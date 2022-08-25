@@ -11,32 +11,35 @@ RSpec.describe Cognito::SignInUser do
 
     let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
-    context 'when success' do
-      let(:response) { described_class.call(email, password, cookies_disabled) }
+    let(:sign_in_user) { described_class.new(email, password, cookies_disabled) }
 
+    before { allow(sign_in_user).to receive(:sleep) }
+
+    context 'when success' do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => user_id_for_srp }))
+        sign_in_user.call
       end
 
       it 'returns success' do
-        expect(response.success?).to eq true
+        expect(sign_in_user.success?).to eq true
       end
 
       it 'returns no error' do
-        expect(response.error).to eq nil
+        expect(sign_in_user.error).to eq nil
       end
 
       it 'returns challenge name' do
-        expect(response.challenge_name).to eq challenge_name
+        expect(sign_in_user.challenge_name).to eq challenge_name
       end
 
       it 'returns challenge?' do
-        expect(response.challenge?).to eq true
+        expect(sign_in_user.challenge?).to eq true
       end
 
       it 'returns session' do
-        expect(response.session).to eq session
+        expect(sign_in_user.session).to eq session
       end
     end
 
@@ -44,16 +47,15 @@ RSpec.describe Cognito::SignInUser do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
+        sign_in_user.call
       end
 
       it 'does not return success' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.success?).to eq false
+        expect(sign_in_user.success?).to eq false
       end
 
       it 'does returns cognito error' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.error).to eq I18n.t('facilities_management.users.sign_in_error')
+        expect(sign_in_user.error).to eq I18n.t('facilities_management.users.sign_in_error')
       end
     end
 
@@ -61,21 +63,19 @@ RSpec.describe Cognito::SignInUser do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::UserNotConfirmedException.new('oops', 'Oops'))
+        sign_in_user.call
       end
 
       it 'does not return success' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.success?).to eq false
+        expect(sign_in_user.success?).to eq false
       end
 
       it 'does returns cognito error' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.error).to eq 'Oops'
+        expect(sign_in_user.error).to eq 'Oops'
       end
 
       it 'returns needs_confirmation true' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.needs_confirmation).to eq true
+        expect(sign_in_user.needs_confirmation).to eq true
       end
     end
 
@@ -83,21 +83,19 @@ RSpec.describe Cognito::SignInUser do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::PasswordResetRequiredException.new('oops', 'Oops'))
+        sign_in_user.call
       end
 
       it 'does not return success' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.success?).to eq false
+        expect(sign_in_user.success?).to eq false
       end
 
       it 'does returns cognito error' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.error).to eq 'Oops'
+        expect(sign_in_user.error).to eq 'Oops'
       end
 
       it 'returns need_password_reset true' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.needs_password_reset).to eq true
+        expect(sign_in_user.needs_password_reset).to eq true
       end
     end
 
@@ -105,21 +103,19 @@ RSpec.describe Cognito::SignInUser do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::UserNotFoundException.new('oops', 'Oops'))
+        sign_in_user.call
       end
 
       it 'does not return success' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.success?).to eq false
+        expect(sign_in_user.success?).to eq false
       end
 
       it 'does returns cognito error' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.error).to eq I18n.t('facilities_management.users.sign_in_error')
+        expect(sign_in_user.error).to eq I18n.t('facilities_management.users.sign_in_error')
       end
 
       it 'returns need_password_reset false' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.needs_password_reset).to eq false
+        expect(sign_in_user.needs_password_reset).to eq false
       end
     end
 
@@ -129,16 +125,15 @@ RSpec.describe Cognito::SignInUser do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => user_id_for_srp }))
+        sign_in_user.call
       end
 
       it 'does not return success' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.success?).to eq false
+        expect(sign_in_user.success?).to eq false
       end
 
       it 'does returns cognito error' do
-        response = described_class.call(email, password, cookies_disabled)
-        expect(response.errors.any?).to eq true
+        expect(sign_in_user.errors.any?).to eq true
       end
     end
   end

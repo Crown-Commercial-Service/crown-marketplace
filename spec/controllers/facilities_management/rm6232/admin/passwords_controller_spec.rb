@@ -12,35 +12,70 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::PasswordsController, type: :
   end
 
   describe 'POST create' do
-    before do
-      # rubocop:disable RSpec/AnyInstance
-      allow_any_instance_of(Cognito::ForgotPassword).to receive(:forgot_password).and_return(true)
-      # rubocop:enable RSpec/AnyInstance
-      post :create, params: { email: email }
-      cookies.update(response.cookies)
+    context 'when no exception is raised' do
+      before do
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(Cognito::ForgotPassword).to receive(:forgot_password).and_return(true)
+        # rubocop:enable RSpec/AnyInstance
+        post :create, params: { email: email }
+        cookies.update(response.cookies)
+      end
+
+      context 'when the email is invalid' do
+        let(:email) { 'testtest.com' }
+
+        it 'redirects to the facilities_management_rm6232_admin_new_user_password_path' do
+          expect(response).to redirect_to facilities_management_rm6232_admin_new_user_password_path
+        end
+
+        it 'does not set the crown_marketplace_reset_email cookie' do
+          expect(cookies[:crown_marketplace_reset_email]).to be nil
+        end
+      end
+
+      context 'when the email is valid' do
+        let(:email) { 'test@test.com' }
+
+        it 'redirects to facilities_management_rm6232_admin_edit_user_password_path' do
+          expect(response).to redirect_to facilities_management_rm6232_admin_edit_user_password_path
+        end
+
+        it 'sets the crown_marketplace_reset_email cookie' do
+          expect(cookies[:crown_marketplace_reset_email]).to eq 'test@test.com'
+        end
+      end
     end
 
-    context 'when the email is invalid' do
-      let(:email) { 'testtest.com' }
-
-      it 'redirects to the facilities_management_rm6232_admin_new_user_password_path' do
-        expect(response).to redirect_to facilities_management_rm6232_admin_new_user_password_path
+    context 'when the email is valid but an exception is raised' do
+      before do
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(Cognito::ForgotPassword).to receive(:forgot_password).and_raise(error.new('Some context', 'Some message'))
+        # rubocop:enable RSpec/AnyInstance
+        post :create, params: { email: 'test@test.com' }
       end
 
-      it 'does not set the crown_marketplace_reset_email cookie' do
-        expect(cookies[:crown_marketplace_reset_email]).to be nil
-      end
-    end
+      context 'and the error is UserNotFoundException' do
+        let(:error) { Aws::CognitoIdentityProvider::Errors::UserNotFoundException }
 
-    context 'when the email is valid' do
-      let(:email) { 'test@test.com' }
-
-      it 'redirects to facilities_management_rm6232_admin_edit_user_password_path' do
-        expect(response).to redirect_to facilities_management_rm6232_admin_edit_user_password_path
+        it 'redirects to the edit password page' do
+          expect(response).to redirect_to facilities_management_rm6232_admin_edit_user_password_path
+        end
       end
 
-      it 'sets the crown_marketplace_reset_email cookie' do
-        expect(cookies[:crown_marketplace_reset_email]).to eq 'test@test.com'
+      context 'and the error is InvalidParameterException' do
+        let(:error) { Aws::CognitoIdentityProvider::Errors::InvalidParameterException }
+
+        it 'redirects to the new password page' do
+          expect(response).to redirect_to facilities_management_rm6232_admin_new_user_password_path
+        end
+      end
+
+      context 'and the error is ServiceError' do
+        let(:error) { Aws::CognitoIdentityProvider::Errors::ServiceError }
+
+        it 'redirects to the new password page' do
+          expect(response).to redirect_to facilities_management_rm6232_admin_new_user_password_path
+        end
       end
     end
   end

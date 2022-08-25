@@ -166,28 +166,51 @@ RSpec.describe Cognito::SignUpUser do
     end
 
     context 'when cognito error' do
+      let(:response) { described_class.call(email, password, password_confirmation, roles) }
+
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:sign_up).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
+        allow(aws_client).to receive(:sign_up).and_raise(error.new('Some context', 'Some message'))
       end
 
-      it 'does not create user' do
-        expect { described_class.call(email, password, password_confirmation, roles) }.not_to change(User, :count)
+      context 'and the error is ServiceError' do
+        let(:error) { Aws::CognitoIdentityProvider::Errors::ServiceError }
+
+        it 'does not create user' do
+          expect { response }.not_to change(User, :count)
+        end
+
+        it 'does not return user' do
+          expect(response.user).to eq nil
+        end
+
+        it 'does not return success' do
+          expect(response.success?).to eq false
+        end
+
+        it 'returns an error' do
+          expect(response.errors.empty?).to eq false
+        end
       end
 
-      it 'does not return user' do
-        response = described_class.call(email, password, password_confirmation, roles)
-        expect(response.user).to eq nil
-      end
+      context 'and the error is UsernameExistsException' do
+        let(:error) { Aws::CognitoIdentityProvider::Errors::UsernameExistsException }
 
-      it 'does not return success' do
-        response = described_class.call(email, password, password_confirmation, roles)
-        expect(response.success?).to eq false
-      end
+        it 'does not create user' do
+          expect { response }.not_to change(User, :count)
+        end
 
-      it 'returns an error' do
-        response = described_class.call(email, password, password_confirmation, roles)
-        expect(response.errors.empty?).to eq false
+        it 'does not return user' do
+          expect(response.user).to eq nil
+        end
+
+        it 'does return success' do
+          expect(response.success?).to eq true
+        end
+
+        it 'returns no error' do
+          expect(response.error).to eq nil
+        end
       end
     end
   end

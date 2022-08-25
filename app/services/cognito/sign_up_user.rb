@@ -21,6 +21,7 @@ module Cognito
       @roles = roles.compact
       @user = nil
       @not_on_safelist = nil
+      @skip_success = false
     end
 
     def call
@@ -30,11 +31,16 @@ module Cognito
         add_user_to_groups
         create_user_object
       end
+    rescue Aws::CognitoIdentityProvider::Errors::UsernameExistsException
+      # We do nothing as we don't want people to be able enumerate users
+      @skip_success = true
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
       errors.add(:base, e.message)
     end
 
     def success?
+      return true if @skip_success
+
       errors.empty? && @user.try(:persisted?)
     end
 

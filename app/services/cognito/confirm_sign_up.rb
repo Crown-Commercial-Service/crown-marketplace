@@ -21,6 +21,9 @@ module Cognito
         confirm_sign_up
         confirm_user
       end
+    rescue Aws::CognitoIdentityProvider::Errors::NotAuthorizedException
+      # We do nothing as we don't want people to be able enumerate users
+      errors.add(:confirmation_code, :invalid)
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
       errors.add(:confirmation_code, e.message)
     end

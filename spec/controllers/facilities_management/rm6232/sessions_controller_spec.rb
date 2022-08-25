@@ -34,6 +34,9 @@ RSpec.describe FacilitiesManagement::RM6232::SessionsController, type: :controll
     before do
       cookies['test_marketplace_session'] = 'I AM THE SESSION COOKIE'
       allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(Cognito::SignInUser).to receive(:sleep)
+      # rubocop:enable RSpec/AnyInstance
     end
 
     context 'when the log in attempt is unsuccessful' do

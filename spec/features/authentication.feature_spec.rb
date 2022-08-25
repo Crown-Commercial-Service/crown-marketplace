@@ -13,6 +13,9 @@ RSpec.feature 'Authentication', type: :feature do
     allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
     allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new(session: '1234667'))
     allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
+    # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(Cognito::SignInUser).to receive(:sleep)
+    # rubocop:enable RSpec/AnyInstance
     create_cookie('foo', 'bar')
   end
 
