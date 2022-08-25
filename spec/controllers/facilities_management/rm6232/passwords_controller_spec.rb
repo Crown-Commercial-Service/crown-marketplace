@@ -25,7 +25,7 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController, type: :control
   end
 
   describe 'POST create' do
-    context 'when the framework is live' do
+    context 'when no exception is raised' do
       before do
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Cognito::ForgotPassword).to receive(:forgot_password).and_return(true)
@@ -59,14 +59,36 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController, type: :control
       end
     end
 
-    context 'when the framework is not live' do
-      include_context 'and RM6232 is not live'
-
-      it 'renders the unrecognised framework page with the right http status' do
+    context 'when the email is valid but an exception is raised' do
+      before do
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(Cognito::ForgotPassword).to receive(:forgot_password).and_raise(error.new('Some context', 'Some message'))
+        # rubocop:enable RSpec/AnyInstance
         post :create, params: { email: 'test@test.com' }
+      end
 
-        expect(response).to render_template('home/unrecognised_framework')
-        expect(response).to have_http_status(:bad_request)
+      context 'and the error is UserNotFoundException' do
+        let(:error) { Aws::CognitoIdentityProvider::Errors::UserNotFoundException }
+
+        it 'redirects to the edit password page' do
+          expect(response).to redirect_to facilities_management_rm6232_edit_user_password_path
+        end
+      end
+
+      context 'and the error is InvalidParameterException' do
+        let(:error) { Aws::CognitoIdentityProvider::Errors::InvalidParameterException }
+
+        it 'redirects to the new password page' do
+          expect(response).to redirect_to facilities_management_rm6232_new_user_password_path
+        end
+      end
+
+      context 'and the error is ServiceError' do
+        let(:error) { Aws::CognitoIdentityProvider::Errors::ServiceError }
+
+        it 'redirects to the new password page' do
+          expect(response).to redirect_to facilities_management_rm6232_new_user_password_path
+        end
       end
     end
   end

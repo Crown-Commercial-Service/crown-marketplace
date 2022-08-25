@@ -56,18 +56,31 @@ module Cognito
     private
 
     def initiate_auth
-      @auth_response = client.initiate_auth(
-        client_id: ENV['COGNITO_CLIENT_ID'],
-        auth_flow: 'USER_PASSWORD_AUTH',
-        auth_parameters: {
-          'USERNAME' => email,
-          'PASSWORD' => password
-        }
-      )
+      go_then_wait do
+        @auth_response = client.initiate_auth(
+          client_id: ENV['COGNITO_CLIENT_ID'],
+          auth_flow: 'USER_PASSWORD_AUTH',
+          auth_parameters: {
+            'USERNAME' => email,
+            'PASSWORD' => password
+          }
+        )
+      end
     end
 
     def cookies_should_be_enabled
       errors.add(:base, :cookies_disabled) if @cookies_disabled
     end
+
+    # This should keep the response times for attempting to log in with a fake or valid an account around the same length
+    def go_then_wait
+      finish_time = Time.now.in_time_zone('London') + MINIMUM_WAIT_TIME.second
+
+      yield
+    ensure
+      sleep (finish_time - Time.now.in_time_zone('London')).clamp(0, MINIMUM_WAIT_TIME).seconds
+    end
+
+    MINIMUM_WAIT_TIME = 1
   end
 end
