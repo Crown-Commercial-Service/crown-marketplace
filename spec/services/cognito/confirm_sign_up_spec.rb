@@ -48,9 +48,9 @@ RSpec.describe Cognito::ConfirmSignUp do
   end
 
   describe '#call' do
-    context 'when success' do
-      let(:response) { described_class.call(user.email, confirmation_code) }
+    let(:response) { described_class.call(user.email, confirmation_code) }
 
+    context 'when success' do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:confirm_sign_up).and_return(JSON[{ user_sub: '1234'.to_json }])
@@ -74,22 +74,36 @@ RSpec.describe Cognito::ConfirmSignUp do
     context 'when cognito error' do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:confirm_sign_up).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
+        allow(aws_client).to receive(:confirm_sign_up).and_raise(error.new('Some context', 'Some message'))
+        response
       end
 
-      it 'does not return success' do
-        response = described_class.call(user.email, confirmation_code)
-        expect(response.success?).to eq false
+      context 'and the error is generic' do
+        let(:error) { Aws::CognitoIdentityProvider::Errors::ServiceError }
+
+        it 'sets the error and success will be false' do
+          expect(response.errors[:confirmation_code].first).to eq 'Some message'
+          expect(response.success?).to be false
+        end
+
+        it 'does not confirm user' do
+          user.reload
+          expect(user.confirmed?).to eq false
+        end
       end
 
-      it 'does returns cognito error' do
-        response = described_class.call(user.email, confirmation_code)
-        expect(response.errors.any?).to eq true
-      end
+      context 'and the error is NotAuthorizedException' do
+        let(:error) { Aws::CognitoIdentityProvider::Errors::NotAuthorizedException }
 
-      it 'does not confirm user' do
-        user.reload
-        expect(user.confirmed?).to eq false
+        it 'sets the error and success will be false' do
+          expect(response.errors[:confirmation_code].first).to eq 'Invalid verification code provided, please try again'
+          expect(response.success?).to be false
+        end
+
+        it 'does not confirm user' do
+          user.reload
+          expect(user.confirmed?).to eq false
+        end
       end
     end
   end
