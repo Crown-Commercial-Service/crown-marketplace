@@ -225,7 +225,7 @@ RSpec.describe FacilitiesManagement::ContractDatesHelper, type: :helper do
       let(:initial_call_off_period_years) { 1 }
 
       it 'returns one year after the icontract start date' do
-        expect(result).to eq (Time.zone.now + 18.months).strftime '%e %B %Y'
+        expect(result).to eq (Time.zone.now + 6.months + 1.year).strftime '%e %B %Y'
       end
     end
   end

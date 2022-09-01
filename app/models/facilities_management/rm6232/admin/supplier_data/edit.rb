@@ -24,7 +24,7 @@ module FacilitiesManagement
         end
 
         # TODO: See if we can rmove this
-        # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+        # rubocop:disable Metrics/AbcSize
         def current_supplier_data
           @current_supplier_data ||= begin
             supplier = supplier_data.data.find { |supplier_item| supplier_item['id'] == supplier_id }.dup
@@ -33,8 +33,8 @@ module FacilitiesManagement
               if edit.change_type == 'lot_data'
                 supplier_lot_data = supplier['lot_data'].find { |lot_data| lot_data['lot_code'] == edit.data['lot_code'] }
 
-                edit.data['removed'].each { |code| supplier_lot_data[edit.data['attribute']].delete(code) }
-                edit.data['added'].each { |code| supplier_lot_data[edit.data['attribute']] << code }
+                lot_data_changes(edit, supplier_lot_data, 'removed', :delete)
+                lot_data_changes(edit, supplier_lot_data, 'added', :push)
               else
                 edit.data.each { |detail| supplier[detail['attribute']] = detail['value'] }
               end
@@ -43,7 +43,11 @@ module FacilitiesManagement
             supplier
           end
         end
-        # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+        # rubocop:enable Metrics/AbcSize
+
+        def lot_data_changes(edit, supplier_lot_data, key, method)
+          edit.data[key].is_a?(Array) ? edit.data[key].each { |code| supplier_lot_data[edit.data['attribute']].send(method, code) } : supplier_lot_data[edit.data['attribute']] = edit.data[key]
+        end
 
         def previous_supplier_data
           supplier_data.edits.where(supplier_id: supplier_id).where('created_at < ?', created_at).order(created_at: :desc).first&.current_supplier_data || supplier_data.data.find { |supplier_item| supplier_item['id'] == supplier_id }

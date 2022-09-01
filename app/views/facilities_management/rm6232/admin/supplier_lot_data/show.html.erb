@@ -28,6 +28,19 @@
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
+            <%= t('.status') %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= govuk_tag_with_text(*lot_data[:current_status]) %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to facilities_management_rm6232_admin_supplier_lot_datum_edit_path(supplier_lot_datum_id: lot_data[:id], lot_data_type: 'lot_status'), class: 'govuk-link--no-visited-state' do %>
+              <%= t('.change') %> <span class="govuk-visually-hidden"><%= t('.lot_status', lot_code: lot_data[:lot_code]) %></span>
+            <% end %>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
             <%= t('.services') %>
           </dt>
           <dd class="govuk-summary-list__value">

@@ -19,8 +19,11 @@ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 sh -c 'echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list'
 apt-get update
 apt-get install -y --no-install-recommends yarn
+
 PHANTOM_JS="phantomjs-2.1.1-linux-x86_64"
 curl -OLk https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2
+wget --quiet https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2
 tar xvjf $PHANTOM_JS.tar.bz2
-mv $PHANTOM_JS/bin/phantomjs /usr/local/bin/phantomjs
+mv $PHANTOM_JS /usr/local/share
+ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
 rm -rf $PHANTOM_JS
