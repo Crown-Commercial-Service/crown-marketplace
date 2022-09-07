@@ -1,0 +1,53 @@
+name: "Run application unit tests"
+
+on:
+  workflow_call:
+    inputs:
+      publish_test_report:
+        description: 'A trigger to publish the test report'
+        default: false
+        required: false
+        type: boolean
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-20.04
+
+    services:
+      postgres:
+        image: postgis/postgis:11-2.5
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: rails
+          POSTGRES_PASSWORD: password
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgis://rails:password@localhost:5432/rails_test"
+      CC_TEST_REPORTER_ID: ${{ secrets.cc_test_reporter_id }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1.101.0
+        with:
+          bundler-cache: true
+
+      - name: Set up database schema
+        run: bin/rails db:test:prepare
+
+      - name: Compile assets
+        run: bin/rails assets:precompile
+
+      - name: Run unit tests
+        run: bin/rake
+
+      - name: publish code coverage
+        uses: paambaati/codeclimate-action@v3.0.0
+        with:
+          debug: true
+        if: ${{ inputs.publish_test_report }}

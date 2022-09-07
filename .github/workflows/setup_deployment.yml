@@ -1,0 +1,55 @@
+name: "Set up deployment of latest code to AWS"
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+      - preview
+      - production
+
+jobs:
+  determine-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      ENV_NAME: ${{ steps.determine_environment.outputs.ENV_NAME }}
+    steps:
+      - name: Determine the environment to deploy to
+        id: determine_environment
+        run: |
+          echo "ENV_NAME=$(
+            case ${{ github.ref }} in
+              "refs/heads/master")
+                echo "CMPDEV"
+                ;;
+              "refs/heads/develop")
+                echo "Sandbox"
+                ;;
+              "refs/heads/preview")
+                echo "Preview"
+                ;;
+              "refs/heads/production")
+                echo "Production"
+                ;;
+              *)
+                echo "FAIL"
+                ;;
+            esac
+          )" >> $GITHUB_OUTPUT
+
+      - name: Fail if not an environment
+        run: |
+          echo "ERROR: No environment found"
+          exit 1
+        if: steps.determine_environment.outputs.ENV_NAME == 'FAIL'
+
+      - name: Show where we are deploying to
+        run: echo "We will deploy to ${{ steps.determine_environment.outputs.ENV_NAME }}"
+
+  deploy-to-aws:
+    uses: ./.github/workflows/deploy_to_aws.yml
+    needs:
+      - determine-environment
+    with:
+      environment: ${{ needs.determine-environment.outputs.ENV_NAME }}
+    secrets: inherit
