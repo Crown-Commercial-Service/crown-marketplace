@@ -4,11 +4,19 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "sunday"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: weekly
-  - package-ecosystem: docker
+      interval: "weekly"
+      day: "sunday"
+  - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: weekly
+      interval: "weekly"
+      day: "sunday"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
