@@ -74,7 +74,7 @@ module FacilitiesManagement
     end
 
     def build_call_off_extensions
-      (0..3).each do |extension|
+      4.times do |extension|
         call_off_extensions.find_or_initialize_by(extension: extension)
       end
     end
