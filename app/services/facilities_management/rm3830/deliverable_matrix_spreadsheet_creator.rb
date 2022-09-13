@@ -158,7 +158,7 @@ class FacilitiesManagement::RM3830::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_extension_periods(sheet)
-    (0..3).each do |period|
+    4.times do |period|
       sheet.add_row ["Extension Period #{period + 1}", extension_period(period)]
     end
   end
