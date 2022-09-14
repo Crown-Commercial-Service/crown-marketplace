@@ -1,0 +1,34 @@
+<% if @paginated_procurements.length > 0 %>
+  <% content_for :page_title, t('.page_title', page_number: params[:page] || 1, total_pages: @paginated_procurements.total_pages) %>
+<% else %>
+  <% content_for :page_title, t('.page_title_none') %>
+<% end %>
+
+<%= admin_breadcrumbs({ text: t('.heading') })%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row" id="procurements-search-container">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: search_procurements_facilities_management_rm6232_admin_procurements_path, method: :get, remote: true, html: { specialvalidation: true } do |f| %>
+      <%= f.label :search_value, t('.find_a_procurement'), class: 'govuk-label govuk-label--m' %>
+      <div class="govuk-hint" id="procurements-search-hint">
+        <%= t('.enter_a_value') %>
+      </div>
+      <%= f.text_field :search_value, class: 'govuk-input govuk-!-width-three-quarters govuk-!-margin-right-2', type: 'search', aria: { describedby: 'procurements-search-hint' } %>
+      <%= f.submit t('.search'), class: 'govuk-button govuk-button--secondary', id: 'procurements-search-button' %>
+    <% end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full" id="procurements-table">
+    <%= render partial: 'procurements_table', locals: { paginated_procurements: @paginated_procurements } %>
+  </div>
+</div>

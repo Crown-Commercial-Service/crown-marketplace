@@ -1,0 +1,37 @@
+<% if paginated_procurements.length > 0 %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header" style="width: 25%"><%= t('.name') %></th>
+        <th scope="col" class="govuk-table__header" style="width: 25%"><%= t('.ref_number') %></th>
+        <th scope="col" class="govuk-table__header" style="width: 25%"><%= t('.date_saved') %></th>
+        <th scope="col" class="govuk-table__header" style="width: 25%"><%= t('.award_status') %></th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% paginated_procurements.each do |procurement| %>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__cell">
+            <%= link_to procurement.contract_name, '#', class: ' govuk-link--no-visited-state' %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= procurement.contract_number %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= format_date_time(procurement.updated_at) %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= govuk_tag_with_text(*procurement.award_status) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate paginated_procurements, views_prefix: 'shared', params: { controller: 'procurements', action: 'index' } %>
+<% else %>
+  <hr class="govuk-section-break govuk-section-break--visible">
+  <p class="govuk-!-margin-top-4">
+    <%= t('.there_are_not_any') %>
+  </p>
+  <hr class="govuk-section-break govuk-section-break--visible">
+<% end %>

@@ -211,6 +211,11 @@ Rails.application.routes.draw do
           get '/:change_type', action: :show, as: :show
         end
         resources :supplier_data_snapshots, path: 'supplier-data-snapshots', only: %i[new create]
+        resources :procurements, only: %i[index show] do
+          collection do
+            get :search_procurements, action: :search_procurements
+          end
+        end
       end
     end
 

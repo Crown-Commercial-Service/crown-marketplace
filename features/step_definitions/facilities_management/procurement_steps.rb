@@ -66,6 +66,10 @@ Given('I have a completed procurement for further information named {string}') d
   create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:further_information], user: @user, contract_name: contract_name)
 end
 
+Given('there are {int} procurements') do |number_of_procurements|
+  create_list(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:initial], number_of_procurements)
+end
+
 FRMAEOWRK_AND_STATE_TO_FACTORY = {
   'RM3830' => {
     initial: :facilities_management_rm3830_procurement,

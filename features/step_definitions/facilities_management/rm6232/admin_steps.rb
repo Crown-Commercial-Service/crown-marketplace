@@ -208,6 +208,19 @@ Then('the upload was done by {string}') do |email|
   expect(admin_page.uploaded_by_email).to have_content(email)
 end
 
+Then('I enter {string} for the procurement search') do |procurement_name|
+  admin_page.user_procurements.input.fill_in with: "#{procurement_name}\n"
+  admin_page.user_procurements.search.click
+end
+
+Then('I should see the following user procurements listed:') do |procurement_names|
+  expect(admin_page.user_procurements.names.length).to eq(procurement_names.raw.flatten.length)
+
+  admin_page.user_procurements.names.zip(procurement_names.raw.flatten).each do |element, value|
+    expect(element).to have_content(value)
+  end
+end
+
 def core_services(lot_number)
   FacilitiesManagement::RM6232::WorkPackage.selectable.map { |work_package| work_package.supplier_services.where(**LOT_NUMBER_TO_QUERY_PARAMS[lot_number]).select(&:core) }.flatten
 end

@@ -260,13 +260,33 @@ en:
             you_can_view_upload_html: You can view the %{link_url} in the 'Manage supplier data' section of the portal.
         home:
           index:
-            audit_logs: Supplier data change log
+            audit_logs:
+              details: View logs of all changes made to the supplier data by the admin team
+              title: Supplier data change log
             header: RM6232 administration dashboard
-            manage_supplier_data: Manage the supplier's details and their lot data
-            management_report: Management reports
-            management_report_detail: Download the management data in CSV format
-            supplier_data: Supplier data
-            view_logs: View logs of all changes made to the supplier data by the admin team
+            management_report:
+              details: Download the management data in CSV format
+              title: Management reports
+            supplier_data:
+              details: Manage the supplier's details and their lot data
+              title: Supplier data
+            user_procurements:
+              details: View and update user's procurements to add details of award
+              title: User procurements
+        procurements:
+          index:
+            enter_a_value: Enter a name or reference number to find a procurement
+            find_a_procurement: Find a procurement
+            heading: User procurements
+            page_title: User procurements (Page %{page_number} of %{total_pages})
+            page_title_none: User procurements
+            search: Search
+          procurements_table:
+            award_status: Award status
+            date_saved: Date saved
+            name: Procurement name
+            ref_number: Ref number
+            there_are_not_any: There are no procurements that match your search
         supplier_data:
           index:
             by_going_to_html: You can bulk upload the supplier data by going to '%{manage_data_link}'.

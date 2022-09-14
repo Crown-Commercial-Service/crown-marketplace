@@ -90,5 +90,11 @@ module Pages::RM6232
       element :'To month', '#facilities_management_rm6232_admin_management_report_end_date_mm'
       element :'To year', '#facilities_management_rm6232_admin_management_report_end_date_yyyy'
     end
+
+    section :user_procurements, '#main-content' do
+      element :input, '#search_value'
+      element :search, '#procurements-search-button'
+      elements :names, '#procurements-table > table > tbody > tr > th'
+    end
   end
 end

@@ -409,4 +409,24 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       end
     end
   end
+
+  describe 'award_status' do
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: state) }
+
+    context 'when the state is what_happens_next' do
+      let(:state) { 'what_happens_next' }
+
+      it 'returns grey and search only' do
+        expect(procurement.award_status).to eq [:grey, 'search only']
+      end
+    end
+
+    context 'when the state is not what_happens_next' do
+      let(:state) { 'not_what_happens_next' }
+
+      it 'returns blue and awarded' do
+        expect(procurement.award_status).to eq [:blue, 'awarded']
+      end
+    end
+  end
 end

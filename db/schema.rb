@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_14_120005) do
+ActiveRecord::Schema.define(version: 2022_09_14_142228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -418,6 +418,8 @@ ActiveRecord::Schema.define(version: 2022_09_14_120005) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "contract_number"
+    t.index "lower((contract_name)::text)", name: "index_fm_rm6232_procurements_on_lower_contract_name"
+    t.index "lower((contract_number)::text)", name: "index_fm_rm6232_procurements_on_lower_contract_number"
     t.index ["user_id", "contract_name"], name: "index_rm6232_procurement_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_fm_rm6232_procurements_on_user_id"
   end

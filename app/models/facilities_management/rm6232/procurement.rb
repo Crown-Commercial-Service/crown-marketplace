@@ -34,6 +34,14 @@ module FacilitiesManagement
         @regions ||= Region.where(code: region_codes)
       end
 
+      def award_status
+        if what_happens_next?
+          [:grey, 'search only']
+        else
+          [:blue, 'awarded']
+        end
+      end
+
       aasm do
         state :what_happens_next, initial: true
       end
