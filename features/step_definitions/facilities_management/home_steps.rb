@@ -55,23 +55,25 @@ Then('the cookie banner shows I have {string} the cookies') do |option|
   end
 end
 
-Then('the cookies have been {string}') do |option|
-  expect(page.driver.browser.manage.cookie_named('crown_marketplace_cookie_settings_viewed')[:value]).to eq('true')
+Then('the cookies have been saved') do
+  expect(cookie_settings['settings_viewed']).to be true
+end
 
+Then('the {string} cookies have been {string}') do |cookie, option|
   case option
   when 'accepted'
-    expect(page.driver.browser.manage.cookie_named('crown_marketplace_google_analytics_enabled')[:value]).to eq('true')
+    expect(cookie_settings[COOKIE_TO_OPTION[cookie]]).to be true
   when 'rejected'
-    expect(page.driver.browser.manage.cookie_named('crown_marketplace_google_analytics_enabled')[:value]).to eq('false') if page.driver.browser.manage.all_cookies.find { |cookie| cookie[:name] == 'crown_marketplace_google_analytics_enabled' }
+    expect(cookie_settings[COOKIE_TO_OPTION[cookie]]).to be false
   end
 end
 
-Then('I choose to {string} cookies') do |option|
+Then('I choose to {string} {string} cookies') do |option, cookie|
   case option
   when 'enable'
-    page.find('#ga_cookie_usage_true').choose
+    page.find("##{cookie}_cookie_usage_true").choose
   when 'disable'
-    page.find('#ga_cookie_usage_false').choose
+    page.find("##{cookie}_cookie_usage_false").choose
   end
 end
 
@@ -104,4 +106,13 @@ Then('the header navigation links {string} visible') do |option|
   when 'are not'
     expect(home_page.navigation).to_not be_visible
   end
+end
+
+COOKIE_TO_OPTION = {
+  'ga' => 'google_analytics_enabled',
+  'glassbox' => 'glassbox_enabled'
+}.freeze
+
+def cookie_settings
+  JSON.parse(CGI.unescape(page.driver.browser.manage.cookie_named('crown_marketplace_cookie_options_v1')[:value]))
 end

@@ -16,7 +16,15 @@ RSpec.describe 'layouts/application.html.erb', type: :view do
       end
       helper_method :ccs_homepage_url, :service_path_base
     end
-    cookies[:crown_marketplace_google_analytics_enabled] = 'true'
+
+    cookies[:crown_marketplace_cookie_options_v1] = {
+      value: {
+        'settings_viewed' => true,
+        'google_analytics_enabled' => true,
+        'glassbox_enabled' => true
+      }.to_json
+    }
+
     allow(cookies.class).to receive(:new).and_return(cookies)
     allow(Marketplace).to receive(:google_analytics_tracking_id).and_return('123')
     allow(Marketplace).to receive(:google_tag_manager_tracking_id).and_return('456')

@@ -474,16 +474,11 @@ en:
       cookie_banner_cookies:
         row_1:
           expires: 1 year
-          name: crown_marketplace_google_analytics_enabled
-          purpose: Saves your cookie consent settings for Google Analytics
-        row_2:
-          expires: 1 year
-          name: crown_marketplace_cookie_settings_viewed
-          purpose: Lets us know that you’ve viewed your cookie consent settings
+          purpose: Saves your cookie consent preferences
       cookies_banner: Cookies banner
       ga_cookies:
         row_1:
-          expires: 2 years
+          expires: 400 days
           name: _ga
           purpose: This cookie allows Google to track unique users via a client identifier that is randomly generated
         row_2:
@@ -494,10 +489,20 @@ en:
           expires: 24 hours
           name: _gid
           purpose: This cookie is used to group the user behaviour
-      ga_sets_following_cookies: Google Analytics sets the following cookies.
+      ga_sets_following_cookies: 'Google Analytics sets the following cookies:'
+      glassbox_cookies:
+        row_1:
+          expires: 2 years
+          name: _cls_s
+          purpose: The session identifying cookie. It also indicates if the visitor is new or existing
+        row_2:
+          expires: 2 years
+          name: _cls_v
+          purpose: The visitor identifying cookie
+      glassbox_sets_following_cookies: 'Glassbox sets the following cookies:'
       heading: Details about cookies on Crown Marketplace
-      last_updated: Last updated 8 July 2022
-      policy_will_apply: This cookie policy is applicable to all four services
+      last_updated: Last updated 22 September 2022.
+      policy_will_apply: This cookie policy is applicable to all four services.
       reg_and_sign_in: Registration and sign in
       reg_and_sign_in_cookie:
         row_1:
@@ -517,40 +522,60 @@ en:
           name: crown_marketplace_confirmation_email
           purpose: This cookie holds the email of the user when activating their account
       reg_and_sign_in_cookies: These cookies are sometimes required to complete the regestration and sign in process.
-      we_also_use: We also use Google Tag Manager, but this does not set any cookies.
-      we_do_not_let: We do not allow Google to use or share the data about how you use this site.
       what_are_cookies: Crown Marketplace puts small files (known as ‘cookies’) onto your computer to collect information about how you browse the site. Find out more about the cookies we use, what they’re for and when they expire.
       you_may_see_a_banner: You may see a banner when you visit Crown Marketplace inviting you to accept cookies or review your settings. We’ll set cookies so that your computer knows you’ve seen it and not to show it again, and also to store your settings.
     cookie_settings:
       always_need_to_be_on: They always need to be on.
       cookie_settings: Cookie settings
       cookies_saved: Your cookie settings were saved
-      dont_use_cookies: Do not use cookies that measure my website use
+      dont_use_cookies:
+        ga: Do not use cookies that measure my website use (Google Analytics)
+        glassbox: Do not use cookies that measure my website use (Glassbox)
       essential_cookies: These essential cookies do things like remember the notifications you have seen so we do not show them to you again.
       find_out_more: Find out more about cookies on Crown Marketplace
       heading: Cookies on Crown Marketplace
       save_changes: Save changes
       settings_will_apply: The settings you choose on this page will apply to all four services
       the_number_we_use: We use 2 types of cookie. You can choose which cookies you're happy for us to use.
-      use_cookies: Use cookies that measure my website use
+      use_cookies:
+        ga: Use cookies that measure my website use (Google Analytics)
+        glassbox: Use cookies that measure my website use (Glassbox)
       what_are_cookies: Cookies are files saved on your phone, tablet or computer when you visit a website.
       why_we_use_them: We use cookies to store information about how you use the Crown Marketplace website, such as the pages you visit.
     cookies:
       expires: Expires
       facilities_management: Facilities Management
-      ga_list: 'Google Analytics sets cookies that store anonymised information about:'
-      ga_list_1: how you got to the site
-      ga_list_2: the pages you visit on Crown Marketplace, and how long you spend on each page
-      ga_list_3: what you click on while you're visiting the site
       legal_services: Legal Services
       management_consultancy: Management Consultancy
-      measure_website_use: Cookies that measure website use
+      measure_website_use:
+        ga: Measuring website usage (Google Analytics)
+        glassbox: Measuring website usage (Glassbox)
+        title: Cookies that measure website use
       name: Name
       purpose: Purpose
       strictly_necessary_cookies: Strictly necessary cookies
       supply_teachers: Supply Teachers
-      we_use_ga: We use Google Analytics to measure how you use the website so we can improve it based on user needs.
       website_has_4_services: 'The Crown Marketplace website contains the following four services:'
+    ga_cookies_info:
+      ga_list:
+        item_1: the pages you visit on Crown Marketplace
+        item_2: how long you spend on each Crown Marketplace page
+        item_3: how you got to the site
+        item_4: what you click on while you’re visiting the site
+        title: 'Google Analytics stores information about:'
+      we_dont_allow: We don’t allow Google to use or share our analytics data.
+      we_dont_collect: We don’t collect or store your personal information (eg your name or address) so this information can’t be used to identify who you are.
+      we_use_ga: We use Google Analytics software to collect information about how you use Crown Marketplace. We do this to help make sure the site is meeting the needs of its users and to help us make improvements, eg improving site search.
+    glassbox_cookies_info:
+      glassbox_list:
+        item_1: Browsing activity
+        item_2: Click-stream activity
+        item_3: Session heatmaps
+        item_4: Scrolls
+        title: 'Glassbox stores information about:'
+      we_dont_allow: We don’t allow Glassbox to use or share our analytics data.
+      we_dont_collect: We don’t collect or store your personal information (e.g. your name or address) so this information can’t be used to identify who you are.
+      we_use_glassbox: We use Glassbox software to collect information about how you use Crown Marketplace. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.
     index:
       crown_marketplace_link: Crown Marketplace
       facilities_management_admin_link: Managing framework and supplier data

@@ -191,4 +191,38 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe '.cookie_preferences_settings' do
+    let(:result) { helper.cookie_preferences_settings }
+
+    context 'when the cookie has not been set' do
+      let(:expected_cookie_settings) do
+        {
+          'settings_viewed' => false,
+          'google_analytics_enabled' => false,
+          'glassbox_enabled' => false
+        }
+      end
+
+      it 'returns the default settings' do
+        expect(result).to eq(expected_cookie_settings)
+      end
+    end
+
+    context 'when the cookie has been set' do
+      let(:expected_cookie_settings) do
+        {
+          'settings_viewed' => true,
+          'google_analytics_enabled' => true,
+          'glassbox_enabled' => false
+        }
+      end
+
+      it 'returns the settings from the cookie' do
+        helper.request.cookies['crown_marketplace_cookie_options_v1'] = expected_cookie_settings.to_json
+
+        expect(result).to eq(expected_cookie_settings)
+      end
+    end
+  end
 end

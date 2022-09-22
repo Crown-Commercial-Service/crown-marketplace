@@ -12,7 +12,6 @@
 //= require jquery3
 //= require rails-ujs
 //= require govuk-frontend/govuk/all
-//= require js-cookie/dist/js.cookie
 //= require google-analytics
 //= require cookie-banner
 //= require_tree ./common

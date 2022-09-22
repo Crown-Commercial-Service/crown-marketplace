@@ -114,6 +114,7 @@ ignore_unused:
   - facilities_management.rm3830.procurements.contract_details.da_journey.review.contract_documents.*
   - home.cookie_policy.cookie_banner_cookies.row_*
   - home.cookie_policy.ga_cookies.row_*
+  - home.cookie_policy.glassbox_cookies.row_*
   - home.cookie_policy.reg_and_sign_in_cookie.row_*
   - facilities_management.rm3830.procurements.results.hint-text-unpriced*
   - facilities_management.rm3830.procurements.results.sub-lot-1*
