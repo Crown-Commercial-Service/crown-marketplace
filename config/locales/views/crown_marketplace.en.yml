@@ -1,0 +1,69 @@
+---
+en:
+  activemodel:
+    errors:
+      models:
+        allowed_email_domain:
+          attributes:
+            email_domain:
+              blank: Enter an email domain
+              invalid: The email domain can only contain letters, numbers, hyphens or full stops
+              taken: The email domain is already in the Allow list
+        cognito/admin/user:
+          attributes:
+            email:
+              blank: Enter an email address in the correct format, like name@example.com
+              invalid: Email address cannot contain any capital letters
+              not_on_allow_list: Email domain is not in the allow list
+            mfa_enabled:
+              telephone_number_required: The telephone number of the user must be set to update the MFA configuration
+            roles:
+              invalid_role_selection: You do not have the ability to create users with these roles
+              mfa_required: You must enable MFA for this user to add these admin roles
+              role_selection_required: Select a role for the user
+              wrong_length: Select one role for the user
+            service_access:
+              invalid_service_access_selection: You must select the service access for the user from this list
+              service_access_selection_required: You must select the service access for the user if they have the buyer or service admin role
+              too_short: You must select the service access for the user from this list
+            telephone_number:
+              invalid: Enter a UK mobile telephone number, for example 07700900982
+  crown_marketplace:
+    allow_list:
+      allow_list_table:
+        email_domain: Email domain
+        no_email_domains_found: No email domains found
+        remove: Remove
+      delete:
+        are_you_sure: Are you sure you want to remove '%{email_domain}' from the Allow list?
+        page_title: Delete email domain
+        re_add: The email domain can be added again at a later date
+        remove: Remove
+        return_to_allow_list: Return to the allow list
+      index:
+        add_new_email_domain: Add a new email domain
+        added: Email domain added
+        enter_an_email_domain: Enter an email domain and click 'Search' to see if it is in the Allow list.
+        facilities_management: Facilities Management
+        find_an_email_domain: Find an email domain
+        heading_title: Allow list
+        in_order_to: In order to create an account for three of the Crown Marketplace services, the user must use an email which has a domain contained within this list.
+        legal_services: Legal Services
+        management_consultancy: Management Consultancy
+        not_in_allow_list: The email domain could not be found in the Allow list
+        removed: Email domain removed
+        search: Search
+        the_four_Services_are: 'The three Crown Marketplace services are:'
+        was_added: "'%{email_domain}' was added to the allow list"
+        was_removed: "'%{email_domain}' was removed from the allow list"
+        you_can_add: You can add a new email domain by clicking the 'Add a new email domain' button.
+      new:
+        email_domain_hint: For example, the email domain for 'example@crowncommercial.gov.uk' would be 'crowncommercial.gov.uk'
+        email_domain_label: Enter a new email domain for the Allow list
+        email_domain_must: 'The new email domain cannot already be in the allow list and it can only contain the following:'
+        email_domain_must_1: letters
+        email_domain_must_2: numbers
+        email_domain_must_3: hyphen (-) or full stop (.)
+        heading: Add an email domain
+        return_to_allow_list: Return to the allow list
+        save_and_continue: Save and continue
