@@ -42,3 +42,16 @@ def create_user(option)
   allow_any_instance_of(Cognito::UpdateUser).to receive(:call).with(anything).and_return(true)
   stub_login
 end
+
+def create_admin_user(user_type)
+  @user = create(:user, confirmed_at: Time.zone.now, roles: [USER_TYPE_TO_ROLE[user_type]])
+  allow_any_instance_of(Cognito::UpdateUser).to receive(:call).and_return(true)
+  allow_any_instance_of(Cognito::UpdateUser).to receive(:call).with(anything).and_return(true)
+  stub_login
+end
+
+USER_TYPE_TO_ROLE = {
+  'user support' => :allow_list_access,
+  'user admin' => :ccs_user_admin,
+  'super admin' => :ccs_developer
+}.freeze

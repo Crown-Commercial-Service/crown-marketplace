@@ -360,6 +360,13 @@ en:
     unacceptable:
       changes_rejected: Sorry, the change you wanted was rejected
       explanation: Maybe you tried to change something you didn’t have access to.
+  header_navigation_links_helper:
+    admin_dashboard: Admin dashboard
+    back_to_start: Back to start
+    crown_marketplace: Crown Marketplace dashboard
+    my_account: My account
+    my_dashboard: My dashboard
+    sign_out: Sign out
   home:
     accessibility_statement:
       CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.

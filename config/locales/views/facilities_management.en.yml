@@ -544,9 +544,3 @@ en:
           tupe: TUPE
     users:
       sign_in_error: You must provide a correct username or password
-  header_navigation_links_helper:
-    admin_dashboard: Admin dashboard
-    back_to_start: Back to start
-    my_account: My account
-    my_dashboard: My dashboard
-    sign_out: Sign out

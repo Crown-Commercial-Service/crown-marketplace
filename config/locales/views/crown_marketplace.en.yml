@@ -50,7 +50,6 @@ en:
         in_order_to: In order to create an account for three of the Crown Marketplace services, the user must use an email which has a domain contained within this list.
         legal_services: Legal Services
         management_consultancy: Management Consultancy
-        not_in_allow_list: The email domain could not be found in the Allow list
         removed: Email domain removed
         search: Search
         the_four_Services_are: 'The three Crown Marketplace services are:'
