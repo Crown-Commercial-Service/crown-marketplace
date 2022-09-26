@@ -170,4 +170,16 @@ module Marketplace
   def self.rm6232_live?
     @rm6232_live ||= Time.now.in_time_zone('London') >= Time.new(2022, 7, 18, 11).in_time_zone('London')
   end
+
+  def self.cookie_settings_name
+    :crown_marketplace_cookie_options_v1
+  end
+
+  def self.default_cookie_options
+    {
+      settings_viewed: false,
+      google_analytics_enabled: false,
+      glassbox_enabled: false
+    }.stringify_keys
+  end
 end
