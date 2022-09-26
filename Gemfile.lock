@@ -75,7 +75,7 @@ GEM
       activesupport
     amoeba (3.2.0)
       activerecord (>= 4.2.0)
-    asset_sync (2.15.2)
+    asset_sync (2.16.0)
       activemodel (>= 4.1.0)
       fog-core
       mime-types (>= 2.99)
@@ -236,7 +236,7 @@ GEM
     email_validator (2.2.3)
       activemodel
     erubi (1.11.0)
-    excon (0.92.4)
+    excon (0.92.5)
     execjs (2.7.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
