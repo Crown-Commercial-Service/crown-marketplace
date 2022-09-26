@@ -87,8 +87,9 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
     context 'when the email domain is valid' do
       let(:email_domain) { 'email-domain.com' }
 
-      it 'redirects to the index page' do
-        expect(response).to redirect_to crown_marketplace_allow_list_index_path(email_domain_added: email_domain)
+      it 'redirects to the allow list index page with the flash message' do
+        expect(response).to redirect_to crown_marketplace_allow_list_index_path
+        expect(flash[:email_domain_added]).to eq email_domain
       end
     end
   end
@@ -148,10 +149,11 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
   describe 'DESTROY destroy' do
     login_crown_marketplace_admin
 
-    it 'redirects to the allow list page' do
+    it 'redirects to the allow list index page with the flash message' do
       delete :destroy, params: { allowed_email_domain: { email_domain: 'email.com' } }
 
-      expect(response).to redirect_to crown_marketplace_allow_list_index_path(email_domain_removed: 'email.com')
+      expect(response).to redirect_to crown_marketplace_allow_list_index_path
+      expect(flash[:email_domain_removed]).to eq 'email.com'
     end
   end
 end

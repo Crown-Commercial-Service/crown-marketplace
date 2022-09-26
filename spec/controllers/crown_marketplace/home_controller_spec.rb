@@ -176,4 +176,64 @@ RSpec.describe CrownMarketplace::HomeController, type: :controller do
       expect(response).to render_template('home/not_permitted')
     end
   end
+
+  describe 'GET #index' do
+    context 'when not logged in' do
+      before { get :index }
+
+      it 'redirects to the sign in page' do
+        expect(response).to redirect_to crown_marketplace_new_user_session_path
+      end
+    end
+
+    context 'when logged in as a user support user' do
+      login_crown_marketplace_read_only
+
+      before { get :index }
+
+      it 'renders the index page' do
+        expect(response).to redirect_to crown_marketplace_allow_list_index_path
+      end
+    end
+
+    context 'when logged in as a user admin user' do
+      login_crown_marketplace_admin
+
+      before { get :index }
+
+      it 'renders the index page' do
+        expect(response).to redirect_to crown_marketplace_allow_list_index_path
+      end
+    end
+
+    context 'when logged in as a super admin user' do
+      login_ccs_developer
+
+      before { get :index }
+
+      it 'renders the index page' do
+        expect(response).to redirect_to crown_marketplace_allow_list_index_path
+      end
+    end
+
+    context 'when not logged in as an fm admin' do
+      login_fm_admin
+
+      before { get :index }
+
+      it 'redirects to the not permitted page' do
+        expect(response).to redirect_to '/crown-marketplace/not-permitted'
+      end
+    end
+
+    context 'when not logged in a non-admin' do
+      login_fm_buyer
+
+      before { get :index }
+
+      it 'redirects to the not permitted page' do
+        expect(response).to redirect_to '/crown-marketplace/not-permitted'
+      end
+    end
+  end
 end

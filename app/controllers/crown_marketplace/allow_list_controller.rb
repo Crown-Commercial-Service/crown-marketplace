@@ -8,7 +8,9 @@ class CrownMarketplace::AllowListController < CrownMarketplace::FrameworkControl
 
   def create
     if @allowed_email_domain.save
-      redirect_to crown_marketplace_allow_list_index_path(email_domain_added: @allowed_email_domain.email_domain)
+      flash[:email_domain_added] = @allowed_email_domain.email_domain
+
+      redirect_to crown_marketplace_allow_list_index_path
     else
       render :new
     end
@@ -20,7 +22,10 @@ class CrownMarketplace::AllowListController < CrownMarketplace::FrameworkControl
 
   def destroy
     @allowed_email_domain.remove_email_domain
-    redirect_to crown_marketplace_allow_list_index_path(email_domain_removed: @allowed_email_domain.email_domain)
+
+    flash[:email_domain_removed] = @allowed_email_domain.email_domain
+
+    redirect_to crown_marketplace_allow_list_index_path
   end
 
   def search_allow_list

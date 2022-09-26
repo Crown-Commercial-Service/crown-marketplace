@@ -231,10 +231,13 @@ Rails.application.routes.draw do
     concerns :shared_pages
 
     get '/', to: 'home#index'
-    resources :allow_list, path: 'allow-list', only: %i[index new create]
-    delete '/allow-list/destroy', to: 'allow_list#destroy'
-    get '/allow-list/delete', to: 'allow_list#delete'
-    get '/allow-list/search_allow_list', to: 'allow_list#search_allow_list'
+    resources :allow_list, path: 'allow-list', only: %i[index new create] do
+      collection do
+        delete '/destroy', action: :destroy
+        get '/delete', action: :delete
+        get '/search_allow_list', action: :search_allow_list
+      end
+    end
   end
 
   get '/404', to: 'errors#not_found', as: :errors_404

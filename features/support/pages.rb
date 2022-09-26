@@ -1,4 +1,8 @@
 module Pages
+  def allow_list_page
+    @allow_list_page ||= AllowList.new
+  end
+
   def admin_page
     @admin_page ||= case @framework
                     when 'RM3830'

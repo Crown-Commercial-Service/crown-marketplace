@@ -32,7 +32,7 @@ module HeaderNavigationLinksHelper
   end
 
   def crown_marketplace_navigation_link
-    { link_text: t('header_navigation_links_helper.back_to_start'), link_url: crown_marketplace_path } if user_signed_in? && request.path != crown_marketplace_allow_list_index_path
+    { link_text: crown_marketplace_back_to_start_text, link_url: crown_marketplace_path } unless sign_in_or_dashboard?('home')
   end
 
   def facilites_management_admin_navigation_link
@@ -63,6 +63,10 @@ module HeaderNavigationLinksHelper
 
   def page_with_back_to_start?
     fm_back_to_start_page? || fm_activate_account_landing_page?
+  end
+
+  def crown_marketplace_back_to_start_text
+    passwords_page? || !user_signed_in? ? t('header_navigation_links_helper.back_to_start') : t('header_navigation_links_helper.crown_marketplace')
   end
 
   def supplier_back_to_start_text
