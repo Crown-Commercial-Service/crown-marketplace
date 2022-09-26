@@ -39,10 +39,11 @@ class Ability
 
     can :read, :all
     can :manage, FacilitiesManagement::Admin
+    cannot :read, AllowedEmailDomain
   end
 
   def allow_list_specific_auth(user)
-    if user.has_role?(:ccs_user_admin)
+    if user.has_role?(:ccs_user_admin) || user.has_role?(:ccs_developer)
       can :manage, AllowedEmailDomain
     elsif user.has_role?(:allow_list_access)
       can :read, AllowedEmailDomain

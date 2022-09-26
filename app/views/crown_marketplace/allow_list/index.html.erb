@@ -1,10 +1,10 @@
 <%= content_for :page_title, t('.heading_title') %>
-
-<%= govuk_notification_banner(:success, t('.added')) { t('.was_added', email_domain: params[:email_domain_added]) } unless params[:email_domain_added].blank? %>
-<%= govuk_notification_banner(:success, t('.removed')) { t('.was_removed', email_domain: params[:email_domain_removed]) } unless params[:email_domain_removed].blank? %>
+<%= crown_marketplace_breadcrumbs({ text: t('.heading_title') })%>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= govuk_notification_banner(:success, t('.added')) { t('.was_added', email_domain: flash[:email_domain_added]) } unless flash[:email_domain_added].blank? %>
+    <%= govuk_notification_banner(:success, t('.removed')) { t('.was_removed', email_domain: flash[:email_domain_removed]) } unless flash[:email_domain_removed].blank? %>
     <h1 class="govuk-heading-xl"><%= t('.heading_title') %></h1>
     <p>
       <%= t('.in_order_to') %>
@@ -30,17 +30,12 @@
 
 <div class="govuk-grid-row" id="allow-list-search-container">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: crown_marketplace_allow_list_search_allow_list_path, model: @allowed_email_domain, method: :get, remote: true, html: { specialvalidation: true } do |f| %>
+    <%= form_with url: search_allow_list_crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :get, remote: true, html: { specialvalidation: true } do |f| %>
       <%= hidden_field_tag :email_domain_added, params[:email_domain_added] %>
       <%= f.label :email_domain, t('.find_an_email_domain'), class: 'govuk-label--m' %>
       <p class="govuk-hint" id="allow-list-search-hint">
         <%= t('.enter_an_email_domain') %>
       </p>
-      <div id="domain-not-found" hidden>
-        <span class="govuk-error-message">
-          <%= t('.not_in_allow_list') %>
-        </span>
-      </div>
       <%= f.text_field  :email_domain, class: 'govuk-input govuk-!-width-three-quarters govuk-!-margin-right-2', type: 'search', aria: { describedby: 'allow-list-search-hint' } %>
       <%= f.submit t('.search'), class: 'govuk-button govuk-button--secondary' %>
     <% end %>
@@ -49,6 +44,6 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds" id="allow-list-table">
-    <%= render(partial: 'allow_list_table', locals: { paginated_allow_list: @paginated_allow_list, email_domain_added: params[:email_domain_added] }) %>
+    <%= render(partial: 'allow_list_table', locals: { paginated_allow_list: @paginated_allow_list }) %>
   </div>
 </div>
