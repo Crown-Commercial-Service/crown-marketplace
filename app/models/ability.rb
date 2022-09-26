@@ -41,19 +41,17 @@ class Ability
     can :manage, FacilitiesManagement::Admin
   end
 
+  def allow_list_specific_auth(user)
+    if user.has_role?(:ccs_user_admin)
+      can :manage, AllowedEmailDomain
+    elsif user.has_role?(:allow_list_access)
+      can :read, AllowedEmailDomain
+    end
+  end
+
   def super_admin_specific_auth(user)
     return unless user.has_role?(:ccs_developer)
 
     can :manage, FacilitiesManagement::Framework
-  end
-
-  def allow_list_specific_auth(user)
-    return unless user.has_role?(:allow_list_access)
-
-    if user.has_role?(:ccs_employee)
-      can :manage, AllowedEmailDomain
-    else
-      can :read, AllowedEmailDomain
-    end
   end
 end
