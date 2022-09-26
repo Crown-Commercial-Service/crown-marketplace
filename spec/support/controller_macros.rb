@@ -45,7 +45,7 @@ module ControllerMacros
   def login_crown_marketplace_admin
     before do
       @request.env['devise.mapping'] = Devise.mappings[:user]
-      user = FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[ccs_employee allow_list_access])
+      user = FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[ccs_user_admin])
       sign_in user
     end
   end
