@@ -262,13 +262,8 @@ module ApplicationHelper
     end
   end
 
-  def create_find_address_helper(object, organisaiton_prefix, object_name, postcode_name)
-    @find_address_helper = FacilitiesManagement::FindAddressHelper.new(object, organisaiton_prefix)
-
-    capture do
-      concat(hidden_field_tag(:object_name, object_name))
-      concat(hidden_field_tag(:postcode_name, postcode_name))
-    end
+  def find_address_helper(object, organisaiton_prefix)
+    FacilitiesManagement::FindAddressHelper.new(object, organisaiton_prefix)
   end
 
   def hidden_class(visible)
@@ -381,6 +376,17 @@ module ApplicationHelper
   def can_show_new_framework_banner?
     Marketplace.rm6232_live? || params[:show_new_framework_banner].present?
   end
+
+  # rubocop:disable Metrics/ParameterLists
+  def link_to_add_row(name, number_of_items, form, association, partial_prefix, **args)
+    new_object = form.object.send(association).klass.new
+    id = new_object.object_id
+    fields = form.fields_for(association, new_object, child_index: id) do |builder|
+      render("#{partial_prefix}/#{association.to_s.singularize}", ff: builder)
+    end
+    link_to(name.gsub('<number_of_items>', number_of_items.to_s), '#', class: args[:class], data: { id: id, fields: fields.gsub('\n', ''), 'button-text': name })
+  end
+  # rubocop:enable Metrics/ParameterLists
 
   def cookie_preferences_settings
     @cookie_preferences_settings ||= begin

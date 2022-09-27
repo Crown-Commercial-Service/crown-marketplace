@@ -1,6 +1,5 @@
-<fieldset class="govuk-fieldset">
-    
-    <div class="pension-row govuk-body govuk-row govuk-!-margin-bottom-6 <%= 'govuk-form-group--error' if ff.object.errors.any? %>">
+<fieldset class="govuk-fieldset pension-row">
+    <div class="govuk-body govuk-row govuk-!-margin-bottom-6 <%= 'govuk-form-group--error' if ff.object.errors.any? %>">
 
         <% if ff.object.errors[:name].any? %>
             <span class="govuk-error-message"><%= ff.object.errors[:name].first  %></span>

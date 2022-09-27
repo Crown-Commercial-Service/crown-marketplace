@@ -7,10 +7,10 @@ module Pages
   class Building < SitePrism::Page
     element :building_name, '#facilities_management_building_building_name'
 
-    element :postcode_error, '#error_facilities_management_building_address_postcode > span'
+    element :postcode_error, '#address_postcode-error'
 
     element :address_drop_down, '#address-results-container'
-    element :region_drop_down, '#regions-container'
+    element :region_drop_down, '#regions-results-container'
     element :address_text, '#address-text'
     element :region_text, '#region-text'
     element :change_address, '#change-input-2'

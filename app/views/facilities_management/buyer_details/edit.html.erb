@@ -19,44 +19,86 @@
         <h2 class="govuk-heading-m">
           <%= t('.your_details') %>
         </h2>
-        <%= form_group_with_error(f.object, :full_name) do |displayed_error, any_errors| %>
-          <%= f.label :full_name, t('.name'), class: 'govuk-label' %>
-          <%= displayed_error %>
-          <%= f.text_field :full_name, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255, required: true, autocomplete: "off" %>
-        <% end %>
 
-        <%= form_group_with_error(f.object, :job_title) do |displayed_error, any_errors| %>
-          <%= f.label :job_title, class: 'govuk-label' %>
-          <%= displayed_error %>
-          <%= f.text_field :job_title, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255 %>
-        <% end %>
+        <%= govuk_text_input(
+          f,
+          :full_name,
+          {
+            label: {
+              text: t('.name')
+            },
+            input: {
+              attributes: {
+                required: true,
+                maxlength: 255,
+                autocomplete: 'off',
+              }
+            }
+          }
+        )%>
 
-        <%= form_group_with_error(f.object, :telephone_number) do |displayed_error, any_errors| %>
-          <%= f.label :telephone_number, class: 'govuk-label' %>
-          <%= displayed_error %>
-          <%= f.number_field :telephone_number, class: "govuk-input #{'govuk-input--error' if any_errors} govuk-!-width-one-half", required:true, autocomplete: "off" %>
-        <% end %>
+        <%= govuk_text_input(
+          f,
+          :job_title,
+          {
+            label: {
+              text: t('.job_title')
+            },
+            input: {
+              attributes: {
+                maxlength: 255
+              }
+            }
+          }
+        )%>
+
+        <%= govuk_text_input(
+          f,
+          :telephone_number,
+          {
+            label: {
+              text: t('.telephone_number')
+            },
+            input: {
+              classes: 'govuk-!-width-one-half',
+              attributes: {
+                required: true,
+                autocomplete: "off"
+              }
+            }
+          }
+        )%>
 
         <h2 class="govuk-heading-m govuk-!-margin-top-3">
           <%= t('.organisation_details') %>
         </h2>
 
-        <%= form_group_with_error(f.object, :organisation_name) do |displayed_error, any_errors| %>
-          <%= f.label :organisation_name, class: 'govuk-label' %>
-          <%= displayed_error %>
-          <%= f.text_field :organisation_name, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255, required: true %>
-        <% end %>
+        <%= govuk_text_input(
+          f,
+          :organisation_name,
+          {
+            label: {
+              text: t('.organisation_name')
+            },
+            input: {
+              attributes: {
+                required: true,
+                maxlength: 255
+              }
+            }
+          }
+        )%>
 
-        <div class="govuk-!-margin-top-7">
-          <h2 class="govuk-heading-s govuk-!-margin-bottom-0">
-            <%= t('.organisation_address') %>
-          </h2>
-        </div>
-
-        <%= render partial: 'contact_detail_address_container', locals: { f: f } %>
+        <%= render partial: 'facilities_management/shared/find_address/find_address', locals: {
+          f: f,
+          find_address_helper: find_address_helper(f.object, true),
+          cant_find_address_text: t('.cant_find_address'),
+          submit_cant_find_address: false,
+          address_title: t('.organisation_address')
+        } %>
 
         <h2 class="govuk-heading-m">
-          Sector
+          <%= t('.sector') %>
         </h2>
         <%= form_group_with_error(f.object, :central_government) do |displayed_error| %>
 

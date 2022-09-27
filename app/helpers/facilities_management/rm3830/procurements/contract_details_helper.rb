@@ -27,15 +27,6 @@ module FacilitiesManagement::RM3830
       'supplier'.pluralize(sorted_supplier_list.count)
     end
 
-    def link_to_add_row(name, form, association, **args)
-      new_object = form.object.send(association).klass.new
-      id = new_object.object_id
-      fields = form.fields_for(association, new_object, child_index: id) do |builder|
-        render("#{partial_prefix}/#{association.to_s.singularize}", ff: builder)
-      end
-      link_to(name, '#', class: "add-pension-fields #{args[:class]}", data: { id: id, fields: fields.gsub('\n', '') })
-    end
-
     def object_name(name)
       name.gsub('[', '_')[0..-2]
     end

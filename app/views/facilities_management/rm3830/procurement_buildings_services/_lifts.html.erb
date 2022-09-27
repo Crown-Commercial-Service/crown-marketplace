@@ -7,5 +7,5 @@
         <%= render partial: "lift", locals: {ff: builder} %>
     <% end %>
   </div>
-  <%= link_to_lift_add_row("Add another lift (#{FacilitiesManagement::RM3830::ProcurementBuildingService::MAX_NUMBER_OF_LIFTS - f.object.lifts.length} remaining)", f, :lifts, class: 'add-lift-button govuk-button govuk-button--secondary govuk-!-margin-bottom-2', 'aria-label': "Add another lift" ) %>
+  <%= link_to_add_row(t('.button_text'), FacilitiesManagement::RM3830::ProcurementBuildingService::MAX_NUMBER_OF_LIFTS - f.object.lifts.length, f, :lifts, 'facilities_management/rm3830/procurement_buildings_services', class: 'add-lift-button govuk-button govuk-button--secondary govuk-!-margin-bottom-2', 'aria-label': "Add another lift" ) %>
 </div>

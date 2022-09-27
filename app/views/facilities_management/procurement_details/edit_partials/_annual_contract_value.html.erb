@@ -14,12 +14,14 @@
         },
         input: {
           classes: 'govuk-input--width-10 ccs-number-field ccs-integer-field',
-          maxlength: 15,
           prefix: {
             text: '£'
           },
-          aria: {
-            describedby: 'annual-contract-value-hint'
+          attributes: {
+            maxlength: 15,
+            aria: {
+              describedby: 'annual-contract-value-hint'
+            }
           }
         }
       }
