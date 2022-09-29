@@ -19,13 +19,11 @@
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
 
-    <% if cookies[:crown_marketplace_google_analytics_enabled] == 'true' %>
-      <%= render partial: '/shared/google/analytics' if Marketplace.google_analytics_tracking_id.present? %>
-      <%= render partial: '/shared/google/tag_manager_head' if Marketplace.google_tag_manager_tracking_id.present? %>
-    <% end %>
+    <%= render partial: '/shared/google/analytics' if cookie_preferences_settings['google_analytics_enabled'] && Marketplace.google_analytics_tracking_id.present? %>
+    <%= render partial: '/shared/google/tag_manager_head' if Marketplace.google_tag_manager_tracking_id.present? %>
   </head>
   <body class="govuk-template__body error-box">
-    <%= render partial: '/shared/google/tag_manager_body' if cookies[:crown_marketplace_google_analytics_enabled] == 'true' && Marketplace.google_tag_manager_tracking_id.present? %>
+    <%= render partial: '/shared/google/tag_manager_body' if Marketplace.google_tag_manager_tracking_id.present? %>
     <script>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
@@ -35,7 +33,7 @@
 
     <div class="error-content">
       <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link"><%= t('layouts.application.skip') %></a>
-      <%= render partial: '/layouts/cookie-banner' unless cookies[:crown_marketplace_cookie_settings_viewed] == 'true' || controller.action_name == 'cookie_settings' %>
+      <%= render partial: '/layouts/cookie-banner' unless cookie_preferences_settings['settings_viewed'] || controller.action_name == 'cookie_settings' %>
       <%= render partial: '/layouts/header' %>
 
       <main class="govuk-width-container govuk-!-margin-bottom-6" role="main">
@@ -54,6 +52,5 @@
     <%= render partial: '/layouts/footer' %>
 
     <%= javascript_include_tag 'application' %>
-    <%= render partial: '/layouts/init-js' %>
   </body>
 </html>

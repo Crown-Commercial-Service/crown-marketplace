@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.5', '>= 6.0.5.1'
+gem 'rails', '~> 6.0.6'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -52,7 +52,7 @@ gem 'devise', '~> 4.8.1'
 gem 'auto-session-timeout', '~> 0.9.9'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.69.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.70.0'
 
 # for pagination
 gem 'kaminari', '~> 1.2.2'
@@ -127,7 +127,7 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
-  gem 'faker', '~> 2.22.0'
+  gem 'faker', '~> 2.23.0'
 end
 
 group :development do

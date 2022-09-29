@@ -28,53 +28,72 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <h2 class="govuk-heading-m">
-      <%= t('home.cookies.measure_website_use') %>
+      <%= t('home.cookies.measure_website_use.title') %>
     </h2>
 
-    <p>
-      <%= t('home.cookies.we_use_ga') %>
-    </p>
+    <div>
+      <h3 class="govuk-heading-s">
+        <%= t('home.cookies.measure_website_use.ga') %>
+      </h3>
 
-    <div class="govuk-inset-text">
-      <%= t('.we_do_not_let') %>
+      <%= render partial: 'home/ga_cookies_info' %>
+
+      <p>
+        <%= t('.ga_sets_following_cookies') %>
+      </p>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.name') %></th>
+            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.purpose') %></th>
+            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.expires') %></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% (1..3).each do |i| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.name") %></td>
+              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.purpose") %></td>
+              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.expires") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
-    <p>
-      <%= t('home.cookies.ga_list') %>
-    </p>
-    
-    <ul class="govuk-list govuk-list--bullet">
-      <li><%= t('home.cookies.ga_list_1') %></li>
-      <li><%= t('home.cookies.ga_list_2') %></li>
-      <li><%= t('home.cookies.ga_list_3') %></li>
-    </ul>
+    <hr class="govuk-section-break govuk-section-break--m">
 
-    <p>
-      <%= t('.ga_sets_following_cookies') %>
-    </p>
+    <div>
+      <h3 class="govuk-heading-s">
+        <%= t('home.cookies.measure_website_use.glassbox') %>
+      </h3>
 
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.name') %></th>
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.purpose') %></th>
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.expires') %></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% (1..3).each do |i| %>
+      <%= render partial: 'home/glassbox_cookies_info' %>
+
+      <p>
+        <%= t('.glassbox_sets_following_cookies') %>
+      </p>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.name") %></td>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.purpose") %></td>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.expires") %></td>
+            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.name') %></th>
+            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.purpose') %></th>
+            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.expires') %></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-
-    <p>
-      <%= t('.we_also_use') %>
-    </p>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% (1..2).each do |i| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".glassbox_cookies.row_#{i}.name") %></td>
+              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".glassbox_cookies.row_#{i}.purpose") %></td>
+              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".glassbox_cookies.row_#{i}.expires") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -103,13 +122,11 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <% (1..2).each do |i| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= t(".cookie_banner_cookies.row_#{i}.name") %></td>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".cookie_banner_cookies.row_#{i}.purpose") %></td>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".cookie_banner_cookies.row_#{i}.expires") %></td>
-          </tr>
-        <% end %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= Marketplace.cookie_settings_name %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".cookie_banner_cookies.row_1.purpose") %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".cookie_banner_cookies.row_1.expires") %></td>
+        </tr>
       </tbody>
     </table>
 

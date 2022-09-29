@@ -42,7 +42,7 @@ module GovUKHelper::TextInput
 
     prefix = input_options.delete(:prefix)
     suffix = input_options.delete(:suffix)
-    text_field = form.text_field(attribute, class: class_list, **input_options)
+    text_field = form.text_field(attribute, class: class_list, **input_options[:attributes])
 
     if prefix || suffix
       tag.div(class: 'govuk-input__wrapper') do

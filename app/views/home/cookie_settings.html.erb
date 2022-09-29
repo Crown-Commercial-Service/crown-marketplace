@@ -46,37 +46,50 @@
 <%= form_with method: :put, local: true, id: 'update-cookie-setings', html: { specialvalidation: true } do |f| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
+      <h2 class="govuk-heading-m">
+        <%= t('home.cookies.measure_website_use.title') %>
+      </h2>
+
       <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h2 class="govuk-fieldset__heading">
-            <%= t('home.cookies.measure_website_use') %>
-          </h2>
+        <legend class="govuk-fieldset__legend">
+          <h3 class="govuk-fieldset__heading govuk-heading-m">
+            <%= t('home.cookies.measure_website_use.ga') %>
+          </h3>
         </legend>
 
-        <div>
-          <p>
-            <%= t('home.cookies.we_use_ga') %>
-          </p>
-
-          <p>
-            <%= t('home.cookies.ga_list') %>
-          </p>
-          
-          <ul class="govuk-list govuk-list--bullet">
-            <li><%= t('home.cookies.ga_list_1') %></li>
-            <li><%= t('home.cookies.ga_list_2') %></li>
-            <li><%= t('home.cookies.ga_list_3') %></li>
-          </ul>
-        </div>
+        <%= render partial: 'home/ga_cookies_info' %>
 
         <div class="govuk-radios">
           <div class="govuk-radios__item">
-            <%= radio_button_tag :ga_cookie_usage, true, cookies[:crown_marketplace_google_analytics_enabled] == 'true', class: 'govuk-radios__input' %>
-            <%= label_tag :ga_cookie_usage, t('.use_cookies'), for: :ga_cookie_usage_true, class: 'govuk-label govuk-radios__label' %>
+            <%= radio_button_tag :ga_cookie_usage, true, cookie_preferences_settings['google_analytics_enabled'], class: 'govuk-radios__input' %>
+            <%= label_tag :ga_cookie_usage, t('.use_cookies.ga'), for: :ga_cookie_usage_true, class: 'govuk-label govuk-radios__label' %>
           </div>
           <div class="govuk-radios__item">
-            <%= radio_button_tag :ga_cookie_usage, false, cookies[:crown_marketplace_google_analytics_enabled] != 'true', class: 'govuk-radios__input' %>
-            <%= label_tag :ga_cookie_usage, t('.dont_use_cookies'), for: :ga_cookie_usage_false, class: 'govuk-label govuk-radios__label' %>
+            <%= radio_button_tag :ga_cookie_usage, false, !cookie_preferences_settings['google_analytics_enabled'], class: 'govuk-radios__input' %>
+            <%= label_tag :ga_cookie_usage, t('.dont_use_cookies.ga'), for: :ga_cookie_usage_false, class: 'govuk-label govuk-radios__label' %>
+          </div>
+        </div>
+      </fieldset>
+
+      <hr class="govuk-section-break govuk-section-break--m">
+
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend">
+          <h3 class="govuk-fieldset__heading govuk-heading-m">
+            <%= t('home.cookies.measure_website_use.glassbox') %>
+          </h3>
+        </legend>
+
+        <%= render partial: 'home/glassbox_cookies_info' %>
+
+        <div class="govuk-radios">
+          <div class="govuk-radios__item">
+            <%= radio_button_tag :glassbox_cookie_usage, true, cookie_preferences_settings['glassbox_enabled'], class: 'govuk-radios__input' %>
+            <%= label_tag :glassbox_cookie_usage, t('.use_cookies.glassbox'), for: :glassbox_cookie_usage_true, class: 'govuk-label govuk-radios__label' %>
+          </div>
+          <div class="govuk-radios__item">
+            <%= radio_button_tag :glassbox_cookie_usage, false, !cookie_preferences_settings['glassbox_enabled'], class: 'govuk-radios__input' %>
+            <%= label_tag :glassbox_cookie_usage, t('.dont_use_cookies.glassbox'), for: :glassbox_cookie_usage_false, class: 'govuk-label govuk-radios__label' %>
           </div>
         </div>
       </fieldset>

@@ -27,41 +27,79 @@ RSpec.describe FacilitiesManagement::RM6232::UsersController, type: :controller 
   describe 'POST confirm' do
     let(:user) { create(:user) }
     let(:user_email) { user.email }
+    let(:confirmation_code) { '123456' }
 
+    # rubocop:disable RSpec/NestedGroups
     context 'when the framework is live' do
-      before do
-        cookies[:crown_marketplace_confirmation_email] = user_email
-        # rubocop:disable RSpec/AnyInstance
-        allow_any_instance_of(Cognito::ConfirmSignUp).to receive(:confirm_sign_up).and_return(true)
-        # rubocop:enable RSpec/AnyInstance
-        post :confirm, params: { email: user_email, confirmation_code: confirmation_code }
-        cookies.update(response.cookies)
+      context 'and there is no exception' do
+        before do
+          cookies[:crown_marketplace_confirmation_email] = user_email
+          # rubocop:disable RSpec/AnyInstance
+          allow_any_instance_of(Cognito::ConfirmSignUp).to receive(:confirm_sign_up).and_return(true)
+          # rubocop:enable RSpec/AnyInstance
+          post :confirm, params: { email: user_email, confirmation_code: confirmation_code }
+          cookies.update(response.cookies)
+        end
+
+        context 'when the information is invalid' do
+          let(:confirmation_code) { '' }
+
+          it 'renders confirm_new' do
+            expect(response).to render_template(:confirm_new)
+          end
+
+          it 'does not delete the crown_marketplace_confirmation_email cookie' do
+            expect(cookies[:crown_marketplace_confirmation_email]).to eq user_email
+          end
+        end
+
+        context 'when the information is valid' do
+          it 'redirects to facilities_management_rm6232_path' do
+            expect(response).to redirect_to facilities_management_rm6232_path
+          end
+
+          it 'deletes the crown_marketplace_confirmation_email cookie' do
+            expect(cookies[:crown_marketplace_confirmation_email]).to be nil
+          end
+        end
       end
 
-      context 'when the information is invalid' do
-        let(:confirmation_code) { '' }
-
-        it 'renders confirm_new' do
-          expect(response).to render_template(:confirm_new)
+      context 'and there is an exception' do
+        before do
+          cookies[:crown_marketplace_confirmation_email] = user_email
+          # rubocop:disable RSpec/AnyInstance
+          allow_any_instance_of(Cognito::ConfirmSignUp).to receive(:confirm_sign_up).and_raise(error.new('Some context', 'Some message'))
+          # rubocop:enable RSpec/AnyInstance
+          post :confirm, params: { email: user_email, confirmation_code: confirmation_code }
+          cookies.update(response.cookies)
         end
 
-        it 'does not delete the crown_marketplace_confirmation_email cookie' do
-          expect(cookies[:crown_marketplace_confirmation_email]).to eq user_email
+        context 'when the exception is generic' do
+          let(:error) { Aws::CognitoIdentityProvider::Errors::ServiceError }
+
+          it 'renders confirm_new' do
+            expect(response).to render_template(:confirm_new)
+          end
+
+          it 'does not delete the crown_marketplace_confirmation_email cookie' do
+            expect(cookies[:crown_marketplace_confirmation_email]).to eq user_email
+          end
         end
-      end
 
-      context 'when the information is valid' do
-        let(:confirmation_code) { '123456' }
+        context 'when the exception is NotAuthorizedException' do
+          let(:error) { Aws::CognitoIdentityProvider::Errors::NotAuthorizedException }
 
-        it 'redirects to facilities_management_rm6232_path' do
-          expect(response).to redirect_to facilities_management_rm6232_path
-        end
+          it 'renders confirm_new' do
+            expect(response).to render_template(:confirm_new)
+          end
 
-        it 'deletes the crown_marketplace_confirmation_email cookie' do
-          expect(cookies[:crown_marketplace_confirmation_email]).to be nil
+          it 'does not delete the crown_marketplace_confirmation_email cookie' do
+            expect(cookies[:crown_marketplace_confirmation_email]).to eq user_email
+          end
         end
       end
     end
+    # rubocop:enable RSpec/NestedGroups
 
     context 'when the framework is not live' do
       include_context 'and RM6232 is not live'

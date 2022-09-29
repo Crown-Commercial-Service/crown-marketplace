@@ -72,3 +72,6 @@ launch.json
 
 # We are using yarn not npm, but this file sometimes gets added by snyk which brakes the pipeline
 package-lock.json
+
+# We will compile the typescript as part of the assets pipeline
+app/assets/javascripts/dist/*
