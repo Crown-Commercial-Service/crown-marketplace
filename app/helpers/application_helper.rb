@@ -392,7 +392,7 @@ module ApplicationHelper
     @cookie_preferences_settings ||= begin
       current_cookie_preferences = JSON.parse(cookies[Marketplace.cookie_settings_name] || '{}')
 
-      current_cookie_preferences.empty? ? Marketplace.default_cookie_options : current_cookie_preferences
+      !current_cookie_preferences.is_a?(Hash) || current_cookie_preferences.empty? ? Marketplace.default_cookie_options : current_cookie_preferences
     end
   end
 end
