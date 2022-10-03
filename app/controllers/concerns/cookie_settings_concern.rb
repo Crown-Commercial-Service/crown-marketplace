@@ -5,7 +5,7 @@ module CookieSettingsConcern
     update_cookie_preferences
 
     cookies[Marketplace.cookie_settings_name] = {
-      value: cookie_preferences_settings.to_json,
+      value: helpers.cookie_preferences_settings.to_json,
       expires: 1.year.from_now
     }
 
@@ -19,22 +19,14 @@ module CookieSettingsConcern
 
   private
 
-  def cookie_preferences_settings
-    @cookie_preferences_settings ||= begin
-      current_cookie_preferences = JSON.parse(cookies[Marketplace.cookie_settings_name] || '{}')
-
-      current_cookie_preferences.empty? ? Marketplace.default_cookie_options : current_cookie_preferences
-    end
-  end
-
   def update_cookie_preferences
     cookie_prefixes = []
 
     COOKIE_UPDATE_OPTIONS.each do |cookie_update_option|
       if params[cookie_update_option[:param_name]] == 'true'
-        cookie_preferences_settings[cookie_update_option[:cookie_name]] = true
+        helpers.cookie_preferences_settings[cookie_update_option[:cookie_name]] = true
       else
-        cookie_preferences_settings[cookie_update_option[:cookie_name]] = false
+        helpers.cookie_preferences_settings[cookie_update_option[:cookie_name]] = false
 
         cookie_prefixes += cookie_update_option[:cookie_prefixes]
       end
@@ -42,7 +34,7 @@ module CookieSettingsConcern
 
     delete_unwanted_cookie(cookie_prefixes)
 
-    cookie_preferences_settings['settings_viewed'] = true
+    helpers.cookie_preferences_settings['settings_viewed'] = true
   end
 
   def delete_unwanted_cookie(cookie_prefixes)

@@ -12,4 +12,5 @@
 //= require jquery3
 //= require rails-ujs
 //= require govuk-frontend/govuk/all
+//= require js-cookie/dist/js.cookie
 //= require_tree ./dist

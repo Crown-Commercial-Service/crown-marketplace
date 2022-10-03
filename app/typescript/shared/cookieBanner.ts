@@ -2,6 +2,53 @@ type CookieBannerFormData = {
   [key: string]: string
 }
 
+type CookiePreferences = {
+  settings_viewed: boolean,
+  google_analytics_enabled: boolean,
+  glassbox_enabled: boolean
+}
+
+type CookieUpdateOption = {
+  cookieName: keyof CookiePreferences,
+  cookiePrefixes: string[]
+}
+
+const cookieUpdateOptions: CookieUpdateOption[] = [
+  {
+    cookieName: 'google_analytics_enabled',
+    cookiePrefixes: ['_ga', '_gi']
+  },
+  {
+    cookieName: 'glassbox_enabled',
+    cookiePrefixes: ['_cls']
+  }
+]
+
+const getCookiePreferences = (): CookiePreferences => {
+  const defaultCookieSettings = '{"google_analytics_enabled":true,"glassbox_enabled":false}'
+
+  return JSON.parse(Cookies.get('crown_marketplace_cookie_options_v1') || defaultCookieSettings)
+}
+
+const removeUnwantedCookies = () => {
+  const cookieList: string[] = Object.keys(Cookies.get())
+  const cookiesToRemove: string[] = ['crown_marketplace_cookie_settings_viewed', 'crown_marketplace_google_analytics_enabled']
+  const cookiePreferences: CookiePreferences = getCookiePreferences()
+  const cookiePrefixes: string[] = []
+
+  cookieUpdateOptions.forEach((cookieUpdateOption) => {
+    if (!cookiePreferences[cookieUpdateOption.cookieName]) cookiePrefixes.push(...cookieUpdateOption.cookiePrefixes)
+  })
+
+  for (let i = 0; i < cookieList.length; i++) {
+    const cookieName = cookieList[i]
+
+    if (cookiePrefixes.some((cookiePrefix) => cookieName.startsWith(cookiePrefix))) cookiesToRemove.push(cookieName)
+  }
+
+  cookiesToRemove.forEach((cookieName) => Cookies.remove(cookieName, { path: '/', domain: '.crowncommercial.gov.uk' }))
+}
+
 const removeGACookies = (cookieBannerFormData: CookieBannerFormData, successFunction: () => void) => {
   let success = false
 
@@ -47,11 +94,7 @@ const updateBanner = (isAccepeted: string, $newBanner: JQuery<HTMLElement>) => {
 }
 
 const initCookieBanner = (): void => {
-  const obsoleteCookies: string[] = ['crown_marketplace_cookie_settings_viewed', 'crown_marketplace_google_analytics_enabled']
-
-  obsoleteCookies.forEach((cookieName: string) => {
-    if (document.cookie.includes(`${cookieName}=`)) document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
-  })
+  removeUnwantedCookies()
 
   $('[name="cookies"]').on('click', (event: JQuery.ClickEvent) => {
     event.preventDefault()
