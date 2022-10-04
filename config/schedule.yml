@@ -1,0 +1,4 @@
+export_management_report:
+  cron: '0 3 * * 0'
+  class: 'FacilitiesManagement::RM6232::Admin::ManagementReportExportWorker'
+  queue: fm
