@@ -1,8 +1,8 @@
 @allow_list @pipeline
-Feature: Sign up user
+Feature: Sign up user - RM3830 - Validations
 
   Background: navigate to create an account page
-    Given I go to the facilities management RM6232 start page
+    Given I go to the facilities management RM3830 start page
     And I am on the 'Find a facilities management supplier' page
     When I click on 'Start now'
     Then I am on the 'Sign in to your account' page
@@ -38,11 +38,11 @@ Feature: Sign up user
       | <error_message> |
 
     Examples:
-        | password    | error_message                             |
-        | Pass!1      | Password must be 8 characters or more     |
-        | password1!  | Password must include a capital letter    |
-        | Password1   | Password must include a special character |
-        | Password!   | Password must include a number            |
+      | password    | error_message                             |
+      | Pass!1      | Password must be 8 characters or more     |
+      | password1!  | Password must include a capital letter    |
+      | Password1   | Password must include a special character |
+      | Password!   | Password must include a number            |
 
   Scenario: Password blank
     Given I enter 'test@test.com' for my email
@@ -60,3 +60,12 @@ Feature: Sign up user
     When I click on 'Create account'
     Then I should see the following error messages:
       | Passwords don't match |
+
+  Scenario: Create an account - username exists error
+    And I cannot create an account becaue of the 'username exists' error
+    Then I am on the 'Activate your account' page
+
+  Scenario: Create an account - service error
+    And I cannot create an account becaue of the 'service' error
+    Then I should see the following error messages:
+      | An error occured: service |

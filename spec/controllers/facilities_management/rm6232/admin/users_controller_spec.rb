@@ -50,7 +50,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::UsersController, type: :cont
 
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:respond_to_auth_challenge).and_return(OpenStruct.new(challenge_name: new_challenge_name, session: new_session, challenge_parameters: { 'USER_ID_FOR_SRP' => username }))
+        allow(aws_client).to receive(:respond_to_auth_challenge).and_return(OpenStruct.new(challenge_name: new_challenge_name, session: new_session))
         allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(OpenStruct.new(user: user))
 
         post :challenge, params: { challenge_name: challenge_name, username: username, session: session, new_password: password, new_password_confirmation: password }
