@@ -42,6 +42,7 @@ en:
             new_password:
               blank: Enter a password
               invalid_no_capitals: Password must include a capital letter
+              invalid_no_number: Password must include a number
               invalid_no_symbol: Password must include a special character
               too_short: Password must be 8 characters or more
             new_password_confirmation:
