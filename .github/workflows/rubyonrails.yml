@@ -14,7 +14,8 @@ jobs:
     uses: ./.github/workflows/unit_tests.yml
     with:
       publish_test_report: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'master' }}
-    secrets: inherit
+    secrets:
+      cc_test_reporter_id: ${{ secrets.CC_TEST_REPORTER_ID }}
 
   run-feature-tests:
     uses: ./.github/workflows/feature_tests.yml

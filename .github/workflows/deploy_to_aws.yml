@@ -7,6 +7,22 @@ on:
         description: 'The name of the environment we are deploying to'
         required: true
         type: string
+    secrets:
+      AWS_PIPELINE_REGION:
+        description: 'The AWS pipeline region'
+        required: true
+      AWS_PIPELINE_ACCESS_KEY:
+        description: 'The AWS pipeline access region'
+        required: true
+      AWS_PIPELINE_SECRET_KEY:
+        description: 'The AWS pipeline secret region'
+        required: true
+      AWS_PIPELINE_MAIN_NAME:
+        description: 'The AWS main pipeline name'
+        required: true
+      AWS_PIPELINE_SIDEKIQ_NAME:
+        description: 'The AWS sidekiq pipeline name'
+        required: true
 
 concurrency:
   group: deploy-${{ inputs.environment }}
