@@ -33,7 +33,7 @@ jobs:
         uses: browser-actions/setup-geckodriver@latest
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1.101.0
