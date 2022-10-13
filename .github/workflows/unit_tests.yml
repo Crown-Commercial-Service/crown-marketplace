@@ -8,6 +8,10 @@ on:
         default: false
         required: false
         type: boolean
+    secrets:
+      cc_test_reporter_id:
+        description: 'The code climate test report ID'
+        required: false
 
 jobs:
   unit-test:

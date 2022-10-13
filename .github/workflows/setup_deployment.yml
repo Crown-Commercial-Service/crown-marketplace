@@ -52,4 +52,9 @@ jobs:
       - determine-environment
     with:
       environment: ${{ needs.determine-environment.outputs.ENV_NAME }}
-    secrets: inherit
+    secrets:
+      AWS_PIPELINE_REGION: ${{ secrets.AWS_PIPELINE_REGION }}
+      AWS_PIPELINE_ACCESS_KEY: ${{ secrets.AWS_PIPELINE_ACCESS_KEY }}
+      AWS_PIPELINE_SECRET_KEY: ${{ secrets.AWS_PIPELINE_SECRET_KEY }}
+      AWS_PIPELINE_MAIN_NAME: ${{ secrets.AWS_PIPELINE_MAIN_NAME }}
+      AWS_PIPELINE_SIDEKIQ_NAME: ${{ secrets.AWS_PIPELINE_SIDEKIQ_NAME }}
