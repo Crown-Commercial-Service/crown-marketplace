@@ -4,14 +4,17 @@ module Cognito
     attr_reader :challenge_name, :username, :session, :new_password, :new_password_confirmation, :access_code, :roles
 
     # new password validations
-    validates :new_password,
-              presence: true,
-              confirmation: { case_sensitive: true },
-              length: { within: 8..200 },
-              if: :new_password_challenge?
-    validates_presence_of :new_password_confirmation, if: :new_password_challenge?
-    validates_format_of :new_password, with: /(?=.*[A-Z])/, message: :invalid_no_capitals, if: :new_password_challenge?
-    validates_format_of :new_password, with: /(?=.*\W)/, message: :invalid_no_symbol, if: :new_password_challenge?
+    with_options if: :new_password_challenge? do
+      validates :new_password,
+                presence: true,
+                confirmation: { case_sensitive: true },
+                length: { within: 8..200 }
+      validates_format_of :new_password, with: /(?=.*[A-Z])/, message: :invalid_no_capitals
+      validates_format_of :new_password, with: /(?=.*\W)/, message: :invalid_no_symbol
+      validates_format_of :new_password, with: /(?=.*[0-9])/, message: :invalid_no_number
+
+      validates_presence_of :new_password_confirmation
+    end
 
     # sms mfa validations
     validates :access_code,
@@ -49,7 +52,7 @@ module Cognito
     end
 
     def cognito_uuid
-      @response.challenge_parameters['USER_ID_FOR_SRP']
+      @username
     end
 
     def new_session
