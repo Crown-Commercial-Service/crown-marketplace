@@ -91,7 +91,7 @@ gem 'date_validator', '>= 0.12.0'
 gem 'ratonvirus', '>= 0.3.2'
 gem 'ratonvirus-clamby', '>= 0.3.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.9.8'
+gem 'active_storage_validations', '>= 1.0.0'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 1.4.0'
 # gov notify
@@ -112,7 +112,7 @@ gem 'fog-aws', '>= 3.14.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails', '>= 2.7.6'
+  gem 'dotenv-rails', '>= 2.8.1'
   gem 'factory_bot_rails', '>= 6.2.0'
   gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
@@ -121,7 +121,7 @@ group :development, :test do
   gem 'shoulda-matchers', '>= 5.1.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
-  gem 'rubocop-rails', '>= 2.15.2', require: false
+  gem 'rubocop-rails', '>= 2.16.1', require: false
   gem 'rubyXL', '>= 3.4.23'
   gem 'i18n-tasks', '>= 1.0.11'
   gem 'poltergeist', '>= 1.18.1'
