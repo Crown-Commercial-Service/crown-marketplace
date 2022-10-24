@@ -573,7 +573,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       end
 
       it 'has the right data' do
-        expect(described_class.searches.first.attributes.keys).to eq(%w[id aasm_state contract_name updated_at initial_call_off_start_date])
+        expect(described_class.searches.first.attributes.keys).to eq(%w[id contract_name aasm_state initial_call_off_start_date updated_at])
       end
     end
 
@@ -586,7 +586,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       end
 
       it 'has the right data' do
-        expect(described_class.advanced_procurement_activities.first.attributes.keys).to eq(%w[id contract_name updated_at contract_number initial_call_off_start_date])
+        expect(described_class.advanced_procurement_activities.first.attributes.keys).to eq(%w[id contract_name initial_call_off_start_date contract_number updated_at])
       end
     end
   end

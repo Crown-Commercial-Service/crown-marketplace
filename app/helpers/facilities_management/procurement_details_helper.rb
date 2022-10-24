@@ -11,7 +11,7 @@ module FacilitiesManagement
     end
 
     def extension_periods_error?
-      %i[extensions_required call_off_extensions.months call_off_extensions.years call_off_extensions.base].any? { |extension_error| @procurement.errors.keys.include? extension_error }
+      %i[extensions_required call_off_extensions.months call_off_extensions.years call_off_extensions.base].any? { |extension_error| @procurement.errors.attribute_names.include? extension_error }
     end
 
     def total_contract_length_error?

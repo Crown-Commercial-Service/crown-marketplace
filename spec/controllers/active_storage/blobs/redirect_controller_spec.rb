@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ActiveStorage::BlobsController, type: :controller do
+RSpec.describe ActiveStorage::Blobs::RedirectController, type: :controller do
   let(:default_params) do
     {
       signed_id: signed_id,
