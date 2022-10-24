@@ -8,8 +8,7 @@ module FacilitiesManagement::PageDetail::RM3830::Supplier::Contracts
 
   def page_definitions
     @page_definitions ||= {
-      default: {
-      },
+      default: {},
       show: {
         back_url: facilities_management_rm3830_supplier_dashboard_index_path,
         back_label: 'Return to dashboard',
