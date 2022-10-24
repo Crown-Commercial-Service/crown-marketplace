@@ -67,8 +67,6 @@ module Marketplace
     config.active_job.queue_adapter = :sidekiq unless Rails.env.test?
 
     config.exceptions_app = routes
-
-    config.active_record.yaml_column_permitted_classes = [Symbol]
   end
 
   def self.feedback_email_address

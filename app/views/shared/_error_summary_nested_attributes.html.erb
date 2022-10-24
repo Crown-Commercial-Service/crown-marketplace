@@ -7,7 +7,7 @@
     <div class="govuk-error-summary__body">
       <ul class="govuk-list govuk-error-summary__list">
         <% nested_attributes.each do |nested_attr| %>
-          <% nested_attr.errors.keys.each do |attribute| %>
+          <% nested_attr.errors.attribute_names.each do |attribute| %>
             <li>
               <%= link_to "#{nested_attr.errors[attribute].first}", "##{error_id(nested_attr.id)}", data: {fieldname: attribute, errortype: get_client_side_error_type_from_errors(nested_attr.errors, attribute).to_s } %>
             </li>

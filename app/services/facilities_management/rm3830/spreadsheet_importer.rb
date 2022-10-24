@@ -170,7 +170,7 @@ module FacilitiesManagement::RM3830
 
       building.errors.add(:building_name, :taken) unless @procurement_array.reject { |building_hash| building_hash[:skip] }.none? { |building_value| building_value[:object].building_name == building.building_name }
 
-      [building.errors.empty?, building.errors.details]
+      [building.errors.empty?, building.errors.details.to_h]
     end
 
     def remove_expected_errors(building)
@@ -275,7 +275,7 @@ module FacilitiesManagement::RM3830
       procurement_building.validate_spreadsheet_external_area(building.external_area, building.building_name)
 
       procurement_building_hash[:valid] = procurement_building.errors.empty?
-      procurement_building_hash[:errors] = procurement_building.errors.details
+      procurement_building_hash[:errors] = procurement_building.errors.details.to_h
     end
 
     ########## Importing Service volumes 1 ##########
@@ -382,7 +382,7 @@ module FacilitiesManagement::RM3830
           procurement_building_service.errors.delete(:procurement_building)
 
           procurement_building_service_hash[:valid] = procurement_building_service.errors.empty?
-          procurement_building_service_hash[:errors] = procurement_building_service.errors.details
+          procurement_building_service_hash[:errors] = procurement_building_service.errors.details.to_h
         end
       end
     end
