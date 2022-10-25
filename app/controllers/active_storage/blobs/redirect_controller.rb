@@ -1,4 +1,4 @@
-class ActiveStorage::BlobsController < ActiveStorage::BaseController
+class ActiveStorage::Blobs::RedirectController < ActiveStorage::BaseController
   include Rails.application.routes.url_helpers
   before_action :authenticate_user!
   before_action :authorize_user
@@ -11,7 +11,7 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
 
   def show
     expires_in ActiveStorage.service_urls_expire_in
-    redirect_to @blob.service_url(disposition: params[:disposition])
+    redirect_to @blob.url(disposition: params[:disposition])
   end
 
   protected

@@ -5,7 +5,7 @@
     </h2>
     <div class="govuk-error-summary__body">
       <ul class="govuk-list govuk-error-summary__list">
-        <% errors.keys.each do |attribute| %>
+        <% errors.attribute_names.each do |attribute| %>
           <li>
             <%= link_to "#{errors[attribute].first}", "##{error_id(attribute)}", data: {fieldname: attribute, errortype: get_client_side_error_type_from_errors(errors, attribute).to_s } %>
           </li>
