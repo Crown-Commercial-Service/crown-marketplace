@@ -251,7 +251,15 @@ Note that some lines are excluded from simplecov with the `# :nocov:` instructio
 * When a branch is pushed or pull request is raised GitHub actions will run
   the rspec and cucumber test suites.
 * When the PR is merged to a main branch GitHub actions will run the test suites
-  again before triggering the AWS pipeline.
+  again before triggering the AWS pipeline using the [CCS AWS Pipeline action][].
+* Before the code is deployed to the environment,
+  you will be asked to review the deployment.
+  Once you approve the deployment, the action will trigger the AWS Pipeline.
+* If something goes wrong during this phase you should:
+  - [investigate the action][]
+  - If the test section failed, try re-running them
+  - If the deployment section failed, try re-running them
+  - If that does not work and you have to release the code you can still do it within [AWS CodePipeline][]
 * We use [AWS CodePipeline][] and [AWS CodeBuild][] to build and deploy the application.
 * A container is built using the `Dockerfile` in this repo,
   uploaded to the [AWS Elastic Container Registry][], and deployed
@@ -288,3 +296,5 @@ Note that some lines are excluded from simplecov with the `# :nocov:` instructio
 [faker]: https://github.com/stympy/faker
 [Cucumber]: https://cucumber.io/
 [Axe Cucumber]: https://www.deque.com/axe/
+[CCS AWS Pipeline action]: https://github.com/Crown-Commercial-Service/ccs-aws-codepipeline-action
+[investigate the action]: https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml
