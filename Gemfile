@@ -39,7 +39,7 @@ gem 'caxlsx_rails', '>= 0.6.3'
 gem 'virtus'
 gem 'jquery-rails', '~> 4.5.0'
 
-gem 'rollbar', '~> 3.3.1'
+gem 'rollbar', '~> 3.3.2'
 
 # for dfe sign in
 gem 'omniauth', '~> 2.1.0'
