@@ -1,0 +1,35 @@
+# When a new release tag is made, the preview and production branches are reset to match this tag
+# They are then pushed which will trigger the deployments
+
+name: "Release latest code to Preview and Production"
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  trigger-release:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        branch: [preview, production]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ matrix.branch }}
+          token: ${{ secrets.CROWN_MARKETPLACE_CI_ACCOUNT }}
+          fetch-depth: 0
+
+      - name: View current release
+        run: echo "We will be releasing ${{ github.ref_name }}"
+
+      - name: Reset branch
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git reset --hard ${{ github.ref_name }}
+          git push --force
