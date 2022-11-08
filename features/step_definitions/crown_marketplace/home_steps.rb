@@ -5,8 +5,7 @@ Given('I sign in as an {string} user go to the crown marketplace dashboard') do 
   fill_in 'email', with: @user.email
   fill_in 'password', with: 'ValidPassword'
   click_on 'Sign in'
-  # expect(page.find('h1')).to have_content('Crown Marketplace dashboard')
-  expect(page.find('h1')).to have_content('Allow list')
+  expect(page.find('h1')).to have_content('Crown Marketplace dashboard')
 end
 
 Given('I go to the crown marketplace start page') do
