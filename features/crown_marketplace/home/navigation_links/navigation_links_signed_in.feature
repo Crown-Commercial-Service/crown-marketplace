@@ -11,9 +11,8 @@ Feature: Navigation links when signed in
       | Crown Marketplace dashboard |
       | Sign out                    |
     And I click on 'Crown Marketplace dashboard'
-    # Then I am on the 'Crown Marketplace dashboard' page
-    Then I am on the 'Allow list' page
-
+    Then I am on the 'Crown Marketplace dashboard' page
+    
   Scenario: Cookies policy - Sign out
     When I click on 'Cookie policy'
     Then I am on the 'Details about cookies on Crown Marketplace' page
@@ -30,8 +29,7 @@ Feature: Navigation links when signed in
       | Crown Marketplace dashboard |
       | Sign out                    |
     And I click on 'Crown Marketplace dashboard'
-    # Then I am on the 'Crown Marketplace dashboard' page
-    Then I am on the 'Allow list' page
+    Then I am on the 'Crown Marketplace dashboard' page
 
   Scenario: Cookies settings - Sign out
     When I click on 'Cookie settings'
@@ -49,8 +47,7 @@ Feature: Navigation links when signed in
       | Crown Marketplace dashboard |
       | Sign out                    |
     And I click on 'Crown Marketplace dashboard'
-    # Then I am on the 'Crown Marketplace dashboard' page
-    Then I am on the 'Allow list' page
+    Then I am on the 'Crown Marketplace dashboard' page
 
   Scenario: Accessibility statement - Sign out
     When I click on 'Accessibility statement'
@@ -61,11 +58,11 @@ Feature: Navigation links when signed in
     And I click on 'Sign out'
     And I am on the 'Sign in to manage Crown Marketplace' page
 
-  # Scenario: Crown Marketplace dashboard - Sign out
-  #   And I should see the following navigation links:
-  #     | Sign out                    |
-  #   And I click on 'Sign out'
-  #   And I am on the 'Sign in to manage Crown Marketplace' page
+   Scenario: Crown Marketplace dashboard - Sign out
+     And I should see the following navigation links:
+       | Sign out                    |
+     And I click on 'Sign out'
+     And I am on the 'Sign in to manage Crown Marketplace' page
 
   Scenario: Accessibility statement - Crown Marketplace dashboard
     When I click on 'Accessibility statement'
@@ -74,8 +71,8 @@ Feature: Navigation links when signed in
       | Crown Marketplace dashboard |
       | Sign out                    |
     And I click on 'Crown Marketplace dashboard'
-    # Then I am on the 'Crown Marketplace dashboard' page
-    Then I am on the 'Allow list' page
+    Then I am on the 'Crown Marketplace dashboard' page
+ 
 
   Scenario: Accessibility statement - Sign out
     When I click on 'Accessibility statement'
@@ -88,19 +85,18 @@ Feature: Navigation links when signed in
 
   @allow_list
   Scenario: Crown Marketplace admin page - Crown Marketplace dashboard
-    # When I click on 'Allow list'
-    # Then I am on the 'Allow list' page
+     When I click on 'Allow list'
+     Then I am on the 'Allow list' page
     And I should see the following navigation links:
       | Crown Marketplace dashboard |
       | Sign out                    |
     And I click on 'Crown Marketplace dashboard'
-    # Then I am on the 'Crown Marketplace dashboard' page
-    Then I am on the 'Allow list' page
+    Then I am on the 'Crown Marketplace dashboard' page
 
   @allow_list
   Scenario: Crown Marketplace admin page - Accessibility statement - Sign out
-    # When I click on 'Allow list'
-    # Then I am on the 'Allow list' page
+     When I click on 'Allow list'
+     Then I am on the 'Allow list' page
     And I should see the following navigation links:
       | Crown Marketplace dashboard |
       | Sign out                    |

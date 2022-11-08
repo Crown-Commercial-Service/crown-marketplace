@@ -66,3 +66,18 @@ en:
         heading: Add an email domain
         return_to_allow_list: Return to the allow list
         save_and_continue: Save and continue
+    home:
+      index:
+        admin_page_heading: Crown Marketplace dashboard
+        allow_list_body: View and update the allow list so users can create their own accounts
+        allow_list_heading: Allow list
+        facilities_management: Facilities Management
+        legal_service: Legal Service
+        manage_users_body: Find a user by email to view and update their details
+        manage_users_title: Manage users
+        management_consultancy: Management Consultancy
+        new_user_body: Add a new user onto the Crown Marketplace platform
+        new_user_invite_title: Invite a new user
+        supply_teachers: Supply Teachers
+        support_users_blurb: 'Support users on the following four services:'
+        user_support_heading: User support

@@ -1,0 +1,47 @@
+<%= content_for :page_title, t('.admin_page_heading') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.admin_page_heading') %></h1>
+    <p class="govuk-body"><%= t('.support_users_blurb') %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t('.facilities_management') %></li>
+      <li><%= t('.legal_service') %></li>
+      <li><%= t('.management_consultancy') %></li>
+      <li><%= t('.supply_teachers') %></li>
+    </ul>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.user_support_heading') %></span>
+  </div>
+</div>
+<hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+<%= ccs_account_panel_row do %>
+  <%= ccs_account_panel(t('.new_user_invite_title'), '#') do %>
+    <%= t('.new_user_body') %>
+  <% end %>
+
+  <%= ccs_account_panel(t('.manage_users_title'),  '#') do %>
+    <%= t('.manage_users_body') %>
+  <% end %>
+
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.allow_list_heading') %></span>
+  </div>
+</div>
+<hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+
+<%= ccs_account_panel_row do %>
+  <%= ccs_account_panel(t('.allow_list_heading'), crown_marketplace_allow_list_index_path) do %>
+    <%= t('.allow_list_body') %>
+  <% end %>
+<% end %>
+
+
