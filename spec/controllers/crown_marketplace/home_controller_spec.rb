@@ -189,30 +189,30 @@ RSpec.describe CrownMarketplace::HomeController, type: :controller do
     context 'when logged in as a user support user' do
       login_crown_marketplace_read_only
 
-      before { get :index }
-
       it 'renders the index page' do
-        expect(response).to redirect_to crown_marketplace_allow_list_index_path
+        get :index
+
+        expect(response).to render_template(:index)
       end
     end
 
     context 'when logged in as a user admin user' do
       login_crown_marketplace_admin
 
-      before { get :index }
-
       it 'renders the index page' do
-        expect(response).to redirect_to crown_marketplace_allow_list_index_path
+        get :index
+
+        expect(response).to render_template(:index)
       end
-    end
 
-    context 'when logged in as a super admin user' do
-      login_ccs_developer
+      context 'when logged in as a super admin user' do
+        login_ccs_developer
 
-      before { get :index }
+        it 'renders the index page' do
+          get :index
 
-      it 'renders the index page' do
-        expect(response).to redirect_to crown_marketplace_allow_list_index_path
+          expect(response).to render_template(:index)
+        end
       end
     end
 
