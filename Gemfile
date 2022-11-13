@@ -37,7 +37,7 @@ gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
 gem 'caxlsx_rails', '>= 0.6.3'
 gem 'virtus'
-gem 'jquery-rails', '~> 4.5.0'
+gem 'jquery-rails', '~> 4.5.1'
 
 gem 'rollbar', '~> 3.3.2'
 
