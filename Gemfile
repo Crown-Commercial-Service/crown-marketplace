@@ -69,7 +69,7 @@ gem 'after_commit_everywhere', '~> 1.2', '>= 1.2.1'
 
 # for running background jobs
 gem 'sidekiq', '~> 6.5.7'
-gem 'sinatra', '~> 3.0.2', require: false
+gem 'sinatra', '~> 3.0.3', require: false
 gem 'slim', '~> 4.1.0'
 gem 'sidekiq-cron'
 
