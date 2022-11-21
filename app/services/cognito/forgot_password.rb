@@ -3,7 +3,7 @@ module Cognito
     include ActiveModel::Validations
     attr_reader :email, :error
 
-    validates :email, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }
+    validates :email, format: { with: /\A([\w+-].?)+@[a-z\d-]+(\.[a-z]+)*\.[a-z]+\z/i }
 
     def initialize(email)
       @email = email
