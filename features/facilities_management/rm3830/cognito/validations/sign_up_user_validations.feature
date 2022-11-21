@@ -20,7 +20,20 @@ Feature: Sign up user - RM3830 - Validations
     Examples:
       | email         | error_message                                                       |
       |               | Enter an email address in the correct format, like name@example.com |
-      | Test@test.com | Email address cannot contain any capital letters                    |
+      | Test@test.com | Email address cannot contain any capital letters                    |   
+
+
+Scenario Outline: Incorrect email format on sign up & off safelist
+    Given I enter '<email>' for my email 
+    And I enter 'Passowrd1!' for the password
+    And I enter 'Passowrd1!' for the password confirmation
+    When I click on 'Create account'
+    And I am on the 'You must use a public sector email address' page
+
+    Examples:
+      | email        |     
+      | local@       |
+      | @            | 
 
   Scenario: Not on allow list
     Given I enter 'test@tmail.com' for my email

@@ -170,6 +170,51 @@ RSpec.describe Cognito::SignInUser do
           expect(sign_in_user.valid?).to be true
         end
       end
+
+      context 'and local is present but domain is not' do
+        let(:email) { 'some-person@' }
+
+        it 'is not valid and has the correct error message' do
+          expect(sign_in_user.valid?).to be false
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'and local is not present but domain is' do
+        let(:email) { '@some-domain.com' }
+
+        it 'is not valid and has the correct error message' do
+          expect(sign_in_user.valid?).to be false
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'and local is not present and domain is also not' do
+        let(:email) { '@' }
+
+        it 'is not valid and has the correct error message' do
+          expect(sign_in_user.valid?).to be false
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'and domain and local are present, but there are two @ symbols' do
+        let(:email) { 'dom@@ain.com' }
+
+        it 'is invalid and gives the correct error message' do
+          expect(sign_in_user.valid?).to eq false
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'and there is an extra @ symbol in the domain' do
+        let(:email) { 'local@domain@com' }
+
+        it 'is invalid and gives the correct error message' do
+          expect(sign_in_user.valid?).to eq false
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
+        end
+      end
     end
 
     context 'when considering the password' do
