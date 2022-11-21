@@ -29,7 +29,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
     end
 
     context 'when logged in with read only allow list access' do
-      login_crown_marketplace_read_only
+      login_user_support_admin
 
       it 'renders the index page' do
         get :index
@@ -39,7 +39,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
     end
 
     context 'when logged in with full allow list access' do
-      login_crown_marketplace_admin
+      login_user_admin
 
       it 'renders the index page' do
         get :index
@@ -51,7 +51,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
 
   describe 'GET new' do
     context 'when logged in with read only allow list access' do
-      login_crown_marketplace_read_only
+      login_user_support_admin
 
       it 'redirects to the not permited path' do
         get :new
@@ -61,7 +61,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
     end
 
     context 'when logged in with full allow list access' do
-      login_crown_marketplace_admin
+      login_user_admin
 
       it 'renders the new page' do
         get :new
@@ -72,7 +72,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
   end
 
   describe 'POST create' do
-    login_crown_marketplace_admin
+    login_user_admin
 
     before { post :create, params: { allowed_email_domain: { email_domain: email_domain } } }
 
@@ -96,7 +96,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
 
   describe 'GET search_allow_list' do
     context 'when logged in with read only allow list access' do
-      login_crown_marketplace_read_only
+      login_user_support_admin
 
       before { get :search_allow_list, params: { allowed_email_domain: { email_domain: 'email' } }, xhr: true }
 
@@ -110,7 +110,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
     end
 
     context 'when logged in with full allow list access' do
-      login_crown_marketplace_admin
+      login_user_admin
 
       before { get :search_allow_list, params: { allowed_email_domain: { email_domain: 'email' } }, xhr: true }
 
@@ -126,7 +126,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
 
   describe 'GET delete' do
     context 'when logged in with read only allow list access' do
-      login_crown_marketplace_read_only
+      login_user_support_admin
 
       it 'redirects to the not permited path' do
         get :delete, params: { email_domain: 'email' }
@@ -136,7 +136,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
     end
 
     context 'when logged in with full allow list access' do
-      login_crown_marketplace_admin
+      login_user_admin
 
       it 'renders the delete page' do
         get :delete, params: { email_domain: 'email' }
@@ -147,7 +147,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
   end
 
   describe 'DESTROY destroy' do
-    login_crown_marketplace_admin
+    login_user_admin
 
     it 'redirects to the allow list index page with the flash message' do
       delete :destroy, params: { allowed_email_domain: { email_domain: 'email.com' } }

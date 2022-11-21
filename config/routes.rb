@@ -238,6 +238,12 @@ Rails.application.routes.draw do
         get '/search_allow_list', action: :search_allow_list
       end
     end
+    resources :manage_users, path: 'manage-users', param: :cognito_uuid, only: %i[new create] do
+      collection do
+        get '/:section/add-user', action: :add_user, as: :add_user
+        post '/:section/add-user', action: :create_add_user, as: :create_add_user
+      end
+    end
   end
 
   get '/404', to: 'errors#not_found', as: :errors_404

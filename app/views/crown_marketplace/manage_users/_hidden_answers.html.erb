@@ -1,0 +1,23 @@
+<% unless section == :select_role %>
+  <% @user.roles.each do |role| %> 
+    <%= f.hidden_field :roles, multiple: true, value: role %>
+  <% end %>
+<% end %>
+
+<% unless section == :select_service_access %>
+  <% if @user.service_access && (allow_anyway || role_requires_service_access?(@user.roles)) %>
+    <% @user.service_access.each do |service_access| %> 
+      <%= f.hidden_field :service_access, multiple: true, value: service_access %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% unless section == :enter_user_details %>
+  <%= f.hidden_field :email, value: @user.email %>
+<% end %>
+
+<% unless section == :enter_user_details %>
+  <% if (allow_anyway || @user.roles != ['buyer']) %>
+    <%= f.hidden_field :telephone_number, value: @user.telephone_number %>
+  <% end %>
+<% end %>
