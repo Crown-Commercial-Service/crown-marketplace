@@ -1,7 +1,0 @@
-.govuk-button:not(.govuk-button--secondary):not(.govuk-button--warning) {
-  background-color: ccs-colour("button-green");
-
-  &:hover {
-    background-color: darken(ccs-colour("button-green"), 5%);
-  }
-}
