@@ -137,33 +137,6 @@ RSpec.describe Cognito::SignUpUser do
         end
       end
 
-      context 'when email is not in the correct format and in SQL Injection' do
-        
-        let (:email) { 'xxxxxxxxx' }
-        
-        it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
-          puts response.errors[:email].first
-          expect(:email).to match(/\A[^A-Z]*\z/)
-          expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
-
-        end
-      end
-    
-      context 'when email is not in the correct format and in SQL Injection' do
-        
-        let (:email) { '"SELECT * FROM Users WHERE UserId = " + txtUserId;' }
-        
-        it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
-          puts response.errors[:email].first
-          expect(:email).to match(/\A[^A-Z]*\z/)
-          expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
-          #this works no idea why as it didn't 5 mins ago
-        end
-      end
-
-      #the above was before
       context 'validiting email' do
         context 'when local is present but domain is not' do
 
