@@ -54,7 +54,7 @@ en:
         cognito/sign_up_user:
           attributes:
             email:
-              blank: Enter an email address in the correct format, like name@example.com
+              blank: Enter an email address in the correct format, for example name@organisation.gov.uk
               invalid: Email address cannot contain any capital letters
               not_on_safelist: You must use a public sector email
             password:
