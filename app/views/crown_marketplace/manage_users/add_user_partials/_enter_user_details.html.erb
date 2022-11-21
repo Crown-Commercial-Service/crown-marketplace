@@ -1,0 +1,45 @@
+<%= render partial: 'user_details_summary', locals: { allowed_attributes: %i[roles service_access] } %>
+<%= render partial: 'hidden_answers', locals: { f: f, allow_anyway: true } %>
+
+<%= govuk_text_input(
+  f,
+  :email,
+  {
+    label: {
+      classes: 'govuk-label--m',
+      text: t('.email_address')
+    },
+    input: {
+      classes: 'govuk-input--width-20',
+      attributes: {
+        autocomplete: 'off',
+        spellcheck: false,
+        required: true
+      }
+    }
+  }
+) %>
+
+<%= govuk_text_input(
+  f,
+  :telephone_number,
+  {
+    label: {
+      classes: 'govuk-label--m',
+      text: t('.telephone_number.label')
+    },
+    hint: {
+      text: t('.telephone_number.hint')
+    },
+    input: {
+      classes: 'govuk-input--width-10 ccs-integer-field',
+      attributes: {
+        autocomplete: 'off',
+        spellcheck: false,
+        required: true,
+        type: 'number',
+        maxlength: 11
+      }
+    }
+  }
+) if @user.roles != ['buyer'] %>

@@ -57,6 +57,10 @@ module Pages
     @home_page ||= RM3830::Home.new
   end
 
+  def manage_users_page
+    @manage_users_page ||= ManageUsers.new
+  end
+
   def procurement_page
     @procurement_page ||= case @framework
                           when 'RM3830'

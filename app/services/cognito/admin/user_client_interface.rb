@@ -38,6 +38,22 @@ module Cognito
           { users: [], error: e.message }
         end
 
+        def user_with_email_exists(email)
+          client = new_client
+
+          list_users_resp = client.list_users(
+            {
+              user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+              attributes_to_get: ['email'],
+              filter: "email = \"#{email}\""
+            }
+          )
+
+          { result: list_users_resp.users.any? }
+        rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
+          { error: e.message }
+        end
+
         def update_user_and_return_errors(cognito_uuid, attributes, method)
           client = new_client
 
@@ -79,7 +95,7 @@ module Cognito
               },
               {
                 name: 'email_verified',
-                value: true
+                value: 'true'
               }
             ],
             desired_delivery_mediums: ['EMAIL']

@@ -97,6 +97,10 @@ Then('I select {string}') do |item|
   page.check(item)
 end
 
+Then 'I choose the {string} radio button' do |option|
+  page.choose(option)
+end
+
 Then('I select the following items:') do |items|
   items.raw.flatten.each do |item|
     page.check(item)

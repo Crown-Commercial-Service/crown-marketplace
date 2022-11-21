@@ -187,7 +187,7 @@ RSpec.describe CrownMarketplace::HomeController, type: :controller do
     end
 
     context 'when logged in as a user support user' do
-      login_crown_marketplace_read_only
+      login_user_support_admin
 
       it 'renders the index page' do
         get :index
@@ -197,7 +197,7 @@ RSpec.describe CrownMarketplace::HomeController, type: :controller do
     end
 
     context 'when logged in as a user admin user' do
-      login_crown_marketplace_admin
+      login_user_admin
 
       it 'renders the index page' do
         get :index
@@ -206,7 +206,7 @@ RSpec.describe CrownMarketplace::HomeController, type: :controller do
       end
 
       context 'when logged in as a super admin user' do
-        login_ccs_developer
+        login_super_admin
 
         it 'renders the index page' do
           get :index
