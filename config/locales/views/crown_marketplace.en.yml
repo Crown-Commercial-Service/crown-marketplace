@@ -15,6 +15,7 @@ en:
               blank: Enter an email address in the correct format, like name@example.com
               invalid: Email address cannot contain any capital letters
               not_on_allow_list: Email domain is not in the allow list
+              user_already_exist: An account with this email already exists
             mfa_enabled:
               telephone_number_required: The telephone number of the user must be set to update the MFA configuration
             roles:
@@ -78,6 +79,60 @@ en:
         management_consultancy: Management Consultancy
         new_user_body: Add a new user onto the Crown Marketplace platform
         new_user_invite_title: Invite a new user
+        something_went_wrong_banner:
+          message: 'The following error occured: "%{error_message}"'
+          title: There is a problem
         supply_teachers: Supply Teachers
         support_users_blurb: 'Support users on the following four services:'
+        user_account_created_banner:
+          message: An email has been sent to %{user_email} with the details for them to sign in.
+          title: User account created
         user_support_heading: User support
+    manage_users:
+      add_user:
+        heading: Add a user
+        submit: Continue
+      add_user_partials:
+        enter_user_details:
+          email_address: Email address
+          telephone_number:
+            hint: Admin users require Multi-Factor Authentication (MFA) when signing in, otherwise this can be left blank
+            label: Mobile telephone number
+        select_role:
+          hint: The user will have different access depending on the role selected. If the user needs additional access, this can be added once they have been created.
+          legend: Select the role for the user
+        select_service_access:
+          hint: Buyer and service admin users need to be assigned access to at least one service
+          legend: Select the service access for the user
+      new:
+        heading: Add a user
+        submit: Create user account
+      user_details_summary:
+        change: Change
+        email_address: Email address
+        role: Role
+        service_access: Service access
+        telephone_number: Mobile telephone number
+        user_details_summary: User details summary
+    role_map:
+      allow_list_access:
+        hint: Abile to view the allow list and manage buyer users
+        text: User support
+      buyer:
+        hint: Able to use the portal as a buyer to search for services
+        text: Buyer
+      ccs_employee:
+        hint: Able to manage one of the services on the portal
+        text: Service admin
+      ccs_user_admin:
+        hint: Able to manage the allow list and manage buyer, service admin and user support users
+        text: User admin
+    service_access_map:
+      fm_access:
+        text: Facilities Management
+      ls_access:
+        text: Legal Services
+      mc_access:
+        text: Management Consultancy
+      st_access:
+        text: Supply Teachers

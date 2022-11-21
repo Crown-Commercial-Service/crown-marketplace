@@ -64,8 +64,192 @@ RSpec.describe Cognito::Admin::User do
     context 'when one role is selected' do
       let(:roles) { %w[allow_list_access] }
 
-      it 'is ivalid' do
+      it 'is valid' do
         expect(cognito_admin_user).to be_valid(:select_role)
+      end
+    end
+  end
+
+  describe '#validations on select_service_access' do
+    let(:attributes) do
+      {
+        roles: roles,
+        service_access: service_access
+      }
+    end
+    let(:roles) { %w[buyer] }
+    let(:service_access) { %w[fm_access] }
+
+    context 'and the service_access is empty when it required' do
+      let(:roles) { %w[ccs_employee] }
+      let(:service_access) { [] }
+
+      it 'is invalid and it has the correct error message' do
+        expect(cognito_admin_user).not_to be_valid(:select_service_access)
+        expect(cognito_admin_user.errors[:service_access].first).to eq 'You must select the service access for the user from this list'
+      end
+    end
+
+    context 'and the service_access are not within the list' do
+      let(:service_access) { %w[fake_service] }
+
+      it 'is invalid and it has the correct error message' do
+        expect(cognito_admin_user).not_to be_valid(:select_service_access)
+        expect(cognito_admin_user.errors[:service_access].first).to eq 'You must select the service access for the user from this list'
+      end
+    end
+
+    context 'when one service access is selected' do
+      it 'is valid' do
+        expect(cognito_admin_user).to be_valid(:select_service_access)
+      end
+    end
+  end
+
+  describe '#validations on enter_user_details' do
+    let(:attributes) do
+      {
+        email: email,
+        telephone_number: telephone_number,
+        roles: roles,
+        service_access: service_access
+      }
+    end
+    let(:allow_list_file) { Tempfile.new('allow_list.txt') }
+    let(:email_list) { ['email.com'] }
+    let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
+    let(:users) { [] }
+
+    before do
+      allow_list_file.write(email_list.join("\n"))
+      allow_list_file.close
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(AllowedEmailDomain).to receive(:allow_list_file_path).and_return(allow_list_file.path)
+      # rubocop:enable RSpec/AnyInstance
+      allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+      allow(aws_client).to receive(:list_users).and_return(OpenStruct.new(users: users))
+    end
+
+    after do
+      allow_list_file.unlink
+    end
+
+    context 'when validating the email' do
+      context 'and the email is nil' do
+        let(:email) { '' }
+
+        it 'is invalid and it has the correct error message' do
+          expect(cognito_admin_user).not_to be_valid(:enter_user_details)
+          expect(cognito_admin_user.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'and the email contains an uppercase character' do
+        let(:email) { 'uSer@cheemail.com' }
+
+        it 'is invalid and it has the correct error message' do
+          expect(cognito_admin_user).not_to be_valid(:enter_user_details)
+          expect(cognito_admin_user.errors[:email].first).to eq 'Email address cannot contain any capital letters'
+        end
+      end
+
+      context 'when the email is not on the allow list' do
+        context 'and the current user is super_admin' do
+          it 'is valid' do
+            expect(cognito_admin_user).to be_valid(:enter_user_details)
+          end
+        end
+
+        context 'and the current user is user_admin' do
+          let(:current_user_access) { :user_admin }
+
+          it 'is valid' do
+            expect(cognito_admin_user).to be_valid(:enter_user_details)
+          end
+        end
+
+        context 'and the current user is user_support' do
+          let(:current_user_access) { :user_support }
+
+          it 'is invalid and it has the correct error message' do
+            expect(cognito_admin_user).not_to be_valid(:enter_user_details)
+            expect(cognito_admin_user.errors[:email].first).to eq 'Email domain is not in the allow list'
+          end
+        end
+      end
+
+      context 'when the user already exists' do
+        let(:users) { ['I am an existing user'] }
+        let(:email) { 'user@email.com' }
+
+        it 'is invalid and it has the correct error message' do
+          expect(cognito_admin_user).not_to be_valid(:enter_user_details)
+          expect(cognito_admin_user.errors[:email].first).to eq 'An account with this email already exists'
+        end
+      end
+
+      context 'when there is a cognito error' do
+        let(:email) { 'user@email.com' }
+
+        before { allow(aws_client).to receive(:list_users).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('Some context', 'Some message')) }
+
+        it 'is invalid and it has the correct error message' do
+          expect(cognito_admin_user).not_to be_valid(:enter_user_details)
+          expect(cognito_admin_user.errors[:base].first).to eq 'Some message'
+        end
+      end
+    end
+
+    context 'when validating the telephone number' do
+      context 'when the phone number is too short' do
+        let(:telephone_number) { '0712345678' }
+
+        it 'is invalid and it has the correct error message' do
+          expect(cognito_admin_user).not_to be_valid(:enter_user_details)
+          expect(cognito_admin_user.errors[:telephone_number].first).to eq 'Enter a UK mobile telephone number, for example 07700900982'
+        end
+      end
+
+      context 'when the phone number is too long' do
+        let(:telephone_number) { '071234567891' }
+
+        it 'is invalid and it has the correct error message' do
+          expect(cognito_admin_user).not_to be_valid(:enter_user_details)
+          expect(cognito_admin_user.errors[:telephone_number].first).to eq 'Enter a UK mobile telephone number, for example 07700900982'
+        end
+      end
+
+      context 'when the phone number does not start with 07' do
+        let(:telephone_number) { '12345678912' }
+
+        it 'is invalid and it has the correct error message' do
+          expect(cognito_admin_user).not_to be_valid(:enter_user_details)
+          expect(cognito_admin_user.errors[:telephone_number].first).to eq 'Enter a UK mobile telephone number, for example 07700900982'
+        end
+      end
+
+      context 'when the role requires the telephone number and it is blank' do
+        let(:telephone_number) { '' }
+        let(:roles) { %w[allow_list_access] }
+
+        it 'is invalid and it has the correct error message' do
+          expect(cognito_admin_user).not_to be_valid(:enter_user_details)
+          expect(cognito_admin_user.errors[:telephone_number].first).to eq 'Enter a UK mobile telephone number, for example 07700900982'
+        end
+      end
+
+      context 'when the role does not require the telephone number and it is blank' do
+        let(:telephone_number) { '' }
+
+        it 'is valid' do
+          expect(cognito_admin_user).to be_valid(:enter_user_details)
+        end
+      end
+    end
+
+    context 'when eveything is present and correct' do
+      it 'is valid' do
+        expect(cognito_admin_user).to be_valid(:enter_user_details)
       end
     end
   end
@@ -547,7 +731,7 @@ RSpec.describe Cognito::Admin::User do
                 },
                 {
                   name: 'email_verified',
-                  value: true
+                  value: 'true'
                 }
               ],
               desired_delivery_mediums: ['EMAIL']
@@ -600,7 +784,7 @@ RSpec.describe Cognito::Admin::User do
                 },
                 {
                   name: 'email_verified',
-                  value: true
+                  value: 'true'
                 },
                 {
                   name: 'phone_number',

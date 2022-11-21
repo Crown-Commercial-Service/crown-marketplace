@@ -2,6 +2,25 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <% if flash[:account_added] %>
+      <%= govuk_notification_banner(:success, t('.user_account_created_banner.title')) do %>
+        <%= t('.user_account_created_banner.message', user_email: flash[:account_added]) %>
+      <% end %>
+    <% end %>
+    <% if flash[:error_message] %>
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">
+          <%= t('.something_went_wrong_banner.title') %>
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            <li>
+              <%= t('.something_went_wrong_banner.message', error_message: flash[:error_message]) %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
     <h1 class="govuk-heading-xl"><%= t('.admin_page_heading') %></h1>
     <p class="govuk-body"><%= t('.support_users_blurb') %></p>
     <ul class="govuk-list govuk-list--bullet">
@@ -18,24 +37,25 @@
     <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.user_support_heading') %></span>
   </div>
 </div>
+
 <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+
 <%= ccs_account_panel_row do %>
-  <%= ccs_account_panel(t('.new_user_invite_title'), '#') do %>
+  <%= ccs_account_panel(t('.new_user_invite_title'), add_user_crown_marketplace_manage_users_path(section: 'select-role')) do %>
     <%= t('.new_user_body') %>
   <% end %>
 
   <%= ccs_account_panel(t('.manage_users_title'),  '#') do %>
     <%= t('.manage_users_body') %>
   <% end %>
-
 <% end %>
-
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.allow_list_heading') %></span>
   </div>
 </div>
+
 <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
 
 <%= ccs_account_panel_row do %>

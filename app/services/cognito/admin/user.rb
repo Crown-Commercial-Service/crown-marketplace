@@ -14,19 +14,20 @@ module Cognito
 
       public
 
-      validates :email, presence: true, format: { with: /\A[^A-Z]*\z/ }, on: :create
-      validate :domain_in_allow_list, if: -> { @cognito_roles.access == :user_support && email.present? }, on: :create
+      validates :email, presence: true, format: { with: /\A[^A-Z]*\z/ }, on: %i[create enter_user_details]
+      validate :domain_in_allow_list, if: -> { @cognito_roles.access == :user_support && email.present? }, on: %i[create enter_user_details]
+      validate :user_does_not_exist, on: :enter_user_details
 
       validates :account_status, inclusion: { in: [true, false] }, on: :account_status
 
-      validates :telephone_number, format: { with: /\A07\d{9}\z/ }, if: :telephone_number_required?, on: %i[create telephone_number]
+      validates :telephone_number, format: { with: /\A07\d{9}\z/ }, if: :telephone_number_required?, on: %i[create enter_user_details telephone_number]
 
       validates :roles, length: { is: 1 }, on: %i[select_role create]
-      validate :validate_role, on: %i[create roles select_role]
+      validate :validate_role, on: %i[roles select_role create]
       validate :can_set_admin_role, on: :roles
 
-      validates :service_access, length: { minimum: 1 }, on: :service_access
-      validate :validate_service_access, on: %i[create service_access]
+      validates :service_access, length: { minimum: 1 }, on: %i[select_service_access service_access]
+      validate :validate_service_access, on: %i[create select_service_access service_access]
 
       with_options on: :mfa_enabled do
         validate :can_set_mfa
@@ -115,6 +116,18 @@ module Cognito
         return if AllowedEmailDomain.new(email_domain: email.split('@').last).domain_in_allow_list?
 
         errors.add(:email, :not_on_allow_list)
+      end
+
+      def user_does_not_exist
+        return if errors[:email].present?
+
+        check_if_user_exists = UserClientInterface.user_with_email_exists(email)
+
+        if check_if_user_exists[:result]
+          errors.add(:email, :user_already_exist)
+        elsif check_if_user_exists[:error]
+          errors.add(:base, check_if_user_exists[:error])
+        end
       end
 
       def telephone_number_required?
