@@ -4,7 +4,10 @@ module Cognito
     attr_reader :email, :password, :cookies_disabled
     attr_accessor :error, :needs_password_reset, :needs_confirmation
 
-    validates_presence_of :email, :password
+    
+    validates_presence_of :email, :password # here
+    validates_format_of :email, with: /\A[^A-Z]*\z/, message: :invalid #validates lowercase
+    validates_format_of :email, with: /\A[^\s^@]+@[^\s^@]+\z/, message: :blank #validates 'x@y'
     validate :cookies_should_be_enabled
 
     def initialize(email, password, cookies_disabled)
