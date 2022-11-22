@@ -174,7 +174,7 @@ RSpec.describe Cognito::SignInUser do
       context 'local is present but domain is not' do
         let(:email) { 'some-person@' }
 
-        it 'is not valid' do
+        it 'is not valid and has the correct error message' do
           expect(sign_in_user.valid?).to be false
           expect(sign_in_user.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
         end
@@ -183,7 +183,7 @@ RSpec.describe Cognito::SignInUser do
       context 'local is not present but domain is' do
         let(:email) { '@some-domain.com' }
 
-        it 'is not valid' do
+        it 'is not valid and has the correct error message' do
           expect(sign_in_user.valid?).to be false
           expect(sign_in_user.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
         end
@@ -192,7 +192,7 @@ RSpec.describe Cognito::SignInUser do
       context 'local is not present and domain is also not' do
         let(:email) { '@' }
 
-        it 'is not valid' do
+        it 'is not valid and has the correct error message' do
           expect(sign_in_user.valid?).to be false
           expect(sign_in_user.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
         end
