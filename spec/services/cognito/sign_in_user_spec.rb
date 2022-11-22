@@ -171,7 +171,7 @@ RSpec.describe Cognito::SignInUser do
         end
       end
 
-      context 'local is present but domain is not' do
+      context 'and local is present but domain is not' do
         let(:email) { 'some-person@' }
 
         it 'is not valid and has the correct error message' do
@@ -180,7 +180,7 @@ RSpec.describe Cognito::SignInUser do
         end
       end
 
-      context 'local is not present but domain is' do
+      context 'and local is not present but domain is' do
         let(:email) { '@some-domain.com' }
 
         it 'is not valid and has the correct error message' do
@@ -189,7 +189,7 @@ RSpec.describe Cognito::SignInUser do
         end
       end
 
-      context 'local is not present and domain is also not' do
+      context 'and local is not present and domain is also not' do
         let(:email) { '@' }
 
         it 'is not valid and has the correct error message' do
@@ -198,7 +198,7 @@ RSpec.describe Cognito::SignInUser do
         end
       end
 
-      context 'domain and local are present, but there are two @ symbols' do
+      context 'and domain and local are present, but there are two @ symbols' do
         let(:email) { 'dom@@ain.com' }
 
         it 'is invalid and gives the correct error message' do
@@ -207,7 +207,7 @@ RSpec.describe Cognito::SignInUser do
         end
       end
 
-      context 'there is an extra @ symbol in the domain' do
+      context 'and there is an extra @ symbol in the domain' do
         let(:email) { 'local@domain@com' }
 
         it 'is invalid and gives the correct error message' do

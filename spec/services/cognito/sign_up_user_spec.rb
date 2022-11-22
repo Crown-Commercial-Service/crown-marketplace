@@ -137,61 +137,59 @@ RSpec.describe Cognito::SignUpUser do
         end
       end
 
-      context 'validiting email' do
-        context 'when local is present but domain is not' do
-          let(:email) { 'local@' }
+      context 'when local is present but domain is not' do
+        let(:email) { 'local@' }
 
-          it 'is invalid and gives the correct error message' do
-            expect(response.valid?).to eq false
-            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
-          end
-        end
-
-        context 'when domain is present but local is not' do
-          let(:email) { '@domain.com' }
-
-          it 'is invalid and gives the correct error message' do
-            expect(response.valid?).to eq false
-            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
-          end
-        end
-
-        context 'when neither local or domain are present' do
-          let(:email) { '@' }
-
-          it 'is invalid and gives the correct error message' do
-            expect(response.valid?).to eq false
-            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
-          end
-        end
-
-        context 'domain and local are present, but there are two @ symbols' do
-          let(:email) { 'dom@@ain.com' }
-
-          it 'is invalid and gives the correct error message' do
-            expect(response.valid?).to eq false
-            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
-          end
-        end
-
-        context 'there is an extra @ symbol in the domain' do
-          let(:email) { 'local@domain@com' }
-
-          it 'is invalid and gives the correct error message' do
-            expect(response.valid?).to eq false
-            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
-          end
-        end
-
-        context 'it is a valid email' do
-          let(:email) { 'user@crowncommercial.gov.uk' }
-
-          it 'is valid' do
-            expect(response.valid?).to eq true
-          end
+        it 'is invalid and gives the correct error message' do
+          expect(response.valid?).to eq false
+          expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
         end
       end
-    end # validations end here
+
+      context 'when domain is present but local is not' do
+        let(:email) { '@domain.com' }
+
+        it 'is invalid and gives the correct error message' do
+          expect(response.valid?).to eq false
+          expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'when neither local or domain are present' do
+        let(:email) { '@' }
+
+        it 'is invalid and gives the correct error message' do
+          expect(response.valid?).to eq false
+          expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'and domain and local are present, but there are two @ symbols' do
+        let(:email) { 'dom@@ain.com' }
+
+        it 'is invalid and gives the correct error message' do
+          expect(response.valid?).to eq false
+          expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'and there is an extra @ symbol in the domain' do
+        let(:email) { 'local@domain@com' }
+
+        it 'is invalid and gives the correct error message' do
+          expect(response.valid?).to eq false
+          expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'and it is a valid email' do
+        let(:email) { 'user@crowncommercial.gov.uk' }
+
+        it 'is valid' do
+          expect(response.valid?).to eq true
+        end
+      end
+    end
 
     context 'when success' do
       before do
