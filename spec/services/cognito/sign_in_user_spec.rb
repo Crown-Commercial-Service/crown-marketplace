@@ -153,7 +153,7 @@ RSpec.describe Cognito::SignInUser do
 
         it 'has the correct error message' do
           sign_in_user.valid?
-          expect(sign_in_user.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
         end
       end
 
@@ -176,7 +176,7 @@ RSpec.describe Cognito::SignInUser do
 
         it 'is not valid and has the correct error message' do
           expect(sign_in_user.valid?).to be false
-          expect(sign_in_user.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
         end
       end
 
@@ -185,7 +185,7 @@ RSpec.describe Cognito::SignInUser do
 
         it 'is not valid and has the correct error message' do
           expect(sign_in_user.valid?).to be false
-          expect(sign_in_user.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
         end
       end
 
@@ -194,7 +194,27 @@ RSpec.describe Cognito::SignInUser do
 
         it 'is not valid and has the correct error message' do
           expect(sign_in_user.valid?).to be false
-          expect(sign_in_user.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'domain and local are present, but there are two @ symbols' do
+                  
+        let (:email) {'dom@@ain.com'}
+
+        it 'is invalid and gives the correct error message' do
+          expect(sign_in_user.valid?).to eq false
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'there is an extra @ symbol in the domain' do
+
+        let (:email) {'local@domain@com'}
+
+        it 'is invalid and gives the correct error message' do
+          expect(sign_in_user.valid?).to eq false
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
         end
       end
     end

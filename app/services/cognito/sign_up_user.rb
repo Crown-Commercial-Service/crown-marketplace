@@ -2,8 +2,7 @@ module Cognito
   class SignUpUser < BaseService
     include ActiveModel::Validations
 
- 
-    # validates :email, presence: true, format: { with: /\A[^A-Z]*\z/, message: "Enter an email address in the correct format, for example name@organisation.gov.uk" }
+
     validates :email, presence: true, format: { with: /\A[^A-Z]*\z/, message: :invalid} #validates lowercase
     validates_format_of :email, with: /\A[^\s^@]+@[^\s^@]+\z/, message: :blank #validates x@y
     validates :password, presence: true, length: { within: 8..200 }

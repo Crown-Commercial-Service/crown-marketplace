@@ -19,8 +19,22 @@ Feature: Sign up user - RM3830 - Validations
 
     Examples:
       | email         | error_message                                                       |
-      |               | Enter an email address in the correct format, like name@example.com |
+      |               | Enter an email address in the correct format, for example name@organisation.gov.uk |
       | Test@test.com | Email address cannot contain any capital letters                    |
+
+    Scenario Outline: I sign up to my account - email format wrong
+    And I enter the following details into the form:
+      | Email     | <email>  |
+      | Password  | ValidPassword1! |
+    And I click on 'Create account'
+    Then I should see the following error messages:
+      | Enter an email address in the correct format, for example name@organisation.gov.uk  |
+
+    Examples:
+      | email   |  
+      | local@  |
+      | @domain |
+      | @       |
 
   Scenario: Not on allow list
     Given I enter 'test@tmail.com' for my email

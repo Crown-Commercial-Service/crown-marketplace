@@ -144,7 +144,7 @@ RSpec.describe Cognito::SignUpUser do
 
           it 'is invalid and gives the correct error message' do
             expect(response.valid?).to eq false
-            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
           end
         end
 
@@ -154,7 +154,7 @@ RSpec.describe Cognito::SignUpUser do
     
             it 'is invalid and gives the correct error message' do
               expect(response.valid?).to eq false
-              expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+              expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
             end
         end
         
@@ -164,7 +164,7 @@ RSpec.describe Cognito::SignUpUser do
       
               it 'is invalid and gives the correct error message' do
                 expect(response.valid?).to eq false
-                expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+                expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
               end
           end
         
@@ -174,7 +174,7 @@ RSpec.describe Cognito::SignUpUser do
 
           it 'is invalid and gives the correct error message' do
             expect(response.valid?).to eq false
-            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
           end
         end
 
@@ -184,7 +184,7 @@ RSpec.describe Cognito::SignUpUser do
 
           it 'is invalid and gives the correct error message' do
             expect(response.valid?).to eq false
-            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+            expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
           end
         end
 
