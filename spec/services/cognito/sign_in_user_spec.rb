@@ -199,8 +199,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       context 'domain and local are present, but there are two @ symbols' do
-                  
-        let (:email) {'dom@@ain.com'}
+        let(:email) { 'dom@@ain.com' }
 
         it 'is invalid and gives the correct error message' do
           expect(sign_in_user.valid?).to eq false
@@ -209,8 +208,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       context 'there is an extra @ symbol in the domain' do
-
-        let (:email) {'local@domain@com'}
+        let(:email) { 'local@domain@com' }
 
         it 'is invalid and gives the correct error message' do
           expect(sign_in_user.valid?).to eq false
