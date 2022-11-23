@@ -18,13 +18,15 @@ Feature: Sign in to my account - RM3830 - Validations
       | Password  | ValidPassword1! |
     And I click on 'Sign in'
     Then I should see the following error messages:
-      | Enter an email address in the correct format, for example name@organisation.gov.uk  |
+      | You must provide your email address in the correct format, like name@example.com  |
 
     Examples:
       | email   |  
       | local@  |
       | @domain |
       | @       |
+
+      #works
 
 
   Scenario: I sign in to my account - cookies disabled
