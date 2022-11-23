@@ -9,7 +9,7 @@ Feature: Sign up user - RM3830 - Validations
     And I click on 'Create an account'
     Then I am on the 'Create an account' page
 
- Scenario: Email validations
+  Scenario: Email validations
     Given I enter '<email>' for my email
     And I enter 'Passowrd1!' for the password
     And I enter 'Passowrd1!' for the password confirmation
