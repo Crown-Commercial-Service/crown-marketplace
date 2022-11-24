@@ -25,10 +25,7 @@ Feature: Sign in to my account - RM3830 - Validations
       | local@  |
       | @domain |
       | @       |
-
-      #works
-
-
+      
   Scenario: I sign in to my account - cookies disabled
     And my cookies are disabled
     And I enter the following details into the form:
