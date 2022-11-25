@@ -5,6 +5,7 @@ module Cognito
     attr_accessor :error, :needs_password_reset, :needs_confirmation
 
     validates_presence_of :email, :password
+    validates_format_of :email, with: /\A[^\s^@]+@[^\s^@]+\z/, message: :blank
     validate :cookies_should_be_enabled
 
     def initialize(email, password, cookies_disabled)

@@ -3,6 +3,7 @@ module Cognito
     include ActiveModel::Validations
 
     validates :email, presence: true, format: { with: /\A[^A-Z]*\z/ }
+    validates_format_of :email, with: /\A[^\s^@]+@[^\s^@]+\z/, message: :blank
     validates :password, presence: true, length: { within: 8..200 }
     validates_format_of :password, with: /(?=.*[A-Z])/, message: :invalid_no_capitals
     validates_format_of :password, with: /(?=.*\W)/, message: :invalid_no_symbol
