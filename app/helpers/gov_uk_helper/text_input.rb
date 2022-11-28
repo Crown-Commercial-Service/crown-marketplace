@@ -27,14 +27,6 @@ module GovUKHelper::TextInput
     tag.div(hint_options[:text], class: 'govuk-hint', **hint_options)
   end
 
-  def govuk_error_message(form, attribute)
-    error = form.object.errors[attribute].first
-
-    tag.span(id: "#{attribute}-error", class: 'govuk-error-message') do
-      error.to_s
-    end
-  end
-
   def govuk_input(form, attribute, any_errors, input_options = {})
     class_list = ['govuk-input']
     class_list << input_options.delete(:classes) if input_options[:classes]

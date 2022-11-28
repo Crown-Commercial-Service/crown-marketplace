@@ -43,8 +43,30 @@ def stub_create_user(aws_client, **options)
 end
 # rubocop:enable Metrics/AbcSize
 
+def stub_find_users(aws_client, **options)
+  if options[:search]
+    allow(aws_client).to receive(:list_users).with(
+      {
+        user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+        attributes_to_get: ['email'],
+        filter: "email ^= \"#{options[:search]}\""
+      }
+    ).and_return(
+      OpenStruct.new(
+        users: options[:users].map { |found_user| OpenStruct.new(username: SecureRandom.uuid, enabled: found_user[:account_status], attributes: [OpenStruct.new(name: 'email', value: found_user[:email])]) }
+      )
+    )
+  else
+    allow(aws_client).to receive(:list_users).and_raise(StandardError.new('Unexpected call to list users'))
+  end
+end
+
 def stub_create_user_error(aws_client, error)
   allow(aws_client).to receive(:admin_create_user).and_raise(error)
+end
+
+def stub_find_users_error(aws_client, error)
+  allow(aws_client).to receive(:list_users).and_raise(error)
 end
 
 def role_and_service_access_to_group_names(roles, service_accesses)
