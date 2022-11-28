@@ -3,7 +3,7 @@ module FacilitiesManagement
     class ProcurementContactDetail < ApplicationRecord
       validates :name, presence: true, length: { maximum: 50 }, on: %i[new_invoicing_contact_details new_authorised_representative new_notices_contact_details]
       validates :job_title, presence: true, length: { maximum: 150 }, on: %i[new_invoicing_contact_details new_authorised_representative new_notices_contact_details]
-      validates :email, presence: true, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }, on: %i[new_invoicing_contact_details new_authorised_representative new_notices_contact_details]
+      validates :email, presence: true, format: { with: /\A([\w+-].?)+@[a-z\d-]+(\.[a-z]+)*\.[a-z]+\z/i }, on: %i[new_invoicing_contact_details new_authorised_representative new_notices_contact_details]
 
       include AddressValidator
 
