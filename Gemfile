@@ -65,7 +65,7 @@ gem 'roo', '~> 2.9.0'
 
 # state machine
 gem 'aasm', '~> 5.4'
-gem 'after_commit_everywhere', '~> 1.2', '>= 1.2.1'
+gem 'after_commit_everywhere', '~> 1.3'
 
 # for running background jobs
 gem 'sidekiq', '~> 6.5.7'
