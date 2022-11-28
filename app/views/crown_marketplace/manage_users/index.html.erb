@@ -1,0 +1,54 @@
+<%= content_for :page_title, t('.heading') %>
+<%= crown_marketplace_breadcrumbs({ text: t('.heading') })%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row" id="users-search-container">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: crown_marketplace_manage_users_path, method: :get, remote: true, html: { specialvalidation: true } do |f| %>
+      <div class="govuk-form-group <%= 'govuk-form-group--error' if @search[:error] %>" id="email-form-group">
+        <%= govuk_label(
+          f,
+          :email,
+          {
+            text: t('.find_a_user'),
+            classes: 'govuk-label--m',
+            id: 'email-search-label'
+          }
+        ) %>
+        <%= govuk_error_message_format(:email, @search[:error]) if @search[:error] %>
+        <%= govuk_hint(
+          {
+            text: t('.enter_an_email'),
+            id: 'email_hint'
+          }
+        ) %>
+        <%= govuk_input(
+          f,
+          :email,
+          false,
+          {
+            classes: 'govuk-input--width-20 govuk-!-margin-right-2',
+            attributes: {
+              type: 'search',
+              value: params[:email]
+            }
+          }
+        )%>
+        <%= f.submit t('.search'), class: 'govuk-button govuk-button--secondary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters" id="users-table">
+    <%= render(partial: 'users_table', locals: { users: @search[:users] }) %>
+  </div>
+</div>

@@ -4,6 +4,7 @@ module GovUKHelper
   include Button
   include CharacterCount
   include Details
+  include ErrorMessage
   include Header
   include NotificationBanner
   include Pagination

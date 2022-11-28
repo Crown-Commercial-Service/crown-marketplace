@@ -264,3 +264,7 @@ Feature: Manage users - User admin - Add user
       | name@test.com |
     And the 'telephone number' in the summary is:
       | 07987654321 |
+
+  Scenario: Home link works
+    Given I click on 'Home'
+    Then I am on the 'Crown Marketplace dashboard' page

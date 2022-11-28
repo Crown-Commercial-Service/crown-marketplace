@@ -77,6 +77,121 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
     end
   end
 
+  describe 'GET index' do
+    login_super_admin
+
+    context 'when there is no email' do
+      before { get :index }
+
+      it 'renders the index page' do
+        expect(response).to render_template(:index)
+      end
+
+      it 'has an empty search' do
+        expect(assigns(:search)).to eq({ users: [] })
+      end
+    end
+
+    context 'when an email is provided' do
+      let(:found_user_1) { { cognito_uuid: SecureRandom.uuid, email: 'test1@test.com', account_status: true } }
+      let(:found_user_2) { { cognito_uuid: SecureRandom.uuid, email: 'test2@test.com', account_status: false } }
+
+      before do
+        aws_client = instance_double(Aws::CognitoIdentityProvider::Client)
+
+        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+        allow(aws_client).to receive(:list_users).with(
+          {
+            user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+            attributes_to_get: ['email'],
+            filter: 'email ^= "test"'
+          }
+        ).and_return(
+          OpenStruct.new(
+            users: [
+              found_user_1,
+              found_user_2
+            ].map { |found_user| OpenStruct.new(username: found_user[:cognito_uuid], enabled: found_user[:account_status], attributes: [OpenStruct.new(name: 'email', value: found_user[:email])]) }
+          )
+        )
+      end
+
+      context 'and it is a HTML request' do
+        before { get :index, params: { email: 'test' } }
+
+        it 'renders the index page' do
+          expect(response).to render_template(:index)
+        end
+
+        it 'has a search with the users response' do
+          expect(assigns(:search)).to eq(
+            {
+              users: [
+                found_user_1,
+                found_user_2
+              ]
+            }
+          )
+        end
+      end
+
+      context 'and we render with JavaScript' do
+        before { get :index, params: { email: 'test' }, xhr: true }
+
+        it 'renders the index page' do
+          expect(response).to render_template(:index)
+        end
+
+        it 'has a search with the users response' do
+          expect(assigns(:search)).to eq(
+            {
+              users: [
+                found_user_1,
+                found_user_2
+              ]
+            }
+          )
+        end
+      end
+    end
+
+    context 'when the email is blank' do
+      context 'and it is a HTML request' do
+        before { get :index, params: { email: '' } }
+
+        it 'renders the index page' do
+          expect(response).to render_template(:index)
+        end
+
+        it 'has a search with the error in the response' do
+          expect(assigns(:search)).to eq(
+            {
+              users: [],
+              error: 'You must enter an email address'
+            }
+          )
+        end
+      end
+
+      context 'and we render with JavaScript' do
+        before { get :index, params: { email: '' }, xhr: true }
+
+        it 'renders the index page' do
+          expect(response).to render_template(:index)
+        end
+
+        it 'has a search with the error in the response' do
+          expect(assigns(:search)).to eq(
+            {
+              users: [],
+              error: 'You must enter an email address'
+            }
+          )
+        end
+      end
+    end
+  end
+
   # rubocop:disable RSpec/NestedGroups
   describe 'GET add_user' do
     context 'and I am a super admin' do

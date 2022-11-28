@@ -6,6 +6,19 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
 
   helper_method :section, :available_roles, :role_requires_service_access?
 
+  def index
+    @search = if find_user_params.empty?
+                { users: [] }
+              else
+                Cognito::Admin::User.search(find_user_params[:email])
+              end
+
+    respond_to do |format|
+      format.js
+      format.html { render :index }
+    end
+  end
+
   def add_user; end
 
   def create_add_user
@@ -76,6 +89,10 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
     else
       {}
     end
+  end
+
+  def find_user_params
+    @find_user_params ||= params.permit(:email)
   end
 
   def role_requires_service_access?(roles)
