@@ -1,0 +1,13 @@
+<% if @search[:error] %>
+  if ($("#email-error").length === 0) {
+    $("#email-form-group").addClass("govuk-form-group--error");
+    $("#email-search-label").after("<%= escape_javascript(govuk_error_message_format(:email, @search[:error])) %>");
+  }
+<% else %>
+  if ($("#email-error").length > 0) {
+    $("#email-form-group").removeClass("govuk-form-group--error");
+    $("#email-error").remove();
+  }
+<% end %>
+
+$("#users-table").html("<%= escape_javascript(render(partial: 'users_table', locals: { users: @search[:users] })) %>");

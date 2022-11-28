@@ -40,7 +40,7 @@ module Cognito
       end
 
       def self.search(email)
-        return { users: [], error: 'You must enter an email address' } if email.blank?
+        return { users: [], error: I18n.t('activemodel.errors.models.cognito/admin/user.attributes.search.invalid') } if email.blank?
 
         UserClientInterface.find_users_from_email(email.squish.downcase)
       end

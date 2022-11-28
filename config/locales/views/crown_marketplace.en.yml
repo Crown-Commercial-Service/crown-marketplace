@@ -23,6 +23,8 @@ en:
               mfa_required: You must enable MFA for this user to add these admin roles
               role_selection_required: Select a role for the user
               wrong_length: Select one role for the user
+            search:
+              invalid: You must enter an email address
             service_access:
               invalid_service_access_selection: You must select the service access for the user from this list
               service_access_selection_required: You must select the service access for the user if they have the buyer or service admin role
@@ -104,6 +106,16 @@ en:
         select_service_access:
           hint: Buyer and service admin users need to be assigned access to at least one service
           legend: Select the service access for the user
+      edit_partials:
+        account_status:
+          options:
+            disabled: Disabled
+            enabled: Enabled
+      index:
+        enter_an_email: Enter the email of the user and click 'Search' to see if that user has an account in Crown Marketplace.
+        find_a_user: Find a user
+        heading: Manage users
+        search: Search
       new:
         heading: Add a user
         submit: Create user account
@@ -114,6 +126,12 @@ en:
         service_access: Service access
         telephone_number: Mobile telephone number
         user_details_summary: User details summary
+      users_table:
+        email: Email address
+        no_users_found: No users were found with that email address
+        status: Status
+        view_user: View user
+        view_user_email: View user with email %{email}
     role_map:
       allow_list_access:
         hint: Abile to view the allow list and manage buyer users
