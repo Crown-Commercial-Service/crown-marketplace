@@ -42,7 +42,7 @@ module ControllerMacros
     end
   end
 
-  def login_crown_marketplace_admin
+  def login_user_admin
     before do
       @request.env['devise.mapping'] = Devise.mappings[:user]
       user = FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[ccs_user_admin])
@@ -50,7 +50,7 @@ module ControllerMacros
     end
   end
 
-  def login_crown_marketplace_read_only
+  def login_user_support_admin
     before do
       @request.env['devise.mapping'] = Devise.mappings[:user]
       user = FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[allow_list_access])
@@ -58,7 +58,7 @@ module ControllerMacros
     end
   end
 
-  def login_ccs_developer
+  def login_super_admin
     before do
       @request.env['devise.mapping'] = Devise.mappings[:user]
       user = FactoryBot.create(:user, confirmed_at: Time.zone.now, roles: %i[fm_access ccs_employee ccs_developer])

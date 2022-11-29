@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::Admin::FrameworksController do
   let(:default_params) { { service: 'facilities_management/admin' } }
 
-  login_ccs_developer
+  login_super_admin
 
   describe 'GET index' do
     it 'renders the index page' do

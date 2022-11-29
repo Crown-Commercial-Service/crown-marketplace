@@ -1,0 +1,24 @@
+<%= render partial: 'hidden_answers', locals: { f: f, allow_anyway: true } %>
+
+<%= form_group_with_error(@user, :roles) do |displayed_error| %>
+  <fieldset class="govuk-fieldset" aria-describedby="roles-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <%= t('.legend') %>
+    </legend>
+    <div id="roles-hint" class="govuk-hint">
+      <%= t('.hint') %>
+    </div>
+    <%= displayed_error %>
+    <div class="govuk-radios" data-module="govuk-radios">
+      <% available_roles.each do |role| %>
+        <div class="govuk-radios__item">
+          <%= f.radio_button :roles, role, multiple: true, class: 'govuk-radios__input', checked: @user.roles&.first == role %>
+          <%= f.label :roles, t("crown_marketplace.role_map.#{role}.text"), value: role, class: 'govuk-label govuk-radios__label' %>
+          <div class="govuk-hint govuk-radios__hint">
+            <%= t("crown_marketplace.role_map.#{role}.hint") %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </fieldset>
+<% end %>
