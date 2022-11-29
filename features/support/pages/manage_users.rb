@@ -5,6 +5,12 @@ module Pages
     element :action, 'dd.govuk-summary-list__actions > a'
   end
 
+  class UserAccountsRow < SitePrism::Section
+    element :email, 'td:nth-child(1)'
+    element :status, 'td:nth-child(2)'
+    element :view, 'td:nth-child(3)'
+  end
+
   class ManageUsers < SitePrism::Page
     section :user_details_summary, '#add-user-details-summary' do
       section :role, UserDetailRow, '#add-user-details-summary--roles'
@@ -16,6 +22,16 @@ module Pages
     section :notification_banner, 'div.govuk-notification-banner' do
       element :heading, 'p.govuk-notification-banner__heading'
       element :content, 'div.govuk-notification-banner__content'
+    end
+
+    section :find_a_user, '#email-form-group' do
+      element :search, '#email'
+      element :error, '#email-error'
+    end
+
+    section :find_a_user_table, '#users-table > table' do
+      element :no_users, 'tbody > tr > td'
+      sections :rows, UserAccountsRow, 'tbody > tr'
     end
   end
 end
