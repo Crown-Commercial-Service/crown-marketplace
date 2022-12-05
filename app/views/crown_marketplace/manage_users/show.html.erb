@@ -1,0 +1,136 @@
+<%= content_for :page_title, t('.heading') %>
+<%= crown_marketplace_breadcrumbs(
+  { text: t('crown_marketplace.home.index.manage_users_title'), link: crown_marketplace_manage_users_path },
+  { text: t('.heading') }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-l"><%= @user.email %></span>
+      <%= t('.heading') %>
+    </h1>
+    <% unless @current_row_change_access %>
+      <%= warning_text(
+        if @minimum_editor
+          t('.warning_text', minimum_editor_text: t("crown_marketplace.role_map.#{@minimum_editor}.text"))
+        else
+          t('.super_admin_warning.warning_text')
+        end
+      )%>
+    <%end%>
+  </div>
+</div>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <dl id="show-user-details-summary" class="govuk-summary-list">
+      <div id="view-user__email" class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+        <dt class="govuk-summary-list__key">
+          <%= t('.email') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @user.email %>
+        </dd>
+      </div>
+      <div id= "view-user__account-status" class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.account_status') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= govuk_tag_with_text(*user_account_status_tag(@user.account_status)) %>
+        </dd>
+        <% if @current_row_change_access %>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to(t('.change'), class: 'govuk-link govuk-link--no-visited-state') %>
+          </dd>
+        <%end%>
+      </div>
+      <div id= "view-user__confirmation-status" class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.confirmation_status') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= govuk_tag_with_text(*user_confirmation_status_tag(@user.confirmation_status)) %>
+        </dd>
+      </div>
+      <div id= "view-user__telephone-number" class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.telephone_number') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <% if @user.telephone_number.present?%>
+            <%= @user.telephone_number %>
+          <% else %>
+            <%= t('.none') %>
+          <% end %> 
+        </dd>
+        <% if @current_row_change_access %>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to(t('.change'), class: 'govuk-link govuk-link--no-visited-state') %>
+          </dd>
+        <%end%>
+      </div>
+      <% if @user.telephone_number.present? %>
+        <div id= "view-user__mfa-status" class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t('.mfa_status') %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <% if @user.mfa_enabled%>
+                <strong class="govuk-tag">
+                    <%= t('.enabled') %>
+                </strong>
+            <% else %>
+                <strong class="govuk-tag govuk-tag--red">
+                    <%= t('.disabled') %>
+                </strong>
+            <% end %>
+          </dd>
+        </div>
+      <%end%>
+      <div id= "view-user__roles" class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.roles') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%if @user.roles.present?%>
+            <% @user.roles.each do |role| %>
+              <%= t("crown_marketplace.role_map.#{role}.text") %><br>
+            <% end %>
+          <% else %>
+            <%= t('.none') %>
+          <% end %>
+        </dd>
+        <% if @current_row_change_access %>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to(t('.change'), class: 'govuk-link govuk-link--no-visited-state') %>
+          </dd>
+        <%end%>
+      </div>
+      <div id= "view-user__service-access" class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.service_access') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%if @user.service_access.present?%>
+            <% @user.service_access.each do |service_access| %>
+              <%= t("crown_marketplace.service_access_map.#{service_access}.text") %><br>
+            <% end %>
+          <%else%>
+            <%= t('.none') %>
+          <%end%>
+        </dd>
+        <% if @current_row_change_access %>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to(t('.change'), class: 'govuk-link govuk-link--no-visited-state') %>
+          </dd>
+        <%end%>
+      </div>
+    </dl>
+  </div>
+</div>
+
+
+

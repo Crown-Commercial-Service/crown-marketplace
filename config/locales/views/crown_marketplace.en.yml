@@ -119,6 +119,22 @@ en:
       new:
         heading: Add a user
         submit: Create user account
+      show:
+        account_status: Account status
+        change: Change
+        confirmation_status: Confirmation status
+        disabled: Disabled
+        email: Email address
+        enabled: Enabled
+        heading: View user
+        mfa_status: MFA status
+        none: None
+        roles: Roles
+        service_access: Service access
+        super_admin_warning:
+          warning_text: You cannot make changes to this user. 'Super admins' can only be updated in the AWS Cognito console.
+        telephone_number: Mobile telephone number
+        warning_text: You do not have the required permissions to make changes to this user. You must have the '%{minimum_editor_text}' role to make changes.
       user_details_summary:
         change: Change
         email_address: Email address
@@ -139,6 +155,8 @@ en:
       buyer:
         hint: Able to use the portal as a buyer to search for services
         text: Buyer
+      ccs_developer:
+        text: Super admin
       ccs_employee:
         hint: Able to manage one of the services on the portal
         text: Service admin

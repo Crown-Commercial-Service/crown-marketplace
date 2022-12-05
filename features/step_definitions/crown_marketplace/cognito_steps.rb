@@ -31,3 +31,25 @@ end
 Then('I cannot find any user accounts because of the {string} error') do |error_key|
   stub_cognito_admin_with_error(:find_users, error_key)
 end
+
+Then('I cannot view the user account because of the {string} error') do |error_key|
+  stub_cognito_admin_with_error(:find_user, error_key)
+end
+
+Given('I search for {string} and there is a user with the following details:') do |email, user_details_table|
+  stub_admin_cognito(:find_users, search: email, users: [{ email: email, account_status: 'enabled' }])
+
+  user_details = user_details_table.raw.to_h
+  allow(Cognito::Admin::UserClientInterface).to receive(:find_user_from_cognito_uuid).and_return(
+    {
+      cognito_uuid: SecureRandom.uuid,
+      email: email,
+      telephone_number: user_details['Mobile telephone number'],
+      account_status: user_details['Account enabled'] == 'true',
+      confirmation_status: user_details['Confirmation status'],
+      mfa_enabled: user_details['MFA enabled'] == 'true',
+      roles: (user_details['Roles'] || '').split(','),
+      service_access: (user_details['Service access'] || '').split(',')
+    }
+  )
+end

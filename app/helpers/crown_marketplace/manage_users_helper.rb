@@ -17,4 +17,16 @@ module CrownMarketplace::ManageUsersHelper
       [:red, t('crown_marketplace.manage_users.edit_partials.account_status.options.disabled')]
     end
   end
+
+  def user_confirmation_status_tag(confirmation_status)
+    colour = case confirmation_status
+             when 'CONFIRMED'
+               :blue
+             when 'COMPROMISED'
+               :red
+             else
+               :grey
+             end
+    [colour, confirmation_status]
+  end
 end
