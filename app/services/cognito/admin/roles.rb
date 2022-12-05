@@ -43,8 +43,34 @@ module Cognito
         application_locations
       end
 
+      def array_of_users_that_could_edit
+        if @roles.include?('ccs_developer')
+          []
+        elsif @roles.include?('ccs_user_admin')
+          [:super_admin]
+        elsif @roles.include?('allow_list_access') || @roles.include?('ccs_employee')
+          %i[user_admin super_admin]
+        elsif @roles.include?('buyer')
+          %i[user_support user_admin super_admin]
+        else
+          []
+        end
+      end
+
+      def minimum_editor_role
+        if @roles.include?('ccs_developer')
+          nil
+        elsif @roles.include?('ccs_user_admin')
+          'ccs_developer'
+        elsif @roles.include?('allow_list_access') || @roles.include?('ccs_employee')
+          'ccs_user_admin'
+        elsif @roles.include?('buyer')
+          'allow_list_access'
+        end
+      end
+
       def self.get_roles_and_service_access_from_cognito_roles(cognito_roles)
-        roles = SUPER_ADMIN_ROLE_ACCESS & cognito_roles
+        roles = ALL_ROLES & cognito_roles
         service_access = SERVICE_ROLES_ACCESS & cognito_roles
 
         [roles, service_access]
@@ -77,9 +103,15 @@ module Cognito
       LEGACY_SERVICE_ROLE_ACCESS = %w[st_access ls_access mc_access].freeze
       SERVICE_ROLES_ACCESS = (MAIN_SERVICE_ROLE_ACCESS + LEGACY_SERVICE_ROLE_ACCESS).freeze
 
-      USER_SUPPORT_ROLE_ACCESS = %w[buyer].freeze
-      USER_ADMIN_ROLE_ACCESS = (USER_SUPPORT_ROLE_ACCESS + %w[ccs_employee allow_list_access]).freeze
-      SUPER_ADMIN_ROLE_ACCESS = (USER_ADMIN_ROLE_ACCESS + %w[ccs_user_admin]).freeze
+      USER_SUPPORT_ROLE_ADDITIONS = %w[buyer].freeze
+      USER_ADMIN_ROLE_ADDITIONS = %w[ccs_employee allow_list_access].freeze
+      SUPER_ADMIN_ROLE_ADDITIONS = %w[ccs_user_admin].freeze
+      BEYOND_SUPER_ADMIN_ROLE_ADDITIONS = %w[ccs_developer].freeze
+
+      USER_SUPPORT_ROLE_ACCESS = USER_SUPPORT_ROLE_ADDITIONS
+      USER_ADMIN_ROLE_ACCESS = (USER_SUPPORT_ROLE_ACCESS + USER_ADMIN_ROLE_ADDITIONS).freeze
+      SUPER_ADMIN_ROLE_ACCESS = (USER_ADMIN_ROLE_ACCESS + SUPER_ADMIN_ROLE_ADDITIONS).freeze
+      ALL_ROLES = (SUPER_ADMIN_ROLE_ACCESS + BEYOND_SUPER_ADMIN_ROLE_ADDITIONS).freeze
     end
   end
 end

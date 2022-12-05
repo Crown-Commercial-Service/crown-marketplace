@@ -8,7 +8,13 @@ module Pages
   class UserAccountsRow < SitePrism::Section
     element :email, 'td:nth-child(1)'
     element :status, 'td:nth-child(2)'
-    element :view, 'td:nth-child(3)'
+    element :view, 'td:nth-child(3) > a'
+  end
+
+  class ViewUserRow < SitePrism::Section
+    element :key, 'dt.govuk-summary-list__key'
+    element :value, 'dd.govuk-summary-list__value'
+    element :edit, 'dd.govuk-summary-list__actions > a'
   end
 
   class ManageUsers < SitePrism::Page
@@ -32,6 +38,18 @@ module Pages
     section :find_a_user_table, '#users-table > table' do
       element :no_users, 'tbody > tr > td'
       sections :rows, UserAccountsRow, 'tbody > tr'
+    end
+
+    element :view_user_warning, '#main-content > div:nth-child(3) > div > div > strong'
+
+    section :view_user_summary, 'dl.govuk-summary-list' do
+      section :'Email address', ViewUserRow, '#view-user__email'
+      section :'Account status', ViewUserRow, '#view-user__account-status'
+      section :'Confirmation status', ViewUserRow, '#view-user__confirmation-status'
+      section :'Mobile telephone number', ViewUserRow, '#view-user__telephone-number'
+      section :'MFA status', ViewUserRow, '#view-user__mfa-status'
+      section :Roles, ViewUserRow, '#view-user__roles'
+      section :'Service access', ViewUserRow, '#view-user__service-access'
     end
   end
 end

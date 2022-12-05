@@ -736,4 +736,108 @@ RSpec.describe Cognito::Admin::Roles do
       end
     end
   end
+
+  describe '.array_of_users_that_could_edit' do
+    let(:result) { cognito_roles.array_of_users_that_could_edit }
+
+    context 'when the user is a buyer' do
+      let(:roles) { %w[buyer] }
+
+      it 'returns user support, user admin and super admin ' do
+        expect(result).to eq %i[user_support user_admin super_admin]
+      end
+    end
+
+    context 'when the user is a User Support' do
+      let(:roles) { %w[allow_list_access] }
+
+      it 'returns user admin and super admin ' do
+        expect(result).to eq %i[user_admin super_admin]
+      end
+    end
+
+    context 'when the user is a User Admin' do
+      let(:roles) { %w[ccs_user_admin] }
+
+      it 'returns a super_admin' do
+        expect(result).to eq [:super_admin]
+      end
+    end
+
+    context 'when the user is a ccs_developer' do
+      let(:roles) { %w[ccs_developer] }
+
+      it 'returns a blank array' do
+        expect(result).to eq []
+      end
+    end
+
+    context 'when the user is a ccs_developer and a User Admin' do
+      let(:roles) { %w[ccs_developer ccs_user_admin] }
+
+      it 'returns a blank array' do
+        expect(result).to eq []
+      end
+    end
+
+    context 'when the user is a Buyer and a User Support' do
+      let(:roles) { %w[buyer allow_list_access] }
+
+      it 'returns user admin and super admin' do
+        expect(result).to eq %i[user_admin super_admin]
+      end
+    end
+  end
+
+  describe '.minimum_editor_role' do
+    let(:result) { cognito_roles.minimum_editor_role }
+
+    context 'when the user is a buyer' do
+      let(:roles) { %w[buyer] }
+
+      it 'returns User Support translation' do
+        expect(result).to eq 'allow_list_access'
+      end
+    end
+
+    context 'when the user is a User Support' do
+      let(:roles) { %w[allow_list_access] }
+
+      it 'returns user admin translation' do
+        expect(result).to eq 'ccs_user_admin'
+      end
+    end
+
+    context 'when the user is a User Admin' do
+      let(:roles) { %w[ccs_user_admin] }
+
+      it 'returns super admin translation' do
+        expect(result).to eq 'ccs_developer'
+      end
+    end
+
+    context 'when the user is a ccs_developer' do
+      let(:roles) { %w[ccs_developer] }
+
+      it 'returns nil' do
+        expect(result).to eq nil
+      end
+    end
+
+    context 'when the user is a ccs_developer and a User Admin' do
+      let(:roles) { %w[ccs_developer ccs_user_admin] }
+
+      it 'returns nil' do
+        expect(result).to eq nil
+      end
+    end
+
+    context 'when the user is a Buyer and a User Support' do
+      let(:roles) { %w[buyer allow_list_access] }
+
+      it 'returns user admin translation' do
+        expect(result).to eq 'ccs_user_admin'
+      end
+    end
+  end
 end
