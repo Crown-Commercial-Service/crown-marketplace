@@ -91,7 +91,7 @@ gem 'date_validator', '>= 0.12.0'
 gem 'ratonvirus', '>= 0.3.2'
 gem 'ratonvirus-clamby', '>= 0.3.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.9.8'
+gem 'active_storage_validations', '>= 1.0.3'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 1.4.1'
 # gov notify
@@ -112,12 +112,12 @@ gem 'fog-aws', '>= 3.14.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails', '>= 2.7.6'
+  gem 'dotenv-rails', '>= 2.8.1'
   gem 'factory_bot_rails', '>= 6.2.0'
   gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
-  gem 'rspec-rails', '>= 5.1.2'
+  gem 'rspec-rails', '>= 6.0.1'
   gem 'shoulda-matchers', '>= 5.1.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
@@ -143,7 +143,7 @@ group :test do
   gem 'webmock', '>= 3.12.1'
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
-  gem 'cucumber-rails', '>= 2.5.1', require: false
+  gem 'cucumber-rails', '>= 2.6.1', require: false
   gem 'capybara', '>= 3.38.0'
   gem 'database_cleaner', '>= 2.0.1'
   gem 'site_prism', '>= 3.7.3'
