@@ -75,6 +75,7 @@ en:
         allow_list_body: View and update the allow list so users can create their own accounts
         allow_list_heading: Allow list
         facilities_management: Facilities Management
+        lack_permissions: You do not have the required permissions to edit this user
         legal_service: Legal Service
         manage_users_body: Find a user by email to view and update their details
         manage_users_title: Manage users
@@ -83,7 +84,7 @@ en:
         new_user_invite_title: Invite a new user
         something_went_wrong_banner:
           message: 'The following error occured: "%{error_message}"'
-          title: There is a problem
+          title: Something went wrong
         supply_teachers: Supply Teachers
         support_users_blurb: 'Support users on the following four services:'
         user_account_created_banner:
@@ -106,11 +107,18 @@ en:
         select_service_access:
           hint: Buyer and service admin users need to be assigned access to at least one service
           legend: Select the service access for the user
+      edit:
+        heading: Update user %{section}
+        save_and_return: Save and return
       edit_partials:
         account_status:
           options:
             disabled: Disabled
             enabled: Enabled
+        service_access:
+          hint: Buyer and service admin users need to be assigned access to at least one service, otherwise this can be left empty
+          legend: Select the service access for the user
+          section: service access
       index:
         enter_an_email: Enter the email of the user and click 'Search' to see if that user has an account in Crown Marketplace.
         find_a_user: Find a user
@@ -123,9 +131,7 @@ en:
         account_status: Account status
         change: Change
         confirmation_status: Confirmation status
-        disabled: Disabled
         email: Email address
-        enabled: Enabled
         heading: View user
         mfa_status: MFA status
         none: None

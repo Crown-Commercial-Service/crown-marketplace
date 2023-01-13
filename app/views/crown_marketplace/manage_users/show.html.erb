@@ -1,16 +1,16 @@
 <%= content_for :page_title, t('.heading') %>
 <%= crown_marketplace_breadcrumbs(
-  { text: t('crown_marketplace.home.index.manage_users_title'), link: crown_marketplace_manage_users_path },
+  { text: t('crown_marketplace.manage_users.index.heading'), link: crown_marketplace_manage_users_path },
   { text: t('.heading') }
 )%>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-l"><%= @user.email %></span>
       <%= t('.heading') %>
     </h1>
-    <% unless @current_row_change_access %>
+    <% unless can_edit_user? %>
       <%= warning_text(
         if @minimum_editor
           t('.warning_text', minimum_editor_text: t("crown_marketplace.role_map.#{@minimum_editor}.text"))
@@ -22,11 +22,10 @@
   </div>
 </div>
 
-
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <dl id="show-user-details-summary" class="govuk-summary-list">
-      <div id="view-user__email" class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <div class="govuk-grid-column-three-quarters">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row" id="view-user__email">
         <dt class="govuk-summary-list__key">
           <%= t('.email') %>
         </dt>
@@ -34,20 +33,23 @@
           <%= @user.email %>
         </dd>
       </div>
-      <div id= "view-user__account-status" class="govuk-summary-list__row">
+      <div class="govuk-summary-list__row" id="view-user__account-status">
         <dt class="govuk-summary-list__key">
           <%= t('.account_status') %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= govuk_tag_with_text(*user_account_status_tag(@user.account_status)) %>
+          <%= govuk_tag_with_text(*enabled_disabled_status_tag(@user.account_status)) %>
         </dd>
-        <% if @current_row_change_access %>
+        <% if can_edit_user? %>
           <dd class="govuk-summary-list__actions">
-            <%= link_to(t('.change'), class: 'govuk-link govuk-link--no-visited-state') %>
+            <%= link_to('#account-status', class: 'govuk-link govuk-link--no-visited-state') do %>
+              <%= t('.change') %>
+              <span class="govuk-visually-hidden"><%= t('.account_status') %></span>
+            <% end %>
           </dd>
-        <%end%>
+        <% end %>
       </div>
-      <div id= "view-user__confirmation-status" class="govuk-summary-list__row">
+      <div class="govuk-summary-list__row" id="view-user__confirmation-status">
         <dt class="govuk-summary-list__key">
           <%= t('.confirmation_status') %>
         </dt>
@@ -55,82 +57,92 @@
           <%= govuk_tag_with_text(*user_confirmation_status_tag(@user.confirmation_status)) %>
         </dd>
       </div>
-      <div id= "view-user__telephone-number" class="govuk-summary-list__row">
+      <div class="govuk-summary-list__row" id="view-user__telephone-number">
         <dt class="govuk-summary-list__key">
           <%= t('.telephone_number') %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <% if @user.telephone_number.present?%>
-            <%= @user.telephone_number %>
-          <% else %>
-            <%= t('.none') %>
-          <% end %> 
+          <%= @user.telephone_number.blank? ? t('.none') : @user.telephone_number %>
         </dd>
-        <% if @current_row_change_access %>
+        <% if can_edit_user? %>
           <dd class="govuk-summary-list__actions">
-            <%= link_to(t('.change'), class: 'govuk-link govuk-link--no-visited-state') %>
+            <%= link_to('#telephone-number', class: 'govuk-link govuk-link--no-visited-state') do %>
+              <%= t('.change') %>
+              <span class="govuk-visually-hidden"><%= t('.telephone_number') %></span>
+            <% end %>
           </dd>
-        <%end%>
+        <% end %>
       </div>
-      <% if @user.telephone_number.present? %>
-        <div id= "view-user__mfa-status" class="govuk-summary-list__row">
+      <% unless @user.telephone_number.blank? %>
+        <div class="govuk-summary-list__row" id="view-user__mfa-status">
           <dt class="govuk-summary-list__key">
             <%= t('.mfa_status') %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <% if @user.mfa_enabled%>
-                <strong class="govuk-tag">
-                    <%= t('.enabled') %>
-                </strong>
-            <% else %>
-                <strong class="govuk-tag govuk-tag--red">
-                    <%= t('.disabled') %>
-                </strong>
-            <% end %>
+            <%= govuk_tag_with_text(*enabled_disabled_status_tag(@user.mfa_enabled)) %>
           </dd>
+          <% if can_edit_user? %>
+            <dd class="govuk-summary-list__actions">
+              <%= link_to('#mfa-enabled', class: 'govuk-link govuk-link--no-visited-state') do %>
+                <%= t('.change') %>
+                <span class="govuk-visually-hidden"><%= t('.mfa_status') %></span>
+              <% end %>
+            </dd>
+          <% end %>
         </div>
-      <%end%>
-      <div id= "view-user__roles" class="govuk-summary-list__row">
+      <% end %>
+      <div class="govuk-summary-list__row" id="view-user__roles">
         <dt class="govuk-summary-list__key">
           <%= t('.roles') %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%if @user.roles.present?%>
-            <% @user.roles.each do |role| %>
-              <%= t("crown_marketplace.role_map.#{role}.text") %><br>
-            <% end %>
+          <% if @user.roles.any? %>
+            <ul class="govuk-list">
+              <% @user.roles.each do |role| %>
+                <li>
+                  <%= t("crown_marketplace.role_map.#{role}.text") %>
+                </li>
+              <% end %>
+            </ul>
           <% else %>
             <%= t('.none') %>
           <% end %>
         </dd>
-        <% if @current_row_change_access %>
+        <% if can_edit_user? %>
           <dd class="govuk-summary-list__actions">
-            <%= link_to(t('.change'), class: 'govuk-link govuk-link--no-visited-state') %>
+            <%= link_to('#roles', class: 'govuk-link govuk-link--no-visited-state') do %>
+              <%= t('.change') %>
+              <span class="govuk-visually-hidden"><%= t('.roles') %></span>
+            <% end %>
           </dd>
-        <%end%>
+        <% end %>
       </div>
-      <div id= "view-user__service-access" class="govuk-summary-list__row">
+      <div class="govuk-summary-list__row" id="view-user__service-access">
         <dt class="govuk-summary-list__key">
           <%= t('.service_access') %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%if @user.service_access.present?%>
-            <% @user.service_access.each do |service_access| %>
-              <%= t("crown_marketplace.service_access_map.#{service_access}.text") %><br>
-            <% end %>
-          <%else%>
+          <% if @user.service_access.any? %>
+            <ul class="govuk-list">
+              <% @user.service_access.each do |service_access| %>
+                <li>
+                  <%= t("crown_marketplace.service_access_map.#{service_access}.text") %>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
             <%= t('.none') %>
-          <%end%>
+          <% end %>
         </dd>
-        <% if @current_row_change_access %>
+        <% if can_edit_user? %>
           <dd class="govuk-summary-list__actions">
-            <%= link_to(t('.change'), class: 'govuk-link govuk-link--no-visited-state') %>
+            <%= link_to(edit_crown_marketplace_manage_user_path(section: 'service-access'), class: 'govuk-link govuk-link--no-visited-state') do %>
+              <%= t('.change') %>
+              <span class="govuk-visually-hidden"><%= t('.service_access') %></span>
+            <% end %>
           </dd>
-        <%end%>
+        <% end %>
       </div>
     </dl>
   </div>
 </div>
-
-
-

@@ -8,18 +8,9 @@
       <% end %>
     <% end %>
     <% if flash[:error_message] %>
-      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
-        <h2 class="govuk-error-summary__title" id="error-summary-title">
-          <%= t('.something_went_wrong_banner.title') %>
-        </h2>
-        <div class="govuk-error-summary__body">
-          <ul class="govuk-list govuk-error-summary__list">
-            <li>
-              <%= t('.something_went_wrong_banner.message', error_message: flash[:error_message]) %>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <%= govuk_notification_banner(:error, t('.something_went_wrong_banner.title')) do %>
+        <%= t('.something_went_wrong_banner.message', error_message: flash[:error_message]) %>
+      <% end %>
     <% end %>
     <h1 class="govuk-heading-xl"><%= t('.admin_page_heading') %></h1>
     <p class="govuk-body"><%= t('.support_users_blurb') %></p>

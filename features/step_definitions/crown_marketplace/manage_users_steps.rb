@@ -13,6 +13,11 @@ Then('the account {string} has been added') do |email|
   expect(manage_users_page.notification_banner.content).to have_content("An email has been sent to #{email} with the details for them to sign in")
 end
 
+Then('there is an error notification with the message {string}') do |error_message|
+  expect(manage_users_page.notification_banner.heading).to have_content('Something went wrong')
+  expect(manage_users_page.notification_banner.content).to have_content("The following error occured: \"#{error_message}\"")
+end
+
 Then('I change the {string} from the user summary') do |option|
   manage_users_page.user_details_summary.send(option).action.click
 end
@@ -67,4 +72,8 @@ end
 Then('I can see the following error message in the summary:') do |table|
   expect(page).to have_css('div.govuk-error-summary')
   expect(page.find('.govuk-error-summary__list').find_all('li').map(&:text).reject(&:empty?)).to eq table.raw.flatten
+end
+
+Then('I change the {string} for the user') do |section|
+  manage_users_page.view_user_summary.send(section).edit.click
 end

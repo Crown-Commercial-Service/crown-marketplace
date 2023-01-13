@@ -737,58 +737,6 @@ RSpec.describe Cognito::Admin::Roles do
     end
   end
 
-  describe '.array_of_users_that_could_edit' do
-    let(:result) { cognito_roles.array_of_users_that_could_edit }
-
-    context 'when the user is a buyer' do
-      let(:roles) { %w[buyer] }
-
-      it 'returns user support, user admin and super admin ' do
-        expect(result).to eq %i[user_support user_admin super_admin]
-      end
-    end
-
-    context 'when the user is a User Support' do
-      let(:roles) { %w[allow_list_access] }
-
-      it 'returns user admin and super admin ' do
-        expect(result).to eq %i[user_admin super_admin]
-      end
-    end
-
-    context 'when the user is a User Admin' do
-      let(:roles) { %w[ccs_user_admin] }
-
-      it 'returns a super_admin' do
-        expect(result).to eq [:super_admin]
-      end
-    end
-
-    context 'when the user is a ccs_developer' do
-      let(:roles) { %w[ccs_developer] }
-
-      it 'returns a blank array' do
-        expect(result).to eq []
-      end
-    end
-
-    context 'when the user is a ccs_developer and a User Admin' do
-      let(:roles) { %w[ccs_developer ccs_user_admin] }
-
-      it 'returns a blank array' do
-        expect(result).to eq []
-      end
-    end
-
-    context 'when the user is a Buyer and a User Support' do
-      let(:roles) { %w[buyer allow_list_access] }
-
-      it 'returns user admin and super admin' do
-        expect(result).to eq %i[user_admin super_admin]
-      end
-    end
-  end
-
   describe '.minimum_editor_role' do
     let(:result) { cognito_roles.minimum_editor_role }
 
@@ -840,4 +788,707 @@ RSpec.describe Cognito::Admin::Roles do
       end
     end
   end
+
+  # rubocop:disable RSpec/NestedGroups
+  describe '.can_edit_user_with_current_access?' do
+    let(:result) { cognito_roles.can_edit_user_with_current_access? }
+    let(:roles) { primary_role + additional_roles }
+
+    context 'when the user is a super_admin' do
+      let(:user_access) { :super_admin }
+
+      context 'when there are no roles' do
+        let(:roles) { [] }
+
+        it 'returns false' do
+          expect(result).to eq false
+        end
+      end
+
+      context 'when the roles include buyer' do
+        let(:primary_role) { %w[buyer] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include ccs_employee' do
+        let(:primary_role) { %w[ccs_employee] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include allow_list_access' do
+        let(:primary_role) { %w[allow_list_access] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include ccs_user_admin' do
+        let(:primary_role) { %w[ccs_user_admin] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include ccs_developer' do
+        let(:primary_role) { %w[ccs_developer] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+    end
+
+    context 'when the user is a user_admin' do
+      let(:user_access) { :user_admin }
+
+      context 'when there are no roles' do
+        let(:roles) { [] }
+
+        it 'returns false' do
+          expect(result).to eq false
+        end
+      end
+
+      context 'when the roles include buyer' do
+        let(:primary_role) { %w[buyer] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include ccs_employee' do
+        let(:primary_role) { %w[ccs_employee] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include allow_list_access' do
+        let(:primary_role) { %w[allow_list_access] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include ccs_user_admin' do
+        let(:primary_role) { %w[ccs_user_admin] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include ccs_developer' do
+        let(:primary_role) { %w[ccs_developer] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+    end
+
+    context 'when the user is a user_support' do
+      let(:user_access) { :user_support }
+
+      context 'when there are no roles' do
+        let(:roles) { [] }
+
+        it 'returns false' do
+          expect(result).to eq false
+        end
+      end
+
+      context 'when the roles include buyer' do
+        let(:primary_role) { %w[buyer] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include ccs_employee' do
+        let(:primary_role) { %w[ccs_employee] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include allow_list_access' do
+        let(:primary_role) { %w[allow_list_access] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include ccs_user_admin' do
+        let(:primary_role) { %w[ccs_user_admin] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_developer' do
+          let(:additional_roles) { %w[ccs_developer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+
+      context 'when the roles include ccs_developer' do
+        let(:primary_role) { %w[ccs_developer] }
+
+        context 'and there are no additional roles' do
+          let(:additional_roles) { [] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are buyer' do
+          let(:additional_roles) { %w[buyer] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_employee' do
+          let(:additional_roles) { %w[ccs_employee] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are allow_list_access' do
+          let(:additional_roles) { %w[allow_list_access] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+
+        context 'and the additional roles are ccs_user_admin' do
+          let(:additional_roles) { %w[ccs_user_admin] }
+
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+      end
+    end
+  end
+  # rubocop:enable RSpec/NestedGroups
 end
