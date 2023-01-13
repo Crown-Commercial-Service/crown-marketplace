@@ -243,6 +243,10 @@ Rails.application.routes.draw do
         get '/:section/add-user', action: :add_user, as: :add_user
         post '/:section/add-user', action: :create_add_user, as: :create_add_user
       end
+      member do
+        get '/:section/edit', action: :edit, as: :edit
+        put '/:section/', action: :update, as: :update
+      end
     end
   end
 

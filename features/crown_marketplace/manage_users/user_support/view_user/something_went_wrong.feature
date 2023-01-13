@@ -14,5 +14,4 @@ Feature: Manage users - User support - View user - Something went wron
     And I cannot view the user account because of the 'service' error
     And I view the user with email 'buyer@test.com'
     Then I am on the 'Crown Marketplace dashboard' page
-    And I can see the following error message in the summary:
-      | The following error occured: "An error occured: service" |
+    And there is an error notification with the message 'An error occured: service'

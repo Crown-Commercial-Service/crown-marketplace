@@ -3,6 +3,30 @@ require 'rails_helper'
 RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
   let(:default_params) { { service: 'crown_marketplace' } }
 
+  let(:user) { Cognito::Admin::User.new(current_user_access, attributes) }
+
+  let(:current_user_access) { :super_admin }
+  let(:cognito_uuid) { SecureRandom.uuid }
+  let(:email) { 'user@crowncommercial.gov.uk' }
+  let(:account_status) { true }
+  let(:roles) { %w[buyer] }
+  let(:telephone_number) { '07123456789' }
+  let(:service_access) { %w[fm_access] }
+  let(:mfa_enabled) { false }
+
+  let(:attributes) do
+    {
+      cognito_uuid: cognito_uuid,
+      email: email,
+      telephone_number: telephone_number,
+      roles: roles,
+      service_access: service_access,
+      account_status: account_status,
+      confirmation_status: 'CONFIRMED',
+      mfa_enabled: mfa_enabled
+    }
+  end
+
   describe 'callbacks' do
     context 'when I log in as a buyer' do
       login_fm_buyer
@@ -444,92 +468,356 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
     end
   end
 
-  describe 'show' do
+  describe 'GET show' do
     login_super_admin
+
+    before do
+      allow(Cognito::Admin::User).to receive(:find).and_return(user)
+
+      get :show, params: { cognito_uuid: cognito_uuid }
+    end
+
     context 'when the current user has edit permissions and successfully looks up a user' do
-      let(:user) { Cognito::Admin::User.new(current_user_access, attributes) }
-      let(:current_user_access) { :super_admin }
-      let(:attributes) do
-        {
-          cognito_uuid: SecureRandom.uuid,
-          roles: ['buyer'],
-        }
-      end
-
-      before do
-        allow(Cognito::Admin::User).to receive(:find).and_return(user)
-        get :show, params: { cognito_uuid: user.send(:cognito_uuid) }
-      end
-
       it 'renders the show page' do
         expect(response).to render_template(:show)
       end
 
-      it 'sets the @array_of_possible_editors instance variable' do
-        expect(assigns(:array_of_possible_editors)).to eq(%i[user_support user_admin super_admin])
-      end
-
       it 'sets the @minimum_editor instance variable correctly' do
         expect(assigns(:minimum_editor)).to eq('allow_list_access')
-      end
-
-      it 'sets the @current_user_access instance variable as true' do
-        expect(assigns(:current_row_change_access)).to eq(true)
-      end
-    end
-
-    context 'when there is an error on the user' do
-      let(:user) { Cognito::Admin::User.new(current_user_access, attributes) }
-      let(:current_user_access) { :super_admin }
-      let(:attributes) do
-        {
-          cognito_uuid: SecureRandom.uuid,
-          roles: ['buyer'],
-          error: 'error_message'
-        }
-      end
-
-      before do
-        allow(Cognito::Admin::User).to receive(:find).and_return(user)
-        get :show, params: { cognito_uuid: user.send(:cognito_uuid) }
-      end
-
-      it 'redirects to the crown marketplace home page' do
-        expect(response).to redirect_to crown_marketplace_path
       end
     end
 
     context 'when current user does not have edit permissions and successfully looks up a user' do
       login_user_support_admin
 
-      let(:user) { Cognito::Admin::User.new(current_user_access, attributes) }
       let(:current_user_access) { :user_support }
-      let(:attributes) do
-        {
-          cognito_uuid: SecureRandom.uuid,
-          roles: ['ccs_user_admin'],
-        }
-      end
-
-      before do
-        allow(Cognito::Admin::User).to receive(:find).and_return(user)
-        get :show, params: { cognito_uuid: user.send(:cognito_uuid) }
-      end
+      let(:roles) { %w[ccs_user_admin] }
 
       it 'renders the show page' do
         expect(response).to render_template(:show)
       end
 
-      it 'sets the @array_of_possible_editors instance variable' do
-        expect(assigns(:array_of_possible_editors)).to eq([:super_admin])
-      end
-
       it 'sets the @minimum_editor instance variable correctly' do
         expect(assigns(:minimum_editor)).to eq('ccs_developer')
       end
+    end
 
-      it 'sets the @current_user_access instance variable as false' do
-        expect(assigns(:current_row_change_access)).to eq(false)
+    context 'when there is an error on the user' do
+      let(:user) { Cognito::Admin::User.new(current_user_access, attributes) }
+      let(:current_user_access) { :super_admin }
+      let(:attributes) { super().merge({ error: 'error_message' }) }
+
+      it 'redirects to the crown marketplace home page' do
+        expect(response).to redirect_to crown_marketplace_path
+      end
+    end
+  end
+
+  describe 'GET edit' do
+    context 'when there is an issue with editing the user' do
+      before { allow(Cognito::Admin::User).to receive(:find).and_return(user) }
+
+      context 'and it is because I do not have permissions to edit the user' do
+        let(:roles) { %w[ccs_developer] }
+        let(:section) { :service_access }
+
+        login_super_admin
+
+        before { get :edit, params: { cognito_uuid: cognito_uuid, section: section } }
+
+        it 'redirects to the crown marketplace home page and sets the flash message' do
+          expect(response).to redirect_to crown_marketplace_path
+          expect(flash[:error_message]).to eq 'You do not have the required permissions to edit this user'
+        end
+      end
+
+      context 'and it is because I try and edit a section that does not exist' do
+        let(:section) { :bank_account }
+
+        login_super_admin
+
+        before { get :edit, params: { cognito_uuid: cognito_uuid, section: section } }
+
+        it 'redirects to the show page' do
+          expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+        end
+      end
+
+      context 'and it is because I try and edit a section that does not exist for my user type' do
+        let(:section) { :roles }
+
+        login_user_support_admin
+
+        before { get :edit, params: { cognito_uuid: cognito_uuid, section: section } }
+
+        it 'redirects to the show page' do
+          expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+        end
+      end
+    end
+
+    context 'when there is no issue with editing the user' do
+      login_super_admin
+
+      render_views
+
+      before do
+        allow(Cognito::Admin::User).to receive(:find).and_return(user)
+
+        get :edit, params: { cognito_uuid: cognito_uuid, section: section }
+      end
+
+      context 'and I edit the users account_status' do
+        let(:section) { :account_status }
+
+        pending 'sets the user' do
+          expect(assigns(:user)).to eq user
+        end
+
+        pending 'renders the account_status template' do
+          expect(response).to render_template(partial: 'crown_marketplace/manage_users/edit_partials/_account_status')
+        end
+      end
+
+      context 'and I edit the users telephone_number' do
+        let(:section) { :telephone_number }
+
+        pending 'sets the user' do
+          expect(assigns(:user)).to eq user
+        end
+
+        pending 'renders the telephone_number template' do
+          expect(response).to render_template(partial: 'crown_marketplace/manage_users/edit_partials/_telephone_number')
+        end
+      end
+
+      context 'and I edit the users mfa_enabled' do
+        let(:section) { :mfa_enabled }
+
+        pending 'sets the user' do
+          expect(assigns(:user)).to eq user
+        end
+
+        pending 'renders the mfa_enabled template' do
+          expect(response).to render_template(partial: 'crown_marketplace/manage_users/edit_partials/_mfa_enabled')
+        end
+      end
+
+      context 'and I edit the users roles' do
+        let(:section) { :roles }
+
+        pending 'sets the user' do
+          expect(assigns(:user)).to eq user
+        end
+
+        pending 'renders the roles template' do
+          expect(response).to render_template(partial: 'crown_marketplace/manage_users/edit_partials/_roles')
+        end
+      end
+
+      context 'and I edit the users service_access' do
+        let(:section) { :service_access }
+
+        it 'sets the user' do
+          expect(assigns(:user)).to eq user
+        end
+
+        it 'renders the service_access template' do
+          expect(response).to render_template(partial: 'crown_marketplace/manage_users/edit_partials/_service_access')
+        end
+      end
+    end
+  end
+
+  describe 'PUT update' do
+    context 'when there is an issue with editing the user' do
+      before { allow(Cognito::Admin::User).to receive(:find).and_return(user) }
+
+      context 'and it is because I do not have permissions to edit the user' do
+        let(:roles) { %w[ccs_developer] }
+        let(:section) { :service_access }
+
+        login_super_admin
+
+        before { put :update, params: { cognito_uuid: cognito_uuid, section: section } }
+
+        it 'redirects to the crown marketplace home page and sets the flash message' do
+          expect(response).to redirect_to crown_marketplace_path
+          expect(flash[:error_message]).to eq 'You do not have the required permissions to edit this user'
+        end
+      end
+
+      context 'and it is because I try and edit a section that does not exist' do
+        let(:section) { :bank_account }
+
+        login_super_admin
+
+        before { put :update, params: { cognito_uuid: cognito_uuid, section: section } }
+
+        it 'redirects to the show page' do
+          expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+        end
+      end
+
+      context 'and it is because I try and edit a section that does not exist for my user type' do
+        let(:section) { :roles }
+
+        login_user_support_admin
+
+        before { put :update, params: { cognito_uuid: cognito_uuid, section: section } }
+
+        it 'redirects to the show page' do
+          expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+        end
+      end
+    end
+
+    context 'when there is no issue with editing the user' do
+      let(:is_valid) { false }
+      let(:update_params) { nil }
+
+      login_super_admin
+
+      before do
+        allow(Cognito::Admin::User).to receive(:find).and_return(user)
+        allow(user).to receive(:update).with(section).and_return(is_valid)
+
+        put :update, params: { cognito_uuid: cognito_uuid, section: section, cognito_admin_user: { section => update_params } }
+      end
+
+      context 'and I update account_status for the user' do
+        let(:section) { :account_status }
+
+        context 'and it is valid' do
+          let(:is_valid) { true }
+          let(:update_params) { true }
+
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'redirects to the show page' do
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          end
+        end
+
+        context 'and it is invalid' do
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'renders the edit template' do
+            expect(response).to render_template(:edit)
+          end
+        end
+      end
+
+      context 'and I update telephone_number for the user' do
+        let(:section) { :telephone_number }
+
+        context 'and it is valid' do
+          let(:is_valid) { true }
+          let(:update_params) { telephone_number }
+
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'redirects to the show page' do
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          end
+        end
+
+        context 'and it is invalid' do
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'renders the edit template' do
+            expect(response).to render_template(:edit)
+          end
+        end
+      end
+
+      context 'and I update mfa_enabled for the user' do
+        let(:section) { :mfa_enabled }
+
+        context 'and it is valid' do
+          let(:is_valid) { true }
+          let(:update_params) { mfa_enabled }
+
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'redirects to the show page' do
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          end
+        end
+
+        context 'and it is invalid' do
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'renders the edit template' do
+            expect(response).to render_template(:edit)
+          end
+        end
+      end
+
+      context 'and I update roles for the user' do
+        let(:section) { :roles }
+
+        context 'and it is valid' do
+          let(:is_valid) { true }
+          let(:update_params) { roles }
+
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'redirects to the show page' do
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          end
+        end
+
+        context 'and it is invalid' do
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'renders the edit template' do
+            expect(response).to render_template(:edit)
+          end
+        end
+      end
+
+      context 'and I update service_access for the user' do
+        let(:section) { :service_access }
+
+        context 'and it is valid' do
+          let(:is_valid) { true }
+          let(:update_params) { service_access }
+
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'redirects to the show page' do
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          end
+        end
+
+        context 'and it is invalid' do
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'renders the edit template' do
+            expect(response).to render_template(:edit)
+          end
+        end
       end
     end
   end
