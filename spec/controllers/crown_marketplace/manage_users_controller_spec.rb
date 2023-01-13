@@ -443,5 +443,95 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
       end
     end
   end
+
+  describe 'show' do
+    login_super_admin
+    context 'when the current user has edit permissions and successfully looks up a user' do
+      let(:user) { Cognito::Admin::User.new(current_user_access, attributes) }
+      let(:current_user_access) { :super_admin }
+      let(:attributes) do
+        {
+          cognito_uuid: SecureRandom.uuid,
+          roles: ['buyer'],
+        }
+      end
+
+      before do
+        allow(Cognito::Admin::User).to receive(:find).and_return(user)
+        get :show, params: { cognito_uuid: user.send(:cognito_uuid) }
+      end
+
+      it 'renders the show page' do
+        expect(response).to render_template(:show)
+      end
+
+      it 'sets the @array_of_possible_editors instance variable' do
+        expect(assigns(:array_of_possible_editors)).to eq(%i[user_support user_admin super_admin])
+      end
+
+      it 'sets the @minimum_editor instance variable correctly' do
+        expect(assigns(:minimum_editor)).to eq('allow_list_access')
+      end
+
+      it 'sets the @current_user_access instance variable as true' do
+        expect(assigns(:current_row_change_access)).to eq(true)
+      end
+    end
+
+    context 'when there is an error on the user' do
+      let(:user) { Cognito::Admin::User.new(current_user_access, attributes) }
+      let(:current_user_access) { :super_admin }
+      let(:attributes) do
+        {
+          cognito_uuid: SecureRandom.uuid,
+          roles: ['buyer'],
+          error: 'error_message'
+        }
+      end
+
+      before do
+        allow(Cognito::Admin::User).to receive(:find).and_return(user)
+        get :show, params: { cognito_uuid: user.send(:cognito_uuid) }
+      end
+
+      it 'redirects to the crown marketplace home page' do
+        expect(response).to redirect_to crown_marketplace_path
+      end
+    end
+
+    context 'when current user does not have edit permissions and successfully looks up a user' do
+      login_user_support_admin
+
+      let(:user) { Cognito::Admin::User.new(current_user_access, attributes) }
+      let(:current_user_access) { :user_support }
+      let(:attributes) do
+        {
+          cognito_uuid: SecureRandom.uuid,
+          roles: ['ccs_user_admin'],
+        }
+      end
+
+      before do
+        allow(Cognito::Admin::User).to receive(:find).and_return(user)
+        get :show, params: { cognito_uuid: user.send(:cognito_uuid) }
+      end
+
+      it 'renders the show page' do
+        expect(response).to render_template(:show)
+      end
+
+      it 'sets the @array_of_possible_editors instance variable' do
+        expect(assigns(:array_of_possible_editors)).to eq([:super_admin])
+      end
+
+      it 'sets the @minimum_editor instance variable correctly' do
+        expect(assigns(:minimum_editor)).to eq('ccs_developer')
+      end
+
+      it 'sets the @current_user_access instance variable as false' do
+        expect(assigns(:current_row_change_access)).to eq(false)
+      end
+    end
+  end
   # rubocop:enable RSpec/NestedGroups
 end

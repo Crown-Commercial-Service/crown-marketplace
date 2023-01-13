@@ -1,0 +1,18 @@
+Feature: Manage users - Super admin - View user - Something went wron
+
+  Scenario: View user - Service error
+    Given I sign in as an 'super admin' user go to the crown marketplace dashboard
+    When I click on 'Manage users'
+    Then I am on the 'Manage users' page
+    Given I am going to do a search to find users
+    And I search for 'buyer@test.com' there are the following users:
+      | buyer@test.com  | enabled   |
+    And I enter 'buyer@test.com' into the search
+    And I click on 'Search'
+    Then I should see the following users in the results:
+      | buyer@test.com  | Enabled   |
+    And I cannot view the user account because of the 'service' error
+    And I view the user with email 'buyer@test.com'
+    Then I am on the 'Crown Marketplace dashboard' page
+    And I can see the following error message in the summary:
+      | The following error occured: "An error occured: service" |

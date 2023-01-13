@@ -21,6 +21,18 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
 
   def add_user; end
 
+  def show
+    @user = Cognito::Admin::User.find(@current_user_access, params[:cognito_uuid])
+    if @user.error
+      flash[:error_message] = @user.error
+      redirect_to crown_marketplace_path
+    else
+      @array_of_possible_editors = @user.array_of_users_that_could_edit
+      @current_row_change_access = @array_of_possible_editors.include?(@current_user_access)
+      @minimum_editor = @user.minimum_editor_role
+    end
+  end
+
   def create_add_user
     @user = Cognito::Admin::User.new(@current_user_access, add_user_params)
 
