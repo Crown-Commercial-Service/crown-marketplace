@@ -25,6 +25,20 @@ Feature: Manage users - Super admin - Edit user
       | Roles                   | Buyer                                 |
       | Service access          | Facilities Management Legal Services  |
 
+  Scenario: Edit user - Telephone number
+    And I change the 'Mobile telephone number' for the user
+    And I am on the 'Update user mobile telephone number' page
+    And the users details after the update will be:
+      | Mobile telephone number | 07123456789 |
+    And I am going to succesfully update the user on 'telephone_number'
+    And I enter the following details into the form:
+      | Mobile telephone number | 07123456789 |
+    And I click on 'Save and return'
+    Then I am on the 'View user' page
+    And the user has the following details:
+      | Mobile telephone number | 07123456789 |
+      | MFA status              | Disabled    |
+
   Scenario: Edit user - Service access
     And I change the 'Service access' for the user
     And I am on the 'Update user service access' page

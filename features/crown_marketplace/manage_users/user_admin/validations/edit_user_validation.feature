@@ -28,6 +28,21 @@ Feature: Manage users - User admin - Edit user - Validations
       | Roles                   | Service admin           |
       | Service access          | Management Consultancy  |
 
+  Scenario: Telephone number - Validations
+    And I change the 'Mobile telephone number' for the user
+    And I am on the 'Update user mobile telephone number' page
+    And I enter the following details into the form:
+      | Mobile telephone number | <telephone_number>  |
+    And I click on 'Save and return'
+    Then I should see the following error messages:
+      | <error_message> |
+
+    Examples:
+      | telephone_number  | error_message                                               |
+      |                   | Enter a UK mobile telephone number, for example 07700900982 |
+      | 0712345678        | Enter a UK mobile telephone number, for example 07700900982 |
+      | 01702123456       | Enter a UK mobile telephone number, for example 07700900982 |
+
   Scenario: Service access - Validations
     And I change the 'Service access' for the user
     And I am on the 'Update user service access' page
