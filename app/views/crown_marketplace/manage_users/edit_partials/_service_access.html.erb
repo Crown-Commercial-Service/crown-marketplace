@@ -4,13 +4,13 @@
       <%= t('.legend') %>
     </legend>
   </fieldset>
-  <%= displayed_error %>
   <%= govuk_hint(
     {
       text: t('.hint'),
       id: 'service-access-hint'
     }
   ) %>
+  <%= displayed_error %>
   <div class="govuk-checkboxes", data-module="govuk-checkboxes">
     <% Cognito::Admin::Roles::SERVICE_ROLES_ACCESS.each do |service_access| %>
       <div class="govuk-checkboxes__item">

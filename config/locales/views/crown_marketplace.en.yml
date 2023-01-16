@@ -115,6 +115,10 @@ en:
           options:
             disabled: Disabled
             enabled: Enabled
+        roles:
+          hint: The user will have different access depending on the roles selected. If the user requires an admin related role, make sure they have Multi-Factor Authentication (MFA) enabled.
+          legend: Select the roles for the user
+          section: roles
         service_access:
           hint: Buyer and service admin users need to be assigned access to at least one service, otherwise this can be left empty
           legend: Select the service access for the user
