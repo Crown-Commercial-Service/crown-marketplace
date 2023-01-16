@@ -66,7 +66,7 @@
         </dd>
         <% if can_edit_user? %>
           <dd class="govuk-summary-list__actions">
-            <%= link_to('#telephone-number', class: 'govuk-link govuk-link--no-visited-state') do %>
+            <%= link_to(edit_crown_marketplace_manage_user_path(section: 'telephone-number'), class: 'govuk-link govuk-link--no-visited-state') do %>
               <%= t('.change') %>
               <span class="govuk-visually-hidden"><%= t('.telephone_number') %></span>
             <% end %>
