@@ -77,3 +77,10 @@ end
 Then('I change the {string} for the user') do |section|
   manage_users_page.view_user_summary.send(section).edit.click
 end
+
+Then('I have the following options for roles:') do |roles_table|
+  role_labels = manage_users_page.all('label.govuk-checkboxes__label').map(&:text)
+  roles = roles_table.raw.flatten
+
+  expect(role_labels).to eq roles
+end

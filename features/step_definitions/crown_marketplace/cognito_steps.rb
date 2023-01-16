@@ -82,9 +82,9 @@ Then('the users details after the update will be:') do |user_details_table|
     cognito_uuid: @user_details[:cognito_uuid],
     email: @user_details[:email],
     telephone_number: user_details['Mobile telephone number'] || @user_details[:telephone_number],
-    account_status: user_details['Account enabled'] == 'true' || @user_details[:account_status],
+    account_status: user_details['Account enabled'] == 'true' || @user_details[:account_status] == 'true',
     confirmation_status: user_details['Confirmation status'] || @user_details[:confirmation_status],
-    mfa_enabled: user_details['MFA enabled'] == 'true' || @user_details[:mfa_enabled],
+    mfa_enabled: user_details['MFA enabled'] == 'true' || @user_details[:mfa_enabled] == 'true',
     roles: (user_details['Roles'] || '').split(',').presence || @user_details[:roles],
     service_access: (user_details['Service access'] || '').split(',').presence || @user_details[:service_access]
   }

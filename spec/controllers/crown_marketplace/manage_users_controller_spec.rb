@@ -606,11 +606,11 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
       context 'and I edit the users roles' do
         let(:section) { :roles }
 
-        pending 'sets the user' do
+        it 'sets the user' do
           expect(assigns(:user)).to eq user
         end
 
-        pending 'renders the roles template' do
+        it 'renders the roles template' do
           expect(response).to render_template(partial: 'crown_marketplace/manage_users/edit_partials/_roles')
         end
       end
