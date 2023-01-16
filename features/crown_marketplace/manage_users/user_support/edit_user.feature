@@ -7,10 +7,12 @@ Feature: Manage users - User support - Edit user
     Then I am on the 'Manage users' page
     Given I am going to do a search to find users
     And I search for 'buyer@test.com' and there is a user with the following details:
-      | Account enabled     | true                |
-      | Confirmation status | confirmed           |
-      | Roles               | buyer               |
-      | Service access      | fm_access,ls_access |
+      | Account enabled         | true                |
+      | Confirmation status     | confirmed           |
+      | Roles                   | buyer               |
+      | Mobile telephone number | 07987654321         |
+      | MFA enabled             | false               |
+      | Service access          | fm_access,ls_access |
     And I enter 'buyer@test.com' into the search
     And I click on 'Search'
     Then I should see the following users in the results:
@@ -22,23 +24,10 @@ Feature: Manage users - User support - Edit user
       | Email address           | buyer@test.com                        |
       | Account status          | Enabled                               |
       | Confirmation status     | confirmed                             |
-      | Mobile telephone number | None                                  |
+      | Mobile telephone number | 07987654321                           |
+      | Mobile telephone number | 07987654321                           |
       | Roles                   | Buyer                                 |
       | Service access          | Facilities Management Legal Services  |
-
-  Scenario: Edit user - Telephone number
-    And I change the 'Mobile telephone number' for the user
-    And I am on the 'Update user mobile telephone number' page
-    And the users details after the update will be:
-      | Mobile telephone number | 07123456789 |
-    And I am going to succesfully update the user on 'telephone_number'
-    And I enter the following details into the form:
-      | Mobile telephone number | 07123456789 |
-    And I click on 'Save and return'
-    Then I am on the 'View user' page
-    And the user has the following details:
-      | Mobile telephone number | 07123456789 |
-      | MFA status              | Disabled    |
 
   Scenario: Edit user - Service access
     And I change the 'Service access' for the user
@@ -59,3 +48,15 @@ Feature: Manage users - User support - Edit user
     And I change the 'Service access' for the user
     Then I am on the 'Crown Marketplace dashboard' page
     And there is an error notification with the message 'An error occured when trying to edit the user'
+
+  Scenario: Cannot edit some of the attributes
+    And the users details after the update will be:
+      | Mobile telephone number | 07123456789 |
+    And I refresh the page
+    And the user has the following details:
+      | Mobile telephone number | 07123456789 |
+      | MFA status              | Disabled    |
+    And I cannot edit the users:
+      | Mobile telephone number |
+      | MFA status              |
+      | Roles                   |

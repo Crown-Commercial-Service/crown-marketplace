@@ -17,6 +17,7 @@ en:
               not_on_allow_list: Email domain is not in the allow list
               user_already_exist: An account with this email already exists
             mfa_enabled:
+              cannot_disable_mfa: You cannot disable MFA for this user as they have an admin role
               telephone_number_required: The telephone number of the user must be set to update the MFA configuration
             roles:
               invalid_role_selection: You do not have the ability to create users with these roles
@@ -115,6 +116,10 @@ en:
           options:
             disabled: Disabled
             enabled: Enabled
+        mfa_enabled:
+          hint: Admin users need to have MFA enabled in order to use the Crown Marketplace.
+          legend: Multi-Factor Authentication (MFA) status
+          section: MFA status
         roles:
           hint: The user will have different access depending on the roles selected. If the user requires an admin related role, make sure they have Multi-Factor Authentication (MFA) enabled.
           legend: Select the roles for the user

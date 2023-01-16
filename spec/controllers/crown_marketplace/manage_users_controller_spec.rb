@@ -519,11 +519,10 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
 
       context 'and it is because I do not have permissions to edit the user' do
         let(:roles) { %w[ccs_developer] }
-        let(:section) { :service_access }
 
         login_super_admin
 
-        before { get :edit, params: { cognito_uuid: cognito_uuid, section: section } }
+        before { get :edit, params: { cognito_uuid: cognito_uuid, section: :service_access } }
 
         it 'redirects to the crown marketplace home page and sets the flash message' do
           expect(response).to redirect_to crown_marketplace_path
@@ -532,11 +531,9 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
       end
 
       context 'and it is because I try and edit a section that does not exist' do
-        let(:section) { :bank_account }
-
         login_super_admin
 
-        before { get :edit, params: { cognito_uuid: cognito_uuid, section: section } }
+        before { get :edit, params: { cognito_uuid: cognito_uuid, section: :bank_account } }
 
         it 'redirects to the show page' do
           expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
@@ -544,14 +541,14 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
       end
 
       context 'and it is because I try and edit a section that does not exist for my user type' do
-        let(:section) { :roles }
+        %i[telephone_number mfa_enabled roles].each do |unpermitted_section|
+          login_user_support_admin
 
-        login_user_support_admin
+          before { get :edit, params: { cognito_uuid: cognito_uuid, section: unpermitted_section } }
 
-        before { get :edit, params: { cognito_uuid: cognito_uuid, section: section } }
-
-        it 'redirects to the show page' do
-          expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          it "redirects to the show page for #{unpermitted_section}" do
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          end
         end
       end
     end
@@ -594,11 +591,11 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
       context 'and I edit the users mfa_enabled' do
         let(:section) { :mfa_enabled }
 
-        pending 'sets the user' do
+        it 'sets the user' do
           expect(assigns(:user)).to eq user
         end
 
-        pending 'renders the mfa_enabled template' do
+        it 'renders the mfa_enabled template' do
           expect(response).to render_template(partial: 'crown_marketplace/manage_users/edit_partials/_mfa_enabled')
         end
       end
@@ -635,11 +632,10 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
 
       context 'and it is because I do not have permissions to edit the user' do
         let(:roles) { %w[ccs_developer] }
-        let(:section) { :service_access }
 
         login_super_admin
 
-        before { put :update, params: { cognito_uuid: cognito_uuid, section: section } }
+        before { put :update, params: { cognito_uuid: cognito_uuid, section: :service_access } }
 
         it 'redirects to the crown marketplace home page and sets the flash message' do
           expect(response).to redirect_to crown_marketplace_path
@@ -647,27 +643,25 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
         end
       end
 
-      context 'and it is because I try and edit a section that does not exist' do
-        let(:section) { :bank_account }
-
+      context 'and it is because I try and update a section that does not exist' do
         login_super_admin
 
-        before { put :update, params: { cognito_uuid: cognito_uuid, section: section } }
+        before { put :update, params: { cognito_uuid: cognito_uuid, section: :bank_account } }
 
         it 'redirects to the show page' do
           expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
         end
       end
 
-      context 'and it is because I try and edit a section that does not exist for my user type' do
-        let(:section) { :roles }
+      context 'and it is because I try and update a section that does not exist for my user type' do
+        %i[telephone_number mfa_enabled roles].each do |unpermitted_section|
+          login_user_support_admin
 
-        login_user_support_admin
+          before { put :update, params: { cognito_uuid: cognito_uuid, section: unpermitted_section } }
 
-        before { put :update, params: { cognito_uuid: cognito_uuid, section: section } }
-
-        it 'redirects to the show page' do
-          expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          it "redirects to the show page for #{unpermitted_section}" do
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          end
         end
       end
     end
