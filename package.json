@@ -20,7 +20,7 @@
     "@babel/preset-env": "^7.20.2",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
-    "eslint": "^8.31.0",
+    "eslint": "^8.32.0",
     "juice": "^8.1.0"
   }
 }
