@@ -51,5 +51,8 @@ module Pages
       section :Roles, ViewUserRow, '#view-user__roles'
       section :'Service access', ViewUserRow, '#view-user__service-access'
     end
+
+    element :mfa_status_enabled, '#cognito_admin_user_mfa_enabled_true'
+    element :mfa_status_disabled, '#cognito_admin_user_mfa_enabled_false'
   end
 end
