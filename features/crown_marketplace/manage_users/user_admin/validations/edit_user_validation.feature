@@ -43,6 +43,24 @@ Feature: Manage users - User admin - Edit user - Validations
       | 0712345678        | Enter a UK mobile telephone number, for example 07700900982 |
       | 01702123456       | Enter a UK mobile telephone number, for example 07700900982 |
 
+  Scenario: Roles - Validations - None selected
+    And I change the 'Roles' for the user
+    And I am on the 'Update user roles' page
+    And I deselect the following items:
+      | Service admin |
+    And I click on 'Save and return'
+    Then I should see the following error messages:
+      | Select a role for the user  |
+
+  Scenario: Roles - Validations - Admin role selected without MFA
+    And I change the 'Roles' for the user
+    And I am on the 'Update user roles' page
+    And the users details after the update will be:
+      | MFA enabled | false |
+    And I click on 'Save and return'
+    Then I should see the following error messages:
+      | You must enable MFA for this user to add these admin roles  |
+
   Scenario: Service access - Validations
     And I change the 'Service access' for the user
     And I am on the 'Update user service access' page
