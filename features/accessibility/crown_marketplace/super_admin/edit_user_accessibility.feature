@@ -31,7 +31,18 @@ Feature: Manage users - Super admin - Edit user - Accessibility
     And I am on the 'Update user mobile telephone number' page
     And the page should be axe clean
 
-  Scenario: Telephone number - Accessibility
+  Scenario: MFA Status - Accessibility
+    And the users details after the update will be:
+      | Mobile telephone number | 07123456789 |
+    And I refresh the page
+    And the user has the following details:
+      | Mobile telephone number | 07123456789 |
+      | MFA status              | Disabled    |
+    And I change the 'MFA status' for the user
+    And I am on the 'Update user MFA status' page
+    And the page should be axe clean
+
+  Scenario: Roles - Accessibility
     And I change the 'Roles' for the user
     And I am on the 'Update user roles' page
     And the page should be axe clean
