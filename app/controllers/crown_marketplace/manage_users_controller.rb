@@ -6,7 +6,7 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
   before_action :set_user, only: %i[show edit update]
   before_action :redirect_if_lack_permissions, :redirect_if_unpermitted_section, only: %i[edit update]
 
-  helper_method :section, :available_roles, :role_requires_service_access?, :can_edit_user?
+  helper_method :section, :available_roles, :role_requires_service_access?, :can_edit_user?, :permitted_sections
 
   def index
     @search = if find_user_params.empty?
@@ -146,11 +146,11 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
   end
 
   def permitted_sections
-    if @current_user_access == :user_support
-      USER_SUPPORT_EDIT_SECTIONS
-    else
-      RECOGNISED_EDIT_SECTIONS
-    end
+    @permitted_sections ||= if @current_user_access == :user_support
+                              USER_SUPPORT_EDIT_SECTIONS
+                            else
+                              RECOGNISED_EDIT_SECTIONS
+                            end
   end
 
   def authorize_user
@@ -197,8 +197,8 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
     { service_access: [] }
   ].freeze
 
-  USER_SUPPORT_EDIT_SECTIONS = %i[account_status telephone_number mfa_enabled service_access].freeze
-  RECOGNISED_EDIT_SECTIONS = (USER_SUPPORT_EDIT_SECTIONS + %i[roles]).freeze
+  USER_SUPPORT_EDIT_SECTIONS = %i[account_status service_access].freeze
+  RECOGNISED_EDIT_SECTIONS = (USER_SUPPORT_EDIT_SECTIONS + %i[telephone_number mfa_enabled roles]).freeze
   PERMITED_PARAMS = {
     account_status: %i[account_status],
     telephone_number: %i[telephone_number],
