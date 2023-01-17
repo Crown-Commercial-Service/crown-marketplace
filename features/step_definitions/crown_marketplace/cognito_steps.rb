@@ -93,3 +93,7 @@ Then('the users details after the update will be:') do |user_details_table|
   }
   allow(Cognito::Admin::UserClientInterface).to receive(:find_user_from_cognito_uuid).and_return(@user_details)
 end
+
+Then('I am going to click resend temporary password which will return:') do |resend_temporary_password_response|
+  allow(Cognito::Admin::UserClientInterface).to receive(:resend_temporary_password).and_return(resend_temporary_password_response.raw.flatten.first.presence)
+end
