@@ -26,6 +26,11 @@ Feature: Manage users - Super admin - Edit user - Accessibility
       | Roles                   | Buyer                                 |
       | Service access          | Facilities Management Legal Services  |
 
+  Scenario: Telephone number - Accessibility
+    And I change the 'Mobile telephone number' for the user
+    And I am on the 'Update user mobile telephone number' page
+    And the page should be axe clean
+
   Scenario: Service access - Accessibility
     And I change the 'Service access' for the user
     And I am on the 'Update user service access' page

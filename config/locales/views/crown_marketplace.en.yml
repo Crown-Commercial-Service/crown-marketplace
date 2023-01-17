@@ -99,7 +99,7 @@ en:
         enter_user_details:
           email_address: Email address
           telephone_number:
-            hint: Admin users require Multi-Factor Authentication (MFA) when signing in, otherwise this can be left blank
+            hint: This will be used for Multi-Factor Authentication (MFA) when signing in
             label: Mobile telephone number
         select_role:
           hint: The user will have different access depending on the role selected. If the user needs additional access, this can be added once they have been created.
@@ -119,6 +119,10 @@ en:
           hint: Buyer and service admin users need to be assigned access to at least one service, otherwise this can be left empty
           legend: Select the service access for the user
           section: service access
+        telephone_number:
+          hint: This will be used for Multi-Factor Authentication (MFA) when signing in
+          label: Mobile telephone number
+          section: mobile telephone number
       index:
         enter_an_email: Enter the email of the user and click 'Search' to see if that user has an account in Crown Marketplace.
         find_a_user: Find a user

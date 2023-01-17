@@ -582,11 +582,11 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
       context 'and I edit the users telephone_number' do
         let(:section) { :telephone_number }
 
-        pending 'sets the user' do
+        it 'sets the user' do
           expect(assigns(:user)).to eq user
         end
 
-        pending 'renders the telephone_number template' do
+        it 'renders the telephone_number template' do
           expect(response).to render_template(partial: 'crown_marketplace/manage_users/edit_partials/_telephone_number')
         end
       end
