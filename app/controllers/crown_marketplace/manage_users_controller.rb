@@ -183,9 +183,10 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
     { service_access: [] }
   ].freeze
 
-  USER_SUPPORT_EDIT_SECTIONS = %i[account_status service_access].freeze
+  USER_SUPPORT_EDIT_SECTIONS = %i[email_verified account_status service_access].freeze
   RECOGNISED_EDIT_SECTIONS = (USER_SUPPORT_EDIT_SECTIONS + %i[telephone_number mfa_enabled roles]).freeze
   PERMITED_PARAMS = {
+    email_verified: %i[email_verified],
     account_status: %i[account_status],
     telephone_number: %i[telephone_number],
     mfa_enabled: %i[mfa_enabled],

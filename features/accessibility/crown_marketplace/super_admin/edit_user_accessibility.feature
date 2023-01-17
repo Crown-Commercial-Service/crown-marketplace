@@ -7,6 +7,7 @@ Feature: Manage users - Super admin - Edit user - Accessibility
     Then I am on the 'Manage users' page
     Given I am going to do a search to find users
     And I search for 'buyer@test.com' and there is a user with the following details:
+      | Email verified      | true                |
       | Account enabled     | true                |
       | Confirmation status | confirmed           |
       | Roles               | buyer               |
@@ -20,11 +21,22 @@ Feature: Manage users - Super admin - Edit user - Accessibility
     And I can manage the user
     And the user has the following details:
       | Email address           | buyer@test.com                        |
+      | Email status            | Verified                              |
       | Account status          | Enabled                               |
       | Confirmation status     | confirmed                             |
       | Mobile telephone number | None                                  |
       | Roles                   | Buyer                                 |
       | Service access          | Facilities Management Legal Services  |
+
+  Scenario: Email status - Accessibility
+    And I change the 'Email status' for the user
+    And I am on the 'Update user email status' page
+    And the page should be axe clean
+
+  Scenario: Account status - Accessibility
+    And I change the 'Account status' for the user
+    And I am on the 'Update user account status' page
+    And the page should be axe clean
 
   Scenario: Telephone number - Accessibility
     And I change the 'Mobile telephone number' for the user

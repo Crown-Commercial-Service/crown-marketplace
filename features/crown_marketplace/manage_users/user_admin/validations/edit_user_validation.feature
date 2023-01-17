@@ -6,6 +6,7 @@ Feature: Manage users - User admin - Edit user - Validations
     Then I am on the 'Manage users' page
     Given I am going to do a search to find users
     And I search for 'service_admin@test.com' and there is a user with the following details:
+      | Email verified          | true          |
       | Account enabled         | true          |
       | Confirmation status     | confirmed     |
       | Mobile telephone number | 07987654321   |
@@ -21,6 +22,7 @@ Feature: Manage users - User admin - Edit user - Validations
     And I can manage the user
     And the user has the following details:
       | Email address           | service_admin@test.com  |
+      | Email status            | Verified                |
       | Account status          | Enabled                 |
       | Confirmation status     | confirmed               |
       | Mobile telephone number | 07987654321             |

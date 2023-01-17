@@ -58,6 +58,8 @@ module Cognito
           client = new_client
 
           case method
+          when :email_verified
+            update_email_verification(client, cognito_uuid, attributes)
           when :account_status
             update_enabled_status(client, cognito_uuid, attributes)
           when :telephone_number
@@ -170,6 +172,7 @@ module Cognito
           attributes = {}
 
           attributes[:email] = get_attribute_value_from_user_attributes(resp.user_attributes, 'email')
+          attributes[:email_verified] = get_attribute_value_from_user_attributes(resp.user_attributes, 'email_verified') == 'true'
           attributes[:telephone_number] = extract_telephone_number_from_response(get_attribute_value_from_user_attributes(resp.user_attributes, 'phone_number'))
           attributes[:account_status] = resp.enabled
           attributes[:confirmation_status] = resp.user_status
@@ -188,20 +191,17 @@ module Cognito
           end
         end
 
-        def find_user_in_cognito_debug
-          attributes = {}
-
-          attributes[:email] = 'tim.south@email.com'
-          # attributes[:telephone_number] = '07123456789'
-          attributes[:telephone_number] = ''
-          attributes[:account_status] = true
-          attributes[:confirmation_status] = 'CONFIRMED'
-          attributes[:mfa_enabled] = false
-          # attributes[:roles] = ['buyer', 'ccs_user_admin', 'ccs_employee']
-          attributes[:roles] = ['buyer']
-          attributes[:service_access] = ['fm_access', 'st_access']
-
-          attributes
+        def update_email_verification(client, cognito_uuid, attributes)
+          client.admin_update_user_attributes(
+            user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+            username: cognito_uuid,
+            user_attributes: [
+              {
+                name: 'email_verified',
+                value: attributes[:email_verified].to_s
+              }
+            ]
+          )
         end
 
         # Methods relating to updating the user

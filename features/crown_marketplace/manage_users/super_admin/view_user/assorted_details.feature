@@ -8,6 +8,7 @@ Feature: Manage users - Super admin - View user - Assorted Details
   
   Scenario Outline: View Buyer - Different confirmation status
     And I search for 'buyer@test.com' and there is a user with the following details:
+      | Email verified      | true                  |
       | Account enabled     | true                  |
       | Confirmation status | <confirmation_status> |
       | Roles               | buyer                 |
@@ -21,6 +22,7 @@ Feature: Manage users - Super admin - View user - Assorted Details
     And I can manage the user
     And the user has the following details:
       | Email address           | buyer@test.com                        |
+      | Email status            | Verified                              |
       | Account status          | Enabled                               |
       | Confirmation status     | <confirmation_status>                 |
       | Mobile telephone number | None                                  |
@@ -36,6 +38,7 @@ Feature: Manage users - Super admin - View user - Assorted Details
 
   Scenario: View Buyer - Things are disabled
     And I search for 'buyer@test.com' and there is a user with the following details:
+      | Email verified          | false         |
       | Account enabled         | false         |
       | Confirmation status     | confirmed     |
       | Mobile telephone number | 07987654321   |
@@ -51,6 +54,7 @@ Feature: Manage users - Super admin - View user - Assorted Details
     And I can manage the user
     And the user has the following details:
       | Email address           | buyer@test.com          |
+      | Email status            | Unverified              |
       | Account status          | Disabled                |
       | Confirmation status     | confirmed               |
       | Mobile telephone number | 07987654321             |
@@ -60,11 +64,12 @@ Feature: Manage users - Super admin - View user - Assorted Details
 
   Scenario: View Super admin - Has everything
     And I search for 'super_admin@test.com' and there is a user with the following details:
+      | Email verified          | true                                                                |
       | Account enabled         | true                                                                |
       | Confirmation status     | confirmed                                                           |
       | Mobile telephone number | 07123456789                                                         |
       | MFA enabled             | true                                                                |
-      | Roles                   | buyer,ccs_employee,allow_list_access,ccs_user_admin,ccs_developer |
+      | Roles                   | buyer,ccs_employee,allow_list_access,ccs_user_admin,ccs_developer   |
       | Service access          | fm_access,mc_access,ls_access,st_access                             |
     And I enter 'super_admin@test.com' into the search
     And I click on 'Search'
@@ -76,6 +81,7 @@ Feature: Manage users - Super admin - View user - Assorted Details
       | You cannot make changes to this user. 'Super admins' can only be updated in the AWS Cognito console.  |
     And the user has the following details:
       | Email address           | super_admin@test.com                                                        |
+      | Email status            | Verified                                                                    |
       | Account status          | Enabled                                                                     |
       | Confirmation status     | confirmed                                                                   |
       | Mobile telephone number | 07123456789                                                                 |
