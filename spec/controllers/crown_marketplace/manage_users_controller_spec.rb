@@ -567,11 +567,11 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
       context 'and I edit the users account_status' do
         let(:section) { :account_status }
 
-        pending 'sets the user' do
+        it 'sets the user' do
           expect(assigns(:user)).to eq user
         end
 
-        pending 'renders the account_status template' do
+        it 'renders the account_status template' do
           expect(response).to render_template(partial: 'crown_marketplace/manage_users/edit_partials/_account_status')
         end
       end

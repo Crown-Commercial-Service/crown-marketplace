@@ -54,5 +54,7 @@ module Pages
 
     element :mfa_status_enabled, '#cognito_admin_user_mfa_enabled_true'
     element :mfa_status_disabled, '#cognito_admin_user_mfa_enabled_false'
+    element :account_status_enabled, '#cognito_admin_user_account_status_true'
+    element :account_status_disabled, '#cognito_admin_user_account_status_false'
   end
 end

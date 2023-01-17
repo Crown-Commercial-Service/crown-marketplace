@@ -113,9 +113,12 @@ en:
         save_and_return: Save and return
       edit_partials:
         account_status:
+          hint: Disabling the user will remove their access to all the services in the Crown Marketplace
+          legend: User account status
           options:
             disabled: Disabled
             enabled: Enabled
+          section: account status
         mfa_enabled:
           hint: Admin users need to have MFA enabled in order to use the Crown Marketplace.
           legend: Multi-Factor Authentication (MFA) status

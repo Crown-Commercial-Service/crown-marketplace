@@ -40,9 +40,9 @@
         <dd class="govuk-summary-list__value">
           <%= govuk_tag_with_text(*enabled_disabled_status_tag(@user.account_status)) %>
         </dd>
-        <% if can_edit_user? %>
+         <% if can_edit_user? %>
           <dd class="govuk-summary-list__actions">
-            <%= link_to('#account-status', class: 'govuk-link govuk-link--no-visited-state') do %>
+            <%= link_to(edit_crown_marketplace_manage_user_path(section: 'account_status'), class: 'govuk-link govuk-link--no-visited-state') do %>
               <%= t('.change') %>
               <span class="govuk-visually-hidden"><%= t('.account_status') %></span>
             <% end %>

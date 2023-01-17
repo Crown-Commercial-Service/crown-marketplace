@@ -29,6 +29,18 @@ Feature: Manage users - User support - Edit user
       | Roles                   | Buyer                                 |
       | Service access          | Facilities Management Legal Services  |
 
+  Scenario: Edit user - Account status
+    And I change the 'Account status' for the user
+    And I am on the 'Update user account status' page
+    And the users details after the update will be:
+      | Account status | Enabled |
+    And I am going to succesfully update the user on 'account_status'
+    And I choose 'Disabled' for the account status
+    And I click on 'Save and return'
+    Then I am on the 'View user' page
+    And the user has the following details:
+      | Account status | Disabled |
+
   Scenario: Edit user - Service access
     And I change the 'Service access' for the user
     And I am on the 'Update user service access' page
