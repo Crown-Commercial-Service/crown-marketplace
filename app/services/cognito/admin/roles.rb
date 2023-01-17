@@ -43,7 +43,7 @@ module Cognito
         application_locations
       end
 
-      def array_of_users_that_could_edit
+      def can_edit_user_with_current_access?
         if @roles.include?('ccs_developer')
           []
         elsif @roles.include?('ccs_user_admin')
@@ -54,7 +54,7 @@ module Cognito
           %i[user_support user_admin super_admin]
         else
           []
-        end
+        end.include?(@access)
       end
 
       def minimum_editor_role

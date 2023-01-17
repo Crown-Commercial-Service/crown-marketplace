@@ -54,9 +54,7 @@ module Cognito
         @origional_groups = @cognito_roles.combine_roles
       end
 
-      delegate :array_of_users_that_could_edit, to: :cognito_roles
-
-      delegate :minimum_editor_role, to: :cognito_roles
+      delegate :can_edit_user_with_current_access?, :minimum_editor_role, to: :cognito_roles
 
       def assign_attributes(**new_attributes)
         raise ArgumentError, 'When assigning attributes, you must pass a hash as an argument.' unless new_attributes.respond_to?(:stringify_keys)

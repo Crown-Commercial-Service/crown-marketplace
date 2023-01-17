@@ -1,0 +1,27 @@
+<%= content_for :page_title, t('.heading', section: t("crown_marketplace.manage_users.edit_partials.#{section}.section")) %>
+<%= crown_marketplace_breadcrumbs(
+  { text: t('crown_marketplace.manage_users.index.heading'), link: crown_marketplace_manage_users_path },
+  { text: t('crown_marketplace.manage_users.show.heading'), link: crown_marketplace_manage_user_path },
+  { text: t('.heading', section: t("crown_marketplace.manage_users.edit_partials.#{section}.section")) }
+)%>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @user.errors } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-l"><%= @user.email %></span>
+      <%= t('.heading', section: t("crown_marketplace.manage_users.edit_partials.#{section}.section")) %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @user, url: update_crown_marketplace_manage_user_path, method: :put, local: 'false', html: { novalidate: true } do |f| %>
+      <%= render partial: "crown_marketplace/manage_users/edit_partials/#{section}", locals: { f: f } %>
+
+      <%= f.submit t('.save_and_return'), class: "govuk-button", aria: { label: t('.save_and_return') } %>
+    <% end %>
+  </div>
+</div>
