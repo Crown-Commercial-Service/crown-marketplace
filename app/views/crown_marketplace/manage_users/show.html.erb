@@ -110,7 +110,7 @@
         </dd>
         <% if can_edit_user? %>
           <dd class="govuk-summary-list__actions">
-            <%= link_to('#roles', class: 'govuk-link govuk-link--no-visited-state') do %>
+            <%= link_to(edit_crown_marketplace_manage_user_path(section: 'roles'), class: 'govuk-link govuk-link--no-visited-state') do %>
               <%= t('.change') %>
               <span class="govuk-visually-hidden"><%= t('.roles') %></span>
             <% end %>

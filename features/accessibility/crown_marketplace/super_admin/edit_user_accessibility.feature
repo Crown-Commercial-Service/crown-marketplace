@@ -31,6 +31,11 @@ Feature: Manage users - Super admin - Edit user - Accessibility
     And I am on the 'Update user mobile telephone number' page
     And the page should be axe clean
 
+  Scenario: Telephone number - Accessibility
+    And I change the 'Roles' for the user
+    And I am on the 'Update user roles' page
+    And the page should be axe clean
+
   Scenario: Service access - Accessibility
     And I change the 'Service access' for the user
     And I am on the 'Update user service access' page

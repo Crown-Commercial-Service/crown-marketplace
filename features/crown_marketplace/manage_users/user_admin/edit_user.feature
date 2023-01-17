@@ -39,6 +39,26 @@ Feature: Manage users - User admin - Edit user
       | Mobile telephone number | 07123456789 |
       | MFA status              | Disabled    |
 
+  Scenario: Edit user - Roles
+    And I change the 'Roles' for the user
+    And I am on the 'Update user roles' page
+    And I have the following options for roles:
+      | Buyer         |
+      | Service admin |
+      | User support  |
+    And the users details after the update will be:
+      | Mobile telephone number | 07123456789   |
+      | MFA enabled             | true          |
+      | Roles                   | ccs_employee  |
+    And I am going to succesfully update the user on 'roles'
+    And I deselect the following items:
+      | Buyer |
+    And I select 'Service admin'
+    And I click on 'Save and return'
+    Then I am on the 'View user' page
+    And the user has the following details:
+      | Roles | Service admin  |
+
   Scenario: Edit user - Service access
     And I change the 'Service access' for the user
     And I am on the 'Update user service access' page
