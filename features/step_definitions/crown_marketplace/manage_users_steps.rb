@@ -93,6 +93,14 @@ Then('I choose {string} for the MFA status') do |option|
   end
 end
 
+Then('I choose {string} for the account status') do |option|
+  if option == 'Enabled'
+    manage_users_page.account_status_enabled.choose
+  else
+    manage_users_page.account_status_disabled.choose
+  end
+end
+
 Then('I cannot edit the users:') do |sections|
   sections.raw.flatten.each do |section|
     expect(manage_users_page.view_user_summary.send(section)).not_to have_css('.govuk-summary-list__actions')
