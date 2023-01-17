@@ -33,6 +33,22 @@
           <%= @user.email %>
         </dd>
       </div>
+      <div class="govuk-summary-list__row" id="view-user__email-status">
+        <dt class="govuk-summary-list__key">
+          <%= t('.email_status') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= govuk_tag_with_text(*verified_unverified_status_tag(@user.email_verified)) %>
+        </dd>
+        <% if can_edit_user? %>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to(edit_crown_marketplace_manage_user_path(section: 'email-verified'), class: 'govuk-link govuk-link--no-visited-state') do %>
+              <%= t('.change') %>
+              <span class="govuk-visually-hidden"><%= t('.email_status') %></span>
+            <% end %>
+          </dd>
+        <% end %>
+      </div>
       <div class="govuk-summary-list__row" id="view-user__account-status">
         <dt class="govuk-summary-list__key">
           <%= t('.account_status') %>
@@ -40,7 +56,7 @@
         <dd class="govuk-summary-list__value">
           <%= govuk_tag_with_text(*enabled_disabled_status_tag(@user.account_status)) %>
         </dd>
-         <% if can_edit_user? %>
+        <% if can_edit_user? %>
           <dd class="govuk-summary-list__actions">
             <%= link_to(edit_crown_marketplace_manage_user_path(section: 'account_status'), class: 'govuk-link govuk-link--no-visited-state') do %>
               <%= t('.change') %>

@@ -119,6 +119,13 @@ en:
             disabled: Disabled
             enabled: Enabled
           section: account status
+        email_verified:
+          hint: The user's email must be verified for them to be able to reset their password.
+          legend: Is the user's email verified?
+          options:
+            unverified: Unverified
+            verified: Verified
+          section: email status
         mfa_enabled:
           hint: Admin users need to have MFA enabled in order to use the Crown Marketplace.
           legend: Multi-Factor Authentication (MFA) status
@@ -148,6 +155,7 @@ en:
         change: Change
         confirmation_status: Confirmation status
         email: Email address
+        email_status: Email status
         heading: View user
         mfa_status: MFA status
         none: None

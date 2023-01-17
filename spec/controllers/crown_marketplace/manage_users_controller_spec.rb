@@ -564,6 +564,18 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
         get :edit, params: { cognito_uuid: cognito_uuid, section: section }
       end
 
+      context 'and I edit the users email_verified' do
+        let(:section) { :email_verified }
+
+        it 'sets the user' do
+          expect(assigns(:user)).to eq user
+        end
+
+        it 'renders the email_verified template' do
+          expect(response).to render_template(partial: 'crown_marketplace/manage_users/edit_partials/_email_verified')
+        end
+      end
+
       context 'and I edit the users account_status' do
         let(:section) { :account_status }
 
@@ -677,6 +689,33 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
         allow(user).to receive(:update).with(section).and_return(is_valid)
 
         put :update, params: { cognito_uuid: cognito_uuid, section: section, cognito_admin_user: { section => update_params } }
+      end
+
+      context 'and I update email_verified for the user' do
+        let(:section) { :email_verified }
+
+        context 'and it is valid' do
+          let(:is_valid) { true }
+          let(:update_params) { true }
+
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'redirects to the show page' do
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          end
+        end
+
+        context 'and it is invalid' do
+          it 'sets the user' do
+            expect(assigns(:user)).to eq user
+          end
+
+          it 'renders the edit template' do
+            expect(response).to render_template(:edit)
+          end
+        end
       end
 
       context 'and I update account_status for the user' do

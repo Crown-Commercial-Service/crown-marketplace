@@ -85,6 +85,14 @@ Then('I have the following options for roles:') do |roles_table|
   expect(role_labels).to eq roles
 end
 
+Then('I choose {string} for the email status') do |option|
+  if option == 'VERIFIED'
+    manage_users_page.email_status_verified.choose
+  else
+    manage_users_page.email_status_unverified.choose
+  end
+end
+
 Then('I choose {string} for the MFA status') do |option|
   if option == 'ENABLED'
     manage_users_page.mfa_status_enabled.choose

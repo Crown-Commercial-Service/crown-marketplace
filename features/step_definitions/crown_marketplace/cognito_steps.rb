@@ -51,6 +51,7 @@ Given('I search for {string} and there is a user with the following details:') d
   @user_details = {
     cognito_uuid: SecureRandom.uuid,
     email: email,
+    email_verified: user_details['Email verified'] == 'true',
     telephone_number: user_details['Mobile telephone number'],
     account_status: user_details['Account enabled'] == 'true',
     confirmation_status: user_details['Confirmation status'],
@@ -66,6 +67,7 @@ Then('I am going to succesfully update the user on {string}') do |section|
     @user_details[:cognito_uuid],
     {
       email: @user_details[:email],
+      email_verified: @user_details[:email_verified],
       account_status: @user_details[:account_status],
       telephone_number: @user_details[:telephone_number],
       groups: @user_details[:service_access] + @user_details[:roles],
@@ -81,6 +83,7 @@ Then('the users details after the update will be:') do |user_details_table|
   @user_details = {
     cognito_uuid: @user_details[:cognito_uuid],
     email: @user_details[:email],
+    email_verified: user_details['Email verified'] == 'true' || @user_details[:email_verified] == 'true',
     telephone_number: user_details['Mobile telephone number'] || @user_details[:telephone_number],
     account_status: user_details['Account enabled'] == 'true' || @user_details[:account_status] == 'true',
     confirmation_status: user_details['Confirmation status'] || @user_details[:confirmation_status],

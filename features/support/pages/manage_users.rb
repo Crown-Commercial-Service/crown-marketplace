@@ -44,6 +44,7 @@ module Pages
 
     section :view_user_summary, 'dl.govuk-summary-list' do
       section :'Email address', ViewUserRow, '#view-user__email'
+      section :'Email status', ViewUserRow, '#view-user__email-status'
       section :'Account status', ViewUserRow, '#view-user__account-status'
       section :'Confirmation status', ViewUserRow, '#view-user__confirmation-status'
       section :'Mobile telephone number', ViewUserRow, '#view-user__telephone-number'
@@ -51,6 +52,9 @@ module Pages
       section :Roles, ViewUserRow, '#view-user__roles'
       section :'Service access', ViewUserRow, '#view-user__service-access'
     end
+
+    element :email_status_verified, '#cognito_admin_user_email_verified_true'
+    element :email_status_unverified, '#cognito_admin_user_email_verified_false'
 
     element :mfa_status_enabled, '#cognito_admin_user_mfa_enabled_true'
     element :mfa_status_disabled, '#cognito_admin_user_mfa_enabled_false'
