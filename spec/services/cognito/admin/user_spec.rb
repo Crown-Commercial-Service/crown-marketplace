@@ -580,6 +580,7 @@ RSpec.describe Cognito::Admin::User do
 
           it 'is invalid and it has the correct error message' do
             expect(cognito_admin_user).not_to be_valid(:mfa_enabled)
+            expect(cognito_admin_user.errors[:mfa_enabled].first).to eq 'You cannot disable MFA for this user as they have an admin role'
           end
         end
 

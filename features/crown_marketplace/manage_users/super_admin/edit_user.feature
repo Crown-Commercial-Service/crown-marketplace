@@ -39,6 +39,24 @@ Feature: Manage users - Super admin - Edit user
       | Mobile telephone number | 07123456789 |
       | MFA status              | Disabled    |
 
+  Scenario: Edit user - MFA Status
+    And the users details after the update will be:
+      | Mobile telephone number | 07123456789 |
+    And I refresh the page
+    And the user has the following details:
+      | Mobile telephone number | 07123456789 |
+      | MFA status              | Disabled    |
+    And I change the 'MFA status' for the user
+    And I am on the 'Update user MFA status' page
+    And the users details after the update will be:
+      | MFA enabled | true  |
+    And I am going to succesfully update the user on 'mfa_enabled'
+    And I choose 'ENABLED' for the MFA status
+    And I click on 'Save and return'
+    Then I am on the 'View user' page
+    And the user has the following details:
+      | MFA status  | Enabled  |
+
   Scenario: Edit user - Roles
     And I change the 'Roles' for the user
     And I am on the 'Update user roles' page
