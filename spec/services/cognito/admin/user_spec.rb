@@ -12,6 +12,7 @@ RSpec.describe Cognito::Admin::User do
   let(:roles) { %w[buyer] }
   let(:telephone_number) { '07123456789' }
   let(:service_access) { %w[fm_access] }
+  let(:confirmation_status) { 'CONFIRMED' }
   let(:mfa_enabled) { false }
 
   let(:attributes) do
@@ -23,7 +24,7 @@ RSpec.describe Cognito::Admin::User do
       roles: roles,
       service_access: service_access,
       account_status: account_status,
-      confirmation_status: 'CONFIRMED',
+      confirmation_status: confirmation_status,
       mfa_enabled: mfa_enabled
     }
   end
@@ -1681,6 +1682,73 @@ RSpec.describe Cognito::Admin::User do
             }
           )
         end
+      end
+    end
+  end
+
+  describe '.resend_temporary_password' do
+    let(:result) { cognito_admin_user.resend_temporary_password }
+
+    let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
+
+    before do
+      allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+      allow(aws_client).to receive(:admin_create_user)
+    end
+
+    context 'when the confirmation status is not FORCE_CHANGE_PASSWORD' do
+      it 'returns an error message' do
+        expect(result).to eq "The temporary password can only be resent if the confirmation status is 'FORCE_CHANGE_PASSWORD'"
+      end
+
+      it 'does not call admin_create_user' do
+        result
+
+        expect(aws_client).not_to have_received(:admin_create_user)
+      end
+    end
+
+    context 'when it raises an AWS error' do
+      let(:confirmation_status) { 'FORCE_CHANGE_PASSWORD' }
+
+      before { allow(aws_client).to receive(:admin_create_user).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('Some context', 'Some message')) }
+
+      it 'returns an error message' do
+        expect(result).to eq 'Some message'
+      end
+
+      it 'calls admin_create_user with correct arguments' do
+        result
+
+        expect(aws_client).to have_received(:admin_create_user).with(
+          {
+            user_pool_id: 'cognito-user-pool-id',
+            username: email,
+            message_action: 'RESEND',
+            desired_delivery_mediums: ['EMAIL']
+          }
+        )
+      end
+    end
+
+    context 'when it does not raise an AWS error' do
+      let(:confirmation_status) { 'FORCE_CHANGE_PASSWORD' }
+
+      it 'returns nil' do
+        expect(result).to be_nil
+      end
+
+      it 'calls admin_create_user with correct arguments' do
+        result
+
+        expect(aws_client).to have_received(:admin_create_user).with(
+          {
+            user_pool_id: 'cognito-user-pool-id',
+            username: email,
+            message_action: 'RESEND',
+            desired_delivery_mediums: ['EMAIL']
+          }
+        )
       end
     end
   end

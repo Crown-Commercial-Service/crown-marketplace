@@ -41,6 +41,7 @@ module Pages
     end
 
     element :view_user_warning, '#main-content > div:nth-child(3) > div > div > strong'
+    element :resend_temporary_password_button, '#resend-temporary-password-button'
 
     section :view_user_summary, 'dl.govuk-summary-list' do
       section :'Email address', ViewUserRow, '#view-user__email'

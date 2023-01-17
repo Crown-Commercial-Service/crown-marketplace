@@ -1,3 +1,4 @@
+@pipeline
 Feature: Manage users - Super admin - Edit user
 
   Background: Navigate to the user show page

@@ -11,6 +11,8 @@ en:
               taken: The email domain is already in the Allow list
         cognito/admin/user:
           attributes:
+            confirmation_status:
+              invalid: The temporary password can only be resent if the confirmation status is 'FORCE_CHANGE_PASSWORD'
             email:
               blank: Enter an email address in the correct format, like name@example.com
               invalid: Email address cannot contain any capital letters
@@ -159,6 +161,12 @@ en:
         heading: View user
         mfa_status: MFA status
         none: None
+        resend_temporary_password:
+          description: If the user has not received or has lost their temporary password, you can click on 'Resend temporary password' to send it again.
+          link: Resend temporary password
+        resend_temporary_password_banner:
+          message: A new email has been sent to %{user_email} with the temporary password for their account.
+          title: Password resent
         roles: Roles
         service_access: Service access
         super_admin_warning:

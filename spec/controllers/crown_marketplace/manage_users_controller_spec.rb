@@ -854,5 +854,58 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
       end
     end
   end
+
+  describe 'PUT resend_temporary_password' do
+    before { allow(Cognito::Admin::User).to receive(:find).and_return(user) }
+
+    context 'when I do not have permissions to edit the user' do
+      let(:roles) { %w[ccs_developer] }
+
+      login_super_admin
+
+      before { put :resend_temporary_password, params: { cognito_uuid: cognito_uuid } }
+
+      it 'redirects to the crown marketplace home page and sets the flash message' do
+        expect(response).to redirect_to crown_marketplace_path
+        expect(flash[:error_message]).to eq 'You do not have the required permissions to edit this user'
+      end
+    end
+
+    context 'when I am allowed to edit the user' do
+      login_super_admin
+
+      before do
+        allow(user).to receive(:resend_temporary_password).and_return(resend_temporary_password_response)
+
+        put :resend_temporary_password, params: { cognito_uuid: cognito_uuid }
+      end
+
+      context 'and there is an error' do
+        let(:resend_temporary_password_response) { 'There was an error' }
+
+        it 'sets the user' do
+          expect(assigns(:user)).to eq user
+        end
+
+        it 'redirects to the crown marketplace manage users show page and sets the flash error message' do
+          expect(response).to redirect_to crown_marketplace_manage_user_path
+          expect(flash[:error_message]).to eq 'There was an error'
+        end
+      end
+
+      context 'and there is no error' do
+        let(:resend_temporary_password_response) { nil }
+
+        it 'sets the user' do
+          expect(assigns(:user)).to eq user
+        end
+
+        it 'redirects to the crown marketplace manage users show page and sets the flash password resent message' do
+          expect(response).to redirect_to crown_marketplace_manage_user_path
+          expect(flash[:password_resent]).to eq email
+        end
+      end
+    end
+  end
   # rubocop:enable RSpec/NestedGroups
 end

@@ -3,8 +3,9 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
   before_action :redirect_if_unrecognised_add_user_section, :continue_if_user_support, only: %i[add_user create_add_user]
   before_action :continue_if_role_does_not_require_service_access, only: :add_user
   before_action :set_new_user, only: %i[add_user new]
-  before_action :set_user, only: %i[show edit update]
-  before_action :redirect_if_lack_permissions, :redirect_if_unpermitted_section, only: %i[edit update]
+  before_action :set_user, only: %i[show edit update resend_temporary_password]
+  before_action :redirect_if_lack_permissions, only: %i[edit update resend_temporary_password]
+  before_action :redirect_if_unpermitted_section, only: %i[edit update]
 
   helper_method :section, :available_roles, :role_requires_service_access?, :can_edit_user?, :permitted_sections
 
@@ -67,6 +68,18 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
     else
       render :edit
     end
+  end
+
+  def resend_temporary_password
+    error = @user.resend_temporary_password
+
+    if error
+      flash[:error_message] = error
+    else
+      flash[:password_resent] = @user.email
+    end
+
+    redirect_to crown_marketplace_manage_user_path
   end
 
   private

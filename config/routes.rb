@@ -244,6 +244,7 @@ Rails.application.routes.draw do
         post '/:section/add-user', action: :create_add_user, as: :create_add_user
       end
       member do
+        put '/resend-temporary-password', action: :resend_temporary_password, as: :resend_temporary_password
         get '/:section/edit', action: :edit, as: :edit
         put '/:section/', action: :update, as: :update
       end

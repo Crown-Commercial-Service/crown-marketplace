@@ -6,19 +6,36 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
+    <% if flash[:password_resent] %>
+      <%= govuk_notification_banner(:success, t('.resend_temporary_password_banner.title')) do %>
+        <%= t('.resend_temporary_password_banner.message', user_email: flash[:password_resent]) %>
+      <% end %>
+    <% end %>
+    <% if flash[:error_message] %>
+      <%= govuk_notification_banner(:error, t('crown_marketplace.home.index.something_went_wrong_banner.title')) do %>
+        <%= t('crown_marketplace.home.index.something_went_wrong_banner.message', error_message: flash[:error_message]) %>
+      <% end %>
+    <% end %>
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-l"><%= @user.email %></span>
       <%= t('.heading') %>
     </h1>
-    <% unless can_edit_user? %>
+    <% if can_edit_user? %>
+      <% if @user.confirmation_status == 'FORCE_CHANGE_PASSWORD' %>
+        <p>
+          <%= t('.resend_temporary_password.description') %>
+        </p>
+        <%= link_to(t('.resend_temporary_password.link'), resend_temporary_password_crown_marketplace_manage_user_path, id: 'resend-temporary-password-button', class: 'govuk-button govuk-button--secondary', data: { module: 'govuk-button' }, method: :put) %>
+      <% end %>
+    <% else %>
       <%= warning_text(
         if @minimum_editor
           t('.warning_text', minimum_editor_text: t("crown_marketplace.role_map.#{@minimum_editor}.text"))
         else
           t('.super_admin_warning.warning_text')
         end
-      )%>
-    <%end%>
+      ) %>
+    <% end %>
   </div>
 </div>
 
