@@ -1,4 +1,3 @@
-@pipeline
 Feature: Manage users - User support - Edit user
 
   Background: Navigate to the user show page

@@ -75,6 +75,19 @@ module Cognito
           e.message
         end
 
+        def resend_temporary_password(email)
+          new_client.admin_create_user(
+            user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+            username: email,
+            message_action: 'RESEND',
+            desired_delivery_mediums: ['EMAIL']
+          )
+
+          nil
+        rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
+          e.message
+        end
+
         private
 
         def new_client

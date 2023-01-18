@@ -93,6 +93,14 @@ module Cognito
         error.nil?
       end
 
+      def resend_temporary_password
+        if confirmation_status == 'FORCE_CHANGE_PASSWORD'
+          UserClientInterface.resend_temporary_password(email)
+        else
+          I18n.t('activemodel.errors.models.cognito/admin/user.attributes.confirmation_status.invalid')
+        end
+      end
+
       def success?
         errors.none?
       end

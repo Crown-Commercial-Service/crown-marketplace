@@ -69,11 +69,6 @@ Then('the user has the following details:') do |user_details_table|
   end
 end
 
-Then('I can see the following error message in the summary:') do |table|
-  expect(page).to have_css('div.govuk-error-summary')
-  expect(page.find('.govuk-error-summary__list').find_all('li').map(&:text).reject(&:empty?)).to eq table.raw.flatten
-end
-
 Then('I change the {string} for the user') do |section|
   manage_users_page.view_user_summary.send(section).edit.click
 end
@@ -113,4 +108,17 @@ Then('I cannot edit the users:') do |sections|
   sections.raw.flatten.each do |section|
     expect(manage_users_page.view_user_summary.send(section)).not_to have_css('.govuk-summary-list__actions')
   end
+end
+
+Then('the resend temporary password is {string}') do |option|
+  if option == 'visible'
+    expect(manage_users_page.resend_temporary_password_button).to be_visible
+  else
+    expect(manage_users_page).not_to have_css('#resend-temporary-password-button')
+  end
+end
+
+Then('an email has been sent to {string}') do |email|
+  expect(manage_users_page.notification_banner.heading).to have_content('Password resent')
+  expect(manage_users_page.notification_banner.content).to have_content("A new email has been sent to #{email} with the temporary password for their account.")
 end
