@@ -8,6 +8,7 @@ Feature: Manage users - User support - View user - Mixed Roles
   
   Scenario: View Buyer and service admin
     And I search for 'buyer@test.com' and there is a user with the following details:
+      | Email verified      | true                |
       | Account enabled     | true                |
       | Confirmation status | confirmed           |
       | Roles               | buyer,ccs_employee  |
@@ -22,10 +23,12 @@ Feature: Manage users - User support - View user - Mixed Roles
       | You do not have the required permissions to make changes to this user. You must have the 'User admin' role to make changes. |
     And the user has the following details:
       | Email address | buyer@test.com      |
+      | Email status  | Verified            |
       | Roles         | Buyer Service admin |
   
   Scenario: View Service admin and User support
     And I search for 'service_admin@test.com' and there is a user with the following details:
+      | Email verified      | true                            |
       | Account enabled     | true                            |
       | Confirmation status | confirmed                       |
       | Roles               | ccs_employee,allow_list_access  |
@@ -40,10 +43,12 @@ Feature: Manage users - User support - View user - Mixed Roles
       | You do not have the required permissions to make changes to this user. You must have the 'User admin' role to make changes. |
     And the user has the following details:
       | Email address | service_admin@test.com      |
+      | Email status  | Verified                    |
       | Roles         | Service admin User support  |
 
   Scenario: View User support and User admin
     And I search for 'user_support@test.com' and there is a user with the following details:
+      | Email verified      | true                              |
       | Account enabled     | true                              |
       | Confirmation status | confirmed                         |
       | Roles               | allow_list_access,ccs_user_admin  |
@@ -57,10 +62,12 @@ Feature: Manage users - User support - View user - Mixed Roles
       | You do not have the required permissions to make changes to this user. You must have the 'Super admin' role to make changes.  |
     And the user has the following details:
       | Email address | user_support@test.com   |
+      | Email status  | Verified                |
       | Roles         | User support User admin |
   
   Scenario: View User admin and Super admin
     And I search for 'user_admin@test.com' and there is a user with the following details:
+      | Email verified      | true                          |
       | Account enabled     | true                          |
       | Confirmation status | confirmed                     |
       | Roles               | ccs_user_admin,ccs_developer  |
@@ -74,4 +81,5 @@ Feature: Manage users - User support - View user - Mixed Roles
       | You cannot make changes to this user. 'Super admins' can only be updated in the AWS Cognito console.  |
     And the user has the following details:
       | Email address | user_admin@test.com     |
+      | Email status  | Verified                |
       | Roles         | User admin Super admin  |

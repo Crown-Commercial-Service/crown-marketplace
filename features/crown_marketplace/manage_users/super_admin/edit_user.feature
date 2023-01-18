@@ -6,6 +6,7 @@ Feature: Manage users - Super admin - Edit user
     Then I am on the 'Manage users' page
     Given I am going to do a search to find users
     And I search for 'buyer@test.com' and there is a user with the following details:
+      | Email verified      | true                |
       | Account enabled     | true                |
       | Confirmation status | confirmed           |
       | Roles               | buyer               |
@@ -19,17 +20,30 @@ Feature: Manage users - Super admin - Edit user
     And I can manage the user
     And the user has the following details:
       | Email address           | buyer@test.com                        |
+      | Email status            | Verified                              |
       | Account status          | Enabled                               |
       | Confirmation status     | confirmed                             |
       | Mobile telephone number | None                                  |
       | Roles                   | Buyer                                 |
       | Service access          | Facilities Management Legal Services  |
 
+  Scenario: Edit user - Email Status
+    And I change the 'Email status' for the user
+    And I am on the 'Update user email status' page
+    And the users details after the update will be:
+      | Email verified | false  |
+    And I am going to succesfully update the user on 'email_verified'
+    And I choose 'UNVERIFIED' for the email status
+    And I click on 'Save and return'
+    Then I am on the 'View user' page
+    And the user has the following details:
+      | Email status  | Unverified  |
+
   Scenario: Edit user - Account status
     And I change the 'Account status' for the user
     And I am on the 'Update user account status' page
     And the users details after the update will be:
-      | Account status | Enabled |
+      | Account status | false |
     And I am going to succesfully update the user on 'account_status'
     And I choose 'Disabled' for the account status
     And I click on 'Save and return'

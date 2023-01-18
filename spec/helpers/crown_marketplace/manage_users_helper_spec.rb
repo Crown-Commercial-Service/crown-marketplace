@@ -56,6 +56,26 @@ RSpec.describe CrownMarketplace::ManageUsersHelper, type: :helper do
     end
   end
 
+  describe '.verified_unverified_status_tag' do
+    let(:result) { helper.verified_unverified_status_tag(verified) }
+
+    context 'when the email is verified' do
+      let(:verified) { true }
+
+      it 'returns blue with verified' do
+        expect(result).to eq [:blue, 'Verified']
+      end
+    end
+
+    context 'when the email is not verified' do
+      let(:verified) { false }
+
+      it 'returns grey with Unverified' do
+        expect(result).to eq [:grey, 'Unverified']
+      end
+    end
+  end
+
   describe '.user_confirmation_status_tag' do
     let(:result) { helper.user_confirmation_status_tag(status) }
 
