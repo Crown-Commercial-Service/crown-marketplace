@@ -108,7 +108,7 @@ Then('I select the following items:') do |items|
 end
 
 Then('I refresh the page') do
-  page.driver.browser.navigate.refresh
+  refresh
 end
 
 When('I visit {string}') do |url|

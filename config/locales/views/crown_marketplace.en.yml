@@ -11,12 +11,15 @@ en:
               taken: The email domain is already in the Allow list
         cognito/admin/user:
           attributes:
+            confirmation_status:
+              invalid: The temporary password can only be resent if the confirmation status is 'FORCE_CHANGE_PASSWORD'
             email:
               blank: Enter an email address in the correct format, like name@example.com
               invalid: Email address cannot contain any capital letters
               not_on_allow_list: Email domain is not in the allow list
               user_already_exist: An account with this email already exists
             mfa_enabled:
+              cannot_disable_mfa: You cannot disable MFA for this user as they have an admin role
               telephone_number_required: The telephone number of the user must be set to update the MFA configuration
             roles:
               invalid_role_selection: You do not have the ability to create users with these roles
@@ -75,6 +78,7 @@ en:
         allow_list_body: View and update the allow list so users can create their own accounts
         allow_list_heading: Allow list
         facilities_management: Facilities Management
+        lack_permissions: You do not have the required permissions to edit this user
         legal_service: Legal Service
         manage_users_body: Find a user by email to view and update their details
         manage_users_title: Manage users
@@ -83,7 +87,7 @@ en:
         new_user_invite_title: Invite a new user
         something_went_wrong_banner:
           message: 'The following error occured: "%{error_message}"'
-          title: There is a problem
+          title: Something went wrong
         supply_teachers: Supply Teachers
         support_users_blurb: 'Support users on the following four services:'
         user_account_created_banner:
@@ -98,7 +102,7 @@ en:
         enter_user_details:
           email_address: Email address
           telephone_number:
-            hint: Admin users require Multi-Factor Authentication (MFA) when signing in, otherwise this can be left blank
+            hint: This will be used for Multi-Factor Authentication (MFA) when signing in
             label: Mobile telephone number
         select_role:
           hint: The user will have different access depending on the role selected. If the user needs additional access, this can be added once they have been created.
@@ -106,11 +110,40 @@ en:
         select_service_access:
           hint: Buyer and service admin users need to be assigned access to at least one service
           legend: Select the service access for the user
+      edit:
+        heading: Update user %{section}
+        save_and_return: Save and return
       edit_partials:
         account_status:
+          hint: Disabling the user will remove their access to all the services in the Crown Marketplace
+          legend: User account status
           options:
             disabled: Disabled
             enabled: Enabled
+          section: account status
+        email_verified:
+          hint: The user's email must be verified for them to be able to reset their password.
+          legend: Is the user's email verified?
+          options:
+            unverified: Unverified
+            verified: Verified
+          section: email status
+        mfa_enabled:
+          hint: Admin users need to have MFA enabled in order to use the Crown Marketplace.
+          legend: Multi-Factor Authentication (MFA) status
+          section: MFA status
+        roles:
+          hint: The user will have different access depending on the roles selected. If the user requires an admin related role, make sure they have Multi-Factor Authentication (MFA) enabled.
+          legend: Select the roles for the user
+          section: roles
+        service_access:
+          hint: Buyer and service admin users need to be assigned access to at least one service, otherwise this can be left empty
+          legend: Select the service access for the user
+          section: service access
+        telephone_number:
+          hint: This will be used for Multi-Factor Authentication (MFA) when signing in
+          label: Mobile telephone number
+          section: mobile telephone number
       index:
         enter_an_email: Enter the email of the user and click 'Search' to see if that user has an account in Crown Marketplace.
         find_a_user: Find a user
@@ -119,6 +152,27 @@ en:
       new:
         heading: Add a user
         submit: Create user account
+      show:
+        account_status: Account status
+        change: Change
+        confirmation_status: Confirmation status
+        email: Email address
+        email_status: Email status
+        heading: View user
+        mfa_status: MFA status
+        none: None
+        resend_temporary_password:
+          description: If the user has not received or has lost their temporary password, you can click on 'Resend temporary password' to send it again.
+          link: Resend temporary password
+        resend_temporary_password_banner:
+          message: A new email has been sent to %{user_email} with the temporary password for their account.
+          title: Password resent
+        roles: Roles
+        service_access: Service access
+        super_admin_warning:
+          warning_text: You cannot make changes to this user. 'Super admins' can only be updated in the AWS Cognito console.
+        telephone_number: Mobile telephone number
+        warning_text: You do not have the required permissions to make changes to this user. You must have the '%{minimum_editor_text}' role to make changes.
       user_details_summary:
         change: Change
         email_address: Email address
@@ -139,6 +193,8 @@ en:
       buyer:
         hint: Able to use the portal as a buyer to search for services
         text: Buyer
+      ccs_developer:
+        text: Super admin
       ccs_employee:
         hint: Able to manage one of the services on the portal
         text: Service admin

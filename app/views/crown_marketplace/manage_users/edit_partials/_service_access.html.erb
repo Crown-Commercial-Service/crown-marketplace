@@ -1,0 +1,22 @@
+<%= form_group_with_error(f.object, :service_access) do |displayed_error| %>
+  <fieldset class="govuk-fieldset" aria-describedby="service-access-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <%= t('.legend') %>
+    </legend>
+  </fieldset>
+  <%= govuk_hint(
+    {
+      text: t('.hint'),
+      id: 'service-access-hint'
+    }
+  ) %>
+  <%= displayed_error %>
+  <div class="govuk-checkboxes", data-module="govuk-checkboxes">
+    <% Cognito::Admin::Roles::SERVICE_ROLES_ACCESS.each do |service_access| %>
+      <div class="govuk-checkboxes__item">
+        <%= f.check_box(:service_access, { class: 'govuk-checkboxes__input', multiple: true, include_hidden: false }, service_access) %>
+        <%= f.label(:service_access, t("crown_marketplace.service_access_map.#{service_access}.text"), value: service_access, class: 'govuk-label govuk-checkboxes__label') %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

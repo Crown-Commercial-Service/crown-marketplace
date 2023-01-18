@@ -1,0 +1,28 @@
+<%= form_group_with_error(f.object, :account_status) do |displayed_error| %>
+  <fieldset class="govuk-fieldset" aria-describedby="account-status-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <%= t('.legend') %>
+    </legend>
+  </fieldset>
+  <%= govuk_hint(
+    {
+      text: t('.hint'),
+      id: 'account-status-hint'
+    }
+  ) %>
+  <%= displayed_error %>
+  <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+    <div class="govuk-radios__item">
+      <%= f.radio_button :account_status, true, class: 'govuk-radios__input', required: true, aria: { describedby: 'account-status-hint' } %>
+      <%= f.label :account_status, value: true, class: 'govuk-label govuk-radios__label' do %>
+        <%= govuk_tag_with_text(*enabled_disabled_status_tag(true)) %>
+      <% end %>
+    </div>
+    <div class="govuk-radios__item">
+      <%= f.radio_button :account_status, false, class: 'govuk-radios__input', required: true, aria: { describedby: 'account-status-hint' } %>
+      <%= f.label :account_status, value: false, class: 'govuk-label govuk-radios__label' do %>
+        <%= govuk_tag_with_text(*enabled_disabled_status_tag(false)) %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

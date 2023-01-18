@@ -69,6 +69,10 @@ def stub_find_users_error(aws_client, error)
   allow(aws_client).to receive(:list_users).and_raise(error)
 end
 
+def stub_find_user_error(aws_client, error)
+  allow(aws_client).to receive(:admin_get_user).and_raise(error)
+end
+
 def role_and_service_access_to_group_names(roles, service_accesses)
   (roles || []).map { |role| ROLE_SERVICE_ACCESS_TO_GROUP_NAMES[role] } + (service_accesses || []).map { |service_access| ROLE_SERVICE_ACCESS_TO_GROUP_NAMES[service_access] }
 end

@@ -1,0 +1,23 @@
+<%= govuk_text_input(
+  f,
+  :telephone_number,
+  {
+    label: {
+      classes: 'govuk-label--m',
+      text: t('.label')
+    },
+    hint: {
+      text: t('.hint')
+    },
+    input: {
+      classes: 'govuk-input--width-10 ccs-integer-field',
+      attributes: {
+        autocomplete: 'off',
+        spellcheck: false,
+        required: true,
+        type: 'number',
+        maxlength: 11
+      }
+    }
+  }
+) %>

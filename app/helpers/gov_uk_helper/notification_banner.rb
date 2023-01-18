@@ -15,6 +15,9 @@ module GovUKHelper::NotificationBanner
     end
   end
 
-  BANNER_TYPE = { success: { class: 'govuk-notification-banner--success', text: 'Success' },
-                  neutral: { text: 'Important' } }.freeze
+  BANNER_TYPE = {
+    success: { class: 'govuk-notification-banner--success', text: 'Success' },
+    error: { class: 'govuk-notification-banner--error', text: 'Error' },
+    neutral: { text: 'Important' }
+  }.freeze
 end

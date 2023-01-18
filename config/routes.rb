@@ -238,10 +238,15 @@ Rails.application.routes.draw do
         get '/search_allow_list', action: :search_allow_list
       end
     end
-    resources :manage_users, path: 'manage-users', param: :cognito_uuid, only: %i[index new create] do
+    resources :manage_users, path: 'manage-users', param: :cognito_uuid, only: %i[index new create show] do
       collection do
         get '/:section/add-user', action: :add_user, as: :add_user
         post '/:section/add-user', action: :create_add_user, as: :create_add_user
+      end
+      member do
+        put '/resend-temporary-password', action: :resend_temporary_password, as: :resend_temporary_password
+        get '/:section/edit', action: :edit, as: :edit
+        put '/:section/', action: :update, as: :update
       end
     end
   end
