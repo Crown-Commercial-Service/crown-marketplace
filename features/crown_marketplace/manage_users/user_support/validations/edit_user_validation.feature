@@ -35,7 +35,7 @@ Feature: Manage users - User support - Edit user - Validations
       | Legal Services        |
     And I click on 'Save and return'
     Then I should see the following error messages:
-      | You must select the service access for the user from this list |
+      | You must select the service access for the user if they have the buyer or service admin role |
 
   Scenario: Service error
     And I change the 'Service access' for the user

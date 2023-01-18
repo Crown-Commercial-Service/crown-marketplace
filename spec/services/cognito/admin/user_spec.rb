@@ -682,16 +682,15 @@ RSpec.describe Cognito::Admin::User do
         context 'and the role requires a service' do
           it 'is invalid and it has the correct error message' do
             expect(cognito_admin_user).not_to be_valid(:service_access)
-            expect(cognito_admin_user.errors[:service_access].first).to eq 'You must select the service access for the user from this list'
+            expect(cognito_admin_user.errors[:service_access].first).to eq 'You must select the service access for the user if they have the buyer or service admin role'
           end
         end
 
         context 'and the role does not require a service' do
           let(:roles) { %w[user_admin] }
 
-          it 'is invalid and it has the correct error message' do
-            expect(cognito_admin_user).not_to be_valid(:service_access)
-            expect(cognito_admin_user.errors[:service_access].first).to eq 'You must select the service access for the user from this list'
+          it 'is valid' do
+            expect(cognito_admin_user).to be_valid(:service_access)
           end
         end
       end
@@ -1614,7 +1613,7 @@ RSpec.describe Cognito::Admin::User do
 
         it 'returns false it has the correct error message' do
           expect(result).to be false
-          expect(cognito_admin_user.errors[:service_access].first).to eq 'You must select the service access for the user from this list'
+          expect(cognito_admin_user.errors[:service_access].first).to eq 'You must select the service access for the user if they have the buyer or service admin role'
         end
 
         it 'does not call admin_remove_user_from_group or admin_add_user_to_group' do
