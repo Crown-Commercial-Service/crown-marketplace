@@ -53,7 +53,7 @@ module Postcode
       if postcode_structure[:valid] && !EXCLUDED_POSTCODE_AREAS.include?(postcode_structure[:postcode_area])
         result = extract_regions(postcode_structure)
 
-        if result.length.zero?
+        if result.empty?
           regions_from_nuts
         else
           result
