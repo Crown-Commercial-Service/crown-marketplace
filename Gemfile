@@ -52,7 +52,7 @@ gem 'devise', '~> 4.8.1'
 gem 'auto-session-timeout', '~> 0.9.9'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.72.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.73.0'
 
 # for pagination
 gem 'kaminari', '~> 1.2.2'
