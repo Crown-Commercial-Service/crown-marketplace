@@ -119,6 +119,37 @@ Feature: Manage users - Super admin - Edit user
     And the user has the following details:
       | Service access  | Facilities Management Supply Teachers  |
 
+  Scenario: Edit user - No Service access required
+    And I change the 'Roles' for the user
+    And I am on the 'Update user roles' page
+    And I have the following options for roles:
+      | Buyer         |
+      | Service admin |
+      | User support  |
+      | User admin    |
+    And the users details after the update will be:
+      | Mobile telephone number | 07123456789        |
+      | MFA enabled             | true               |
+      | Roles                   | allow_list_access  |
+    And I am going to succesfully update the user on 'roles'
+    And I deselect the following items:
+      | Buyer |
+    And I select 'User support'
+    And I click on 'Save and return'
+    Then I am on the 'View user' page
+    And I change the 'Service access' for the user
+    And I am on the 'Update user service access' page
+    Then the users details after the update will be:
+      | Service access  ||
+    And I am going to succesfully update the user on 'service_access'
+    And I deselect the following items:
+      | Facilities Management |
+      | Legal Services        |
+    And I click on 'Save and return'
+    Then I am on the 'View user' page
+    And the user has the following details:
+      | Service access  | None |
+    
   Scenario: Edit user - Service error
     And I cannot edit the user account because of an error
     And I change the 'Service access' for the user
