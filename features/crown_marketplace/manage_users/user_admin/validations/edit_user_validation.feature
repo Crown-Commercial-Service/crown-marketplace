@@ -4,6 +4,7 @@ Feature: Manage users - User admin - Edit user - Validations
     Given I sign in as an 'super admin' user go to the crown marketplace dashboard
     When I click on 'Manage users'
     Then I am on the 'Manage users' page
+    Then I should not see users table
     Given I am going to do a search to find users
     And I search for 'service_admin@test.com' and there is a user with the following details:
       | Email verified          | true          |
