@@ -6,7 +6,7 @@ Feature: Manage users - User admin - Find users - JavaScript enabled - Validatio
     When I click on 'Manage users'
     Then I am on the 'Manage users' page
     Then I should not see users table
-    
+
   Scenario: I enter no email - JavaScript disabled
     And I click on 'Search'
     Then I should see the following error for finding a user:
@@ -20,4 +20,3 @@ Feature: Manage users - User admin - Find users - JavaScript enabled - Validatio
     Then I should see the following error for finding a user:
       | An error occured: service |
     Then I should not see users table
-    

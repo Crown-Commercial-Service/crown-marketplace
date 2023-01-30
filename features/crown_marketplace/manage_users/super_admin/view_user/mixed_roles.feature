@@ -6,9 +6,7 @@ Feature: Manage users - Super admin - View user - Mixed Roles
     Then I am on the 'Manage users' page
     Then I should not see users table
     Given I am going to do a search to find users
-    
-    
-  
+
   Scenario: View Buyer and service admin
     And I search for 'buyer@test.com' and there is a user with the following details:
       | Email verified      | true                |
