@@ -34,6 +34,10 @@ Given('I should see that there are no users with that email address') do
   expect(manage_users_page.find_a_user_table.no_users).to have_content('No users were found with that email address')
 end
 
+Given('I should not see users table') do
+  expect(manage_users_page).to have_css('table.govuk-table', count: 0)
+end
+
 Then('I should see the following users in the results:') do |found_users_table|
   found_users = found_users_table.raw
   found_users_rows = manage_users_page.find_a_user_table.rows
