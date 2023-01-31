@@ -5,6 +5,7 @@ Feature: Manage users - User admin - Find users - JavaScript disabled
     Given I sign in as an 'user admin' user go to the crown marketplace dashboard
     When I click on 'Manage users'
     Then I am on the 'Manage users' page
+    Then I should not see users table
   
   Scenario: Try and find a user
     Given I am going to do a search to find users

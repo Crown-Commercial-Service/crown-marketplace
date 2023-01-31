@@ -89,7 +89,8 @@ Then('the users details after the update will be:') do |user_details_table|
     confirmation_status: user_details['Confirmation status'] || @user_details[:confirmation_status],
     mfa_enabled: user_details['MFA enabled'] == 'true' || @user_details[:mfa_enabled] == 'true',
     roles: (user_details['Roles'] || '').split(',').presence || @user_details[:roles],
-    service_access: (user_details['Service access'] || '').split(',').presence || @user_details[:service_access]
+    service_access: user_details.key?('Service access') ? user_details['Service access'].split(',') : @user_details[:service_access]
+
   }
   allow(Cognito::Admin::UserClientInterface).to receive(:find_user_from_cognito_uuid).and_return(@user_details)
 end

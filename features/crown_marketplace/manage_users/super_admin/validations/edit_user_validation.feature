@@ -6,6 +6,7 @@ Feature: Manage users - Super admin - Edit user - Validations
     When I click on 'Manage users'
     Then I am on the 'Manage users' page
     Given I am going to do a search to find users
+    Then I should not see users table
     And I search for 'service_admin@test.com' and there is a user with the following details:
       | Email verified          | true          |
       | Account enabled         | true          |
@@ -79,7 +80,7 @@ Feature: Manage users - Super admin - Edit user - Validations
       | Management Consultancy |
     And I click on 'Save and return'
     Then I should see the following error messages:
-      | You must select the service access for the user from this list |
+      | You must select the service access for the user if they have the buyer or service admin role |
 
   Scenario: Service error
     And I change the 'Service access' for the user

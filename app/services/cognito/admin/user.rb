@@ -28,7 +28,7 @@ module Cognito
       validate :validate_role, on: %i[roles select_role create]
       validate :can_set_admin_role, on: :roles
 
-      validates :service_access, length: { minimum: 1 }, on: %i[select_service_access service_access]
+      validates :service_access, length: { minimum: 1 }, on: %i[select_service_access]
       validate :validate_service_access, on: %i[create select_service_access service_access]
 
       with_options on: :mfa_enabled do

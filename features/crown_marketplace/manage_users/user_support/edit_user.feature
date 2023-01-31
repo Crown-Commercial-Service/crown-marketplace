@@ -5,6 +5,7 @@ Feature: Manage users - User support - Edit user
     When I click on 'Manage users'
     Then I am on the 'Manage users' page
     Given I am going to do a search to find users
+    Then I should not see users table
     And I search for 'buyer@test.com' and there is a user with the following details:
       | Email verified          | true                |
       | Account enabled         | true                |

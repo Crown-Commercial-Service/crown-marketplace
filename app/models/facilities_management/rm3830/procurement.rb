@@ -459,7 +459,7 @@ module FacilitiesManagement
 
       def rate_model
         frozen_rates ||= FrozenRate.where(facilities_management_rm3830_procurement_id: id)
-        @rate_model ||= frozen_rates.size.zero? ? Rate : frozen_rates
+        @rate_model ||= frozen_rates.empty? ? Rate : frozen_rates
       end
 
       def remove_buyer_choice
