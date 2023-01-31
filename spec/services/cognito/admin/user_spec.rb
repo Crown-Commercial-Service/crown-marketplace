@@ -7,21 +7,24 @@ RSpec.describe Cognito::Admin::User do
   let(:current_user_access) { :super_admin }
   let(:cognito_uuid) { SecureRandom.uuid }
   let(:email) { 'user@crowncommercial.gov.uk' }
+  let(:email_verified) { true }
   let(:account_status) { true }
   let(:roles) { %w[buyer] }
   let(:telephone_number) { '07123456789' }
   let(:service_access) { %w[fm_access] }
+  let(:confirmation_status) { 'CONFIRMED' }
   let(:mfa_enabled) { false }
 
   let(:attributes) do
     {
       cognito_uuid: cognito_uuid,
       email: email,
+      email_verified: email_verified,
       telephone_number: telephone_number,
       roles: roles,
       service_access: service_access,
       account_status: account_status,
-      confirmation_status: 'CONFIRMED',
+      confirmation_status: confirmation_status,
       mfa_enabled: mfa_enabled
     }
   end
@@ -432,6 +435,42 @@ RSpec.describe Cognito::Admin::User do
   describe 'validations on an existing user' do
     before { cognito_admin_user.assign_attributes({ attribute => value }) }
 
+    context 'when validating the email status' do
+      let(:attribute) { :email_verified }
+
+      context 'when it is nil' do
+        let(:value) { nil }
+
+        it 'is invalid' do
+          expect(cognito_admin_user).not_to be_valid(:email_verified)
+        end
+      end
+
+      context 'when it is empty' do
+        let(:value) { '' }
+
+        it 'is invalid' do
+          expect(cognito_admin_user).not_to be_valid(:email_verified)
+        end
+      end
+
+      context 'when it is true' do
+        let(:value) { 'true' }
+
+        it 'is valid' do
+          expect(cognito_admin_user).to be_valid(:email_verified)
+        end
+      end
+
+      context 'when it is false' do
+        let(:value) { 'false' }
+
+        it 'is valid' do
+          expect(cognito_admin_user).to be_valid(:email_verified)
+        end
+      end
+    end
+
     context 'when validating the account status' do
       let(:attribute) { :account_status }
 
@@ -580,6 +619,7 @@ RSpec.describe Cognito::Admin::User do
 
           it 'is invalid and it has the correct error message' do
             expect(cognito_admin_user).not_to be_valid(:mfa_enabled)
+            expect(cognito_admin_user.errors[:mfa_enabled].first).to eq 'You cannot disable MFA for this user as they have an admin role'
           end
         end
 
@@ -1149,6 +1189,75 @@ RSpec.describe Cognito::Admin::User do
 
     before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
 
+    context 'when updating the email status' do
+      let(:method) { :email_verified }
+
+      before { allow(aws_client).to receive(:admin_update_user_attributes) }
+
+      context 'and it is invalid' do
+        let(:email_verified) { '' }
+
+        it 'returns false' do
+          expect(result).to be false
+        end
+
+        it 'does not call admin_update_user_attributes' do
+          result
+
+          expect(aws_client).not_to have_received(:admin_update_user_attributes)
+        end
+      end
+
+      context 'and it raises an AWS error' do
+        before { allow(aws_client).to receive(:admin_update_user_attributes).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('Some context', 'Some message')) }
+
+        it 'returns false it has the correct error message' do
+          expect(result).to be false
+          expect(cognito_admin_user.errors[:email_verified].first).to eq 'Some message'
+        end
+
+        it 'calls admin_update_user_attributes with correct arguments' do
+          result
+
+          expect(aws_client).to have_received(:admin_update_user_attributes).with(
+            {
+              user_pool_id: 'cognito-user-pool-id',
+              username: cognito_uuid,
+              user_attributes: [
+                {
+                  name: 'email_verified',
+                  value: 'true'
+                }
+              ]
+            }
+          )
+        end
+      end
+
+      context 'and it is valid and does not raise an AWS error' do
+        it 'returns true' do
+          expect(result).to be true
+        end
+
+        it 'calls admin_update_user_attributes with correct arguments' do
+          result
+
+          expect(aws_client).to have_received(:admin_update_user_attributes).with(
+            {
+              user_pool_id: 'cognito-user-pool-id',
+              username: cognito_uuid,
+              user_attributes: [
+                {
+                  name: 'email_verified',
+                  value: 'true'
+                }
+              ]
+            }
+          )
+        end
+      end
+    end
+
     context 'when updating the account status' do
       let(:method) { :account_status }
 
@@ -1573,6 +1682,73 @@ RSpec.describe Cognito::Admin::User do
             }
           )
         end
+      end
+    end
+  end
+
+  describe '.resend_temporary_password' do
+    let(:result) { cognito_admin_user.resend_temporary_password }
+
+    let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
+
+    before do
+      allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+      allow(aws_client).to receive(:admin_create_user)
+    end
+
+    context 'when the confirmation status is not FORCE_CHANGE_PASSWORD' do
+      it 'returns an error message' do
+        expect(result).to eq "The temporary password can only be resent if the confirmation status is 'FORCE_CHANGE_PASSWORD'"
+      end
+
+      it 'does not call admin_create_user' do
+        result
+
+        expect(aws_client).not_to have_received(:admin_create_user)
+      end
+    end
+
+    context 'when it raises an AWS error' do
+      let(:confirmation_status) { 'FORCE_CHANGE_PASSWORD' }
+
+      before { allow(aws_client).to receive(:admin_create_user).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('Some context', 'Some message')) }
+
+      it 'returns an error message' do
+        expect(result).to eq 'Some message'
+      end
+
+      it 'calls admin_create_user with correct arguments' do
+        result
+
+        expect(aws_client).to have_received(:admin_create_user).with(
+          {
+            user_pool_id: 'cognito-user-pool-id',
+            username: email,
+            message_action: 'RESEND',
+            desired_delivery_mediums: ['EMAIL']
+          }
+        )
+      end
+    end
+
+    context 'when it does not raise an AWS error' do
+      let(:confirmation_status) { 'FORCE_CHANGE_PASSWORD' }
+
+      it 'returns nil' do
+        expect(result).to be_nil
+      end
+
+      it 'calls admin_create_user with correct arguments' do
+        result
+
+        expect(aws_client).to have_received(:admin_create_user).with(
+          {
+            user_pool_id: 'cognito-user-pool-id',
+            username: email,
+            message_action: 'RESEND',
+            desired_delivery_mediums: ['EMAIL']
+          }
+        )
       end
     end
   end

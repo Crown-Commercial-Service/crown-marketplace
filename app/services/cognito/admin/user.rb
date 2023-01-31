@@ -4,12 +4,12 @@ module Cognito
       include ActiveModel::Validations
       include ActiveModel::Validations::Callbacks
 
-      attr_reader :email, :account_status, :confirmation_status, :mfa_enabled, :roles, :service_access, :cognito_roles, :telephone_number
+      attr_reader :email, :email_verified, :account_status, :confirmation_status, :mfa_enabled, :roles, :service_access, :cognito_roles, :telephone_number
 
       private
 
       attr_reader :origional_groups
-      attr_writer :email, :telephone_number, :account_status, :confirmation_status
+      attr_writer :email, :email_verified, :telephone_number, :account_status, :confirmation_status
       attr_accessor :cognito_uuid
 
       public
@@ -17,6 +17,8 @@ module Cognito
       validates :email, presence: true, format: { with: /\A[^A-Z]*\z/ }, on: %i[create enter_user_details]
       validate :domain_in_allow_list, if: -> { @cognito_roles.access == :user_support && email.present? }, on: %i[create enter_user_details]
       validate :user_does_not_exist, on: :enter_user_details
+
+      validates :email_verified, inclusion: { in: [true, false] }, on: :email_verified
 
       validates :account_status, inclusion: { in: [true, false] }, on: :account_status
 
@@ -54,6 +56,8 @@ module Cognito
         @origional_groups = @cognito_roles.combine_roles
       end
 
+      delegate :can_edit_user_with_current_access?, :minimum_editor_role, to: :cognito_roles
+
       def assign_attributes(**new_attributes)
         raise ArgumentError, 'When assigning attributes, you must pass a hash as an argument.' unless new_attributes.respond_to?(:stringify_keys)
         return if new_attributes.empty?
@@ -89,6 +93,14 @@ module Cognito
         error.nil?
       end
 
+      def resend_temporary_password
+        if confirmation_status == 'FORCE_CHANGE_PASSWORD'
+          UserClientInterface.resend_temporary_password(email)
+        else
+          I18n.t('activemodel.errors.models.cognito/admin/user.attributes.confirmation_status.invalid')
+        end
+      end
+
       def success?
         errors.none?
       end
@@ -96,7 +108,7 @@ module Cognito
       private
 
       # Methods for assigning values to certain attributes
-      %i[account_status mfa_enabled].each do |attribute|
+      %i[email_verified account_status mfa_enabled].each do |attribute|
         define_method :"#{attribute}=" do |value|
           instance_variable_set("@#{attribute}", ActiveModel::Type::Boolean.new.cast(value))
         end
@@ -163,6 +175,7 @@ module Cognito
       def cognito_attributes
         {
           email: email,
+          email_verified: email_verified,
           account_status: account_status,
           telephone_number: telephone_number,
           groups: cognito_roles.combine_roles,
