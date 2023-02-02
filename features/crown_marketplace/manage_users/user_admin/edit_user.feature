@@ -4,6 +4,7 @@ Feature: Manage users - User admin - Edit user
     Given I sign in as an 'user admin' user go to the crown marketplace dashboard
     When I click on 'Manage users'
     Then I am on the 'Manage users' page
+    Then I should not see users table
     Given I am going to do a search to find users
     And I search for 'buyer@test.com' and there is a user with the following details:
       | Email verified      | true                |
@@ -123,3 +124,33 @@ Feature: Manage users - User admin - Edit user
     And I change the 'Service access' for the user
     Then I am on the 'Crown Marketplace dashboard' page
     And there is an error notification with the message 'An error occured when trying to edit the user'
+    
+  Scenario: Edit user - No Service access required
+    And I change the 'Roles' for the user
+    And I am on the 'Update user roles' page
+    And I have the following options for roles:
+      | Buyer         |
+      | Service admin |
+      | User support  |
+    And the users details after the update will be:
+      | Mobile telephone number | 07123456789        |
+      | MFA enabled             | true               |
+      | Roles                   | allow_list_access  |
+    And I am going to succesfully update the user on 'roles'
+    And I deselect the following items:
+      | Buyer |
+    And I select 'User support'
+    And I click on 'Save and return'
+    Then I am on the 'View user' page
+    And I change the 'Service access' for the user
+    And I am on the 'Update user service access' page
+    Then the users details after the update will be:
+      | Service access  ||
+    And I am going to succesfully update the user on 'service_access'
+    And I deselect the following items:
+      | Facilities Management |
+      | Legal Services        |
+    And I click on 'Save and return'
+    Then I am on the 'View user' page
+    And the user has the following details:
+      | Service access  | None |
