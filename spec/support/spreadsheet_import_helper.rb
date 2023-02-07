@@ -46,10 +46,10 @@ module SpreadsheetImportHelper
       template_sheet_row_count = template_sheet.parse.size + 1
 
       @package.workbook.add_worksheet(name: name) do |sheet|
-        status_indicators = data.map { |building| building[:status] }
+        status_indicators = data.pluck(:status)
         sheet.add_row(template_sheet.row(1) + status_indicators)
 
-        building_names = data.map { |building| building[:building_name] }
+        building_names = data.pluck(:building_name)
         sheet.add_row(template_sheet.row(2) + building_names)
 
         sheet.add_row(template_sheet.row(3))
@@ -67,9 +67,9 @@ module SpreadsheetImportHelper
       name = 'Service Volumes 1'
       @sheets_added << name
       @package.workbook.add_worksheet(name: name) do |sheet|
-        sheet.add_row(['', '', '', 'Service status indicator'] + service_details.map { |pb| pb[2] })
+        sheet.add_row(['', '', '', 'Service status indicator'] + service_details.pluck(2))
         sheet.add_row([])
-        sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Metric per Annum'] + service_details.map { |pb| pb[0] })
+        sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Metric per Annum'] + service_details.pluck(0))
         sheet.add_row(service_volume_1_row('E.4', 'Portable Appliance Testing', 'Number of appliances to be tested', service_details))
         sheet.add_row(service_volume_1_row('G.1', 'Routine Cleaning', 'Number of building occupants', service_details))
         sheet.add_row(service_volume_1_row('G.3', 'Mobile Cleaning', 'Number of building occupants', service_details))
@@ -88,17 +88,17 @@ module SpreadsheetImportHelper
       [service_code, detail, (current_service.all?(&:nil?) ? 'No' : 'Yes'), unit] + current_service
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def add_service_volumes_2(service_details)
       name = 'Service Volumes 2'
       @sheets_added << name
       @package.workbook.add_worksheet(name: name) do |sheet|
-        sheet.add_row(['', '', '', '', 'Service status indicator'] + service_details.map { |pb| pb[2] })
-        sheet.add_row(['', '', '', '', 'Building name'] + service_details.map { |pb| pb[0] })
+        sheet.add_row(['', '', '', '', 'Service status indicator'] + service_details.pluck(2))
+        sheet.add_row(['', '', '', '', 'Building name'] + service_details.pluck(0))
         sheet.add_row(['', '', '', '', 'Service required within this building?'] + service_details.map { |pb| pb[1].any? ? 'Yes' : 'No' })
         sheet.add_row(['', '', '', '', 'Number of lifts in each building'] + service_details.map { |pb| pb[1].length })
         sheet.add_row([])
-        sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Lift Number', 'Metric'] + service_details.map { |pb| pb[0] })
+        sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Lift Number', 'Metric'] + service_details.pluck(0))
         FacilitiesManagement::RM3830::SpreadsheetImporter::NUMBER_OF_LIFTS.times do |i|
           sheet.add_row(['C.5', 'Lifts, Hoists & Conveyance Systems Maintenance', service_details.map { |pb| pb[1].any? }.any? ? 'Yes' : 'No', i + 1, 'Number of floors'] + service_details.map { |pb| pb[1][i] })
         end
@@ -108,7 +108,7 @@ module SpreadsheetImportHelper
         sheet.add_row(['', '', '', '', 'Total number of lift entrances'] + service_details.map { |pb| pb[1].sum })
       end
     end
-    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     SERVICE_HOURS = { 'H.4': 'Handyman Services', 'H.5': 'Move and Space Management - Internal Moves', 'I.1': 'Reception Service', 'I.2': 'Taxi Booking Service', 'I.3': 'Car Park Management and Booking', 'I.4': 'Voice Announcement System Operation', 'J.1': 'Manned Guarding Service', 'J.2': 'CCTV / Alarm Monitoring', 'J.3': 'Control of Access and Security Passes', 'J.4': 'Emergency Response', 'J.5': 'Patrols (Fixed or Static Guarding)', 'J.6': 'Management of Visitors and Passes' }.freeze
 
@@ -116,9 +116,9 @@ module SpreadsheetImportHelper
       name = 'Service Volumes 3'
       @sheets_added << name
       @package.workbook.add_worksheet(name: name) do |sheet|
-        sheet.add_row([nil, nil, nil, 'Service status indicator'] + data.map { |service| service[:status] })
+        sheet.add_row([nil, nil, nil, 'Service status indicator'] + data.pluck(:status))
         sheet.add_row([])
-        sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Metric per Annum'] + data.map { |building| building[:building_name] })
+        sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Metric per Annum'] + data.pluck(:building_name))
 
         SERVICE_HOURS.each do |code, detail|
           service_volume_3_row(code.to_s, detail, data).each do |row|
@@ -127,7 +127,7 @@ module SpreadsheetImportHelper
         end
 
         SERVICE_HOURS.count.times do |index|
-          min = 4 + index * 2
+          min = 4 + (index * 2)
           max = min + 1
           sheet.merge_cells "A#{min}:A#{max}"
           sheet.merge_cells "B#{min}:B#{max}"

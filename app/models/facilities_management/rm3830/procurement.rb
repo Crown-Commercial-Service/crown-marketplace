@@ -396,7 +396,7 @@ module FacilitiesManagement
       end
 
       def services
-        sort_order = StaticData.work_packages.map { |wp| wp['code'] }
+        sort_order = StaticData.work_packages.pluck('code')
         Service.where(code: service_codes)&.sort_by { |service| sort_order.index(service.code) }
       end
 

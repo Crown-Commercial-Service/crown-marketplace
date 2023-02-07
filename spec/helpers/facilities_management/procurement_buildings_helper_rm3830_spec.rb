@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper do
   let(:building) { create(:facilities_management_building, user: user) }
   let(:procurement) { create(:facilities_management_rm3830_procurement_entering_requirements, user: user) }
   let(:procurement_building) { create(:facilities_management_rm3830_procurement_building_no_services, procurement: procurement, building: building) }
@@ -79,7 +79,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper d
   end
 
   describe '.regions' do
-    before { allow(Postcode::PostcodeCheckerV2).to receive(:find_region).and_return([{ "code": 'UKH2', "region": 'Bedfordshire and Hertfordshire' }, { "code": 'UKJ1', "region": 'Berkshire, Buckinghamshire and Oxfordshire' }]) }
+    before { allow(Postcode::PostcodeCheckerV2).to receive(:find_region).and_return([{ code: 'UKH2', region: 'Bedfordshire and Hertfordshire' }, { code: 'UKJ1', region: 'Berkshire, Buckinghamshire and Oxfordshire' }]) }
 
     it 'returns the region names' do
       expect(helper.regions).to eq ['Bedfordshire and Hertfordshire', 'Berkshire, Buckinghamshire and Oxfordshire']

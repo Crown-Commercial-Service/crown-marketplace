@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CrownMarketplace::AllowListController, type: :controller do
+RSpec.describe CrownMarketplace::AllowListController do
   let(:default_params) { { service: 'crown_marketplace' } }
   let(:email_list) { ['cheemail.com', 'cmail.com', 'crowncommercial.gov.uk', 'email.com', 'jmail.com', 'kmail.com', 'tmail.com'] }
   let(:allow_list_file) { Tempfile.new('allow_list.txt') }

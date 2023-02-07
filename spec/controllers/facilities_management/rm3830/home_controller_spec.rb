@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::HomeController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::HomeController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
 
   describe 'GET accessibility_statement' do

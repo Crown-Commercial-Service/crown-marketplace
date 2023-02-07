@@ -191,7 +191,7 @@ module FacilitiesManagement
       end
 
       def error_types(error_details)
-        error_details.map { |e| e[:error] }.uniq
+        error_details.pluck(:error).uniq
       end
 
       def volume_error(error_list)

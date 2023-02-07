@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::PasswordsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM6232' } }
 
   describe 'GET new' do
@@ -42,7 +42,7 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController, type: :control
         end
 
         it 'does not set the crown_marketplace_reset_email cookie' do
-          expect(cookies[:crown_marketplace_reset_email]).to be nil
+          expect(cookies[:crown_marketplace_reset_email]).to be_nil
         end
       end
 
@@ -153,7 +153,7 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController, type: :control
         end
 
         it 'deletes the crown_marketplace_reset_email cookie' do
-          expect(cookies[:crown_marketplace_reset_email]).to be nil
+          expect(cookies[:crown_marketplace_reset_email]).to be_nil
         end
       end
     end

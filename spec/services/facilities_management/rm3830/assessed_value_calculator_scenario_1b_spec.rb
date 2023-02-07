@@ -9,7 +9,7 @@ RSpec.describe FacilitiesManagement::RM3830::AssessedValueCalculator do
   let(:user) { create(:user) }
   let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, user: user, estimated_annual_cost: estimated_annual_cost, service_codes: service_codes, **additional_params) }
 
-  describe 'when the buyer input is known and  any service is missing framework and benchmark rate' do
+  describe 'when the buyer input is known and any service is missing framework and benchmark rate' do
     context 'when CAFM Helpdesk and TUPE are not required' do
       let(:service_codes) { %w[C.1 D.3 G.1 I.1 K.2] }
       let(:additional_params) { { tupe: false, mobilisation_period_required: false, extensions_required: false, initial_call_off_period_years: 1, initial_call_off_period_months: 0 } }

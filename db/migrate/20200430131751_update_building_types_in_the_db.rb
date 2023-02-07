@@ -11,7 +11,7 @@ class UpdateBuildingTypesInTheDb < ActiveRecord::Migration[5.2]
   BUILDING_TYPE_KEY = { 'General office - Customer Facing': 'General office - Customer Facing',
                         'General office - Non Customer Facing': 'General office - Non Customer Facing',
                         'Call-Centre-Operations': 'Call Centre Operations',
-                        'Warehouses': 'Warehouses',
+                        Warehouses: 'Warehouses',
                         'Restaurant-and-Catering-Facilities': 'Restaurant and Catering Facilities',
                         'Pre-School': 'Pre-School',
                         'Primary-School': 'Primary School',

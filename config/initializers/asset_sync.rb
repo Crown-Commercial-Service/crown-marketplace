@@ -4,7 +4,7 @@ if defined?(AssetSync)
     config.fog_provider = 'AWS'
     config.aws_iam_roles = true
     config.aws_session_token = ENV['AWS_SESSION_TOKEN'] if ENV.key?('AWS_SESSION_TOKEN')
-    config.fog_directory = ENV['ASSETS_BUCKET']
+    config.fog_directory = ENV.fetch('ASSETS_BUCKET', nil)
     config.fog_region = 'eu-west-2'
   end
 end

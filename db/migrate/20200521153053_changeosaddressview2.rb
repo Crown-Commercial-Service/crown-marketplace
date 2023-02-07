@@ -3,12 +3,12 @@ class Changeosaddressview2 < ActiveRecord::Migration[5.2]
   def change
     reversible do |dir|
       dir.up do
-        execute <<~SQL
+        execute <<~SQL.squish
           DROP VIEW IF EXISTS public.postcode_lookup CASCADE;
           DROP VIEW IF EXISTS public.os_address_view_2 CASCADE;
         SQL
 
-        execute <<~SQL
+        execute <<~SQL.squish
           create or replace
           view public.os_address_view_2 as
           select
@@ -65,7 +65,7 @@ class Changeosaddressview2 < ActiveRecord::Migration[5.2]
         SQL
 
         # postcode_lookup is unchanged in this migration
-        execute <<~SQL
+        execute <<~SQL.squish
           CREATE VIEW postcode_lookup
           (summary_line, address_line_1, address_line_2, address_town, address_postcode, address_region,
           address_region_code) AS
@@ -100,12 +100,12 @@ class Changeosaddressview2 < ActiveRecord::Migration[5.2]
       end
 
       dir.down do
-        execute <<~SQL
+        execute <<~SQL.squish
           DROP VIEW IF EXISTS public.postcode_lookup;
           DROP VIEW IF EXISTS public.os_address_view_2;
         SQL
 
-        execute <<~SQL
+        execute <<~SQL.squish
           create or replace
           view public.os_address_view_2 as
           select
@@ -163,7 +163,7 @@ class Changeosaddressview2 < ActiveRecord::Migration[5.2]
         SQL
 
         # postcode_lookup is unchanged in this migration
-        execute <<~SQL
+        execute <<~SQL.squish
           CREATE VIEW postcode_lookup
           (summary_line, address_line_1, address_line_2, address_town, address_postcode, address_region,
           address_region_code) AS

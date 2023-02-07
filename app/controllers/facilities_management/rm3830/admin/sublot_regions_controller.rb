@@ -16,11 +16,11 @@ module FacilitiesManagement
         private
 
         def set_region_data
-          @regions = Nuts1Region.all.map { |region| [region.code, region.name] }.to_h
+          @regions = Nuts1Region.all.to_h { |region| [region.code, region.name] }
           supplier_lot_data = @supplier.lot_data[@lot]['regions']
           @sublot_region_name = "Sub-lot #{@lot} regions"
           @selected_supplier_regions = Supplier::SupplierRegionsHelper.supllier_selected_regions(supplier_lot_data)
-          @subregions = FacilitiesManagement::Region.all.map { |region| [region.code, region.name] }.to_h
+          @subregions = FacilitiesManagement::Region.all.to_h { |region| [region.code, region.name] }
         end
       end
     end

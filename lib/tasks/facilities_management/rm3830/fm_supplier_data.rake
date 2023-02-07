@@ -19,6 +19,5 @@ namespace :db do
   end
 
   desc 'add static data to the database'
-  task static: %i[rm3830:fm_supplier_data rm3830:add_supplier_rate_cards] do
-  end
+  task static: %i[rm3830:fm_supplier_data rm3830:add_supplier_rate_cards]
 end

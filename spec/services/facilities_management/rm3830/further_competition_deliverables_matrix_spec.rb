@@ -23,7 +23,7 @@ RSpec.describe FacilitiesManagement::RM3830::FurtherCompetitionDeliverablesMatri
         report.calculate_services_for_buildings(supplier_id, :fc)
       end
       spreadsheet = spreadsheet_builder.build
-      IO.write('/tmp/further_competition_procurement_summary.xlsx', spreadsheet.to_stream.read, binmode: true)
+      File.write('/tmp/further_competition_procurement_summary.xlsx', spreadsheet.to_stream.read, binmode: true)
       Roo::Excelx.new('/tmp/further_competition_procurement_summary.xlsx')
     end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::ProcurementDetailsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM6232::ProcurementDetailsHelper do
   describe '.porcurement_services' do
     before { @procurement = create(:facilities_management_rm6232_procurement_entering_requirements, service_codes: %w[E.1 F.1 Q.3]) }
 

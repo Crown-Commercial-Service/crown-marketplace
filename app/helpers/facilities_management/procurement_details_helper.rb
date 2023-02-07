@@ -75,7 +75,7 @@ module FacilitiesManagement
     end
 
     def address_in_a_line(building)
-      [building.address_line_1, building.address_line_2, building.address_town].reject(&:blank?).join(', ') + " #{building.address_postcode}"
+      [building.address_line_1, building.address_line_2, building.address_town].compact_blank.join(', ') + " #{building.address_postcode}"
     end
 
     def edit_page_title

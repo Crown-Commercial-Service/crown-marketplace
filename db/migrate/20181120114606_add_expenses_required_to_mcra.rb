@@ -1,7 +1,7 @@
 class AddExpensesRequiredToMcra < ActiveRecord::Migration[5.2]
   def up
     add_column :management_consultancy_regional_availabilities, :expenses_required, :boolean
-    execute <<~SQL
+    execute <<~SQL.squish
       UPDATE management_consultancy_regional_availabilities
       SET expenses_required = false
     SQL

@@ -6,19 +6,21 @@ RSpec.describe Cognito::ResendConfirmationCode do
 
   describe '#call' do
     context 'when success' do
+      include_context 'with cognito structs'
+
       let(:response) { described_class.call(email) }
 
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:resend_confirmation_code).and_return(OpenStruct.new('USER_ID_FOR_SRP' => email))
+        allow(aws_client).to receive(:resend_confirmation_code).and_return(resend_confirmation_code_resp_struct.new('USER_ID_FOR_SRP' => email))
       end
 
       it 'returns success' do
-        expect(response.success?).to eq true
+        expect(response.success?).to be true
       end
 
       it 'returns no error' do
-        expect(response.error).to eq nil
+        expect(response.error).to be_nil
       end
     end
 
@@ -30,7 +32,7 @@ RSpec.describe Cognito::ResendConfirmationCode do
 
       it 'does not return success' do
         response = described_class.call(email)
-        expect(response.success?).to eq false
+        expect(response.success?).to be false
       end
 
       it 'does returns cognito error' do

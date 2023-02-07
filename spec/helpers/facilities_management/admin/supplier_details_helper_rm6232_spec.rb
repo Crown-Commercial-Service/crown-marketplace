@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # We have a spec for both frameworks to make sure
 # both suppliers admin models work with the helpers
-RSpec.describe FacilitiesManagement::Admin::SupplierDetailsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::Admin::SupplierDetailsHelper do
   let(:supplier) { create(:facilities_management_rm6232_admin_suppliers_admin, **attributes) }
   let(:attributes) { {} }
 

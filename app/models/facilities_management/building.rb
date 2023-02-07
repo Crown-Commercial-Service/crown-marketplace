@@ -6,8 +6,8 @@ module FacilitiesManagement
 
     scope :order_by_building_name, -> { order(Arel.sql('lower(building_name)')) }
 
-    before_save :determine_status
     before_validation :determine_status
+    before_save :determine_status
 
     with_options on: %i[all new building_details] do
       validate :remove_excess_spaces_from_building_name
@@ -74,11 +74,11 @@ module FacilitiesManagement
     end
 
     def full_address
-      [address_line_1, address_line_2, address_town, address_region, address_postcode].reject(&:blank?).join(', ')
+      [address_line_1, address_line_2, address_town, address_region, address_postcode].compact_blank.join(', ')
     end
 
     def address_no_region
-      [address_line_1, address_line_2, address_town, address_postcode].reject(&:blank?).join(', ')
+      [address_line_1, address_line_2, address_town, address_postcode].compact_blank.join(', ')
     end
 
     def add_region_code_from_address_region
@@ -178,7 +178,7 @@ module FacilitiesManagement
     end
 
     def building_type_selection
-      fm_building_types = BUILDING_TYPES.map { |type| type[:id] }
+      fm_building_types = BUILDING_TYPES.pluck(:id)
 
       errors.add(:building_type, :inclusion) unless (fm_building_types + ['other']).include? building_type
     end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper do
   describe '.cell_class' do
     let(:context) { nil }
     let(:answer) { nil }
@@ -153,7 +153,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
 
       context 'when the gia has been provided' do
         it 'returns false' do
-          expect(result).to eq false
+          expect(result).to be false
         end
       end
 
@@ -161,7 +161,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
         let(:gia) { 0 }
 
         it 'returns true' do
-          expect(result).to eq true
+          expect(result).to be true
         end
       end
     end
@@ -171,7 +171,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
 
       context 'when the external area has been provided' do
         it 'returns false' do
-          expect(result).to eq false
+          expect(result).to be false
         end
       end
 
@@ -179,7 +179,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
         let(:external_area) { 0 }
 
         it 'returns true' do
-          expect(result).to eq true
+          expect(result).to be true
         end
       end
     end
@@ -188,7 +188,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
       let(:context) { :volume }
 
       it 'returns false' do
-        expect(result).to eq false
+        expect(result).to be false
       end
     end
   end

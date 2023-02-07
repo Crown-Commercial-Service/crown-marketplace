@@ -28,7 +28,7 @@ module FacilitiesManagement::BuildingsHelper
   end
 
   def address_in_a_line
-    [@building.address_line_1, @building.address_line_2, @building.address_town].reject(&:blank?).join(', ') + " #{@building.address_postcode}"
+    [@building.address_line_1, @building.address_line_2, @building.address_town].compact_blank.join(', ') + " #{@building.address_postcode}"
   end
 
   def type_description(text, attribute)
@@ -55,11 +55,11 @@ module FacilitiesManagement::BuildingsHelper
   SECTIONS = %i[building_details building_area building_type security_type].freeze
 
   def should_building_details_be_open?
-    @should_building_details_be_open ||= begin
-      return false if @building.building_type.blank?
-
-      @building.building_type == 'other' || @building.errors.key?(:other_building_type) || FacilitiesManagement::Building::BUILDING_TYPES[0..1].map { |bt| bt[:id] }.exclude?(@building.building_type)
-    end
+    @should_building_details_be_open ||= if @building.building_type.blank?
+                                           false
+                                         else
+                                           @building.building_type == 'other' || @building.errors.key?(:other_building_type) || FacilitiesManagement::Building::BUILDING_TYPES[0..1].pluck(:id).exclude?(@building.building_type)
+                                         end
   end
 
   def building_type_radio_button(form, building_type, disabled)

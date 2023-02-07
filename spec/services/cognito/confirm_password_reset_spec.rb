@@ -19,7 +19,7 @@ RSpec.describe Cognito::ConfirmPasswordReset do
       let(:password_confirmation) { 'Pass!' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
 
@@ -28,7 +28,7 @@ RSpec.describe Cognito::ConfirmPasswordReset do
       let(:password_confirmation) { 'password!' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
 
@@ -37,7 +37,7 @@ RSpec.describe Cognito::ConfirmPasswordReset do
       let(:password_confirmation) { 'ValidPass123!' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
 
@@ -46,26 +46,28 @@ RSpec.describe Cognito::ConfirmPasswordReset do
       let(:password_confirmation) { 'ValidPass123!' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
   end
 
   describe '#call' do
     context 'when success' do
+      include_context 'with cognito structs'
+
       let(:response) { described_class.call(username, password, password_confirmation, confirmation_code) }
 
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:confirm_forgot_password).and_return(OpenStruct.new(session: '12345'))
+        allow(aws_client).to receive(:confirm_forgot_password).and_return(cognito_session_struct.new(session: '12345'))
       end
 
       it 'returns success' do
-        expect(response.success?).to eq true
+        expect(response.success?).to be true
       end
 
       it 'returns no error' do
-        expect(response.error).to eq nil
+        expect(response.error).to be_nil
       end
     end
 
@@ -77,7 +79,7 @@ RSpec.describe Cognito::ConfirmPasswordReset do
 
       it 'does not return success' do
         response = described_class.call(username, password, password_confirmation, confirmation_code)
-        expect(response.success?).to eq false
+        expect(response.success?).to be false
       end
 
       it 'does returns cognito error' do

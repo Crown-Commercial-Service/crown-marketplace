@@ -2,12 +2,16 @@ require 'rails_helper'
 
 RSpec.describe Cognito::UpdateUser do
   describe '#call' do
+    include_context 'with cognito structs'
+
     let(:user) { create(:user, :without_detail, roles: %i[mc_access fm_acess ls_access]) }
     let(:cognito_groups) do
-      OpenStruct.new(groups: [
-                       OpenStruct.new(group_name: 'buyer'),
-                       OpenStruct.new(group_name: 'st_access')
-                     ])
+      admin_list_groups_for_user_resp_struct.new(
+        groups: [
+          cognito_group_struct.new(group_name: 'buyer'),
+          cognito_group_struct.new(group_name: 'st_access')
+        ]
+      )
     end
     let(:roles) { %i[buyer st_access] }
 
@@ -26,33 +30,33 @@ RSpec.describe Cognito::UpdateUser do
 
       it 'returns the newly created resource with the buyer and st_access role' do
         response = described_class.call(user)
-        expect(response.user.has_role?(:buyer)).to eq true
-        expect(response.user.has_role?(:st_access)).to eq true
+        expect(response.user.has_role?(:buyer)).to be true
+        expect(response.user.has_role?(:st_access)).to be true
       end
 
       it 'returns the newly created resource with no fm_access role' do
         response = described_class.call(user)
-        expect(response.user.has_role?(:fm_access)).to eq false
+        expect(response.user.has_role?(:fm_access)).to be false
       end
 
       it 'returns the newly created resource with no ls_access role' do
         response = described_class.call(user)
-        expect(response.user.has_role?(:ls_access)).to eq false
+        expect(response.user.has_role?(:ls_access)).to be false
       end
 
       it 'returns the newly created resource with no mc_access role' do
         response = described_class.call(user)
-        expect(response.user.has_role?(:mc_access)).to eq false
+        expect(response.user.has_role?(:mc_access)).to be false
       end
 
       it 'returns success' do
         response = described_class.call(user)
-        expect(response.success?).to eq true
+        expect(response.success?).to be true
       end
 
       it 'returns no error' do
         response = described_class.call(user)
-        expect(response.error).to eq nil
+        expect(response.error).to be_nil
       end
     end
 
@@ -69,7 +73,7 @@ RSpec.describe Cognito::UpdateUser do
 
       it 'does not return success' do
         response = described_class.call(user)
-        expect(response.success?).to eq false
+        expect(response.success?).to be false
       end
 
       it 'returns an error' do

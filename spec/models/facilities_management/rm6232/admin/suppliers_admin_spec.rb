@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin do
   let(:supplier) { create(:facilities_management_rm6232_admin_suppliers_admin) }
 
   describe 'validations' do
@@ -479,7 +479,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin, type: :model
         let(:address_postcode) { nil }
 
         it 'is invalid' do
-          expect(supplier.valid?(:supplier_address)).to eq false
+          expect(supplier.valid?(:supplier_address)).to be false
         end
 
         it 'has the correct error message' do
@@ -493,7 +493,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin, type: :model
         let(:address_postcode) { 'SA3 1TA NW14' }
 
         it 'is invalid' do
-          expect(supplier.valid?(:supplier_address)).to eq false
+          expect(supplier.valid?(:supplier_address)).to be false
         end
 
         it 'has the correct error message' do
@@ -507,7 +507,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin, type: :model
         let(:address_postcode) { 'SA3 1TA' }
 
         it 'is valid' do
-          expect(supplier.valid?(:supplier_address)).to eq true
+          expect(supplier.valid?(:supplier_address)).to be true
         end
       end
     end
@@ -520,7 +520,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin, type: :model
       let(:supplier_status) { nil }
 
       it 'is invalid' do
-        expect(supplier.valid?(:supplier_status)).to eq false
+        expect(supplier.valid?(:supplier_status)).to be false
       end
 
       it 'has the correct error message' do
@@ -534,7 +534,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin, type: :model
       let(:supplier_status) { '' }
 
       it 'is invalid' do
-        expect(supplier.valid?(:supplier_status)).to eq false
+        expect(supplier.valid?(:supplier_status)).to be false
       end
 
       it 'has the correct error message' do

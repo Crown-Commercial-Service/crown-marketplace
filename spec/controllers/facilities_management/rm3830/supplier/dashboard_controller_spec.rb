@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Supplier::DashboardController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Supplier::DashboardController do
   let(:default_params) { { service: 'facilities_management/supplier', framework: 'RM3830' } }
 
   describe '#index' do

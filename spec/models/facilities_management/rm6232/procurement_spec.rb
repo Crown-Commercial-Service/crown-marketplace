@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Procurement do
   it { is_expected.to belong_to(:user) }
 
   describe '.quick_view_suppliers' do
@@ -40,8 +40,8 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
 
     context 'when the service codes contain Q.3' do
       let(:service_codes) { base_service_codes + ['Q.3'] }
-      let(:suppliers_selector) { instance_double('suppliers_selector') }
-      let(:suppliers) { instance_double('suppliers') }
+      let(:suppliers_selector) { instance_double(FacilitiesManagement::RM6232::SuppliersSelector) }
+      let(:suppliers) { [] }
 
       it 'does not use that service code in the call to SuppliersSelector' do
         allow(FacilitiesManagement::RM6232::SuppliersSelector).to receive(:new).and_return(suppliers_selector)
@@ -750,7 +750,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       let(:service_codes) { [] }
 
       it 'returns false' do
-        expect(procurement.buildings_and_services_completed?).to eq false
+        expect(procurement.buildings_and_services_completed?).to be false
       end
     end
 
@@ -758,7 +758,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       let(:service_codes) { %w[Q.3 R.1 S.1] }
 
       it 'returns false' do
-        expect(procurement.buildings_and_services_completed?).to eq false
+        expect(procurement.buildings_and_services_completed?).to be false
       end
     end
 
@@ -766,7 +766,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       let(:service_codes) { %w[Q.3 R.1 S.1 E.1] }
 
       it 'returns true' do
-        expect(procurement.buildings_and_services_completed?).to eq true
+        expect(procurement.buildings_and_services_completed?).to be true
       end
     end
   end
@@ -1132,7 +1132,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       let(:state) { 'what_happens_next' }
 
       it 'returns false' do
-        expect(procurement.procurement_buildings_missing_regions?).to eq false
+        expect(procurement.procurement_buildings_missing_regions?).to be false
       end
     end
 
@@ -1143,7 +1143,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
         before { procurement.active_procurement_buildings.first.building.update(address_region_code: nil) }
 
         it 'returns true' do
-          expect(procurement.procurement_buildings_missing_regions?).to eq true
+          expect(procurement.procurement_buildings_missing_regions?).to be true
         end
       end
 
@@ -1151,13 +1151,13 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
         before { procurement.active_procurement_buildings.first.building.update(address_region_code: '') }
 
         it 'returns true' do
-          expect(procurement.procurement_buildings_missing_regions?).to eq true
+          expect(procurement.procurement_buildings_missing_regions?).to be true
         end
       end
 
       context 'when a building address region is present' do
         it 'returns false' do
-          expect(procurement.procurement_buildings_missing_regions?).to eq false
+          expect(procurement.procurement_buildings_missing_regions?).to be false
         end
       end
     end

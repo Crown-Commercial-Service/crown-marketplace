@@ -18,7 +18,7 @@ RSpec.describe Cognito::ConfirmSignUp do
       let(:confirmation_code) { '123' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe Cognito::ConfirmSignUp do
       let(:confirmation_code) { 'invalid' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe Cognito::ConfirmSignUp do
       let(:confirmation_code) { '' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe Cognito::ConfirmSignUp do
       let(:email) { '' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
   end
@@ -58,16 +58,16 @@ RSpec.describe Cognito::ConfirmSignUp do
       end
 
       it 'returns success' do
-        expect(response.success?).to eq true
+        expect(response.success?).to be true
       end
 
       it 'returns no error' do
-        expect(response.error).to eq nil
+        expect(response.error).to be_nil
       end
 
       it 'confirms user' do
         user.reload
-        expect(user.confirmed?).to eq true
+        expect(user.confirmed?).to be true
       end
     end
 
@@ -88,7 +88,7 @@ RSpec.describe Cognito::ConfirmSignUp do
 
         it 'does not confirm user' do
           user.reload
-          expect(user.confirmed?).to eq false
+          expect(user.confirmed?).to be false
         end
       end
 
@@ -102,7 +102,7 @@ RSpec.describe Cognito::ConfirmSignUp do
 
         it 'does not confirm user' do
           user.reload
-          expect(user.confirmed?).to eq false
+          expect(user.confirmed?).to be false
         end
       end
     end

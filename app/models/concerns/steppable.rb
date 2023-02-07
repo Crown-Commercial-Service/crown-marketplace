@@ -11,7 +11,7 @@ module Steppable
     def permit_list
       array_params, single_params =
         attribute_set.partition { |a| a.type.primitive == Array }
-      single_params.map(&:name) + [array_params.map { |a| [a.name, []] }.to_h]
+      single_params.map(&:name) + [array_params.to_h { |a| [a.name, []] }]
     end
 
     def permitted_keys

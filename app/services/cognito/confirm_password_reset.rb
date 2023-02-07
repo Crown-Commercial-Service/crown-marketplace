@@ -39,7 +39,7 @@ module Cognito
 
     def confirm_forgot_password
       @response = client.confirm_forgot_password(
-        client_id: ENV['COGNITO_CLIENT_ID'],
+        client_id: ENV.fetch('COGNITO_CLIENT_ID', nil),
         username: email,
         password: password,
         confirmation_code: confirmation_code

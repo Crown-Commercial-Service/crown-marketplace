@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Framework, type: :model do
+RSpec.describe FacilitiesManagement::Framework do
   describe '.frameworks' do
     it 'returns RM3830 ad RM6232' do
       expect(described_class.frameworks).to eq ['RM3830', 'RM6232']
@@ -8,7 +8,7 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
   end
 
   shared_context 'and RM6232 is live in the future' do
-    before { described_class.find_by(framework: 'RM6232').update(live_at: Time.zone.now + 1.day) }
+    before { described_class.find_by(framework: 'RM6232').update(live_at: 1.day.from_now) }
   end
 
   shared_context 'and RM6232 is live today' do
@@ -143,7 +143,7 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
     let(:framework) { create(:facilities_management_framework, live_at: live_at) }
 
     context 'when the live_at date is before today' do
-      let(:live_at) { Time.zone.now - 1.day }
+      let(:live_at) { 1.day.ago }
 
       it 'returns live' do
         expect(framework.status).to eq :live
@@ -159,7 +159,7 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
     end
 
     context 'when the live_at date is after today' do
-      let(:live_at) { Time.zone.now + 1.day }
+      let(:live_at) { 1.day.from_now }
 
       it 'returns coming' do
         expect(framework.status).to eq :coming
@@ -169,7 +169,7 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
 
   describe 'validating the live at date' do
     let(:framework) { create(:facilities_management_framework) }
-    let(:live_at) { Time.zone.now + 1.day }
+    let(:live_at) { 1.day.from_now }
     let(:live_at_yyyy) { live_at.year.to_s }
     let(:live_at_mm) { live_at.month.to_s }
     let(:live_at_dd) { live_at.day.to_s }
@@ -184,7 +184,7 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
       let(:live_at_yyyy) { nil }
 
       it 'is not valid and has the correct error message' do
-        expect(framework.valid?(:update)).to eq false
+        expect(framework.valid?(:update)).to be false
         expect(framework.errors[:live_at].first).to eq 'Enter a valid \'live at\' date'
       end
     end
@@ -193,7 +193,7 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
       let(:live_at_mm) { '' }
 
       it 'is not valid and has the correct error message' do
-        expect(framework.valid?(:update)).to eq false
+        expect(framework.valid?(:update)).to be false
         expect(framework.errors[:live_at].first).to eq 'Enter a valid \'live at\' date'
       end
     end
@@ -202,7 +202,7 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
       let(:live_at_dd) { '    ' }
 
       it 'is not valid and has the correct error message' do
-        expect(framework.valid?(:update)).to eq false
+        expect(framework.valid?(:update)).to be false
         expect(framework.errors[:live_at].first).to eq 'Enter a valid \'live at\' date'
       end
     end
@@ -214,14 +214,14 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
         let(:live_at_dd) { '30' }
 
         it 'is not valid and has the correct error message' do
-          expect(framework.valid?(:update)).to eq false
+          expect(framework.valid?(:update)).to be false
           expect(framework.errors[:live_at].first).to eq 'Enter a valid \'live at\' date'
         end
       end
 
       context 'and it is a real date' do
         it 'is valid' do
-          expect(framework.valid?(:update)).to eq true
+          expect(framework.valid?(:update)).to be true
         end
       end
     end

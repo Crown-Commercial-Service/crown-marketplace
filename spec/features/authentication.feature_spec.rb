@@ -1,17 +1,21 @@
 require 'rails_helper'
 
-RSpec.feature 'Authentication', type: :feature do
+RSpec.feature 'Authentication' do
+  include_context 'with cognito structs'
+
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
   let(:cognito_groups) do
-    OpenStruct.new(groups: [
-                     OpenStruct.new(group_name: 'buyer'),
-                     OpenStruct.new(group_name: 'fm_access')
-                   ])
+    admin_list_groups_for_user_resp_struct.new(
+      groups: [
+        cognito_group_struct.new(group_name: 'buyer'),
+        cognito_group_struct.new(group_name: 'fm_access')
+      ]
+    )
   end
 
   before do
     allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-    allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new(session: '1234667'))
+    allow(aws_client).to receive(:initiate_auth).and_return(initiate_auth_resp_struct.new(session: '1234667'))
     allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(Cognito::SignInUser).to receive(:sleep)

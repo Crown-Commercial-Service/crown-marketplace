@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsHelper do
   let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
   before { @procurement = procurement }
 
   describe '.show_page_content' do
     let(:result) { helper.show_page_content }
-    let(:page_description) { instance_double('page_description') }
+    let(:page_description) { instance_double(FacilitiesManagement::PageDetail::PageDescription) }
 
     before do
       @page_name = page_name

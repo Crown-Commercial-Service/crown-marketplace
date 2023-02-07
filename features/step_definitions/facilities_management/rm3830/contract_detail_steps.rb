@@ -56,7 +56,7 @@ end
 Given('I upload security policy document that is {string}') do |option|
   filepath = case option
              when 'valid'
-               Rails.root.join('public', 'facilities-management', 'rm3830', 'Attachment 1 - About the Direct Award v3.0.pdf')
+               Rails.public_path.join('facilities-management', 'rm3830', 'Attachment 1 - About the Direct Award v3.0.pdf')
              when 'invalid'
                Rails.root.join('features', 'facilities_management', 'rm3830', 'procurements', 'contract_details', 'validations', 'security_policy_document_validations.feature')
              end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   subject(:user) { build(:user, :without_detail, confirmed_at: confirmed_at) }
 
   describe '#confirmed?' do
@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
       let(:confirmed_at) { nil }
 
       it 'returns false' do
-        expect(user.confirmed?).to eq false
+        expect(user.confirmed?).to be false
       end
     end
 
@@ -16,7 +16,7 @@ RSpec.describe User, type: :model do
       let(:confirmed_at) { Time.zone.now }
 
       it 'returns true' do
-        expect(user.confirmed?).to eq true
+        expect(user.confirmed?).to be true
       end
     end
   end
@@ -27,14 +27,14 @@ RSpec.describe User, type: :model do
     context 'when user is buyer without buyer details' do
       it 'will return true' do
         user.roles = %i[buyer fm_access]
-        expect(user.fm_buyer_details_incomplete?).to eq true
+        expect(user.fm_buyer_details_incomplete?).to be true
       end
     end
 
     context 'when user isn\'t a buyer' do
       it 'will return false' do
         user.roles = %i[fm_access]
-        expect(user.fm_buyer_details_incomplete?).to eq false
+        expect(user.fm_buyer_details_incomplete?).to be false
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe User, type: :model do
       it 'will return true' do
         user.roles = %i[buyer fm_access]
         user.buyer_detail = nil
-        expect(user.fm_buyer_details_incomplete?).to eq true
+        expect(user.fm_buyer_details_incomplete?).to be true
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe User, type: :model do
         user.roles = %i[buyer fm_access]
         user.buyer_detail = FacilitiesManagement::BuyerDetail.new
         user.buyer_detail.full_name = 'Test name'
-        expect(user.fm_buyer_details_incomplete?).to eq true
+        expect(user.fm_buyer_details_incomplete?).to be true
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'will return true' do
-        expect(user.fm_buyer_details_incomplete?).to eq true
+        expect(user.fm_buyer_details_incomplete?).to be true
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'will return false' do
-        expect(user.fm_buyer_details_incomplete?).to eq false
+        expect(user.fm_buyer_details_incomplete?).to be false
       end
     end
   end

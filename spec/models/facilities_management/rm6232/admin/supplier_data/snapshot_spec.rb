@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot do
   let(:snapshot) do
     described_class.new(
       snapshot_date_yyyy: snapshot_date_yyyy,
@@ -10,7 +10,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
       snapshot_time_mm: snapshot_time_mm
     )
   end
-  let(:snapshot_date) { Time.zone.now + 1.day }
+  let(:snapshot_date) { 1.day.from_now }
   let(:snapshot_date_yyyy) { snapshot_date.year.to_s }
   let(:snapshot_date_mm) { snapshot_date.month.to_s }
   let(:snapshot_date_dd) { snapshot_date.day.to_s }
@@ -22,7 +22,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
       let(:snapshot_date_yyyy) { nil }
 
       it 'is not valid and has the correct error message' do
-        expect(snapshot.valid?).to eq false
+        expect(snapshot.valid?).to be false
         expect(snapshot.errors[:snapshot_date].first).to eq 'Enter a valid \'snapshot\' date'
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
       let(:snapshot_date_mm) { '' }
 
       it 'is not valid and has the correct error message' do
-        expect(snapshot.valid?).to eq false
+        expect(snapshot.valid?).to be false
         expect(snapshot.errors[:snapshot_date].first).to eq 'Enter a valid \'snapshot\' date'
       end
     end
@@ -40,7 +40,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
       let(:snapshot_date_dd) { '    ' }
 
       it 'is not valid and has the correct error message' do
-        expect(snapshot.valid?).to eq false
+        expect(snapshot.valid?).to be false
         expect(snapshot.errors[:snapshot_date].first).to eq 'Enter a valid \'snapshot\' date'
       end
     end
@@ -52,7 +52,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_date_dd) { '30' }
 
         it 'is not valid and has the correct error message' do
-          expect(snapshot.valid?).to eq false
+          expect(snapshot.valid?).to be false
           expect(snapshot.errors[:snapshot_date].first).to eq 'Enter a valid \'snapshot\' date'
         end
       end
@@ -89,7 +89,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_time_hh) { 'Go Beyond' }
 
         it 'is not valid and has the correct error message' do
-          expect(snapshot.valid?).to eq false
+          expect(snapshot.valid?).to be false
           expect(snapshot.errors[:snapshot_time].first).to eq "Enter a valid 'snapshot' time (23:59 or earlier)"
         end
       end
@@ -98,7 +98,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_time_hh) { '-6' }
 
         it 'is not valid and has the correct error message' do
-          expect(snapshot.valid?).to eq false
+          expect(snapshot.valid?).to be false
           expect(snapshot.errors[:snapshot_time].first).to eq "Enter a valid 'snapshot' time (23:59 or earlier)"
         end
       end
@@ -107,7 +107,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_time_hh) { '24' }
 
         it 'is not valid and has the correct error message' do
-          expect(snapshot.valid?).to eq false
+          expect(snapshot.valid?).to be false
           expect(snapshot.errors[:snapshot_time].first).to eq "Enter a valid 'snapshot' time (23:59 or earlier)"
         end
       end
@@ -117,7 +117,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_time_mm) { '8' }
 
         it 'is valid' do
-          expect(snapshot.valid?).to eq true
+          expect(snapshot.valid?).to be true
         end
       end
     end
@@ -153,7 +153,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_time_mm) { 'Plus Ultra!' }
 
         it 'is not valid and has the correct error message' do
-          expect(snapshot.valid?).to eq false
+          expect(snapshot.valid?).to be false
           expect(snapshot.errors[:snapshot_time].first).to eq "Enter a valid 'snapshot' time (23:59 or earlier)"
         end
       end
@@ -162,7 +162,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_time_mm) { '-1' }
 
         it 'is not valid and has the correct error message' do
-          expect(snapshot.valid?).to eq false
+          expect(snapshot.valid?).to be false
           expect(snapshot.errors[:snapshot_time].first).to eq "Enter a valid 'snapshot' time (23:59 or earlier)"
         end
       end
@@ -171,7 +171,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_time_mm) { '60' }
 
         it 'is not valid and has the correct error message' do
-          expect(snapshot.valid?).to eq false
+          expect(snapshot.valid?).to be false
           expect(snapshot.errors[:snapshot_time].first).to eq "Enter a valid 'snapshot' time (23:59 or earlier)"
         end
       end
@@ -181,7 +181,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_time_mm) { '08' }
 
         it 'is valid' do
-          expect(snapshot.valid?).to eq true
+          expect(snapshot.valid?).to be true
         end
       end
     end
@@ -196,14 +196,14 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_time_mm) { '44' }
 
         it 'is not valid and has the correct error message' do
-          expect(snapshot.valid?).to eq false
+          expect(snapshot.valid?).to be false
           expect(snapshot.errors[:snapshot_date_time].first).to eq 'You must enter a data and time on or after  5 July 2022, 13:45 (when the supplier data was imported for the first time)'
         end
       end
 
       context 'and the date and time entered is on the oldest supplier data' do
         it 'is valid' do
-          expect(snapshot.valid?).to eq true
+          expect(snapshot.valid?).to be true
         end
       end
 
@@ -211,7 +211,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         let(:snapshot_time_mm) { '46' }
 
         it 'is valid' do
-          expect(snapshot.valid?).to eq true
+          expect(snapshot.valid?).to be true
         end
       end
     end
@@ -287,7 +287,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
   end
 
   describe 'generate_snapshot_zip' do
-    let(:snapshot_generator) { instance_double('snapshot_generator') }
+    let(:snapshot_generator) { instance_double(FacilitiesManagement::RM6232::Admin::SupplierDataSnapshotGenerator) }
 
     before do
       allow(FacilitiesManagement::RM6232::Admin::SupplierDataSnapshotGenerator).to receive(:new).and_return(snapshot_generator)

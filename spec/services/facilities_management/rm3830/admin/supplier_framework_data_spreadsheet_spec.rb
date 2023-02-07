@@ -8,7 +8,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierFrameworkDataSpreads
   before do
     spreadsheet_builder = described_class.new
     spreadsheet_builder.build
-    IO.write(spreadsheet_file, spreadsheet_builder.to_xlsx, binmode: true)
+    File.write(spreadsheet_file, spreadsheet_builder.to_xlsx, binmode: true)
   end
 
   after do
