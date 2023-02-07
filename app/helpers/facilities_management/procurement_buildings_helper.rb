@@ -19,7 +19,7 @@ module FacilitiesManagement::ProcurementBuildingsHelper
   end
 
   def regions
-    Postcode::PostcodeCheckerV2.find_region(@building.address_postcode.delete(' ')).map { |region| region[:region] }
+    Postcode::PostcodeCheckerV2.find_region(@building.address_postcode.delete(' ')).pluck(:region)
   end
 
   def form_object

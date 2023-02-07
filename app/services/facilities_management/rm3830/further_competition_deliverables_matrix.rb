@@ -80,7 +80,7 @@ module FacilitiesManagement::RM3830
     end
 
     def get_sorted_list_unique_standards_per_building(data_for_service)
-      list_standards = data_for_service.map { |data| data[:service_standard] }.compact.uniq.sort
+      list_standards = data_for_service.pluck(:service_standard).compact.uniq.sort
       list_standards << nil if list_standards.empty?
       list_standards.sort
     end
@@ -255,7 +255,7 @@ module FacilitiesManagement::RM3830
                    sanitize_string_for_excel(buyer_detail.organisation_address_line_2),
                    sanitize_string_for_excel(buyer_detail.organisation_address_town),
                    sanitize_string_for_excel(buyer_detail.organisation_address_county)]
-      "#{str_array.reject(&:blank?).join(', ')}. #{sanitize_string_for_excel(buyer_detail.organisation_address_postcode)}"
+      "#{str_array.compact_blank.join(', ')}. #{sanitize_string_for_excel(buyer_detail.organisation_address_postcode)}"
     end
 
     ##### Methods regarding the styling of the worksheets #####

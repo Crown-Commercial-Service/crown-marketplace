@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::RegistrationsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::RegistrationsController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
 
   before { request.env['devise.mapping'] = Devise.mappings[:user] }
@@ -40,7 +40,7 @@ RSpec.describe FacilitiesManagement::RM3830::RegistrationsController, type: :con
       context 'when no exception is raised' do
         before do
           # rubocop:disable RSpec/AnyInstance
-          allow_any_instance_of(Cognito::SignUpUser).to receive(:create_cognito_user).and_return({ 'user_sub': '1234567890' })
+          allow_any_instance_of(Cognito::SignUpUser).to receive(:create_cognito_user).and_return({ user_sub: '1234567890' })
           allow_any_instance_of(Cognito::SignUpUser).to receive(:add_user_to_groups).and_return(true)
           allow_any_instance_of(AllowedEmailDomain).to receive(:allow_list).and_return(['testemail.com'])
           # rubocop:enable RSpec/AnyInstance

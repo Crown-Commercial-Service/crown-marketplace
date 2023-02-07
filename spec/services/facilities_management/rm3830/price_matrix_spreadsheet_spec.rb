@@ -7,7 +7,7 @@ RSpec.describe FacilitiesManagement::RM3830::PriceMatrixSpreadsheet do
     spreadsheet = described_class.new contract.id
     spreadsheet.build
     path = '/tmp/Attachment_3_Price_Matrix_(DA).xlsx'
-    IO.write(path, spreadsheet.to_xlsx, binmode: true)
+    File.write(path, spreadsheet.to_xlsx, binmode: true)
     Roo::Excelx.new(path)
   end
 

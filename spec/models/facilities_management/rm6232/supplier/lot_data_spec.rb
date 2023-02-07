@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData do
   let(:lot_data) { described_class.where(facilities_management_rm6232_supplier_id: supplier_id).find_by(lot_code: lot_code) }
   let(:random_lot_data) { described_class.order(Arel.sql('RANDOM()')).first }
 

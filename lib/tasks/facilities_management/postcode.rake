@@ -21,7 +21,7 @@ namespace :db do
       opts.banner = 'Usage: rake db:local_postcode [option]'
       opts.on('-f', '--folder ARG', String) { |folder| options[:folder] = folder }
     end
-    nargs = o.order!(ARGV) {}
+    nargs = o.order!(ARGV)
     o.parse!(nargs)
     options[:folder] = args[:folder] if options.empty? # support debugging
 
@@ -113,8 +113,7 @@ namespace :db do
 
   if Rails.env.test?
     desc 'add static data to the database'
-    task static: :sample_address_import do
-    end
+    task static: :sample_address_import
   end
 end
 # rubocop:enable Metrics/BlockLength

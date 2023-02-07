@@ -1,7 +1,7 @@
 require 'rails_helper'
 # rubocop:disable RSpec/NamedSubject
 module FacilitiesManagement
-  RSpec.describe BuyerDetailsController, type: :controller do
+  RSpec.describe BuyerDetailsController do
     let(:default_params) { { service: 'facilities_management', framework: framework } }
     let(:framework) { 'RM6232' }
 

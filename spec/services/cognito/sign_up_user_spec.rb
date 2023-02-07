@@ -37,7 +37,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:password_confirmation) { 'Pass1!' }
 
         it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:password].first).to eq 'Password must be 8 characters or more'
         end
       end
@@ -47,7 +47,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:password_confirmation) { 'password1!' }
 
         it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:password].first).to eq 'Password must include a capital letter'
         end
       end
@@ -57,7 +57,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:password_confirmation) { 'Password123' }
 
         it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:password].first).to eq 'Password must include a special character'
         end
       end
@@ -67,7 +67,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:password_confirmation) { 'Password!' }
 
         it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:password].first).to eq 'Password must include a number'
         end
       end
@@ -77,7 +77,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:password_confirmation) { 'ValidPass123!' }
 
         it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:password].first).to eq 'Enter a password'
         end
       end
@@ -87,7 +87,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:password_confirmation) { 'ValidPass123!' }
 
         it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:password_confirmation].first).to eq "Passwords don't match"
         end
       end
@@ -96,7 +96,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { '' }
 
         it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
         end
       end
@@ -105,7 +105,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { 'uSer@cheemail.com' }
 
         it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:email].first).to eq 'Email address cannot contain any capital letters'
         end
       end
@@ -114,7 +114,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { 'user@Cheemail.com' }
 
         it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:email].first).to eq 'Email address cannot contain any capital letters'
           expect(response.errors.of_kind?(:email, :not_on_safelist)).to be false
         end
@@ -124,7 +124,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { 'user@test.com' }
 
         it 'is invalid and it has the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:email].first).to eq 'You must use a public sector email'
         end
       end
@@ -133,7 +133,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { 'user@cheemail.com' }
 
         it 'is invalid' do
-          expect(response.valid?).to eq true
+          expect(response.valid?).to be true
         end
       end
 
@@ -141,7 +141,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { 'local@' }
 
         it 'is invalid and gives the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
         end
       end
@@ -150,7 +150,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { '@domain.com' }
 
         it 'is invalid and gives the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
         end
       end
@@ -159,7 +159,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { '@' }
 
         it 'is invalid and gives the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
         end
       end
@@ -168,7 +168,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { 'dom@@ain.com' }
 
         it 'is invalid and gives the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
         end
       end
@@ -177,7 +177,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { 'local@domain@com' }
 
         it 'is invalid and gives the correct error message' do
-          expect(response.valid?).to eq false
+          expect(response.valid?).to be false
           expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
         end
       end
@@ -186,7 +186,7 @@ RSpec.describe Cognito::SignUpUser do
         let(:email) { 'user@crowncommercial.gov.uk' }
 
         it 'is valid' do
-          expect(response.valid?).to eq true
+          expect(response.valid?).to be true
         end
       end
     end
@@ -209,12 +209,12 @@ RSpec.describe Cognito::SignUpUser do
 
       it 'returns success' do
         response = described_class.call(email, password, password_confirmation, roles)
-        expect(response.success?).to eq true
+        expect(response.success?).to be true
       end
 
       it 'returns no error' do
         response = described_class.call(email, password, password_confirmation, roles)
-        expect(response.error).to eq nil
+        expect(response.error).to be_nil
       end
     end
 
@@ -234,15 +234,15 @@ RSpec.describe Cognito::SignUpUser do
         end
 
         it 'does not return user' do
-          expect(response.user).to eq nil
+          expect(response.user).to be_nil
         end
 
         it 'does not return success' do
-          expect(response.success?).to eq false
+          expect(response.success?).to be false
         end
 
         it 'returns an error' do
-          expect(response.errors.empty?).to eq false
+          expect(response.errors.empty?).to be false
         end
       end
 
@@ -254,15 +254,15 @@ RSpec.describe Cognito::SignUpUser do
         end
 
         it 'does not return user' do
-          expect(response.user).to eq nil
+          expect(response.user).to be_nil
         end
 
         it 'does return success' do
-          expect(response.success?).to eq true
+          expect(response.success?).to be true
         end
 
         it 'returns no error' do
-          expect(response.error).to eq nil
+          expect(response.error).to be_nil
         end
       end
     end

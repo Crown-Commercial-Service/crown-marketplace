@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
   let(:supplier) { FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
   let(:supplier_id) { supplier.supplier_id }
@@ -9,9 +9,9 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController, typ
 
   before do
     supplier.update(lot_data: {
-                      '1a': { 'regions': ['UKC1', 'UKC2', 'UKD1'], 'services': ['A.7', 'A.12'] },
-                      '1b': { 'regions': ['UKC1', 'UKC2'], 'services': ['A.7', 'A.12'] },
-                      '1c': { 'regions': ['UKC1', 'UKC2'], 'services': ['A.7', 'A.12'] }
+                      '1a': { regions: ['UKC1', 'UKC2', 'UKD1'], services: ['A.7', 'A.12'] },
+                      '1b': { regions: ['UKC1', 'UKC2'], services: ['A.7', 'A.12'] },
+                      '1c': { regions: ['UKC1', 'UKC2'], services: ['A.7', 'A.12'] }
                     })
   end
 

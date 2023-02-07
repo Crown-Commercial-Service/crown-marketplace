@@ -66,6 +66,5 @@ namespace :db do
   end
 
   desc 'add NUTS regions to the database'
-  task static: :regions do
-  end
+  task static: :regions
 end

@@ -31,7 +31,7 @@ module Cognito
     private
 
     def forgot_password
-      client.forgot_password(client_id: ENV['COGNITO_CLIENT_ID'], username: email)
+      client.forgot_password(client_id: ENV.fetch('COGNITO_CLIENT_ID', nil), username: email)
     end
   end
 end

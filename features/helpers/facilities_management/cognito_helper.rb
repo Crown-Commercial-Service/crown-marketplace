@@ -54,7 +54,7 @@ AWS_ERRORS = {
 # Normal cognito paths
 def stub_existing_user(aws_client, user_params)
   create(:user, :without_detail, email: user_params[:user_email], cognito_uuid: user_params[:user_cognito_uuid], confirmed_at: Time.zone.now, roles: user_params[:roles])
-  allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new)
+  allow(aws_client).to receive(:initiate_auth).and_return(COGNITO_RESPONSE_STRUCTS[:initiate_auth].new)
   stub_adding_to_groups(aws_client, user_params)
 end
 
@@ -63,7 +63,7 @@ def stub_first_time_password_reset(aws_client, user_params)
 
   stub_login_with_challange(aws_client, user_params, 'NEW_PASSWORD_REQUIRED')
 
-  allow(aws_client).to receive(:respond_to_auth_challenge).with(**respond_to_auth_challenge_new_password(user_params)).and_return(OpenStruct.new)
+  allow(aws_client).to receive(:respond_to_auth_challenge).with(**respond_to_auth_challenge_new_password(user_params)).and_return(COGNITO_RESPONSE_STRUCTS[:respond_to_auth_challenge].new)
 end
 
 def stub_first_time_sms_mfa(aws_client, user_params)
@@ -72,13 +72,13 @@ def stub_first_time_sms_mfa(aws_client, user_params)
   stub_login_with_challange(aws_client, user_params, 'NEW_PASSWORD_REQUIRED')
 
   allow(aws_client).to receive(:respond_to_auth_challenge).with(**respond_to_auth_challenge_new_password(user_params)).and_return(
-    OpenStruct.new(
+    COGNITO_RESPONSE_STRUCTS[:respond_to_auth_challenge].new(
       session: user_params[:session_uuid],
       challenge_name: 'SMS_MFA'
     )
   )
 
-  allow(aws_client).to receive(:respond_to_auth_challenge).with(**respond_to_auth_challenge_sms_mfa(user_params)).and_return(OpenStruct.new)
+  allow(aws_client).to receive(:respond_to_auth_challenge).with(**respond_to_auth_challenge_sms_mfa(user_params)).and_return(COGNITO_RESPONSE_STRUCTS[:respond_to_auth_challenge].new)
 end
 
 def stub_first_time_confirm_account(aws_client, user_params)
@@ -94,7 +94,7 @@ def stub_sms_mfa(aws_client, user_params)
 
   stub_login_with_challange(aws_client, user_params, 'SMS_MFA')
 
-  allow(aws_client).to receive(:respond_to_auth_challenge).with(**respond_to_auth_challenge_sms_mfa(user_params)).and_return(OpenStruct.new)
+  allow(aws_client).to receive(:respond_to_auth_challenge).with(**respond_to_auth_challenge_sms_mfa(user_params)).and_return(COGNITO_RESPONSE_STRUCTS[:respond_to_auth_challenge].new)
 end
 
 def stub_password_reset_required(aws_client, user_params)
@@ -125,7 +125,7 @@ def stub_create_an_account(aws_client, user_params)
 
   user_params[:roles].each do |role|
     allow(aws_client).to receive(:admin_add_user_to_group).with(
-      user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+      user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
       username: user_params[:user_cognito_uuid],
       group_name: role
     )
@@ -172,7 +172,7 @@ def stub_first_time_sms_mfa_error(aws_client, user_params, error)
   stub_login_with_challange(aws_client, user_params, 'NEW_PASSWORD_REQUIRED')
 
   allow(aws_client).to receive(:respond_to_auth_challenge).with(**respond_to_auth_challenge_new_password(user_params)).and_return(
-    OpenStruct.new(
+    COGNITO_RESPONSE_STRUCTS[:respond_to_auth_challenge].new(
       session: user_params[:session_uuid],
       challenge_name: 'SMS_MFA'
     )
@@ -200,7 +200,7 @@ end
 # Shared methods
 def stub_login_with_challange(aws_client, user_params, challenge)
   allow(aws_client).to receive(:initiate_auth).with(**initiate_auth(user_params)).and_return(
-    OpenStruct.new(
+    COGNITO_RESPONSE_STRUCTS[:initiate_auth].new(
       session: user_params[:session_uuid],
       challenge_parameters: {
         'USER_ID_FOR_SRP' => user_params[:user_cognito_uuid]
@@ -210,10 +210,10 @@ def stub_login_with_challange(aws_client, user_params, challenge)
   )
 
   allow(aws_client).to receive(:admin_get_user).with(**admin_get_user(user_params)).and_return(
-    OpenStruct.new(
+    COGNITO_RESPONSE_STRUCTS[:admin_get_user].new(
       user_attributes: [
-        OpenStruct.new(name: 'sub', value: user_params[:user_cognito_uuid]),
-        OpenStruct.new(name: 'email', value: user_params[:user_email])
+        COGNITO_OBJECT_STRUCTS[:cognito_user_attribute].new(name: 'sub', value: user_params[:user_cognito_uuid]),
+        COGNITO_OBJECT_STRUCTS[:cognito_user_attribute].new(name: 'email', value: user_params[:user_email])
       ]
     )
   )
@@ -223,8 +223,8 @@ end
 
 def stub_adding_to_groups(aws_client, user_params)
   allow(aws_client).to receive(:admin_list_groups_for_user).with(**admin_get_user(user_params)).and_return(
-    OpenStruct.new(
-      groups: user_params[:roles].map { |role| OpenStruct.new(group_name: role) }
+    COGNITO_RESPONSE_STRUCTS[:admin_list_groups_for_user].new(
+      groups: user_params[:roles].map { |role| COGNITO_OBJECT_STRUCTS[:cognito_group].new(group_name: role) }
     )
   )
 end
@@ -232,7 +232,7 @@ end
 # Methods which build the params
 def initiate_auth(user_params)
   {
-    client_id: ENV['COGNITO_CLIENT_ID'],
+    client_id: ENV.fetch('COGNITO_CLIENT_ID', nil),
     auth_flow: 'USER_PASSWORD_AUTH',
     auth_parameters: {
       'USERNAME' => user_params[:user_email],
@@ -243,7 +243,7 @@ end
 
 def respond_to_auth_challenge_new_password(user_params)
   {
-    client_id: ENV['COGNITO_CLIENT_ID'],
+    client_id: ENV.fetch('COGNITO_CLIENT_ID', nil),
     session: user_params[:session_uuid],
     challenge_name: 'NEW_PASSWORD_REQUIRED',
     challenge_responses: {
@@ -255,7 +255,7 @@ end
 
 def respond_to_auth_challenge_sms_mfa(user_params)
   {
-    client_id: ENV['COGNITO_CLIENT_ID'],
+    client_id: ENV.fetch('COGNITO_CLIENT_ID', nil),
     session: user_params[:session_uuid],
     challenge_name: 'SMS_MFA',
     challenge_responses: {
@@ -280,7 +280,7 @@ end
 
 def forgot_password(user_params)
   {
-    client_id: ENV['COGNITO_CLIENT_ID'],
+    client_id: ENV.fetch('COGNITO_CLIENT_ID', nil),
     username: user_params[:user_email]
   }
 end
@@ -299,7 +299,7 @@ end
 
 def admin_get_user(user_params)
   {
-    user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+    user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
     username: user_params[:user_cognito_uuid]
   }
 end

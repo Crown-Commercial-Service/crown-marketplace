@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
   describe 'contract number generation' do
     let(:current_year) { Date.current.year.to_s }
 
@@ -239,7 +239,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
 
       context 'when contract_response is nil' do
         it 'will not be valid' do
-          expect(contract.contract_response).to be nil
+          expect(contract.contract_response).to be_nil
           expect(contract.valid?(:contract_response)).to be false
         end
       end
@@ -361,12 +361,12 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
 
           context 'when the values entered are not numbers' do
             let(:string) { (0...rand(1..9)).map { ('a'..'z').to_a[rand(26)] }.join }
-            let(:contract_start_date_dd) { string.split('').shuffle.join }
-            let(:contract_start_date_mm) { string.split('').shuffle.join }
-            let(:contract_start_date_yyyy) { string.split('').shuffle.join }
-            let(:contract_end_date_dd) { string.split('').shuffle.join }
-            let(:contract_end_date_mm) { string.split('').shuffle.join }
-            let(:contract_end_date_yyyy) { string.split('').shuffle.join }
+            let(:contract_start_date_dd) { string.chars.shuffle.join }
+            let(:contract_start_date_mm) { string.chars.shuffle.join }
+            let(:contract_start_date_yyyy) { string.chars.shuffle.join }
+            let(:contract_end_date_dd) { string.chars.shuffle.join }
+            let(:contract_end_date_mm) { string.chars.shuffle.join }
+            let(:contract_end_date_yyyy) { string.chars.shuffle.join }
 
             it 'will not be valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
@@ -407,7 +407,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
             it 'will have the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to eq 'Enter a valid start date'
-              expect(contract.errors[:contract_end_date].first).to eq nil
+              expect(contract.errors[:contract_end_date].first).to be_nil
             end
           end
 
@@ -425,7 +425,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
 
             it 'will have the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
-              expect(contract.errors[:contract_start_date].first).to eq nil
+              expect(contract.errors[:contract_start_date].first).to be_nil
               expect(contract.errors[:contract_end_date].first).to eq 'Enter a valid end date'
             end
           end
@@ -447,7 +447,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
 
             it 'will have the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
-              expect(contract.errors[:contract_start_date].first).to eq nil
+              expect(contract.errors[:contract_start_date].first).to be_nil
               expect(contract.errors[:contract_end_date].first).to eq 'Enter contract end date'
             end
           end
@@ -463,7 +463,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
             it 'will have the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to eq 'Enter contract start date'
-              expect(contract.errors[:contract_end_date].first).to eq nil
+              expect(contract.errors[:contract_end_date].first).to be_nil
             end
           end
 
@@ -477,7 +477,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
 
             it 'will have the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
-              expect(contract.errors[:contract_start_date].first).to eq nil
+              expect(contract.errors[:contract_start_date].first).to be_nil
               expect(contract.errors[:contract_end_date].first).to eq 'The contract end date must be after the contract start date'
             end
           end
@@ -493,7 +493,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
             it 'will have the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to eq 'The contract start date must be on or after 1 June 2020'
-              expect(contract.errors[:contract_end_date].first).to eq nil
+              expect(contract.errors[:contract_end_date].first).to be_nil
             end
           end
 
@@ -785,7 +785,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'sent' }
 
       it 'cannot_offer_to_next_supplier returns true' do
-        expect(contract.cannot_offer_to_next_supplier?).to eq true
+        expect(contract.cannot_offer_to_next_supplier?).to be true
       end
     end
 
@@ -793,7 +793,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'accepted' }
 
       it 'cannot_offer_to_next_supplier returns true' do
-        expect(contract.cannot_offer_to_next_supplier?).to eq true
+        expect(contract.cannot_offer_to_next_supplier?).to be true
       end
     end
 
@@ -801,7 +801,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'signed' }
 
       it 'cannot_offer_to_next_supplier returns true' do
-        expect(contract.cannot_offer_to_next_supplier?).to eq true
+        expect(contract.cannot_offer_to_next_supplier?).to be true
       end
     end
 
@@ -809,7 +809,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'not_signed' }
 
       it 'cannot_offer_to_next_supplier returns false' do
-        expect(contract.cannot_offer_to_next_supplier?).to eq false
+        expect(contract.cannot_offer_to_next_supplier?).to be false
       end
     end
 
@@ -817,7 +817,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'declined' }
 
       it 'cannot_offer_to_next_supplier returns false' do
-        expect(contract.cannot_offer_to_next_supplier?).to eq false
+        expect(contract.cannot_offer_to_next_supplier?).to be false
       end
     end
 
@@ -825,7 +825,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'expired' }
 
       it 'cannot_offer_to_next_supplier returns false' do
-        expect(contract.cannot_offer_to_next_supplier?).to eq false
+        expect(contract.cannot_offer_to_next_supplier?).to be false
       end
     end
 
@@ -834,7 +834,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:procurement_state) { 'closed' }
 
       it 'cannot_offer_to_next_supplier returns true' do
-        expect(contract.cannot_offer_to_next_supplier?).to eq true
+        expect(contract.cannot_offer_to_next_supplier?).to be true
       end
     end
   end
@@ -849,7 +849,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'sent' }
 
       it 'cannot_withdraw returns true' do
-        expect(contract.cannot_withdraw?).to eq false
+        expect(contract.cannot_withdraw?).to be false
       end
     end
 
@@ -857,7 +857,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'accepted' }
 
       it 'cannot_withdraw returns true' do
-        expect(contract.cannot_withdraw?).to eq false
+        expect(contract.cannot_withdraw?).to be false
       end
     end
 
@@ -865,7 +865,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'signed' }
 
       it 'cannot_withdraw returns true' do
-        expect(contract.cannot_withdraw?).to eq true
+        expect(contract.cannot_withdraw?).to be true
       end
     end
 
@@ -873,7 +873,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'not_signed' }
 
       it 'cannot_withdraw returns false' do
-        expect(contract.cannot_withdraw?).to eq false
+        expect(contract.cannot_withdraw?).to be false
       end
     end
 
@@ -881,7 +881,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'declined' }
 
       it 'cannot_withdraw returns false' do
-        expect(contract.cannot_withdraw?).to eq false
+        expect(contract.cannot_withdraw?).to be false
       end
     end
 
@@ -889,7 +889,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:state) { 'expired' }
 
       it 'cannot_withdraw returns false' do
-        expect(contract.cannot_withdraw?).to eq false
+        expect(contract.cannot_withdraw?).to be false
       end
     end
 
@@ -898,7 +898,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:procurement_state) { 'closed' }
 
       it 'cannot_withdraw returns true' do
-        expect(contract.cannot_withdraw?).to eq true
+        expect(contract.cannot_withdraw?).to be true
       end
     end
   end

@@ -7,6 +7,10 @@ module FacilitiesManagement
         before_action :set_spreadsheet_import, only: %i[show destroy progress]
         before_action :redirect_to_requirements
 
+        def show
+          initialize_errors if @spreadsheet_import.failed?
+        end
+
         def new
           @spreadsheet_import = SpreadsheetImport.new(facilities_management_rm3830_procurement_id: params[:procurement_id])
         end
@@ -24,10 +28,6 @@ module FacilitiesManagement
             @spreadsheet_import.destroy
             render :new
           end
-        end
-
-        def show
-          initialize_errors if @spreadsheet_import.failed?
         end
 
         def destroy
@@ -87,7 +87,7 @@ module FacilitiesManagement
         def cancel_and_return
           @procurement.spreadsheet_import.destroy if @procurement.spreadsheet_import.present?
 
-          redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id, 'spreadsheet': true)
+          redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id, spreadsheet: true)
         end
 
         protected

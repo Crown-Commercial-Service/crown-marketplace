@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Region, type: :model do
+RSpec.describe FacilitiesManagement::Region do
   subject(:regions) { described_class.all }
 
   let(:all_codes) { described_class.all_codes }

@@ -17,7 +17,7 @@ module OrdnanceSurvey
   extend ActiveSupport::NumberHelper
 
   def self.create_postcode_table
-    str   = File.read(Rails.root.join('data', 'postcode', 'PostgreSQL_AddressBase_Plus_CreateTable.sql'))
+    str   = Rails.root.join('data', 'postcode', 'PostgreSQL_AddressBase_Plus_CreateTable.sql').read
     query = str.slice str.index('CREATE TABLE')..str.length
     query.sub!('<INSERTTABLENAME>', 'os_address')
     query.sub!('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS')
@@ -39,7 +39,7 @@ module OrdnanceSurvey
   end
 
   def self.create_postcode_locator_index
-    query = <<~SQL
+    query = <<~SQL.squish
       CREATE INDEX IF NOT EXISTS index_os_address_on_postcode_locator
       ON public.os_address USING btree
       (postcode_locator ASC NULLS LAST);
@@ -50,7 +50,7 @@ module OrdnanceSurvey
 
   # rubocop:disable Metrics/MethodLength
   def self.create_new_postcode_views
-    query = <<~SQL
+    query = <<~SQL.squish
         DO $$
         BEGIN
         drop view if exists postcode_lookup cascade;
@@ -129,7 +129,7 @@ module OrdnanceSurvey
     SQL
     p 'creating os_address_view_2'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
-    query = <<~SQL
+    query = <<~SQL.squish
       DO $$
       BEGIN
         CREATE VIEW public.postcode_region_view
@@ -146,7 +146,7 @@ module OrdnanceSurvey
     SQL
     p 'creating postcode_region_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
-    query = <<~SQL
+    query = <<~SQL.squish
         DO $$
         BEGIN
         CREATE VIEW postcode_lookup
@@ -225,7 +225,7 @@ module OrdnanceSurvey
 
   # rubocop:disable Style/ClassVars
   def self.os_address_headers
-    @@os_address_headers ||= File.read(Rails.root.join('data', 'postcode', 'os_address_headers.csv'))
+    @@os_address_headers ||= Rails.root.join('data', 'postcode', 'os_address_headers.csv').read
   end
   # rubocop:enable Style/ClassVars
 

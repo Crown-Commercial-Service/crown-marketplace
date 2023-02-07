@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit do
   describe '.log_change' do
     let(:supplier) { create(:facilities_management_rm6232_admin_suppliers_admin) }
     let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, facilities_management_rm6232_supplier_id: supplier.id) }
@@ -127,7 +127,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
     let(:edit_2) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_details, created_at: dates[1]) }
     let(:edit_3) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_region_lot_data, created_at: dates[2]) }
     let(:edit_4) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_status, created_at: dates[3]) }
-    let(:dates) { [Time.zone.now - 4.days, Time.zone.now - 3.days, Time.zone.now - 2.days, Time.zone.now - 1.day] }
+    let(:dates) { [4.days.ago, 3.days.ago, 2.days.ago, 1.day.ago] }
 
     before do
       edit_1
@@ -181,7 +181,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
         expect(result['active']).to be false
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes - ['UKC1']
-        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['active']).to eq false
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['active']).to be false
       end
     end
   end

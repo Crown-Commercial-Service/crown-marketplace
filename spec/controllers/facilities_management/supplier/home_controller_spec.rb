@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Supplier::HomeController, type: :controller do
+RSpec.describe FacilitiesManagement::Supplier::HomeController do
   let(:default_params) { { service: 'facilities_management/supplier' } }
 
   describe 'validate service' do

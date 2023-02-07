@@ -6,17 +6,17 @@ RSpec.describe WorkingDays do
   describe '#bank_holiday?' do
     context 'when it is not a bank holiday' do
       it 'will return false' do
-        expect(described_class.bank_holiday?(DateTime.new(2020, 3, 15, 12, 12, 12).in_time_zone('London').to_date)).to eq false
-        expect(described_class.bank_holiday?(DateTime.new(2020, 2, 19, 14, 5, 1).in_time_zone('London').to_date)).to eq false
-        expect(described_class.bank_holiday?(DateTime.new(2020, 9, 30, 1, 4, 57).in_time_zone('London').to_date)).to eq false
+        expect(described_class.bank_holiday?(DateTime.new(2020, 3, 15, 12, 12, 12).in_time_zone('London').to_date)).to be false
+        expect(described_class.bank_holiday?(DateTime.new(2020, 2, 19, 14, 5, 1).in_time_zone('London').to_date)).to be false
+        expect(described_class.bank_holiday?(DateTime.new(2020, 9, 30, 1, 4, 57).in_time_zone('London').to_date)).to be false
       end
     end
 
     context 'when it is a bank holiday' do
       it 'will return true' do
-        expect(described_class.bank_holiday?(DateTime.new(2021, 12, 27, 20, 34, 8).in_time_zone('London').to_date)).to eq true
-        expect(described_class.bank_holiday?(DateTime.new(2020, 3, 17, 21, 4, 5).in_time_zone('London').to_date)).to eq true
-        expect(described_class.bank_holiday?(DateTime.new(2020, 8, 3, 13, 28, 19).in_time_zone('London').to_date)).to eq true
+        expect(described_class.bank_holiday?(DateTime.new(2021, 12, 27, 20, 34, 8).in_time_zone('London').to_date)).to be true
+        expect(described_class.bank_holiday?(DateTime.new(2020, 3, 17, 21, 4, 5).in_time_zone('London').to_date)).to be true
+        expect(described_class.bank_holiday?(DateTime.new(2020, 8, 3, 13, 28, 19).in_time_zone('London').to_date)).to be true
       end
     end
   end

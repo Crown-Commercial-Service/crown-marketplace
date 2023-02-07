@@ -15,10 +15,12 @@ module FacilitiesManagement
       @buildings = current_user.buildings.order_by_building_name.page(params[:page])
     end
 
+    # rubocop:disable Rails/I18nLazyLookup
     def show
       @back_text = t('facilities_management.buildings.show.return_to_buildings')
       @back_path = index_path
     end
+    # rubocop:enable Rails/I18nLazyLookup
 
     def new
       @building = current_user.buildings.build

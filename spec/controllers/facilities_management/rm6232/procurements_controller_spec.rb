@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM6232::ProcurementsController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM6232' } }
   let(:user) { controller.current_user }
 

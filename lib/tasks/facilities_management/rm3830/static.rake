@@ -24,6 +24,5 @@ namespace :db do
   end
 
   desc 'add FM rates to the database'
-  task static: :'rm3830:fm_rates' do
-  end
+  task static: :'rm3830:fm_rates'
 end

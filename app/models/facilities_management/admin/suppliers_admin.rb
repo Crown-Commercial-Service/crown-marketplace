@@ -24,7 +24,7 @@ module FacilitiesManagement
       end
 
       def full_address
-        [address_line_1, address_line_2, address_town, address_county].reject(&:blank?).join(', ') + " #{address_postcode}"
+        [address_line_1, address_line_2, address_town, address_county].compact_blank.join(', ') + " #{address_postcode}"
       end
 
       private

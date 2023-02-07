@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Cognito::SignInUser do
   describe '#call' do
+    include_context 'with cognito structs'
+
     let(:email) { 'user@email.com' }
     let(:password) { 'ValidPass123!' }
     let(:challenge_name) { 'Challenge name' }
@@ -18,16 +20,16 @@ RSpec.describe Cognito::SignInUser do
     context 'when success' do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => user_id_for_srp }))
+        allow(aws_client).to receive(:initiate_auth).and_return(initiate_auth_resp_struct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => user_id_for_srp }))
         sign_in_user.call
       end
 
       it 'returns success' do
-        expect(sign_in_user.success?).to eq true
+        expect(sign_in_user.success?).to be true
       end
 
       it 'returns no error' do
-        expect(sign_in_user.error).to eq nil
+        expect(sign_in_user.error).to be_nil
       end
 
       it 'returns challenge name' do
@@ -35,7 +37,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'returns challenge?' do
-        expect(sign_in_user.challenge?).to eq true
+        expect(sign_in_user.challenge?).to be true
       end
 
       it 'returns session' do
@@ -51,7 +53,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'does not return success' do
-        expect(sign_in_user.success?).to eq false
+        expect(sign_in_user.success?).to be false
       end
 
       it 'does returns cognito error' do
@@ -67,7 +69,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'does not return success' do
-        expect(sign_in_user.success?).to eq false
+        expect(sign_in_user.success?).to be false
       end
 
       it 'does returns cognito error' do
@@ -75,7 +77,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'returns needs_confirmation true' do
-        expect(sign_in_user.needs_confirmation).to eq true
+        expect(sign_in_user.needs_confirmation).to be true
       end
     end
 
@@ -87,7 +89,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'does not return success' do
-        expect(sign_in_user.success?).to eq false
+        expect(sign_in_user.success?).to be false
       end
 
       it 'does returns cognito error' do
@@ -95,7 +97,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'returns need_password_reset true' do
-        expect(sign_in_user.needs_password_reset).to eq true
+        expect(sign_in_user.needs_password_reset).to be true
       end
     end
 
@@ -107,7 +109,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'does not return success' do
-        expect(sign_in_user.success?).to eq false
+        expect(sign_in_user.success?).to be false
       end
 
       it 'does returns cognito error' do
@@ -115,7 +117,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'returns need_password_reset false' do
-        expect(sign_in_user.needs_password_reset).to eq false
+        expect(sign_in_user.needs_password_reset).to be false
       end
     end
 
@@ -124,16 +126,16 @@ RSpec.describe Cognito::SignInUser do
 
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => user_id_for_srp }))
+        allow(aws_client).to receive(:initiate_auth).and_return(initiate_auth_resp_struct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => user_id_for_srp }))
         sign_in_user.call
       end
 
       it 'does not return success' do
-        expect(sign_in_user.success?).to eq false
+        expect(sign_in_user.success?).to be false
       end
 
       it 'does returns cognito error' do
-        expect(sign_in_user.errors.any?).to eq true
+        expect(sign_in_user.errors.any?).to be true
       end
     end
   end
@@ -202,7 +204,7 @@ RSpec.describe Cognito::SignInUser do
         let(:email) { 'dom@@ain.com' }
 
         it 'is invalid and gives the correct error message' do
-          expect(sign_in_user.valid?).to eq false
+          expect(sign_in_user.valid?).to be false
           expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
         end
       end
@@ -211,7 +213,7 @@ RSpec.describe Cognito::SignInUser do
         let(:email) { 'local@domain@com' }
 
         it 'is invalid and gives the correct error message' do
-          expect(sign_in_user.valid?).to eq false
+          expect(sign_in_user.valid?).to be false
           expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
         end
       end

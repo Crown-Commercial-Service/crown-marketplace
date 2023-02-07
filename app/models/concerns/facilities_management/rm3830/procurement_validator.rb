@@ -115,14 +115,11 @@ module FacilitiesManagement::RM3830
     end
 
     def check_service_and_buildings_completed
-      if (error_list & %i[services_incomplete buildings_incomplete]).any?
+      if (error_list & %i[services_incomplete buildings_incomplete]).any? || !buildings_and_services_completed?
         errors.add(:base, :buildings_and_services_incomplete)
         errors.add(:base, :service_requirements_incomplete)
-      elsif buildings_and_services_completed?
-        errors.add(:base, :service_requirements_incomplete) unless service_requirements_completed?
       else
-        errors.add(:base, :buildings_and_services_incomplete)
-        errors.add(:base, :service_requirements_incomplete)
+        errors.add(:base, :service_requirements_incomplete) unless service_requirements_completed?
       end
     end
 

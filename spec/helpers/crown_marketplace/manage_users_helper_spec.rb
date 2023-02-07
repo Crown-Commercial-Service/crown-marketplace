@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CrownMarketplace::ManageUsersHelper, type: :helper do
+RSpec.describe CrownMarketplace::ManageUsersHelper do
   describe '.add_users_back_link' do
     let(:result) { helper.add_users_back_link(cognito_admin_user, 'my_section') }
 

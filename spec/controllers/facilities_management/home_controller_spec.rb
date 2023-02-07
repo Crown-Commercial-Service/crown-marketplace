@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::HomeController, type: :controller do
+RSpec.describe FacilitiesManagement::HomeController do
   let(:default_params) { { service: 'facilities_management' } }
 
   describe 'GET framework' do

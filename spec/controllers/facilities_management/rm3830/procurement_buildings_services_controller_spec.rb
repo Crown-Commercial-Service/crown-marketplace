@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesController do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
   let(:procurement_building_service) { create(:facilities_management_rm3830_procurement_building_service, procurement_building: create(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement, user: subject.current_user))) }
@@ -60,7 +60,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating lift data' do
       before do
         procurement_building_service.update(code: 'C.5')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'lifts', lifts_attributes: { '0': { number_of_floors: lifts[0], "_destroy": false }, '1': { number_of_floors: lifts[1], "_destroy": false }, '2': { number_of_floors: lifts[2], "_destroy": false }, '3': { number_of_floors: lifts[3], "_destroy": false } } } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'lifts', lifts_attributes: { '0': { number_of_floors: lifts[0], _destroy: false }, '1': { number_of_floors: lifts[1], _destroy: false }, '2': { number_of_floors: lifts[2], _destroy: false }, '3': { number_of_floors: lifts[3], _destroy: false } } } }
       end
 
       context 'when the lift data is valid' do

@@ -49,7 +49,7 @@ module Cognito
 
     def create_cognito_user
       client.sign_up(
-        client_id: ENV['COGNITO_CLIENT_ID'],
+        client_id: ENV.fetch('COGNITO_CLIENT_ID', nil),
         username: email,
         password: password,
         user_attributes: [
@@ -64,7 +64,7 @@ module Cognito
     def add_user_to_groups
       @roles.each do |role|
         client.admin_add_user_to_group(
-          user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+          user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
           username: @cognito_uuid,
           group_name: role.to_s
         )

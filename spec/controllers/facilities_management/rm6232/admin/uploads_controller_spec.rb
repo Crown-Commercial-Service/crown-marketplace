@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::UploadsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM6232::Admin::UploadsController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM6232' } }
 
   describe 'GET index' do

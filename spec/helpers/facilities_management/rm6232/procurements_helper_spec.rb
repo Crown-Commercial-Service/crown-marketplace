@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper do
   describe '.page_subtitle' do
     let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, contract_name: 'Noah of colony 4', contract_number: 'RM6232-123456-2022') }
 

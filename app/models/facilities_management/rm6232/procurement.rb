@@ -18,9 +18,8 @@ module FacilitiesManagement
       scope :searches, -> { where(aasm_state: SEARCH).select(:id, :contract_name, :aasm_state, :initial_call_off_start_date, :updated_at).order(updated_at: :asc).sort_by { |search| SEARCH.index(search.aasm_state) } }
       scope :advanced_procurement_activities, -> { further_information.select(:id, :contract_name, :initial_call_off_start_date, :contract_number, :updated_at).order(updated_at: :asc) }
 
-      before_create :generate_contract_number, :determine_lot_number
-
       before_save :update_procurement_building_service_codes, if: :service_codes_changed?
+      before_create :generate_contract_number, :determine_lot_number
 
       # The service CAFM – Soft FM Requirements (Q.1) can only be selected when all other services are soft.
       # Because we don't want to pass that logic onto the user, we determine which CAFM service they need for them.

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::FrozenRate, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::FrozenRate do
   subject(:frozen_rate) { described_class.new(facilities_management_rm3830_procurement_id: procurement.id, code: 'abc', framework: 1.2, benchmark: 2.2, standard: 'Y', direct_award: false) }
 
   before { frozen_rate.save }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension do
   subject(:call_off_extension) { create(:facilities_management_rm3830_procurement_call_off_extension) }
 
   describe 'validatins' do
@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:years) { nil }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -30,7 +30,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:years) { '' }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -43,7 +43,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:years) { '    ' }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -56,7 +56,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:years) { -1 }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -69,7 +69,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:years) { 'TEN' }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -80,7 +80,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
 
       context 'and it is a number greater than or equal to 0' do
         it 'is valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq true
+          expect(call_off_extension.valid?(:contract_period)).to be true
         end
       end
     end
@@ -90,7 +90,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:months) { nil }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -103,7 +103,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:months) { '' }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -116,7 +116,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:months) { '    ' }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -129,7 +129,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:months) { -1 }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -142,7 +142,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:months) { 12 }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -155,7 +155,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:months) { 'NINE' }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -166,7 +166,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
 
       context 'and it is a number between 0 and 11' do
         it 'is valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq true
+          expect(call_off_extension.valid?(:contract_period)).to be true
         end
       end
     end
@@ -177,7 +177,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:months) { 0 }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -191,7 +191,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         let(:months) { 1 }
 
         it 'is valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq true
+          expect(call_off_extension.valid?(:contract_period)).to be true
         end
 
         it 'has a contract length of 1 month' do
@@ -201,7 +201,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
 
       context 'and the total length is more than 1 month' do
         it 'is valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq true
+          expect(call_off_extension.valid?(:contract_period)).to be true
         end
 
         it 'has a contract length of 1 month' do
@@ -217,7 +217,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         before { call_off_extension.extension = extension }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
       end
 
@@ -227,7 +227,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         before { call_off_extension.extension = extension }
 
         it 'is not valid' do
-          expect(call_off_extension.valid?(:contract_period)).to eq false
+          expect(call_off_extension.valid?(:contract_period)).to be false
         end
       end
 
@@ -238,7 +238,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement::CallOffExtension, type
         before { new_extension }
 
         it 'is will not save' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
       end
     end
