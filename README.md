@@ -142,10 +142,12 @@ provider:
 
 - [Amazon Cognito](https://aws.amazon.com/cognito/)
 
-Both of these require configuration using environment variables listed above.
+This require configuration using [environment variables listed below](#cognito).
 
-Authorisation is implemented by the `Login::CognitoLogin`
-class.
+Authorisation is implemented by the `Login::CognitoLogin` class.
+
+The folder `data/cognito/email_templates` contains the templates that we use in AWS Cognito for email messaging.
+These need to be configured in AWS Cognito and the files are only in this repository as documentation.
 
 ### Linting
 
