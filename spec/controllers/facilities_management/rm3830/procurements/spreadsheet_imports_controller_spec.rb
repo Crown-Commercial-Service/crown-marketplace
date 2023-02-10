@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsController do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
   let(:spreadsheet_import) { create(:facilities_management_rm3830_procurement_spreadsheet_import, procurement: procurement) }
@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
       end
 
       it 'creates a new spreadsheet_import' do
-        expect(assigns(:spreadsheet_import).present?).to eq true
+        expect(assigns(:spreadsheet_import).present?).to be true
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
       end
 
       it 'redirects to the spreadsheet template page' do
-        expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id, 'spreadsheet': true)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id, spreadsheet: true)
       end
 
       it 'deletes the spreadsheet import' do
@@ -96,10 +96,10 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
     end
 
     context 'when the spreadsheet import does not exist' do
-      before { get :show, params: { id: procurement.id, procurement_id: procurement.id } }
-
       it 'redirects to new_facilities_management_rm3830_procurement_spreadsheet_import_path' do
-        redirect_to new_facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: procurement.id)
+        get :show, params: { id: procurement.id, procurement_id: procurement.id }
+
+        expect(response).to redirect_to new_facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: procurement.id)
       end
     end
 
@@ -137,7 +137,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
 
       context 'and there are errors on the buildings' do
         let(:import_errors) do
-          { "Building 1": {
+          { 'Building 1': {
             building_name: 'Building 1',
             building_errors: { building_name: [{ error: :blank }], other_building_type: [{ error: :too_long }] },
             procurement_building_errors: {},
@@ -230,7 +230,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
     end
 
     it 'redirects to new_facilities_management_rm3830_procurement_spreadsheet_import_path' do
-      redirect_to new_facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: procurement.id)
+      expect(response).to redirect_to new_facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: procurement.id)
     end
   end
 end

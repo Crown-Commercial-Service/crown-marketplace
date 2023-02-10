@@ -73,10 +73,10 @@ module Cognito
       return unless valid?
 
       if new_password_challenge?
-        @response = client.respond_to_auth_challenge(client_id: ENV['COGNITO_CLIENT_ID'], challenge_name: 'NEW_PASSWORD_REQUIRED', session: session, challenge_responses: { 'NEW_PASSWORD' => new_password, 'USERNAME' => username })
+        @response = client.respond_to_auth_challenge(client_id: ENV.fetch('COGNITO_CLIENT_ID', nil), challenge_name: 'NEW_PASSWORD_REQUIRED', session: session, challenge_responses: { 'NEW_PASSWORD' => new_password, 'USERNAME' => username })
         Cognito::CreateUserFromCognito.call(username) if User.find_by(cognito_uuid: username).nil?
       elsif sms_mfa_challenge?
-        @response = client.respond_to_auth_challenge(client_id: ENV['COGNITO_CLIENT_ID'], challenge_name: 'SMS_MFA', session: session, challenge_responses: { 'SMS_MFA_CODE' => access_code, 'USERNAME' => username })
+        @response = client.respond_to_auth_challenge(client_id: ENV.fetch('COGNITO_CLIENT_ID', nil), challenge_name: 'SMS_MFA', session: session, challenge_responses: { 'SMS_MFA_CODE' => access_code, 'USERNAME' => username })
       end
     end
   end

@@ -8,7 +8,7 @@ RSpec.describe FacilitiesManagement::RM3830::DirectAwardDeliverablesMatrix do
     spreadsheet_builder = described_class.new(contract.id)
     spreadsheet = spreadsheet_builder.build
     path = '/tmp/deliverable_matrix_3_1year.xlsx'
-    IO.write(path, spreadsheet.to_stream.read, binmode: true)
+    File.write(path, spreadsheet.to_stream.read, binmode: true)
     Roo::Excelx.new(path)
   end
 

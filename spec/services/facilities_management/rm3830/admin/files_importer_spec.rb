@@ -111,7 +111,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::FilesImporter do
     end
 
     def get_discount_for_service(service_code)
-      supplier_discounts[service_code][:"Disc %"]
+      supplier_discounts[service_code][:'Disc %']
     end
 
     context 'when considering just Hirthe-Mills' do

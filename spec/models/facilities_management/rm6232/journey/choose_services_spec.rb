@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices do
   let(:choose_services) { described_class.new(service_codes: service_codes, region_codes: region_codes, annual_contract_value: annual_contract_value) }
   let(:service_codes) { %w[E.1 E.2] }
   let(:region_codes) {  %w[UKC1 UKC2] }

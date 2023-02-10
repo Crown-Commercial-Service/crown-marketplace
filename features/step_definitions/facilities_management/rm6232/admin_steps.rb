@@ -92,8 +92,8 @@ Then('I select {string} for the supplier status') do |option|
 end
 
 Given('I go to a quick view with the following services, regions and annual contract cost:') do |quick_view_data|
-  service_codes = quick_view_data.transpose.raw[0].reject(&:blank?)
-  region_codes = quick_view_data.transpose.raw[1].reject(&:blank?)
+  service_codes = quick_view_data.transpose.raw[0].compact_blank
+  region_codes = quick_view_data.transpose.raw[1].compact_blank
   annual_cost = quick_view_data.transpose.raw[2].first
 
   parameters = [

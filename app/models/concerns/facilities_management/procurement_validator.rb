@@ -157,7 +157,7 @@ module FacilitiesManagement
     end
 
     def error_list
-      errors.details[:base].map { |detail| detail[:error] }
+      errors.details[:base].pluck(:error)
     end
   end
 end

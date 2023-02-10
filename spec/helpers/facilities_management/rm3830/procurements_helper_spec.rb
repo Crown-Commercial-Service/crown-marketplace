@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper do
   describe '.journey_step_url_former' do
     let(:service_codes) { ['C.1', 'D.1', 'E.1', 'F.1', 'G.1'] }
     let(:result) { helper.journey_step_url_former(journey_step: journey_step, framework: 'RM3830', region_codes: region_codes, service_codes: service_codes) }
@@ -557,7 +557,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe 'methods relating to suppliers' do
-    let(:service_codes) { FacilitiesManagement::RM3830::StaticData.work_packages.reject { |wp| ['A', 'B'].include? wp['work_package_code'] }.map { |wp| wp['code'] } }
+    let(:service_codes) { FacilitiesManagement::RM3830::StaticData.work_packages.reject { |wp| ['A', 'B'].include? wp['work_package_code'] }.pluck('code') }
     let(:region_codes) { FacilitiesManagement::Region.all.reject { |region| region.code == 'OS01' }.map(&:code) }
     let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, region_codes: region_codes, service_codes: service_codes) }
 
@@ -569,7 +569,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
 
       it 'returns the correct suppliers' do
-        expect(helper.suppliers_lot1a.map { |suppliers| suppliers['name'] }).to eq ['Bogan-Koch', 'Dare, Heaney and Kozey', 'Dickinson-Abbott', 'Hirthe-Mills', 'Lebsack, Vandervort and Veum', 'Leffler-Strosin', 'Marvin, Kunde and Cartwright', "O'Keefe LLC", "O'Keefe-Mitchell"]
+        expect(helper.suppliers_lot1a.pluck('name')).to eq ['Bogan-Koch', 'Dare, Heaney and Kozey', 'Dickinson-Abbott', 'Hirthe-Mills', 'Lebsack, Vandervort and Veum', 'Leffler-Strosin', 'Marvin, Kunde and Cartwright', "O'Keefe LLC", "O'Keefe-Mitchell"]
       end
     end
 
@@ -579,7 +579,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
 
       it 'returns the correct suppliers' do
-        expect(helper.suppliers_lot1b.map { |suppliers| suppliers['name'] }).to eq ['Abbott-Dooley', 'Bogan-Koch', 'Dickens and Sons', 'Dickinson-Abbott', 'Ebert Inc', 'Feest-Blanda', 'Gleichner, Thiel and Weissnat', 'Graham-Farrell', 'Kemmer Inc', 'Lebsack, Vandervort and Veum', 'Leffler-Strosin', 'Mann Group', 'Marvin, Kunde and Cartwright', 'Nader, Prosacco and Gaylord', "O'Keefe LLC", "O'Keefe-Mitchell", 'Orn-Welch', 'Sanford LLC', 'Sanford-Lubowitz', 'Smitham-Brown', 'Treutel Inc', 'Wiza, Kunde and Gibson']
+        expect(helper.suppliers_lot1b.pluck('name')).to eq ['Abbott-Dooley', 'Bogan-Koch', 'Dickens and Sons', 'Dickinson-Abbott', 'Ebert Inc', 'Feest-Blanda', 'Gleichner, Thiel and Weissnat', 'Graham-Farrell', 'Kemmer Inc', 'Lebsack, Vandervort and Veum', 'Leffler-Strosin', 'Mann Group', 'Marvin, Kunde and Cartwright', 'Nader, Prosacco and Gaylord', "O'Keefe LLC", "O'Keefe-Mitchell", 'Orn-Welch', 'Sanford LLC', 'Sanford-Lubowitz', 'Smitham-Brown', 'Treutel Inc', 'Wiza, Kunde and Gibson']
       end
     end
 
@@ -589,7 +589,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
 
       it 'returns the correct suppliers' do
-        expect(helper.suppliers_lot1c.map { |suppliers| suppliers['name'] }).to eq ['Abbott-Dooley', 'Dickens and Sons', 'Ebert Inc', 'Feest-Blanda', 'Gleichner, Thiel and Weissnat', 'Graham-Farrell', 'Huels, Borer and Rowe', 'Kemmer Inc', 'Mann Group', 'Nader, Prosacco and Gaylord', 'Orn-Welch', 'Sanford LLC', 'Sanford-Lubowitz', 'Smitham-Brown', 'Terry-Konopelski', 'Treutel Inc', 'Wiza, Kunde and Gibson']
+        expect(helper.suppliers_lot1c.pluck('name')).to eq ['Abbott-Dooley', 'Dickens and Sons', 'Ebert Inc', 'Feest-Blanda', 'Gleichner, Thiel and Weissnat', 'Graham-Farrell', 'Huels, Borer and Rowe', 'Kemmer Inc', 'Mann Group', 'Nader, Prosacco and Gaylord', 'Orn-Welch', 'Sanford LLC', 'Sanford-Lubowitz', 'Smitham-Brown', 'Terry-Konopelski', 'Treutel Inc', 'Wiza, Kunde and Gibson']
       end
     end
 
@@ -603,7 +603,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   describe '.further_competition_saved_date' do
     let(:procurement) { create(:facilities_management_rm3830_procurement, contract_datetime: contract_datetime) }
 
-    context 'when the contract_datetime is 01/02/2019 -  2:53pm' do
+    context 'when the contract_datetime is 01/02/2019 - 2:53pm' do
       let(:contract_datetime) { '01/02/2019 -  2:53pm' }
 
       it 'returns 1 February 2019, 2:53pm' do
@@ -611,7 +611,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
     end
 
-    context 'when the contract_datetime is 15/01/2020 -  11:05am' do
+    context 'when the contract_datetime is 15/01/2020 - 11:05am' do
       let(:contract_datetime) { '15/01/2020 -  11:05am' }
 
       it 'returns 15 January 2020, 11:05am' do

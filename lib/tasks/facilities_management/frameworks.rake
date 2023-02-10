@@ -1,7 +1,7 @@
 module Frameworks
   def self.rm6232_live_at
     if Rails.env.test?
-      Time.zone.now - 1.day
+      1.day.ago
     else
       Time.new(2022, 7, 14).in_time_zone('London')
     end
@@ -25,6 +25,5 @@ namespace :db do
   end
 
   desc 'add static data to the database'
-  task static: :fm_frameworks do
-  end
+  task static: :fm_frameworks
 end

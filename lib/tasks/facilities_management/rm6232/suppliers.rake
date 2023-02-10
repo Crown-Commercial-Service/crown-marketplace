@@ -12,11 +12,9 @@ namespace :db do
     end
 
     desc 'add Suppliers for RM6232 to the database'
-    task static: :import_suppliers do
-    end
+    task static: :import_suppliers
   end
 
   desc 'add Suppliers for RM6232 to the database'
-  task static: :'rm6232:import_suppliers' do
-  end
+  task static: :'rm6232:import_suppliers'
 end

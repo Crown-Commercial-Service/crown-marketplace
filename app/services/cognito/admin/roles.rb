@@ -44,17 +44,17 @@ module Cognito
       end
 
       def can_edit_user_with_current_access?
-        if @roles.include?('ccs_developer')
-          []
-        elsif @roles.include?('ccs_user_admin')
-          [:super_admin]
-        elsif @roles.include?('allow_list_access') || @roles.include?('ccs_employee')
-          %i[user_admin super_admin]
-        elsif @roles.include?('buyer')
-          %i[user_support user_admin super_admin]
-        else
-          []
-        end.include?(@access)
+        (
+          if @roles.include?('ccs_developer')
+            []
+          elsif @roles.include?('ccs_user_admin')
+            [:super_admin]
+          elsif @roles.include?('allow_list_access') || @roles.include?('ccs_employee')
+            %i[user_admin super_admin]
+          elsif @roles.include?('buyer')
+            %i[user_support user_admin super_admin]
+          end || []
+        ).include?(@access)
       end
 
       def minimum_editor_role

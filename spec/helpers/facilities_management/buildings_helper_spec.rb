@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::BuildingsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::BuildingsHelper do
   let(:building) { create(:facilities_management_building, user: create(:user), **building_options) }
   let(:building_options) { {} }
 

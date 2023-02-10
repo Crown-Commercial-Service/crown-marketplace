@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ProcurementDetailsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::ProcurementDetailsHelper do
   describe '.edit_page_title' do
     let(:result) { helper.edit_page_title }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::Procurement do
   subject(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, user: user) }
 
   let(:user) { create(:user) }
@@ -45,21 +45,21 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     context 'when the name is more than 100 characters' do
       it 'is expected to not be valid' do
         procurement.contract_name = (0...101).map { ('a'..'z').to_a[rand(26)] }.join
-        expect(procurement.valid?(:contract_name)).to eq false
+        expect(procurement.valid?(:contract_name)).to be false
       end
     end
 
     context 'when the name is blank' do
       it 'is expected to not be valid' do
         procurement.contract_name = ''
-        expect(procurement.valid?(:contract_name)).to eq false
+        expect(procurement.valid?(:contract_name)).to be false
       end
     end
 
     context 'when the name is correct' do
       it 'expected to be valid' do
         procurement.contract_name = 'Valid Name'
-        expect(procurement.valid?(:contract_name)).to eq true
+        expect(procurement.valid?(:contract_name)).to be true
       end
     end
   end
@@ -70,7 +70,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         it 'expected to be valid' do
           procurement.estimated_cost_known = true
           procurement.estimated_annual_cost = 25000
-          expect(procurement.valid?(:estimated_annual_cost)).to eq true
+          expect(procurement.valid?(:estimated_annual_cost)).to be true
         end
       end
 
@@ -78,7 +78,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         it 'expected to not be valid' do
           procurement.estimated_cost_known = true
           procurement.estimated_annual_cost = nil
-          expect(procurement.valid?(:estimated_annual_cost)).to eq false
+          expect(procurement.valid?(:estimated_annual_cost)).to be false
         end
       end
     end
@@ -88,14 +88,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         it 'expected to be valid' do
           procurement.estimated_cost_known = false
           procurement.estimated_annual_cost = 25000
-          expect(procurement.valid?(:estimated_annual_cost)).to eq true
+          expect(procurement.valid?(:estimated_annual_cost)).to be true
         end
       end
 
       context 'when the estimated_annual_cost is not present' do
         it 'expected to be valid' do
           procurement.estimated_cost_known = false
-          expect(procurement.valid?(:estimated_annual_cost)).to eq true
+          expect(procurement.valid?(:estimated_annual_cost)).to be true
         end
       end
     end
@@ -105,21 +105,21 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     context 'when a payment_method is not present' do
       it 'is expected not to be valid' do
         procurement.payment_method = ''
-        expect(procurement.valid?(:payment_method)).to eq false
+        expect(procurement.valid?(:payment_method)).to be false
       end
     end
 
     context 'when bacs is a selected payment_method' do
       it 'is expected to be valid' do
         procurement.payment_method = 'bacs'
-        expect(procurement.valid?(:payment_method)).to eq true
+        expect(procurement.valid?(:payment_method)).to be true
       end
     end
 
     context 'when card is a selected payment_method' do
       it 'is expected to be valid' do
         procurement.payment_method = 'card'
-        expect(procurement.valid?(:payment_method)).to eq true
+        expect(procurement.valid?(:payment_method)).to be true
       end
     end
 
@@ -164,14 +164,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     context 'when there are no procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
         procurement.procurement_buildings.destroy_all
-        expect(procurement.valid?(:buildings)).to eq false
+        expect(procurement.valid?(:buildings)).to be false
       end
     end
 
     context 'when there are no active procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
         procurement.procurement_buildings.first.update(active: false)
-        expect(procurement.valid?(:buildings)).to eq false
+        expect(procurement.valid?(:buildings)).to be false
       end
     end
 
@@ -179,7 +179,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       it 'expected to be valid' do
         procurement.save
         procurement.procurement_buildings.create(active: true)
-        expect(procurement.valid?(:buildings)).to eq true
+        expect(procurement.valid?(:buildings)).to be true
       end
     end
 
@@ -189,7 +189,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         procurement.save
         procurement.procurement_buildings.create
         procurement.procurement_buildings.first.update_column(:service_codes, ['test'])
-        expect(procurement.valid?(:buildings_and_services)).to eq true
+        expect(procurement.valid?(:buildings_and_services)).to be true
       end
     end
     # rubocop:enable Rails/SkipsModelValidations
@@ -199,7 +199,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         procurement.save
         procurement_building = procurement.procurement_buildings.create(active: true)
         allow(procurement_building.building).to receive(:building_name).and_return('asa')
-        expect(procurement_building.valid?(:buildings_and_services)).to eq false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
     end
   end
@@ -224,7 +224,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'returns true' do
-          expect(procurement.valid?(:continue)).to eq true
+          expect(procurement.valid?(:continue)).to be true
         end
       end
 
@@ -232,7 +232,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:service_codes) { ['C.19', 'D.3'] }
 
         it 'returns true' do
-          expect(procurement.valid?(:continue)).to eq true
+          expect(procurement.valid?(:continue)).to be true
         end
       end
     end
@@ -253,7 +253,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'is not valid' do
-          expect(procurement.errors.any?).to eq true
+          expect(procurement.errors.any?).to be true
         end
 
         it 'has the correct errors' do
@@ -278,7 +278,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'is not valid' do
-          expect(procurement.errors.any?).to eq true
+          expect(procurement.errors.any?).to be true
         end
 
         it 'has the correct errors' do
@@ -298,7 +298,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'is not valid' do
-          expect(procurement.errors.any?).to eq true
+          expect(procurement.errors.any?).to be true
         end
 
         it 'has the correct errors' do
@@ -327,7 +327,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is not valid' do
-            expect(procurement.errors.any?).to eq true
+            expect(procurement.errors.any?).to be true
           end
 
           it 'has the correct errors' do
@@ -346,7 +346,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is not valid' do
-            expect(procurement.errors.any?).to eq true
+            expect(procurement.errors.any?).to be true
           end
 
           it 'has the correct errors' do
@@ -365,7 +365,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is not valid' do
-            expect(procurement.errors.any?).to eq true
+            expect(procurement.errors.any?).to be true
           end
 
           it 'has the correct errors' do
@@ -381,7 +381,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           before { procurement.procurement_buildings.first.building.update(address_region_code: nil) }
 
           it 'is not valid' do
-            expect(procurement.valid?(:continue)).to eq false
+            expect(procurement.valid?(:continue)).to be false
           end
         end
       end
@@ -465,7 +465,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     context 'when no eligible suppliers' do
       it 'does not create any procurement suppliers' do
         allow(obj).to receive(:sorted_list).and_return([])
-        expect { procurement.set_state_to_results_if_possible }.to change(FacilitiesManagement::RM3830::ProcurementSupplier, :count).by(0)
+        expect { procurement.set_state_to_results_if_possible }.not_to change(FacilitiesManagement::RM3830::ProcurementSupplier, :count)
       end
     end
 
@@ -541,7 +541,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'does not save lot number' do
-          expect(procurement.lot_number).to be nil
+          expect(procurement.lot_number).to be_nil
         end
       end
 
@@ -570,7 +570,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'does not save lot number' do
-          expect(procurement.lot_number).to be nil
+          expect(procurement.lot_number).to be_nil
         end
       end
 
@@ -600,7 +600,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'does save lot number' do
-          expect(procurement.lot_number).not_to be nil
+          expect(procurement.lot_number).not_to be_nil
         end
       end
 
@@ -621,7 +621,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'does save lot number' do
-          expect(procurement.lot_number).not_to be nil
+          expect(procurement.lot_number).not_to be_nil
         end
       end
 
@@ -643,7 +643,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'does save lot number' do
-          expect(procurement.lot_number).not_to be nil
+          expect(procurement.lot_number).not_to be_nil
         end
       end
 
@@ -665,7 +665,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'does save lot number' do
-          expect(procurement.lot_number).not_to be nil
+          expect(procurement.lot_number).not_to be_nil
         end
       end
 
@@ -690,7 +690,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'does save lot number' do
-          expect(procurement.lot_number).not_to be nil
+          expect(procurement.lot_number).not_to be_nil
         end
 
         it 'procurement_building_services_not_used_in_calculation an empty list' do
@@ -781,7 +781,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         expect(procurement.offer_to_next_supplier).to be false
         procurement.reload
         closed_contracts = procurement.procurement_suppliers.map(&:aasm_state)
-        expect(closed_contracts.all?('sent')).to eq true
+        expect(closed_contracts.all?('sent')).to be true
       end
 
       it 'the contracts will be sent in order of lowest direct award value' do
@@ -825,7 +825,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       it 'returns false' do
-        expect(procurement.send(:priced_at_framework)).to eq false
+        expect(procurement.send(:priced_at_framework)).to be false
       end
     end
 
@@ -836,7 +836,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       it 'returns true' do
-        expect(procurement.send(:priced_at_framework)).to eq true
+        expect(procurement.send(:priced_at_framework)).to be true
       end
     end
   end
@@ -846,13 +846,13 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       it 'is expected to be true' do
         procurement.aasm_state = 'direct_award'
 
-        expect(procurement.direct_award?).to eq(true)
+        expect(procurement.direct_award?).to be(true)
       end
     end
 
     context 'when the procurement is not set to direct award' do
       it 'is expected to be false' do
-        expect(procurement.direct_award?).to eq(false)
+        expect(procurement.direct_award?).to be(false)
       end
     end
   end
@@ -1069,37 +1069,39 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     let(:pension_fund) { build(:facilities_management_rm3830_procurement_pension_fund, procurement: create(:facilities_management_rm3830_procurement)) }
     let(:attributes) { ActiveSupport::HashWithIndifferentAccess.new(pension_fund.attributes) }
 
-    before do
-      attributes['percentage'] = attributes['percentage'].to_s
-    end
+    before { attributes['percentage'] = attributes['percentage'].to_s }
 
     # validating number of record
     context 'when the number of records is greater than 99' do
-      it 'is expected to be true' do
-        99.times do
-          procurement.procurement_pension_funds.build(attributes)
-        end
+      it 'only assignes the first 99 pension funds' do
+        nested_attributes = {
+          procurement_pension_funds_attributes: (0..99).to_h { |index| [index.to_s, { case_sensitive_error: false, name: Faker::Name.unique.name[1..150], percentage: rand(1..100).to_s, _destroy: false }] }
+        }
+
+        procurement.assign_attributes(nested_attributes)
+
+        expect(procurement.procurement_pension_funds.length).to eq 99
       end
     end
+  end
 
-    describe '#before_each_procurement_pension_funds verify' do
-      let(:pension_fund1) { build(:facilities_management_rm3830_procurement_pension_fund, procurement: create(:facilities_management_rm3830_procurement)) }
-      let(:pension_fund2) { build(:facilities_management_rm3830_procurement_pension_fund, procurement: create(:facilities_management_rm3830_procurement)) }
+  describe '#before_each_procurement_pension_funds verify' do
+    let(:pension_fund1) { build(:facilities_management_rm3830_procurement_pension_fund, procurement: create(:facilities_management_rm3830_procurement)) }
+    let(:pension_fund2) { build(:facilities_management_rm3830_procurement_pension_fund, procurement: create(:facilities_management_rm3830_procurement)) }
 
-      context 'when the name is not case sensitive' do
-        it 'can be saved if name is not case sensitive' do
-          pension_fund2.name = "#{pension_fund1.name}abc"
-          procurement.procurement_pension_funds = [pension_fund1, pension_fund2]
-          expect(pension_fund1.case_sensitive_error).to eq false
-          expect(pension_fund2.case_sensitive_error).to eq false
-        end
+    context 'when the name is not case sensitive' do
+      it 'can be saved if name is not case sensitive' do
+        pension_fund2.name = "#{pension_fund1.name}abc"
+        procurement.procurement_pension_funds = [pension_fund1, pension_fund2]
+        expect(pension_fund1.case_sensitive_error).to be false
+        expect(pension_fund2.case_sensitive_error).to be false
+      end
 
-        it 'cannot be saved if name is case sensitive' do
-          pension_fund2.name = pension_fund1.name.upcase
-          expect { procurement.procurement_pension_funds = [pension_fund1, pension_fund2] }.to raise_exception(ActiveRecord::RecordNotSaved)
-          expect(pension_fund1.case_sensitive_error).to eq false
-          expect(pension_fund2.case_sensitive_error).to eq true
-        end
+      it 'cannot be saved if name is case sensitive' do
+        pension_fund2.name = pension_fund1.name.upcase
+        expect { procurement.procurement_pension_funds = [pension_fund1, pension_fund2] }.to raise_exception(ActiveRecord::RecordNotSaved)
+        expect(pension_fund1.case_sensitive_error).to be false
+        expect(pension_fund2.case_sensitive_error).to be true
       end
     end
   end
@@ -1108,11 +1110,11 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     context 'when further competition is valid' do
       it 'is expected to be true' do
         procurement.aasm_state = 'further_competition'
-        expect(procurement.further_competition?).to eq(true)
+        expect(procurement.further_competition?).to be(true)
       end
 
       it 'is expected to be false' do
-        expect(procurement.further_competition?).to eq(false)
+        expect(procurement.further_competition?).to be(false)
       end
     end
   end
@@ -1135,15 +1137,15 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:codes) { %w[L.6 L.7 L.8] }
 
         it 'all_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq true
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to be true
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq true
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to be true
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns true' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq true
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to be true
         end
       end
 
@@ -1151,15 +1153,15 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 D.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to be false
         end
       end
 
@@ -1167,15 +1169,15 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 L.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq true
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to be true
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to be false
         end
       end
 
@@ -1183,15 +1185,15 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:codes) { %w[D.3 M.1 O.1] }
 
         it 'all_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq true
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to be true
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq true
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to be true
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns true' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq true
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to be true
         end
       end
 
@@ -1199,15 +1201,15 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:codes) { %w[C.1 M.1 N.1] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to be false
         end
       end
 
@@ -1215,15 +1217,15 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:codes) { %w[C.1 C.2 C.3] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to be false
         end
       end
     end
@@ -1235,15 +1237,15 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:codes) { %w[L.6 L.7 L.8] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns true' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq true
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to be true
         end
       end
 
@@ -1251,15 +1253,15 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 D.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to be false
         end
       end
 
@@ -1267,15 +1269,15 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 L.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to be false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to be false
         end
       end
     end
@@ -1283,7 +1285,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
   describe '#set_state_to_results' do
     let(:procurement) { create(:facilities_management_rm3830_procurement_for_further_competition, aasm_state: state) }
-    let(:building) { create :facilities_management_building_london }
+    let(:building) { create(:facilities_management_building_london) }
 
     before do
       procurement.send(:copy_procurement_buildings_data)
@@ -1515,7 +1517,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:service_codes) { [] }
 
       it 'returns false' do
-        expect(procurement.buildings_and_services_completed?).to eq false
+        expect(procurement.buildings_and_services_completed?).to be false
       end
     end
 
@@ -1523,7 +1525,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:service_codes) { %w[M.1 N.1 O.1] }
 
       it 'returns false' do
-        expect(procurement.buildings_and_services_completed?).to eq false
+        expect(procurement.buildings_and_services_completed?).to be false
       end
     end
 
@@ -1531,7 +1533,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:service_codes) { %w[M.1 N.1 O.1 C.1] }
 
       it 'returns true' do
-        expect(procurement.buildings_and_services_completed?).to eq true
+        expect(procurement.buildings_and_services_completed?).to be true
       end
     end
   end
@@ -1674,7 +1676,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       it 'is not completed' do
-        expect(procurement.service_requirements_completed?).to eq false
+        expect(procurement.service_requirements_completed?).to be false
       end
     end
 
@@ -1686,7 +1688,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       it 'is not completed' do
-        expect(procurement.service_requirements_completed?).to eq false
+        expect(procurement.service_requirements_completed?).to be false
       end
     end
 
@@ -1698,7 +1700,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       it 'is not completed' do
-        expect(procurement.service_requirements_completed?).to eq true
+        expect(procurement.service_requirements_completed?).to be true
       end
     end
   end
@@ -1766,7 +1768,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       before { procurement.update(aasm_state: 'quick_search') }
 
       it 'returns false' do
-        expect(procurement.procurement_buildings_missing_regions?).to eq false
+        expect(procurement.procurement_buildings_missing_regions?).to be false
       end
     end
 
@@ -1777,7 +1779,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         before { procurement.active_procurement_buildings.first.building.update(address_region_code: nil) }
 
         it 'returns true' do
-          expect(procurement.procurement_buildings_missing_regions?).to eq true
+          expect(procurement.procurement_buildings_missing_regions?).to be true
         end
       end
 
@@ -1785,13 +1787,13 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         before { procurement.active_procurement_buildings.first.building.update(address_region_code: '') }
 
         it 'returns true' do
-          expect(procurement.procurement_buildings_missing_regions?).to eq true
+          expect(procurement.procurement_buildings_missing_regions?).to be true
         end
       end
 
       context 'when a building address region is present' do
         it 'returns false' do
-          expect(procurement.procurement_buildings_missing_regions?).to eq false
+          expect(procurement.procurement_buildings_missing_regions?).to be false
         end
       end
     end
@@ -1856,7 +1858,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       context 'when there is invoice_contact_detail and it is complete' do
-        before { create :facilities_management_rm3830_procurement_invoice_contact_detail, procurement: procurement }
+        before { create(:facilities_management_rm3830_procurement_invoice_contact_detail, procurement: procurement) }
 
         it 'returns false' do
           expect(result).to be false
@@ -1864,7 +1866,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       context 'when there is invoice_contact_detail and it is incomplete' do
-        before { create :facilities_management_rm3830_procurement_invoice_contact_detail_empty, procurement: procurement }
+        before { create(:facilities_management_rm3830_procurement_invoice_contact_detail_empty, procurement: procurement) }
 
         it 'returns true' do
           expect(result).to be true
@@ -1882,7 +1884,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       context 'when there is authorised_contact_detail and it is complete' do
-        before { create :facilities_management_rm3830_procurement_authorised_contact_detail, procurement: procurement }
+        before { create(:facilities_management_rm3830_procurement_authorised_contact_detail, procurement: procurement) }
 
         it 'returns false' do
           expect(result).to be false
@@ -1890,7 +1892,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       context 'when there is authorised_contact_detail and it is incomplete' do
-        before { create :facilities_management_rm3830_procurement_authorised_contact_detail_empty, procurement: procurement }
+        before { create(:facilities_management_rm3830_procurement_authorised_contact_detail_empty, procurement: procurement) }
 
         it 'returns true' do
           expect(result).to be true
@@ -1908,7 +1910,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       context 'when there is notices_contact_detail and it is complete' do
-        before { create :facilities_management_rm3830_procurement_notices_contact_detail, procurement: procurement }
+        before { create(:facilities_management_rm3830_procurement_notices_contact_detail, procurement: procurement) }
 
         it 'returns false' do
           expect(result).to be false
@@ -1916,7 +1918,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       context 'when there is notices_contact_detail and it is incomplete' do
-        before { create :facilities_management_rm3830_procurement_notices_contact_detail_empty, procurement: procurement }
+        before { create(:facilities_management_rm3830_procurement_notices_contact_detail_empty, procurement: procurement) }
 
         it 'returns true' do
           expect(result).to be true

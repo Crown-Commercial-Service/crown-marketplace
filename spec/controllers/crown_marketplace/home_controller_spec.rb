@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CrownMarketplace::HomeController, type: :controller do
+RSpec.describe CrownMarketplace::HomeController do
   let(:default_params) { { service: 'crown_marketplace' } }
 
   describe 'GET accessibility_statement' do

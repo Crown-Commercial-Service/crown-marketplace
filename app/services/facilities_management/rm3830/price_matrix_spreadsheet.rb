@@ -100,7 +100,7 @@ module FacilitiesManagement::RM3830
         sheet.add_row ['Table 1. Service rates']
 
         new_row = ['Service Reference', 'Service Name', 'Unit of Measure']
-        new_row += @building_types_with_service_codes.map { |building_type_with_service_code| building_type_with_service_code[:building_type] }
+        new_row += @building_types_with_service_codes.pluck(:building_type)
         sheet.add_row new_row, style: header_row_style
 
         add_supplier_rates_to_rate_card(sheet) if @supplier_name
@@ -159,8 +159,8 @@ module FacilitiesManagement::RM3830
       percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
 
       sheet.add_row ['Cleaning Consumables', 'price per building occupant per annum', rate_card_variances[:'Cleaning Consumables per Building User (£)']], style: [standard_column_style, standard_column_style, price_style]
-      sheet.add_row ['Management Overhead', 'percentage of deliverables value', rate_card_variances[:"Management Overhead %"]], style: [standard_column_style, standard_column_style, percentage_style]
-      sheet.add_row ['Corporate Overhead', 'percentage of deliverables value', rate_card_variances[:"Corporate Overhead %"]], style: [standard_column_style, standard_column_style, percentage_style]
+      sheet.add_row ['Management Overhead', 'percentage of deliverables value', rate_card_variances[:'Management Overhead %']], style: [standard_column_style, standard_column_style, percentage_style]
+      sheet.add_row ['Corporate Overhead', 'percentage of deliverables value', rate_card_variances[:'Corporate Overhead %']], style: [standard_column_style, standard_column_style, percentage_style]
       sheet.add_row ['Profit', 'percentage of deliverables value', rate_card_variances[:'Profit %']], style: [standard_column_style, standard_column_style, percentage_style]
       sheet.add_row ['London Location Variance Rate', 'variance to standard service rate', rate_card_variances[:'London Location Variance Rate (%)']], style: [standard_column_style, standard_column_style, percentage_style]
       sheet.add_row ['TUPE Risk Premium', 'percentage of deliverables value', rate_card_variances[:'TUPE Risk Premium (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]

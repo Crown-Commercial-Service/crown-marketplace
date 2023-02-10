@@ -101,6 +101,5 @@ namespace :db do
   end
 
   desc 'add FM static data to the database'
-  task static: :'rm3830:fmdata' do
-  end
+  task static: :'rm3830:fmdata'
 end

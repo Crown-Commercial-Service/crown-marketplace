@@ -152,13 +152,13 @@ module FacilitiesManagement
                                                             [[], [], []]
                                                           else
                                                             suppliers = suppliers(sheet_name).transpose
-                                                            suppliers + [(['Yes', 'Yes'] + ['No'] * (suppliers.first.length - 2))]
+                                                            suppliers + [(['Yes', 'Yes'] + (['No'] * (suppliers.first.length - 2)))]
                                                           end
 
         @package.workbook.add_worksheet(name: sheet_name) do |sheet|
           sheet.add_row ['If you are bidding for Lot 1a, please confirm within the Yellow highlighted cells, that you are able to provide the relevant additional service']
-          sheet.add_row [nil] * 4 + supplier_names
-          sheet.add_row [nil] * 4 + supplier_duns
+          sheet.add_row ([nil] * 4) + supplier_names
+          sheet.add_row ([nil] * 4) + supplier_duns
           sheet.add_row ['Work package Description', 'Work Package Standard Reference (where applicable)', 'Work Package Section Reference', 'Service', 'Are you able to provide this additional service?']
 
           header_columns.each do |service_name_cell, service_code_cell|

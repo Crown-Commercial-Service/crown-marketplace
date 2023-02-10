@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData do
   describe '.latest_data' do
     let(:latest_data) { described_class.create }
 
     before do
-      4.times { described_class.create(created_at: Time.zone.now - 1.day) }
+      4.times { described_class.create(created_at: 1.day.ago) }
       latest_data
     end
 
@@ -41,7 +41,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData, type: :model d
     let(:edit_1) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_service_lot_data, user: user_1, created_at: dates[1]) }
     let(:edit_2) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_details, user: user_2, created_at: dates[2]) }
     let(:edit_3) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_region_lot_data, user: user_1, created_at: dates[3]) }
-    let(:dates) { [Time.zone.now - 4.days, Time.zone.now - 3.days, Time.zone.now - 2.days, Time.zone.now - 1.day] }
+    let(:dates) { [4.days.ago, 3.days.ago, 2.days.ago, 1.day.ago] }
 
     before do
       supplier_data.update(created_at: dates[0])

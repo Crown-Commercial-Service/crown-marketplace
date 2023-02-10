@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V2::PostcodesController, type: :controller do
+RSpec.describe Api::V2::PostcodesController do
   login_fm_buyer
 
   describe 'can retrieve a postcode' do

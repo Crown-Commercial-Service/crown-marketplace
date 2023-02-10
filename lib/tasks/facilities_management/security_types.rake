@@ -29,6 +29,5 @@ namespace :db do
   end
 
   desc 'add building Security Types to the database'
-  task static: :'rm3830:security_types' do
-  end
+  task static: :'rm3830:security_types'
 end

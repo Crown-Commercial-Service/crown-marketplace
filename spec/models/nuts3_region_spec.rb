@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Nuts3Region, type: :model do
+RSpec.describe Nuts3Region do
   subject(:region) { described_class.find_by(code: 'UKL12') }
 
   let(:all_codes) { described_class.all.map(&:code) }

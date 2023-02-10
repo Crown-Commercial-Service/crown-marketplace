@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe FacilitiesManagement::RM6232::BuyerAccountController, type: :controller do
+RSpec.describe FacilitiesManagement::RM6232::BuyerAccountController do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM6232' }
 

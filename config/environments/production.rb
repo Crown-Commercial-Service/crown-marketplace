@@ -75,7 +75,7 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  config.log_formatter = Logger::Formatter.new
 
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
@@ -88,7 +88,7 @@ Rails.application.configure do
   end
 
   config.assets.initialize_on_precompile = true
-  config.action_controller.asset_host = "//#{ENV['ASSETS_BUCKET']}.s3.amazonaws.com/"
+  config.action_controller.asset_host = "//#{ENV.fetch('ASSETS_BUCKET', nil)}.s3.amazonaws.com/"
   config.assets.digest = true
   config.assets.enabled = true
   config.fail_silently = true
@@ -97,5 +97,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Prevents against DNS rebinding and other Host header attacks.
-  config.hosts << ENV['ENVIRONMENT_HOST']
+  config.hosts << ENV.fetch('ENVIRONMENT_HOST', nil)
 end

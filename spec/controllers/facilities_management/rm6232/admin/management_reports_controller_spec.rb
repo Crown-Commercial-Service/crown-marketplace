@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportsController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM6232' } }
 
   login_fm_admin

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AllowedEmailDomain, type: :model do
+RSpec.describe AllowedEmailDomain do
   let(:allowed_email_domain) { described_class.new(email_domain: email_domain) }
   let(:email_list) { ['cheemail.com', 'cmail.com', 'crowncommercial.gov.uk', 'email.com', 'jmail.com', 'kmail.com', 'tmail.com'] }
   let(:allow_list_file) { Tempfile.new('allow_list.txt') }

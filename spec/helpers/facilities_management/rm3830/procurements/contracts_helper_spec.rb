@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsHelper do
   extend APIRequestStubs
 
   def format_date_time(date_object)

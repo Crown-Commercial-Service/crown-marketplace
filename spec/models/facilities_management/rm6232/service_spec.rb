@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Service, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Service do
   describe '.work_package' do
     let(:result) { described_class.find(code).work_package.code }
 

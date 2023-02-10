@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::ChangeLogsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM6232::Admin::ChangeLogsHelper do
   describe '.show_page_title' do
     let(:result) { helper.show_page_title }
 

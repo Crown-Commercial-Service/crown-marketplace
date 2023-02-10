@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # We have a spec for both frameworks to make sure
 # both work with the supplier details controller
-RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :controller do
+RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM6232' } }
   let(:supplier) { create(:facilities_management_rm6232_admin_suppliers_admin) }
 

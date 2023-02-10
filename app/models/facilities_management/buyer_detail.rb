@@ -23,7 +23,7 @@ module FacilitiesManagement
     delegate :email, to: :user
 
     def full_organisation_address
-      [organisation_address_line_1, organisation_address_line_2, organisation_address_town, organisation_address_county].reject(&:nil?).reject(&:empty?).join(', ') + " #{organisation_address_postcode}"
+      [organisation_address_line_1, organisation_address_line_2, organisation_address_town, organisation_address_county].compact.reject(&:empty?).join(', ') + " #{organisation_address_postcode}"
     end
   end
 end
