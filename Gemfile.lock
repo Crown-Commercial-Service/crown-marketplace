@@ -400,7 +400,7 @@ GEM
       binding_of_caller (~> 1.0)
       pry (~> 0.13)
     public_suffix (5.0.1)
-    puma (6.0.2)
+    puma (6.1.0)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.6.2)
@@ -665,7 +665,7 @@ DEPENDENCIES
   pry-rails
   pry-rescue
   pry-stack_explorer
-  puma (~> 6.0)
+  puma (~> 6.1)
   rails (~> 6.1.7)
   rails-controller-testing (>= 1.0.5)
   ratonvirus (>= 0.3.2)
