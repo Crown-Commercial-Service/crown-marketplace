@@ -78,7 +78,7 @@ module FacilitiesManagement::RakeModules::SupplierData
 
   def self.awd_credentials(access_key, secret_key, bucket, region)
     Aws.config[:credentials] = Aws::Credentials.new(access_key, secret_key)
-    p "Importing from AWS bucket: #{bucket}, region: #{region}"
+    puts "Importing from AWS bucket: #{bucket}, region: #{region}"
 
     extend_timeout
   end

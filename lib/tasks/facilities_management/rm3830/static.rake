@@ -18,7 +18,7 @@ namespace :db do
   namespace :rm3830 do
     desc 'add FM rates to the database'
     task fm_rates: :environment do
-      p 'Loading FM rates static data'
+      puts 'Loading FM rates static data'
       CCS.csv_to_fm_rates 'data/facilities_management/rm3830/rates.csv'
     end
   end

@@ -127,7 +127,7 @@ module OrdnanceSurvey
             NULL;
         END; $$
     SQL
-    p 'creating os_address_view_2'
+    puts 'creating os_address_view_2'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     query = <<~SQL.squish
       DO $$
@@ -144,7 +144,7 @@ module OrdnanceSurvey
           NULL;
       END; $$
     SQL
-    p 'creating postcode_region_view'
+    puts 'creating postcode_region_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     query = <<~SQL.squish
         DO $$
@@ -184,7 +184,7 @@ module OrdnanceSurvey
             NULL;
         END; $$
     SQL
-    p 'creating postcode_lookup_view'
+    puts 'creating postcode_lookup_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
   rescue PG::Error => e
     puts e.message
@@ -212,7 +212,7 @@ module OrdnanceSurvey
 
   def self.awd_credentials(access_key, secret_key, bucket, region)
     Aws.config[:credentials] = Aws::Credentials.new(access_key, secret_key)
-    p "Importing from AWS bucket: #{bucket}, region: #{region}"
+    puts "Importing from AWS bucket: #{bucket}, region: #{region}"
 
     extend_timeout
   end
@@ -248,31 +248,31 @@ module OrdnanceSurvey
 
         import_local_postcode_file(directory, filename)
       rescue StandardError => e
-        p "Error with    #{File.basename(filename, File.extname(filename))}: #{([e.message] + e.backtrace).join($INPUT_RECORD_SEPARATOR)}"
+        puts "Error with    #{File.basename(filename, File.extname(filename))}: #{([e.message] + e.backtrace).join($INPUT_RECORD_SEPARATOR)}"
         log_postcode_file_failed(File.basename(filename, File.extname(filename)), e.message)
         Rails.logger.error((["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
       end
-      p "Purging excluded areas: #{EXCLUDED_POSTCODE_AREAS.map { |e| "'#{e}'" }.join(',')}"
+      puts "Purging excluded areas: #{EXCLUDED_POSTCODE_AREAS.map { |e| "'#{e}'" }.join(',')}"
       purge_excluded_areas
-      p "Duration: #{Time.current - beginning_time} seconds"
+      puts "Duration: #{Time.current - beginning_time} seconds"
       Rails.logger.info("POSTCODE: Duration #{Time.current - beginning_time}")
     else
       Rails.logger.info("POSTCODE: No folder for local postcode import found (#{directory})")
-      p "POSTCODE: No folder for local postcode import found (#{directory})"
+      puts "POSTCODE: No folder for local postcode import found (#{directory})"
     end
   end
 
   def self.import_sample_addresses
     beginning_time = Time.current
     import_local_postcode_file('data/facilities_management', 'uk_addresses.csv')
-    p "Duration: #{Time.current - beginning_time} seconds"
+    puts "Duration: #{Time.current - beginning_time} seconds"
   end
 
   def self.import_local_postcode_file(directory, filename)
-    p "Processing    #{filename}"
+    puts "Processing    #{filename}"
     file_time = Time.current
     read_file("#{directory}/#{filename}", method(:process_csv_data)) do |summation|
-      p "Duration for #{filename}, of #{number_to_human_size summation[:length]} is #{Time.current - file_time}"
+      puts "Duration for #{filename}, of #{number_to_human_size summation[:length]} is #{Time.current - file_time}"
       log_postcode_file_loaded(File.basename(filename, File.extname(filename)), summation[:length],
                                summation[:md5],
                                summation[:updated_time],
@@ -300,11 +300,11 @@ module OrdnanceSurvey
 
       next if postcode_file_already_loaded(extract_metadata(File.basename(obj.key, File.extname(obj.key))))
 
-      p "Processing    #{obj.key}"
+      puts "Processing    #{obj.key}"
 
       file_time = Time.current
       read_file_from_s3(obj, method(:process_csv_data)) do |summation|
-        p "Duration for #{obj.key}, of #{ActiveSupport::NumberHelper.number_to_human_size(summation[:length])} is #{Time.current - file_time}"
+        puts "Duration for #{obj.key}, of #{ActiveSupport::NumberHelper.number_to_human_size(summation[:length])} is #{Time.current - file_time}"
         log_postcode_file_loaded(obj.key, summation[:length],
                                  summation[:md5],
                                  summation[:updated_time],
@@ -314,13 +314,13 @@ module OrdnanceSurvey
       Rails.logger.warn "Access denied on #{obj.key}. #{e.message}}"
       puts "*** Access denied on #{obj.key}"
     rescue StandardError => e
-      p "\tError: #{e.message}"
+      puts "\tError: #{e.message}"
       Rails.logger.error((["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
       raise e
     end
-    p "Purging excluded areas: #{EXCLUDED_POSTCODE_AREAS.map { |e| "'#{e}'" }.join(',')}"
+    puts "Purging excluded areas: #{EXCLUDED_POSTCODE_AREAS.map { |e| "'#{e}'" }.join(',')}"
     purge_excluded_areas
-    p "Duration: #{Time.current - beginning_time} seconds"
+    puts "Duration: #{Time.current - beginning_time} seconds"
   rescue PG::Error => e
     puts e.message
   end
