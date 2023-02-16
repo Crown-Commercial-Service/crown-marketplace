@@ -79,7 +79,7 @@ GEM
       activesupport
     amoeba (3.2.0)
       activerecord (>= 4.2.0)
-    asset_sync (2.16.0)
+    asset_sync (2.18.0)
       activemodel (>= 4.1.0)
       fog-core
       mime-types (>= 2.99)
