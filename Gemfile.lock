@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (5.4.0)
+    aasm (5.5.0)
       concurrent-ruby (~> 1.0)
     actioncable (6.1.7.2)
       actionpack (= 6.1.7.2)
@@ -619,7 +619,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
-  aasm (~> 5.4)
+  aasm (~> 5.5)
   active_storage_validations (>= 1.0.3)
   activerecord-import (~> 1.4.1)
   activerecord-postgis-adapter (>= 6.0.3)
