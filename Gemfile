@@ -64,7 +64,7 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'roo', '~> 2.10.0'
 
 # state machine
-gem 'aasm', '~> 5.4'
+gem 'aasm', '~> 5.5'
 gem 'after_commit_everywhere', '~> 1.3'
 
 # for running background jobs
