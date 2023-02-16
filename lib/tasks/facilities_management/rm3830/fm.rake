@@ -86,15 +86,15 @@ namespace :db do
     desc 'add FM static data to the database'
     task fmdata: :environment do
       DistributedLocks.distributed_lock(153) do
-        p 'Creating FM UOM table'
+        puts 'Creating FM UOM table'
         FM.create_uom_table
-        p 'Creating FM static data table'
+        puts 'Creating FM static data table'
         FM.static_data_table
-        p 'add services data to fm_static_table'
+        puts 'add services data to fm_static_table'
         FM.facilities_management_services
-        p 'add work_packages data to fm_static_table'
+        puts 'add work_packages data to fm_static_table'
         FM.facilities_management_work_packages
-        p 'add bank_holidays data to fm_static_table'
+        puts 'add bank_holidays data to fm_static_table'
         FM.facilities_management_bank_holidays
       end
     end
