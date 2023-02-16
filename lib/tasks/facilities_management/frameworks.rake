@@ -18,7 +18,7 @@ end
 namespace :db do
   desc 'add the frameworks into the database'
   task fm_frameworks: :environment do
-    p 'Loading FM Frameworks'
+    puts 'Loading FM Frameworks'
     DistributedLocks.distributed_lock(157) do
       Frameworks.add_frameworks
     end
