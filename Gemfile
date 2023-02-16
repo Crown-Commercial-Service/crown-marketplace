@@ -42,7 +42,7 @@ gem 'jquery-rails', '~> 4.5.1'
 gem 'rollbar', '~> 3.4.0'
 
 # for dfe sign in
-gem 'omniauth', '~> 2.1.0'
+gem 'omniauth', '~> 2.1.1'
 gem 'omniauth-oauth2', '~> 1.8.0'
 
 # for authentication
