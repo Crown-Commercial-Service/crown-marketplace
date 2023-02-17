@@ -17,7 +17,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <%= render partial: '/shared/google/analytics' if cookie_preferences_settings['google_analytics_enabled'] && Marketplace.google_analytics_tracking_id.present? %>
     <%= render partial: '/shared/google/tag_manager_head' if Marketplace.google_tag_manager_tracking_id.present? %>
@@ -51,6 +52,7 @@
       <%= render partial: '/layouts/footer' %>
     </div>
 
-    <%= javascript_include_tag 'application' %>
+    <%= javascript_pack_tag 'govuk', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'ccs', 'data-turbolinks-track': 'reload' %>
   </body>
 </html>
