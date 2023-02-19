@@ -10,7 +10,7 @@
     "@babel/plugin-transform-modules-umd": "^7.16.5",
     "@hmcts/frontend": "0.0.29-alpha",
     "@types/jquery": "^3.5.16",
-    "@types/js-cookie": "^3.0.2",
+    "@types/js-cookie": "^3.0.3",
     "govuk-frontend": "^4.5.0",
     "html5shiv": "^3.7.3",
     "js-cookie": "^3.0.1",
