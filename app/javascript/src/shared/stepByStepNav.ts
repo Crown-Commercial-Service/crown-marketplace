@@ -1,5 +1,5 @@
 interface GOVUKStepByStepNavStepSectionInterface {
-  toggleSection(isShown: boolean): void
+  toggleSection: (isShown: boolean) => void
 }
 
 interface GOVUKStepByStepNavStepInterface {
@@ -15,14 +15,14 @@ interface GOVUKStepByStepNavInterface {
 }
 
 class GOVUKStepByStepNavShowHideAllButton {
-  private govukStepByStepNav: GOVUKStepByStepNav
-  private showAllText: string
-  private hideAllText: string
-  private $showHideAllButton: JQuery<HTMLButtonElement>
-  private $showHideAllButtonnChevron: JQuery<HTMLSpanElement>
-  private $showHideAllButtonTextSpan: JQuery<HTMLSpanElement>
+  private readonly govukStepByStepNav: GOVUKStepByStepNav
+  private readonly showAllText: string
+  private readonly hideAllText: string
+  private readonly $showHideAllButton: JQuery<HTMLButtonElement>
+  private readonly $showHideAllButtonnChevron: JQuery<HTMLSpanElement>
+  private readonly $showHideAllButtonTextSpan: JQuery<HTMLSpanElement>
 
-  constructor(govukStepByStepNav: GOVUKStepByStepNav, showAllText: string, hideAllText: string) {
+  constructor (govukStepByStepNav: GOVUKStepByStepNav, showAllText: string, hideAllText: string) {
     this.govukStepByStepNav = govukStepByStepNav
     this.showAllText = showAllText
     this.hideAllText = hideAllText
@@ -34,7 +34,7 @@ class GOVUKStepByStepNavShowHideAllButton {
     this.setEventListener()
   }
 
-  private generateButtonHTML = (): string => {
+  private readonly generateButtonHTML = (): string => {
     return `
     <button type="button" aria-expanded="false" class="gem-c-step-nav__button gem-c-step-nav__button--controls js-step-controls-button">
       <span class="gem-c-step-nav__chevron gem-c-step-nav__chevron--down js-step-controls-button-icon"></span>
@@ -43,12 +43,12 @@ class GOVUKStepByStepNavShowHideAllButton {
     `
   }
 
-  private setEventListener = (): void => {
+  private readonly setEventListener = (): void => {
     this.$showHideAllButton.on('click', this.govukStepByStepNav.toggleAllOnClick.bind(this))
   }
 
   toggleShowHideAll = (showAll: boolean): void => {
-    if(showAll) {
+    if (showAll) {
       this.$showHideAllButtonnChevron.removeClass('gem-c-step-nav__chevron--down')
       this.$showHideAllButtonTextSpan.text(this.hideAllText)
     } else {
@@ -61,12 +61,12 @@ class GOVUKStepByStepNavShowHideAllButton {
 }
 
 class GOVUKStepByStepNavStepShowHideButton implements GOVUKStepByStepNavStepSectionInterface {
-  private govukStepByStepNavStep: GOVUKStepByStepNavStep
-  private showText: string
-  private hideText: string
-  private $button: JQuery<HTMLButtonElement>
-  private $buttonChevron: JQuery<HTMLSpanElement>
-  private $buttonTextSpan: JQuery<HTMLSpanElement>
+  private readonly govukStepByStepNavStep: GOVUKStepByStepNavStep
+  private readonly showText: string
+  private readonly hideText: string
+  private readonly $button: JQuery<HTMLButtonElement>
+  private readonly $buttonChevron: JQuery<HTMLSpanElement>
+  private readonly $buttonTextSpan: JQuery<HTMLSpanElement>
 
   constructor (govukStepByStepNavStep: GOVUKStepByStepNavStep, showText: string, hideText: string, $titleSection: JQuery<HTMLSpanElement>, controlledPanel: string) {
     this.govukStepByStepNavStep = govukStepByStepNavStep
@@ -84,7 +84,7 @@ class GOVUKStepByStepNavStepShowHideButton implements GOVUKStepByStepNavStepSect
     this.setEventListener()
   }
 
-  private generateButtonHTML = (titleText: string, controlledPanel: string): string => {
+  private readonly generateButtonHTML = (titleText: string, controlledPanel: string): string => {
     return `
       <button type="button" class="gem-c-step-nav__button gem-c-step-nav__button--title js-step-title-button" aria-expanded="false" aria-controls="${controlledPanel}">
         <span class="gem-c-step-nav____title-text-focus">
@@ -102,12 +102,12 @@ class GOVUKStepByStepNavStepShowHideButton implements GOVUKStepByStepNavStepSect
     `
   }
 
-  private setEventListener = (): void => {
+  private readonly setEventListener = (): void => {
     this.$button.on('click', this.govukStepByStepNavStep.toggleOnClick.bind(this))
   }
 
-  toggleSection = (isShown: boolean) => {
-    if(isShown) {
+  toggleSection = (isShown: boolean): void => {
+    if (isShown) {
       this.$buttonChevron.removeClass('gem-c-step-nav__chevron--down')
       this.$buttonTextSpan.text(this.hideText)
     } else {
@@ -120,7 +120,7 @@ class GOVUKStepByStepNavStepShowHideButton implements GOVUKStepByStepNavStepSect
 }
 
 class GOVUKStepByStepNavStepPanel implements GOVUKStepByStepNavStepSectionInterface {
-  private $stepByStepNavigationStepPannel: JQuery<HTMLElement>
+  private readonly $stepByStepNavigationStepPannel: JQuery<HTMLElement>
 
   constructor ($stepByStepNavigationStepPannel: JQuery<HTMLElement>) {
     this.$stepByStepNavigationStepPannel = $stepByStepNavigationStepPannel
@@ -136,12 +136,12 @@ class GOVUKStepByStepNavStepPanel implements GOVUKStepByStepNavStepSectionInterf
 }
 
 class GOVUKStepByStepNavStep implements GOVUKStepByStepNavStepInterface {
-  private govukStepByStepNav: GOVUKStepByStepNav
-  private $stepByStepNavigationStep: JQuery<HTMLElement>
-  private showHideButton: GOVUKStepByStepNavStepShowHideButton
-  private stepByStepNavigationStepPannel: GOVUKStepByStepNavStepPanel
+  private readonly govukStepByStepNav: GOVUKStepByStepNav
+  private readonly $stepByStepNavigationStep: JQuery<HTMLElement>
+  private readonly showHideButton: GOVUKStepByStepNavStepShowHideButton
+  private readonly stepByStepNavigationStepPannel: GOVUKStepByStepNavStepPanel
 
-  constructor(govukStepByStepNav: GOVUKStepByStepNav, $stepByStepNavigationStep: JQuery<HTMLElement>, showText: string, hideText: string) {
+  constructor (govukStepByStepNav: GOVUKStepByStepNav, $stepByStepNavigationStep: JQuery<HTMLElement>, showText: string, hideText: string) {
     this.govukStepByStepNav = govukStepByStepNav
     this.$stepByStepNavigationStep = $stepByStepNavigationStep
 
@@ -152,7 +152,7 @@ class GOVUKStepByStepNavStep implements GOVUKStepByStepNavStepInterface {
       showText,
       hideText,
       $stepByStepNavigationStep.find('.js-step-title'),
-      $stepByStepNavigationStepPannel.attr('id') || ''
+      $stepByStepNavigationStepPannel.attr('id') ?? ''
     )
 
     this.stepByStepNavigationStepPannel = new GOVUKStepByStepNavStepPanel(
@@ -162,7 +162,7 @@ class GOVUKStepByStepNavStep implements GOVUKStepByStepNavStepInterface {
     this.toggleSection(false)
   }
 
-  toggleOnClick = (event: JQuery.ClickEvent) => {
+  toggleOnClick = (event: JQuery.ClickEvent): void => {
     event.preventDefault()
 
     this.toggleSection(!this.isShown())
@@ -185,11 +185,11 @@ class GOVUKStepByStepNavStep implements GOVUKStepByStepNavStepInterface {
 }
 
 class GOVUKStepByStepNav implements GOVUKStepByStepNavInterface {
-  private $stepByStepNavigation: JQuery<HTMLElement> = $('#step-by-step-navigation')
-  private stepByStepNavigationSteps: GOVUKStepByStepNavStep[] = []
-  private stepNavShowHideAllButton: GOVUKStepByStepNavShowHideAllButton
+  private readonly $stepByStepNavigation: JQuery<HTMLElement> = $('#step-by-step-navigation')
+  private readonly stepByStepNavigationSteps: GOVUKStepByStepNavStep[] = []
+  private readonly stepNavShowHideAllButton: GOVUKStepByStepNavShowHideAllButton
 
-  constructor() {
+  constructor () {
     const showText: string = this.$stepByStepNavigation.data('show-text')
     const hideText: string = this.$stepByStepNavigation.data('hide-text')
     const showAllText: string = this.$stepByStepNavigation.data('show-all-text')
@@ -208,23 +208,23 @@ class GOVUKStepByStepNav implements GOVUKStepByStepNavInterface {
     return this.$stepByStepNavigation.find('div > button') as JQuery<HTMLButtonElement>
   }
 
-  toggleAllOnClick = (event: JQuery.ClickEvent) => {
+  toggleAllOnClick = (event: JQuery.ClickEvent): void => {
     event.preventDefault()
 
     this.toggleAll(!this.isAllShown())
   }
 
-  private isAllShown = () => this.stepByStepNavigationSteps.every((stepByStepNavigationStep) => stepByStepNavigationStep.isShown())
+  private readonly isAllShown = (): boolean => this.stepByStepNavigationSteps.every((stepByStepNavigationStep) => stepByStepNavigationStep.isShown())
 
-  private toggleAll = (showAll: boolean): void => {
-    this.stepByStepNavigationSteps.forEach((stepByStepNavigationStep) => stepByStepNavigationStep.toggleSection(showAll))
+  private readonly toggleAll = (showAll: boolean): void => {
+    this.stepByStepNavigationSteps.forEach((stepByStepNavigationStep) => { stepByStepNavigationStep.toggleSection(showAll) })
     this.stepNavShowHideAllButton.toggleShowHideAll(showAll)
   }
 
-  checkIfAllShown = (): void => this.stepNavShowHideAllButton.toggleShowHideAll(this.isAllShown())
+  checkIfAllShown = (): void => { this.stepNavShowHideAllButton.toggleShowHideAll(this.isAllShown()) }
 }
 
-const initStepByStepNav = () => {
+const initStepByStepNav = (): void => {
   if ($('#step-by-step-navigation').length) new GOVUKStepByStepNav()
 }
 

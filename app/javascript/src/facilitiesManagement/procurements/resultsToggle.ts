@@ -18,7 +18,7 @@ const initResultsToggle = (): void => {
       $suppliersPlane.addClass('govuk-grid-column-full').removeClass('govuk-grid-column-two-thirds')
     }
 
-    $resultsFilterButton.text($resultsFilterButton.attr('alt-text') || '')
+    $resultsFilterButton.text($resultsFilterButton.attr('alt-text') ?? '')
     $resultsFilterButton.attr('alt-text', currentText)
   })
 }

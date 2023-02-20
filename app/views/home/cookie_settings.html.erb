@@ -1,7 +1,12 @@
 <%= content_for :page_title, t('.heading') %>
 
-<div class="govuk-grid-row" id="cookie-settings-saved" <%= 'hidden' unless params[:cookies_updated] %>>
-  <%= govuk_notification_banner(:success, t('.cookies_saved')) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters" id="cookie-settings-saved" <%= 'hidden' unless params[:cookies_updated] %>>
+    <%= govuk_notification_banner(:success, t('.cookies_saved')) %>
+  </div>
+  <div class="govuk-grid-column-three-quarters" id="cookie-settings-not-saved" hidden>
+    <%= govuk_notification_banner(:error, t('.cookies_not_saved')) %>
+  </div>
 </div>
 
 <div class="govuk-grid-row">

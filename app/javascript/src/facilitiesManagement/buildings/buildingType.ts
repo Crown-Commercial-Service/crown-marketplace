@@ -1,7 +1,7 @@
-const enableRadios = (detailsOpen: boolean) => {
+const enableRadios = (detailsOpen: boolean): void => {
   const $radioInputs: JQuery<HTMLElement> = $('.govuk-details__text .govuk-radios__item')
 
-  if (detailsOpen === true) {
+  if (detailsOpen) {
     $radioInputs.each((_, element: HTMLElement) => {
       $(element).find('input').removeAttr('disabled')
     })

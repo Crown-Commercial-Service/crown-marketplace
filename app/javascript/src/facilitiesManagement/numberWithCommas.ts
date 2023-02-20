@@ -1,13 +1,13 @@
 const updateNumberWithCommas = ($input: JQuery<HTMLInputElement>): void => {
-  const number = String($input.val() || '')
+  const number = String($input.val() ?? '')
   const numberString = number.replace(/,/g, '')
 
   $input.val(numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
 }
 
 const updateNumberWithoutCommas = ($input: JQuery<HTMLInputElement>): void => {
-  const number = String($input.val() || '')
-  
+  const number = String($input.val() ?? '')
+
   $input.val(number.toString().replace(/,/g, ''))
 }
 
@@ -25,7 +25,7 @@ const showNumberWithCommas = (): void => {
   })
 }
 
-const initNumberWithCommas = () => {
+const initNumberWithCommas = (): void => {
   if ($('.ccs-number-field').length) showNumberWithCommas()
 }
 

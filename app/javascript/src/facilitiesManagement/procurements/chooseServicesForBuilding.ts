@@ -20,7 +20,7 @@ const initChooseServicesForBuilding = (): void => {
     checkAllSelected(numberOfCheckboxes)
 
     $('.govuk-checkboxes').each((_index: number, element: HTMLElement) => {
-      $(element).on('click', () => checkAllSelected(numberOfCheckboxes))
+      $(element).on('click', () => { checkAllSelected(numberOfCheckboxes) })
     })
 
     $('#box-all').on('click', () => {
@@ -30,4 +30,3 @@ const initChooseServicesForBuilding = (): void => {
 }
 
 export default initChooseServicesForBuilding
-
