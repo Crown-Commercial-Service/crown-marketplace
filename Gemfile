@@ -49,7 +49,7 @@ gem 'omniauth-oauth2', '~> 1.8.0'
 gem 'devise', '~> 4.9.0'
 
 # for timing out when session expires
-gem 'auto-session-timeout', '~> 0.9.9'
+gem 'auto-session-timeout', '~> 1.0'
 
 # for cognito
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.73.0'
