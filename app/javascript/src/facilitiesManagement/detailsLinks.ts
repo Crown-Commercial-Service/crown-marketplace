@@ -1,4 +1,4 @@
-const toggleLinksInDetails = ($details: JQuery<HTMLDetailsElement>) => {
+const toggleLinksInDetails = ($details: JQuery<HTMLDetailsElement>): void => {
   const $detailLinks: JQuery<HTMLElement> = $details.find('a')
 
   if ($details.attr('open') === 'open') {

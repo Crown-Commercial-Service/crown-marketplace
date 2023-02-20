@@ -490,6 +490,7 @@ en:
     cookie_settings:
       always_need_to_be_on: They always need to be on.
       cookie_settings: Cookie settings
+      cookies_not_saved: Something went wrong, your cookie preferences were not saved. Please try again.
       cookies_saved: Your cookie settings were saved
       dont_use_cookies:
         ga: Do not use cookies that measure my website use (Google Analytics)
@@ -581,6 +582,7 @@ en:
       change_cookie_settings_html: You can %{cookie_settings_link} at any time.
       change_cookie_settings_link: change your cookie settings
       cookies_accepted: You’ve accepted all analytics cookies.
+      cookies_not_saved: Something went wrong, your cookie preferences were not saved. Please try again.
       cookies_on_crown_marketplace: Cookies on Crown Marketplace
       cookies_rejected: You’ve rejected all analytics cookies.
       reject_cookies: Reject analytics cookies

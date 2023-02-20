@@ -1,4 +1,4 @@
-type StateToProgressDefaultOptions = {
+interface StateToProgressDefaultOptions {
   wait: number
 }
 
@@ -21,17 +21,13 @@ type StateToProgressWithoutProgressBarOptions = StateToProgressDefaultOptions & 
   isFinished: boolean
 }
 
-type StateToProgressWithProgressBar = {
-  [key: string]: StateToProgressWithProgressBarNormalOptions | StateToProgressWithProgressBarFinishedOptions
-}
+type StateToProgressWithProgressBar = Record<string, StateToProgressWithProgressBarNormalOptions | StateToProgressWithProgressBarFinishedOptions>
 
-type StateToProgressWithoutProgressBar = {
-  [key: string]: StateToProgressWithoutProgressBarOptions
-}
+type StateToProgressWithoutProgressBar = Record<string, StateToProgressWithoutProgressBarOptions>
 
 type FileUploadState = keyof StateToProgressWithProgressBar | keyof StateToProgressWithoutProgressBar
 
-type FileUploadResponseJSON = {
+interface FileUploadResponseJSON {
   import_status: FileUploadState
 }
 
@@ -47,15 +43,17 @@ const checkImportProgress = (fileUploadProgress: FileUploadProgressInterface): v
     type: 'GET',
     url: fileUploadProgress.url,
     dataType: 'json',
-    success(responseJSON: FileUploadResponseJSON) {
+    success (responseJSON: FileUploadResponseJSON) {
       fileUploadProgress.updateCurrentState(responseJSON.import_status)
     },
-    error() {
+    error () {
       fileUploadProgress.stop()
     },
-    complete() {
+    complete () {
       fileUploadProgress.processImportStatus()
-    },
+    }
+  }).catch(() => {
+    fileUploadProgress.stop()
   })
 }
 
@@ -65,9 +63,9 @@ abstract class FileUploadProgress implements FileUploadProgressInterface {
   protected stateToProgress: StateToProgressWithProgressBar | StateToProgressWithoutProgressBar
   protected currentState: StateToProgressWithProgressBarNormalOptions | StateToProgressWithProgressBarFinishedOptions | StateToProgressWithoutProgressBarOptions
 
-  constructor(stateToProgress: StateToProgressWithProgressBar | StateToProgressWithoutProgressBar, initial_state: string) {
+  constructor (stateToProgress: StateToProgressWithProgressBar | StateToProgressWithoutProgressBar, initialState: string) {
     this.stateToProgress = stateToProgress
-    this.currentState = stateToProgress[initial_state]
+    this.currentState = stateToProgress[initialState]
 
     setTimeout(checkImportProgress.bind(null, this), 0)
   }
@@ -88,18 +86,19 @@ abstract class FileUploadProgress implements FileUploadProgressInterface {
 }
 
 class FileUploadProgressWithBar extends FileUploadProgress {
-  private $progressBar: JQuery<HTMLElement> = $('#upload-import-progress')
-  private $prgressStates: JQuery<HTMLElement> = $('.ccs-upload-progress-container > div')
+  private readonly $progressBar: JQuery<HTMLElement> = $('#upload-import-progress')
+  private readonly $prgressStates: JQuery<HTMLElement> = $('.ccs-upload-progress-container > div')
 
-  constructor(stateToProgress: StateToProgressWithProgressBar, initial_state: string) {
-    super(stateToProgress, initial_state)
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  constructor (stateToProgress: StateToProgressWithProgressBar, initialState: string) {
+    super(stateToProgress, initialState)
   }
 
-  private updateProgressBar = (): void => {
+  private readonly updateProgressBar = (): void => {
     this.$prgressStates.each(this.updateShownStatus)
   }
 
-  private updateShownStatus = (_index: number, element: HTMLElement): void => {
+  private readonly updateShownStatus = (_index: number, element: HTMLElement): void => {
     if ($(element).attr('id') === (this.currentState as StateToProgressWithProgressBarNormalOptions | StateToProgressWithProgressBarFinishedOptions).state) {
       $(element).attr('aria-current', 'true')
       $(element).addClass('govuk-!-font-weight-bold')
@@ -128,18 +127,19 @@ class FileUploadProgressWithBar extends FileUploadProgress {
 }
 
 class FileUploadProgressWithoutBar extends FileUploadProgress {
-  constructor(stateToProgress: StateToProgressWithoutProgressBar, initial_state: string) {
-    super(stateToProgress, initial_state)
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  constructor (stateToProgress: StateToProgressWithoutProgressBar, initialState: string) {
+    super(stateToProgress, initialState)
   }
 
   processImportStatus = (): void => {
     if (this.continue) {
       let continueFunction = checkImportProgress.bind(null, this)
-  
+
       if (this.currentState.isFinished) {
         continueFunction = this.processComplete
       }
-  
+
       setTimeout(continueFunction, this.currentState.wait)
     } else {
       this.processComplete()
@@ -147,4 +147,4 @@ class FileUploadProgressWithoutBar extends FileUploadProgress {
   }
 }
 
-export { StateToProgressWithProgressBar, StateToProgressWithoutProgressBar, FileUploadProgressWithBar, FileUploadProgressWithoutBar }
+export { type StateToProgressWithProgressBar, type StateToProgressWithoutProgressBar, FileUploadProgressWithBar, FileUploadProgressWithoutBar }

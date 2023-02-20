@@ -1,4 +1,4 @@
-import initDetailsStorage, { ContactDetailOption, ContactDetailType } from '../detailsStorage'
+import initDetailsStorage, { type ContactDetailOption, ContactDetailType } from '../detailsStorage'
 
 const buildingContactDetailsOptions: ContactDetailOption[] = [
   {
@@ -13,11 +13,13 @@ const buildingContactDetailsOptions: ContactDetailOption[] = [
   }
 ]
 
-const initBuildingsInStorage = (): void => initDetailsStorage(
-  'buildingDetails',
-  buildingContactDetailsOptions,
-  $('#building-details-form'),
-  $('#building-address-details-form')
-)
+const initBuildingsInStorage = (): void => {
+  initDetailsStorage(
+    'buildingDetails',
+    buildingContactDetailsOptions,
+    $('#building-details-form'),
+    $('#building-address-details-form')
+  )
+}
 
 export default initBuildingsInStorage

@@ -1,4 +1,4 @@
-import { FileUploadProgressWithoutBar, StateToProgressWithoutProgressBar } from 'src/facilitiesManagement/uploadProgress'
+import { FileUploadProgressWithoutBar, type StateToProgressWithoutProgressBar } from 'src/facilitiesManagement/uploadProgress'
 
 const managementReportStateToProgress: StateToProgressWithoutProgressBar = {
   generating_csv: {
@@ -11,7 +11,7 @@ const managementReportStateToProgress: StateToProgressWithoutProgressBar = {
   }
 }
 
-const initManagementReport = () => {
+const initManagementReport = (): void => {
   if ($('#management-report-status').length && $('.management-report-state-generating_csv').length) new FileUploadProgressWithoutBar(managementReportStateToProgress, 'generating_csv')
 }
 

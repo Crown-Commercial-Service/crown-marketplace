@@ -1,33 +1,33 @@
-type NormalisationFactors = {
+interface NormalisationFactors {
   years: number
   months: number
   weeks: number
 }
 
-type ButtonInterface = {
+interface ButtonInterface {
   $button: JQuery<HTMLButtonElement>
   hideButton: () => void
   showButton: () => void
 }
 
-type YearsAndMonthsInputInterface = {
+interface YearsAndMonthsInputInterface {
   $years: JQuery<HTMLInputElement>
   $months: JQuery<HTMLInputElement>
   yearsAndMonthsInomplete: () => boolean
   totalPeriod: () => number
 }
 
-type ExtensionPeriodInterface = {
+interface ExtensionPeriodInterface {
   $years: JQuery<HTMLInputElement>
   $months: JQuery<HTMLInputElement>
   $removeButton: ContractPeriodButton
   showExtensionPeriod: () => void
   hideExtensionPeriod: () => void
-  isVisible: () => boolean
+  isNotVisible: () => boolean
   isRequired: () => boolean
 }
 
-type ContractPeriodInterface = {
+interface ContractPeriodInterface {
   $mobilisationPeriodRequiredTrue: JQuery<HTMLInputElement>
   $mobilisationPeriodRequiredFalse: JQuery<HTMLInputElement>
   $periodInput: JQuery<HTMLInputElement>
@@ -37,11 +37,11 @@ type ContractPeriodInterface = {
   extensionChecked: () => boolean
   allPeriodInputsComplete: () => boolean
   calculateTotalContractPeriod: () => void
-  getTotalTimeRemaining: ()  => number
+  getTotalTimeRemaining: () => number
   timeRemaining: () => [number, number]
 }
 
-type AddExtensionPeriodButtonInterface = {
+interface AddExtensionPeriodButtonInterface {
   ableToAddPeriod: () => boolean
   updateButtonVisibility: () => void
   updateButtonText: () => void
@@ -51,7 +51,7 @@ type AddExtensionPeriodButtonInterface = {
 class ContractPeriodButton implements ButtonInterface {
   $button: JQuery<HTMLButtonElement>
 
-  constructor($button: JQuery<HTMLButtonElement>) {
+  constructor ($button: JQuery<HTMLButtonElement>) {
     this.$button = $button
   }
 
@@ -66,28 +66,26 @@ class ContractPeriodButton implements ButtonInterface {
   }
 }
 
-class YearsAndMonthsNormalisation {
-  static normalisationFactors: NormalisationFactors = {
-    years: 156,
-    months: 13,
-    weeks: 3
-  }
-
-  static normaliseTimeLength = (inputElement: JQuery<HTMLInputElement>, factor: 'years' | 'months' | 'weeks'): number =>  parseInt(String(inputElement.val()), 10) * this.normalisationFactors[factor]
+const normalisationFactors: NormalisationFactors = {
+  years: 156,
+  months: 13,
+  weeks: 3
 }
+
+const normaliseTimeLength = (inputElement: JQuery<HTMLInputElement>, factor: 'years' | 'months' | 'weeks'): number => parseInt(String(inputElement.val()), 10) * normalisationFactors[factor]
 
 class YearsAndMonthsInput implements YearsAndMonthsInputInterface {
   $years: JQuery<HTMLInputElement>
   $months: JQuery<HTMLInputElement>
 
-  constructor($years: JQuery<HTMLInputElement>, $months: JQuery<HTMLInputElement>) {
+  constructor ($years: JQuery<HTMLInputElement>, $months: JQuery<HTMLInputElement>) {
     this.$years = $years
     this.$months = $months
   }
 
-  private normalisedYears = (): number => YearsAndMonthsNormalisation.normaliseTimeLength(this.$years, 'years')
+  private readonly normalisedYears = (): number => normaliseTimeLength(this.$years, 'years')
 
-  private  normalisedMonths = (): number => YearsAndMonthsNormalisation.normaliseTimeLength(this.$months, 'months')
+  private readonly normalisedMonths = (): number => normaliseTimeLength(this.$months, 'months')
 
   yearsAndMonthsInomplete = (): boolean => {
     const years: number = this.normalisedYears()
@@ -102,7 +100,7 @@ class YearsAndMonthsInput implements YearsAndMonthsInputInterface {
 }
 
 class InitialCallOffPeriod extends YearsAndMonthsInput {
-  constructor(framework: string) {
+  constructor (framework: string) {
     super($(`#facilities_management_${framework}_procurement_initial_call_off_period_years`), $(`#facilities_management_${framework}_procurement_initial_call_off_period_months`))
   }
 }
@@ -110,10 +108,10 @@ class InitialCallOffPeriod extends YearsAndMonthsInput {
 class ExtensionPeriod extends YearsAndMonthsInput implements ExtensionPeriodInterface {
   $removeButton: ContractPeriodButton
 
-  private $container: JQuery<HTMLInputElement>
-  private $required: JQuery<HTMLInputElement>
+  private readonly $container: JQuery<HTMLInputElement>
+  private readonly $required: JQuery<HTMLInputElement>
 
-  constructor(framework: string, extension: number) {
+  constructor (framework: string, extension: number) {
     super($(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_${extension}_years`), $(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_${extension}_months`))
     this.$container = $(`#extension-${extension}-container`)
     this.$required = $(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_${extension}_extension_required`)
@@ -139,13 +137,13 @@ class ExtensionPeriod extends YearsAndMonthsInput implements ExtensionPeriodInte
     this.$removeButton.hideButton()
   }
 
-  private resetInput = ($element: JQuery<HTMLInputElement>) => {
+  private readonly resetInput = ($element: JQuery<HTMLInputElement>): void => {
     $element.attr('tabindex', -1)
     $element.val('')
     $element.removeClass('govuk-input--error')
   }
 
-  isVisible = (): boolean => this.$container.hasClass('govuk-visually-hidden')
+  isNotVisible = (): boolean => this.$container.hasClass('govuk-visually-hidden')
 
   isRequired = (): boolean => this.$required.val() === 'true'
 }
@@ -159,22 +157,22 @@ class ContractPeriod implements ContractPeriodInterface {
   extensions: ExtensionPeriod[]
 
   private totalContractPeriod = 0
-  private initialCallOffPeriod: InitialCallOffPeriod
-  private $mobilisationPeriod: JQuery<HTMLInputElement>
+  private readonly initialCallOffPeriod: InitialCallOffPeriod
+  private readonly $mobilisationPeriod: JQuery<HTMLInputElement>
 
-  constructor(framework: string) {
+  constructor (framework: string) {
     this.initialCallOffPeriod = new InitialCallOffPeriod(framework)
     this.$mobilisationPeriodRequiredTrue = $(`#facilities_management_${framework}_procurement_mobilisation_period_required_true`)
     this.$mobilisationPeriodRequiredFalse = $(`#facilities_management_${framework}_procurement_mobilisation_period_required_false`)
     this.$mobilisationPeriod = $(`#facilities_management_${framework}_procurement_mobilisation_period`)
     this.$extensionsRequiredTrue = $(`#facilities_management_${framework}_procurement_extensions_required_true`)
     this.$extensionsRequiredFalse = $(`#facilities_management_${framework}_procurement_extensions_required_false`)
-    this.extensions = [...Array(4).keys()].map((extension: number) =>  new ExtensionPeriod(framework, extension))
+    this.extensions = [...Array(4).keys()].map((extension: number) => new ExtensionPeriod(framework, extension))
   }
 
-  private mobilisationPeriodChecked = (): boolean => this.$mobilisationPeriodRequiredTrue.is(':checked')
+  private readonly mobilisationPeriodChecked = (): boolean => this.$mobilisationPeriodRequiredTrue.is(':checked')
 
-  private mobilisationPeriod = (): number => YearsAndMonthsNormalisation.normaliseTimeLength(this.$mobilisationPeriod, 'weeks')
+  private readonly mobilisationPeriod = (): number => normaliseTimeLength(this.$mobilisationPeriod, 'weeks')
 
   extensionChecked = (): boolean => this.$extensionsRequiredTrue.is(':checked')
 
@@ -188,13 +186,7 @@ class ContractPeriod implements ContractPeriodInterface {
     let extensionsCompleted = true
 
     if (this.extensionChecked()) {
-      this.extensions.forEach((extension: ExtensionPeriod) => {
-        if (extension.isVisible()) return
-
-        extensionsCompleted = !extension.yearsAndMonthsInomplete()
-  
-        if (!extensionsCompleted) return
-      })
+      extensionsCompleted = this.extensions.every((extension: ExtensionPeriod) => extension.isNotVisible() || !extension.yearsAndMonthsInomplete())
     }
 
     return extensionsCompleted
@@ -209,7 +201,7 @@ class ContractPeriod implements ContractPeriodInterface {
 
     if (this.extensionChecked()) {
       this.extensions.forEach((extension: ExtensionPeriod) => {
-        if (extension.isVisible()) return
+        if (extension.isNotVisible()) return
 
         totalPeriod += extension.totalPeriod()
       })
@@ -223,17 +215,17 @@ class ContractPeriod implements ContractPeriodInterface {
   timeRemaining = (): [number, number] => {
     const totalTimeRemaining: number = this.getTotalTimeRemaining()
 
-    const years: number = Math.floor(totalTimeRemaining / YearsAndMonthsNormalisation.normalisationFactors.years)
-    const months: number = Math.floor((totalTimeRemaining % YearsAndMonthsNormalisation.normalisationFactors.years) / YearsAndMonthsNormalisation.normalisationFactors.months)
+    const years: number = Math.floor(totalTimeRemaining / normalisationFactors.years)
+    const months: number = Math.floor((totalTimeRemaining % normalisationFactors.years) / normalisationFactors.months)
 
     return [years, months]
   }
 }
 
 class $AddExtensionPeriodButton extends ContractPeriodButton implements AddExtensionPeriodButtonInterface {
-  private contractPeriod: ContractPeriod
+  private readonly contractPeriod: ContractPeriod
 
-  constructor(contractPeriod: ContractPeriod) {
+  constructor (contractPeriod: ContractPeriod) {
     super($('#add-contract-extension-button'))
     this.contractPeriod = contractPeriod
   }
@@ -260,7 +252,7 @@ class $AddExtensionPeriodButton extends ContractPeriodButton implements AddExten
     this.$button.text(this.getButtonText())
   }
 
-  private getButtonText = (): string => {
+  private readonly getButtonText = (): string => {
     const timeRemainingParts: number[] = this.contractPeriod.timeRemaining()
     const years: number = timeRemainingParts[0]
     const months: number = timeRemainingParts[1]
@@ -276,9 +268,9 @@ class $AddExtensionPeriodButton extends ContractPeriodButton implements AddExten
     return `${text} remaining)`
   }
 
-  private forthExtensionRequired = (): boolean => this.contractPeriod.fourthExtensionRequired()
+  private readonly forthExtensionRequired = (): boolean => this.contractPeriod.fourthExtensionRequired()
 
-  private noTimePeriodLeftToAdd = (): boolean => this.contractPeriod.getTotalTimeRemaining() < 13
+  private readonly noTimePeriodLeftToAdd = (): boolean => this.contractPeriod.getTotalTimeRemaining() < 13
 
   updateButtonState = (): void => {
     if (this.contractPeriod.allPeriodInputsComplete()) {
@@ -304,7 +296,7 @@ const initContractExtenesions = (): void => {
     })
 
     contractPeriod.$extensionsRequiredFalse.on('click', () => {
-      contractPeriod.extensions.forEach((extension: ExtensionPeriod) => extension.hideExtensionPeriod())
+      contractPeriod.extensions.forEach((extension: ExtensionPeriod) => { extension.hideExtensionPeriod() })
       addExtensionPeriodButton.hideButton()
     })
 

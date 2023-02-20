@@ -1,11 +1,11 @@
-type NestedAttributesFieldsArguments = {
+interface NestedAttributesFieldsArguments {
   $button: JQuery<HTMLAnchorElement>
   nestedAttributeRowClasses: NestedAttributeRowClasses
   rowLabelText: string
   removeButtonMode: RemoveButtonModes
 }
 
-type NestedAttributeRowClasses = {
+interface NestedAttributeRowClasses {
   rowClass: string
   rowNumberClass: string
   removeButtonClass: string
@@ -17,7 +17,7 @@ type RemoveButtonModes = 'all' | 'final'
 type NestedAttributeRowArguments = {
   initiateRow: {
     $row: JQuery<HTMLElement>
-  },
+  }
   generateRowHTML?: never
 } | {
   initiateRow?: never
@@ -43,21 +43,21 @@ interface NestedAttributesFieldsInterface {
 }
 
 class NestedAttributeRow implements NestedAttributeRowInterface {
-  private $row: JQuery<HTMLElement>
-  private $rowLabel: JQuery<HTMLLabelElement>
-  private $rowRemoveButton: JQuery<HTMLAnchorElement>
-  private $destoryRowInput: JQuery<HTMLInputElement>
+  private readonly $row: JQuery<HTMLElement>
+  private readonly $rowLabel: JQuery<HTMLLabelElement>
+  private readonly $rowRemoveButton: JQuery<HTMLAnchorElement>
+  private readonly $destoryRowInput: JQuery<HTMLInputElement>
 
-  constructor(nestedAttributesFields: NestedAttributesFields, nestedAttributeRowClasses: NestedAttributeRowClasses, nestedAttributeRowArguments: NestedAttributeRowArguments) {
+  constructor (nestedAttributesFields: NestedAttributesFields, nestedAttributeRowClasses: NestedAttributeRowClasses, nestedAttributeRowArguments: NestedAttributeRowArguments) {
     if (nestedAttributeRowArguments.initiateRow !== undefined) {
       this.$row = nestedAttributeRowArguments.initiateRow.$row
     } else {
       const time = new Date().getTime()
       const regexp = new RegExp(nestedAttributeRowArguments.generateRowHTML.id, 'g')
-  
+
       this.$row = $(nestedAttributeRowArguments.generateRowHTML.fields.replace(regexp, String(time)))
     }
-    
+
     this.$rowLabel = this.$row.find(`.${nestedAttributeRowClasses.rowNumberClass}`) as JQuery<HTMLLabelElement>
     this.$rowRemoveButton = this.$row.find(`.${nestedAttributeRowClasses.removeButtonClass}`) as JQuery<HTMLAnchorElement>
     this.$destoryRowInput = this.$row.find(`.${nestedAttributeRowClasses.destroyRowClass}`) as JQuery<HTMLInputElement>
@@ -71,7 +71,7 @@ class NestedAttributeRow implements NestedAttributeRowInterface {
     this.setEventListeners(nestedAttributesFields)
   }
 
-  private setEventListeners = (nestedAttributesFields: NestedAttributesFields) => {
+  private readonly setEventListeners = (nestedAttributesFields: NestedAttributesFields): void => {
     this.$rowRemoveButton.on('click', (event: JQuery.ClickEvent) => {
       event.preventDefault()
       this.$destoryRowInput.val('true')
@@ -83,7 +83,6 @@ class NestedAttributeRow implements NestedAttributeRowInterface {
 
       nestedAttributesFields.updateAll()
     })
-
   }
 
   updateRowLabelText = (text: string): void => {
@@ -96,12 +95,12 @@ class NestedAttributeRow implements NestedAttributeRowInterface {
 }
 
 class AddNestedAttributeButton implements AddNestedAttributeButtonInterface {
-  private $button: JQuery<HTMLAnchorElement>
-  private id: string
-  private fields: string
-  private buttonText: string
+  private readonly $button: JQuery<HTMLAnchorElement>
+  private readonly id: string
+  private readonly fields: string
+  private readonly buttonText: string
 
-  constructor($button: JQuery<HTMLAnchorElement>, nestedAttributesFields: NestedAttributesFields) {
+  constructor ($button: JQuery<HTMLAnchorElement>, nestedAttributesFields: NestedAttributesFields) {
     this.$button = $button
     this.id = $button.data('id')
     this.fields = $button.data('fields')
@@ -109,7 +108,7 @@ class AddNestedAttributeButton implements AddNestedAttributeButtonInterface {
     this.setEventListeners(nestedAttributesFields)
   }
 
-  private setEventListeners = (nestedAttributesFields: NestedAttributesFields): void => {
+  private readonly setEventListeners = (nestedAttributesFields: NestedAttributesFields): void => {
     this.$button.on('click', (event: JQuery.ClickEvent) => {
       event.preventDefault()
 
@@ -130,14 +129,14 @@ class AddNestedAttributeButton implements AddNestedAttributeButtonInterface {
 }
 
 class NestedAttributesFields implements NestedAttributesFieldsInterface {
-  private maxNumberOfItems = 99
-  private addNestedAttributeButton: AddNestedAttributeButton
+  private readonly maxNumberOfItems = 99
+  private readonly addNestedAttributeButton: AddNestedAttributeButton
   private nestedAttributeRows: NestedAttributeRow[] = []
-  private nestedAttributeRowClasses: NestedAttributeRowClasses
-  private rowLabelText: string
-  private removeButtonMode: RemoveButtonModes
+  private readonly nestedAttributeRowClasses: NestedAttributeRowClasses
+  private readonly rowLabelText: string
+  private readonly removeButtonMode: RemoveButtonModes
 
-  constructor(nestedAttributesFieldsArguments: NestedAttributesFieldsArguments) {
+  constructor (nestedAttributesFieldsArguments: NestedAttributesFieldsArguments) {
     this.addNestedAttributeButton = new AddNestedAttributeButton(nestedAttributesFieldsArguments.$button, this)
     this.nestedAttributeRowClasses = nestedAttributesFieldsArguments.nestedAttributeRowClasses
     this.rowLabelText = nestedAttributesFieldsArguments.rowLabelText
@@ -154,25 +153,25 @@ class NestedAttributesFields implements NestedAttributesFieldsInterface {
     this.updateAll()
   }
 
-  private getNumberOfRows = (): number => this.nestedAttributeRows.length
+  private readonly getNumberOfRows = (): number => this.nestedAttributeRows.length
 
-  private updateRowAndButtonNumbers = (): void => {
-    this.nestedAttributeRows.forEach((nestedAttributeRow: NestedAttributeRow, index: number) => nestedAttributeRow.updateRowLabelText(`${this.rowLabelText} ${index + 1}`))
+  private readonly updateRowAndButtonNumbers = (): void => {
+    this.nestedAttributeRows.forEach((nestedAttributeRow: NestedAttributeRow, index: number) => { nestedAttributeRow.updateRowLabelText(`${this.rowLabelText} ${index + 1}`) })
     this.addNestedAttributeButton.updateButtonText(this.maxNumberOfItems - this.getNumberOfRows())
   }
 
-  private updateRemoveButtonVisibilities = (): void => {
+  private readonly updateRemoveButtonVisibilities = (): void => {
     if (this.removeButtonMode === 'all') {
-      this.nestedAttributeRows.forEach((nestedAttributeRow: NestedAttributeRow) => nestedAttributeRow.toggleRemoveButton(this.getNumberOfRows() > 1))
+      this.nestedAttributeRows.forEach((nestedAttributeRow: NestedAttributeRow) => { nestedAttributeRow.toggleRemoveButton(this.getNumberOfRows() > 1) })
     } else {
-      this.nestedAttributeRows.forEach((nestedAttributeRow: NestedAttributeRow, index: number) => nestedAttributeRow.toggleRemoveButton(index > 0 && index + 1 ===this.getNumberOfRows()))
+      this.nestedAttributeRows.forEach((nestedAttributeRow: NestedAttributeRow, index: number) => { nestedAttributeRow.toggleRemoveButton(index > 0 && index + 1 === this.getNumberOfRows()) })
     }
   }
 
   updateAll = (): void => {
     this.updateRemoveButtonVisibilities()
     this.updateRowAndButtonNumbers()
-  }  
+  }
 
   addNestedAttributeRow = (nestedAttributeRowArguments: NestedAttributeRowArguments): void => {
     if (this.getNumberOfRows() < this.maxNumberOfItems) this.nestedAttributeRows.push(new NestedAttributeRow(this, this.nestedAttributeRowClasses, nestedAttributeRowArguments))
@@ -195,7 +194,7 @@ const initNestedAttributesFields = (): void => {
     rowLabelText: 'Pension fund name',
     removeButtonMode: 'all'
   }
-  
+
   const lifts: NestedAttributesFieldsArguments = {
     $button: $('.add-lift-button'),
     nestedAttributeRowClasses: {
