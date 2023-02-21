@@ -1,17 +1,15 @@
 import * as Cookies from 'js-cookie'
 
-type CookieBannerFormData = {
-  [key: string]: string
-}
+type CookieBannerFormData = Record<string, string>
 
-type CookiePreferences = {
-  settings_viewed: boolean,
-  google_analytics_enabled: boolean,
+interface CookiePreferences {
+  settings_viewed: boolean
+  google_analytics_enabled: boolean
   glassbox_enabled: boolean
 }
 
-type CookieUpdateOption = {
-  cookieName: keyof CookiePreferences,
+interface CookieUpdateOption {
+  cookieName: keyof CookiePreferences
   cookiePrefixes: string[]
 }
 
@@ -29,10 +27,10 @@ const cookieUpdateOptions: CookieUpdateOption[] = [
 const getCookiePreferences = (): CookiePreferences => {
   const defaultCookieSettings = '{"google_analytics_enabled":true,"glassbox_enabled":false}'
 
-  return JSON.parse(Cookies.get('crown_marketplace_cookie_options_v1') || defaultCookieSettings)
+  return JSON.parse(Cookies.get('crown_marketplace_cookie_options_v1') ?? defaultCookieSettings)
 }
 
-const removeUnwantedCookies = () => {
+const removeUnwantedCookies = (): void => {
   const cookieList: string[] = Object.keys(Cookies.get())
   const cookiesToRemove: string[] = ['crown_marketplace_cookie_settings_viewed', 'crown_marketplace_google_analytics_enabled']
   const cookiePreferences: CookiePreferences = getCookiePreferences()
@@ -48,10 +46,10 @@ const removeUnwantedCookies = () => {
     if (cookiePrefixes.some((cookiePrefix) => cookieName.startsWith(cookiePrefix))) cookiesToRemove.push(cookieName)
   }
 
-  cookiesToRemove.forEach((cookieName) => Cookies.remove(cookieName, { path: '/', domain: '.crowncommercial.gov.uk' }))
+  cookiesToRemove.forEach((cookieName) => { Cookies.remove(cookieName, { path: '/', domain: '.crowncommercial.gov.uk' }) })
 }
 
-const removeGACookies = (cookieBannerFormData: CookieBannerFormData, successFunction: () => void) => {
+const removeGACookies = (cookieBannerFormData: CookieBannerFormData, successFunction: () => void, failureFunction: () => void): void => {
   let success = false
 
   $.ajax({
@@ -59,39 +57,62 @@ const removeGACookies = (cookieBannerFormData: CookieBannerFormData, successFunc
     url: '/api/v2/update-cookie-settings',
     data: cookieBannerFormData,
     dataType: 'json',
-    success() {
+    success () {
       success = true
     },
-    complete() {
-      if (success) successFunction()
+    error () {
+      success = false
     },
+    complete () {
+      success ? successFunction() : failureFunction()
+    }
+  }).catch(() => {
+    failureFunction()
   })
 }
 
-const cookiesSaved = () => {
-  const $cookieSettingsSaved: JQuery<HTMLElement> = $('#cookie-settings-saved')
+const scrollNotificationBannerIntoView = ($notificationBanner: JQuery<HTMLElement>, $otherNotificationBanner: JQuery<HTMLElement>): void => {
+  $otherNotificationBanner.hide()
+  $notificationBanner.show()
 
-  $cookieSettingsSaved.show()
-
-  const offsetCoordinates = $cookieSettingsSaved.offset()
+  const offsetCoordinates = $notificationBanner.offset()
 
   if (offsetCoordinates !== undefined) {
     $('html, body').animate({ scrollTop: offsetCoordinates.top }, 'slow')
   }
 }
 
-const cookieSettingsViewed = ($newBanner: JQuery<HTMLElement>) => {
+const cookiesSaved = (): void => {
+  scrollNotificationBannerIntoView(
+    $('#cookie-settings-saved'),
+    $('#cookie-settings-not-saved')
+  )
+}
+
+const cookiesNotSaved = (): void => {
+  scrollNotificationBannerIntoView(
+    $('#cookie-settings-not-saved'),
+    $('#cookie-settings-saved')
+  )
+}
+
+const cookieSettingsViewed = ($newBanner: JQuery<HTMLElement>): void => {
   $('#cookie-options-container').hide()
   $newBanner.show()
 }
 
-const updateBanner = (isAccepeted: string, $newBanner: JQuery<HTMLElement>) => {
+const cookieSettingsError = (): void => {
+  $('#cookie-settings-not-saved').show()
+}
+
+const updateBanner = (isAccepeted: string, $newBanner: JQuery<HTMLElement>): void => {
   removeGACookies(
     {
       ga_cookie_usage: isAccepeted,
-      glassbox_cookie_usage: isAccepeted,
+      glassbox_cookie_usage: isAccepeted
     },
     cookieSettingsViewed.bind(null, $newBanner),
+    cookieSettingsError
   )
 }
 
@@ -118,6 +139,7 @@ const initCookieBanner = (): void => {
     removeGACookies(
       formData,
       cookiesSaved,
+      cookiesNotSaved
     )
   })
 }

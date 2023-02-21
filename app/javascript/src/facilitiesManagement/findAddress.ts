@@ -1,4 +1,3 @@
-
 type PostcodeResult = {
   valid: false
   input: string
@@ -9,11 +8,11 @@ type PostcodeResult = {
   fullPostcode: string
 }
 
-type ErrorMessages = {
+interface ErrorMessages {
   invalid: string
 }
 
-type AddressResult = {
+interface AddressResult {
   summary_line: string
   address_line_1: string
   address_line_2: string
@@ -21,17 +20,17 @@ type AddressResult = {
   address_postcode: string
 }
 
-type RegionResult = {
+interface RegionResult {
   code: string
   region: string
 }
 
-type ResultTextPromptOptions = {
+interface ResultTextPromptOptions {
   textSingle: string
   textPlural: string
 }
 
-type AddressElements = {
+interface AddressElements {
   summaryLine: string
   addressLine1: string
   addressLine2: string
@@ -39,19 +38,19 @@ type AddressElements = {
   addressPostcode: string
 }
 
-type RegionElements = {
+interface RegionElements {
   addressRegion: string
   addressRegionCode: string
 }
 
-type HiddenAddressInputs = {
+interface HiddenAddressInputs {
   addressLine1: JQuery<HTMLInputElement>
   addressLine2: JQuery<HTMLInputElement>
   addressTown: JQuery<HTMLInputElement>
   addressCounty: JQuery<HTMLInputElement>
 }
 
-type HiddenRegionInputs = {
+interface HiddenRegionInputs {
   addressRegion: JQuery<HTMLInputElement>
   addressRegionCode: JQuery<HTMLInputElement>
 }
@@ -111,15 +110,17 @@ const callAPI = (module: FindAddressSelectSection, url: string): void => {
     type: 'GET',
     url: encodeURI(url),
     dataType: 'json',
-    success(data) {
-      result = data.result
+    success (data) {
+      result = data.result ?? []
     },
-    error() {
+    error () {
       result = []
     },
-    complete() {
+    complete () {
       module.processResult(result)
     }
+  }).catch(() => {
+    module.processResult([])
   })
 }
 
@@ -132,7 +133,7 @@ abstract class FindAddressSection {
     this.$section = $section
   }
 
-  toggleSectionVisibility = (isShown: boolean) => {
+  toggleSectionVisibility = (isShown: boolean): void => {
     let tabindex
 
     if (isShown) {
@@ -147,7 +148,7 @@ abstract class FindAddressSection {
     this.$section.find('[tabindex]').attr('tabIndex', tabindex)
   }
 
-  abstract focus(): JQuery<HTMLElement>
+  abstract focus (): JQuery<HTMLElement>
   protected _focus = ($element: JQuery<HTMLElement>): JQuery<HTMLElement> => $element.trigger('focus')
 }
 
@@ -155,11 +156,11 @@ abstract class FindAddressInputSection extends FindAddressSection {
   protected $input: JQuery<HTMLInputElement>
   protected inputErrorClass: string
   protected $errorMessage?: JQuery<HTMLElement>
-  protected errorMessageID = `${this.$section.data('propertyname') || ''}-error`
+  protected errorMessageID = `${this.$section.data('propertyname') as string ?? ''}-error`
   protected $formGroup: JQuery<HTMLElement>
   protected errorMessageText?: string
 
-  constructor(findAddress: FindAddress, $section: JQuery<HTMLElement>, $input: JQuery<HTMLInputElement>, inputType: string) {
+  constructor (findAddress: FindAddress, $section: JQuery<HTMLElement>, $input: JQuery<HTMLInputElement>, inputType: string) {
     super(findAddress, $section)
 
     this.$input = $input
@@ -170,12 +171,12 @@ abstract class FindAddressInputSection extends FindAddressSection {
     this.setErrorMessageElement()
   }
 
-  private setErrorMessageElement = (): void => {
+  private readonly setErrorMessageElement = (): void => {
     this.$errorMessage = $(`#${this.errorMessageID}`)
   }
 
   protected showError = (): void => {
-    const errorMessageHTML = `<span id="${this.errorMessageID}" class="govuk-error-message">${this.errorMessageText}</span>`
+    const errorMessageHTML = `<span id="${this.errorMessageID}" class="govuk-error-message">${this.errorMessageText ?? ''}</span>`
 
     this.$input.before(errorMessageHTML)
     this.setErrorMessageElement()
@@ -198,10 +199,10 @@ abstract class FindAddressInputSection extends FindAddressSection {
 abstract class FindAddressSelectSection extends FindAddressInputSection implements FindAddressSelectSectionInterface {
   protected resultTextPromptOptions: ResultTextPromptOptions = this.$input.data() as ResultTextPromptOptions
   protected $selectedItem: JQuery<HTMLOptionElement> = $(this.$input.find('option:selected')) as JQuery<HTMLOptionElement>
-  private findAddresCallback: () => void
-  private resultProcessedCallback: () => void
+  private readonly findAddresCallback: () => void
+  private readonly resultProcessedCallback: () => void
 
-  constructor(findAddress: FindAddress, $section: JQuery<HTMLElement>, $input: JQuery<HTMLInputElement>, inputType: string, findAddresCallback: () => void, resultProcessedCallback: () => void) {
+  constructor (findAddress: FindAddress, $section: JQuery<HTMLElement>, $input: JQuery<HTMLInputElement>, inputType: string, findAddresCallback: () => void, resultProcessedCallback: () => void) {
     super(findAddress, $section, $input, inputType)
 
     this.findAddresCallback = findAddresCallback
@@ -212,9 +213,11 @@ abstract class FindAddressSelectSection extends FindAddressInputSection implemen
 
   protected abstract createOption: (result: AddressResult | RegionResult) => string
 
-  private setEventListener = () => this.$input.on('change', this.selectItem)
+  private readonly setEventListener = (): void => {
+    this.$input.on('change', this.selectItem)
+  }
 
-  protected getPromptText = (resultsLength: number): string => `${resultsLength} ${resultsLength == 1 ?  this.resultTextPromptOptions.textSingle : this.resultTextPromptOptions.textPlural}`
+  protected getPromptText = (resultsLength: number): string => `${resultsLength} ${resultsLength === 1 ? this.resultTextPromptOptions.textSingle : this.resultTextPromptOptions.textPlural}`
 
   protected getOptions = (results: AddressResult[] | RegionResult[]): string[] => {
     return [
@@ -256,10 +259,10 @@ abstract class FindAddressSelectSection extends FindAddressInputSection implemen
   focus = (): JQuery<HTMLElement> => this._focus(this.$input)
 }
 
-abstract class FindAddressTextSection extends FindAddressSection implements FindAddressTextSectionInterface {
+abstract class FindAddressTextSection<HiddenInputsType> extends FindAddressSection implements FindAddressTextSectionInterface {
   protected $sectionText: JQuery<HTMLElement>
   protected $changeSectionLink: JQuery<HTMLElement>
-  protected abstract hiddenInputs: {[key: string]: JQuery<HTMLInputElement>}
+  protected abstract hiddenInputs: Record<keyof HiddenInputsType, JQuery<HTMLInputElement>>
 
   constructor (findAddress: FindAddress, $section: JQuery<HTMLElement>, $sectionText: JQuery<HTMLElement>, $changeSectionLink: JQuery<HTMLElement>, findAddresCallback: () => void) {
     super(findAddress, $section)
@@ -270,12 +273,12 @@ abstract class FindAddressTextSection extends FindAddressSection implements Find
     this.setEventListener(findAddresCallback)
   }
 
-  private setEventListener = (findAddresCallback: () => void) => {
+  private readonly setEventListener = (findAddresCallback: () => void): void => {
     this.$changeSectionLink.on('click', (event: JQuery.ClickEvent) => {
       event.preventDefault()
 
       this.clearSelectedItems()
-  
+
       findAddresCallback()
     })
   }
@@ -283,15 +286,15 @@ abstract class FindAddressTextSection extends FindAddressSection implements Find
   clearSelectedItems = (): void => {
     this.$sectionText.text('')
 
-    Object.entries(this.hiddenInputs).forEach(([, $hiddenInput]) => $hiddenInput.val(''))
+    Object.entries<JQuery<HTMLInputElement>>(this.hiddenInputs).forEach(([, $hiddenInput]) => $hiddenInput.val(''))
   }
 
   focus = (): JQuery<HTMLElement> => this._focus(this.$changeSectionLink)
 }
 
 class PostcodeSearch extends FindAddressInputSection implements PostcodeSearchInterface {
-  private $findAddressButton: JQuery<HTMLButtonElement> = $('#find-address-button')
-  private postcodeValue = String(this.$input.val() || '')
+  private readonly $findAddressButton: JQuery<HTMLButtonElement> = $('#find-address-button')
+  private postcodeValue = String(this.$input.val() ?? '')
 
   constructor (findAddress: FindAddress) {
     super(
@@ -304,7 +307,7 @@ class PostcodeSearch extends FindAddressInputSection implements PostcodeSearchIn
     this.setEventListener()
   }
 
-  private setEventListener = (): void => {
+  private readonly setEventListener = (): void => {
     this.$findAddressButton.on('click', (event: JQuery.ClickEvent) => {
       event.preventDefault()
 
@@ -321,8 +324,8 @@ class PostcodeSearch extends FindAddressInputSection implements PostcodeSearchIn
     })
   }
 
-  private destructurePostCode(): PostcodeResult {
-    const input: string = String(this.$input.val() || '').trim().toUpperCase()
+  private destructurePostCode (): PostcodeResult {
+    const input: string = String(this.$input.val() ?? '').trim().toUpperCase()
     const regEx = /^(([A-Z][A-Z]{0,1})([0-9][A-Z0-9]{0,1})) {0,}(([0-9])([A-Z]{2}))$/i
     const matches: RegExpMatchArray | null = input.match(regEx)
 
@@ -345,8 +348,8 @@ class PostcodeSearch extends FindAddressInputSection implements PostcodeSearchIn
 }
 
 class PostcodeChange extends FindAddressSection implements PostcodeChangeInterface {
-  private $postcodeOnView: JQuery<HTMLElement> = $('#postcode-on-view')
-  private $changePostcodeLink: JQuery<HTMLAnchorElement> = $('#change-input-1')
+  private readonly $postcodeOnView: JQuery<HTMLElement> = $('#postcode-on-view')
+  private readonly $changePostcodeLink: JQuery<HTMLAnchorElement> = $('#change-input-1')
 
   constructor (findAddress: FindAddress) {
     super(findAddress, $('#postcode-change'))
@@ -354,7 +357,7 @@ class PostcodeChange extends FindAddressSection implements PostcodeChangeInterfa
     this.setEventListener()
   }
 
-  private setEventListener = (): void => {
+  private readonly setEventListener = (): void => {
     this.$changePostcodeLink.on('click', (event: JQuery.ClickEvent) => {
       event.preventDefault()
 
@@ -397,7 +400,7 @@ class SelectAnAddress extends FindAddressSelectSection implements SelectAnAddres
 
   getAddressElements = (): AddressElements => {
     return {
-      summaryLine: String(this.$selectedItem.val() || ''),
+      summaryLine: String(this.$selectedItem.val() ?? ''),
       addressLine1: this.$selectedItem.data('addressLine1'),
       addressLine2: this.$selectedItem.data('addressLine2'),
       addressTown: this.$selectedItem.data('addressTown'),
@@ -406,7 +409,7 @@ class SelectAnAddress extends FindAddressSelectSection implements SelectAnAddres
   }
 }
 
-class SelectedAddress extends FindAddressTextSection implements SelectedAddressInterface {
+class SelectedAddress extends FindAddressTextSection<HiddenAddressInputs> implements SelectedAddressInterface {
   protected hiddenInputs: HiddenAddressInputs = {
     addressLine1: $('#address-line-1'),
     addressLine2: $('#address-line-2'),
@@ -433,7 +436,7 @@ class SelectedAddress extends FindAddressTextSection implements SelectedAddressI
   }
 }
 
-class SelectARegion  extends FindAddressSelectSection implements SelectARegionInterface {
+class SelectARegion extends FindAddressSelectSection implements SelectARegionInterface {
   constructor (findAddress: FindAddress) {
     super(
       findAddress,
@@ -448,7 +451,7 @@ class SelectARegion  extends FindAddressSelectSection implements SelectARegionIn
   protected createOption = (result: AddressResult | RegionResult): string => {
     const regionResult: RegionResult = result as RegionResult
 
-    return  `
+    return `
       <option
         value="${regionResult.code}"
         data-address-region="${regionResult.region}"
@@ -457,7 +460,7 @@ class SelectARegion  extends FindAddressSelectSection implements SelectARegionIn
     `
   }
 
-  private regionOptions = (): JQuery<HTMLOptionElement> => this.$input.find('option[value][value!=""]') as JQuery<HTMLOptionElement>
+  private readonly regionOptions = (): JQuery<HTMLOptionElement> => this.$input.find('option[value][value!=""]') as JQuery<HTMLOptionElement>
 
   getRegionElements = (): RegionElements => {
     return {
@@ -467,7 +470,7 @@ class SelectARegion  extends FindAddressSelectSection implements SelectARegionIn
   }
 
   isOneResult = (): boolean => {
-    return this.regionOptions().length == 1
+    return this.regionOptions().length === 1
   }
 
   selectOnlyRegion = (): void => {
@@ -483,7 +486,7 @@ class SelectARegion  extends FindAddressSelectSection implements SelectARegionIn
   }
 }
 
-class SelectedRegion extends FindAddressTextSection implements SelectedRegionInterface {
+class SelectedRegion extends FindAddressTextSection<HiddenRegionInputs> implements SelectedRegionInterface {
   protected hiddenInputs: HiddenRegionInputs = {
     addressRegion: $('#address-region'),
     addressRegionCode: $('#address-region-code')
@@ -516,7 +519,7 @@ class SelectedRegion extends FindAddressTextSection implements SelectedRegionInt
       this.$changeSectionLink.addClass('govuk-visually-hidden')
       tabindex = -1
     }
-  
+
     this.$changeSectionLink.attr('tabIndex', tabindex)
   }
 }
@@ -530,14 +533,14 @@ enum StateToView {
 }
 
 class FindAddress implements FindAddressInterface {
-  private postcodeSearch: PostcodeSearch
-  private postcodeChange: PostcodeChange
-  private selectAnAddress: SelectAnAddress
-  private selectedAddress: SelectedAddress
-  private selectARegion?: SelectARegion
-  private selectedRegion?: SelectedRegion
+  private readonly postcodeSearch: PostcodeSearch
+  private readonly postcodeChange: PostcodeChange
+  private readonly selectAnAddress: SelectAnAddress
+  private readonly selectedAddress: SelectedAddress
+  private readonly selectARegion?: SelectARegion
+  private readonly selectedRegion?: SelectedRegion
 
-  constructor() {
+  constructor () {
     this.postcodeSearch = new PostcodeSearch(this)
     this.postcodeChange = new PostcodeChange(this)
     this.selectAnAddress = new SelectAnAddress(this)
@@ -549,12 +552,12 @@ class FindAddress implements FindAddressInterface {
     }
   }
 
-  private updateViewAndFocus = (state: number): void => {
+  private readonly updateViewAndFocus = (state: number): void => {
     this.updateView(state)
     this.updateFocus(state)
   }
 
-  private updateView = (state: number): void => {
+  private readonly updateView = (state: number): void => {
     this.postcodeSearch.toggleSectionVisibility(state === 1)
     this.postcodeChange.toggleSectionVisibility(state === 2)
     this.selectAnAddress.toggleSectionVisibility(state === 2)
@@ -564,29 +567,29 @@ class FindAddress implements FindAddressInterface {
     this.selectedRegion?.toggleChangeLinkVisibility(state === 5)
   }
 
-  private updateFocus = (state: number): void => {
+  private readonly updateFocus = (state: number): void => {
     switch (state) {
-    case 1:
-      this.postcodeSearch.focus()
-      break
-    case 2:
-      this.selectAnAddress.focus()
-      break
-    case 3:
-      this.selectAnAddress.focus()
-      break
-    case 4:
-      this.selectARegion?.focus()
-      break
-    case 5:
-      this.selectedRegion?.focus()
-      break
-    default:
-      break
+      case 1:
+        this.postcodeSearch.focus()
+        break
+      case 2:
+        this.selectAnAddress.focus()
+        break
+      case 3:
+        this.selectAnAddress.focus()
+        break
+      case 4:
+        this.selectARegion?.focus()
+        break
+      case 5:
+        this.selectedRegion?.focus()
+        break
+      default:
+        break
     }
   }
 
-  findAddressFromPostcode = () => {
+  findAddressFromPostcode = (): void => {
     const postcode = this.postcodeSearch.getPostcode()
 
     this.postcodeChange.setPostcode(this.postcodeSearch.getPostcode())
@@ -596,14 +599,14 @@ class FindAddress implements FindAddressInterface {
     )
   }
 
-  addressesFound = () => this.updateViewAndFocus(StateToView.selectAddress)
+  addressesFound = (): void => { this.updateViewAndFocus(StateToView.selectAddress) }
 
-  changePostcode = () => {
+  changePostcode = (): void => {
     this.updateViewAndFocus(StateToView.postcodeSearch)
     this.selectAnAddress.clearSelection()
   }
 
-  addressSelected = () => {
+  addressSelected = (): void => {
     this.selectedAddress.populateSelectedAddress(this.selectAnAddress.getAddressElements())
 
     if (this.selectARegion !== undefined) {
@@ -618,7 +621,7 @@ class FindAddress implements FindAddressInterface {
     }
   }
 
-  regionsFound = () => {
+  regionsFound = (): void => {
     if (this.selectARegion !== undefined) {
       if (this.selectARegion.isOneResult()) {
         this.selectARegion.selectOnlyRegion()
@@ -629,7 +632,7 @@ class FindAddress implements FindAddressInterface {
     }
   }
 
-  changeAddress = () => {
+  changeAddress = (): void => {
     this.selectAnAddress.clearSelection()
 
     if (this.selectARegion !== undefined && this.selectedRegion !== undefined) {
@@ -640,9 +643,8 @@ class FindAddress implements FindAddressInterface {
     this.updateViewAndFocus(StateToView.postcodeSearch)
   }
 
-  regionSelected = () => {
+  regionSelected = (): void => {
     if (this.selectARegion !== undefined && this.selectedRegion !== undefined) {
-
       this.selectedRegion.populateSelectedRegion(this.selectARegion.getRegionElements())
 
       if (this.selectARegion.isOneResult()) {
@@ -653,7 +655,7 @@ class FindAddress implements FindAddressInterface {
     }
   }
 
-  changeRegion = () => {
+  changeRegion = (): void => {
     if (this.selectARegion !== undefined && this.selectedRegion !== undefined) {
       this.selectARegion.resetSelectedRegion()
       this.selectedRegion.clearSelectedItems()
@@ -662,7 +664,8 @@ class FindAddress implements FindAddressInterface {
     }
   }
 }
-const initFindAddress = () => {
+
+const initFindAddress = (): void => {
   if ($('[data-module="find-address"]').length) new FindAddress()
 }
 

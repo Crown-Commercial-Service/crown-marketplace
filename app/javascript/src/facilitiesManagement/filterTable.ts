@@ -1,14 +1,14 @@
 class FilterTableRow {
-  private $row: JQuery<HTMLTableRowElement>
-  private rowValue: string
+  private readonly $row: JQuery<HTMLTableRowElement>
+  private readonly rowValue: string
 
-  constructor($row: JQuery<HTMLTableRowElement>, column: number) {
+  constructor ($row: JQuery<HTMLTableRowElement>, column: number) {
     this.$row = $row
-    this.rowValue = (this.$row.children().get(column)?.textContent || '').toUpperCase()
+    this.rowValue = (this.$row.children().get(column)?.textContent ?? '').toUpperCase()
   }
 
-  checkRowAndToggleVisibility = (filter: string) => {
-    const isShown: boolean = this.rowValue.indexOf(filter) > -1
+  checkRowAndToggleVisibility = (filter: string): void => {
+    const isShown: boolean = this.rowValue.includes(filter)
 
     if (isShown) {
       this.$row.show()
@@ -19,11 +19,11 @@ class FilterTableRow {
 }
 
 class FilterTable {
-  private $searchBox: JQuery<HTMLInputElement>
-  private column: number
-  private tableRows: FilterTableRow[] = []
+  private readonly $searchBox: JQuery<HTMLInputElement>
+  private readonly column: number
+  private readonly tableRows: FilterTableRow[] = []
 
-  constructor() {
+  constructor () {
     this.$searchBox = $('#fm-table-filter-input')
     this.column = Number($('#fm-table-filter-input').attr('data-column')) || 0
 
@@ -36,12 +36,14 @@ class FilterTable {
     this.setEventListners()
   }
 
-  private setEventListners = () => this.$searchBox.on('keyup', () => this.filterTable(String(this.$searchBox.val() || '').toUpperCase()))
+  private readonly setEventListners = (): void => {
+    this.$searchBox.on('keyup', () => { this.filterTable(String(this.$searchBox.val() ?? '').toUpperCase()) })
+  }
 
-  private filterTable = (filter: string): void => this.tableRows.forEach(tableRow => tableRow.checkRowAndToggleVisibility(filter))
+  private readonly filterTable = (filter: string): void => { this.tableRows.forEach(tableRow => { tableRow.checkRowAndToggleVisibility(filter) }) }
 }
 
-const initFilterTable = () => {
+const initFilterTable = (): void => {
   if ($('#fm-table-filter-input').length > 0) new FilterTable()
 }
 

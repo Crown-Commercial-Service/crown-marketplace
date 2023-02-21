@@ -1,4 +1,4 @@
-import initDetailsStorage, { ContactDetailOption, ContactDetailType } from './detailsStorage'
+import initDetailsStorage, { type ContactDetailOption, ContactDetailType } from './detailsStorage'
 
 const modelName: string = $('[data-module="find-address"]').data('modelName')
 
@@ -45,11 +45,13 @@ const contactDetailsOptions: ContactDetailOption[] = [
   }
 ]
 
-const initContactDetailsInStorage = (): void => initDetailsStorage(
-  'contactDetails',
-  contactDetailsOptions,
-  $('#edit-contact-detail'),
-  $('#edit-contact-detail-address')
-)
+const initContactDetailsInStorage = (): void => {
+  initDetailsStorage(
+    'contactDetails',
+    contactDetailsOptions,
+    $('#edit-contact-detail'),
+    $('#edit-contact-detail-address')
+  )
+}
 
 export default initContactDetailsInStorage

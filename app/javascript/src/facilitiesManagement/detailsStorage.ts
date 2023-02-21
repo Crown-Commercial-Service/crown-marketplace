@@ -3,7 +3,7 @@ enum ContactDetailType {
   RadioInput
 }
 
-type ContactDetailOption = {
+interface ContactDetailOption {
   name: string
   $element: JQuery<HTMLInputElement>
   type: ContactDetailType
@@ -13,7 +13,7 @@ abstract class ContactDetail {
   protected detailName: string
   protected $element: JQuery<HTMLInputElement>
 
-  constructor(detailName: string, $element: JQuery<HTMLInputElement>) {
+  constructor (detailName: string, $element: JQuery<HTMLInputElement>) {
     this.detailName = detailName
     this.$element = $element
   }
@@ -45,32 +45,31 @@ class RadioInputContactDetail extends ContactDetail {
 
 class ContactDetails {
   private id: string
-  private contactDetails: Array<TextInputContactDetail | RadioInputContactDetail>
+  private readonly contactDetails: Array<TextInputContactDetail | RadioInputContactDetail>
 
   constructor (id: string, contactDetails: ContactDetailOption[]) {
     this.id = id
-    this.contactDetails = contactDetails.map((contactDetailOption) => {
-      switch(contactDetailOption.type) {
-      case ContactDetailType.TextInput:
-        return new TextInputContactDetail(contactDetailOption.name, contactDetailOption.$element)
-      case ContactDetailType.RadioInput:
+    this.contactDetails = contactDetails.map((contactDetailOption): TextInputContactDetail | RadioInputContactDetail => {
+      if (contactDetailOption.type === ContactDetailType.RadioInput) {
         return new RadioInputContactDetail(contactDetailOption.name, contactDetailOption.$element)
+      } else {
+        return new TextInputContactDetail(contactDetailOption.name, contactDetailOption.$element)
       }
     })
   }
 
   storeDetails = (): void => {
-    this.contactDetails.forEach(contactDetail => contactDetail.storeDetail())
+    this.contactDetails.forEach(contactDetail => { contactDetail.storeDetail() })
 
     window.sessionStorage[this.id] = true
   }
 
   fillInDetails = (): void => {
-    this.contactDetails.forEach(contactDetail => contactDetail.fillInDetail())
+    this.contactDetails.forEach(contactDetail => { contactDetail.fillInDetail() })
   }
 
   removeDetails = (): void => {
-    this.contactDetails.forEach(contactDetail => contactDetail.removeDetail())
+    this.contactDetails.forEach(contactDetail => { contactDetail.removeDetail() })
 
     window.sessionStorage.removeItem(this.id)
   }
@@ -88,14 +87,14 @@ const initDetailsStorage = (
     if ($contactDetailsForm.length && window.sessionStorage[id]) contactDetails.fillInDetails()
 
     if ($contactDetailsForm.length) {
-      $('#cant-find-address-link').on('click', () => contactDetails.storeDetails())
+      $('#cant-find-address-link').on('click', () => { contactDetails.storeDetails() })
 
-      $('input[type="submit"]').on('click', () => contactDetails.removeDetails())
+      $('input[type="submit"]').on('click', () => { contactDetails.removeDetails() })
     } else if (!$contactDetailsAddressForm.length) {
       contactDetails.removeDetails()
     }
   }
 }
 
-export { ContactDetailType, ContactDetailOption }
+export { ContactDetailType, type ContactDetailOption }
 export default initDetailsStorage
