@@ -44,7 +44,7 @@ jobs:
         run: bin/rails db:test:prepare
 
       - name: Compile assets
-        run: bin/rails assets:precompile
+        run: NODE_OPTIONS=--openssl-legacy-provider bin/rails assets:precompile
 
       - name: Seed DB with test data
         run: bin/rails db:static

@@ -1,9 +1,26 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
-    "strict": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "rootDir": "app/typescript",
-    "outDir": "app/assets/javascripts/dist"
-  }
+    "lib": ["es6", "dom"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+        "*": ["node_modules/*", "app/javascript/*"]
+    },
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES2019",
+    "noEmit": true
+  },
+  "exclude": [
+    "**/*.spec.ts",
+    "node_modules",
+    "vendor",
+    "public"
+  ],
+  "compileOnSave": false
 }
