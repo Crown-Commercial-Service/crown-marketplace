@@ -520,7 +520,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    schmooze (0.1.6)
     selenium-webdriver (4.8.1)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -696,7 +695,7 @@ DEPENDENCIES
   virtus
   wdm (>= 0.1.0)
   webmock (>= 3.12.1)
-  webpacker (~> 5.0)
+  webpacker (~> 5.4, >= 5.4.4)
 
 RUBY VERSION
    ruby 2.7.7p221
