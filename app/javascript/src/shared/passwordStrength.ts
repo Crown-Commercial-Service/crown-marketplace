@@ -1,27 +1,9 @@
-const cReg = (): RegExp => {
-  return /^.{8,}/
-}
+const cReg = /^.{8,}/
+const pReg = /^(?=.*?[#?!@£$%^&*-])/
+const uReg = /^(?=.*?[A-Z])/
+const numReg = /^(?=.*[0-9])/
 
-const pReg = (): RegExp => {
-  return /^(?=.*?[#?!@£$%^&*-])/
-}
-
-const uReg = (): RegExp => {
-  return /^(?=.*?[A-Z])/
-}
-
-const numReg = (): RegExp => {
-  return /^(?=.*[0-9])/
-}
-
-const theTests: Array<[RegExp, JQuery<HTMLElement>]> = [
-  [cReg(), $('#passeight')],
-  [pReg(), $('#passsymbol')],
-  [uReg(), $('#passcap')],
-  [numReg(), $('#passnum')]
-]
-
-const runTests = ($input: JQuery<HTMLElement>): void => {
+const runTests = ($input: JQuery<HTMLElement>, theTests: Array<[RegExp, JQuery<HTMLElement>]>): void => {
   const inputText = String($input.val())
 
   theTests.forEach((test) => {
@@ -33,21 +15,20 @@ const runTests = ($input: JQuery<HTMLElement>): void => {
   })
 }
 
-const passwordStrength = ($input: JQuery<HTMLElement>): void => {
-  $input.on('keyup', () => { runTests($input) })
+const passwordStrength = ($input: JQuery<HTMLElement>, theTests: Array<[RegExp, JQuery<HTMLElement>]>): void => {
+  $input.on('keyup', () => { runTests($input, theTests) })
 }
 
 const initPasswordStrength = (): void => {
-  const form: JQuery<HTMLElement> = $('#main-content form.ccs-form')
+  if ($('#passwordrules').length) {
+    const theTests: Array<[RegExp, JQuery<HTMLElement>]> = [
+      [cReg, $('#passeight')],
+      [pReg, $('#passsymbol')],
+      [uReg, $('#passcap')],
+      [numReg, $('#passnum')]
+    ]
 
-  if (form.length) {
-    const formIDs: string[] = ['cop_sign_in_form', 'cop_change_password_form', 'cop_register', 'cop_confirmation_code', 'cog_forgot_password_request_form', 'cog_forgot_password_reset_form']
-
-    formIDs.forEach((formID) => {
-      if (form.is(`#${formID}`)) {
-        passwordStrength($('#password01'))
-      }
-    })
+    passwordStrength($('#password01'), theTests)
   }
 }
 
