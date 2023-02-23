@@ -14,7 +14,7 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import $ from 'jquery'
+import jQuery from 'jquery'
 import Rails from '@rails/ujs'
 import Turbolinks from 'turbolinks'
 
@@ -24,4 +24,4 @@ Turbolinks.start()
 
 // Initiate jQuery
 // eslint-disable-next-line no-undef
-global.$ = $
+global.$ = jQuery
