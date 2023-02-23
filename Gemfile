@@ -14,7 +14,7 @@ gem 'sass-rails', '~> 5.1', '>= 5.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
-gem 'shakapacker', '~> 6.5.6', '>= 6.5.6'
+gem 'shakapacker', '~> 6.5.6'
 
 gem 'turbolinks', '~> 5'
 
