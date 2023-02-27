@@ -86,7 +86,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportsController 
 
       it 'renders the aasm_state as JSON' do
         expect(response.content_type).to eq('application/json; charset=utf-8')
-        expect(JSON.parse(response.body)).to eq 'import_status' => 'generating_csv'
+        expect(response.parsed_body).to eq 'import_status' => 'generating_csv'
       end
     end
 
@@ -95,7 +95,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportsController 
 
       it 'renders the aasm_state as JSON' do
         expect(response.content_type).to eq('application/json; charset=utf-8')
-        expect(JSON.parse(response.body)).to eq 'import_status' => 'completed'
+        expect(response.parsed_body).to eq 'import_status' => 'completed'
       end
     end
   end
