@@ -164,7 +164,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
   end
 
   describe 'GET progress' do
-    let(:result) { JSON.parse(response.body) }
+    let(:result) { response.parsed_body }
 
     context 'when the user can view the spreadsheet' do
       before do
