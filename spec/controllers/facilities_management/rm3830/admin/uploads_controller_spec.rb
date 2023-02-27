@@ -149,7 +149,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
 
     it 'renders the aasm_state as JSON' do
       expect(response.content_type).to eq('application/json; charset=utf-8')
-      expect(JSON.parse(response.body)).to eq 'import_status' => 'publishing_data'
+      expect(response.parsed_body).to eq 'import_status' => 'publishing_data'
     end
   end
 end
