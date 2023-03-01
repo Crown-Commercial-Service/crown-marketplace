@@ -5,7 +5,7 @@ module Api
     # return json
     class NutsController < FacilitiesManagement::FrameworkController
       protect_from_forgery with: :exception
-      before_action :validate_service, :raise_if_unrecognised_live_framework, :redirect_to_buyer_detail, except: %i[show_post_code show_nuts_code find_region_query find_region_query_by_postcode]
+      before_action :validate_service, :raise_if_not_live_framework, :redirect_to_buyer_detail, except: %i[show_post_code show_nuts_code find_region_query find_region_query_by_postcode]
 
       def show_post_code
         result = PostcodesNutsRegion.select(:id, :code, :postcode).find_by(postcode: params[:postcode].delete(' '))

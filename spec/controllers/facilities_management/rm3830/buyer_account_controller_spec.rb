@@ -59,7 +59,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuyerAccountController do
 
       it 'sets the framework variables' do
         expect(assigns(:unrecognised_framework)).to eq 'RM31415'
-        expect(controller.params[:framework]).to eq FacilitiesManagement::Framework.default_framework
+        expect(controller.params[:framework]).to eq Framework.facilities_management.current_framework
       end
     end
   end
