@@ -1,17 +1,27 @@
 module Frameworks
-  def self.rm6232_live_at
+  def self.rm3830_expires_at
     if Rails.env.test?
-      1.day.ago
+      1.year.from_now
     else
-      Time.new(2022, 7, 14).in_time_zone('London')
+      # This is not correct but it is far in the future and we can update it with another migration later on
+      Time.new(2023, 4, 9).in_time_zone('London')
+    end
+  end
+
+  def self.rm6232_expires_at
+    if Rails.env.test?
+      1.year.from_now
+    else
+      # This is not correct but it is far in the future and we can update it with another migration later on
+      Time.new(2026, 6, 8).in_time_zone('London')
     end
   end
 
   def self.add_frameworks
-    ActiveRecord::Base.connection.truncate_tables(:facilities_management_frameworks)
+    ActiveRecord::Base.connection.truncate_tables(:frameworks)
 
-    FacilitiesManagement::Framework.create(framework: 'RM3830', live_at: Time.new(2020, 6, 26).in_time_zone('London'))
-    FacilitiesManagement::Framework.create(framework: 'RM6232', live_at: rm6232_live_at)
+    Framework.create(service: 'facilities_management', framework: 'RM3830', live_at: Time.new(2018, 7, 10).in_time_zone('London'), expires_at: rm3830_expires_at)
+    Framework.create(service: 'facilities_management', framework: 'RM6232', live_at: Time.new(2022, 7, 14).in_time_zone('London'), expires_at: rm6232_expires_at)
   end
 end
 

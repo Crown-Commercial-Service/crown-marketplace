@@ -6,10 +6,22 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::SessionsController do
   before { request.env['devise.mapping'] = Devise.mappings[:user] }
 
   describe 'GET new' do
-    before { get :new }
+    context 'when the framework is live' do
+      it 'renders the new page' do
+        get :new
 
-    it 'renders the new page' do
-      expect(response).to render_template(:new)
+        expect(response).to render_template(:new)
+      end
+    end
+
+    context 'when the framework is not live' do
+      include_context 'and RM3830 has expired'
+
+      it 'redirects to the buyer index page' do
+        get :new
+
+        expect(response).to redirect_to(facilities_management_rm6232_path)
+      end
     end
   end
 
@@ -64,7 +76,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::SessionsController do
       let(:cognito_groups) do
         admin_list_groups_for_user_resp_struct.new(
           groups: [
-            cognito_group_struct.new(group_name: 'supplier'),
+            cognito_group_struct.new(group_name: 'buyer'),
             cognito_group_struct.new(group_name: 'fm_access')
           ]
         )
@@ -98,6 +110,16 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::SessionsController do
           expect(cookies[:crown_marketplace_challenge_session]).to eq(session)
           expect(cookies[:crown_marketplace_challenge_username]).to eq(username)
         end
+      end
+    end
+
+    context 'when the framework is not live' do
+      include_context 'and RM3830 has expired'
+
+      it 'redirects to the buyer index page' do
+        post :create, params: { user: { email: email, password: 'Password12345!' } }
+
+        expect(response).to redirect_to(facilities_management_rm6232_path)
       end
     end
   end

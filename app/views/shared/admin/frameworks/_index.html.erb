@@ -1,0 +1,50 @@
+<% content_for :page_title, t('.page_title', service_title: service_title) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t('.page_title', service_title: service_title) %></h1>
+    <p>
+      <%= t('.this_section_allows', service_name: service_name) %>
+    </p>
+
+    <p>
+      <%= t('.if_the_framework', current_date: format_date(Time.now.in_time_zone('London'))) %>
+    </p>
+
+    <p>
+      <%= t('.the_admin_section') %>
+    </p>
+  
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"><%= t('.framework') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.live_at') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.expires_at') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.status') %></th>
+          <td class="govuk-table__header"></td>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @frameworks.each do |framework| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= framework.framework %></th>
+            <td class="govuk-table__cell"><%= format_date(framework.live_at) %></td>
+            <td class="govuk-table__cell"><%= format_date(framework.expires_at) %></td>
+            <td class="govuk-table__cell">
+              <% case framework.status %>
+              <% when :live %>
+                <%= govuk_tag_with_text(:blue, t('.live')) %>
+              <% when :coming %>
+                <%= govuk_tag_with_text(:grey, t('.coming')) %>
+              <% else %>
+                <%= govuk_tag_with_text(:red, t('.expired')) %>
+              <% end %>
+            </td>
+            <td class="govuk-table__cell"><%= link_to t('.change'), "/#{service_param}/admin/frameworks/#{framework.id}/edit" %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

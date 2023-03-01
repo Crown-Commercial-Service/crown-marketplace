@@ -6,10 +6,22 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SessionsController do
   before { request.env['devise.mapping'] = Devise.mappings[:user] }
 
   describe 'GET new' do
-    before { get :new }
+    context 'when the framework is live' do
+      it 'renders the new page' do
+        get :new
 
-    it 'renders the new page' do
-      expect(response).to render_template(:new)
+        expect(response).to render_template(:new)
+      end
+    end
+
+    context 'when the framework is not live' do
+      include_context 'and RM6232 has expired'
+
+      it 'renders the new page' do
+        get :new
+
+        expect(response).to render_template(:new)
+      end
     end
   end
 
@@ -64,7 +76,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SessionsController do
       let(:cognito_groups) do
         admin_list_groups_for_user_resp_struct.new(
           groups: [
-            cognito_group_struct.new(group_name: 'ccs_employee'),
+            cognito_group_struct.new(group_name: 'buyer'),
             cognito_group_struct.new(group_name: 'fm_access')
           ]
         )
@@ -74,29 +86,50 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SessionsController do
         allow(aws_client).to receive(:initiate_auth).and_return(initiate_auth_resp_struct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => username }))
         allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
         allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user: user))
-
-        post :create, params: { user: { email: email, password: 'Password12345!' } }
-        cookies.update(response.cookies)
       end
 
-      context 'and there is no challenge' do
+      # rubocop:disable RSpec/NestedGroups
+      context 'and the framework is live' do
+        before do
+          post :create, params: { user: { email: email, password: 'Password12345!' } }
+          cookies.update(response.cookies)
+        end
+
+        context 'and there is no challenge' do
+          let(:challenge_name) { nil }
+
+          it 'redirects to facilities_management_rm6232_admin_path' do
+            expect(response).to redirect_to facilities_management_rm6232_admin_path
+          end
+        end
+
+        context 'and there is a challenge' do
+          let(:challenge_name) { 'NEW_PASSWORD_REQUIRED' }
+
+          it 'redirects to facilities_management_rm6232_admin_users_challenge_path' do
+            expect(response).to redirect_to facilities_management_rm6232_admin_users_challenge_path(challenge_name: challenge_name)
+          end
+
+          it 'the cookies are updated correctly' do
+            expect(cookies[:crown_marketplace_challenge_session]).to eq(session)
+            expect(cookies[:crown_marketplace_challenge_username]).to eq(username)
+          end
+        end
+      end
+      # rubocop:enable RSpec/NestedGroups
+
+      context 'when the framework is not live' do
         let(:challenge_name) { nil }
+
+        include_context 'and RM6232 has expired'
+
+        before do
+          post :create, params: { user: { email: email, password: 'Password12345!' } }
+          cookies.update(response.cookies)
+        end
 
         it 'redirects to facilities_management_rm6232_admin_path' do
           expect(response).to redirect_to facilities_management_rm6232_admin_path
-        end
-      end
-
-      context 'and there is a challenge' do
-        let(:challenge_name) { 'NEW_PASSWORD_REQUIRED' }
-
-        it 'redirects to facilities_management_rm6232_admin_users_challenge_path' do
-          expect(response).to redirect_to facilities_management_rm6232_admin_users_challenge_path(challenge_name: challenge_name)
-        end
-
-        it 'the cookies are updated correctly' do
-          expect(cookies[:crown_marketplace_challenge_session]).to eq(session)
-          expect(cookies[:crown_marketplace_challenge_username]).to eq(username)
         end
       end
     end

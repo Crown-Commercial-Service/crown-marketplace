@@ -1,42 +1,19 @@
 module FacilitiesManagement
   module Admin
     class FrameworksController < FacilitiesManagement::Admin::FrameworkController
-      before_action :raise_if_unrecognised_framework, except: %i[index edit update]
-      before_action :set_framework, only: %i[edit update]
+      include ::Admin::FrameworksConcern
 
-      def index
-        @frameworks = Framework.all
-      end
+      before_action :authenticate_user!
+      before_action :authorize_user
 
-      def edit; end
-
-      def update
-        if @framework.update(framework_params)
-          redirect_to facilities_management_admin_frameworks_path
-        else
-          render :edit
-        end
+      def framework_index_path
+        facilities_management_admin_frameworks_path
       end
 
       private
 
-      def set_framework
-        @framework = Framework.find(params[:id])
-      end
-
-      def framework_params
-        params.require(:facilities_management_framework)
-              .permit(
-                :live_at_dd,
-                :live_at_mm,
-                :live_at_yyyy,
-              )
-      end
-
-      protected
-
       def authorize_user
-        authorize! :manage, FacilitiesManagement::Framework
+        authorize! :manage, Framework
       end
     end
   end

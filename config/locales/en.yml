@@ -226,14 +226,15 @@ en:
   activerecord:
     errors:
       models:
-        supply_teachers/admin/upload:
+        framework:
           attributes:
-            base:
-              none_present: Upload at least one file
-        supply_teachers/branch:
-          attributes:
-            postcode:
-              invalid_postcode: Enter a valid postcode
+            expires_at:
+              blank: Enter a valid 'expires at' date
+              not_a_date: Enter a valid 'expires at' date
+              not_after_live_at_date: The 'expires at' date must be after the 'live at' date
+            live_at:
+              blank: Enter a valid 'live at' date
+              not_a_date: Enter a valid 'live at' date
   base:
     passwords:
       edit:
@@ -549,11 +550,6 @@ en:
       ccs_support: CCS Support (opens in a new tab)
       details_html: Contact %{link} if you need to speak to someone about this.
       title: Sorry, you are not authorised to view this page
-    unrecognised_framework:
-      heading: The web address contained an unrecognised framework
-      make_sure_listed: The framework in the web address is '%{framework}'. Make sure the web address contains one of the listed frameworks.
-      page_title: Unrecognised framework
-      the_recognised_are: 'The Facilities Management frameworks are:'
   layouts:
     application:
       accessibility_statement_link: Accessibility statement
@@ -644,6 +640,30 @@ en:
       one: result
       other: results
   shared:
+    admin:
+      frameworks:
+        edit:
+          expires_at_date: Framework 'expires at' date for %{framework}
+          expires_at_hint: The buyer section for this framework will not be visible if the date today (%{current_date}) is on or after the 'expires at' date.
+          live_at_date: Framework 'live at' date for %{framework}
+          live_at_hint: The buyer section for this framework will be visible if the 'live at' date is today (%{current_date}) or earlier.
+          page_title: Framework 'live at' date
+          return_to_frameworks: Return to %{service_name} frameworks
+          save_and_return: Save and return
+          update_the_framework_dates: Update the framework dates
+        index:
+          change: Change
+          coming: coming
+          expired: Expired
+          expires_at: Expires at
+          framework: Framework
+          if_the_framework: If the framework 'live at' date is before the current date (%{current_date}), the buyer section for this framework will be accessible to our customers.
+          live: live
+          live_at: Live at
+          page_title: "%{service_title} frameworks"
+          status: Status
+          the_admin_section: The admin section for a framework will always be visible for any framework that is on the system no matter when it goes live.
+          this_section_allows: This section allows you to view and change the 'live at' date for a %{service_name} framework.
     error_summary:
       there_is_a_problem: There is a problem
     tags:

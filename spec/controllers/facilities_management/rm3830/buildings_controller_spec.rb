@@ -31,7 +31,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController do
 
       it 'sets the framework variables' do
         expect(assigns(:unrecognised_framework)).to eq 'RM3840'
-        expect(controller.params[:framework]).to eq FacilitiesManagement::Framework.default_framework
+        expect(controller.params[:framework]).to eq Framework.facilities_management.current_framework
       end
     end
 

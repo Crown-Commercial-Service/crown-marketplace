@@ -13,7 +13,7 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 is not live'
+      include_context 'and RM3830 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
         get :confirm_new
@@ -102,7 +102,7 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController do
     # rubocop:enable RSpec/NestedGroups
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 is not live'
+      include_context 'and RM3830 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
         post :confirm, params: { email: user_email, confirmation_code: '123456' }
@@ -128,7 +128,7 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 is not live'
+      include_context 'and RM3830 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
         post :resend_confirmation_email, params: { email: email }
@@ -167,7 +167,7 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 is not live'
+      include_context 'and RM3830 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
         get :challenge_new, params: { challenge_name: 'NEW_PASSWORD_REQUIRED' }
@@ -289,7 +289,7 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 is not live'
+      include_context 'and RM3830 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
         post :challenge, params: { challenge_name: 'SMS_MFA', username: username, session: session }
