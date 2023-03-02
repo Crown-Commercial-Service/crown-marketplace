@@ -1,25 +1,21 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-
-
-
-    <div id="ccs-error-sum" class="govuk-error-summary  <%= 'govuk-visually-hidden' unless @challenge.errors.any? %> ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
-      <h2 class="govuk-error-summary__title" id="error-summary-title">
-        <%= t('common.error_summary_title') %>
-      </h2>
-      <div class="govuk-error-summary__body">
-        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
-          <% @challenge.errors.attribute_names.each do |attribute| %>
-            <li>
-              <%= link_to @challenge.errors[attribute].first, "##{error_id(attribute)}", data: { turbolinks: false } %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-
-
+    <% if @challenge.errors.any? %>
+      <%= govuk_error_summary(
+        t("common.error_summary_title"),
+        @challenge.errors.attribute_names.map do |attribute|
+          {
+            text: @challenge.errors[attribute].first,
+            href: "##{error_id(attribute)}",
+            attributes: {
+              data: {
+                turbolinks: false
+              }
+            }
+          }
+        end
+      ) %>
+    <% end %>
 
     <h1 class="govuk-heading-xl">
       <%= t('.heading') %>

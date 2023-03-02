@@ -15,18 +15,11 @@
   <% if @specification.work_package_service_lines %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <details class="govuk-details" data-module="govuk-details">
-          <summary class="govuk-details__summary govuk-!-margin-bottom-1">
-            <span class="govuk-details__summary-text">
-              <%= t('.generic_requirements', work_package_name: @service.work_package.name) %>
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <% @specification.work_package_service_lines.each do |clause| %>
-              <%= render 'clause', clause: clause %>
-            <% end %>
-          </div>
-        </details>
+        <%= govuk_details(t('.generic_requirements', work_package_name: @service.work_package.name)) do %>
+          <% @specification.work_package_service_lines.each do |clause| %>
+            <%= render 'clause', clause: clause %>
+          <% end %>
+        <% end %>
       </div>
     </div>
   <% end %>

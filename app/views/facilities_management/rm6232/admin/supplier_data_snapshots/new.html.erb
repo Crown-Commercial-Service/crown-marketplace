@@ -1,6 +1,6 @@
 <%= content_for :page_title, t('.heading') %>
 <%= admin_breadcrumbs(
-  { text: t('facilities_management.rm6232.admin.change_logs.index.heading'), link: facilities_management_rm6232_admin_change_logs_path },
+  { text: t('facilities_management.rm6232.admin.change_logs.index.heading'), href: facilities_management_rm6232_admin_change_logs_path },
   { text: t('.heading') }
 )%>
 
@@ -18,7 +18,7 @@
       <%= t('.when_you_click') %>
     </p>
     <p>
-      <%= warning_text(t('.the_date_you_enter', oldest_data_created_at: FacilitiesManagement::RM6232::Admin::SupplierData.oldest_data_created_at_string )) %>
+      <%= govuk_warning_text(t('.the_date_you_enter', oldest_data_created_at: FacilitiesManagement::RM6232::Admin::SupplierData.oldest_data_created_at_string )) %>
     </p>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <%= content_for :page_title, @lot_name %>
 <%= admin_breadcrumbs(
-  { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), link: facilities_management_rm3830_admin_supplier_framework_data_path },
+  { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), href: facilities_management_rm3830_admin_supplier_framework_data_path },
   { text: @lot_name }
 )%>
 
@@ -8,7 +8,7 @@
   <div class="govuk-grid-column-full">
     <span class="govuk-caption-l"><%= @supplier.supplier_name %></span>
     <h1 class="govuk-heading-xl"><%= @lot_name %></h1>
-    <%= warning_text(t('facilities_management.rm3830.admin.you_cannot_update.services')) %>
+    <%= govuk_warning_text(t('facilities_management.rm3830.admin.you_cannot_update.services')) %>
     <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
       <%= t('.note') %>
     </p>

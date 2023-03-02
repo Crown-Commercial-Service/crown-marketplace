@@ -185,7 +185,7 @@ class GOVUKStepByStepNavStep implements GOVUKStepByStepNavStepInterface {
 }
 
 class GOVUKStepByStepNav implements GOVUKStepByStepNavInterface {
-  private readonly $stepByStepNavigation: JQuery<HTMLElement> = $('#step-by-step-navigation')
+  private readonly $stepByStepNavigation: JQuery<HTMLElement> = $('[data-module="govuk-step-by-step-navigation"]')
   private readonly stepByStepNavigationSteps: GOVUKStepByStepNavStep[] = []
   private readonly stepNavShowHideAllButton: GOVUKStepByStepNavShowHideAllButton
 
@@ -225,7 +225,7 @@ class GOVUKStepByStepNav implements GOVUKStepByStepNavInterface {
 }
 
 const initStepByStepNav = (): void => {
-  if ($('#step-by-step-navigation').length) new GOVUKStepByStepNav()
+  if ($('[data-module="govuk-step-by-step-navigation"]').length) new GOVUKStepByStepNav()
 }
 
 export default initStepByStepNav

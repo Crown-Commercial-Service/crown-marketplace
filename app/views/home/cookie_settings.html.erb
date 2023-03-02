@@ -2,10 +2,10 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters" id="cookie-settings-saved" <%= 'hidden' unless params[:cookies_updated] %>>
-    <%= govuk_notification_banner(:success, t('.cookies_saved')) %>
+    <%= govuk_notification_banner(t('.cookies_saved'), true) %>
   </div>
   <div class="govuk-grid-column-three-quarters" id="cookie-settings-not-saved" hidden>
-    <%= govuk_notification_banner(:error, t('.cookies_not_saved')) %>
+    <%= govuk_notification_banner(t('.cookies_not_saved'), classes: 'ccs-notification-banner--error', title_text: t('.error')) %>
   </div>
 </div>
 

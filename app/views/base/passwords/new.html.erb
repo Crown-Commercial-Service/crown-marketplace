@@ -3,18 +3,20 @@
   <div class="govuk-grid-column-two-thirds">
 
   <% unless flash[:error].nil? %>
-    <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
-      <h2 class="govuk-error-summary__title" id="error-summary-title">
-        <%= t("common.error_summary_title") %>
-      </h2>
-      <div class="govuk-error-summary__body">
-        <ul class="govuk-list govuk-error-summary__list">
-          <li>
-            <%= link_to flash[:error], "##{error_id('email')}", data: { turbolinks: false } %>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <%= govuk_error_summary(
+      t("common.error_summary_title"),
+      [
+        {
+          text: flash[:error],
+          href: "##{error_id('email')}",
+          attributes: {
+            data: {
+              turbolinks: false
+            }
+          }
+        }
+      ]
+    ) %>
   <% end %>
 
     <h1 class="govuk-heading-xl">

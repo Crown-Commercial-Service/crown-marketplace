@@ -2,7 +2,7 @@
   <div class="govuk-grid-column-full">
     <%= content_for :page_title, t('.heading') %>
     <%= admin_breadcrumbs(
-      { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), link: facilities_management_rm3830_admin_supplier_framework_data_path },
+      { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), href: facilities_management_rm3830_admin_supplier_framework_data_path },
       { text: t('.heading') }
     )%>
 
@@ -10,7 +10,7 @@
     <span class="govuk-caption-l"><%= @supplier.supplier_name %></span>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <h2 class="govuk-heading-l govuk-!-font-weight-bold "><%= t('.services_and_prices') %></h2>
-    <%= warning_text(t('facilities_management.rm3830.admin.you_cannot_update.services')) %>
+    <%= govuk_warning_text(t('facilities_management.rm3830.admin.you_cannot_update.services')) %>
 
     <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
       <%= t('.note') %><br/>

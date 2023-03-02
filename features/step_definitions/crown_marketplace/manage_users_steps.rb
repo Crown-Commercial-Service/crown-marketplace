@@ -10,12 +10,12 @@ end
 
 Then('the account {string} has been added') do |email|
   expect(manage_users_page.notification_banner.heading).to have_content('User account created')
-  expect(manage_users_page.notification_banner.content).to have_content("An email has been sent to #{email} with the details for them to sign in")
+  expect(manage_users_page.notification_banner.message).to have_content("An email has been sent to #{email} with the details for them to sign in")
 end
 
 Then('there is an error notification with the message {string}') do |error_message|
   expect(manage_users_page.notification_banner.heading).to have_content('Something went wrong')
-  expect(manage_users_page.notification_banner.content).to have_content("The following error occured: \"#{error_message}\"")
+  expect(manage_users_page.notification_banner.message).to have_content("The following error occured: \"#{error_message}\"")
 end
 
 Then('I change the {string} from the user summary') do |option|
@@ -124,5 +124,5 @@ end
 
 Then('an email has been sent to {string}') do |email|
   expect(manage_users_page.notification_banner.heading).to have_content('Password resent')
-  expect(manage_users_page.notification_banner.content).to have_content("A new email has been sent to #{email} with the temporary password for their account.")
+  expect(manage_users_page.notification_banner.message).to have_content("A new email has been sent to #{email} with the temporary password for their account.")
 end

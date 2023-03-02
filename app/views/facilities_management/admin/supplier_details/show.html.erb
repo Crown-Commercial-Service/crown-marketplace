@@ -1,6 +1,6 @@
 <%= content_for :page_title, t('.page_title', supplier_name: @supplier.supplier_name).html_safe %>
 <%= admin_breadcrumbs(
-  { text: t("facilities_management.#{@framework.downcase}.admin.supplier_details.index.heading"), link: supplier_details_index_path },
+  { text: t("facilities_management.#{@framework.downcase}.admin.supplier_details.index.heading"), href: supplier_details_index_path },
   { text: @supplier.supplier_name }
 ) %>
 

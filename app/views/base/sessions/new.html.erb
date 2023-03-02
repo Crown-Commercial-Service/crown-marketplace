@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= warning_text(t('.session_expired')) if params[:expired] == 'true' %>
+    <%= govuk_warning_text(t('.session_expired')) if params[:expired] == 'true' %>
 
     <%= render partial: 'shared/error_summary', locals: { errors: @result.errors } %>
   </div>

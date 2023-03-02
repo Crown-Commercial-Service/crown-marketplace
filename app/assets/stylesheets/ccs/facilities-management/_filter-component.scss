@@ -11,3 +11,9 @@
   padding-top: 10px;
   min-width: 300px;
 }
+
+.filter-component-container details {
+  background-color: govuk-colour("white");
+  padding: govuk-spacing(2);
+  margin: govuk-spacing(2);
+}

@@ -111,6 +111,12 @@ gem 'email_validator', require: 'email_validator/strict'
 gem 'asset_sync'
 gem 'fog-aws', '>= 3.14.0'
 
+# Use CCS Frontend Helpers
+# TODO: When ready, replace with real link to repo
+# gem 'ccs-frontend_helpers', git: 'https://github.com/tim-s-ccs/ccs-frontend_helpers.git', branch: 'main'
+gem 'ccs-frontend_helpers', '= 0.1.0.rc.7'
+# gem 'ccs-frontend_helpers', path: '~/Code/dfp-repos/ccs-frontend_helpers'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

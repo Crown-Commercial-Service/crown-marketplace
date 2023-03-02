@@ -34,7 +34,7 @@
     <% end %>
 
     <div id="wrapper">
-      <%= link_to t('.skip'), '#main-content', class: 'govuk-skip-link', data: { module: 'govuk-skip-link', turbolinks: false } %>
+      <%= govuk_skip_link(t('.skip'), '#main-content', attributes: { data: { turbolinks: false } })%>
       <%= render partial: '/layouts/cookie-banner' unless cookie_preferences_settings['settings_viewed'] || controller.action_name == 'cookie_settings' %>
       <%= render partial: '/layouts/header' %>
 
