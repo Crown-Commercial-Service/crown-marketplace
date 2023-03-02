@@ -3,7 +3,6 @@ Feature: Adding services for suppliers on the admin tool and seeing the effect o
   Background: Sign in and navigate to the admin dashboard
     Given I sign in as an admin and navigate to the 'RM6232' dashboard
 
-  @pipeline
   Scenario Outline: Total services - service selection
     Given I go to a quick view with the following services, regions and annual contract cost:
       | E.2  | UKE2  | <contract_value> |

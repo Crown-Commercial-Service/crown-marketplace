@@ -191,8 +191,7 @@ To run a specific feature test, use:
 bundle exec cucumber feature/path/to/feature.feature
 ```
 
-For Pull Requests, a subset of the feature tests are run (ones that have the `@pipeline` tag).
-However, all feature tests are run as part of the release process.
+All the feature tests are run as part of the Pull Request and release process
 
 #### Accessibility testing
 We use [Axe Cucumber][] to run accessibility tests but these are not run as part of the CI.

@@ -33,7 +33,6 @@ Feature: Changing the lot status for suppliers on the admin tool and seeing the 
       | 11000000        | 1c          | Cummerata, Lubowitz and Ebert |
 
 
-  @pipeline
   Scenario Outline: Hard services - lot status
     Given I go to a quick view with the following services, regions and annual contract cost:
       | F.2  | UKL18  | <contract_value>  |

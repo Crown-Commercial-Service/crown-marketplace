@@ -1,4 +1,3 @@
-@pipeline
 Feature: Management report  - validations
 
   Background: Navigate to the management report page

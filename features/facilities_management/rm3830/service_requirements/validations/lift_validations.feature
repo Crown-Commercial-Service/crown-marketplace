@@ -1,4 +1,3 @@
-@pipeline
 Feature: Lift validations
 
   Background: Navigate to lift page

@@ -1,4 +1,3 @@
-@pipeline
 Feature: Select services validations
 
   Background: Navigate to the services page

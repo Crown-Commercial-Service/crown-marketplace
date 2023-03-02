@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier address - validations
 
   Background: Navigate to the supplier address section

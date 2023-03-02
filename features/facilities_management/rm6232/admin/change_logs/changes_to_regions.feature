@@ -1,4 +1,3 @@
-@pipeline
 Feature: Change log for supplier regions
 
   Scenario: Changes to the supplier regions are logged

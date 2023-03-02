@@ -1,4 +1,3 @@
-@pipeline
 Feature: Local government pension scheme validations
 
   Background: Navigate to the Local government pension scheme question

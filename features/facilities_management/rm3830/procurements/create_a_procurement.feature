@@ -1,6 +1,5 @@
 Feature: Create a procurement
   
-  @pipeline
   Scenario: Create a procurement
     Given I sign in and navigate to my account for 'RM3830'
     And I click on 'Start a procurement'

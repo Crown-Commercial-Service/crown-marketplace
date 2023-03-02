@@ -16,7 +16,7 @@ Feature: Authorised representative detail
     Then I open the details for the 'Authorised representative details'
     And my 'Authorised representative details' contact details match the buyer details
 
-  @javascript @pipeline
+  @javascript
   Scenario: Entering new details is selected
     Given I select 'Enter a new authorised representative' for the contact details
     And I click on the button with text 'Continue'

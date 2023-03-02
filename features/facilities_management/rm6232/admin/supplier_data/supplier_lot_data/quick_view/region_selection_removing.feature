@@ -33,7 +33,6 @@ Feature: Removing regions for suppliers on the admin tool and seeing the effect 
       | 11000000        | 1c          | Cummerata, Lubowitz and Ebert |
 
 
-  @pipeline
   Scenario Outline: Hard services - region selection
     Given I go to a quick view with the following services, regions and annual contract cost:
       | F.2  | UKL18  | <contract_value>  |

@@ -1,4 +1,4 @@
-@pipeline @contract_emails
+@contract_emails
 Feature: Supplier accepts contract
 
   Scenario: Accept the contract

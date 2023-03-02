@@ -1,4 +1,3 @@
-@pipeline
 Feature: Assigning services to buildings validations
 
   Background: Background name

@@ -33,8 +33,6 @@ jobs:
 
   run-feature-tests:
     uses: ./.github/workflows/feature_tests.yml
-    with:
-      run_all_feature_tests: true
 
   deploy-to-application:
     runs-on: ubuntu-latest

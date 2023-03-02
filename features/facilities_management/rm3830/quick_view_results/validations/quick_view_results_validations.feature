@@ -1,4 +1,3 @@
-@pipeline
 Feature: Quick view results validations
 
   Background: Navigate to the Quick view results page

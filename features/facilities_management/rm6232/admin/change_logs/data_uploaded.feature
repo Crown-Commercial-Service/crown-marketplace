@@ -1,4 +1,3 @@
-@pipeline
 Feature: Change log for data uploads
 
   Scenario: Data uploads are logged

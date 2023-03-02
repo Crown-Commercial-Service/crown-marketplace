@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier status - validations
 
   Scenario: Validate supplier status

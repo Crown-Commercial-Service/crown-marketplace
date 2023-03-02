@@ -12,7 +12,6 @@ Feature: Allow list - User admin - Add email domain
     And I click on 'Add a new email domain'
     Then I am on the 'Add an email domain' page
 
-  @pipeline
   Scenario: Add email domain
     And I enter 'new.emai.com' for the email domain
     And I click on 'Save and continue'
