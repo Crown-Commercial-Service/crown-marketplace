@@ -1,4 +1,3 @@
-@pipeline
 Feature: Buyer details - validations
 
   Background: Navigate to Buyer Details page

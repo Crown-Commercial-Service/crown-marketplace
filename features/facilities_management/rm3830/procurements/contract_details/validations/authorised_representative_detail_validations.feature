@@ -1,4 +1,3 @@
-@pipeline
 Feature: Authorised representative detail validations
 
   Background: Navigate to the Authorised representative detail question

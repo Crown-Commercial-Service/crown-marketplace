@@ -8,7 +8,6 @@ Feature: Payment method
     And I answer the 'Payment method' contract detail question
     Then I am on the 'Payment method' page
 
-  @pipeline
   Scenario: Answer is saved
     Given I pick 'BACS payment' for the payment method
     And I click on 'Save and return'

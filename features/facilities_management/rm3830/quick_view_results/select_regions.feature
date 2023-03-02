@@ -39,7 +39,6 @@ Feature: Select regions
       | East Lothian and Midlothian (UKM23)                                                   |
       | Outer Belfast (Carrickfergus, Castlereagh, Lisburn, Newtownabbey, North Down) (UKN02) |
 
-  @pipeline
   Scenario: Changing the selection will change the basket
     When I select the following items:
       | Essex                       |

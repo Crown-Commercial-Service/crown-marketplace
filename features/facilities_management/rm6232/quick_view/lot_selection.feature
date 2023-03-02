@@ -5,7 +5,6 @@ Feature: Service and selection and annual contract cost result in correct sub lo
     And I click on 'Search for suppliers'
     Then I am on the 'Services' page
 
-  @pipline
   Scenario Outline: Select only hard services
     When I select the following items:
       | Audio Visual (AV) equipment maintenance |
@@ -29,7 +28,6 @@ Feature: Service and selection and annual contract cost result in correct sub lo
       | 6999999               | 2b      |
       | 11000000              | 2c      |
 
-  @pipline
   Scenario Outline: Select only soft services
     When I select the following items:
       | Voice announcement system operation |
@@ -53,7 +51,6 @@ Feature: Service and selection and annual contract cost result in correct sub lo
       | 6999999               | 3b      |
       | 11000000              | 3c      |
 
-  @pipline
   Scenario Outline: Select only total services
     When I select the following items:
       | End-User Accommodation Services       |
@@ -101,7 +98,6 @@ Feature: Service and selection and annual contract cost result in correct sub lo
       | 6999999               | 1b      |
       | 11000000              | 1c      |
 
-  @pipline
   Scenario Outline: Select hard and soft/total services
     When I select the following items:
       | Locksmith Services  |
@@ -150,7 +146,6 @@ Feature: Service and selection and annual contract cost result in correct sub lo
       | 6999999               | 1b      |
       | 11000000              | 1c      |
 
-  @pipline
   Scenario Outline: Select soft and hard/total services
     When I select the following items:
       | Full service restaurant                                     |
@@ -222,7 +217,6 @@ Feature: Service and selection and annual contract cost result in correct sub lo
       | 6999999               | 1b      |
       | 11000000              | 1c      |
   
-  @pipline
   Scenario Outline: Select total, hard and soft services
     When I select the following items:
       | Mail room equipment maintenance                                                                                                           |

@@ -2,12 +2,6 @@ name: "Run application feature tests"
 
 on:
   workflow_call:
-    inputs:
-      run_all_feature_tests:
-        description: 'A trigger to run all the feature tests instead of a subset'
-        default: false
-        required: false
-        type: boolean
 
 jobs:
   feature-test:
@@ -49,10 +43,5 @@ jobs:
       - name: Seed DB with test data
         run: bin/rails db:static
 
-      - name: Run feature tests
-        run: bin/rails cucumber:pipeline
-        if: ${{ !inputs.run_all_feature_tests }}
-
       - name: Run all feature tests
         run: bin/rails cucumber:ok
-        if: ${{ inputs.run_all_feature_tests }}

@@ -1,4 +1,3 @@
-@pipeline
 Feature: Call-off benchmark rates  - validations
 
   Background: Navigate to the call-off benchmark rates page

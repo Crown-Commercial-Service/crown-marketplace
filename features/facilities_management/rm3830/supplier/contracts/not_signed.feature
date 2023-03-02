@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier not signed contract
 
   Scenario: Not signed contract

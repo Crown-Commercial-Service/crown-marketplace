@@ -1,4 +1,4 @@
-@allow_list @javascript @pipeline
+@allow_list @javascript
 Feature: Allow list - User support - Search allow list
 
   Scenario: Serach allow list

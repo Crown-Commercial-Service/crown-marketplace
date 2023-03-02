@@ -9,7 +9,6 @@ Feature: Manage users - User support - Add user
     And the 'role' in the summary is:
       | Buyer |
 
-  @pipeline
   Scenario: Create a Buyer user
     And I select 'Facilities Management'
     Then I click on 'Continue'

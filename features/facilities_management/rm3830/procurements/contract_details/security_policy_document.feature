@@ -8,14 +8,12 @@ Feature: Security policy document
     And I answer the 'Security policy' contract detail question
     Then I am on the 'Security policy document' page
 
-  @pipeline
   Scenario: When no is selected
     Given I select 'No' for the security policy document question
     When I click on 'Save and return'
     Then I am on the 'Contract details' page
     And my answer to the 'Security policy' contract detail question is 'Not applicable'
 
-  @pipeline
   Scenario: When yes is selected
     Given I select 'Yes' for the security policy document question
     And I enter 'Test' for the security policy document 'name'

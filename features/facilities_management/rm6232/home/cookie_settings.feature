@@ -1,4 +1,4 @@
-@javascript @pipeline
+@javascript
 Feature: Cookie settings
 
   Background: Go to start page

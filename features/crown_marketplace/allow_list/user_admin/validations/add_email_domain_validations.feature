@@ -1,4 +1,4 @@
-@allow_list @pipeline
+@allow_list
 Feature: Allow list - User admin - Add email domain - Validations
 
   Scenario Outline: Add email domain

@@ -37,12 +37,6 @@ unless ARGV.any? { |a| a =~ /^gems/ } # Don't load anything when running the gem
         t.profile = 'accessibility'
       end
 
-      Cucumber::Rake::Task.new({ pipeline: 'test:prepare' }, 'Run cut down suite for the pipeline') do |t|
-        t.binary = vendored_cucumber_bin
-        t.fork = true # You may get faster startup if you set this to false
-        t.profile = 'pipeline'
-      end
-
       desc 'Run all features'
       task all: %i[ok wip]
 
