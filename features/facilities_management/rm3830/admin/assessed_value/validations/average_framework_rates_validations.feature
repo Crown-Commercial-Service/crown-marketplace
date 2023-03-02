@@ -1,4 +1,3 @@
-@pipeline
 Feature: Average framework rates  - validations
 
   Background: Navigate to the average framework rates page

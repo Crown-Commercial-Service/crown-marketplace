@@ -29,7 +29,6 @@ Feature: Information appears correctly on results page
     And I should see the following 'annual contract cost' in the selection summary:
       | £123,456  |
 
-  @pipline
   Scenario: I can change the services from the results page
     Given I change the 'services' from the selection summary
     Then I am on the 'Services' page
@@ -48,7 +47,6 @@ Feature: Information appears correctly on results page
       | Planned / Group re-lamping service                |
       | Outside catering                                  |
 
-  @pipline
   Scenario: I can change the regions from the results page
     Given I change the 'regions' from the selection summary
     Then I am on the 'Regions' page
@@ -64,7 +62,6 @@ Feature: Information appears correctly on results page
       | Essex                                             |
       | Gloucestershire, Wiltshire and Bristol/Bath area  |
 
-  @pipline
   Scenario: I can change the annual contract cost from the results page
     Given I change the 'annual contract cost' from the selection summary
     Then I am on the 'Annual contract cost' page

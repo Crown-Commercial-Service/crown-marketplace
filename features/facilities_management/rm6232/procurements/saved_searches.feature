@@ -1,4 +1,3 @@
-@pipeline
 Feature: Saved searches
 
   Scenario: Navigate to saved searches page - no procurements

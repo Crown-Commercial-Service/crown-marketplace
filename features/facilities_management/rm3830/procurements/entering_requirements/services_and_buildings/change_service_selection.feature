@@ -1,4 +1,3 @@
-@pipeline
 Feature: Changing the service selection
 
   Scenario: The assigning services to buildings becomes incomplete when the service selection is changed

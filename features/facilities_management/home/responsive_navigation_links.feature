@@ -1,4 +1,4 @@
-@mobile @javascript @pipline
+@mobile @javascript
 Feature: Headers are responsive
 
   Scenario: Signed in and the navigation links are responsive

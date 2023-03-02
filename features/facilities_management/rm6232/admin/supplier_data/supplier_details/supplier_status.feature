@@ -17,7 +17,6 @@ Feature: Supplier status
     Then I am on the 'Supplier details' page
     And the 'Supplier status' is 'INACTIVE' on the supplier details page
 
-  @pipline
   Scenario Outline: Change supplier status removes it from the results
     Given I go to a quick view with the following services, regions and annual contract cost:
       | F.2  | UKH3  | 654321 |

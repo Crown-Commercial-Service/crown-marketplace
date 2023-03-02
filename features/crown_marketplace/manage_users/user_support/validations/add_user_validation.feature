@@ -1,4 +1,4 @@
-@allow_list @pipeline
+@allow_list
 Feature: Manage users - User support - Add user - Validations
 
   Background: Navigate to add user page

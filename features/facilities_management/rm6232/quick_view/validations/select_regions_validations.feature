@@ -1,4 +1,3 @@
-@pipeline
 Feature: Select region validations
 
   Scenario: No region selected

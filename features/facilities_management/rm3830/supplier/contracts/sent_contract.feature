@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier sent contract
 
   Scenario: Sent contract

@@ -1,4 +1,3 @@
-@pipeline
 Feature: Current user - validations
 
   Background: Navigate to the current user section

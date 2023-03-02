@@ -1,4 +1,3 @@
-@pipeline
 Feature: Manage users - Super admin - Edit user - Validations
 
   Background: Navigate to the user show page

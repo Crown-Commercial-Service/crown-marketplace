@@ -8,7 +8,6 @@ Feature: Governing law
     And I answer the 'Governing law' contract detail question
     Then I am on the 'Governing law' page
 
-  @pipeline
   Scenario: Answer is saved
     Given I pick 'English Law' for the governing law
     And I click on 'Save and continue'

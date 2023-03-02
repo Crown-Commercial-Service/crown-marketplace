@@ -32,7 +32,6 @@ Feature: Service standards
       | Standard B - this is the minimum level of service required                    |
       | Standard C - this level of service will be bespoke and site or area specific  |
 
-  @pipeline
   Scenario: The service standard selection saves
     Given I choose to answer the service standard question for 'Lifts, hoists & conveyance systems maintenance'
     Then I am on the page with secondary heading 'Lifts, hoists & conveyance systems maintenance'

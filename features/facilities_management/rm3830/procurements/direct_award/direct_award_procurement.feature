@@ -1,4 +1,4 @@
-@javascript @pipeline
+@javascript
 Feature: Procurement journey - Direct Award
 
   Scenario: Taking a procurement through to direct award
