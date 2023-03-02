@@ -67,7 +67,7 @@
           <%= t('.email_status') %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= govuk_tag_with_text(*verified_unverified_status_tag(@user.email_verified)) %>
+          <%= govuk_tag(*verified_unverified_status_tag(@user.email_verified)) %>
         </dd>
         <% if can_edit_user? %>
           <dd class="govuk-summary-list__actions">
@@ -83,7 +83,7 @@
           <%= t('.account_status') %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= govuk_tag_with_text(*enabled_disabled_status_tag(@user.account_status)) %>
+          <%= govuk_tag(*enabled_disabled_status_tag(@user.account_status)) %>
         </dd>
         <% if can_edit_user? %>
           <dd class="govuk-summary-list__actions">
@@ -99,7 +99,7 @@
           <%= t('.confirmation_status') %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= govuk_tag_with_text(*user_confirmation_status_tag(@user.confirmation_status)) %>
+          <%= govuk_tag(*user_confirmation_status_tag(@user.confirmation_status)) %>
         </dd>
       </div>
       <div class="govuk-summary-list__row" id="view-user__telephone-number">
@@ -124,7 +124,7 @@
             <%= t('.mfa_status') %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= govuk_tag_with_text(*enabled_disabled_status_tag(@user.mfa_enabled)) %>
+            <%= govuk_tag(*enabled_disabled_status_tag(@user.mfa_enabled)) %>
           </dd>
           <% if can_edit_user? && permitted_sections.include?(:mfa_enabled) %>
             <dd class="govuk-summary-list__actions">

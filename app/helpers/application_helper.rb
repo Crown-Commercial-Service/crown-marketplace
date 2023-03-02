@@ -117,26 +117,8 @@ module ApplicationHelper
     number_to_currency(cost, precision: precision, unit: '£')
   end
 
-  def govuk_tag(status)
-    extra_classes = {
-      cannot_start: 'govuk-tag--grey',
-      incomplete: 'govuk-tag--red',
-      in_progress: 'govuk-tag--blue',
-      not_started: 'govuk-tag--grey',
-      not_required: 'govuk-tag--grey'
-    }
-
-    tag.strong(I18n.t(status, scope: 'shared.tags'), class: ['govuk-tag'] << extra_classes[status])
-  end
-
-  def govuk_tag_with_text(colour, text)
-    extra_classes = {
-      grey: 'govuk-tag--grey',
-      blue: 'govuk-tag',
-      red: 'govuk-tag--red'
-    }
-
-    tag.strong(text, class: ['govuk-tag'] << extra_classes[colour])
+  def govuk_tag_with_status(status)
+    govuk_tag(I18n.t(status, scope: 'shared.tags'), STATUS_TO_COLOUR[status])
   end
 
   def service_specification_document(framework)
@@ -257,5 +239,12 @@ module ApplicationHelper
       !current_cookie_preferences.is_a?(Hash) || current_cookie_preferences.empty? ? Marketplace.default_cookie_options : current_cookie_preferences
     end
   end
+
+  STATUS_TO_COLOUR = {
+    cannot_start: :grey,
+    incomplete: :red,
+    not_started: :grey,
+    not_required: :grey
+  }.freeze
 end
 # rubocop:enable Metrics/ModuleLength
