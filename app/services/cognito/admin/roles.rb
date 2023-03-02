@@ -77,7 +77,7 @@ module Cognito
       end
 
       def self.current_user_access(current_user_ability)
-        if current_user_ability.can? :manage, FacilitiesManagement::Framework
+        if current_user_ability.can? :manage, Framework
           :super_admin
         elsif current_user_ability.can? :manage, AllowedEmailDomain
           :user_admin

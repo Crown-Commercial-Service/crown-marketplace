@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_24_132602) do
+ActiveRecord::Schema.define(version: 2023_03_01_134447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -85,13 +85,6 @@ ActiveRecord::Schema.define(version: 2022_10_24_132602) do
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
-  end
-
-  create_table "facilities_management_frameworks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "framework", limit: 6
-    t.date "live_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "facilities_management_regions", id: false, force: :cascade do |t|
@@ -454,7 +447,7 @@ ActiveRecord::Schema.define(version: 2022_10_24_132602) do
     t.index ["user_id"], name: "index_fm_rm6232_procurements_on_user_id"
   end
 
-  create_table "facilities_management_rm6232_services", primary_key: "code", id: :string, limit: 5, force: :cascade do |t|
+  create_table "facilities_management_rm6232_services", primary_key: "code", id: { type: :string, limit: 5 }, force: :cascade do |t|
     t.string "work_package_code", limit: 1, null: false
     t.string "name", limit: 150
     t.text "description"
@@ -502,7 +495,7 @@ ActiveRecord::Schema.define(version: 2022_10_24_132602) do
     t.index ["supplier_name"], name: "index_facilities_management_rm6232_suppliers_on_supplier_name", unique: true
   end
 
-  create_table "facilities_management_rm6232_work_packages", primary_key: "code", id: :string, limit: 1, force: :cascade do |t|
+  create_table "facilities_management_rm6232_work_packages", primary_key: "code", id: { type: :string, limit: 1 }, force: :cascade do |t|
     t.string "name", limit: 100
     t.boolean "selectable"
     t.datetime "created_at", precision: 6, null: false
@@ -518,6 +511,15 @@ ActiveRecord::Schema.define(version: 2022_10_24_132602) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["id"], name: "index_facilities_management_security_types_on_id"
+  end
+
+  create_table "frameworks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "service", limit: 25
+    t.string "framework", limit: 6
+    t.date "live_at"
+    t.date "expires_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "nuts_regions", id: false, force: :cascade do |t|

@@ -1,9 +1,10 @@
 module FacilitiesManagement
   module Admin
     class FrameworkController < ::ApplicationController
+      include FrameworkStatusConcern
+
       before_action :authenticate_user!
       before_action :authorize_user
-      before_action :raise_if_unrecognised_framework
 
       protected
 
@@ -33,6 +34,10 @@ module FacilitiesManagement
 
       def set_lot
         @lot = params[:lot]
+      end
+
+      def service_scope
+        :facilities_management
       end
     end
   end
