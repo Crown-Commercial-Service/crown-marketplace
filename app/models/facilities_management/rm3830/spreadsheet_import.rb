@@ -74,7 +74,7 @@ module FacilitiesManagement
         STATES_TO_STRINGS[aasm_state.to_sym]
       end
 
-      STATES_TO_STRINGS = { importing: [:grey, 'Upload in progress'], succeeded: [:blue, 'Upload completed'], failed: [:red, 'Upload failed'] }.freeze
+      STATES_TO_STRINGS = { importing: ['Upload in progress', :grey], succeeded: ['Upload completed'], failed: ['Upload failed', :red] }.freeze
       BUILDING_ATTRIBUTES = %i[building_name description address_line_1 address_line_2 address_town address_postcode gia external_area building_type other_building_type security_type other_security_type].freeze
       SERVICE_MATRIX_ATTRIBUTES = %i[service_codes building].freeze
 

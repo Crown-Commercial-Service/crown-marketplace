@@ -56,7 +56,7 @@
             <%= t('.current_status') %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= govuk_tag_with_text(*@supplier.current_status) %>
+            <%= govuk_tag(*@supplier.current_status) %>
           </dd>
           <% unless @framework_has_expired %>
             <dd class="govuk-summary-list__actions">
