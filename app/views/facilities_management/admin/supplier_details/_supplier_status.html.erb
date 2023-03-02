@@ -7,13 +7,13 @@
     <div class="govuk-radios__item">
       <%= f.radio_button :active, true, class: 'govuk-radios__input', required: true %>
       <%= f.label :active, value: true, class: 'govuk-label govuk-radios__label' do %>
-        <%= govuk_tag_with_text(:blue, t('.active')) %>
+        <%= govuk_tag(t('.active')) %>
       <% end %>
     </div>
     <div class="govuk-radios__item">
       <%= f.radio_button :active, false, class: 'govuk-radios__input', required: true %>
       <%= f.label :active, value: false , class: 'govuk-label govuk-radios__label' do %>
-        <%= govuk_tag_with_text(:red, t('.inactive')) %>
+        <%= govuk_tag(t('.inactive'), :red) %>
       <% end %>
     </div>
   </div>

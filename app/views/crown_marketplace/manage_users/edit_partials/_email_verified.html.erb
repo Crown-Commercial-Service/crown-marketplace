@@ -15,13 +15,13 @@
     <div class="govuk-radios__item">
       <%= f.radio_button :email_verified, true, class: 'govuk-radios__input', required: true, aria: { describedby: 'email-verified-hint' } %>
       <%= f.label :email_verified, value: true, class: 'govuk-label govuk-radios__label' do %>
-        <%= govuk_tag_with_text(*verified_unverified_status_tag(true)) %>
+        <%= govuk_tag(*verified_unverified_status_tag(true)) %>
       <% end %>
     </div>
     <div class="govuk-radios__item">
       <%= f.radio_button :email_verified, false, class: 'govuk-radios__input', required: true, aria: { describedby: 'email-verified-hint' } %>
       <%= f.label :email_verified, value: false, class: 'govuk-label govuk-radios__label' do %>
-        <%= govuk_tag_with_text(*verified_unverified_status_tag(false)) %>
+        <%= govuk_tag(*verified_unverified_status_tag(false)) %>
       <% end %>
     </div>
   </div>

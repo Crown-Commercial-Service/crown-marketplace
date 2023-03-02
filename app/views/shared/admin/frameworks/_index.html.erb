@@ -34,11 +34,11 @@
             <td class="govuk-table__cell">
               <% case framework.status %>
               <% when :live %>
-                <%= govuk_tag_with_text(:blue, t('.live')) %>
+                <%= govuk_tag(t('.live')) %>
               <% when :coming %>
-                <%= govuk_tag_with_text(:grey, t('.coming')) %>
+                <%= govuk_tag(t('.coming'), :grey) %>
               <% else %>
-                <%= govuk_tag_with_text(:red, t('.expired')) %>
+                <%= govuk_tag(t('.expired'), :red) %>
               <% end %>
             </td>
             <td class="govuk-table__cell"><%= link_to t('.change'), "/#{service_param}/admin/frameworks/#{framework.id}/edit" %>

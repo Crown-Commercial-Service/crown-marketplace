@@ -31,7 +31,7 @@
             <%= t('.status') %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= govuk_tag_with_text(*lot_data[:current_status]) %>
+            <%= govuk_tag(*lot_data[:current_status]) %>
           </dd>
           <dd class="govuk-summary-list__actions">
             <%= link_to facilities_management_rm6232_admin_supplier_lot_datum_edit_path(supplier_lot_datum_id: lot_data[:id], lot_data_type: 'lot_status'), class: 'govuk-link--no-visited-state' do %>

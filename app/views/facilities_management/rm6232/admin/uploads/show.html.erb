@@ -16,7 +16,7 @@
           <%= t('.status') %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= govuk_tag_with_text(*upload_status_tag(@upload.aasm_state)) %>
+          <%= govuk_tag(*upload_status_tag(@upload.aasm_state)) %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
