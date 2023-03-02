@@ -342,6 +342,7 @@ en:
       dont_use_cookies:
         ga: Do not use cookies that measure my website use (Google Analytics)
         glassbox: Do not use cookies that measure my website use (Glassbox)
+      error: Error
       essential_cookies: These essential cookies do things like remember the notifications you have seen so we do not show them to you again.
       find_out_more: Find out more about cookies on Crown Marketplace
       heading: Cookies on Crown Marketplace

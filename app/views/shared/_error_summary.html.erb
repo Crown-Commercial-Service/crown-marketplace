@@ -1,26 +1,16 @@
 <% if errors.any? %>
-  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
-    <h2 class="govuk-error-summary__title" id="error-summary-title">
-      <%= t(".there_is_a_problem") %>
-    </h2>
-    <div class="govuk-error-summary__body">
-      <ul class="govuk-list govuk-error-summary__list">
-        <% errors.attribute_names.each do |attribute| %>
-          <li>
-            <%= link_to "#{errors[attribute].first}", "##{error_id(attribute)}", data: { turbolinks: false, fieldname: attribute, errortype: get_client_side_error_type_from_errors(errors, attribute).to_s } %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-<%elsif defined?(render_empty) && render_empty %>
-  <div class="govuk-error-summary govuk-visually-hidden" aria-labelledby="error-summary-title" role="alert" data-module="error-summary" style="display: none;">
-    <div class="govuk-error-summary__title" id="error-summary-title">
-      <%= t(".there_is_a_problem") if errors.any? %>
-    </div>
-    <div class="govuk-error-summary__body">
-      <ul class="govuk-list govuk-error-summary__list">
-      </ul>
-    </div>
-  </div>
+  <%= govuk_error_summary(
+    t(".there_is_a_problem"),
+    errors.attribute_names.map do |attribute|
+      {
+        text: errors[attribute].first,
+        href: "##{error_id(attribute)}",
+        attributes: {
+          data: {
+            turbolinks: false
+          }
+        }
+      }
+    end
+  ) %>
 <% end %>
