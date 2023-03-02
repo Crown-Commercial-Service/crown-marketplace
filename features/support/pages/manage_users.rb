@@ -26,8 +26,8 @@ module Pages
     end
 
     section :notification_banner, 'div.govuk-notification-banner' do
-      element :heading, 'p.govuk-notification-banner__heading'
-      element :content, 'div.govuk-notification-banner__content'
+      element :heading, 'div.govuk-notification-banner__content > h3.govuk-notification-banner__heading'
+      element :message, 'div.govuk-notification-banner__content > p.govuk-body'
     end
 
     section :find_a_user, '#email-form-group' do

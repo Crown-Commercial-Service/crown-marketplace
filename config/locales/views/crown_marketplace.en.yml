@@ -86,6 +86,7 @@ en:
         new_user_body: Add a new user onto the Crown Marketplace platform
         new_user_invite_title: Invite a new user
         something_went_wrong_banner:
+          error: Error
           message: 'The following error occured: "%{error_message}"'
           title: Something went wrong
         supply_teachers: Supply Teachers

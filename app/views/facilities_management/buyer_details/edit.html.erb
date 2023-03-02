@@ -3,8 +3,8 @@
 <div class="govuk-body govuk-grid-row buyer-details" id="buyer_details">
   <div class="govuk-grid-column-two-thirds" id="edit-contact-detail">
     <%= form_for @buyer_detail, url: facilities_management_buyer_detail_path(params[:framework]), method: :patch, html: { novalidate: true, specialvalidation: true, multipart: true } do |f| %>
-      <%= link_to t('.back'), facilities_management_index_path, class: "govuk-back-link govuk-!-margin-bottom-2" unless (current_user.nil? || current_user.fm_buyer_details_incomplete?) %>
-      <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: false} %>
+      <%= govuk_back_link( t('.back'), facilities_management_index_path) unless (current_user.nil? || current_user.fm_buyer_details_incomplete?) %>
+      <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors } %>
 
       <div class="govuk-caption-l govuk-!-margin-top-2">
         <%= current_user.email %>

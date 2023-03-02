@@ -1,5 +1,6 @@
 # rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
+  include CCS::FrontendHelpers
   include LayoutHelper
   include GovUKHelper
   include HeaderNavigationLinksHelper
@@ -144,18 +145,6 @@ module ApplicationHelper
 
   def govuk_radio_driver
     tag.div(t('common.radio_driver'), class: 'govuk-radios__divider')
-  end
-
-  def warning_text(text)
-    tag.div(class: 'govuk-warning-text') do
-      concat(tag.span('!', class: 'govuk-warning-text__icon', aria: { hidden: true }))
-      concat(
-        tag.strong(class: 'govuk-warning-text__text') do
-          concat(tag.span('Warning', class: 'govuk-warning-text__assistive'))
-          concat(text)
-        end
-      )
-    end
   end
 
   def find_address_helper(object, organisaiton_prefix)

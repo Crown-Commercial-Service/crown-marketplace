@@ -3,8 +3,28 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= govuk_notification_banner(:success, t('.added')) { t('.was_added', email_domain: flash[:email_domain_added]) } unless flash[:email_domain_added].blank? %>
-    <%= govuk_notification_banner(:success, t('.removed')) { t('.was_removed', email_domain: flash[:email_domain_removed]) } unless flash[:email_domain_removed].blank? %>
+    <% if flash[:email_domain_added] %>
+      <%= govuk_notification_banner(nil, true) do %>
+        <h3 class="govuk-notification-banner__heading">
+          <%= t('.added') %>
+        </h3>
+        <p class="govuk-body">
+          <%= t('.was_added', email_domain: flash[:email_domain_added]) %>
+        </p>
+      <% end %>
+    <% end %>
+
+    <% if flash[:email_domain_removed] %>
+      <%= govuk_notification_banner(nil, true) do %>
+        <h3 class="govuk-notification-banner__heading">
+          <%= t('.removed') %>
+        </h3>
+        <p class="govuk-body">
+          <%= t('.was_removed', email_domain: flash[:email_domain_removed]) %>
+        </p>
+      <% end %>
+    <% end %>
+
     <h1 class="govuk-heading-xl"><%= t('.heading_title') %></h1>
     <p>
       <%= t('.in_order_to') %>
