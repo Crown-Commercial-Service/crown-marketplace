@@ -11,7 +11,7 @@ module Cognito
               length: { is: 6, message: :invalid_length }
 
     def initialize(email, confirmation_code)
-      @email = email
+      @email = email.try(:downcase)
       @confirmation_code = confirmation_code
       @error = nil
     end

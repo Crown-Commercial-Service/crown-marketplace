@@ -17,6 +17,7 @@ RSpec.describe Cognito::SignUpUser do
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(AllowedEmailDomain).to receive(:allow_list_file_path).and_return(allow_list_file.path)
       # rubocop:enable RSpec/AnyInstance
+      allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
     end
 
     after do
@@ -27,7 +28,6 @@ RSpec.describe Cognito::SignUpUser do
       let(:response) { described_class.new(email, password, password_confirmation, roles) }
 
       before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_return(JSON[{ user_sub: '12345'.to_json }])
         allow(aws_client).to receive(:admin_add_user_to_group).and_return(JSON[{ user_sub: '12345'.to_json }])
       end
@@ -192,28 +192,26 @@ RSpec.describe Cognito::SignUpUser do
     end
 
     context 'when success' do
+      let(:response) { described_class.call(email, password, password_confirmation, roles) }
+
       before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_return(JSON[{ user_sub: '12345'.to_json }])
         allow(aws_client).to receive(:admin_add_user_to_group).and_return(JSON[{ user_sub: '12345'.to_json }])
       end
 
       it 'creates user' do
-        expect { described_class.call(email, password, password_confirmation, roles) }.to change(User, :count).by 1
+        expect { response }.to change(User, :count).by 1
       end
 
       it 'returns the newly created resource' do
-        response = described_class.call(email, password, password_confirmation, roles)
         expect(response.user).to eq User.order(created_at: :asc).last
       end
 
       it 'returns success' do
-        response = described_class.call(email, password, password_confirmation, roles)
         expect(response.success?).to be true
       end
 
       it 'returns no error' do
-        response = described_class.call(email, password, password_confirmation, roles)
         expect(response.error).to be_nil
       end
     end
@@ -221,10 +219,7 @@ RSpec.describe Cognito::SignUpUser do
     context 'when cognito error' do
       let(:response) { described_class.call(email, password, password_confirmation, roles) }
 
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:sign_up).and_raise(error.new('Some context', 'Some message'))
-      end
+      before { allow(aws_client).to receive(:sign_up).and_raise(error.new('Some context', 'Some message')) }
 
       context 'and the error is ServiceError' do
         let(:error) { Aws::CognitoIdentityProvider::Errors::ServiceError }

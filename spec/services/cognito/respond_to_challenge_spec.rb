@@ -13,11 +13,12 @@ RSpec.describe Cognito::RespondToChallenge do
   let(:new_session) { 'New session' }
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
+  before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
+
   describe '#validations' do
     let(:response) { described_class.new(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
 
     before do
-      allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
       allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
       allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(true)
     end
@@ -64,7 +65,6 @@ RSpec.describe Cognito::RespondToChallenge do
       let(:response) { described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
 
       before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
         allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(true)
       end
@@ -94,10 +94,7 @@ RSpec.describe Cognito::RespondToChallenge do
       let(:challenge_name) { 'SMS_MFA' }
       let(:response) { described_class.call(challenge_name, username, session, access_code: access_code) }
 
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
-      end
+      before { allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session)) }
 
       it 'returns success' do
         expect(response.success?).to be true
@@ -121,18 +118,15 @@ RSpec.describe Cognito::RespondToChallenge do
     end
 
     context 'when cognito error' do
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:respond_to_auth_challenge).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
-      end
+      let(:response) { described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
+
+      before { allow(aws_client).to receive(:respond_to_auth_challenge).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops')) }
 
       it 'does not return success' do
-        response = described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation)
         expect(response.success?).to be false
       end
 
       it 'does returns cognito error' do
-        response = described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation)
         expect(response.errors.full_messages.to_sentence).to eq 'Oops'
       end
     end

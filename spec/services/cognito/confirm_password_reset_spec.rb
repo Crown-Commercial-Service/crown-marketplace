@@ -7,12 +7,10 @@ RSpec.describe Cognito::ConfirmPasswordReset do
   let(:confirmation_code) { '1234' }
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
+  before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
+
   describe '#validations' do
     let(:response) { described_class.new(username, password, password_confirmation, confirmation_code) }
-
-    before do
-      allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-    end
 
     context 'when password shorter than 8 characters' do
       let(:password) { 'Pass!' }
@@ -52,15 +50,12 @@ RSpec.describe Cognito::ConfirmPasswordReset do
   end
 
   describe '#call' do
+    let(:response) { described_class.call(username, password, password_confirmation, confirmation_code) }
+
     context 'when success' do
       include_context 'with cognito structs'
 
-      let(:response) { described_class.call(username, password, password_confirmation, confirmation_code) }
-
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:confirm_forgot_password).and_return(cognito_session_struct.new(session: '12345'))
-      end
+      before { allow(aws_client).to receive(:confirm_forgot_password).and_return(cognito_session_struct.new(session: '12345')) }
 
       it 'returns success' do
         expect(response.success?).to be true
@@ -72,18 +67,13 @@ RSpec.describe Cognito::ConfirmPasswordReset do
     end
 
     context 'when cognito error' do
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:confirm_forgot_password).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
-      end
+      before { allow(aws_client).to receive(:confirm_forgot_password).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops')) }
 
       it 'does not return success' do
-        response = described_class.call(username, password, password_confirmation, confirmation_code)
         expect(response.success?).to be false
       end
 
       it 'does returns cognito error' do
-        response = described_class.call(username, password, password_confirmation, confirmation_code)
         expect(response.errors.full_messages.to_sentence).to eq 'Oops'
       end
     end
