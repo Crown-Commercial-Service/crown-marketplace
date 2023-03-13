@@ -10,7 +10,7 @@
       <div class="govuk-error-summary__body">
         <ul class="govuk-list govuk-error-summary__list">
           <li>
-            <%= link_to flash[:error], "##{error_id('email')}" %>
+            <%= link_to flash[:error], "##{error_id('email')}", data: { turbolinks: false } %>
           </li>
         </ul>
       </div>

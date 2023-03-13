@@ -33,7 +33,7 @@
     <% end %>
 
     <div class="error-content">
-      <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link"><%= t('layouts.application.skip') %></a>
+      <%= link_to t('layouts.application.skip'), '#main-content', class: 'govuk-skip-link', data: { module: 'govuk-skip-link', turbolinks: false } %>
       <%= render partial: '/layouts/cookie-banner' unless cookie_preferences_settings['settings_viewed'] || controller.action_name == 'cookie_settings' %>
       <%= render partial: '/layouts/header' %>
 
