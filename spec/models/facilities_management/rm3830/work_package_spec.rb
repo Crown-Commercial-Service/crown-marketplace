@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::RM3830::WorkPackage do
   end
 
   it 'only has unique codes' do
-    expect(all_codes.uniq).to contain_exactly(*all_codes)
+    expect(all_codes.uniq).to match_array(all_codes)
   end
 
   it 'all have names' do

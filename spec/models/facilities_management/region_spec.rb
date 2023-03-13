@@ -6,7 +6,7 @@ RSpec.describe FacilitiesManagement::Region do
   let(:all_codes) { described_class.all_codes }
 
   it 'only has unique codes' do
-    expect(all_codes.uniq).to contain_exactly(*all_codes)
+    expect(all_codes.uniq).to match_array(all_codes)
   end
 
   it 'all have names' do

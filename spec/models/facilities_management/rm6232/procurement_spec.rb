@@ -1049,7 +1049,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
         it 'returns only the procurement buildings that are active' do
           expect(result.count).to eq 1
           expect(result.class.to_s).to eq 'FacilitiesManagement::RM6232::ProcurementBuilding::ActiveRecord_AssociationRelation'
-          expect(result).to match_array([building_2])
+          expect(result).to contain_exactly(building_2)
         end
       end
 

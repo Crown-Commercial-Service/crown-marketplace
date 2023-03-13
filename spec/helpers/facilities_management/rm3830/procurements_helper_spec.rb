@@ -491,12 +491,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper do
     end
 
     it 'returns the list of supplier names' do
-      expect(helper.suppliers).to match_array [
-        procurement_supplier1.supplier_name,
-        procurement_supplier2.supplier_name,
-        procurement_supplier3.supplier_name,
-        procurement_supplier4.supplier_name
-      ]
+      expect(helper.suppliers).to contain_exactly(procurement_supplier1.supplier_name, procurement_supplier2.supplier_name, procurement_supplier3.supplier_name, procurement_supplier4.supplier_name)
     end
   end
 

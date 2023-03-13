@@ -36,7 +36,7 @@ When 'I click on {string}' do |button_text|
 end
 
 Then('the following content should be displayed on the page:') do |table|
-  page_text = page.find('#main-content').text
+  page_text = page.find_by_id('main-content').text
 
   table.raw.flatten.each do |item|
     expect(page_text).to include(item)
@@ -116,7 +116,7 @@ When('I visit {string}') do |url|
 end
 
 Then('the framework is {string}') do |framework|
-  expect(current_path).to start_with("/facilities-management/#{framework}")
+  expect(page).to have_current_path(%r{/facilities-management/#{framework}/*})
 end
 
 Then('the spreadsheet {string} is downloaded') do |spreadsheet_name|

@@ -1,5 +1,5 @@
 Then('the procurement name is shown to be {string}') do |contract_name|
-  expect(page.find('#procurement-subtitle')).to have_content(contract_name)
+  expect(page.find_by_id('procurement-subtitle')).to have_content(contract_name)
 end
 
 Then('the RM6232 procurement {string} should have the state {string}') do |contract_name, status|

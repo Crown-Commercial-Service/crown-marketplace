@@ -2,6 +2,7 @@
 require:
   - rubocop-rspec
   - rubocop-rails
+  - rubocop-capybara
   - './lib/cop/all'
 
 AllCops:
