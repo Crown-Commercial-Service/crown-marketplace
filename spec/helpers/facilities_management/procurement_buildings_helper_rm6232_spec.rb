@@ -98,7 +98,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper do
 
     context 'when there are buildings with missing regions' do
       it 'returns the buildings missing regions' do
-        expect(result).to match_array [procurement_building2, procurement_building4]
+        expect(result).to contain_exactly(procurement_building2, procurement_building4)
       end
     end
 
@@ -107,7 +107,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper do
       let(:procurement_building4) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building)) }
 
       it 'returns the buildings missing regions' do
-        expect(result).to match_array []
+        expect(result).to be_empty
       end
     end
   end

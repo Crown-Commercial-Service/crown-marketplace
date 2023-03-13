@@ -72,16 +72,16 @@ RSpec.describe FacilitiesManagement::RM3830::FurtherCompetitionDeliverablesMatri
 
     # rubocop:disable RSpec/MultipleExpectations
     it 'Verify Buildings information headers' do
-      expect(wb.sheet('Buildings information').row(1)).to match_array(['Buildings information', 'Building 1'])
-      expect(wb.sheet('Buildings information').row(2)).to match_array(['Building name', 'asa'])
-      expect(wb.sheet('Buildings information').row(3)).to match_array(['Building Description', 'london building'])
-      expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Line 1', '100 New Barn Street'])
-      expect(wb.sheet('Buildings information').row(9)).to match_array(['Building Gross Internal Area (GIA) (sqm)', 1002])
-      expect(wb.sheet('Buildings information').row(10)).to match_array(['Building External Area (sqm)', 4596])
-      expect(wb.sheet('Buildings information').row(11)).to match_array(['Building Type', 'General office - Customer Facing'])
-      expect(wb.sheet('Buildings information').row(12)).to match_array(['Building Type (other)', nil])
-      expect(wb.sheet('Buildings information').row(13)).to match_array(['Building Security Clearance', 'Baseline personnel security standard (BPSS)'])
-      expect(wb.sheet('Buildings information').row(14)).to match_array(['Building Security Clearance (other)', nil])
+      expect(wb.sheet('Buildings information').row(1)).to contain_exactly('Buildings information', 'Building 1')
+      expect(wb.sheet('Buildings information').row(2)).to contain_exactly('Building name', 'asa')
+      expect(wb.sheet('Buildings information').row(3)).to contain_exactly('Building Description', 'london building')
+      expect(wb.sheet('Buildings information').row(4)).to contain_exactly('Building Address - Line 1', '100 New Barn Street')
+      expect(wb.sheet('Buildings information').row(9)).to contain_exactly('Building Gross Internal Area (GIA) (sqm)', 1002)
+      expect(wb.sheet('Buildings information').row(10)).to contain_exactly('Building External Area (sqm)', 4596)
+      expect(wb.sheet('Buildings information').row(11)).to contain_exactly('Building Type', 'General office - Customer Facing')
+      expect(wb.sheet('Buildings information').row(12)).to contain_exactly('Building Type (other)', nil)
+      expect(wb.sheet('Buildings information').row(13)).to contain_exactly('Building Security Clearance', 'Baseline personnel security standard (BPSS)')
+      expect(wb.sheet('Buildings information').row(14)).to contain_exactly('Building Security Clearance (other)', nil)
     end
     # rubocop:enable RSpec/MultipleExpectations
 

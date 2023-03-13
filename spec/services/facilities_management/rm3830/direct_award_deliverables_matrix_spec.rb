@@ -33,53 +33,53 @@ RSpec.describe FacilitiesManagement::RM3830::DirectAwardDeliverablesMatrix do
 
   # rubocop:disable RSpec/MultipleExpectations
   it 'verify for, service periods, worksheet headers' do
-    expect(wb.sheet('Service Periods').row(1)).to match_array(['Service Reference', 'Service Name', 'Metric per Annum', 'Building 1', 'Building 2'])
-    expect(wb.sheet('Service Periods').row(2)).to match_array([nil, nil, nil, 'asa', 'asa'])
-    expect(wb.sheet('Service Periods').row(3)).to match_array(['I.1', 'Reception service', 'Number of hours required', service_hours, nil])
-    expect(wb.sheet('Service Periods').row(4)).to match_array(['I.1', 'Reception service', 'Detail of requirement', detail_of_requirement, nil])
+    expect(wb.sheet('Service Periods').row(1)).to contain_exactly('Service Reference', 'Service Name', 'Metric per Annum', 'Building 1', 'Building 2')
+    expect(wb.sheet('Service Periods').row(2)).to contain_exactly(nil, nil, nil, 'asa', 'asa')
+    expect(wb.sheet('Service Periods').row(3)).to contain_exactly('I.1', 'Reception service', 'Number of hours required', service_hours, nil)
+    expect(wb.sheet('Service Periods').row(4)).to contain_exactly('I.1', 'Reception service', 'Detail of requirement', detail_of_requirement, nil)
   end
 
   it 'verify for, Building Information, worksheet the NUTS region' do
-    expect(wb.sheet('Buildings information').row(1)).to match_array(['Buildings information', 'Building 1', 'Building 2'])
-    expect(wb.sheet('Buildings information').row(2)).to match_array(['Building name', 'asa', 'asa'])
-    expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Line 1', '17 Sailors road', '17 Sailors road'])
-    expect(wb.sheet('Buildings information').row(5)).to match_array(['Building Address - Line 2', 'Floor 2', 'Floor 2'])
-    expect(wb.sheet('Buildings information').row(9)).to match_array(['Building Gross Internal Area (GIA) (sqm)', 1002, 1002])
-    expect(wb.sheet('Buildings information').row(10)).to match_array(['Building External Area (sqm)', 4596, 4596])
-    expect(wb.sheet('Buildings information').row(11)).to match_array(['Building Type', 'General office - Customer Facing', 'General office - Customer Facing'])
-    expect(wb.sheet('Buildings information').row(12)).to match_array(['Building Type (other)', nil, nil])
-    expect(wb.sheet('Buildings information').row(13)).to match_array(['Building Security Clearance', 'Baseline personnel security standard (BPSS)', 'Baseline personnel security standard (BPSS)'])
-    expect(wb.sheet('Buildings information').row(14)).to match_array(['Building Security Clearance (other)', nil, nil])
+    expect(wb.sheet('Buildings information').row(1)).to contain_exactly('Buildings information', 'Building 1', 'Building 2')
+    expect(wb.sheet('Buildings information').row(2)).to contain_exactly('Building name', 'asa', 'asa')
+    expect(wb.sheet('Buildings information').row(4)).to contain_exactly('Building Address - Line 1', '17 Sailors road', '17 Sailors road')
+    expect(wb.sheet('Buildings information').row(5)).to contain_exactly('Building Address - Line 2', 'Floor 2', 'Floor 2')
+    expect(wb.sheet('Buildings information').row(9)).to contain_exactly('Building Gross Internal Area (GIA) (sqm)', 1002, 1002)
+    expect(wb.sheet('Buildings information').row(10)).to contain_exactly('Building External Area (sqm)', 4596, 4596)
+    expect(wb.sheet('Buildings information').row(11)).to contain_exactly('Building Type', 'General office - Customer Facing', 'General office - Customer Facing')
+    expect(wb.sheet('Buildings information').row(12)).to contain_exactly('Building Type (other)', nil, nil)
+    expect(wb.sheet('Buildings information').row(13)).to contain_exactly('Building Security Clearance', 'Baseline personnel security standard (BPSS)', 'Baseline personnel security standard (BPSS)')
+    expect(wb.sheet('Buildings information').row(14)).to contain_exactly('Building Security Clearance (other)', nil, nil)
   end
 
   it 'verify for, service matrix, worksheet headers' do
-    expect(wb.sheet('Service Matrix').row(1)).to match_array(['Service Reference', 'Service Name', 'Building 1', 'Building 2'])
-    expect(wb.sheet('Service Matrix').row(2)).to match_array([nil, nil, 'asa', 'asa'])
-    expect(wb.sheet('Service Matrix').row(3)).to match_array(['E.4', 'Portable appliance testing', nil, 'Yes'])
-    expect(wb.sheet('Service Matrix').row(4)).to match_array(['I.1', 'Reception service', 'Yes', nil])
+    expect(wb.sheet('Service Matrix').row(1)).to contain_exactly('Service Reference', 'Service Name', 'Building 1', 'Building 2')
+    expect(wb.sheet('Service Matrix').row(2)).to contain_exactly(nil, nil, 'asa', 'asa')
+    expect(wb.sheet('Service Matrix').row(3)).to contain_exactly('E.4', 'Portable appliance testing', nil, 'Yes')
+    expect(wb.sheet('Service Matrix').row(4)).to contain_exactly('I.1', 'Reception service', 'Yes', nil)
   end
 
   it 'verify for, Volume, worksheet headers' do
-    expect(wb.sheet('Volume').row(1)).to match_array(['Service Reference', 'Service Name', 'Metric per annum', 'Building 1', 'Building 2'])
-    expect(wb.sheet('Volume').row(2)).to match_array([nil, nil, nil, 'asa', 'asa'])
-    expect(wb.sheet('Volume').row(3)).to match_array(['E.4', 'Portable appliance testing', 'Number of appliances to be tested', nil, 506])
-    expect(wb.sheet('Volume').row(4)).to match_array(['I.1', 'Reception service', 'Number of hours required', 3484.0, nil])
+    expect(wb.sheet('Volume').row(1)).to contain_exactly('Service Reference', 'Service Name', 'Metric per annum', 'Building 1', 'Building 2')
+    expect(wb.sheet('Volume').row(2)).to contain_exactly(nil, nil, nil, 'asa', 'asa')
+    expect(wb.sheet('Volume').row(3)).to contain_exactly('E.4', 'Portable appliance testing', 'Number of appliances to be tested', nil, 506)
+    expect(wb.sheet('Volume').row(4)).to contain_exactly('I.1', 'Reception service', 'Number of hours required', 3484.0, nil)
   end
 
   it 'verify for, Customer & Contract Details, worksheet headers' do
-    expect(wb.sheet('Customer & Contract Details').row(1)).to match_array(['1. Customer details', nil])
-    expect(wb.sheet('Customer & Contract Details').row(3)).to match_array(['Buyer Organisation Name', 'MyString'])
-    expect(wb.sheet('Customer & Contract Details').row(4)).to match_array(['Buyer Organisation Sector', 'Central Government'])
-    expect(wb.sheet('Customer & Contract Details').row(7)).to match_array(['Buyer Contact Email Address', 'test@example.com'])
-    expect(wb.sheet('Customer & Contract Details').row(10)).to match_array(['2. Contract requirements', nil])
+    expect(wb.sheet('Customer & Contract Details').row(1)).to contain_exactly('1. Customer details', nil)
+    expect(wb.sheet('Customer & Contract Details').row(3)).to contain_exactly('Buyer Organisation Name', 'MyString')
+    expect(wb.sheet('Customer & Contract Details').row(4)).to contain_exactly('Buyer Organisation Sector', 'Central Government')
+    expect(wb.sheet('Customer & Contract Details').row(7)).to contain_exactly('Buyer Contact Email Address', 'test@example.com')
+    expect(wb.sheet('Customer & Contract Details').row(10)).to contain_exactly('2. Contract requirements', nil)
   end
 
   it 'verify for, service information, worksheet headers' do
-    expect(wb.sheet('Service Information').row(1)).to match_array(['Work Package Ref', 'Service Reference', 'Work Package'])
-    expect(wb.sheet('Service Information').row(2)).to match_array(['Work Package A - Contract Management', nil, 'Work Package A – Contract Management'])
-    expect(wb.sheet('Service Information').row(3)).to match_array(['Work Package A - Contract Management', nil, nil])
-    expect(wb.sheet('Service Information').row(4)).to match_array(['Work Package A - Contract Management', nil, '1.       Service A:1 - Integration'])
-    expect(wb.sheet('Service Information').row(5)).to match_array(['Work Package A - Contract Management', nil, '1.1.    Service A:1 – Integration is Mandatory for Lot 1a-1c.'])
+    expect(wb.sheet('Service Information').row(1)).to contain_exactly('Work Package Ref', 'Service Reference', 'Work Package')
+    expect(wb.sheet('Service Information').row(2)).to contain_exactly('Work Package A - Contract Management', nil, 'Work Package A – Contract Management')
+    expect(wb.sheet('Service Information').row(3)).to contain_exactly('Work Package A - Contract Management', nil, nil)
+    expect(wb.sheet('Service Information').row(4)).to contain_exactly('Work Package A - Contract Management', nil, '1.       Service A:1 - Integration')
+    expect(wb.sheet('Service Information').row(5)).to contain_exactly('Work Package A - Contract Management', nil, '1.1.    Service A:1 – Integration is Mandatory for Lot 1a-1c.')
   end
 
   context 'when contract is sent' do
@@ -96,7 +96,7 @@ RSpec.describe FacilitiesManagement::RM3830::DirectAwardDeliverablesMatrix do
     end
 
     it 'returns the right Customer & Contract details header' do
-      expect(wb.sheet('Customer & Contract Details').row(1)).to match_array(['Reference number:', contract.contract_number])
+      expect(wb.sheet('Customer & Contract Details').row(1)).to contain_exactly('Reference number:', contract.contract_number)
       expect(wb.sheet('Customer & Contract Details').cell(2, 1)).to match('Date/time of production of this document:')
       expect(wb.sheet('Customer & Contract Details').cell(2, 2)).not_to be_nil
     end
