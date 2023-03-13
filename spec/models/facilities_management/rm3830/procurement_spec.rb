@@ -2084,15 +2084,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
 
       it 'will not be valid and have the correct error messages' do
         expect(procurement).not_to be_valid(:contract_details)
-        expect(procurement.errors.full_messages).to match_array [
-          'Payment method You must answer the question about ‘Payment method’',
-          'Using buyer detail for invoice details You must answer the question about ‘Invoicing contact details’',
-          'Using buyer detail for authorised detail You must answer the question about ‘Authorised representative details’',
-          'Using buyer detail for notices detail You must answer the question about ‘Notices contact details’',
-          'Security policy document required You must answer the question about ‘Security policy’',
-          'Local government pension scheme You must answer the question about ‘Local Government Pension Scheme’',
-          'Governing law You must answer the question about ‘Governing law’'
-        ]
+        expect(procurement.errors.full_messages).to contain_exactly('Payment method You must answer the question about ‘Payment method’', 'Using buyer detail for invoice details You must answer the question about ‘Invoicing contact details’', 'Using buyer detail for authorised detail You must answer the question about ‘Authorised representative details’', 'Using buyer detail for notices detail You must answer the question about ‘Notices contact details’', 'Security policy document required You must answer the question about ‘Security policy’', 'Local government pension scheme You must answer the question about ‘Local Government Pension Scheme’', 'Governing law You must answer the question about ‘Governing law’')
       end
     end
 
@@ -2103,11 +2095,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
 
       it 'will not be valid and have the correct error messages' do
         expect(procurement).not_to be_valid(:contract_details)
-        expect(procurement.errors.full_messages).to match_array [
-          'Using buyer detail for invoice details You must answer the question about ‘Invoicing contact details’',
-          'Using buyer detail for authorised detail You must answer the question about ‘Authorised representative details’',
-          'Using buyer detail for notices detail You must answer the question about ‘Notices contact details’',
-        ]
+        expect(procurement.errors.full_messages).to contain_exactly('Using buyer detail for invoice details You must answer the question about ‘Invoicing contact details’', 'Using buyer detail for authorised detail You must answer the question about ‘Authorised representative details’', 'Using buyer detail for notices detail You must answer the question about ‘Notices contact details’')
       end
     end
 
