@@ -415,6 +415,8 @@ en:
             uploaded_by: 'Uploaded by:'
           upload:
             upload_name: 'Upload session #%{number}'
+        you_cannot_update:
+          details: The RM6232 has expired, you cannot update the supplier's details.
       buyer_account:
         index:
           buyer_account_dashboard: Buyer account dashboard

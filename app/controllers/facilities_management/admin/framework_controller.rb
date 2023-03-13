@@ -39,6 +39,10 @@ module FacilitiesManagement
       def service_scope
         :facilities_management
       end
+
+      def set_framework_has_expired
+        @framework_has_expired = Framework.find_by(framework: params[:framework]).status == :expired
+      end
     end
   end
 end
