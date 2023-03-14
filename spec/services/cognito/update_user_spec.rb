@@ -17,67 +17,55 @@ RSpec.describe Cognito::UpdateUser do
 
     let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
+    let(:response) { described_class.call(user) }
+
+    before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
+
     context 'when success' do
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
-      end
+      before { allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups) }
 
       it 'returns the newly updated resource' do
-        response = described_class.call(user)
         expect(response.user).to eq User.order(created_at: :asc).last
       end
 
       it 'returns the newly created resource with the buyer and st_access role' do
-        response = described_class.call(user)
         expect(response.user.has_role?(:buyer)).to be true
         expect(response.user.has_role?(:st_access)).to be true
       end
 
       it 'returns the newly created resource with no fm_access role' do
-        response = described_class.call(user)
         expect(response.user.has_role?(:fm_access)).to be false
       end
 
       it 'returns the newly created resource with no ls_access role' do
-        response = described_class.call(user)
         expect(response.user.has_role?(:ls_access)).to be false
       end
 
       it 'returns the newly created resource with no mc_access role' do
-        response = described_class.call(user)
         expect(response.user.has_role?(:mc_access)).to be false
       end
 
       it 'returns success' do
-        response = described_class.call(user)
         expect(response.success?).to be true
       end
 
       it 'returns no error' do
-        response = described_class.call(user)
         expect(response.error).to be_nil
       end
     end
 
     context 'when cognito error' do
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:admin_list_groups_for_user).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
-      end
+      before { allow(aws_client).to receive(:admin_list_groups_for_user).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops')) }
 
       it 'returns user' do
-        response = described_class.call(user)
         expect(response.user).to eq user
       end
 
       it 'does not return success' do
-        response = described_class.call(user)
         expect(response.success?).to be false
       end
 
       it 'returns an error' do
-        response = described_class.call(user)
         expect(response.error).to eq 'Oops'
       end
     end

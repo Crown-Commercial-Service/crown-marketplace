@@ -15,11 +15,13 @@ RSpec.describe Cognito::SignInUser do
 
     let(:sign_in_user) { described_class.new(email, password, cookies_disabled) }
 
-    before { allow(sign_in_user).to receive(:sleep) }
+    before do
+      allow(sign_in_user).to receive(:sleep)
+      allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+    end
 
     context 'when success' do
       before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_return(initiate_auth_resp_struct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => user_id_for_srp }))
         sign_in_user.call
       end
@@ -47,7 +49,6 @@ RSpec.describe Cognito::SignInUser do
 
     context 'when cognito error' do
       before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
         sign_in_user.call
       end
@@ -63,7 +64,6 @@ RSpec.describe Cognito::SignInUser do
 
     context 'when user not confirmed' do
       before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::UserNotConfirmedException.new('oops', 'Oops'))
         sign_in_user.call
       end
@@ -83,7 +83,6 @@ RSpec.describe Cognito::SignInUser do
 
     context 'when password reset required' do
       before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::PasswordResetRequiredException.new('oops', 'Oops'))
         sign_in_user.call
       end
@@ -103,7 +102,6 @@ RSpec.describe Cognito::SignInUser do
 
     context 'when Cogito error is UserNotFoundException' do
       before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_raise(Aws::CognitoIdentityProvider::Errors::UserNotFoundException.new('oops', 'Oops'))
         sign_in_user.call
       end
@@ -125,7 +123,6 @@ RSpec.describe Cognito::SignInUser do
       let(:cookies_disabled) { true }
 
       before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:initiate_auth).and_return(initiate_auth_resp_struct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => user_id_for_srp }))
         sign_in_user.call
       end
