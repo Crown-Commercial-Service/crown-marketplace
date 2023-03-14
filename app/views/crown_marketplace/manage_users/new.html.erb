@@ -15,7 +15,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @user, url: crown_marketplace_manage_users_path, method: :post, local: 'false', html: { novalidate: true } do |f| %>
+    <%= form_with model: @user, url: crown_marketplace_manage_users_path, method: :post, html: { novalidate: true } do |f| %>
       <%= render partial: 'user_details_summary', locals: { allowed_attributes: %i[roles service_access user_details] } %>
       <%= render partial: 'hidden_answers', locals: { f: f, allow_anyway: false } %>
 
