@@ -15,7 +15,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @user, url: create_add_user_crown_marketplace_manage_users_path(section: section), method: :post, local: 'false', html: { novalidate: true } do |f| %>
+    <%= form_with model: @user, url: create_add_user_crown_marketplace_manage_users_path(section: section), method: :post, html: { novalidate: true } do |f| %>
       <%= render partial: "crown_marketplace/manage_users/add_user_partials/#{section}", locals: { f: f } %>
 
       <%= f.submit t('.submit'), class: 'govuk-button' %>

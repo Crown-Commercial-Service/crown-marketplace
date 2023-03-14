@@ -15,7 +15,7 @@
   </div>
 </div>
 
-<%= form_with url: create_path, model: @building, method: :post, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
+<%= form_with url: create_path, model: @building, method: :post, html: { specialvalidation: true, novalidate: true } do |f| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= render partial: "facilities_management/buildings/edit_partials/building_details", locals: { f: f } %>
