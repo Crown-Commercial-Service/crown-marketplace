@@ -25,7 +25,8 @@
   </div>
 </div>
 <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-<h2 class="govuk-heading-l govuk-!-font-weight-bold "><%= t('.services_and_prices') %></h1>
+<h2 class="govuk-heading-l govuk-!-font-weight-bold "><%= t('.services_and_prices') %></h2>
+<%= framework_expired_warning(t('facilities_management.rm3830.admin.you_cannot_update.services')) %>
 
 <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
   <%= t('.note') %><br/>
@@ -61,7 +62,8 @@
                         @supplier_rate_data_checkboxes[work_pckg['code']],
                         class: "govuk-checkboxes__input",
                         id: "rates_#{work_pckg['code']}",
-                        'aria-label': "#{work_pckg['name']} checkbox"
+                        'aria-label': "#{work_pckg['name']} checkbox",
+                        disabled: @framework_has_expired
                     ) %>
 
                 <%= label_tag "rates_#{work_pckg['code']}", "#{work_pckg['code']} #{work_pckg['name']}", id: "#{work_pckg['code']}_label", class: 'govuk-label govuk-checkboxes__label' %>
@@ -78,7 +80,7 @@
                   <% input_value = determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>
                   <% class_list = 'govuk-input govuk-input--width-3' %>
                 <% end %>
-                <%= text_field_tag "data[#{work_pckg['code']}][#{service_type}]", input_value, class: class_list, aria: { label: work_pckg['name'] } %>
+                <%= text_field_tag "data[#{work_pckg['code']}][#{service_type}]", input_value, class: class_list, aria: { label: work_pckg['name'] }, disabled: @framework_has_expired %>
               </td>
             <% end %>
           </tr>
@@ -117,14 +119,14 @@
           <% input_value = @variance_supplier_data[variance_values[i].to_sym] %>
           <% class_list = 'govuk-input govuk-input--width-3' %>
         <% end %>
-        <%= text_field_tag "rate[#{variance}]", input_value, class: class_list %>
+        <%= text_field_tag "rate[#{variance}]", input_value, class: class_list, disabled: @framework_has_expired %>
       </td>
     </tr>
     <% end %>
     </tbody>
   </table>
 
-  <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_sublot_data_services_prices', aria: { label: 'update_sublot_data_services_prices' } %><br/>
+  <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_sublot_data_services_prices', aria: { label: 'update_sublot_data_services_prices' }, disabled: @framework_has_expired %><br/>
   <%= link_to t('.return_link'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link govuk-!-font-size-19' %>
   <% end %>
 </div>

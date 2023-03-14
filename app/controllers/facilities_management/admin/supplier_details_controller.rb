@@ -1,6 +1,8 @@
 module FacilitiesManagement
   module Admin
     class SupplierDetailsController < FacilitiesManagement::Admin::FrameworkController
+      before_action :set_framework_has_expired
+      before_action :redirect_if_framework_has_expired, only: %i[edit update]
       before_action :set_data_for_framework
       before_action :set_supplier
       before_action :set_page, only: %i[edit update]
@@ -51,6 +53,10 @@ module FacilitiesManagement
 
       def supplier_params
         params.require(@suppliers_admin_param_key).permit(PERMITED_PARAMS[@page])
+      end
+
+      def redirect_if_framework_has_expired
+        redirect_to facilities_management_admin_supplier_detail_path if @framework_has_expired
       end
 
       PERMITED_PARAMS = {

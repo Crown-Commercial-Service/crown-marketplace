@@ -86,31 +86,43 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController do
   end
 
   describe 'PUT update' do
-    before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1a', regions: regions } }
+    context 'when the framework is live' do
+      before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1a', regions: regions } }
 
-    context 'when updating the data with regions' do
-      let(:regions) { ['UKC1', 'UKC2'] }
+      context 'when updating the data with regions' do
+        let(:regions) { ['UKC1', 'UKC2'] }
 
-      it 'redirects to the supplier_framework_data_path' do
-        expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
+        it 'redirects to the supplier_framework_data_path' do
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
+        end
+
+        it 'updates the regions correctly' do
+          supplier.reload
+          expect(supplier.lot_data['1a']['regions']).to eq regions
+        end
       end
 
-      it 'updates the regions correctly' do
-        supplier.reload
-        expect(supplier.lot_data['1a']['regions']).to eq regions
+      context 'when updating the data without regions' do
+        let(:regions) { [] }
+
+        it 'redirects to the supplier_framework_data_path' do
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
+        end
+
+        it 'updates the regions correctly' do
+          supplier.reload
+          expect(supplier.lot_data['1a']['regions']).to eq regions
+        end
       end
     end
 
-    context 'when updating the data without regions' do
-      let(:regions) { [] }
+    context 'when the framework has expired' do
+      include_context 'and RM3830 has expired'
 
-      it 'redirects to the supplier_framework_data_path' do
-        expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
-      end
+      before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
 
-      it 'updates the regions correctly' do
-        supplier.reload
-        expect(supplier.lot_data['1a']['regions']).to eq regions
+      it 'redirects to the edit page' do
+        expect(response).to redirect_to edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_region_path
       end
     end
   end
