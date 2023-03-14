@@ -661,8 +661,8 @@ en:
           question: Select the facilities management services that you need
           return_text: Return to your account
       new_framework_banner:
-        new_agreement: new agreement for Facilities Management and Workplace Services
-        new_fm_framework_html: There is a %{new_framework_link}. Before continuing with this agreement please contact CCS.
+        new_agreement: new agreement RM6232 for Facilities Management and Workplace Services
+        new_fm_framework_html: The portal for the RM3830 Facilities Management agreement will close on 5 April 2023. Please use the %{new_framework_link}.
       procurement_buildings:
         show:
           answer_question: Answer question
