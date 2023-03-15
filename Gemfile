@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.7'
+gem 'rails', '~> 6.1.7', '>= 6.1.7.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.11', '>= 2.11.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'geocoder', '>= 1.6.1'
-gem 'activerecord-postgis-adapter', '>= 6.0.3'
+gem 'activerecord-postgis-adapter', '>= 7.1.1'
 gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
@@ -66,7 +66,7 @@ gem 'roo', '~> 2.10.0'
 
 # state machine
 gem 'aasm', '~> 5.5'
-gem 'after_commit_everywhere', '~> 1.3'
+gem 'after_commit_everywhere', '~> 1.3', '>= 1.3.0'
 
 # for running background jobs
 gem 'sidekiq', '~> 7.0.6'
@@ -118,10 +118,10 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
   gem 'rspec-rails', '>= 6.0.1'
-  gem 'shoulda-matchers', '>= 5.1.0'
+  gem 'shoulda-matchers', '>= 5.3.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
-  gem 'rubocop-rails', '>= 2.15.2', require: false
+  gem 'rubocop-rails', '>= 2.18.0', require: false
   gem 'rubyXL', '>= 3.4.23'
   gem 'i18n-tasks', '>= 1.0.11'
   gem 'poltergeist', '>= 1.18.1'
