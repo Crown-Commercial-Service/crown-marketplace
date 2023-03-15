@@ -354,7 +354,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
       let(:filename) { procurement.security_policy_document_file.blob.filename }
       let(:object_id_key) { :procurement_id }
       let(:object_id) { procurement.id }
-      let(:procurement) { create(:facilities_management_rm3830_procurement_with_security_document, user: user) }
+      let(:procurement) { create(:facilities_management_rm3830_procurement_with_security_document, user:) }
       let(:user) { create(:user) }
 
       context 'when signed in as a buyer who created the procurement' do
@@ -452,7 +452,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
       let(:object_id_key) { :contract_id }
       let(:object_id) { contract.id }
       let(:contract) { create(:facilities_management_rm3830_procurement_supplier_with_contract_documents) }
-      let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+      let(:procurement) { create(:facilities_management_rm3830_procurement, user:) }
       let(:user) { create(:user) }
 
       context 'when signed in as a buyer who created the procurement' do

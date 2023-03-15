@@ -31,7 +31,7 @@ module FacilitiesManagement
       def update_procurement_building_service(pbs_params, context)
         @building_service.assign_attributes(pbs_params)
 
-        if @building_service.save(context: context)
+        if @building_service.save(context:)
           redirect_to facilities_management_rm3830_procurement_building_path(@procurement_building)
         else
           params[:service_question] = params[:facilities_management_rm3830_procurement_building_service][:service_question]

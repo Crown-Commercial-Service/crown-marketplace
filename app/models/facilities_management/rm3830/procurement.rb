@@ -401,7 +401,7 @@ module FacilitiesManagement
       end
 
       def services_require_questions?
-        (procurement_building_service_codes & services_requiring_questions).any?
+        procurement_building_service_codes.intersect?(services_requiring_questions)
       end
 
       def can_be_deleted?

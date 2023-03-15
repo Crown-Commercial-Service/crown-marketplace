@@ -554,7 +554,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper do
   describe 'methods relating to suppliers' do
     let(:service_codes) { FacilitiesManagement::RM3830::StaticData.work_packages.reject { |wp| ['A', 'B'].include? wp['work_package_code'] }.pluck('code') }
     let(:region_codes) { FacilitiesManagement::Region.all.reject { |region| region.code == 'OS01' }.map(&:code) }
-    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, region_codes: region_codes, service_codes: service_codes) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, region_codes:, service_codes:) }
 
     before { @procurement = procurement }
 
@@ -596,7 +596,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper do
   end
 
   describe '.further_competition_saved_date' do
-    let(:procurement) { create(:facilities_management_rm3830_procurement, contract_datetime: contract_datetime) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, contract_datetime:) }
 
     context 'when the contract_datetime is 01/02/2019 - 2:53pm' do
       let(:contract_datetime) { '01/02/2019 -  2:53pm' }

@@ -42,7 +42,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController do
     render_views
 
     context 'when the user did create the procurement' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user) }
+      let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user:) }
 
       it 'renders the show page' do
         expect(response).to render_template(:show)

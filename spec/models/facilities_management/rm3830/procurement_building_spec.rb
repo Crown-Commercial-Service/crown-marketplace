@@ -57,7 +57,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
     before do
       procurement_building.procurement.update(aasm_state: 'detailed_search')
       procurement_building.procurement_building_services = [build(:facilities_management_rm3830_procurement_building_service, code: service_code, service_standard: 'A', procurement_building: procurement_building)]
-      procurement_building.building = build(:facilities_management_building, gia: gia, external_area: external_area)
+      procurement_building.building = build(:facilities_management_building, gia:, external_area:)
       procurement_building.service_codes = [service_code]
       procurement_building.save
     end
@@ -341,7 +341,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
       before do
         pbs = procurement_building.procurement_building_services.first
         [1, 2, 3, 4].each do |number_of_floors|
-          pbs.lifts.create(number_of_floors: number_of_floors)
+          pbs.lifts.create(number_of_floors:)
         end
         procurement_building.reload
       end
@@ -571,7 +571,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
 
   describe '#missing_region?' do
     before do
-      procurement_building.building.update(address_region: address_region, address_region_code: address_region_code)
+      procurement_building.building.update(address_region:, address_region_code:)
     end
 
     let(:address_region) { procurement_building.building.address_region }
@@ -625,7 +625,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
   end
 
   describe '#service_selection_complete?' do
-    before { procurement_building.update(service_codes: service_codes) }
+    before { procurement_building.update(service_codes:) }
 
     context 'when there are no service codes' do
       let(:service_codes) { [] }
@@ -688,16 +688,16 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
       before do
         procurement_building.procurement.update(aasm_state: 'detailed_search')
         service_codes = codes_with_values.map { |key, _| key.to_s } << 'C.5'
-        procurement_building.update(service_codes: service_codes)
+        procurement_building.update(service_codes:)
         procurement_building.reload
         procurement_building.procurement_building_services.each do |pbs|
           pbs.update(codes_with_values[pbs.code.to_sym])
         end
         pbs = procurement_building.procurement_building_services.find_by(code: 'C.5')
         lift_data.each do |number_of_floors|
-          pbs.lifts.create(number_of_floors: number_of_floors)
+          pbs.lifts.create(number_of_floors:)
         end
-        procurement_building.building.update(gia: gia, external_area: external_area)
+        procurement_building.building.update(gia:, external_area:)
       end
 
       context 'when a service requires gia and gia is zero' do
@@ -804,7 +804,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
   describe '#requires_service_questions?' do
     before do
       procurement_building.procurement.update(aasm_state: 'detailed_search')
-      procurement_building.update(service_codes: service_codes)
+      procurement_building.update(service_codes:)
       procurement_building.reload
     end
 

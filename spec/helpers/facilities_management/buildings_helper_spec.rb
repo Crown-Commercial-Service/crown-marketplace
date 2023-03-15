@@ -191,7 +191,7 @@ RSpec.describe FacilitiesManagement::BuildingsHelper do
 
   describe '.should_building_details_be_open?' do
     let(:page_data) { {} }
-    let(:building_options) { { building_type: building_type } }
+    let(:building_options) { { building_type: } }
     let(:result) { helper.should_building_details_be_open? }
 
     before { @building = building }
@@ -240,7 +240,7 @@ RSpec.describe FacilitiesManagement::BuildingsHelper do
   end
 
   describe '.select_a_region_visible?' do
-    let(:building_options) { { address_line_1: address_line_1, address_region: address_region } }
+    let(:building_options) { { address_line_1:, address_region: } }
     let(:result) { helper.select_a_region_visible? }
 
     before { @building = building }
@@ -288,7 +288,7 @@ RSpec.describe FacilitiesManagement::BuildingsHelper do
 
   describe '.full_region_visible?' do
     let(:result) { helper.full_region_visible? }
-    let(:building_options) { { address_region: address_region } }
+    let(:building_options) { { address_region: } }
 
     before { @building = building }
 

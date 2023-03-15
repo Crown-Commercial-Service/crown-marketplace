@@ -27,11 +27,11 @@ RSpec.describe FacilitiesManagement::RM3830::Rate do
       let(:standard) { 'A' }
 
       it 'returns standard A framework rate' do
-        expect(described_class.framework_rate_for(code, standard)).to eq(described_class.find_by(code: code, standard: standard).framework)
+        expect(described_class.framework_rate_for(code, standard)).to eq(described_class.find_by(code:, standard:).framework)
       end
 
       it 'returns standard A benchmark rate' do
-        expect(described_class.benchmark_rate_for(code, standard)).to eq(described_class.find_by(code: code, standard: standard).benchmark)
+        expect(described_class.benchmark_rate_for(code, standard)).to eq(described_class.find_by(code:, standard:).benchmark)
       end
     end
 
@@ -40,11 +40,11 @@ RSpec.describe FacilitiesManagement::RM3830::Rate do
       let(:standard) { 'B' }
 
       it 'returns standard B framework rate' do
-        expect(described_class.framework_rate_for(code, standard)).to eq(described_class.find_by(code: code, standard: standard).framework)
+        expect(described_class.framework_rate_for(code, standard)).to eq(described_class.find_by(code:, standard:).framework)
       end
 
       it 'returns standard B benchmark rate' do
-        expect(described_class.benchmark_rate_for(code, standard)).to eq(described_class.find_by(code: code, standard: standard).benchmark)
+        expect(described_class.benchmark_rate_for(code, standard)).to eq(described_class.find_by(code:, standard:).benchmark)
       end
     end
 
@@ -53,11 +53,11 @@ RSpec.describe FacilitiesManagement::RM3830::Rate do
       let(:standard) { 'C' }
 
       it 'returns standard C framework rate' do
-        expect(described_class.framework_rate_for(code, standard)).to eq(described_class.find_by(code: code, standard: standard).framework)
+        expect(described_class.framework_rate_for(code, standard)).to eq(described_class.find_by(code:, standard:).framework)
       end
 
       it 'returns standard C benchmark rate' do
-        expect(described_class.benchmark_rate_for(code, standard)).to eq(described_class.find_by(code: code, standard: standard).benchmark)
+        expect(described_class.benchmark_rate_for(code, standard)).to eq(described_class.find_by(code:, standard:).benchmark)
       end
     end
 
@@ -65,11 +65,11 @@ RSpec.describe FacilitiesManagement::RM3830::Rate do
       let(:code) { 'G.9' }
 
       it 'returns framework rate' do
-        expect(described_class.framework_rate_for(code)).to eq(described_class.find_by(code: code).framework)
+        expect(described_class.framework_rate_for(code)).to eq(described_class.find_by(code:).framework)
       end
 
       it 'returns benchmark rate' do
-        expect(described_class.benchmark_rate_for(code)).to eq(described_class.find_by(code: code).benchmark)
+        expect(described_class.benchmark_rate_for(code)).to eq(described_class.find_by(code:).benchmark)
       end
     end
   end

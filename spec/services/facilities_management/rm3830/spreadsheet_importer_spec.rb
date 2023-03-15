@@ -65,7 +65,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
       spreadsheet_importer.import_data
     end
 
-    let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user:) }
     let(:user) { create(:user) }
     let(:spreadsheet_building) { create(:facilities_management_building) }
     let(:spreadsheet_building_2) { create(:facilities_management_building, building_name: spreadsheet_building.building_name) }
@@ -207,7 +207,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
       end
 
       describe 'address_line_2' do
-        let(:spreadsheet_building) { create(:facilities_management_building, address_line_2: address_line_2) }
+        let(:spreadsheet_building) { create(:facilities_management_building, address_line_2:) }
         let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
         context 'when the address_line_2 is blank' do
@@ -488,7 +488,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
           let(:building_data) do
             FacilitiesManagement::Building::BUILDING_TYPES.pluck(:spreadsheet_title).map do |building_type|
               [
-                create(:facilities_management_building, building_type: building_type),
+                create(:facilities_management_building, building_type:),
                 'Complete'
               ]
             end
@@ -583,7 +583,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
     end
 
     describe 'import with valid data and missing region' do
-      let(:user_building) { create(:facilities_management_building, user: user) }
+      let(:user_building) { create(:facilities_management_building, user:) }
 
       # rubocop:disable RSpec/AnyInstance
       before do
@@ -1331,7 +1331,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
       procurement.reload
     end
 
-    let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user:) }
     let(:user) { create(:user) }
 
     let(:name1) { 'The TARDIS' }

@@ -5,7 +5,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController do
 
   describe 'PUT update' do
     let(:user) { create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
-    let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user: user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user:) }
     let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, facilities_management_rm3830_procurement_id: procurement.id, aasm_state: 'sent', offer_sent_date: Time.zone.now, supplier: supplier) }
     let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user: controller.current_user) }
 
@@ -69,11 +69,11 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController do
   end
 
   describe '.authorize_user' do
-    let(:contract) { create(:facilities_management_rm3830_procurement_supplier, supplier: supplier) }
-    let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier, supplier:) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user:) }
     let(:user) { create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:wrong_user) { create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
-    let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user: user) }
+    let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user:) }
 
     before do
       allow(FacilitiesManagement::RM3830::SupplierDetail).to receive(:find).and_return(supplier)

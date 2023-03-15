@@ -105,8 +105,8 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper do
   end
 
   describe '#procurement_building_status' do
-    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: procurement) }
-    let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement:) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user:) }
     let(:user) { create(:user) }
 
     before do
@@ -142,7 +142,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper do
   describe 'service_has_errors?' do
     let(:gia) { 56 }
     let(:external_area) { 45 }
-    let(:building) { create(:facilities_management_building, gia: gia, external_area: external_area) }
+    let(:building) { create(:facilities_management_building, gia:, external_area:) }
     let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, service_codes: ['C.1', 'G.5'], building: building, procurement: create(:facilities_management_rm3830_procurement)) }
     let(:result) { helper.service_has_errors?(context) }
 

@@ -21,7 +21,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController d
 
       before do
         first_contract.update(aasm_state: 'declined')
-        put :update, params: { procurement_id: procurement.id, id: first_contract.id, name: 'withdraw', facilities_management_rm3830_procurement_supplier: { reason_for_closing: reason_for_closing } }
+        put :update, params: { procurement_id: procurement.id, id: first_contract.id, name: 'withdraw', facilities_management_rm3830_procurement_supplier: { reason_for_closing: } }
       end
 
       context 'when a reason for closing is given' do
@@ -187,7 +187,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController d
 
   describe '.authorize_user' do
     let(:contract) { create(:facilities_management_rm3830_procurement_supplier) }
-    let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user:) }
     let(:user) { create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[buyer fm_access]) }
     let(:wrong_user) { create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[buyer fm_access]) }
 
@@ -261,7 +261,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController d
 
   describe 'GET edit' do
     let(:procurement) { create(:facilities_management_rm3830_procurement, user: controller.current_user) }
-    let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, procurement: procurement) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, procurement:) }
 
     login_fm_buyer_with_details
 

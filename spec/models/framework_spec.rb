@@ -265,7 +265,7 @@ RSpec.describe Framework do
   end
 
   describe '.status' do
-    let(:result) { described_class.find_by(framework: framework).status }
+    let(:result) { described_class.find_by(framework:).status }
 
     context 'when considering facilities_management frameworks' do
       context 'when the framework passed is RM3830' do

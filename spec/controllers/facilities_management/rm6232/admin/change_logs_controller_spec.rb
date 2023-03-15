@@ -47,7 +47,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ChangeLogsController do
 
     render_views
 
-    before { get :show, params: { change_log_id: change_log_id, change_type: change_type } }
+    before { get :show, params: { change_log_id:, change_type: } }
 
     context 'when there are change_type is upload' do
       let(:change_type) { 'upload' }

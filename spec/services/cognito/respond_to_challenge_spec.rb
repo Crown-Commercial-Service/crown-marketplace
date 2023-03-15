@@ -16,7 +16,7 @@ RSpec.describe Cognito::RespondToChallenge do
   before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
 
   describe '#validations' do
-    let(:response) { described_class.new(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
+    let(:response) { described_class.new(challenge_name, username, session, new_password:, new_password_confirmation:) }
 
     before do
       allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
@@ -62,7 +62,7 @@ RSpec.describe Cognito::RespondToChallenge do
 
   describe '#call' do
     context 'when NEW_PASSWORD_REQUIRED challenge success' do
-      let(:response) { described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
+      let(:response) { described_class.call(challenge_name, username, session, new_password:, new_password_confirmation:) }
 
       before do
         allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
@@ -92,7 +92,7 @@ RSpec.describe Cognito::RespondToChallenge do
 
     context 'when SMS_MFA challenge success' do
       let(:challenge_name) { 'SMS_MFA' }
-      let(:response) { described_class.call(challenge_name, username, session, access_code: access_code) }
+      let(:response) { described_class.call(challenge_name, username, session, access_code:) }
 
       before { allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session)) }
 
@@ -118,7 +118,7 @@ RSpec.describe Cognito::RespondToChallenge do
     end
 
     context 'when cognito error' do
-      let(:response) { described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
+      let(:response) { described_class.call(challenge_name, username, session, new_password:, new_password_confirmation:) }
 
       before { allow(aws_client).to receive(:respond_to_auth_challenge).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops')) }
 

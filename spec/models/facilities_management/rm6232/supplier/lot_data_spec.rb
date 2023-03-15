@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData do
-  let(:lot_data) { described_class.where(facilities_management_rm6232_supplier_id: supplier_id).find_by(lot_code: lot_code) }
+  let(:lot_data) { described_class.where(facilities_management_rm6232_supplier_id: supplier_id).find_by(lot_code:) }
   let(:random_lot_data) { described_class.order(Arel.sql('RANDOM()')).first }
 
   describe '.supplier_name' do
@@ -14,7 +14,7 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData do
 
   describe '.services' do
     let(:lot_code) { '1a' }
-    let(:random_lot_data) { described_class.where(lot_code: lot_code).order(Arel.sql('RANDOM()')).first }
+    let(:random_lot_data) { described_class.where(lot_code:).order(Arel.sql('RANDOM()')).first }
 
     it 'returns a collection of services' do
       expect(random_lot_data.services.class.to_s).to eq 'FacilitiesManagement::RM6232::Service::ActiveRecord_Relation'
@@ -63,7 +63,7 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData do
 
   describe 'validations' do
     context 'when validating the lot status' do
-      let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier, active: active) }
+      let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier, active:) }
 
       context 'and active is nil' do
         let(:active) { nil }
@@ -101,7 +101,7 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData do
     end
 
     context 'when validating the region codes' do
-      let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier, region_codes: region_codes) }
+      let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier, region_codes:) }
 
       context 'and there are none' do
         let(:region_codes) { [] }
@@ -146,7 +146,7 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData do
     end
 
     context 'when changing the services' do
-      let(:attributes) { { service_codes: service_codes } }
+      let(:attributes) { { service_codes: } }
 
       context 'and a service is added' do
         let(:service_codes) { %w[E.16 H.6 P.11 F.4] }
@@ -198,7 +198,7 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData do
     end
 
     context 'when changing the regions' do
-      let(:attributes) { { region_codes: region_codes } }
+      let(:attributes) { { region_codes: } }
 
       context 'and a region is added' do
         let(:region_codes) { %w[UKC1 UKD1 UKE1 UKF1] }
@@ -251,7 +251,7 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData do
   end
 
   describe '.current_status' do
-    let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier, active: active) }
+    let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier, active:) }
 
     context 'when the lot data is active' do
       let(:active) { true }

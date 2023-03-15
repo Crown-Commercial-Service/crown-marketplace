@@ -20,7 +20,7 @@ module SpreadsheetImportHelper
       name = 'Building Information'
       @sheets_added << name
       buildings = buildings_details.map(&:first)
-      @package.workbook.add_worksheet(name: name) do |sheet|
+      @package.workbook.add_worksheet(name:) do |sheet|
         sheet.add_row(['Building Number'] + buildings.map.with_index { |_, i| "Building #{i + 1}" })
         sheet.add_row(['Building Name'] + buildings.map(&:building_name))
         sheet.add_row(['Building Description (optional)'] + buildings.map(&:description))
@@ -45,7 +45,7 @@ module SpreadsheetImportHelper
       template_sheet = template_spreadsheet.sheet(name)
       template_sheet_row_count = template_sheet.parse.size + 1
 
-      @package.workbook.add_worksheet(name: name) do |sheet|
+      @package.workbook.add_worksheet(name:) do |sheet|
         status_indicators = data.pluck(:status)
         sheet.add_row(template_sheet.row(1) + status_indicators)
 
@@ -66,7 +66,7 @@ module SpreadsheetImportHelper
     def add_service_volumes_1(service_details)
       name = 'Service Volumes 1'
       @sheets_added << name
-      @package.workbook.add_worksheet(name: name) do |sheet|
+      @package.workbook.add_worksheet(name:) do |sheet|
         sheet.add_row(['', '', '', 'Service status indicator'] + service_details.pluck(2))
         sheet.add_row([])
         sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Metric per Annum'] + service_details.pluck(0))
@@ -92,7 +92,7 @@ module SpreadsheetImportHelper
     def add_service_volumes_2(service_details)
       name = 'Service Volumes 2'
       @sheets_added << name
-      @package.workbook.add_worksheet(name: name) do |sheet|
+      @package.workbook.add_worksheet(name:) do |sheet|
         sheet.add_row(['', '', '', '', 'Service status indicator'] + service_details.pluck(2))
         sheet.add_row(['', '', '', '', 'Building name'] + service_details.pluck(0))
         sheet.add_row(['', '', '', '', 'Service required within this building?'] + service_details.map { |pb| pb[1].any? ? 'Yes' : 'No' })
@@ -115,7 +115,7 @@ module SpreadsheetImportHelper
     def add_service_hours_sheet(data)
       name = 'Service Volumes 3'
       @sheets_added << name
-      @package.workbook.add_worksheet(name: name) do |sheet|
+      @package.workbook.add_worksheet(name:) do |sheet|
         sheet.add_row([nil, nil, nil, 'Service status indicator'] + data.pluck(:status))
         sheet.add_row([])
         sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Metric per Annum'] + data.pluck(:building_name))

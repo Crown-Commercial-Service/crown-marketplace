@@ -6,7 +6,7 @@ module Cognito
         def find_user_from_cognito_uuid(cognito_uuid)
           client = new_client
 
-          attributes = { cognito_uuid: cognito_uuid }
+          attributes = { cognito_uuid: }
 
           attributes.merge(find_user_in_cognito(client, cognito_uuid))
         end

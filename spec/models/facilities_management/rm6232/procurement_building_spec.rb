@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
-  subject(:procurement_building) { build(:facilities_management_rm6232_procurement_building_no_services, procurement: procurement, service_codes: service_codes) }
+  subject(:procurement_building) { build(:facilities_management_rm6232_procurement_building_no_services, procurement:, service_codes:) }
 
   let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
   let(:service_codes) { [] }
@@ -202,7 +202,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
   end
 
   describe '.missing_region?' do
-    before { procurement_building.building.update(address_region_code: address_region_code, address_region: address_region) }
+    before { procurement_building.building.update(address_region_code:, address_region:) }
 
     let(:result) { procurement_building.missing_region? }
 
@@ -295,7 +295,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
     let(:frozen_building_attributes) { %w[building_name description address_town address_line_1 address_line_2 address_postcode address_region address_region_code gia external_area building_type other_building_type security_type other_security_type] }
 
     context 'when there is no data there already' do
-      let(:procurement_building) { create(:facilities_management_rm6232_procurement_building, procurement: procurement) }
+      let(:procurement_building) { create(:facilities_management_rm6232_procurement_building, procurement:) }
       let(:building_attributes) { procurement_building.building.attributes.slice(*frozen_building_attributes) }
 
       it 'updates the frozen data to match the the building attributes' do
@@ -310,7 +310,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
       let(:building) { create(:facilities_management_building, building_name: 'Yuzuriha', description: 'A brand new description', gia: 106) }
       let(:procurement_building_attributes) { building.attributes.slice(*frozen_building_attributes) }
 
-      before { procurement_building.update(building: building) }
+      before { procurement_building.update(building:) }
 
       it 'updates the frozen data to match the changes to the building' do
         expect { procurement_building.freeze_building_data }.to change(procurement_building, :frozen_building_data).from(inital_procurement_building_attributes).to(procurement_building_attributes)
@@ -319,7 +319,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
   end
 
   describe '.get_frozen_attribute' do
-    let(:procurement_building) { create(:facilities_management_rm6232_procurement_building_with_frozen_data, procurement: procurement, building: building) }
+    let(:procurement_building) { create(:facilities_management_rm6232_procurement_building_with_frozen_data, procurement:, building:) }
     let(:building) { create(:facilities_management_building, building_name: 'Yuzuriha', other_building_type: 'Some other building type', other_security_type: 'Some other security type') }
     let(:result) { procurement_building.get_frozen_attribute(attribute) }
 
