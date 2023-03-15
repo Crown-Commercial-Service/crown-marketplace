@@ -8,7 +8,7 @@ module FacilitiesManagement::RM3830
       private
 
       def other_data
-        { file_source: file_source }
+        { file_source: }
       end
 
       def file_source

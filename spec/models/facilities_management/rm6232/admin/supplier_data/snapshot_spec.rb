@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot do
   let(:snapshot) do
     described_class.new(
-      snapshot_date_yyyy: snapshot_date_yyyy,
-      snapshot_date_mm: snapshot_date_mm,
-      snapshot_date_dd: snapshot_date_dd,
-      snapshot_time_hh: snapshot_time_hh,
-      snapshot_time_mm: snapshot_time_mm
+      snapshot_date_yyyy:,
+      snapshot_date_mm:,
+      snapshot_date_dd:,
+      snapshot_time_hh:,
+      snapshot_time_mm:
     )
   end
   let(:snapshot_date) { 1.day.from_now }
@@ -190,7 +190,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot do
       let(:created_at) { DateTime.new(2022, 7, 5, 12, 45, 30).in_time_zone('London') }
       let(:snapshot_date) { created_at }
 
-      before { FacilitiesManagement::RM6232::Admin::SupplierData.latest_data.update(created_at: created_at) }
+      before { FacilitiesManagement::RM6232::Admin::SupplierData.latest_data.update(created_at:) }
 
       context 'and the date and time entered is before the oldest supplier data' do
         let(:snapshot_time_mm) { '44' }

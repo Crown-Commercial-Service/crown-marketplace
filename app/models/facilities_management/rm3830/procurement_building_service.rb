@@ -56,7 +56,7 @@ module FacilitiesManagement
       end
 
       def requires_service_standard?
-        (required_contexts.keys & STANDARD_TYPES).any?
+        required_contexts.keys.intersect?(STANDARD_TYPES)
       end
 
       def requires_lift_data?

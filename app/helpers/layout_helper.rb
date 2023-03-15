@@ -140,7 +140,7 @@ module LayoutHelper
     end
   end
 
-  def govuk_grouped_field(form, caption, attribute, header_text = '', &block)
+  def govuk_grouped_field(form, caption, attribute, header_text = '', &)
     attribute_has_errors = form.object.errors[attribute].any?
 
     options         = {}
@@ -149,9 +149,9 @@ module LayoutHelper
     options[:class] = css_classes
 
     if attribute_has_errors
-      tag.div(fieldset_structure(form, caption, options, header_text, attribute, &block), class: 'govuk-form-group govuk-form-group--error')
+      tag.div(fieldset_structure(form, caption, options, header_text, attribute, &), class: 'govuk-form-group govuk-form-group--error')
     else
-      fieldset_structure(form, caption, options, header_text, attribute, &block)
+      fieldset_structure(form, caption, options, header_text, attribute, &)
     end
   end
 
@@ -225,21 +225,21 @@ module LayoutHelper
     end
   end
 
-  def numbered_list_helper(heading, &block)
+  def numbered_list_helper(heading, &)
     capture do
       concat(tag.h2(heading, class: 'govuk-heading-m govuk-!-font-weight-bold govuk-!-margin-bottom-2'))
-      concat(tag.div(class: 'govuk-body govuk-!-padding-left-5', &block))
+      concat(tag.div(class: 'govuk-body govuk-!-padding-left-5', &))
     end
   end
 
-  def ccs_account_panel_row(**options, &block)
+  def ccs_account_panel_row(**options, &)
     class_list = ['govuk-grid-row govuk-!-margin-bottom-6 fm-buyer-account-panel__container']
     class_list << options.delete(:class)
 
-    tag.div(class: class_list, **options, &block)
+    tag.div(class: class_list, **options, &)
   end
 
-  def ccs_account_panel(title, title_url, **options, &block)
+  def ccs_account_panel(title, title_url, **options, &)
     class_list = ['govuk-grid-column-one-third fm-buyer-account-panel']
     class_list << options.delete(:class)
 
@@ -248,7 +248,7 @@ module LayoutHelper
         concat(tag.p do
           link_to(title, title_url, class: 'ccs-font-weight-semi-bold fm-buyer-account-panel__title_no_link govuk-!-margin-bottom-2 govuk-link--no-visited-state')
         end)
-        concat(tag.p(class: 'govuk-!-top-padding-4', &block))
+        concat(tag.p(class: 'govuk-!-top-padding-4', &))
       end
     end
   end

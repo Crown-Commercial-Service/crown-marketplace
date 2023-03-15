@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
-  let(:procurement) { create(:facilities_management_rm3830_procurement_entering_requirements, user: user) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement_entering_requirements, user:) }
   let(:user) { controller.current_user }
 
   login_fm_buyer_with_details
@@ -78,7 +78,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
 
     context 'when the user wants to edit services' do
       let(:section_name) { 'services' }
-      let(:procurement_options) { { service_codes: service_codes } }
+      let(:procurement_options) { { service_codes: } }
 
       context 'when the services are not complete' do
         let(:service_codes) { [] }
@@ -113,7 +113,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
       end
 
       context 'when there are active_procurement_buildings' do
-        let(:building) { create(:facilities_management_building, user: user) }
+        let(:building) { create(:facilities_management_building, user:) }
         let(:procurement_options) { { procurement_buildings_attributes: { '0': { building_id: building.id, active: true } } } }
 
         render_views
@@ -135,7 +135,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
 
     context 'when the user wants to assign services to buildings' do
       let(:section_name) { 'buildings-and-services' }
-      let(:building) { create(:facilities_management_building, user: user) }
+      let(:building) { create(:facilities_management_building, user:) }
       let(:procurement_options) { { procurement_buildings_attributes: { '0': { building_id: building.id, active: true } } } }
 
       render_views
@@ -156,7 +156,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
 
     context 'when the user wants to view the service requirements' do
       let(:section_name) { 'service-requirements' }
-      let(:building) { create(:facilities_management_building, user: user) }
+      let(:building) { create(:facilities_management_building, user:) }
       let(:procurement_options) { { procurement_buildings_attributes: { '0': { building_id: building.id, active: true, service_codes: %w[E.1 E.2] } } } }
 
       render_views
@@ -258,7 +258,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
       end
 
       context 'when the procurement already has extensions' do
-        let(:procurement) { create(:facilities_management_rm3830_procurement_with_extension_periods, user: user) }
+        let(:procurement) { create(:facilities_management_rm3830_procurement_with_extension_periods, user:) }
 
         it 'finds the extensions' do
           expect(assigns(:procurement).call_off_extensions.length).to eq 4
@@ -303,7 +303,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
         before do
           allow(FacilitiesManagement::Building).to receive(:default_per_page).and_return(5)
 
-          ('aa'..'af').each { |building_name| create(:facilities_management_building, user: user, building_name: building_name) }
+          ('aa'..'af').each { |building_name| create(:facilities_management_building, user:, building_name:) }
         end
 
         context 'and none are active' do
@@ -701,9 +701,9 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
 
     context 'when updating buildings' do
       let(:section_name) { 'buildings' }
-      let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, user: user) }
+      let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, user:) }
       let(:building) { procurement.procurement_buildings.first.building }
-      let(:new_building) { create(:facilities_management_building, user: user) }
+      let(:new_building) { create(:facilities_management_building, user:) }
 
       context 'and the data is valid' do
         let(:update_params) { { procurement_buildings_attributes: { '0': { active: '1', building_id: building.id }, '2': { active: '1', building_id: new_building.id } } } }
@@ -765,7 +765,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
   end
 
   describe 'paginating the buildings page' do
-    let(:procurement) { create(:facilities_management_rm3830_procurement_entering_requirements_with_buildings, user: user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_entering_requirements_with_buildings, user:) }
 
     let(:building1) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 1') }
     let(:building2) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 2') }

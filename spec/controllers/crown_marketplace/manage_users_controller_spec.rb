@@ -225,7 +225,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
 
       login_super_admin
 
-      before { get :add_user, params: { section: section, **additional_params } }
+      before { get :add_user, params: { section:, **additional_params } }
 
       context 'and the section is select-role' do
         let(:section) { 'select-role' }
@@ -344,7 +344,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
 
       context 'and the section is select-role' do
         let(:section) { 'select-role' }
-        let(:create_add_user_params) { { roles: roles } }
+        let(:create_add_user_params) { { roles: } }
 
         context 'and the data is valid' do
           let(:roles) { ['buyer'] }
@@ -476,7 +476,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
     before do
       allow(Cognito::Admin::User).to receive(:find).and_return(user)
 
-      get :show, params: { cognito_uuid: cognito_uuid }
+      get :show, params: { cognito_uuid: }
     end
 
     context 'when the current user has edit permissions and successfully looks up a user' do
@@ -538,7 +538,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
         before { get :edit, params: { cognito_uuid: cognito_uuid, section: :bank_account } }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid:)
         end
       end
 
@@ -549,7 +549,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
           before { get :edit, params: { cognito_uuid: cognito_uuid, section: unpermitted_section } }
 
           it "redirects to the show page for #{unpermitted_section}" do
-            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid:)
           end
         end
       end
@@ -563,7 +563,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
       before do
         allow(Cognito::Admin::User).to receive(:find).and_return(user)
 
-        get :edit, params: { cognito_uuid: cognito_uuid, section: section }
+        get :edit, params: { cognito_uuid:, section: }
       end
 
       context 'and I edit the users email_verified' do
@@ -663,7 +663,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
         before { put :update, params: { cognito_uuid: cognito_uuid, section: :bank_account } }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+          expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid:)
         end
       end
 
@@ -674,7 +674,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
           before { put :update, params: { cognito_uuid: cognito_uuid, section: unpermitted_section } }
 
           it "redirects to the show page for #{unpermitted_section}" do
-            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid:)
           end
         end
       end
@@ -705,7 +705,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
           end
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid:)
           end
         end
 
@@ -732,7 +732,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
           end
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid:)
           end
         end
 
@@ -759,7 +759,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
           end
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid:)
           end
         end
 
@@ -786,7 +786,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
           end
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid:)
           end
         end
 
@@ -813,7 +813,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
           end
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid:)
           end
         end
 
@@ -840,7 +840,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
           end
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid: cognito_uuid)
+            expect(response).to redirect_to crown_marketplace_manage_user_path(cognito_uuid:)
           end
         end
 
@@ -865,7 +865,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
 
       login_super_admin
 
-      before { put :resend_temporary_password, params: { cognito_uuid: cognito_uuid } }
+      before { put :resend_temporary_password, params: { cognito_uuid: } }
 
       it 'redirects to the crown marketplace home page and sets the flash message' do
         expect(response).to redirect_to crown_marketplace_path
@@ -879,7 +879,7 @@ RSpec.describe CrownMarketplace::ManageUsersController do
       before do
         allow(user).to receive(:resend_temporary_password).and_return(resend_temporary_password_response)
 
-        put :resend_temporary_password, params: { cognito_uuid: cognito_uuid }
+        put :resend_temporary_password, params: { cognito_uuid: }
       end
 
       context 'and there is an error' do

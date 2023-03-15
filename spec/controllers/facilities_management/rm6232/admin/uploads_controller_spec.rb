@@ -102,7 +102,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::UploadsController do
   end
 
   describe 'GET show' do
-    let(:upload) { create(:facilities_management_rm6232_admin_upload, aasm_state: aasm_state) }
+    let(:upload) { create(:facilities_management_rm6232_admin_upload, aasm_state:) }
 
     login_fm_admin
 

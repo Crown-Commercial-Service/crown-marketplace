@@ -11,8 +11,8 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementDetailsHelper do
 
   describe '.building_name' do
     let(:building) { create(:facilities_management_building, user: user, building_name: 'Super building name') }
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: user) }
-    let(:procurement_building) { create(:facilities_management_rm6232_procurement_building_no_services, procurement: procurement, building: building) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user:) }
+    let(:procurement_building) { create(:facilities_management_rm6232_procurement_building_no_services, procurement:, building:) }
     let(:user) { create(:user) }
 
     it 'returns the building name' do

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
-  let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: procurement) }
-  let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+  let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement:) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement, user:) }
   let(:user) { controller.current_user }
 
   login_fm_buyer_with_details
@@ -195,8 +195,8 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsController do
   end
 
   describe 'GET missing_regions' do
-    let(:building) { create(:facilities_management_building, user: user, **building_params) }
-    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building_no_services, procurement: procurement, building: building) }
+    let(:building) { create(:facilities_management_building, user:, **building_params) }
+    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building_no_services, procurement:, building:) }
     let(:procurement) { create(:facilities_management_rm3830_procurement_entering_requirements, user: user, procurement_buildings_attributes: { '0': { building_id: building.id, active: true } }) }
     let(:building_params) { {} }
 

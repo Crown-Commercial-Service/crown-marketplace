@@ -15,7 +15,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper do
     let(:service_codes) { ['E.1', 'F.1', 'G.1'] }
     let(:region_codes) { ['UKI3', 'UKI4'] }
     let(:annual_contract_value) { 500_000 }
-    let(:result) { helper.journey_step_url_former(journey_slug: journey_slug, annual_contract_value: annual_contract_value, region_codes: region_codes, service_codes: service_codes) }
+    let(:result) { helper.journey_step_url_former(journey_slug:, annual_contract_value:, region_codes:, service_codes:) }
 
     context 'when the journey_slug is choose-services' do
       let(:journey_slug) { 'choose-services' }
@@ -222,7 +222,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper do
   end
 
   describe '.procurement_service_names' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes: service_codes, lot_number: lot_number) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes:, lot_number:) }
     let(:base_service_codes) { ['E.1', 'E.2', 'E.3', 'E.4', 'E.5'] }
     let(:service_codes) { base_service_codes }
     let(:lot_number) { '1a' }

@@ -17,7 +17,7 @@ RSpec.describe CrownMarketplace::PasswordsController do
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Cognito::ForgotPassword).to receive(:forgot_password).and_return(true)
         # rubocop:enable RSpec/AnyInstance
-        post :create, params: { email: email }
+        post :create, params: { email: }
         cookies.update(response.cookies)
       end
 

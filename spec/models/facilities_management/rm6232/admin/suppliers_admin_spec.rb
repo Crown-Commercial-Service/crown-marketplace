@@ -574,7 +574,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin do
   end
 
   describe '.current_status' do
-    let(:supplier) { create(:facilities_management_rm6232_admin_suppliers_admin, active: active) }
+    let(:supplier) { create(:facilities_management_rm6232_admin_suppliers_admin, active:) }
 
     context 'when the supplier is active' do
       let(:active) { true }

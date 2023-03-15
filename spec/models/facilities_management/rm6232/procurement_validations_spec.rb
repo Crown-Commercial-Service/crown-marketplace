@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM6232::Procurement do
   describe 'validations' do
     describe 'contract_name' do
-      let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, user: user) }
+      let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, user:) }
       let(:user) { create(:user) }
 
       before { procurement.contract_name = contract_name }
@@ -39,7 +39,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
         let(:contract_name) { 'My taken name' }
 
         it 'is expected to not be valid and has the correct error message' do
-          create(:facilities_management_rm6232_procurement_what_happens_next, user: user, contract_name: contract_name)
+          create(:facilities_management_rm6232_procurement_what_happens_next, user:, contract_name:)
 
           expect(procurement.valid?(:contract_name)).to be false
           expect(procurement.errors[:contract_name].first).to eq 'This contract name is already in use'
@@ -66,7 +66,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     end
 
     describe 'annual_contract_value' do
-      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, annual_contract_value: annual_contract_value) }
+      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, annual_contract_value:) }
 
       context 'when no annual contract cost is present' do
         let(:annual_contract_value) { nil }
@@ -123,7 +123,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     end
 
     describe 'tupe' do
-      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, tupe: tupe) }
+      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, tupe:) }
 
       context 'when it is blank' do
         let(:tupe) { '' }
@@ -169,7 +169,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     end
 
     describe 'services' do
-      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, service_codes: service_codes) }
+      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, service_codes:) }
 
       context 'when no service codes are present' do
         let(:service_codes) { [] }
@@ -285,7 +285,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     end
 
     describe '.contract_period_in_past?' do
-      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_start_date: initial_call_off_start_date) }
+      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_start_date:) }
 
       context 'when initial call off period is in the past' do
         let(:initial_call_off_start_date) { Time.now.in_time_zone('London') - 10.days }
@@ -326,7 +326,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
     # rubocop:disable RSpec/NestedGroups
     describe '.mobilisation_period_valid_when_tupe_required?' do
-      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, tupe: tupe, mobilisation_period_required: mobilisation_period_required, mobilisation_period: mobilisation_period) }
+      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, tupe:, mobilisation_period_required:, mobilisation_period:) }
       let(:mobilisation_period_required) { false }
       let(:mobilisation_period) { 4 }
 
@@ -369,8 +369,8 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     end
 
     describe 'validations on entering_requirements' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: user) }
-      let(:building) { create(:facilities_management_building, user: user) }
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user:) }
+      let(:building) { create(:facilities_management_building, user:) }
       let(:user) { create(:user) }
 
       context 'with valid scenarios' do

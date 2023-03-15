@@ -47,7 +47,7 @@ module Cognito
     end
 
     def create_user_if_needed
-      user = User.find_for_authentication(email: email)
+      user = User.find_for_authentication(email:)
       return user if user
 
       resp = CreateUserFromCognito.call(email)

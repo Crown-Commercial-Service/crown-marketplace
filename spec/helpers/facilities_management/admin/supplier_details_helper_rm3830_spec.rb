@@ -112,7 +112,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsHelper do
     before { @supplier = supplier }
 
     context 'and the supplier has a user' do
-      let(:attributes) { { user: user } }
+      let(:attributes) { { user: } }
       let(:user) { create(:user) }
 
       it 'returns the supplier user email' do

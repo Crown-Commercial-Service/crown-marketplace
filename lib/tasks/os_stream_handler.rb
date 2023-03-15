@@ -32,7 +32,7 @@ module OrdnanceSurvey
   end
   # rubocop:enable  Metrics/AbcSize
 
-  def self.stream_url(obj, data_summary, &_block)
+  def self.stream_url(obj, data_summary, &)
     meta_type   = :dat
     chunk_count = -1
     chunks      = ''
@@ -52,21 +52,21 @@ module OrdnanceSurvey
     raise e
   end
 
-  def self.untar_stream(url, summary, &block)
+  def self.untar_stream(url, summary, &)
     Gem::Package::TarReader.new(Zlib::GzipReader.new(File.open(url))) do |tar|
-      handle_tar_contents(tar, summary, &block)
+      handle_tar_contents(tar, summary, &)
     end
   end
 
-  def self.gunzip_url(url, summary, &block)
+  def self.gunzip_url(url, summary, &)
     Zlib::GzipReader.open(File.open(url)) do |gz|
-      handle_gzip_contents(gz, summary, &block)
+      handle_gzip_contents(gz, summary, &)
     end
   end
 
-  def self.unzip_url(url, summary, &block)
+  def self.unzip_url(url, summary, &)
     Zip::InputStream.open(IO.popen(url)) do |io|
-      handle_zip_contents(io, summary, &block)
+      handle_zip_contents(io, summary, &)
     end
   end
 end

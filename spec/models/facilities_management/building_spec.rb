@@ -914,7 +914,7 @@ RSpec.describe FacilitiesManagement::Building do
   end
 
   describe '.standard_building_type?' do
-    let(:building) { create(:facilities_management_building, building_type: building_type) }
+    let(:building) { create(:facilities_management_building, building_type:) }
 
     described_class::BUILDING_TYPES[0..11].pluck(:id).each do |type|
       context "when the building type is #{type}" do
@@ -962,7 +962,7 @@ RSpec.describe FacilitiesManagement::Building do
 
     before do
       allow(Postcode::PostcodeCheckerV2).to receive(:find_region).and_return(returned_regions)
-      building.assign_attributes(address_postcode: address_postcode)
+      building.assign_attributes(address_postcode:)
     end
 
     context 'when there are errors' do

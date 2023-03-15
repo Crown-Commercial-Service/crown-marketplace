@@ -19,22 +19,22 @@ RSpec.describe Cognito::Admin::User do
 
   let(:attributes) do
     {
-      cognito_uuid: cognito_uuid,
-      email: email,
-      email_verified: email_verified,
-      telephone_number: telephone_number,
-      roles: roles,
-      service_access: service_access,
-      account_status: account_status,
-      confirmation_status: confirmation_status,
-      mfa_enabled: mfa_enabled
+      cognito_uuid:,
+      email:,
+      email_verified:,
+      telephone_number:,
+      roles:,
+      service_access:,
+      account_status:,
+      confirmation_status:,
+      mfa_enabled:
     }
   end
 
   describe '#validations on select_role' do
     let(:attributes) do
       {
-        roles: roles,
+        roles:,
       }
     end
 
@@ -78,8 +78,8 @@ RSpec.describe Cognito::Admin::User do
   describe '#validations on select_service_access' do
     let(:attributes) do
       {
-        roles: roles,
-        service_access: service_access
+        roles:,
+        service_access:
       }
     end
     let(:roles) { %w[buyer] }
@@ -114,10 +114,10 @@ RSpec.describe Cognito::Admin::User do
   describe '#validations on enter_user_details' do
     let(:attributes) do
       {
-        email: email,
-        telephone_number: telephone_number,
-        roles: roles,
-        service_access: service_access
+        email:,
+        telephone_number:,
+        roles:,
+        service_access:
       }
     end
     let(:allow_list_file) { Tempfile.new('allow_list.txt') }
@@ -132,7 +132,7 @@ RSpec.describe Cognito::Admin::User do
       allow_any_instance_of(AllowedEmailDomain).to receive(:allow_list_file_path).and_return(allow_list_file.path)
       # rubocop:enable RSpec/AnyInstance
       allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-      allow(aws_client).to receive(:list_users).and_return(list_users_resp_struct.new(users: users))
+      allow(aws_client).to receive(:list_users).and_return(list_users_resp_struct.new(users:))
     end
 
     after do
@@ -262,10 +262,10 @@ RSpec.describe Cognito::Admin::User do
   describe '#validations on create' do
     let(:attributes) do
       {
-        email: email,
-        telephone_number: telephone_number,
-        roles: roles,
-        service_access: service_access
+        email:,
+        telephone_number:,
+        roles:,
+        service_access:
       }
     end
     let(:allow_list_file) { Tempfile.new('allow_list.txt') }
