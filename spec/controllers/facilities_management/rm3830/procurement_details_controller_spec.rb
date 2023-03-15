@@ -21,7 +21,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
     let(:procurement_options) { {} }
 
     before do
-      procurement.update(**procurement_options)
+      procurement.update(procurement_options)
       get :show, params: { procurement_id: procurement.id, section: section_name }
     end
 

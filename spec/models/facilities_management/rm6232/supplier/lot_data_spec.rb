@@ -127,7 +127,7 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData do
     let(:supplier) { lot_data.supplier }
     let(:result) { lot_data.changed_data }
 
-    before { lot_data.update(**attributes) }
+    before { lot_data.update(attributes) }
 
     context 'when changing the status' do
       let(:attributes) { { active: false } }

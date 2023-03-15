@@ -596,7 +596,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin do
   describe '.changed_data' do
     let(:result) { supplier.changed_data }
 
-    before { supplier.update(**attributes) }
+    before { supplier.update(attributes) }
 
     context 'when changing the supplier status' do
       let(:attributes) { { active: false } }

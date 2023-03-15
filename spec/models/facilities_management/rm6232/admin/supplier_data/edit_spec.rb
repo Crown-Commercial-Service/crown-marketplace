@@ -7,7 +7,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit do
     let(:user) { create(:user) }
     let(:result) { described_class.log_change(user, model) }
 
-    before { model.update(**atrributes) }
+    before { model.update(atrributes) }
 
     context 'when the model is supplier admin' do
       let(:model) { supplier }
