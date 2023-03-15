@@ -7,7 +7,7 @@ require:
 
 AllCops:
     NewCops: enable
-    TargetRubyVersion: 2.7
+    TargetRubyVersion: 3.2
     Exclude:
         - 'db/schema.rb'
         - 'db/seeds.rb'
@@ -162,4 +162,14 @@ Rails/HelperInstanceVariable:
     Enabled: false
 
 Style/OptionalBooleanParameter:
+    Enabled: false
+
+# TODO: Reenable these cops
+Style/HashSyntax:
+    Enabled: false
+
+Naming/BlockForwarding:
+    Enabled: false
+
+Style/ArrayIntersect:
     Enabled: false

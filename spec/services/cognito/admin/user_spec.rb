@@ -435,7 +435,7 @@ RSpec.describe Cognito::Admin::User do
   end
 
   describe 'validations on an existing user' do
-    before { cognito_admin_user.assign_attributes({ attribute => value }) }
+    before { cognito_admin_user.assign_attributes(attribute => value) }
 
     context 'when validating the email status' do
       let(:attribute) { :email_verified }
@@ -878,10 +878,10 @@ RSpec.describe Cognito::Admin::User do
   end
 
   describe '.assign_attributes' do
-    let(:assign_attributes) { cognito_admin_user.assign_attributes(new_attributes) }
+    let(:assign_attributes) { cognito_admin_user.assign_attributes(**new_attributes) }
 
     context 'when new_attributes is nil' do
-      let(:new_attributes) { nil }
+      let(:assign_attributes) { cognito_admin_user.assign_attributes(nil) }
 
       it 'raises an argument error' do
         expect { assign_attributes }.to raise_error(ArgumentError)

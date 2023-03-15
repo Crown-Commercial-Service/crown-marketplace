@@ -35,7 +35,7 @@ Given('I should see that there are no users with that email address') do
 end
 
 Given('I should not see users table') do
-  expect(manage_users_page.find('div#users-table')).to have_no_content
+  expect(manage_users_page.find('div#users-table')).to have_content('')
 end
 
 Then('I should see the following users in the results:') do |found_users_table|

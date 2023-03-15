@@ -171,8 +171,8 @@ module OrdnanceSurvey
   end
 
   # rubocop:disable Lint/MixedRegexpCaptureTypes
-  MATCH_1 = /dataPostcode_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)_(?<outcode>\w{1,2}))/.freeze
-  MATCH_2 = /AddressBasePlus_.*?_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)((?>.csv-)(?<outcode>\w{1,2}))?)/.freeze
+  MATCH_1 = /dataPostcode_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)_(?<outcode>\w{1,2}))/
+  MATCH_2 = /AddressBasePlus_.*?_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)((?>.csv-)(?<outcode>\w{1,2}))?)/
   # rubocop:enable Lint/MixedRegexpCaptureTypes
 
   def self.extract_metadata(filename, outcode = nil)
