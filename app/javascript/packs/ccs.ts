@@ -21,7 +21,7 @@ import initSelectRegion from '../src/facilitiesManagement/procurements/selectReg
 import initStepByStepNav from '../src/shared/stepByStepNav'
 import initSupplierDataSnapshot from '../src/facilitiesManagement/rm6232/admin/supplierDataSnapshot'
 
-$(document).on('turbolinks:load', () => {
+$(() => {
   // Facilities Management - Buildings TS
   initBuildingType()
   initBuildingsInStorage()

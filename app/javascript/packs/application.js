@@ -16,11 +16,9 @@
 
 import jQuery from 'jquery'
 import Rails from '@rails/ujs'
-import Turbolinks from 'turbolinks'
 
 // Initiate @rails/ujs
 Rails.start()
-Turbolinks.start()
 
 // Initiate jQuery
 // eslint-disable-next-line no-undef

@@ -16,8 +16,6 @@ gem 'sass-rails', '~> 5.1', '>= 5.1.0'
 
 gem 'shakapacker', '~> 6.5.6'
 
-gem 'turbolinks', '~> 5'
-
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'
 # Use ActiveModel has_secure_password
