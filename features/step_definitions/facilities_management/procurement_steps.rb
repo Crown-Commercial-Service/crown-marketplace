@@ -73,7 +73,7 @@ FRMAEOWRK_AND_STATE_TO_FACTORY = {
     entering_requirements: :facilities_management_rm3830_procurement_entering_requirements_complete
   },
   'RM6232' => {
-    initial: :facilities_management_rm6232_procurement_what_happens_next,
+    initial: :facilities_management_rm6232_procurement,
     empty_entering_requirements: :facilities_management_rm6232_procurement_entering_requirements_empty,
     entering_requirements: :facilities_management_rm6232_procurement_entering_requirements,
     results: :facilities_management_rm6232_procurement_results,

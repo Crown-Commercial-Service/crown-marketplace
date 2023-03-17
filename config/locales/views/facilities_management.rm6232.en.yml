@@ -102,89 +102,11 @@ en:
               wrong_extension: The 'Supplier services' file must be an XLSX
         facilities_management/rm6232/procurement:
           attributes:
-            annual_contract_value:
-              greater_than: The annual contract cost must be a whole number greater than 0
-              less_than: The annual contract cost must be less than 1,000,000,000,000 (1 trillion)
-              not_a_number: The annual contract cost must be a whole number greater than 0
-              not_an_integer: The annual contract cost must be a whole number greater than 0
-            base:
-              buildings_and_services_incomplete: "‘Assigning services to buildings’ must be ‘COMPLETED’"
-              buildings_incomplete: "‘Buildings’ must be ‘COMPLETED’"
-              contract_period_incomplete: "‘Contract period’ must be ‘COMPLETED’"
-              initial_call_off_period_in_past: Initial call-off period start date must not be in the past
-              mobilisation_period_in_past: Mobilisation period start date must not be in the past
-              mobilisation_period_required: Mobilisation period length must be a minimum of 4 weeks when TUPE is selected
-              services_incomplete: "‘Services’ must be ‘COMPLETED’"
-              total_contract_length: Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total
-              total_contract_period: The total initial call-off period must be between 1 month and 7 years
-              tupe_incomplete: "‘TUPE’ must be ‘COMPLETED’"
             contract_name:
               blank: Enter your contract name
               taken: This contract name is already in use
               too_long: Your contract name must be 100 characters or fewer
               too_short: Enter your contract name
-            extensions_required:
-              inclusion: Select one option for call-off contract extension
-            initial_call_off_period_months:
-              blank: Enter the months for the initial call-off period
-              greater_than_or_equal_to: The months for the initial call-off period must be between 0 and 11
-              less_than_or_equal_to: The months for the initial call-off period must be between 0 and 11
-              not_a_number: The months for the initial call-off period must be a whole number
-              not_an_integer: The months for the initial call-off period must be a whole number
-            initial_call_off_period_years:
-              blank: Enter the years for the initial call-off period
-              greater_than_or_equal_to: The years for the initial call-off period must be between 0 and 7
-              less_than_or_equal_to: The years for the initial call-off period must be between 0 and 7
-              not_a_number: The years for the initial call-off period must be a whole number
-              not_an_integer: The years for the initial call-off period must be a whole number
-              not_present: You must answer all questions about ‘Contract period’
-            initial_call_off_start_date:
-              blank: Enter a valid initial call-off start date
-              date_after_or_equal_to: Initial call-off period start date must be today or in the future
-              date_before: Initial call-off period start date cannot be later than 31 December 2100
-              not_a_date: Enter a valid initial call-off start date
-            mobilisation_period:
-              blank: Enter mobilisation period length
-              greater_than: Mobilisation length must be between 1 and 52 weeks
-              greater_than_or_equal_to: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
-              less_than_or_equal_to: Mobilisation length must be between 1 and 52 weeks
-              not_a_number: Enter mobilisation length
-              not_an_integer: Enter mobilisation length as a whole number
-              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
-            mobilisation_period_required:
-              inclusion: Select one option for mobilisation period
-              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
-            mobilisation_start_date:
-              greater_than: Mobilisation start date must be in the future, please review your 'Initial call-off-period' and 'Mobilisation period length'
-            procurement_buildings:
-              invalid: Select at least one building
-            service_codes:
-              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'
-              too_short: Select at least one service you need to include in your procurement
-            tupe:
-              inclusion: Select one option
-              not_present: You must answer the question about ‘TUPE’
-        facilities_management/rm6232/procurement/call_off_extension:
-          attributes:
-            base:
-              minimum_period: The total for extension period %{extension} must be greater than 1 month
-            months:
-              blank: Enter the months for the extension period
-              greater_than_or_equal_to: The months for the extension period must be between 0 and 11
-              less_than_or_equal_to: The months for the extension period must be between 0 and 11
-              not_a_number: The months for the extension period must be a whole number
-              not_an_integer: The months for the extension period must be a whole number
-            years:
-              blank: Enter the years for the extension period
-              greater_than_or_equal_to: The years for the extension period must be greater than or equal to 0
-              not_a_number: The years for the extension period must be a whole number
-              not_an_integer: The years for the extension period must be a whole number
-        facilities_management/rm6232/procurement_building:
-          attributes:
-            service_codes:
-              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'
-              invalid_cleaning: "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only"
-              too_short: You must select at least one service for this building
         facilities_management/rm6232/supplier/lot_data:
           attributes:
             active:
@@ -521,56 +443,6 @@ en:
             item_2: your eligible Lot
             item_3: your unique reference number, time & date stamped
           your_unique_reference_number: Your unique reference number
-        show_partials:
-          entering_requirements:
-            contract_details: 1. Contract details
-            description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'Save and continue' button to see your supplier shortlist and procurement options.
-            services_and_buildings: 2. Services and buildings
-          further_information:
-            deliverables_matrix: Prepopulated 'Deliverables matrix'
-            fm_framework_page: facilities management framework page
-            fm_framework_page_url: https://www.crowncommercial.gov.uk/agreements/rm6232
-            information_list:
-              item_1: Customer guidence documents
-              item_2: Framework benifits
-              item_3: How to buy
-              item_4: Bid pack documents
-            on_the_framework_page_html: 'On the %{framework_page_link}, you can view information including:'
-            step_1: Step 1 - Download your results
-            step_2: Step 2 - Review the Facilities Management framework page
-            supplier_brief: Prepopulated 'Supplier brief'
-            we_have_used: We have used the information entered on the previous pages to prepopulate a deliverables matrix and a supplier bief which you can use when running your further competition.
-          results:
-            based_on_information: 'Based on the further information you provided, this procurement is eligible for the following sub-lot:'
-            building: Building
-            buildings_and_services: Buildings and services summary
-            if_you_wish: If you wish to change your requirements, click the 'Change requirements' button below. Any changes may result in a different outcome.
-            service: Service
-            sub_lot: Sub-lot %{sub_lot}
-            suppliers_shortlisted: "%{number} supplier(s) shortlisted"
-            warning_text: You will not be able to change your requirements for this procurement once you click 'Continue'
-            who_can_provide: who can provide the services you require in your location(s)
-          show:
-            change_requirements: Change requirements
-            return_to_your_account: Return to your account
-            save_and_continue: Save and continue
-            title:
-              entering_requirements: Further service and contract requirements
-              further_information: What do I do next?
-              results: Results
-              what_happens_next: What happens next?
-          what_happens_next:
-            if_you_need_to_talk: If you need to talk to us or refer to your procurement at any point please use the below reference number
-            option_1:
-              details: Click save and continue below to continue entering your requirements. You will be able to edit and enter your Contract details and services and buildings. Once this has been completed you will be able to download a prepopulated deliverables matrix and a prepopulated order form, with all your contract and  service requirements inserted. Once you have downloaded these documents you will then be able to run a further competition either with your organisation’s own sourcing tool or use the Crown Commercial free eSourcing tool.
-              heading: Option 1. Use this portal to complete the facilities services requirements
-            option_2:
-              details: You can download your shortlisted suppliers list now and proceed with  further competition using your own templates and sourcing system.
-              heading: Option 2. Carry out the further competition with your own templates and system
-            or: Or
-            selected_suppliers: Selected suppliers
-            you_have_two_option: You now have two options to complete you procurement activity. You can either continue using this portal to complete the facilities services requirements or you can carry out the further competition with your own templates and system.
-            your_unique_reference_number: Your unique reference number
       service_specification:
         show:
           generic_requirements: "%{work_package_name} - Generic Requirements"

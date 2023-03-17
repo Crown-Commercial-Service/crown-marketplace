@@ -18,7 +18,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController do
 
   describe 'GET index' do
     before do
-      create_list(:facilities_management_rm6232_procurement_what_happens_next, 5, aasm_state: 'what_happens_next', user: user)
+      create_list(:facilities_management_rm6232_procurement, 5, user:)
       get :index
     end
 
@@ -42,7 +42,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController do
     render_views
 
     context 'when the user did create the procurement' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user:) }
+      let(:procurement) { create(:facilities_management_rm6232_procurement, user:) }
 
       it 'renders the show page' do
         expect(response).to render_template(:show)
@@ -59,7 +59,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController do
     end
 
     context 'when the user did not create the procurement' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user: create(:user)) }
+      let(:procurement) { create(:facilities_management_rm6232_procurement, user: create(:user)) }
 
       before { get :show, params: { id: procurement.id } }
 
@@ -158,7 +158,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController do
   describe 'GET supplier_shortlist_spreadsheet' do
     login_fm_buyer_with_details
 
-    let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user, contract_name: 'New search') }
+    let(:procurement) { create(:facilities_management_rm6232_procurement, user: user, contract_name: 'New search') }
 
     before { get :supplier_shortlist_spreadsheet, params: { procurement_id: procurement.id } }
 

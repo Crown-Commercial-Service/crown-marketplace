@@ -1,9 +1,8 @@
 module FacilitiesManagement
   module RM6232
     class ProcurementsController < FacilitiesManagement::FrameworkController
-      before_action :set_procurement, only: %i[show update_show supplier_shortlist_spreadsheet]
+      before_action :set_procurement, only: %i[show supplier_shortlist_spreadsheet]
       before_action :authorize_user
-      before_action :redirect_if_missing_regions, only: :show
 
       def index
         @searches = current_user.rm6232_procurements.order(updated_at: :asc)
@@ -40,15 +39,6 @@ module FacilitiesManagement
         end
       end
 
-      def update_show
-        if (params[:change_requirements] && @procurement.go_back_to_entering_requirements!) || (@procurement.valid?(@procurement.aasm_state.to_sym) && @procurement.set_to_next_state!)
-          redirect_to facilities_management_rm6232_procurement_path(id: @procurement.id)
-        else
-          set_back_path(:show)
-          render :show
-        end
-      end
-
       def supplier_shortlist_spreadsheet
         spreadsheet_builder = SupplierShortlistSpreadsheetCreator.new(@procurement.id)
         spreadsheet_builder.build
@@ -56,10 +46,6 @@ module FacilitiesManagement
       end
 
       private
-
-      def redirect_if_missing_regions
-        redirect_to facilities_management_rm6232_missing_regions_path(procurement_id: @procurement.id) if @procurement.procurement_buildings_missing_regions?
-      end
 
       # rubocop:disable Naming/AccessorMethodName
       def set_back_path(action)

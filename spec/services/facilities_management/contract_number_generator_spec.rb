@@ -121,10 +121,10 @@ RSpec.describe FacilitiesManagement::ContractNumberGenerator do
       let(:current_year) { Date.current.year.to_s }
 
       before do
-        create(:facilities_management_rm6232_procurement_what_happens_next, contract_number: "RM6232-000005-#{current_year}")
-        create(:facilities_management_rm6232_procurement_what_happens_next, contract_number: "RM6232-000006-#{current_year}")
-        create(:facilities_management_rm6232_procurement_what_happens_next, contract_number: 'RM6232-000007-2019')
-        create(:facilities_management_rm6232_procurement_what_happens_next, contract_number: 'RM6232-000008-2019')
+        create(:facilities_management_rm6232_procurement, contract_number: "RM6232-000005-#{current_year}")
+        create(:facilities_management_rm6232_procurement, contract_number: "RM6232-000006-#{current_year}")
+        create(:facilities_management_rm6232_procurement, contract_number: 'RM6232-000007-2019')
+        create(:facilities_management_rm6232_procurement, contract_number: 'RM6232-000008-2019')
       end
 
       it 'presents all of the contract numbers used for the current year' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6232::SupplierShortlistSpreadsheetCreator do
-  let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user, service_codes: %w[E.5 M.1 P.8], region_codes: %w[UKC1 UKD1 UKF3 UKH3], annual_contract_value: 500_000, contract_name: 'My search test') }
+  let(:procurement) { create(:facilities_management_rm6232_procurement, user: user, service_codes: %w[E.5 M.1 P.8], region_codes: %w[UKC1 UKD1 UKF3 UKH3], annual_contract_value: 500_000, contract_name: 'My search test') }
   let(:user) { create(:user, :with_detail) }
   let(:buyer_detail) { user.buyer_detail }
   let(:spreadsheet_builder) { described_class.new(procurement.id) }
