@@ -291,7 +291,7 @@ module OrdnanceSurvey
 
     awd_credentials access_key, secret_key, bucket, region
 
-    object = Aws::S3::Resource.new(region: region)
+    object = Aws::S3::Resource.new(region:)
     beginning_time = Time.current
     object.bucket(bucket).objects.each do |obj|
       next if obj.key == "#{folder_root}/" || !obj.key.starts_with?(folder_root)

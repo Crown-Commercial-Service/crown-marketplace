@@ -34,7 +34,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::PasswordsController do
     context 'when the framework is live' do
       context 'when no exception is raised' do
         before do
-          post :create, params: { email: email }
+          post :create, params: { email: }
           cookies.update(response.cookies)
         end
 
@@ -103,7 +103,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::PasswordsController do
       include_context 'and RM3830 has expired'
 
       before do
-        post :create, params: { email: email }
+        post :create, params: { email: }
         cookies.update(response.cookies)
       end
 

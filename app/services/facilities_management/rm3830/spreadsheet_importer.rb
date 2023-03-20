@@ -244,7 +244,7 @@ module FacilitiesManagement::RM3830
     end
 
     def add_procurement_building_service(procurement_building_services, code, index)
-      procurement_building_service = ProcurementBuildingService.new(code: code)
+      procurement_building_service = ProcurementBuildingService.new(code:)
       procurement_building_service.service_standard = extract_standard(SERVICE_CODES[index]) if requires_service_standard?(SERVICE_CODES[index])
       procurement_building_services << { object: procurement_building_service }
     end
@@ -331,7 +331,7 @@ module FacilitiesManagement::RM3830
         number_of_floors = service_volume_column[row]
         break if number_of_floors.nil?
 
-        procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+        procurement_building_service.lifts.build(number_of_floors:)
       end
     end
 
@@ -352,7 +352,7 @@ module FacilitiesManagement::RM3830
     end
 
     def skip_building?(procurement_building)
-      (procurement_building.service_codes & SERVICE_HOUR_CODES).empty?
+      !procurement_building.service_codes.intersect?(SERVICE_HOUR_CODES)
     end
 
     def get_service_hours_from_sheet(sheet, col)
@@ -475,7 +475,7 @@ module FacilitiesManagement::RM3830
         save_procurement_building_services(building)
       end
 
-      @procurement.update(service_codes: service_codes)
+      @procurement.update(service_codes:)
     end
 
     def delete_existing_procurement_buildings_and_services
@@ -523,7 +523,7 @@ module FacilitiesManagement::RM3830
 
     def save_lift_data(procurement_building_service, object)
       object.lift_data.each do |number_of_floors|
-        procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+        procurement_building_service.lifts.create(number_of_floors:)
       end
     end
 

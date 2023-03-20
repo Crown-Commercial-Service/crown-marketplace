@@ -202,7 +202,7 @@ module FacilitiesManagement
       def download_da_spreadsheet(spreadsheet_creator, filename)
         spreadsheet_builder = spreadsheet_creator.new @procurement.first_unsent_contract.id
         spreadsheet_builder.build
-        send_data spreadsheet_builder.to_xlsx, filename: filename
+        send_data spreadsheet_builder.to_xlsx, filename:
       end
 
       def change_the_contract_value

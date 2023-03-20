@@ -74,7 +74,7 @@ RSpec.describe CrownMarketplace::AllowListController do
   describe 'POST create' do
     login_user_admin
 
-    before { post :create, params: { allowed_email_domain: { email_domain: email_domain } } }
+    before { post :create, params: { allowed_email_domain: { email_domain: } } }
 
     context 'when the email domain is not valid' do
       let(:email_domain) { 'Go Beyond Plus ULTRA!!!' }

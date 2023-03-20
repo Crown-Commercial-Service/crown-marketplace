@@ -70,12 +70,12 @@ module FacilitiesManagement
     end
 
     def call_off_extension(extension)
-      call_off_extensions.find_by(extension: extension)
+      call_off_extensions.find_by(extension:)
     end
 
     def build_call_off_extensions
       4.times do |extension|
-        call_off_extensions.find_or_initialize_by(extension: extension)
+        call_off_extensions.find_or_initialize_by(extension:)
       end
     end
 

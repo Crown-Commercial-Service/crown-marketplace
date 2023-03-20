@@ -4,7 +4,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   it { is_expected.to belong_to(:user) }
 
   describe '.quick_view_suppliers' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, service_codes: service_codes) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, service_codes:) }
     let(:base_service_codes) { ['E.1', 'E.2'] }
     let(:service_codes) { base_service_codes }
 
@@ -26,7 +26,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   end
 
   describe '.supplier_names' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes: service_codes) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes:) }
     let(:base_service_codes) { ['E.1', 'E.2'] }
     let(:service_codes) { base_service_codes }
 
@@ -88,7 +88,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   end
 
   describe '.services' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes: service_codes, lot_number: lot_number) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes:, lot_number:) }
     let(:base_service_codes) { ['E.1', 'E.2'] }
     let(:service_codes) { base_service_codes }
     let(:lot_number) { '1a' }
@@ -135,7 +135,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   end
 
   describe '.procurement_services' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes: service_codes, lot_number: lot_number) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes:, lot_number:) }
     let(:base_service_codes) { ['E.1', 'E.2', 'E.3', 'E.4', 'E.5'] }
     let(:service_codes) { base_service_codes }
     let(:lot_number) { '1a' }
@@ -184,7 +184,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   end
 
   describe '.services_without_lot_consideration' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes: service_codes, lot_number: lot_number) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes:, lot_number:) }
     let(:base_service_codes) { ['E.1', 'E.2'] }
     let(:service_codes) { base_service_codes }
     let(:lot_number) { '1a' }
@@ -239,7 +239,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   end
 
   describe '.service_codes_without_cafm' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes: service_codes) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes:) }
     let(:base_service_codes) { ['E.1', 'E.2', 'F.1', 'F.2', 'H.1'] }
 
     context 'when the service codes contain Q.3' do
@@ -262,7 +262,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   end
 
   describe '.true_service_codes' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes: service_codes, lot_number: lot_number) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes:, lot_number:) }
     let(:base_service_codes) { ['E.1', 'E.2', 'F.1', 'F.2', 'H.1'] }
     let(:lot_number) { '1a' }
 
@@ -594,7 +594,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   describe '.contract_name_status' do
     subject(:status) { procurement.contract_name_status }
 
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, contract_name: contract_name) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, contract_name:) }
 
     context 'when the contract name section has not been completed' do
       let(:contract_name) { '' }
@@ -616,7 +616,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   describe '.annual_contract_value_status' do
     subject(:status) { procurement.annual_contract_value_status }
 
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, annual_contract_value: annual_contract_value) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, annual_contract_value:) }
 
     context 'when the annual contract cost section has not been completed' do
       let(:annual_contract_value) { nil }
@@ -638,7 +638,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   describe '.tupe_status' do
     subject(:status) { procurement.tupe_status }
 
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, tupe: tupe) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, tupe:) }
 
     context 'when the tupe section has not been completed' do
       let(:tupe) { nil }
@@ -688,7 +688,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   describe '.services_status' do
     subject(:status) { procurement.services_status }
 
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, service_codes: service_codes) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, service_codes:) }
 
     context 'when user has not yet selected services' do
       let(:service_codes) { [] }
@@ -729,7 +729,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
   shared_context 'with buildings and services' do
     let(:procurement) do
-      create(:facilities_management_rm6232_procurement_entering_requirements, procurement_buildings: procurement_buildings)
+      create(:facilities_management_rm6232_procurement_entering_requirements, procurement_buildings:)
     end
 
     let(:procurement_buildings) { [procurement_building1, procurement_building2] }
@@ -742,7 +742,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     include_context 'with buildings and services'
 
     before do
-      procurement_building1.update(service_codes: service_codes)
+      procurement_building1.update(service_codes:)
       procurement_building2.update(service_codes: %w[E.1 E.2])
     end
 
@@ -818,7 +818,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   end
 
   describe '.initial_call_off_period' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_period_years: initial_call_off_period_years, initial_call_off_period_months: initial_call_off_period_months) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_period_years:, initial_call_off_period_months:) }
 
     context 'when the years are 0 and months 3' do
       let(:initial_call_off_period_years) { 0 }
@@ -849,7 +849,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   end
 
   describe '.initial_call_off_end_date' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_period_years: initial_call_off_period_years, initial_call_off_period_months: initial_call_off_period_months, initial_call_off_start_date: initial_call_off_start_date) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_period_years:, initial_call_off_period_months:, initial_call_off_start_date:) }
 
     context 'when the start date is 2022/03/01 and the period is 3 years and 4 months' do
       let(:initial_call_off_start_date) { Time.new(2022, 3, 1).in_time_zone('London') }
@@ -1164,7 +1164,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   end
 
   describe '.procurement_buildings_service_codes' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes: service_codes) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes:) }
     let(:service_codes) { ['E.1', 'E.2', 'E.3', 'E.4'] }
 
     before do
@@ -1179,7 +1179,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
   end
 
   describe '.true_procurement_buildings_service_codes' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes: service_codes, lot_number: lot_number) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes:, lot_number:) }
     let(:base_service_codes) { ['E.1', 'E.2', 'F.1', 'F.2', 'H.1'] }
     let(:base_procurement_buildings_service_codes) { ['E.1', 'F.1', 'H.1'] }
     let(:lot_number) { '1a' }

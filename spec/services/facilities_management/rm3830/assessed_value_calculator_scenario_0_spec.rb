@@ -7,14 +7,14 @@ RSpec.describe FacilitiesManagement::RM3830::AssessedValueCalculator do
   let(:lot_number) { assessed_value_calulator.lot_number }
 
   let(:user) { create(:user) }
-  let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, user: user, service_codes: service_codes, **additional_params) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, user:, service_codes:, **additional_params) }
 
   describe 'when all services have framework and beanchmaek rates' do
     context 'when CAFM Helpdesk and TUPE are not required' do
       let(:service_codes) { %w[C.1 G.1 I.1 K.2] }
 
       before do
-        create(:facilities_management_rm3830_procurement_building_av_normal_building, procurement: procurement, service_codes: service_codes)
+        create(:facilities_management_rm3830_procurement_building_av_normal_building, procurement:, service_codes:)
         procurement.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'A')
         procurement.procurement_building_services.find_by(code: 'G.1').update(service_standard: 'A', no_of_building_occupants: 34)
         procurement.procurement_building_services.find_by(code: 'I.1').update(service_hours: 6240)
@@ -42,7 +42,7 @@ RSpec.describe FacilitiesManagement::RM3830::AssessedValueCalculator do
       let(:service_codes) { %w[C.1 G.1 I.1 K.2 M.1 N.1] }
 
       before do
-        create(:facilities_management_rm3830_procurement_building_av_london_building, procurement: procurement, service_codes: service_codes)
+        create(:facilities_management_rm3830_procurement_building_av_london_building, procurement:, service_codes:)
         procurement.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'A')
         procurement.procurement_building_services.find_by(code: 'G.1').update(service_standard: 'A', no_of_building_occupants: 34)
         procurement.procurement_building_services.find_by(code: 'I.1').update(service_hours: 6240)
@@ -71,12 +71,12 @@ RSpec.describe FacilitiesManagement::RM3830::AssessedValueCalculator do
       let(:additional_params) { { estimated_annual_cost: estimated_annual_cost, tupe: true, mobilisation_period_required: true, mobilisation_period: 4, extensions_required: false, initial_call_off_period_years: initial_call_off_period_years, initial_call_off_period_months: 0 } }
 
       before do
-        create(:facilities_management_rm3830_procurement_building_av_normal_building, procurement: procurement, service_codes: service_codes)
-        create(:facilities_management_rm3830_procurement_building_av_london_building, procurement: procurement, service_codes: service_codes)
+        create(:facilities_management_rm3830_procurement_building_av_normal_building, procurement:, service_codes:)
+        create(:facilities_management_rm3830_procurement_building_av_london_building, procurement:, service_codes:)
         procurement.procurement_building_services.where(code: %w[C.2 C.5 G.1]).each { |pbs| pbs.update(service_standard: 'A') }
         procurement.procurement_building_services.where(code: 'G.1').each { |pbs| pbs.update(no_of_building_occupants: volume) }
         procurement.procurement_building_services.where(code: 'E.4').each { |pbs| pbs.update(no_of_appliances_for_testing: volume) }
-        procurement.procurement_building_services.where(code: 'C.5').each { |pbs| no_of_lifts.times { pbs.lifts.create(number_of_floors: number_of_floors) } }
+        procurement.procurement_building_services.where(code: 'C.5').each { |pbs| no_of_lifts.times { pbs.lifts.create(number_of_floors:) } }
       end
 
       context 'and the lot is 1a' do

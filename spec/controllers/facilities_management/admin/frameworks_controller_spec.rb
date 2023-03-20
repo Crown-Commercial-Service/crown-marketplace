@@ -54,7 +54,7 @@ RSpec.describe FacilitiesManagement::Admin::FrameworksController do
     let(:live_at_mm) { framework.live_at.month.to_s }
     let(:live_at_dd) { framework.live_at.day.to_s }
 
-    before { post :update, params: { id: framework.id, framework: { live_at_dd: live_at_dd, live_at_mm: live_at_mm, live_at_yyyy: live_at_yyyy } } }
+    before { post :update, params: { id: framework.id, framework: { live_at_dd:, live_at_mm:, live_at_yyyy: } } }
 
     context 'when the data is valid' do
       it 'redirects to facilities_management_admin_frameworks_path' do

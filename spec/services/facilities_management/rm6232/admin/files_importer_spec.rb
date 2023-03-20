@@ -147,7 +147,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::FilesImporter do
 
       it 'has the correct data for the suppliers' do
         expected_supplier_results.each do |supplier_name, expected_results|
-          supplier = FacilitiesManagement::RM6232::Supplier.find_by(supplier_name: supplier_name)
+          supplier = FacilitiesManagement::RM6232::Supplier.find_by(supplier_name:)
 
           expect(supplier.lot_data.pluck(:lot_code)).to match_array(expected_results[:lot_codes])
         end
@@ -172,7 +172,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::FilesImporter do
 
       it 'imports the supplier data with the correct status' do
         expected_supplier_results.each do |supplier_name, expected_result|
-          supplier = FacilitiesManagement::RM6232::Supplier.find_by(supplier_name: supplier_name)
+          supplier = FacilitiesManagement::RM6232::Supplier.find_by(supplier_name:)
 
           expect(supplier.active).to be expected_result
         end

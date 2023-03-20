@@ -73,7 +73,7 @@ RSpec.describe CrownMarketplace::SessionsController do
       before do
         allow(aws_client).to receive(:initiate_auth).and_return(initiate_auth_resp_struct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => username }))
         allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
-        allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user: user))
+        allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user:))
 
         post :create, params: { user: { email: email, password: 'Password12345!' } }
         cookies.update(response.cookies)
@@ -91,7 +91,7 @@ RSpec.describe CrownMarketplace::SessionsController do
         let(:challenge_name) { 'NEW_PASSWORD_REQUIRED' }
 
         it 'redirects to crown_marketplace_users_challenge_path' do
-          expect(response).to redirect_to crown_marketplace_users_challenge_path(challenge_name: challenge_name)
+          expect(response).to redirect_to crown_marketplace_users_challenge_path(challenge_name:)
         end
 
         it 'the cookies are updated correctly' do

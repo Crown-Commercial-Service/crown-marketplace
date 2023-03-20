@@ -12,7 +12,7 @@ module FacilitiesManagement
 
       context = context_from_params
 
-      if @buyer_detail.save(context: context)
+      if @buyer_detail.save(context:)
         redirect_to redirect_path(context)
       else
         render render_template(context)

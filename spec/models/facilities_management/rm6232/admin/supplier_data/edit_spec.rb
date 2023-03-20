@@ -47,7 +47,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit do
 
     context 'when the model is supplier lot data' do
       let(:model) { lot_data }
-      let(:atrributes) { { service_codes: service_codes } }
+      let(:atrributes) { { service_codes: } }
 
       context 'and there are changes' do
         let(:service_codes) { %w[E.16 H.6 P.11 F.4] }

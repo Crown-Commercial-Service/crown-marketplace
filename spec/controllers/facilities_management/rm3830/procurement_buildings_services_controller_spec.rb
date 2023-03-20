@@ -352,8 +352,8 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
 
       before do
         procurement_building_service.procurement_building.update(service_codes: codes)
-        procurement_building_service.update(code: code)
-        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'area' }, facilities_management_building: { gia: gia, external_area: external_area } }
+        procurement_building_service.update(code:)
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'area' }, facilities_management_building: { gia:, external_area: } }
       end
 
       context 'when the area updated is invalid' do
