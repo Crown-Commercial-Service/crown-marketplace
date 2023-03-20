@@ -25,7 +25,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @snapshot, url: facilities_management_rm6232_admin_supplier_data_snapshots_path, method: :post, id: 'generate-supplier-zip', local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
+    <%= form_with model: @snapshot, url: facilities_management_rm6232_admin_supplier_data_snapshots_path, method: :post, id: 'generate-supplier-zip', html: { specialvalidation: true, novalidate: true } do |f| %>
       <%= form_group_with_error f.object, :snapshot_date_time do |displayed_date_time_error| %>
         <%= displayed_date_time_error %>
 

@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<%= form_with url: update_path, model: form_object, method: :put, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
+<%= form_with url: update_path, model: form_object, method: :put, html: { specialvalidation: true, novalidate: true } do |f| %>
   <%= render partial: section.to_s, locals: { f: f } %>
 
   <div class="govuk-grid-row govuk-!-margin-top-5">

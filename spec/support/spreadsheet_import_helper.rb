@@ -105,7 +105,7 @@ module SpreadsheetImportHelper
         sheet.merge_cells 'A7:A46'
         sheet.merge_cells 'B7:B46'
         sheet.merge_cells 'C7:C46'
-        sheet.add_row(['', '', '', '', 'Total number of lift entrances'] + service_details.map { |pb| pb[1].sum })
+        sheet.add_row(['', '', '', '', 'Total number of lift entrances'] + service_details.map { |pb| pb[1].count })
       end
     end
     # rubocop:enable Metrics/CyclomaticComplexity

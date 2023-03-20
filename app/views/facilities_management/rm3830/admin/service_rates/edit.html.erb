@@ -3,7 +3,7 @@
 
 <%= render partial: 'shared/error_summary', locals: { errors: @errors } %>
 
-<%= form_with url: facilities_management_rm3830_admin_service_rate_path(slug: @slug), method: :put, html: { specialvalidation: true, novalidate: true }, local: 'false' do |f| %>
+<%= form_with url: facilities_management_rm3830_admin_service_rate_path(slug: @slug), method: :put, html: { specialvalidation: true, novalidate: true } do |f| %>
   <%= render partial: @slug, locals: { f: f } %>
   <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_benchmark_rates', aria: { label: t('.update_button') }, disabled: @framework_has_expired %>
   <%= link_to t('.return_link'), facilities_management_rm3830_admin_path, class: 'govuk-link govuk-caption-m'%>

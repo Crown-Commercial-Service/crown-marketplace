@@ -1,6 +1,6 @@
 <% content_for :page_title, t('.page_title').html_safe %>
 
-<%= form_with model: @framework, url: local_update_path, method: :put, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
+<%= form_with model: @framework, url: local_update_path, method: :put, html: { specialvalidation: true, novalidate: true } do |f| %>
   <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
 
   <div class="govuk-grid-row">

@@ -26,7 +26,7 @@
     <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.upload_title') %></h2>
     <span class="govuk-caption-m govuk-!-margin-bottom-7"><%= t('.upload_caption') %></span>
     
-    <%= form_with model: @upload, url: facilities_management_rm6232_admin_uploads_path, method: :post, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
+    <%= form_with model: @upload, url: facilities_management_rm6232_admin_uploads_path, method: :post, html: { specialvalidation: true, novalidate: true } do |f| %>
       <% FacilitiesManagement::RM6232::Admin::Upload::ATTRIBUTES.each do |file| %>
         <%= govuk_form_group_with_optional_error(f.object, file) do %>
           <%= f.label file, t(".file_label.#{file}"), class: 'govuk-label' %>
