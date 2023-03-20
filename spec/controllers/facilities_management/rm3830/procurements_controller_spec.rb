@@ -766,7 +766,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController do
     login_fm_buyer_with_details
 
     before do
-      procurement.update(aasm_state: aasm_state)
+      procurement.update(aasm_state:)
       get :quick_view_results_spreadsheet, params: { procurement_id: procurement.id }
     end
 

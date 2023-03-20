@@ -60,11 +60,11 @@ module FacilitiesManagement
       end
 
       def validate_spreadsheet_gia(gia, building_name)
-        errors.add(:building, :gia_too_small, building_name: building_name) if requires_internal_area? && gia.to_i.zero?
+        errors.add(:building, :gia_too_small, building_name:) if requires_internal_area? && gia.to_i.zero?
       end
 
       def validate_spreadsheet_external_area(external_area, building_name)
-        errors.add(:building, :external_area_too_small, building_name: building_name) if requires_external_area? && external_area.to_i.zero?
+        errors.add(:building, :external_area_too_small, building_name:) if requires_external_area? && external_area.to_i.zero?
       end
 
       def missing_region?
@@ -87,7 +87,7 @@ module FacilitiesManagement
       end
 
       def requires_service_questions?
-        (service_codes & services_requiring_questions).any?
+        service_codes.intersect?(services_requiring_questions)
       end
 
       def building_internal_area
@@ -188,11 +188,11 @@ module FacilitiesManagement
       end
 
       def requires_external_area?
-        @requires_external_area ||= (services_requiring_external_area & service_codes).any?
+        @requires_external_area ||= services_requiring_external_area.intersect?(service_codes)
       end
 
       def requires_internal_area?
-        @requires_internal_area ||= (services_requiring_gia & service_codes).any?
+        @requires_internal_area ||= services_requiring_gia.intersect?(service_codes)
       end
 
       def area_complete?

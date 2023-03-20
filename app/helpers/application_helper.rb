@@ -43,22 +43,22 @@ module ApplicationHelper
     tag.label(text, class: 'govuk-label', for: form_object_name)
   end
 
-  def govuk_form_group_with_optional_error(journey, *attributes, &block)
+  def govuk_form_group_with_optional_error(journey, *attributes, &)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
 
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if attributes_with_errors.any?
 
-    tag.div(class: css_classes, &block)
+    tag.div(class: css_classes, &)
   end
 
-  def govuk_fieldset_with_optional_error(journey, *attributes, &block)
+  def govuk_fieldset_with_optional_error(journey, *attributes, &)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
 
     options = { class: 'govuk-fieldset' }
     options['aria-describedby'] = attributes_with_errors.map { |a| error_id(a) } if attributes_with_errors.any?
 
-    tag.fieldset(**options, &block)
+    tag.fieldset(**options, &)
   end
 
   def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
@@ -275,7 +275,7 @@ module ApplicationHelper
   end
 
   def search_box(placeholder_text, column = 0)
-    text_field_tag 'fm-table-filter-input', nil, class: 'govuk-input', placeholder: placeholder_text, data: { column: column }
+    text_field_tag 'fm-table-filter-input', nil, class: 'govuk-input', placeholder: placeholder_text, data: { column: }
   end
 
   def link_to_public_file_for_download(filename, file_type, text, show_doc_image, **html_options)

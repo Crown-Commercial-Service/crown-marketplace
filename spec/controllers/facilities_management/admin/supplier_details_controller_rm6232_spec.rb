@@ -224,7 +224,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController do
 
       context 'when updating on the supplier name page' do
         let(:page) { :supplier_name }
-        let(:supplier_params) { { supplier_name: supplier_name } }
+        let(:supplier_params) { { supplier_name: } }
 
         context 'and the data is not valid' do
           let(:supplier_name) { '' }

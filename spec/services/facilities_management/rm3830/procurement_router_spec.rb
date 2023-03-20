@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::ProcurementRouter do
-  let(:procurement_router) { described_class.new(1, state, step: step) }
+  let(:procurement_router) { described_class.new(1, state, step:) }
   let(:step) { nil }
 
   describe '.route' do
@@ -76,7 +76,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementRouter do
 
       context 'when on the last step' do
         let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement, id: 1, procurement_buildings: [])) }
-        let(:procurement_router) { described_class.new(procurement_building.procurement.id, state, step: step) }
+        let(:procurement_router) { described_class.new(procurement_building.procurement.id, state, step:) }
         let(:step) { 'building_services' }
 
         it 'returns a route for the show procurement_building page' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::Procurement do
-  subject(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user: user) }
+  subject(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user:) }
 
   let(:user) { create(:user) }
   let(:security_policy_document_file) { Tempfile.new(['security_policy_document_file', '.txt']) }
@@ -123,7 +123,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
     end
 
     context 'when considering lifts' do
-      let(:procurement) { create(:facilities_management_rm3830_procurement_with_lifts, user: user) }
+      let(:procurement) { create(:facilities_management_rm3830_procurement_with_lifts, user:) }
 
       it 'will have the same lift data' do
         procurement_lift_data = procurement.procurement_buildings.first.procurement_building_services.first.lift_data
@@ -134,7 +134,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
     end
 
     context 'when a copy has been made of a procurement without full use of contact details' do
-      let(:second_procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+      let(:second_procurement) { create(:facilities_management_rm3830_procurement, user:) }
       let(:second_procurement_copy) { second_procurement.create_procurement_copy }
 
       it 'will have the same attributes as the procurement' do

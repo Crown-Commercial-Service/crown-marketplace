@@ -79,7 +79,7 @@ module FacilitiesManagement
           snapshot_time_blank? ? '%d_%m_%Y' : '%d_%m_%Y %H_%M'
         end
 
-        INTEGER_REGEX = /\A[+-]?\d+\z/.freeze
+        INTEGER_REGEX = /\A[+-]?\d+\z/
       end
     end
   end
