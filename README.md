@@ -344,7 +344,6 @@ environments:
 
 
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
-[juice]: https://www.npmjs.com/package/juice
 [dotenv-rails]: https://github.com/bkeepers/dotenv
 [aws-parameter-store]: https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-paramstore.html
 [rubocop]: https://github.com/rubocop-hq/rubocop
