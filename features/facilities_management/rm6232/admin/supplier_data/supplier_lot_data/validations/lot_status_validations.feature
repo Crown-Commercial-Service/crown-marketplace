@@ -1,4 +1,3 @@
-@pipline
 Feature: Changing the lot status validations
 
   Scenario: Validate supplier status

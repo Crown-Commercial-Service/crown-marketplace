@@ -33,7 +33,7 @@ module FacilitiesManagement::RM6232
       end
 
       def add_errors(missing_data, error_name)
-        @errors << { error: error_name, details: missing_data.map { |supplier| supplier[:supplier_name] } } if missing_data.any?
+        @errors << { error: error_name, details: missing_data.pluck(:supplier_name) } if missing_data.any?
       end
     end
   end

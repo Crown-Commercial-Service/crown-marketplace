@@ -92,12 +92,12 @@ module FacilitiesManagement
       @buildings = current_user.buildings.order_by_building_name.page(params[:page])
       visible_buildings_ids = @buildings.map(&:id)
 
-      hidden_building_ids = @building_params.reject { |building_id, _| visible_buildings_ids.include? building_id }.keys
+      hidden_building_ids = @building_params.except(*visible_buildings_ids).keys
       @hidden_buildings = current_user.buildings.order_by_building_name.where(id: hidden_building_ids)
     end
 
     def paramatise_building_selection
-      @building_params = procurement_params['procurement_buildings_attributes'].to_h.values.select { |building| building['active'] }.map { |item| [item['building_id'], item['active']] }.to_h
+      @building_params = procurement_params['procurement_buildings_attributes'].to_h.values.select { |building| building['active'] }.to_h { |item| [item['building_id'], item['active']] }
     end
 
     def paginate_procurement_buildings
@@ -116,7 +116,7 @@ module FacilitiesManagement
 
         return unless params[:commit]
 
-        current_procurement_buildings = @procurement.procurement_buildings.select(:id, :building_id).map { |pb| [pb.building_id, pb.id] }.to_h
+        current_procurement_buildings = @procurement.procurement_buildings.select(:id, :building_id).to_h { |pb| [pb.building_id, pb.id] }
         @procurement.assign_attributes(procurement_buildings_attributes: @building_params.map { |building_id, active| { id: current_procurement_buildings[building_id], building_id: building_id, active: active } })
       else
         @procurement.assign_attributes(procurement_params)

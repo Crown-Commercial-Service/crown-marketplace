@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
   subject(:procurement_building) { build(:facilities_management_rm6232_procurement_building_no_services, procurement: procurement, service_codes: service_codes) }
 
   let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
@@ -180,7 +180,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding, type: :model d
       let(:service_codes) { [] }
 
       it 'returns false' do
-        expect(procurement_building.service_selection_complete?).to eq false
+        expect(procurement_building.service_selection_complete?).to be false
       end
     end
 
@@ -188,7 +188,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding, type: :model d
       let(:service_codes) { %w[Q.3 R.1 S.1] }
 
       it 'returns false' do
-        expect(procurement_building.service_selection_complete?).to eq false
+        expect(procurement_building.service_selection_complete?).to be false
       end
     end
 
@@ -196,7 +196,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding, type: :model d
       let(:service_codes) { %w[Q.3 R.1 S.1 E.1] }
 
       it 'returns true' do
-        expect(procurement_building.service_selection_complete?).to eq true
+        expect(procurement_building.service_selection_complete?).to be true
       end
     end
   end
@@ -441,7 +441,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding, type: :model d
       let(:attribute) { 'contract_name' }
 
       it 'returns nil' do
-        expect(result).to be nil
+        expect(result).to be_nil
       end
     end
   end

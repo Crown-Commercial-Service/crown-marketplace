@@ -39,7 +39,7 @@ class MigrateDataFromJsonToColumns < ActiveRecord::Migration[5.2]
       data['lots'] = []
 
       ['1a', '1b', '1c'].each do |lot_number|
-        data['lots'] << { 'lot_number': lot_number, 'regions': supplier.lot_data[lot_number]['regions'], 'services': supplier.lot_data[lot_number]['services'] } if supplier.lot_data[lot_number].present?
+        data['lots'] << { lot_number: lot_number, regions: supplier.lot_data[lot_number]['regions'], services: supplier.lot_data[lot_number]['services'] } if supplier.lot_data[lot_number].present?
       end
 
       supplier.data = data

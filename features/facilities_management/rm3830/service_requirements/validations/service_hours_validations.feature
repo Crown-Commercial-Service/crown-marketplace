@@ -1,4 +1,3 @@
-@pipeline
 Feature: Service hours validations
 
   Background: Navigate to Service hour page

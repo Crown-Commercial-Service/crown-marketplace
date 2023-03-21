@@ -32,7 +32,7 @@ module FacilitiesManagement
         START_DATE = Time.new(2022, 7, 18).in_time_zone('London').freeze
 
         def management_report_s3_object
-          @management_report_s3_object ||= Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION']).bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['MANAGEMENT_REPORT_KEY'])
+          @management_report_s3_object ||= Aws::S3::Resource.new(region: ENV.fetch('COGNITO_AWS_REGION', nil)).bucket(ENV.fetch('CCS_APP_API_DATA_BUCKET', nil)).object(ENV.fetch('MANAGEMENT_REPORT_KEY', nil))
         end
 
         def update_the_management_report(file_stream)

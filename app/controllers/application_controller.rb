@@ -17,20 +17,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  rescue_from UnrecognisedLiveFrameworkError do
-    @unrecognised_framework = params[:framework]
-    params[:framework] = FacilitiesManagement::Framework.default_framework
-
-    render 'home/unrecognised_framework', status: :bad_request
-  end
-
-  rescue_from UnrecognisedFrameworkError do
-    @unrecognised_framework = params[:framework]
-    params[:framework] = FacilitiesManagement::Framework.default_framework
-
-    render 'home/unrecognised_framework', status: :bad_request
-  end
-
   def sign_in_url
     determine_non_admin_after_sign_in
   end
@@ -45,11 +31,11 @@ class ApplicationController < ActionController::Base
     @service_path_base ||= begin
       service_path_base = ['']
 
-      service = params[:service] || 'facilities-management'
+      service = params[:service] || 'facilities_management'
       service_name = service.split('/').first
 
       service_path_base << service_name.gsub('_', '-')
-      service_path_base << (params[:framework] || FacilitiesManagement::Framework.default_framework) unless service_name == 'crown_marketplace'
+      service_path_base << (params[:framework] || Framework.send(service_name).current_framework) unless service_name == 'crown_marketplace'
       service_path_base << 'admin' if service.include?('admin')
       service_path_base << 'supplier' if service.include?('supplier')
 
@@ -100,12 +86,4 @@ class ApplicationController < ActionController::Base
   end
 
   VALID_SERVICE_NAMES = %w[facilities_management facilities_management/supplier facilities_management/admin facilities_management/procurements crown_marketplace].freeze
-
-  def raise_if_unrecognised_live_framework
-    raise UnrecognisedLiveFrameworkError, 'Unrecognised Live Framework' unless FacilitiesManagement::Framework.recognised_live_framework? params[:framework]
-  end
-
-  def raise_if_unrecognised_framework
-    raise UnrecognisedFrameworkError, 'Unrecognised Framework' unless FacilitiesManagement::Framework.recognised_framework? params[:framework]
-  end
 end

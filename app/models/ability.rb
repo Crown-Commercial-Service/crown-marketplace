@@ -53,6 +53,6 @@ class Ability
   def super_admin_specific_auth(user)
     return unless user.has_role?(:ccs_developer)
 
-    can :manage, FacilitiesManagement::Framework
+    can :manage, Framework
   end
 end

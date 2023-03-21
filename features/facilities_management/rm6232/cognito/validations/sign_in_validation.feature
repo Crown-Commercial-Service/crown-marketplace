@@ -1,4 +1,3 @@
-@pipeline
 Feature: Sign in to my account - RM6232 - Validations
 
   Background: Navigate to the sign in page

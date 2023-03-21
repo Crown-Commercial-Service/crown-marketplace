@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::UsersController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
 
   describe 'GET confirm_new' do
@@ -13,7 +13,7 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller 
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 is not live'
+      include_context 'and RM3830 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
         get :confirm_new
@@ -59,7 +59,7 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller 
           end
 
           it 'deletes the crown_marketplace_confirmation_email cookie' do
-            expect(cookies[:crown_marketplace_confirmation_email]).to be nil
+            expect(cookies[:crown_marketplace_confirmation_email]).to be_nil
           end
         end
       end
@@ -102,7 +102,7 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller 
     # rubocop:enable RSpec/NestedGroups
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 is not live'
+      include_context 'and RM3830 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
         post :confirm, params: { email: user_email, confirmation_code: '123456' }
@@ -128,7 +128,7 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller 
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 is not live'
+      include_context 'and RM3830 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
         post :resend_confirmation_email, params: { email: email }
@@ -167,7 +167,7 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller 
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 is not live'
+      include_context 'and RM3830 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
         get :challenge_new, params: { challenge_name: 'NEW_PASSWORD_REQUIRED' }
@@ -180,6 +180,8 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller 
 
   # rubocop:disable RSpec/NestedGroups
   describe 'POST challenge' do
+    include_context 'with cognito structs'
+
     let(:user) { create(:user, cognito_uuid: SecureRandom.uuid, phone_number: Faker::PhoneNumber.cell_phone) }
     let(:session) { 'I_AM_THE_SESSION' }
     let(:username) { user.cognito_uuid }
@@ -199,8 +201,8 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller 
 
         before do
           allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-          allow(aws_client).to receive(:respond_to_auth_challenge).and_return(OpenStruct.new(challenge_name: new_challenge_name, session: new_session))
-          allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(OpenStruct.new(user: user))
+          allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
+          allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user: user))
 
           post :challenge, params: { challenge_name: challenge_name, username: username, session: session, new_password: password, new_password_confirmation: password }
           cookies.update(response.cookies)
@@ -239,8 +241,8 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller 
             end
 
             it 'deletes the cookies' do
-              expect(cookies[:crown_marketplace_challenge_session]).to be nil
-              expect(cookies[:crown_marketplace_challenge_username]).to be nil
+              expect(cookies[:crown_marketplace_challenge_session]).to be_nil
+              expect(cookies[:crown_marketplace_challenge_username]).to be_nil
             end
           end
         end
@@ -253,8 +255,8 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller 
 
         before do
           allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-          allow(aws_client).to receive(:respond_to_auth_challenge).and_return(OpenStruct.new)
-          allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(OpenStruct.new(user: user))
+          allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new)
+          allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user: user))
 
           post :challenge, params: { challenge_name: challenge_name, username: username, session: session, access_code: access_code }
           cookies.update(response.cookies)
@@ -279,15 +281,15 @@ RSpec.describe FacilitiesManagement::RM3830::UsersController, type: :controller 
           end
 
           it 'deletes the cookies' do
-            expect(cookies[:crown_marketplace_challenge_session]).to be nil
-            expect(cookies[:crown_marketplace_challenge_username]).to be nil
+            expect(cookies[:crown_marketplace_challenge_session]).to be_nil
+            expect(cookies[:crown_marketplace_challenge_username]).to be_nil
           end
         end
       end
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 is not live'
+      include_context 'and RM3830 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
         post :challenge, params: { challenge_name: 'SMS_MFA', username: username, session: session }

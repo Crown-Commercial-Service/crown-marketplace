@@ -8,7 +8,6 @@ Feature: Service hours
     And I choose to answer the service volume question for 'Voice announcement system operation'
     Then I am on the page with secondary heading 'Voice announcement system operation'
   
-  @pipeline
   Scenario: Service hour entry saves
     And I enter '3650' for the number of hours per year
     And I enter the following for the detail of requirement:

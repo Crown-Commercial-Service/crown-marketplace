@@ -58,7 +58,6 @@ Feature: Buildings
     Then I click on 'Save and continue'
     Then I am on the 'Internal and external areas' page
 
-  @pipeline
   Scenario: Add Address manually - no region selection
     And I click on 'Add a building'
     Then I am on the 'Add a building' page
@@ -114,7 +113,7 @@ Feature: Buildings
     And I click on 'Save and continue'
     Then I am on the 'Building type' page
 
-  @add_address @pipeline
+  @add_address
   Scenario: Add a building complete journey
     And I click on 'Add a building'
     Then I am on the 'Add a building' page

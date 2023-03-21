@@ -1,4 +1,3 @@
-@pipeline
 Feature: Start pages
 
   Scenario: Buyer sees start page

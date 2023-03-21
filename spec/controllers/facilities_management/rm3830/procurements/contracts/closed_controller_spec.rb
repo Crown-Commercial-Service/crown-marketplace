@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Procurements::Contracts::ClosedController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::Contracts::ClosedController do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
   let(:procurement) { create(:facilities_management_rm3830_procurement, user: subject.current_user) }

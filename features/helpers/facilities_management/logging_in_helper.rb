@@ -1,7 +1,7 @@
 def stub_login
   aws_client = instance_double(Aws::CognitoIdentityProvider::Client)
   allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-  allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new)
+  allow(aws_client).to receive(:initiate_auth).and_return(COGNITO_RESPONSE_STRUCTS[:initiate_auth].new)
   allow_any_instance_of(Cognito::SignInUser).to receive(:sleep)
 end
 

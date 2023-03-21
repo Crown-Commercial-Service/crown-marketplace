@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::Upload, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Admin::Upload do
   let(:upload) { create(:facilities_management_rm6232_admin_upload) }
   let(:valid_file) { Tempfile.new(['valid_file', '.xlsx']) }
   let(:text_file) { Tempfile.new(['text_file', '.txt']) }
@@ -196,7 +196,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::Upload, type: :model do
       let(:latest_upload) { described_class.create(aasm_state: 'published') }
 
       before do
-        4.times { described_class.create(aasm_state: 'published', created_at: Time.zone.now - 1.day) }
+        4.times { described_class.create(aasm_state: 'published', created_at: 1.day.ago) }
         latest_upload
       end
 

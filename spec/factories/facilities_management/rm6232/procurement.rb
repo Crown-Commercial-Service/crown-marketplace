@@ -42,7 +42,7 @@ FactoryBot.define do
     tupe { false }
     initial_call_off_period_years { 1 }
     initial_call_off_period_months { 0 }
-    initial_call_off_start_date { Time.zone.now + 6.months }
+    initial_call_off_start_date { 6.months.from_now }
     mobilisation_period_required { false }
     extensions_required { false }
   end

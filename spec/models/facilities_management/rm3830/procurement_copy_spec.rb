@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::Procurement do
   subject(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user: user) }
 
   let(:user) { create(:user) }

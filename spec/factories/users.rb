@@ -5,7 +5,7 @@ FactoryBot.define do
     confirmed_at { Time.zone.now }
 
     trait :with_detail do
-      buyer_detail { build :buyer_detail }
+      buyer_detail { build(:buyer_detail) }
     end
 
     trait :without_detail do

@@ -84,7 +84,6 @@ Feature: Manage users - User admin - Edit user
     And the user has the following details:
       | MFA status  | Enabled  |
 
-  @pipeline
   Scenario: Edit user - Roles
     And I change the 'Roles' for the user
     And I am on the 'Update user roles' page

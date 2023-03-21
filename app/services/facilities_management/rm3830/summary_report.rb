@@ -34,7 +34,7 @@ module FacilitiesManagement
         @procurement_building_services = @procurement.procurement_building_services
         @posted_services = @procurement_building_services.map(&:code)
         @posted_locations = @active_procurement_buildings.map(&:address_region_code)
-        @contract_length_years = @procurement.initial_call_off_period_years + @procurement.initial_call_off_period_months / 12.0
+        @contract_length_years = @procurement.initial_call_off_period_years + (@procurement.initial_call_off_period_months / 12.0)
         @contract_cost = @procurement.estimated_cost_known? ? @procurement.estimated_annual_cost.to_f : 0
         @tupe_required = @procurement.tupe
       end
@@ -164,7 +164,7 @@ module FacilitiesManagement
       private
 
       def regions
-        @subregions = FacilitiesManagement::Region.where(code: posted_locations).map { |region| [region.code, region.name] }.to_h
+        @subregions = FacilitiesManagement::Region.where(code: posted_locations).to_h { |region| [region.code, region.name] }
       end
 
       def copy_params(procurement_building, uvals)

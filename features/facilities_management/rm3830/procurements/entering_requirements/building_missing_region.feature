@@ -6,7 +6,6 @@ Feature: Buildings used in a procurement are missing a region
     When I navigate to the procurement 'My missing regions procurement'
     Then I am on the 'Review your buildings' page
 
-  @pipeline
   Scenario: Can complete missing regions for buildings
     Then there are 3 buildings missing a region
     And I select region for 'Test building 1'

@@ -23,7 +23,6 @@ Feature: Adding services for suppliers on the admin tool
       |     | UKC2  |
     And 'Shields, Ratke and Parisian' is a supplier in Sub-lot '1a'
 
-  @pipeline
   Scenario: Selecting a service for lot 1b
     Given I go to a quick view with the following services and regions:
       | L.5 | UKC1  |

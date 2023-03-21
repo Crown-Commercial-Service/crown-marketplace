@@ -1,4 +1,3 @@
-@pipeline
 Feature: Prices and variance - validations
 
   Background: Navigate to the services and prices page

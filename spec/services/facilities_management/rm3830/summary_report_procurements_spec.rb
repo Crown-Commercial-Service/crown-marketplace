@@ -1403,11 +1403,11 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
       end
 
       it 'shows suppliers that do provide the service in UKH1 region' do
-        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to eq true
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to be true
       end
 
       it 'does not show the suppliers that do not provide the service in UKH1 region' do
-        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_region)).to eq false
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_region)).to be false
       end
     end
 
@@ -1431,11 +1431,11 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
       end
 
       it 'shows suppliers that do provide the specific service' do
-        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to eq true
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to be true
       end
 
       it 'does not show the suppliers that do not provide the specific service' do
-        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_service)).to eq false
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_service)).to be false
       end
     end
 
@@ -1486,11 +1486,11 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
 
       it 'shows suppliers that do provide the specific service' do
         report = described_class.new(procurement.id)
-        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to eq true
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to be true
       end
 
       it 'does not show the suppliers that do not provide the specific service' do
-        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_service)).to eq false
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_service)).to be false
       end
     end
 
@@ -1526,12 +1526,12 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
 
       it 'shows suppliers that do provide the specific service' do
         report = described_class.new(procurement.id)
-        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to eq true
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to be true
       end
 
       it 'does not show the suppliers that do not provide the specific service' do
         report = described_class.new(procurement.id)
-        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_service)).to eq false
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_service)).to be false
       end
     end
 
@@ -1563,11 +1563,11 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
       end
 
       it 'shows suppliers that do provide the service in lot1b' do
-        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to eq true
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to be true
       end
 
       it 'does not show the suppliers that provide the services in lot1a not lot1b' do
-        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_lot1a)).to eq false
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_lot1a)).to be false
       end
     end
   end

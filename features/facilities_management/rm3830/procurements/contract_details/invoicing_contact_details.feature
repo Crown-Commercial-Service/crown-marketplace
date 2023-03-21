@@ -16,7 +16,7 @@ Feature: Invoicing contact detail
     Then I open the details for the 'Invoicing contact details'
     And my 'Invoicing contact details' contact details match the buyer details
 
-  @javascript @pipeline
+  @javascript
   Scenario: Entering new details is selected
     Given I select 'Enter a new invoicing contact' for the contact details
     And I click on the button with text 'Continue'

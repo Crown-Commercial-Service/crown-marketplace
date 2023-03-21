@@ -1,4 +1,3 @@
-@pipeline
 Feature: Estimated annual cost validations
 
   Background: Navigate to the estimated annual cost page

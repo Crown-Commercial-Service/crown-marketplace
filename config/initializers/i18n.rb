@@ -12,7 +12,7 @@ if ['1.7.0'].include?(I18n::VERSION)
 
           keys = I18n.normalize_keys(locale, key, scope, options[:separator])
 
-          Rails.logger.debug "I18N keys: #{keys}" if ENV['I18N_DEBUG'] == '1'
+          Rails.logger.debug { "I18N keys: #{keys}" } if ENV['I18N_DEBUG'] == '1'
           process_keys keys
         end
 
@@ -24,7 +24,7 @@ if ['1.7.0'].include?(I18n::VERSION)
             result = result[inner_key]
             result = resolve(locale, inner_key, result, options.merge(scope: nil)) if result.is_a?(Symbol)
 
-            Rails.logger.debug "\t\t => #{result}\n" if ENV['I18N_DEBUG'] == '1' && result.instance_of?(String)
+            Rails.logger.debug { "\t\t => #{result}\n" } if ENV['I18N_DEBUG'] == '1' && result.instance_of?(String)
 
             result
           end
@@ -35,9 +35,9 @@ if ['1.7.0'].include?(I18n::VERSION)
 
 else
   Rails.logger.debug '\n--------------------------------------------------------------------------------'
-  Rails.logger.debug "WARNING: you are using version #{I18n::VERSION} of the i18n gem."
+  Rails.logger.debug { "WARNING: you are using version #{I18n::VERSION} of the i18n gem." }
   Rails.logger.debug '         Please double check that your monkey-patch still works!'
-  Rails.logger.debug "         see: '#{__FILE__}'"
+  Rails.logger.debug { "         see: '#{__FILE__}'" }
   Rails.logger.debug '         see: http://www.unixgods.org/~tilo/Rails/which_l10n_strings_is_rails_trying_to_lookup.html'
   Rails.logger.debug '--------------------------------------------------------------------------------\n'
 end

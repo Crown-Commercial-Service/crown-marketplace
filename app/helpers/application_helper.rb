@@ -178,7 +178,7 @@ module ApplicationHelper
       content_for(title_bit)
     end
     title += [t('layouts.application.title')]
-    title.reject(&:blank?).map(&:strip).join(': ')
+    title.compact_blank.map(&:strip).join(': ')
   end
 
   def add_optional_error_prefix_to_page_title(errors)
@@ -312,7 +312,7 @@ module ApplicationHelper
   end
 
   def accordion_region_items(region_codes, with_overseas: false)
-    nuts1_regions = Nuts1Region.send(with_overseas ? :all_with_overseas : :all).map { |region| [region.code, { name: region.name, items: [] }] }.to_h
+    nuts1_regions = Nuts1Region.send(with_overseas ? :all_with_overseas : :all).to_h { |region| [region.code, { name: region.name, items: [] }] }
 
     FacilitiesManagement::Region.all.each do |region|
       region_group_code = region.code[..2]

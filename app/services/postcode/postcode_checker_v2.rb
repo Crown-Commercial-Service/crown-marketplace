@@ -41,8 +41,6 @@ module Postcode
       # in ('N12 9RF', 'AB11 5PN', 'AB11 5PL', 'AB12 4SB', 'AB12 3LF', 'AB10 6PP', 'AB10 1QS', 'NE6 1LA', 'SW1X 9AE', 'MK41 0RU', 'NN8 4PW');
       # where postcode = '#{postcode}'
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query(ActiveRecord::Base.sanitize_sql(query)) }
-    rescue StandardError => e
-      raise e
     end
 
     EXCLUDED_POSTCODE_AREAS = %w[GY IM JE].freeze
@@ -50,7 +48,7 @@ module Postcode
     def self.find_region(postcode)
       postcode_structure = destructure_postcode(postcode)
 
-      if postcode_structure[:valid] && !EXCLUDED_POSTCODE_AREAS.include?(postcode_structure[:postcode_area])
+      if postcode_structure[:valid] && EXCLUDED_POSTCODE_AREAS.exclude?(postcode_structure[:postcode_area])
         result = extract_regions(postcode_structure)
 
         if result.empty?
@@ -61,8 +59,6 @@ module Postcode
       else
         execute_find_region_query(':')
       end
-    rescue StandardError => e
-      raise e
     end
 
     def self.regions_from_nuts
@@ -91,8 +87,6 @@ module Postcode
         WHERE  PUBLIC.postcodes_nuts_regions.postcode LIKE '#{normalise_postcode(postcode)}%'
       HEREDOC
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query(ActiveRecord::Base.sanitize_sql(query)) }
-    rescue StandardError => e
-      raise e
     end
 
     # SELECT EXISTS (SELECT relname FROM pg_class WHERE relname = 'os_address');
@@ -103,8 +97,6 @@ module Postcode
 
         result[0]['exists']
       end
-    rescue StandardError => e
-      raise e
     end
 
     # SELECT COUNT (*) FROM os_address;

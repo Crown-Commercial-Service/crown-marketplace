@@ -46,7 +46,7 @@ module FacilitiesManagement::RM6232
           }
         end
 
-        suppliers.reject(&:blank?).sort_by { |supplier| supplier['supplier_name'] }
+        suppliers.compact_blank.sort_by { |supplier| supplier['supplier_name'] }
       end
     end
   end

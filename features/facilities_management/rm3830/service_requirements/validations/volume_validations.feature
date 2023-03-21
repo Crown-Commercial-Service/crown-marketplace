@@ -1,4 +1,3 @@
-@pipeline
 Feature: Volume validations
 
   Scenario Outline: Validating the volume for appliances

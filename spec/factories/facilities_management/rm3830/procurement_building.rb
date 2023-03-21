@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :facilities_management_rm3830_procurement_building_no_services, class: 'FacilitiesManagement::RM3830::ProcurementBuilding' do
     active { true }
-    building { create :facilities_management_building }
+    building { create(:facilities_management_building) }
     gia { 1002 }
     external_area { 4596 }
     building_name { 'asa' }
@@ -17,11 +17,11 @@ FactoryBot.define do
   end
 
   factory :facilities_management_rm3830_procurement_building, parent: :facilities_management_rm3830_procurement_building_no_services do
-    procurement_building_services { build_list :facilities_management_rm3830_procurement_building_service, 2 }
+    procurement_building_services { build_list(:facilities_management_rm3830_procurement_building_service, 2) }
   end
 
   factory :facilities_management_rm3830_procurement_building_london, parent: :facilities_management_rm3830_procurement_building do
-    building { create :facilities_management_building_london }
+    building { create(:facilities_management_building_london) }
     description { 'london building' }
     address_line_1 { '100 New Barn Street' }
     address_town { 'London' }
@@ -32,14 +32,14 @@ FactoryBot.define do
   end
 
   factory :facilities_management_rm3830_procurement_building_for_further_competition, parent: :facilities_management_rm3830_procurement_building_london do
-    procurement_building_services { build_list :facilities_management_rm3830_procurement_building_service, 2 }
+    procurement_building_services { build_list(:facilities_management_rm3830_procurement_building_service, 2) }
   end
 
   factory :facilities_management_rm3830_procurement_building_for_further_competition_with_gia, parent: :facilities_management_rm3830_procurement_building_london do
-    building { create :facilities_management_building_london }
+    building { create(:facilities_management_building_london) }
   end
 
   factory :facilities_management_rm3830_procurement_building_with_lifts, parent: :facilities_management_rm3830_procurement_building_no_services do
-    procurement_building_services { build_list :facilities_management_rm3830_procurement_building_service_with_lifts, 1 }
+    procurement_building_services { build_list(:facilities_management_rm3830_procurement_building_service_with_lifts, 1) }
   end
 end

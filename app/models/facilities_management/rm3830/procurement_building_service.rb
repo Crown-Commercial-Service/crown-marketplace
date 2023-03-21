@@ -3,7 +3,6 @@ module FacilitiesManagement
     class ProcurementBuildingService < ApplicationRecord
       default_scope { order(created_at: :asc) }
       scope :require_volume, -> { where(code: [REQUIRE_VOLUME_CODES]) }
-      scope :has_service_questions, -> { where(code: [SERVICES_DEFINITION.pluck(:code)]) }
       belongs_to :procurement_building, class_name: 'FacilitiesManagement::RM3830::ProcurementBuilding', foreign_key: :facilities_management_rm3830_procurement_building_id, inverse_of: :procurement_building_services
 
       has_many :lifts, class_name: 'FacilitiesManagement::RM3830::ProcurementBuildingServiceLift', foreign_key: :facilities_management_rm3830_procurement_building_service_id, inverse_of: :procurement_building_service, dependent: :destroy, index_errors: true

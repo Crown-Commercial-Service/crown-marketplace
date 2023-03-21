@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsHelper do
   describe '.error_message' do
     context 'when considering building errors' do
       let(:model) { :building_errors }
@@ -370,7 +370,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsHel
   describe '.error_count' do
     let(:result) { helper.error_count(error_lists[attribute], attribute) }
     let(:spreadsheet_import) { create(:facilities_management_rm3830_procurement_spreadsheet_import, import_errors: import_errors, procurement: create(:facilities_management_rm3830_procurement, aasm_state: 'detailed_search_bulk_upload', user: create(:user))) }
-    let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+    let(:import_errors) { { 'Building 1': building_1_errors, 'Building 2': building_2_errors, 'Building 3': building_3_errors } }
     let(:building_1_errors) do
       {
         building_name: 'Building 1',
@@ -392,7 +392,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsHel
         building_errors: {},
         procurement_building_errors: { service_codes: [{ error: :invalid }], building: [{ error: :gia_too_small }] },
         procurement_building_services_errors: {
-          'C.5': { "lifts[1].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }], "lifts[3].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }] },
+          'C.5': { 'lifts[1].number_of_floors': [{ error: :greater_than, value: 0, count: 0 }], 'lifts[3].number_of_floors': [{ error: :greater_than, value: 0, count: 0 }] },
           'I.3': { service_hours: [{ error: :less_than_or_equal_to }], detail_of_requirement: [{ error: :blank }] },
           'J.2': { service_hours: [{ error: :greater_than_or_equal_to }], detail_of_requirement: [{ error: :blank }] },
           'G.3': { no_of_building_occupants: [{ error: :blank }] },

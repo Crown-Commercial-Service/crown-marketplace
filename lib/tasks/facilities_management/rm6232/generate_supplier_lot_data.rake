@@ -130,7 +130,6 @@ namespace :db do
     end
 
     desc 'Part of generating the full supplier details'
-    task generate_suppliers: :generate_supplier_lot_data do
-    end
+    task generate_suppliers: :generate_supplier_lot_data
   end
 end

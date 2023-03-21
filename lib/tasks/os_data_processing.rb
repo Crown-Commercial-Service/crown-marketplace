@@ -12,7 +12,7 @@ module OrdnanceSurvey
         db.commit_db_transaction
       rescue StandardError => e
         db.rollback_db_transaction
-        p "\tError with upsert: #{e.message}"
+        puts "\tError with upsert: #{e.message}"
         Rails.logger.error((["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
         fully_processed = false
         raise e
@@ -54,7 +54,7 @@ module OrdnanceSurvey
 
     row[col].to_s
   rescue StandardError => e
-    p ["dbValue Error processing column [:#{col}] in #{row}: #{e.message}"] + e.backtrace.join($INPUT_RECORD_SEPARATOR)
+    puts ["dbValue Error processing column [:#{col}] in #{row}: #{e.message}"] + e.backtrace.join($INPUT_RECORD_SEPARATOR)
   end
 
   def self.inject_data(lines)
@@ -82,7 +82,7 @@ module OrdnanceSurvey
       db.execute('vacuum os_address;')
     end
   rescue StandardError => e
-    p "\tError with purge_excluded_areas: #{e.message}"
+    puts "\tError with purge_excluded_areas: #{e.message}"
     Rails.logger.error((["POSTCODE purge_excluded_areas: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
     raise e
   end
@@ -96,7 +96,7 @@ module OrdnanceSurvey
       db.execute('vacuum os_address;')
     end
   rescue StandardError => e
-    p "\tError with truncate: #{e.message}"
+    puts "\tError with truncate: #{e.message}"
     Rails.logger.error((["POSTCODE truncate: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
     raise e
   end
@@ -198,7 +198,7 @@ module OrdnanceSurvey
     ActiveRecord::Base.connection_pool.with_connection do |db|
       result = db.exec_query(query)
       count  = result[0]['count']
-      p "Skipping file #{filename}" if count.positive?
+      puts "Skipping file #{filename}" if count.positive?
       loaded = true if count.positive?
     end
 
@@ -235,7 +235,7 @@ module OrdnanceSurvey
     end
     true
   rescue PG::Error => e
-    p e.message
+    puts e.message
     Rails.logger.error(e.message)
     false
   end

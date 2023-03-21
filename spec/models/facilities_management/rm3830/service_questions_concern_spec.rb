@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ServiceQuestionsConcern, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::ServiceQuestionsConcern do
   include described_class
 
   describe '#service_quesions' do

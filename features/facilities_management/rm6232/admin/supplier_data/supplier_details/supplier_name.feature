@@ -16,7 +16,6 @@ Feature: Supplier name
     Then I am on the 'Supplier details' page
     And the 'Supplier name' is 'The Argentum trade guild' on the supplier details page
 
-  @pipline
   Scenario Outline: Change supplier name changes in results
     Given I go to a quick view with the following services, regions and annual contract cost:
       | E.2  | UKE2  | 123456 |

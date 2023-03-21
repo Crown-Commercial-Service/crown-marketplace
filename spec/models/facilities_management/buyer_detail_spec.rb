@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
+RSpec.describe FacilitiesManagement::BuyerDetail do
   subject(:buyer_detail) { create(:buyer_detail, user: create(:user)) }
 
   describe '#validations' do
     context 'when everything is present' do
       it 'is valid' do
-        expect(buyer_detail.valid?).to eq true
+        expect(buyer_detail.valid?).to be true
       end
     end
 
@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:full_name) { nil }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
         end
       end
 
@@ -25,7 +25,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:full_name) { 'a' * 256 }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
         end
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:job_title) { nil }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
         end
       end
 
@@ -45,7 +45,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:job_title) { 'a' * 256 }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
         end
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
 
     context 'when telephone number not present' do
       it 'is invalid' do
-        expect(buyer_detail.update(telephone_number: nil)).to eq false
+        expect(buyer_detail.update(telephone_number: nil)).to be false
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:telephone_number) { nil }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
         end
       end
 
@@ -77,7 +77,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:telephone_number) { '0161016101610161' }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
         end
       end
 
@@ -85,7 +85,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:telephone_number) { '0161' }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
         end
       end
 
@@ -93,7 +93,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:telephone_number) { '016101610161' }
 
         it 'is valid' do
-          expect(buyer_detail.valid?(:update)).to eq true
+          expect(buyer_detail.valid?(:update)).to be true
         end
       end
     end
@@ -105,7 +105,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_name) { nil }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
         end
       end
 
@@ -113,7 +113,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_name) { 'a' * 256 }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
         end
       end
     end
@@ -125,8 +125,8 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_postcode) { nil }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
-          expect(buyer_detail.valid?(:update_address)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
+          expect(buyer_detail.valid?(:update_address)).to be false
         end
 
         it 'has the correct error message' do
@@ -140,8 +140,8 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_postcode) { 'SA3 1TA NW14' }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update)).to eq false
-          expect(buyer_detail.valid?(:update_address)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
+          expect(buyer_detail.valid?(:update_address)).to be false
         end
 
         it 'has the correct error message' do
@@ -159,7 +159,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_line_1) { nil }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update_address)).to eq false
+          expect(buyer_detail.valid?(:update_address)).to be false
         end
       end
 
@@ -167,7 +167,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_line_1) { 'a' * 256 }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update_address)).to eq false
+          expect(buyer_detail.valid?(:update_address)).to be false
         end
       end
     end
@@ -179,7 +179,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_line_2) { nil }
 
         it 'is valid' do
-          expect(buyer_detail.valid?(:update_address)).to eq true
+          expect(buyer_detail.valid?(:update_address)).to be true
         end
       end
 
@@ -187,7 +187,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_line_2) { 'a' * 256 }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update_address)).to eq false
+          expect(buyer_detail.valid?(:update_address)).to be false
         end
       end
     end
@@ -199,7 +199,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_town) { nil }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update_address)).to eq false
+          expect(buyer_detail.valid?(:update_address)).to be false
         end
       end
 
@@ -207,7 +207,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_town) { 'a' * 256 }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update_address)).to eq false
+          expect(buyer_detail.valid?(:update_address)).to be false
         end
       end
     end
@@ -219,7 +219,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_county) { nil }
 
         it 'is valid' do
-          expect(buyer_detail.valid?(:update_address)).to eq true
+          expect(buyer_detail.valid?(:update_address)).to be true
         end
       end
 
@@ -227,7 +227,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_county) { 'a' * 256 }
 
         it 'is invalid' do
-          expect(buyer_detail.valid?(:update_address)).to eq false
+          expect(buyer_detail.valid?(:update_address)).to be false
         end
       end
     end
@@ -244,12 +244,12 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         let(:organisation_address_postcode) { '' }
 
         it 'is not valid' do
-          expect(buyer_detail.valid?(:update)).to eq false
+          expect(buyer_detail.valid?(:update)).to be false
         end
 
         it 'does not have an error message on address selection' do
           buyer_detail.valid?(:update)
-          expect(buyer_detail.errors[:base].any?).to eq false
+          expect(buyer_detail.errors[:base].any?).to be false
         end
       end
 
@@ -258,7 +258,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
           let(:organisation_address_line_1) { '' }
 
           it 'is not valid' do
-            expect(buyer_detail.valid?(:update)).to eq false
+            expect(buyer_detail.valid?(:update)).to be false
           end
 
           it 'has the correct error message' do
@@ -271,7 +271,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
           let(:organisation_address_town) { '' }
 
           it 'is not valid' do
-            expect(buyer_detail.valid?(:update)).to eq false
+            expect(buyer_detail.valid?(:update)).to be false
           end
 
           it 'has the correct error message' do
@@ -285,7 +285,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
           let(:organisation_address_town) { '' }
 
           it 'is not valid' do
-            expect(buyer_detail.valid?(:update)).to eq false
+            expect(buyer_detail.valid?(:update)).to be false
           end
 
           it 'has the correct error message' do
@@ -297,7 +297,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
 
       context 'when all parts are valid' do
         it 'is valid' do
-          expect(buyer_detail.valid?(:update)).to eq true
+          expect(buyer_detail.valid?(:update)).to be true
         end
       end
     end

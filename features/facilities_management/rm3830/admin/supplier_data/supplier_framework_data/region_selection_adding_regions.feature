@@ -22,7 +22,6 @@ Feature: Adding regions for suppliers on the admin tool
       | C.2 |       |
     And 'Cartwright and Sons' is a supplier in Sub-lot '1a'
 
-  @pipeline
   Scenario: Selecting a service for lot 1b
     Given I go to a quick view with the following services and regions:
       | C.1 | UKH1  |

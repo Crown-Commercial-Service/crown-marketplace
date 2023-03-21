@@ -1,4 +1,3 @@
-@pipeline
 Feature: Results validations
 
   Background: Navigate to the Results page

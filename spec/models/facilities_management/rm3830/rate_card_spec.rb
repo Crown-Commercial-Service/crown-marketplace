@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::RateCard, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::RateCard do
   # pending "add some examples to (or delete) #{__FILE__}"
 
   it 'can contain entries' do

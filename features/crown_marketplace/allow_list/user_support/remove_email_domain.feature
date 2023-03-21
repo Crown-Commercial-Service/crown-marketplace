@@ -1,4 +1,4 @@
-@allow_list @pipeline
+@allow_list
 Feature: Allow list - User support - Remove email domain
 
   Scenario: I cannot remove an email domain

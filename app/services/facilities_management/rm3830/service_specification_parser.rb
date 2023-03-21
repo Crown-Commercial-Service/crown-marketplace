@@ -21,7 +21,7 @@ class FacilitiesManagement::RM3830::ServiceSpecificationParser
   def initialize
     csv = CSV.read(DATA_FILE_PATH)
 
-    lines = csv.map { |row| row[3] }
+    lines = csv.pluck(3)
 
     @work_packages = {}
     work_package_code = nil

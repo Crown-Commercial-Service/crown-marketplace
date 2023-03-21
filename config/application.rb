@@ -49,12 +49,6 @@ module Marketplace
 
     # config.action_dispatch.default_headers.merge!('X-Content-Type-Options' => 'nosniff')
 
-    extend Sprockets::BumbleD::DSL
-
-    configure_sprockets_bumble_d do |config|
-      config.babel_config_version = 1
-    end
-
     config.i18n.default_locale = :en
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
@@ -78,7 +72,7 @@ module Marketplace
   end
 
   def self.fm_survey_link
-    ENV['FM_SURVEY_LINK']
+    ENV.fetch('FM_SURVEY_LINK', nil)
   end
 
   def self.support_telephone_number
@@ -113,7 +107,7 @@ module Marketplace
   end
 
   def self.dfe_signin_url
-    @dfe_signin_url ||= ENV['DFE_SIGNIN_URL']
+    @dfe_signin_url ||= ENV.fetch('DFE_SIGNIN_URL', nil)
   end
 
   def self.dfe_signin_enabled?

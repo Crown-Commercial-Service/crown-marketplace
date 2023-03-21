@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :facilities_management_rm3830_procurement_building_av_default, class: 'FacilitiesManagement::RM3830::ProcurementBuilding' do
     active { true }
-    building { create :facilities_management_building }
+    building { create(:facilities_management_building) }
   end
 
   factory :facilities_management_rm3830_procurement_building_av_normal_building, parent: :facilities_management_rm3830_procurement_building_av_default do

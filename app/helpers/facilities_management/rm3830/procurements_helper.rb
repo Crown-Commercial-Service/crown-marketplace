@@ -45,7 +45,7 @@ module FacilitiesManagement::RM3830
     end
 
     def work_packages_names
-      @work_packages_names ||= StaticData.work_packages.map { |wp| [wp['code'], wp['name']] }.to_h
+      @work_packages_names ||= StaticData.work_packages.to_h { |wp| [wp['code'], wp['name']] }
     end
 
     def number_of_suppliers
@@ -53,7 +53,7 @@ module FacilitiesManagement::RM3830
     end
 
     def procurement_services
-      @procurement_services ||= @procurement.procurement_building_services.map { |s| s[:name] }.uniq
+      @procurement_services ||= @procurement.procurement_building_services.pluck(:name).uniq
     end
 
     def lowest_supplier_price

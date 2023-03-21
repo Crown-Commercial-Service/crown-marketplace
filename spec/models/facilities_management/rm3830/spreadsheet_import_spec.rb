@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport do
   subject(:import) { create(:facilities_management_rm3830_procurement_spreadsheet_import, procurement: create(:facilities_management_rm3830_procurement, aasm_state: 'detailed_search_bulk_upload', user: create(:user))) }
 
   describe 'aasm_state' do
@@ -175,7 +175,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
 
     context 'when wrong type of file' do
       before do
-        import.spreadsheet_file.attach(io: File.open(Rails.root.join('Gemfile')), filename: 'Gemfile')
+        import.spreadsheet_file.attach(io: Rails.root.join('Gemfile').open, filename: 'Gemfile')
         import.valid?(:upload)
       end
 
@@ -195,7 +195,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
     end
 
     describe '.building_error' do
-      let(:import_errors) { { "Building 1": building_1_errors } }
+      let(:import_errors) { { 'Building 1': building_1_errors } }
 
       context 'when there are no errors on the building' do
         let(:building_1_errors) do
@@ -206,7 +206,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
         end
 
         it 'returns nil' do
-          expect(import.send(:building_error, 1, :building_name)).to eq nil
+          expect(import.send(:building_error, 1, :building_name)).to be_nil
         end
       end
 
@@ -225,7 +225,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
     end
 
     describe '.building_errors' do
-      let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+      let(:import_errors) { { 'Building 1': building_1_errors, 'Building 2': building_2_errors, 'Building 3': building_3_errors } }
 
       context 'when there are no errors on the buildings' do
         let(:building_1_errors) do
@@ -283,7 +283,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
     end
 
     describe '.service_matrix_error' do
-      let(:import_errors) { { "Building 1": building_1_errors } }
+      let(:import_errors) { { 'Building 1': building_1_errors } }
 
       context 'when there are no errors on the service matrix' do
         let(:building_1_errors) do
@@ -295,7 +295,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
         end
 
         it 'returns nil' do
-          expect(import.send(:service_matrix_error, 1, :building)).to eq nil
+          expect(import.send(:service_matrix_error, 1, :building)).to be_nil
         end
       end
 
@@ -315,7 +315,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
     end
 
     describe '.service_matrix_errors' do
-      let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+      let(:import_errors) { { 'Building 1': building_1_errors, 'Building 2': building_2_errors, 'Building 3': building_3_errors } }
 
       context 'when there are no errors on the service matrix' do
         let(:building_1_errors) do
@@ -377,7 +377,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
     end
 
     describe '.service_error on volumes' do
-      let(:import_errors) { { "Building 1": building_1_errors } }
+      let(:import_errors) { { 'Building 1': building_1_errors } }
 
       context 'when there are no errors on the service volumes' do
         let(:building_1_errors) do
@@ -390,7 +390,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
         end
 
         it 'returns nil' do
-          expect(import.send(:service_error, 1, 'E.4', :no_of_appliances_for_testing)).to eq nil
+          expect(import.send(:service_error, 1, 'E.4', :no_of_appliances_for_testing)).to be_nil
         end
       end
 
@@ -411,7 +411,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
     end
 
     describe '.service_volume_errors' do
-      let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+      let(:import_errors) { { 'Building 1': building_1_errors, 'Building 2': building_2_errors, 'Building 3': building_3_errors } }
 
       context 'when there are no errors on the service volumes' do
         let(:building_1_errors) do
@@ -477,7 +477,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
     end
 
     describe '.lift_error' do
-      let(:import_errors) { { "Building 1": building_1_errors } }
+      let(:import_errors) { { 'Building 1': building_1_errors } }
 
       context 'when there are no errors on lifts' do
         let(:building_1_errors) do
@@ -490,7 +490,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
         end
 
         it 'returns nil' do
-          expect(import.send(:lift_error, 1)).to eq nil
+          expect(import.send(:lift_error, 1)).to be_nil
         end
       end
 
@@ -515,7 +515,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
             building_name: 'Building 1',
             building_errors: {},
             procurement_building_errors: {},
-            procurement_building_services_errors: { 'C.5': { "lifts[4].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }], "lifts[6].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }] } }
+            procurement_building_services_errors: { 'C.5': { 'lifts[4].number_of_floors': [{ error: :greater_than, value: 0, count: 0 }], 'lifts[6].number_of_floors': [{ error: :greater_than, value: 0, count: 0 }] } }
           }
         end
 
@@ -526,7 +526,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
     end
 
     describe '.lift_errors' do
-      let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+      let(:import_errors) { { 'Building 1': building_1_errors, 'Building 2': building_2_errors, 'Building 3': building_3_errors } }
 
       context 'when there are no errors on the lifts' do
         let(:building_1_errors) do
@@ -563,7 +563,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
             building_name: 'Building 1',
             building_errors: {},
             procurement_building_errors: {},
-            procurement_building_services_errors: { 'C.5': { "lifts[1].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }], "lifts[3].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }] }, 'E.4': {} }
+            procurement_building_services_errors: { 'C.5': { 'lifts[1].number_of_floors': [{ error: :greater_than, value: 0, count: 0 }], 'lifts[3].number_of_floors': [{ error: :greater_than, value: 0, count: 0 }] }, 'E.4': {} }
           }
         end
         let(:building_2_errors) do
@@ -591,7 +591,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
     end
 
     describe '.service_error on service_hours' do
-      let(:import_errors) { { "Building 1": building_1_errors } }
+      let(:import_errors) { { 'Building 1': building_1_errors } }
 
       context 'when there are no errors on the service volumes' do
         let(:building_1_errors) do
@@ -604,7 +604,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
         end
 
         it 'returns nil' do
-          expect(import.send(:service_error, 1, 'H.4', :service_hours)).to eq nil
+          expect(import.send(:service_error, 1, 'H.4', :service_hours)).to be_nil
         end
       end
 
@@ -625,7 +625,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
     end
 
     describe '.service_hour_errors' do
-      let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+      let(:import_errors) { { 'Building 1': building_1_errors, 'Building 2': building_2_errors, 'Building 3': building_3_errors } }
 
       context 'when there are no errors on the service volumes' do
         let(:building_1_errors) do

@@ -1,4 +1,4 @@
-@javascript @add_address @pipeline
+@javascript @add_address
 Feature: Security type - validations
 
   Background: Navigate to Security type page

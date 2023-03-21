@@ -29,7 +29,7 @@ RSpec.describe FacilitiesManagement::Admin::FrameworksController do
       end
     end
 
-    context 'when logged in as a normal amdin' do
+    context 'when logged in as a normal admin' do
       login_fm_admin
 
       it 'redirects to not permitted' do
@@ -40,7 +40,7 @@ RSpec.describe FacilitiesManagement::Admin::FrameworksController do
   end
 
   describe 'GET edit' do
-    let(:framework) { create(:facilities_management_framework) }
+    let(:framework) { create(:framework) }
 
     it 'renders the edit page' do
       get :edit, params: { id: framework.id }
@@ -49,12 +49,12 @@ RSpec.describe FacilitiesManagement::Admin::FrameworksController do
   end
 
   describe 'POST update' do
-    let(:framework) { create(:facilities_management_framework) }
+    let(:framework) { create(:framework) }
     let(:live_at_yyyy) { framework.live_at.year.to_s }
     let(:live_at_mm) { framework.live_at.month.to_s }
     let(:live_at_dd) { framework.live_at.day.to_s }
 
-    before { post :update, params: { id: framework.id, facilities_management_framework: { live_at_dd: live_at_dd, live_at_mm: live_at_mm, live_at_yyyy: live_at_yyyy } } }
+    before { post :update, params: { id: framework.id, framework: { live_at_dd: live_at_dd, live_at_mm: live_at_mm, live_at_yyyy: live_at_yyyy } } }
 
     context 'when the data is valid' do
       it 'redirects to facilities_management_admin_frameworks_path' do

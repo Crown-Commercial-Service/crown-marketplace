@@ -1,4 +1,4 @@
-@javascript @add_address @pipeline
+@javascript @add_address
 Feature: Building type - validations
 
   Background: Navigate to Building type page

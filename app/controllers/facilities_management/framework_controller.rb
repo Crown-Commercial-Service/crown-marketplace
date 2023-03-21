@@ -1,6 +1,7 @@
 module FacilitiesManagement
   class FrameworkController < ::ApplicationController
-    before_action :raise_if_unrecognised_live_framework
+    include FrameworkStatusConcern
+
     before_action :authenticate_user!
     before_action :authorize_user
     before_action :redirect_to_buyer_detail

@@ -12,7 +12,7 @@
         <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
           <% @challenge.errors.attribute_names.each do |attribute| %>
             <li>
-              <%= link_to @challenge.errors[attribute].first, "##{error_id(attribute)}" %>
+              <%= link_to @challenge.errors[attribute].first, "##{error_id(attribute)}", data: { turbolinks: false } %>
             </li>
           <% end %>
         </ul>

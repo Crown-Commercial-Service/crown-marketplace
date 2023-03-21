@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::WorkPackage, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::WorkPackage do
   describe 'work packages' do
     it 'there are 18 work packages' do
       expect(described_class.count).to eq 19
@@ -23,25 +23,25 @@ RSpec.describe FacilitiesManagement::RM6232::WorkPackage, type: :model do
 
   describe '.services' do
     work_packages_with_num_of_services = {
-      'A': 18,
-      'B': 1,
-      'C': 1,
-      'D': 1,
-      'E': 21,
-      'F': 13,
-      'G': 8,
-      'H': 10,
-      'I': 18,
-      'J': 16,
-      'K': 5,
-      'L': 15,
-      'M': 8,
-      'N': 13,
-      'O': 5,
-      'P': 14,
-      'Q': 3,
-      'R': 1,
-      'S': 1
+      A: 18,
+      B: 1,
+      C: 1,
+      D: 1,
+      E: 21,
+      F: 13,
+      G: 8,
+      H: 10,
+      I: 18,
+      J: 16,
+      K: 5,
+      L: 15,
+      M: 8,
+      N: 13,
+      O: 5,
+      P: 14,
+      Q: 3,
+      R: 1,
+      S: 1
     }
 
     work_packages_with_num_of_services.each do |code, number_of_services|
@@ -56,25 +56,25 @@ RSpec.describe FacilitiesManagement::RM6232::WorkPackage, type: :model do
   describe '.selectable_services' do
     context 'when checking the number of services' do
       work_packages_with_num_of_services = {
-        'A': 18,
-        'B': 1,
-        'C': 1,
-        'D': 1,
-        'E': 21,
-        'F': 13,
-        'G': 8,
-        'H': 10,
-        'I': 18,
-        'J': 16,
-        'K': 5,
-        'L': 15,
-        'M': 8,
-        'N': 13,
-        'O': 5,
-        'P': 14,
-        'Q': 1,
-        'R': 1,
-        'S': 1
+        A: 18,
+        B: 1,
+        C: 1,
+        D: 1,
+        E: 21,
+        F: 13,
+        G: 8,
+        H: 10,
+        I: 18,
+        J: 16,
+        K: 5,
+        L: 15,
+        M: 8,
+        N: 13,
+        O: 5,
+        P: 14,
+        Q: 1,
+        R: 1,
+        S: 1
       }
 
       work_packages_with_num_of_services.each do |code, number_of_services|
@@ -96,25 +96,25 @@ RSpec.describe FacilitiesManagement::RM6232::WorkPackage, type: :model do
   describe '.supplier_services' do
     context 'when checking the number of services' do
       work_packages_with_num_of_services = {
-        'A': 18,
-        'B': 1,
-        'C': 1,
-        'D': 1,
-        'E': 21,
-        'F': 13,
-        'G': 8,
-        'H': 10,
-        'I': 18,
-        'J': 16,
-        'K': 5,
-        'L': 15,
-        'M': 8,
-        'N': 13,
-        'O': 5,
-        'P': 14,
-        'Q': 2,
-        'R': 1,
-        'S': 1
+        A: 18,
+        B: 1,
+        C: 1,
+        D: 1,
+        E: 21,
+        F: 13,
+        G: 8,
+        H: 10,
+        I: 18,
+        J: 16,
+        K: 5,
+        L: 15,
+        M: 8,
+        N: 13,
+        O: 5,
+        P: 14,
+        Q: 2,
+        R: 1,
+        S: 1
       }
 
       work_packages_with_num_of_services.each do |code, number_of_services|

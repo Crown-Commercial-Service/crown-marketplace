@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@v1.134.0
+        uses: ruby/setup-ruby@v1.144.0
         with:
           bundler-cache: true
 
@@ -45,7 +45,10 @@ jobs:
         run: bin/rails db:test:prepare
 
       - name: Compile assets
-        run: bin/rails assets:precompile
+        run: NODE_OPTIONS=--openssl-legacy-provider bin/rails assets:precompile
+
+      - name: Check JavaScript code quality
+        run: yarn run eslint app/javascript/
 
       - name: Run unit tests
         run: bin/rake

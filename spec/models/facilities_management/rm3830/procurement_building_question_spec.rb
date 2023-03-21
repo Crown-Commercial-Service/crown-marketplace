@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
   subject(:procurement_building) { build(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement), procurement_building_services: []) }
 
   describe '#validations' do
@@ -8,14 +8,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         procurement_building.active = true
         procurement_building.service_codes = ['K.2']
         procurement_building.save
-        expect(procurement_building.valid?(:procurement_building_services)).to eq false
+        expect(procurement_building.valid?(:procurement_building_services)).to be false
       end
     end
 
     context 'when active and service_codes are empty' do
       it 'is valid' do
         procurement_building.active = true
-        expect(procurement_building.valid?(:procurement_building_services)).to eq true
+        expect(procurement_building.valid?(:procurement_building_services)).to be true
       end
     end
 
@@ -27,7 +27,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         pbs = procurement_building.procurement_building_services.first
         pbs.tones_to_be_collected_and_removed = 90
         pbs.save
-        expect(procurement_building.valid?(:procurement_building_services)).to eq true
+        expect(procurement_building.valid?(:procurement_building_services)).to be true
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         procurement_building.active
         procurement_building.service_codes = ['K.2', 'K.1']
         procurement_building.save
-        expect(procurement_building.valid?(:procurement_building_services)).to eq false
+        expect(procurement_building.valid?(:procurement_building_services)).to be false
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         procurement_building.save
         procurement_building.procurement_building_services.first.tones_to_be_collected_and_removed = 90
         procurement_building.procurement_building_services.first.save
-        expect(procurement_building.valid?(:procurement_building_services)).to eq false
+        expect(procurement_building.valid?(:procurement_building_services)).to be false
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         procurement_building.procurement_building_services[1].tones_to_be_collected_and_removed = 90
         procurement_building.procurement_building_services.first.save
         procurement_building.procurement_building_services[1].save
-        expect(procurement_building.valid?(:procurement_building_services)).to eq true
+        expect(procurement_building.valid?(:procurement_building_services)).to be true
       end
     end
   end

@@ -18,12 +18,14 @@ module FacilitiesManagement
       end
     end
 
+    # rubocop:disable Rails/I18nLazyLookup
     def missing_regions
       redirect_to procurement_show_path unless @procurement.procurement_buildings_missing_regions?
 
       @back_path = procurement_index_path
       @back_text = t('facilities_management.procurement_buildings.missing_regions.return_to_dashboard')
     end
+    # rubocop:enable Rails/I18nLazyLookup
 
     private
 

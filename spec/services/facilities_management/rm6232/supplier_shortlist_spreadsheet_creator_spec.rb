@@ -7,7 +7,7 @@ RSpec.describe FacilitiesManagement::RM6232::SupplierShortlistSpreadsheetCreator
   let(:spreadsheet_builder) { described_class.new(procurement.id) }
   let(:work_book) do
     spreadsheet_builder.build
-    IO.write('/tmp/selected_suppliers.xlsx', spreadsheet_builder.to_xlsx, binmode: true)
+    File.write('/tmp/selected_suppliers.xlsx', spreadsheet_builder.to_xlsx, binmode: true)
     Roo::Excelx.new('/tmp/selected_suppliers.xlsx')
   end
 

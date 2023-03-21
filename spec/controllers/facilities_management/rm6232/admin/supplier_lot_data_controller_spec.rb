@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, type: :controller do
+RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM6232' } }
 
   login_fm_admin
@@ -22,7 +22,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
       end
 
       it 'assigns the lot data' do
-        expect(assigns(:lot_data).map { |lot_data| lot_data[:id] }).to eq supplier.lot_data.order('REVERSE(lot_code)').pluck(:id)
+        expect(assigns(:lot_data).pluck(:id)).to eq supplier.lot_data.order('REVERSE(lot_code)').pluck(:id)
       end
 
       context 'when the supplier does not exist' do

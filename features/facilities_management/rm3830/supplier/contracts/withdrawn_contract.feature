@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier withdrawn contract
 
   Scenario: Withdrawn contract

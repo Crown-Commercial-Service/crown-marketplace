@@ -4,37 +4,33 @@ RSpec.describe Cognito::ResendConfirmationCode do
   let(:email) { create(:user, :without_detail, cognito_uuid: '12345').email }
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
+  let(:response) { described_class.call(email) }
+
+  before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
+
   describe '#call' do
     context 'when success' do
-      let(:response) { described_class.call(email) }
+      include_context 'with cognito structs'
 
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:resend_confirmation_code).and_return(OpenStruct.new('USER_ID_FOR_SRP' => email))
-      end
+      before { allow(aws_client).to receive(:resend_confirmation_code).and_return(resend_confirmation_code_resp_struct.new('USER_ID_FOR_SRP' => email)) }
 
       it 'returns success' do
-        expect(response.success?).to eq true
+        expect(response.success?).to be true
       end
 
       it 'returns no error' do
-        expect(response.error).to eq nil
+        expect(response.error).to be_nil
       end
     end
 
     context 'when cognito error' do
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:resend_confirmation_code).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
-      end
+      before { allow(aws_client).to receive(:resend_confirmation_code).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops')) }
 
       it 'does not return success' do
-        response = described_class.call(email)
-        expect(response.success?).to eq false
+        expect(response.success?).to be false
       end
 
       it 'does returns cognito error' do
-        response = described_class.call(email)
         expect(response.error).to eq 'Oops'
       end
     end

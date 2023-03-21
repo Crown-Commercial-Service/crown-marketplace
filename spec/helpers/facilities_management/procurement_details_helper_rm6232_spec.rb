@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ProcurementDetailsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::ProcurementDetailsHelper do
   describe '.initial_call_off_period_error?' do
     let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
 

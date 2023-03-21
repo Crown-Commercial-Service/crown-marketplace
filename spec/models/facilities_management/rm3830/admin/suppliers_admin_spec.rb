@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin do
   subject(:suppliers_admin) { described_class.find(supplier_id) }
 
   let(:supplier_id) { 'ca57bf4c-e8a5-468a-95f4-39fcf730c770' }
@@ -755,7 +755,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin, type: :model
         let(:address_postcode) { nil }
 
         it 'is invalid' do
-          expect(supplier.valid?(:supplier_address)).to eq false
+          expect(supplier.valid?(:supplier_address)).to be false
         end
 
         it 'has the correct error message' do
@@ -769,7 +769,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin, type: :model
         let(:address_postcode) { 'SA3 1TA NW14' }
 
         it 'is invalid' do
-          expect(supplier.valid?(:supplier_address)).to eq false
+          expect(supplier.valid?(:supplier_address)).to be false
         end
 
         it 'has the correct error message' do
@@ -783,7 +783,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin, type: :model
         let(:address_postcode) { 'SA3 1TA' }
 
         it 'is valid' do
-          expect(supplier.valid?(:supplier_address)).to eq true
+          expect(supplier.valid?(:supplier_address)).to be true
         end
       end
     end

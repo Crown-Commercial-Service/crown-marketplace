@@ -142,10 +142,12 @@ provider:
 
 - [Amazon Cognito](https://aws.amazon.com/cognito/)
 
-Both of these require configuration using environment variables listed above.
+This require configuration using [environment variables listed below](#cognito).
 
-Authorisation is implemented by the `Login::CognitoLogin`
-class.
+Authorisation is implemented by the `Login::CognitoLogin` class.
+
+The folder `data/cognito/email_templates` contains the templates that we use in AWS Cognito for email messaging.
+These need to be configured in AWS Cognito and the files are only in this repository as documentation.
 
 ### Linting
 
@@ -189,8 +191,7 @@ To run a specific feature test, use:
 bundle exec cucumber feature/path/to/feature.feature
 ```
 
-For Pull Requests, a subset of the feature tests are run (ones that have the `@pipeline` tag).
-However, all feature tests are run as part of the release process.
+All the feature tests are run as part of the Pull Request and release process
 
 #### Accessibility testing
 We use [Axe Cucumber][] to run accessibility tests but these are not run as part of the CI.

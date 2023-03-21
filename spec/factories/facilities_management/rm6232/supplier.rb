@@ -10,6 +10,6 @@ FactoryBot.define do
     address_town { Faker::Address.city }
     address_county { Faker::Address.county }
     address_postcode { Faker::Address.postcode }
-    lot_data { build_list :facilities_management_rm6232_supplier_lot_data, 1 }
+    lot_data { build_list(:facilities_management_rm6232_supplier_lot_data, 1) }
   end
 end

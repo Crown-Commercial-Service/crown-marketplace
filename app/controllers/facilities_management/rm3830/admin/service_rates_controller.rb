@@ -2,6 +2,8 @@ module FacilitiesManagement
   module RM3830
     module Admin
       class ServiceRatesController < FacilitiesManagement::Admin::FrameworkController
+        before_action :set_framework_has_expired
+        before_action :redirect_if_framework_has_expired, only: :update
         before_action :set_slug, :set_rate_type, :full_services, :set_variances, :initialise_errors
 
         def edit; end
@@ -73,6 +75,10 @@ module FacilitiesManagement
           end
 
           @variances.each { |_label, rate| rate.save if rate.changed? }
+        end
+
+        def redirect_if_framework_has_expired
+          redirect_to edit_facilities_management_rm3830_admin_service_rate_path if @framework_has_expired
         end
       end
     end

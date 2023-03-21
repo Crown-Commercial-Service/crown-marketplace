@@ -27,4 +27,4 @@ module AutoSessionTimeoutHelper
   end
 end
 
-ActionView::Base.include AutoSessionTimeoutHelper
+ActiveSupport.on_load(:action_view) { include AutoSessionTimeoutHelper }

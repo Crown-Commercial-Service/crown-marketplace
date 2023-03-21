@@ -41,11 +41,11 @@ class AllowedEmailDomain
   private
 
   def allow_list_s3_object
-    @allow_list_s3_object ||= Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION']).bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['ALLOW_LIST_KEY'])
+    @allow_list_s3_object ||= Aws::S3::Resource.new(region: ENV.fetch('COGNITO_AWS_REGION', nil)).bucket(ENV.fetch('CCS_APP_API_DATA_BUCKET', nil)).object(ENV.fetch('ALLOW_LIST_KEY', nil))
   end
 
   def allow_list_file_path
-    @allow_list_file_path ||= Rails.root.join(ENV['ALLOWED_EMAIL_DOMAINS_FILE_PATH'])
+    @allow_list_file_path ||= Rails.root.join(ENV.fetch('ALLOWED_EMAIL_DOMAINS_FILE_PATH', nil))
   end
 
   def remove_excess_space

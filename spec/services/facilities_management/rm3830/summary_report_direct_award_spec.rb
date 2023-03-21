@@ -24,7 +24,7 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
 
       sorted_list = results.sort_by { |_k, v| v }
 
-      expect(sorted_list.first).to eq [:"Hickle-Schinner", 3125.8249008437565]
+      expect(sorted_list.first).to eq [:'Hickle-Schinner', 3125.8249008437565]
     end
 
     it 'price for one supplier with tupe' do

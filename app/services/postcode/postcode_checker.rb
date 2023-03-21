@@ -23,8 +23,6 @@ module Postcode
         where public.os_address_view.postcode = '#{postcode}'
       HEREDOC
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
-    rescue StandardError => e
-      raise e
     end
 
     def self.find_region(postcode)
@@ -37,8 +35,6 @@ module Postcode
         where public.postcodes_nuts_regions.postcode like '#{postcode.upcase}%'
       HEREDOC
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
-    rescue StandardError => e
-      raise e
     end
 
     # SELECT EXISTS (SELECT relname FROM pg_class WHERE relname = 'os_address');
@@ -49,8 +45,6 @@ module Postcode
 
         result[0]['exists']
       end
-    rescue StandardError => e
-      raise e
     end
 
     # SELECT COUNT (*) FROM os_address;

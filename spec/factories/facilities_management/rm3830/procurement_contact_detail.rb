@@ -8,6 +8,5 @@ FactoryBot.define do
     organisation_address_postcode { 'SW1A 1AA' }
   end
 
-  factory :facilities_management_rm3830_procurement_contact_detail_empty, class: 'FacilitiesManagement::RM3830::ProcurementContactDetail' do
-  end
+  factory :facilities_management_rm3830_procurement_contact_detail_empty, class: 'FacilitiesManagement::RM3830::ProcurementContactDetail'
 end

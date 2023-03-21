@@ -3,10 +3,10 @@ module Cognito
     include ActiveModel::Validations
     attr_reader :email, :error
 
-    validates :email, format: { with: /\A([\w+-].?)+@[a-z\d-]+(\.[a-z]+)*\.[a-z]+\z/i }
+    validates :email, format: { with: /\A([\w+\d-].?)+@[a-z\d-]+(\.[a-z]+)*\.[a-z]+\z/i }
 
     def initialize(email)
-      @email = email
+      @email = email.try(:downcase)
       @error = nil
     end
 
@@ -31,7 +31,7 @@ module Cognito
     private
 
     def forgot_password
-      client.forgot_password(client_id: ENV['COGNITO_CLIENT_ID'], username: email)
+      client.forgot_password(client_id: ENV.fetch('COGNITO_CLIENT_ID', nil), username: email)
     end
   end
 end

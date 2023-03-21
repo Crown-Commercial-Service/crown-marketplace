@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Nuts3Region, type: :model do
+RSpec.describe Nuts3Region do
   subject(:region) { described_class.find_by(code: 'UKL12') }
 
   let(:all_codes) { described_class.all.map(&:code) }
@@ -11,7 +11,7 @@ RSpec.describe Nuts3Region, type: :model do
   end
 
   it 'only has unique codes' do
-    expect(all_codes.uniq).to contain_exactly(*all_codes)
+    expect(all_codes.uniq).to match_array(all_codes)
   end
 
   it 'belongs to a NUTS 2 region' do

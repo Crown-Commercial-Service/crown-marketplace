@@ -53,9 +53,9 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportCsvGenerator
 
     let(:buyer_detail) { create(:buyer_detail, user: user_2, full_name: 'Obi-Wan Kenobi', job_title: 'Jedi', telephone_number: '0750050607', organisation_name: 'The Jedi Council', organisation_address_line_1: 'The Jedi Temple', organisation_address_line_2: nil, organisation_address_town: 'Coruscant', organisation_address_county: nil, organisation_address_postcode: 'SW1R 0TS', central_government: false) }
 
-    let(:procurement_1) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user_1, created_at: Time.zone.now - 3.days, contract_name: 'Procurement 1') }
-    let(:procurement_2) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user_2, created_at: Time.zone.now - 2.days, contract_name: 'Procurement 2', contract_number: 'RM6232-000002-2022') }
-    let(:procurement_3) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user_1, created_at: Time.zone.now - 1.day, contract_name: 'Procurement 3', contract_number: 'RM6232-000003-2022', service_codes: %w[E.1 G.1 J.1], annual_contract_value: 50_000_000, lot_number: '1c') }
+    let(:procurement_1) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user_1, created_at: 3.days.ago, contract_name: 'Procurement 1') }
+    let(:procurement_2) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user_2, created_at: 2.days.ago, contract_name: 'Procurement 2', contract_number: 'RM6232-000002-2022') }
+    let(:procurement_3) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user_1, created_at: 1.day.ago, contract_name: 'Procurement 3', contract_number: 'RM6232-000003-2022', service_codes: %w[E.1 G.1 J.1], annual_contract_value: 50_000_000, lot_number: '1c') }
     let(:procurement_4) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user_2, created_at: Time.zone.now, contract_name: 'Procurement 4', contract_number: 'RM6232-000004-2022', region_codes: %w[UKN01], annual_contract_value: 5_000_000) }
 
     let(:generated_csv) { CSV.parse(management_report.management_report_csv.download, headers: true) }
@@ -71,25 +71,25 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportCsvGenerator
     end
 
     context 'when the dates are between 1 and 2 days ago' do
-      let(:start_date) { Time.zone.now - 2.days - 1.hour }
-      let(:end_date) { Time.zone.now - 1.day + 1.hour }
+      let(:start_date) { 2.days.ago - 1.hour }
+      let(:end_date) { 1.day.ago + 1.hour }
 
       it 'has 2 rows with 2nd and 3rd procurement' do
-        expect(generated_csv.map { |row| row[1] }).to eq ['Procurement 3', 'Procurement 2']
+        expect(generated_csv.pluck(1)).to eq ['Procurement 3', 'Procurement 2']
       end
     end
 
     context 'when the dates are between 1 and 3 days ago' do
-      let(:start_date) { Time.zone.now - 3.days - 1.hour }
-      let(:end_date) { Time.zone.now - 1.day + 1.hour }
+      let(:start_date) { 3.days.ago - 1.hour }
+      let(:end_date) { 1.day.ago + 1.hour }
 
       it 'has 3 rows with 1st, 2nd and 3rd procurement' do
-        expect(generated_csv.map { |row| row[1] }).to eq ['Procurement 3', 'Procurement 2', 'Procurement 1']
+        expect(generated_csv.pluck(1)).to eq ['Procurement 3', 'Procurement 2', 'Procurement 1']
       end
     end
 
     context 'when the dates cover the range' do
-      let(:start_date) { Time.zone.now - 5.days }
+      let(:start_date) { 5.days.ago }
       let(:end_date) { Time.zone.now }
 
       let(:generated_csv) { CSV.parse(management_report.management_report_csv.download) }

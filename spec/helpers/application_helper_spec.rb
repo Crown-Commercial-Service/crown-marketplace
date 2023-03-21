@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationHelper, type: :helper do
+RSpec.describe ApplicationHelper do
   describe '#page_title' do
     context 'when there is no prefix' do
       it 'returns title stored in locale file' do
@@ -76,7 +76,7 @@ RSpec.describe ApplicationHelper, type: :helper do
           'question-2' => 'answer-2'
         }
       end
-      let(:journey) { instance_double('Journey', previous_questions_and_answers: questions_and_answers) }
+      let(:journey) { instance_double(GenericJourney, previous_questions_and_answers: questions_and_answers) }
       let(:html) { helper.hidden_fields_for_previous_steps_and_responses(journey) }
 
       it 'renders hidden field for question 1' do
@@ -94,7 +94,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'an empty hash is returned' do
         validation_message = helper.validation_messages :procurement2
         expect(validation_message.class.name).to eq 'Hash'
-        expect(validation_message.empty?).to eq true
+        expect(validation_message.empty?).to be true
       end
 
       it 'returns a hash' do
@@ -102,7 +102,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
         validation_message = helper.validation_messages proc.class.name.underscore.downcase.to_sym
         expect(validation_message.class.name).to eq 'Hash'
-        expect(validation_message.empty?).to eq false
+        expect(validation_message.empty?).to be false
       end
     end
 
@@ -110,13 +110,13 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'will return an empty hash when the attribute cannot be found' do
         validation_message = helper.validation_messages(:procurement, :blahblah)
         expect(validation_message.class.name).to eq 'Hash'
-        expect(validation_message.empty?).to eq true
+        expect(validation_message.empty?).to be true
       end
 
       it 'will return an empty hash when the attribute has no translations' do
         validation_message = helper.validation_messages(:procurement, :blah)
         expect(validation_message.class.name).to eq 'Hash'
-        expect(validation_message.empty?).to eq true
+        expect(validation_message.empty?).to be true
       end
 
       it 'will return a populated hash when the attribute has translations' do
@@ -124,7 +124,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
         validation_message = helper.validation_messages(proc.class.name.underscore.downcase.to_sym, :initial_call_off_period_years)
         expect(validation_message.class.name).to eq 'Hash'
-        expect(validation_message.empty?).to eq false
+        expect(validation_message.empty?).to be false
       end
     end
 

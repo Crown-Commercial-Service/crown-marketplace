@@ -18,7 +18,6 @@ Feature: Selecting region codes
       | Terry-Greenholt             | 2b  | Lot 2b regions  |
       | Schultz-Wilkinson           | 3c  | Lot 3c regions  |
 
-  @pipline
   Scenario: I change the regions and it changes on View lot data - lot 1a
     Then I click on 'View lot data' for 'Brakus, Lueilwitz and Blanda'
     And I am on the 'View lot data' page
@@ -77,7 +76,6 @@ Feature: Selecting region codes
       | Falkirk                 |
       | Belfast                 |
 
-  @pipline
   Scenario Outline: Breadcrumb links work from regions
     Then I click on 'View lot data' for 'Yost LLC'
     And I am on the 'View lot data' page

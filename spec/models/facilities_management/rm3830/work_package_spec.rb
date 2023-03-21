@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::WorkPackage, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::WorkPackage do
   subject(:packages) { described_class.all }
 
   let(:first_package) { packages.first }
@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::RM3830::WorkPackage, type: :model do
   end
 
   it 'only has unique codes' do
-    expect(all_codes.uniq).to contain_exactly(*all_codes)
+    expect(all_codes.uniq).to match_array(all_codes)
   end
 
   it 'all have names' do

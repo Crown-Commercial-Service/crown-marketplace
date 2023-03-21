@@ -39,11 +39,9 @@ namespace :db do
     end
 
     desc 'add Services for RM6232 to the database'
-    task static: :import_services do
-    end
+    task static: :import_services
   end
 
   desc 'add Services for RM6232 to the database'
-  task static: :'rm6232:import_services' do
-  end
+  task static: :'rm6232:import_services'
 end

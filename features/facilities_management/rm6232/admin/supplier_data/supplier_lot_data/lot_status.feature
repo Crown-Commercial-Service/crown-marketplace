@@ -18,7 +18,6 @@ Feature: Changing the lot status
       | Schulist-Wuckert              | 2a  |
       | Zboncak and Sons              | 3c  |
 
-  @pipline
   Scenario Outline: I change the status and it changes on View lot data
     Then I click on 'View lot data' for '<supplier_name>'
     And I am on the 'View lot data' page
@@ -37,7 +36,6 @@ Feature: Changing the lot status
       | Schulist-Wuckert              | 2a  |
       | Zboncak and Sons              | 3c  |
 
-  @pipline
   Scenario Outline: Breadcrumb links work from lot status
     Then I click on 'View lot data' for 'Yost LLC'
     And I am on the 'View lot data' page

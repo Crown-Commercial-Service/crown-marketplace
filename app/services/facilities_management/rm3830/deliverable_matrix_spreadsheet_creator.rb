@@ -9,7 +9,7 @@ class FacilitiesManagement::RM3830::DeliverableMatrixSpreadsheetCreator
 
   # rubocop:disable Metrics/AbcSize
   def services_data
-    uniq_buildings_service_codes ||= buildings_data.map { |pb| pb[:service_codes] }.flatten.uniq
+    uniq_buildings_service_codes ||= buildings_data.pluck(:service_codes).flatten.uniq
     services ||= FacilitiesManagement::RM3830::StaticData.work_packages.select { |wp| uniq_buildings_service_codes.include? wp['code'] }
     @services_data ||= services.sort { |a, b| [a['code'].split('.')[0], a['code'].split('.')[1].to_i] <=> [b['code'].split('.')[0], b['code'].split('.')[1].to_i] }
   end
@@ -239,13 +239,13 @@ class FacilitiesManagement::RM3830::DeliverableMatrixSpreadsheetCreator
   def services_require_service_periods?
     return false if services_data.empty?
 
-    (services_data.map { |sd| sd['code'] }.uniq & SERVICE_HOUR_SERVICES).size.positive?
+    (services_data.pluck('code').uniq & SERVICE_HOUR_SERVICES).size.positive?
   end
 
   def volume_services_included?
     return false if services_data.empty?
 
-    (services_data.map { |sd| sd['code'] }.uniq & ALLOWED_VOLUME_SERVICES).size.positive?
+    (services_data.pluck('code').uniq & ALLOWED_VOLUME_SERVICES).size.positive?
   end
 
   def sanitize_string_for_excel(string)

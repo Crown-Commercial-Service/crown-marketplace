@@ -6,7 +6,6 @@ Feature: What do I do next
     When I navigate to the procurement 'My WDIDN procurement'
     And I am on the 'What do I do next?' page
   
-  @pipeline
   Scenario: The content is correct
     And the procurement name is shown to be 'My WDIDN procurement'
     And the contract number is visible
@@ -17,7 +16,6 @@ Feature: What do I do next
       | Visit the Facilities Management and Workplace Services framework page for |
       | information on how to procure via this framework, including:              |
 
-  @pipeline
   Scenario: I can download the spreadsheet
     And I click on 'Selected suppliers'
     Then the spreadsheet 'Supplier shortlist (My WDIDN procurement)' is downloaded

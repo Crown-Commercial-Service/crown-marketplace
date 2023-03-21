@@ -40,7 +40,13 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
     end
   end
 
+  def show
+    @minimum_editor = @user.minimum_editor_role
+  end
+
   def new; end
+
+  def edit; end
 
   def create
     @user = Cognito::Admin::User.new(@current_user_access, add_user_params)
@@ -53,12 +59,6 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
       render :new
     end
   end
-
-  def show
-    @minimum_editor = @user.minimum_editor_role
-  end
-
-  def edit; end
 
   def update
     @user.assign_attributes(**user_params)

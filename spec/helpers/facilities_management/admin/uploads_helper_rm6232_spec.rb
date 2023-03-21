@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::UploadsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::Admin::UploadsHelper do
   describe 'get_admin_upload_error_details' do
     let(:error_details) { helper.get_admin_upload_error_details(error, details) }
 
@@ -74,7 +74,7 @@ RSpec.describe FacilitiesManagement::Admin::UploadsHelper, type: :helper do
       let(:details) { ['Collier Group'] }
 
       it 'returns the correct error message' do
-        expect(error_details).to eq "The following sheets have incorrect row headers: <ul class=\"govuk-list govuk-list--bullet\"><li>Collier Group</li></ul> Make sure all sheets for \'Supplier services\' have the expected services codes. You can find these in the spreadsheet template."
+        expect(error_details).to eq "The following sheets have incorrect row headers: <ul class=\"govuk-list govuk-list--bullet\"><li>Collier Group</li></ul> Make sure all sheets for 'Supplier services' have the expected services codes. You can find these in the spreadsheet template."
       end
     end
   end

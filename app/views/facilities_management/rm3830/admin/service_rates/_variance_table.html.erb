@@ -22,7 +22,7 @@
           </div>
         </td>
         <td class="govuk-table__cell supplier-rates-td">
-          <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(attribue), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate_invalid }" %>
+          <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(attribue), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate_invalid }", disabled: @framework_has_expired %>
         </td>
       </tr>
     <% end %>

@@ -1,7 +1,7 @@
 require 'rails_helper'
 # rubocop:disable RSpec/NamedSubject
 module FacilitiesManagement
-  RSpec.describe BuyerDetailsController, type: :controller do
+  RSpec.describe BuyerDetailsController do
     let(:default_params) { { service: 'facilities_management', framework: framework } }
     let(:framework) { 'RM6232' }
 
@@ -44,7 +44,7 @@ module FacilitiesManagement
 
         it 'sets the framework variables' do
           expect(assigns(:unrecognised_framework)).to eq 'RM3840'
-          expect(controller.params[:framework]).to eq FacilitiesManagement::Framework.default_framework
+          expect(controller.params[:framework]).to eq Framework.facilities_management.current_framework
         end
       end
     end

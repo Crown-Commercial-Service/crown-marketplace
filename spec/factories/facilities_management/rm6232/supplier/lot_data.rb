@@ -6,7 +6,7 @@ FactoryBot.define do
     region_codes { %w[UKC1 UKD1 UKE1] }
 
     trait :with_supplier do
-      supplier { build :facilities_management_rm6232_supplier }
+      supplier { build(:facilities_management_rm6232_supplier) }
     end
   end
 end

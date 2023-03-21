@@ -768,7 +768,7 @@ RSpec.describe Cognito::Admin::Roles do
       let(:roles) { %w[ccs_developer] }
 
       it 'returns nil' do
-        expect(result).to eq nil
+        expect(result).to be_nil
       end
     end
 
@@ -776,7 +776,7 @@ RSpec.describe Cognito::Admin::Roles do
       let(:roles) { %w[ccs_developer ccs_user_admin] }
 
       it 'returns nil' do
-        expect(result).to eq nil
+        expect(result).to be_nil
       end
     end
 
@@ -801,7 +801,7 @@ RSpec.describe Cognito::Admin::Roles do
         let(:roles) { [] }
 
         it 'returns false' do
-          expect(result).to eq false
+          expect(result).to be false
         end
       end
 
@@ -812,7 +812,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -820,7 +820,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -828,7 +828,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -836,7 +836,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -844,7 +844,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -856,7 +856,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -864,7 +864,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -872,7 +872,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -880,7 +880,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -888,7 +888,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -900,7 +900,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -908,7 +908,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -916,7 +916,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -924,7 +924,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -932,7 +932,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -944,7 +944,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -952,7 +952,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -960,7 +960,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -968,7 +968,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -976,7 +976,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -988,7 +988,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -996,7 +996,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1004,7 +1004,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1012,7 +1012,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1020,7 +1020,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -1033,7 +1033,7 @@ RSpec.describe Cognito::Admin::Roles do
         let(:roles) { [] }
 
         it 'returns false' do
-          expect(result).to eq false
+          expect(result).to be false
         end
       end
 
@@ -1044,7 +1044,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -1052,7 +1052,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -1060,7 +1060,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -1068,7 +1068,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1076,7 +1076,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -1088,7 +1088,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -1096,7 +1096,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -1104,7 +1104,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -1112,7 +1112,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1120,7 +1120,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -1132,7 +1132,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -1140,7 +1140,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -1148,7 +1148,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -1156,7 +1156,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1164,7 +1164,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -1176,7 +1176,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1184,7 +1184,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1192,7 +1192,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1200,7 +1200,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1208,7 +1208,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -1220,7 +1220,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1228,7 +1228,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1236,7 +1236,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1244,7 +1244,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1252,7 +1252,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -1265,7 +1265,7 @@ RSpec.describe Cognito::Admin::Roles do
         let(:roles) { [] }
 
         it 'returns false' do
-          expect(result).to eq false
+          expect(result).to be false
         end
       end
 
@@ -1276,7 +1276,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns true' do
-            expect(result).to eq true
+            expect(result).to be true
           end
         end
 
@@ -1284,7 +1284,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1292,7 +1292,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1300,7 +1300,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1308,7 +1308,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -1320,7 +1320,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1328,7 +1328,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1336,7 +1336,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1344,7 +1344,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1352,7 +1352,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -1364,7 +1364,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1372,7 +1372,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1380,7 +1380,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1388,7 +1388,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1396,7 +1396,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -1408,7 +1408,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1416,7 +1416,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1424,7 +1424,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1432,7 +1432,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1440,7 +1440,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_developer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end
@@ -1452,7 +1452,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { [] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1460,7 +1460,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[buyer] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1468,7 +1468,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_employee] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1476,7 +1476,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[allow_list_access] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
 
@@ -1484,7 +1484,7 @@ RSpec.describe Cognito::Admin::Roles do
           let(:additional_roles) { %w[ccs_user_admin] }
 
           it 'returns false' do
-            expect(result).to eq false
+            expect(result).to be false
           end
         end
       end

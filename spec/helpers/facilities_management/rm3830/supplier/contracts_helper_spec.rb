@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsHelper do
   extend APIRequestStubs
 
   describe '.supplier_contract_reason_id' do

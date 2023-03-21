@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StaticRecord, type: :model do
+RSpec.describe StaticRecord do
   subject(:klass) do
     Class.new do
       include StaticRecord

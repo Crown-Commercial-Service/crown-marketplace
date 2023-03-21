@@ -12,7 +12,6 @@ Feature: Allow list - User admin - Remove email domain
     And I click on remove for 'example.com'
     Then I am on the "Are you sure you want to remove 'example.com' from the Allow list?" page
 
-  @pipeline
   Scenario: Remove email domain
     And I click on 'Remove'
     Then I am on the 'Allow list' page

@@ -17,7 +17,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'govuk', 'ccs', 'data-turbolinks-track': 'reload', defer: false %>
 
     <%= render partial: '/shared/google/analytics' if cookie_preferences_settings['google_analytics_enabled'] && Marketplace.google_analytics_tracking_id.present? %>
     <%= render partial: '/shared/google/tag_manager_head' if Marketplace.google_tag_manager_tracking_id.present? %>
@@ -32,7 +33,7 @@
     <% end %>
 
     <div class="error-content">
-      <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link"><%= t('layouts.application.skip') %></a>
+      <%= link_to t('layouts.application.skip'), '#main-content', class: 'govuk-skip-link', data: { module: 'govuk-skip-link', turbolinks: false } %>
       <%= render partial: '/layouts/cookie-banner' unless cookie_preferences_settings['settings_viewed'] || controller.action_name == 'cookie_settings' %>
       <%= render partial: '/layouts/header' %>
 
@@ -50,7 +51,5 @@
     </div>
     
     <%= render partial: '/layouts/footer' %>
-
-    <%= javascript_include_tag 'application' %>
   </body>
 </html>

@@ -75,3 +75,10 @@ package-lock.json
 
 # We will compile the typescript as part of the assets pipeline
 app/assets/javascripts/dist/*
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

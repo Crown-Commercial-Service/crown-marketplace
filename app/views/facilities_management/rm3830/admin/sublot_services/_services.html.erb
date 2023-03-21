@@ -8,6 +8,7 @@
   <span class="govuk-caption-l"><%= @supplier.supplier_name %></span>
 </div>
 <h1 class="govuk-heading-xl"><%= @lot_name %></h1>
+<%= framework_expired_warning(t('facilities_management.rm3830.admin.you_cannot_update.services')) %>
 <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
   <%= t('.note') %>
 </p>
@@ -35,7 +36,8 @@
                         work_pckg['code'],
                         @supplier_rate_data_checkboxes[work_pckg['code']],
                         class: "govuk-checkboxes__input",
-                        id: "rates_#{work_pckg['code']}"
+                        id: "rates_#{work_pckg['code']}",
+                        disabled: @framework_has_expired
                     ) %>
                 <label class="govuk-label govuk-checkboxes__label" for="rates_<%=work_pckg['code'] %>">
 
@@ -49,6 +51,6 @@
       </table>
     </fieldset>
   <% end %>
-  <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_benchmark_rates', aria: { label:  t('.update_button') }%>
+  <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_benchmark_rates', aria: { label:  t('.update_button') }, disabled: @framework_has_expired %>
   <%= link_to t('.return_button'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link govuk-caption-m' %>
 <% end %>

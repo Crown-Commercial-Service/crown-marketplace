@@ -7,7 +7,7 @@
       <ul class="govuk-list govuk-error-summary__list">
         <% requirements_errors_list.each do |attribute, message| %>
           <li>
-            <%= link_to message, "##{error_id(attribute)}", data: { fieldname: attribute } %>
+            <%= link_to message, "##{error_id(attribute)}", data: { turbolinks: false, fieldname: attribute } %>
           </li>
         <% end %>
       </ul>

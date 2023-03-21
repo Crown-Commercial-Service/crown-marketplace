@@ -224,7 +224,7 @@ module FacilitiesManagement::RM3830
     end
 
     def self.service_codes_with_name
-      @service_codes_with_name ||= Service.all.map { |service| [service.code, service.name] }.to_h
+      @service_codes_with_name ||= Service.all.to_h { |service| [service.code, service.name] }
     end
 
     def self.expand_services_and_standards(list)
@@ -248,7 +248,7 @@ module FacilitiesManagement::RM3830
     end
 
     def self.regions_with_name
-      @regions_with_name ||= FacilitiesManagement::Region.all.map { |region| [region.code, region.name] }.to_h
+      @regions_with_name ||= FacilitiesManagement::Region.all.to_h { |region| [region.code, region.name] }
     end
 
     def self.unpriced_services(list)
@@ -260,8 +260,7 @@ module FacilitiesManagement::RM3830
 
     def self.ccs_fm_rates
       @ccs_fm_rates ||= Rate.select(:code, :standard, :framework, :benchmark)
-                            .map { |rate| [[rate.code, rate.standard], { framework: rate.framework, benchmark: rate.benchmark }] }
-                            .to_h
+                            .to_h { |rate| [[rate.code, rate.standard], { framework: rate.framework, benchmark: rate.benchmark }] }
     end
 
     def self.format_period_start_end(procurement)

@@ -1,4 +1,3 @@
-@pipline
 Feature: Selecting region codes validations
 
   Scenario: No region codes are selected

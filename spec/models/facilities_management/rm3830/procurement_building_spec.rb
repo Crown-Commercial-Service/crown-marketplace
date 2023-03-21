@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
   subject(:procurement_building) { build(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement), procurement_building_services: []) }
 
   describe 'verify active scope works' do
@@ -24,7 +24,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       it 'is valid' do
         procurement_building.active = false
         procurement_building.service_codes = []
-        expect(procurement_building.valid?(:buildings_and_services)).to eq true
+        expect(procurement_building.valid?(:buildings_and_services)).to be true
       end
     end
 
@@ -32,7 +32,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       it 'is valid' do
         procurement_building.active = false
         procurement_building.service_codes = ['test']
-        expect(procurement_building.valid?(:buildings_and_services)).to eq true
+        expect(procurement_building.valid?(:buildings_and_services)).to be true
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       it 'is invalid' do
         procurement_building.active = true
         procurement_building.service_codes = []
-        expect(procurement_building.valid?(:buildings_and_services)).to eq false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
     end
 
@@ -48,7 +48,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       it 'is valid' do
         procurement_building.active = true
         procurement_building.service_codes = ['test']
-        expect(procurement_building.valid?(:buildings_and_services)).to eq true
+        expect(procurement_building.valid?(:buildings_and_services)).to be true
       end
     end
   end
@@ -70,7 +70,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:gia) { 0 }
 
         it 'is incomplete' do
-          expect(procurement_building.internal_area_incomplete?).to eq true
+          expect(procurement_building.internal_area_incomplete?).to be true
         end
       end
 
@@ -78,7 +78,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:gia) { 1000 }
 
         it 'is not incomplete' do
-          expect(procurement_building.internal_area_incomplete?).to eq false
+          expect(procurement_building.internal_area_incomplete?).to be false
         end
       end
     end
@@ -91,7 +91,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:external_area) { 0 }
 
         it 'is incomplete' do
-          expect(procurement_building.external_area_incomplete?).to eq true
+          expect(procurement_building.external_area_incomplete?).to be true
         end
       end
 
@@ -99,7 +99,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:external_area) { 1000 }
 
         it 'is not incomplete' do
-          expect(procurement_building.external_area_incomplete?).to eq false
+          expect(procurement_building.external_area_incomplete?).to be false
         end
       end
     end
@@ -347,7 +347,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       end
 
       it 'is valid' do
-        expect(procurement_building.valid?(:procurement_building_services)).to eq true
+        expect(procurement_building.valid?(:procurement_building_services)).to be true
       end
     end
 
@@ -355,7 +355,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       before { procurement_building.valid?(:procurement_building_services) }
 
       it 'is not valid' do
-        expect(procurement_building.errors.any?).to eq true
+        expect(procurement_building.errors.any?).to be true
       end
 
       it 'has the correct errors' do
@@ -374,7 +374,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       end
 
       it 'is not valid on gia' do
-        expect(procurement_building.valid?(:gia)).to eq false
+        expect(procurement_building.valid?(:gia)).to be false
       end
 
       it 'has the correct error message' do
@@ -387,7 +387,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       it 'is valid on gia' do
         procurement_building.procurement.update(aasm_state: 'detailed_search')
         procurement_building.service_codes << 'C.1'
-        expect(procurement_building.valid?(:gia)).to eq true
+        expect(procurement_building.valid?(:gia)).to be true
       end
     end
   end
@@ -401,7 +401,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       end
 
       it 'is not valid on external_area' do
-        expect(procurement_building.valid?(:external_area)).to eq false
+        expect(procurement_building.valid?(:external_area)).to be false
       end
 
       it 'has the correct error message' do
@@ -414,7 +414,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       it 'is valid on external_area' do
         procurement_building.procurement.update(aasm_state: 'detailed_search')
         procurement_building.service_codes << 'G.5'
-        expect(procurement_building.valid?(:external_area)).to eq true
+        expect(procurement_building.valid?(:external_area)).to be true
       end
     end
   end
@@ -429,7 +429,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       end
 
       it 'is not valid on gia' do
-        expect(procurement_building.errors.any?).to eq true
+        expect(procurement_building.errors.any?).to be true
       end
 
       it 'has the correct error message' do
@@ -445,7 +445,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         procurement_building.service_codes << 'C.1'
         procurement_building.validate_spreadsheet_gia(gia, procurement_building.name)
 
-        expect(procurement_building.errors.any?).to eq false
+        expect(procurement_building.errors.any?).to be false
       end
     end
   end
@@ -460,7 +460,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       end
 
       it 'is not valid on gia' do
-        expect(procurement_building.errors.any?).to eq true
+        expect(procurement_building.errors.any?).to be true
       end
 
       it 'has the correct error message' do
@@ -476,7 +476,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         procurement_building.service_codes << 'G.5'
         procurement_building.validate_spreadsheet_external_area(external_area, procurement_building.name)
 
-        expect(procurement_building.errors.any?).to eq false
+        expect(procurement_building.errors.any?).to be false
       end
     end
   end
@@ -485,14 +485,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
     context 'when a service requires an internal area' do
       it 'will be true' do
         procurement_building.service_codes = FacilitiesManagement::RM3830::Service.full_gia_services.sample(4)
-        expect(procurement_building.send(:requires_internal_area?)).to eq true
+        expect(procurement_building.send(:requires_internal_area?)).to be true
       end
     end
 
     context 'when a service does not require an internal area' do
       it 'will be false' do
         procurement_building.service_codes = ['G.5']
-        expect(procurement_building.send(:requires_internal_area?)).to eq false
+        expect(procurement_building.send(:requires_internal_area?)).to be false
       end
     end
   end
@@ -501,14 +501,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
     context 'when a service requires an external area' do
       it 'will be true' do
         procurement_building.service_codes = ['G.5']
-        expect(procurement_building.send(:requires_external_area?)).to eq true
+        expect(procurement_building.send(:requires_external_area?)).to be true
       end
     end
 
     context 'when a service does not require an external area' do
       it 'will be false' do
         procurement_building.service_codes = ['C.1']
-        expect(procurement_building.send(:requires_external_area?)).to eq false
+        expect(procurement_building.send(:requires_external_area?)).to be false
       end
     end
   end
@@ -581,7 +581,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       let(:address_region) { nil }
 
       it 'returns true' do
-        expect(procurement_building.missing_region?).to eq true
+        expect(procurement_building.missing_region?).to be true
       end
     end
 
@@ -589,7 +589,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       let(:address_region_code) { nil }
 
       it 'returns true' do
-        expect(procurement_building.missing_region?).to eq true
+        expect(procurement_building.missing_region?).to be true
       end
     end
 
@@ -598,13 +598,13 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       let(:address_region) { nil }
 
       it 'returns true' do
-        expect(procurement_building.missing_region?).to eq true
+        expect(procurement_building.missing_region?).to be true
       end
     end
 
     context 'when the building is not missing address_region or address_region_code' do
       it 'returns false' do
-        expect(procurement_building.missing_region?).to eq false
+        expect(procurement_building.missing_region?).to be false
       end
     end
   end
@@ -631,7 +631,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       let(:service_codes) { [] }
 
       it 'returns false' do
-        expect(procurement_building.service_selection_complete?).to eq false
+        expect(procurement_building.service_selection_complete?).to be false
       end
     end
 
@@ -639,7 +639,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       let(:service_codes) { %w[M.1 N.1 O.1] }
 
       it 'returns false' do
-        expect(procurement_building.service_selection_complete?).to eq false
+        expect(procurement_building.service_selection_complete?).to be false
       end
     end
 
@@ -647,7 +647,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       let(:service_codes) { %w[M.1 N.1 O.1 C.1] }
 
       it 'returns true' do
-        expect(procurement_building.service_selection_complete?).to eq true
+        expect(procurement_building.service_selection_complete?).to be true
       end
     end
   end
@@ -704,7 +704,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:gia) { 0 }
 
         it 'returns false' do
-          expect(procurement_building.complete?).to eq false
+          expect(procurement_building.complete?).to be false
         end
       end
 
@@ -712,7 +712,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:external_area) { 0 }
 
         it 'returns false' do
-          expect(procurement_building.complete?).to eq false
+          expect(procurement_building.complete?).to be false
         end
       end
 
@@ -720,7 +720,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:lift_data) { [] }
 
         it 'returns false' do
-          expect(procurement_building.complete?).to eq false
+          expect(procurement_building.complete?).to be false
         end
       end
 
@@ -728,7 +728,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:h5_value) { nil }
 
         it 'returns false' do
-          expect(procurement_building.complete?).to eq false
+          expect(procurement_building.complete?).to be false
         end
       end
 
@@ -736,7 +736,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:e4_value) { nil }
 
         it 'returns false' do
-          expect(procurement_building.complete?).to eq false
+          expect(procurement_building.complete?).to be false
         end
       end
 
@@ -744,7 +744,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:g3_value2) { nil }
 
         it 'returns false' do
-          expect(procurement_building.complete?).to eq false
+          expect(procurement_building.complete?).to be false
         end
       end
 
@@ -752,7 +752,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:k1_value) { nil }
 
         it 'returns false' do
-          expect(procurement_building.complete?).to eq false
+          expect(procurement_building.complete?).to be false
         end
       end
 
@@ -760,7 +760,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:k2_value) { nil }
 
         it 'returns false' do
-          expect(procurement_building.complete?).to eq false
+          expect(procurement_building.complete?).to be false
         end
       end
 
@@ -768,7 +768,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:k7_value) { nil }
 
         it 'returns false' do
-          expect(procurement_building.complete?).to eq false
+          expect(procurement_building.complete?).to be false
         end
       end
 
@@ -776,13 +776,13 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
         let(:c1_value) { nil }
 
         it 'returns false' do
-          expect(procurement_building.complete?).to eq false
+          expect(procurement_building.complete?).to be false
         end
       end
 
       context 'when all service questions are answered' do
         it 'returns true' do
-          expect(procurement_building.complete?).to eq true
+          expect(procurement_building.complete?).to be true
         end
       end
     end

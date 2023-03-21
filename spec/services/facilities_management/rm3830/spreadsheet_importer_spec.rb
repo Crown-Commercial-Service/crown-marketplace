@@ -551,7 +551,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         context 'when validating all the building types' do
-          FacilitiesManagement::Building::BUILDING_TYPES.map { |type| type[:spreadsheet_title] }.each do |building_type|
+          FacilitiesManagement::Building::BUILDING_TYPES.pluck(:spreadsheet_title).each do |building_type|
             context "when the building type is #{building_type}" do
               let(:spreadsheet_building) { create(:facilities_management_building, building_type: building_type) }
               let(:building_data) { [[spreadsheet_building, 'Complete']] }
@@ -692,8 +692,8 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'does not change the region' do
-          expect(user.buildings.first.address_region).to eq nil
-          expect(user.buildings.first.address_region_code).to eq nil
+          expect(user.buildings.first.address_region).to be_nil
+          expect(user.buildings.first.address_region_code).to be_nil
         end
       end
     end
@@ -939,13 +939,13 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'only makes K.1 and K.6 invalid' do
-          validations = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code, pbs[:valid]] }.to_h.sort
+          validations = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].to_h { |pbs| [pbs[:object].code, pbs[:valid]] }.sort
           expect(validations).to eq([['E.4', true], ['K.1', false], ['K.3', true], ['K.6', false], ['K.7', true]])
         end
 
         it 'has the correct error' do
-          k1_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.1' }.first[:errors][:no_of_consoles_to_be_serviced].map { |errors| errors[:error] }
-          k6_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.6' }.first[:errors][:tones_to_be_collected_and_removed].map { |errors| errors[:error] }
+          k1_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.1' }.first[:errors][:no_of_consoles_to_be_serviced].pluck(:error)
+          k6_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.6' }.first[:errors][:tones_to_be_collected_and_removed].pluck(:error)
 
           expect(k1_errors).to include(:blank)
           expect(k6_errors).to include(:blank)
@@ -981,12 +981,12 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'only makes E.4 invalid' do
-          validations = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code, pbs[:valid]] }.to_h.sort
+          validations = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].to_h { |pbs| [pbs[:object].code, pbs[:valid]] }.sort
           expect(validations).to eq([['E.4', false], ['K.1', true], ['K.3', true]])
         end
 
         it 'has the correct error' do
-          e4_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'E.4' }.first[:errors][:no_of_appliances_for_testing].map { |errors| errors[:error] }
+          e4_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'E.4' }.first[:errors][:no_of_appliances_for_testing].pluck(:error)
 
           expect(e4_errors).to include(:not_a_number)
         end
@@ -1018,12 +1018,12 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'only makes K.1 invalid' do
-          validations = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code, pbs[:valid]] }.to_h.sort
+          validations = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].to_h { |pbs| [pbs[:object].code, pbs[:valid]] }.sort
           expect(validations).to eq([['E.4', true], ['K.1', false], ['K.3', true], ['K.6', true], ['K.7', true]])
         end
 
         it 'has the correct error' do
-          k1_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.1' }.first[:errors][:no_of_consoles_to_be_serviced].map { |errors| errors[:error] }
+          k1_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.1' }.first[:errors][:no_of_consoles_to_be_serviced].pluck(:error)
 
           expect(k1_errors).to include(:less_than_or_equal_to)
         end
@@ -1197,7 +1197,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'is invalid' do
-          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to be false
         end
 
         it 'has the correct error' do
@@ -1222,7 +1222,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'is invalid' do
-          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to be false
         end
 
         it 'has the correct error' do
@@ -1247,7 +1247,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'is invalid' do
-          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to be false
         end
 
         it 'has the correct error' do
@@ -1272,7 +1272,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'is invalid' do
-          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to be false
         end
 
         it 'has the correct error' do
@@ -1370,14 +1370,14 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
       end
 
       it 'has the correct service_hour data' do
-        service_hours = procurement.procurement_building_services.map { |pbs| [pbs.code, pbs.service_hours] }.to_h
+        service_hours = procurement.procurement_building_services.to_h { |pbs| [pbs.code, pbs.service_hours] }
         expect(service_hours['H.5']).to eq 450
         expect(service_hours['I.2']).to eq 11
         expect(service_hours['J.2']).to eq 220
       end
 
       it 'has the correct detail_of_requirement data' do
-        service_hours = procurement.procurement_building_services.map { |pbs| [pbs.code, pbs.detail_of_requirement] }.to_h
+        service_hours = procurement.procurement_building_services.to_h { |pbs| [pbs.code, pbs.detail_of_requirement] }
         expect(service_hours['H.5']).to eq 'Who knows'
         expect(service_hours['I.2']).to eq "It can't be possibles"
         expect(service_hours['J.2']).to eq 'Go beyond, Plus Ultra'
@@ -1401,11 +1401,11 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'is not valid' do
-          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to be false
         end
 
         it 'has an error' do
-          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:service_hours].any?).to eq true
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:service_hours].any?).to be true
         end
 
         it 'has the correct import_errors' do
@@ -1423,11 +1423,11 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'is not valid' do
-          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to be false
         end
 
         it 'has an error on service_hours' do
-          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:service_hours].any?).to eq true
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:service_hours].any?).to be true
         end
       end
     end
@@ -1447,11 +1447,11 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
       end
 
       it 'is not valid' do
-        expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+        expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to be false
       end
 
       it 'has an error on detail_of_requirement' do
-        expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:detail_of_requirement].any?).to eq true
+        expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:detail_of_requirement].any?).to be true
       end
     end
   end
@@ -1622,7 +1622,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         it 'will save the procurement_building_service standards data correctly' do
-          standards = procurement_building_services.select { |pbs| pbs.service_standard.present? }.map { |pbs| [pbs.code, pbs.service_standard] }.to_h.sort
+          standards = procurement_building_services.select { |pbs| pbs.service_standard.present? }.to_h { |pbs| [pbs.code, pbs.service_standard] }.sort
           expect(standards).to eq service_standards_array(service_data2)
         end
 
@@ -1774,13 +1774,13 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
       before { spreadsheet_import.delete }
 
       it 'returns true' do
-        expect(spreadsheet_importer.send(:spreadsheet_not_present?)).to eq true
+        expect(spreadsheet_importer.send(:spreadsheet_not_present?)).to be true
       end
     end
 
     context 'when the spreadsheet_import has not been deleted' do
       it 'returns false' do
-        expect(spreadsheet_importer.send(:spreadsheet_not_present?)).to eq false
+        expect(spreadsheet_importer.send(:spreadsheet_not_present?)).to be false
       end
     end
   end

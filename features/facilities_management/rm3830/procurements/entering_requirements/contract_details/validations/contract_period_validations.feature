@@ -1,4 +1,3 @@
-@pipeline
 Feature: Contract period validations
 
   Background: Navigate to the contract period page

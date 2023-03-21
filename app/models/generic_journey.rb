@@ -3,7 +3,7 @@ class GenericJourney
 
   def initialize(first_step_class, framework, slug, params, paths)
     @steps = []
-    @params = HashWithIndifferentAccess.new
+    @params = ActiveSupport::HashWithIndifferentAccess.new
     @paths = paths
     @framework = framework
     @slug = slug

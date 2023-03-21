@@ -8,7 +8,7 @@ module Cognito
     end
 
     def call
-      @cognito_user_groups = client.admin_list_groups_for_user(user_pool_id: ENV['COGNITO_USER_POOL_ID'], username: username)
+      @cognito_user_groups = client.admin_list_groups_for_user(user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil), username: username)
       update_user
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
       @error = e.message

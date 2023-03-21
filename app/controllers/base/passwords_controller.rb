@@ -11,6 +11,10 @@ module Base
       @response = Cognito::ForgotPassword.new(params[:email])
     end
 
+    def edit
+      @response = Cognito::ConfirmPasswordReset.new(cookies[:crown_marketplace_reset_email], params[:password], params[:password_confirmation], params[:confirmation_code])
+    end
+
     def create
       @response = Cognito::ForgotPassword.call(params[:email])
       if @response.success?
@@ -20,10 +24,6 @@ module Base
         flash[:error] = @response.error
         redirect_to new_user_password_path
       end
-    end
-
-    def edit
-      @response = Cognito::ConfirmPasswordReset.new(cookies[:crown_marketplace_reset_email], params[:password], params[:password_confirmation], params[:confirmation_code])
     end
 
     def update

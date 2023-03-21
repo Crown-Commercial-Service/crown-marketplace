@@ -1,4 +1,3 @@
-@pipeline
 Feature: Governing law validations
 
   Scenario: Nothing selected on governing law

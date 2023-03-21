@@ -20,15 +20,15 @@ class FacilitiesManagement::RM3830::ServicesAndQuestions
   end
 
   def self.get_codes_by_context(context)
-    service_collection.select { |svc| svc[:context].include?(context.to_sym) }.map { |svc| svc[:code] }
+    service_collection.select { |svc| svc[:context].include?(context.to_sym) }.pluck(:code)
   end
 
   def self.get_codes_by_question(question)
-    service_collection.select { |svc| svc[:questions].include?(question.to_sym) }.map { |svc| svc[:code] }
+    service_collection.select { |svc| svc[:questions].include?(question.to_sym) }.pluck(:code)
   end
 
   def self.codes
-    service_collection.map { |sc| sc[:code] }
+    service_collection.pluck(:code)
   end
 
   def self.define_context_questions

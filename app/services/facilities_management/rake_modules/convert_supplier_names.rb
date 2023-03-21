@@ -12,11 +12,11 @@ class FacilitiesManagement::RakeModules::ConvertSupplierNames
   end
 
   def complete_task
-    p 'Updating the rate cards'
+    puts 'Updating the rate cards'
     update_rate_cards
-    p 'Updating the frozen rate cards'
+    puts 'Updating the frozen rate cards'
     update_frozen_rate_cards
-    p 'Update complete'
+    puts 'Update complete'
   end
 
   def map_supplier_keys(data)

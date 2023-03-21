@@ -16,7 +16,7 @@ def format_date(date_object)
 end
 
 def format_date_period(start_date, end_date)
-  "#{start_date.strftime('%e %B %Y')} to #{end_date.strftime('%e %B %Y')}".split(' ').join(' ')
+  "#{start_date.strftime('%e %B %Y')} to #{end_date.strftime('%e %B %Y')}".split.join(' ')
 end
 
 def find_building(building_name)

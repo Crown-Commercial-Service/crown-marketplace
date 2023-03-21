@@ -1,4 +1,3 @@
-@pipeline
 Feature: Lifts
 
   Background: I navigate to the lifts page

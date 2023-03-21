@@ -31,7 +31,6 @@ Feature: Contract period
       | 4     | 1       | 4 years and 1 month             |
       | 2     | 8       | 2 years and 8 months            |
 
-  @pipeline
   Scenario: I change the contract date
     Given I enter an inital call-off period start date 1 years and 0 months into the future
     Then I enter '4' years and '8' months for the contract period

@@ -1,4 +1,3 @@
-@pipeline
 Feature: Annual contract cost validations
   
   Scenario Outline: validations for the annual contract cost

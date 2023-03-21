@@ -86,7 +86,7 @@ module FacilitiesManagement::RM6232
     end
 
     def self.region_names
-      @region_names ||= FacilitiesManagement::Region.all.map { |region| [region.code, region.name] }.to_h
+      @region_names ||= FacilitiesManagement::Region.all.to_h { |region| [region.code, region.name] }
     end
 
     def self.delimited_contract_value(value)

@@ -2,6 +2,8 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/NestedGroups
 RSpec.describe Cognito::Admin::User do
+  include_context 'with cognito structs'
+
   let(:cognito_admin_user) { described_class.new(current_user_access, attributes) }
 
   let(:current_user_access) { :super_admin }
@@ -130,7 +132,7 @@ RSpec.describe Cognito::Admin::User do
       allow_any_instance_of(AllowedEmailDomain).to receive(:allow_list_file_path).and_return(allow_list_file.path)
       # rubocop:enable RSpec/AnyInstance
       allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-      allow(aws_client).to receive(:list_users).and_return(OpenStruct.new(users: users))
+      allow(aws_client).to receive(:list_users).and_return(list_users_resp_struct.new(users: users))
     end
 
     after do
@@ -738,18 +740,18 @@ RSpec.describe Cognito::Admin::User do
       end
 
       it 'does not return success' do
-        expect(cognito_admin_user.success?).to eq false
+        expect(cognito_admin_user.success?).to be false
       end
 
       it 'returns an error' do
-        expect(cognito_admin_user.errors.empty?).to eq false
+        expect(cognito_admin_user.errors.empty?).to be false
       end
     end
 
     # rubocop:disable RSpec/ExampleLength
     context 'when the user is successfully created' do
       before do
-        allow(aws_client).to receive(:admin_create_user).and_return(OpenStruct.new(user: { 'username' => cognito_uuid }))
+        allow(aws_client).to receive(:admin_create_user).and_return(admin_create_user_resp_struct.new(user: { 'username' => cognito_uuid }))
         allow(aws_client).to receive(:admin_set_user_mfa_preference)
         allow(aws_client).to receive(:admin_add_user_to_group)
         cognito_admin_user.create
@@ -932,10 +934,10 @@ RSpec.describe Cognito::Admin::User do
     before do
       allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
       allow(aws_client).to receive(:admin_get_user).and_return(
-        OpenStruct.new(
+        admin_get_user_resp_struct.new(
           user_attributes: [
-            OpenStruct.new({ name: 'email', value: email }),
-            OpenStruct.new({ name: 'phone_number', value: cognito_telephone_number })
+            cognito_user_attribute_struct.new({ name: 'email', value: email }),
+            cognito_user_attribute_struct.new({ name: 'phone_number', value: cognito_telephone_number })
           ],
           enabled: cognio_enabled,
           user_status: 'CONFIRMED',
@@ -943,8 +945,8 @@ RSpec.describe Cognito::Admin::User do
         )
       )
       allow(aws_client).to receive(:admin_list_groups_for_user).and_return(
-        OpenStruct.new(
-          groups: cognito_groups.map { |cognito_role| OpenStruct.new(group_name: cognito_role) }
+        admin_list_groups_for_user_resp_struct.new(
+          groups: cognito_groups.map { |cognito_role| cognito_group_struct.new(group_name: cognito_role) }
         )
       )
     end
@@ -979,7 +981,7 @@ RSpec.describe Cognito::Admin::User do
       end
 
       it 'sets the account status' do
-        expect(cognito_admin_user.account_status).to eq true
+        expect(cognito_admin_user.account_status).to be true
       end
 
       it 'sets the confirmation status' do
@@ -1079,12 +1081,12 @@ RSpec.describe Cognito::Admin::User do
     before do
       allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
       allow(aws_client).to receive(:list_users).and_return(
-        OpenStruct.new(
+        list_users_resp_struct.new(
           users: [ac_user, ab_user, aa_user].map do |user|
-            OpenStruct.new(
+            cognito_user_struct.new(
               {
                 username: user[:cognito_uuid],
-                attributes: [OpenStruct.new({ name: 'email', value: user[:email] })],
+                attributes: [cognito_user_attribute_struct.new({ name: 'email', value: user[:email] })],
                 enabled: user[:account_status]
               }
             )

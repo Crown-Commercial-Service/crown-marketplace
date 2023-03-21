@@ -1,4 +1,3 @@
-@pipeline
 Feature: Forgot my password - RM6232 - Admin
 
   Scenario: I forgot my password

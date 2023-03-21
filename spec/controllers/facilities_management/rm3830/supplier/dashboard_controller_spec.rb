@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Supplier::DashboardController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Supplier::DashboardController do
   let(:default_params) { { service: 'facilities_management/supplier', framework: 'RM3830' } }
 
   describe '#index' do
@@ -49,14 +49,8 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::DashboardController, type
 
       before { get :index }
 
-      it 'renders the unrecognised framework page with the right http status' do
-        expect(response).to render_template('home/unrecognised_framework')
-        expect(response).to have_http_status(:bad_request)
-      end
-
-      it 'sets the framework variables' do
-        expect(assigns(:unrecognised_framework)).to eq '↑↑↓↓←→←→BA'
-        expect(controller.params[:framework]).to eq FacilitiesManagement::Framework.default_framework
+      it 'redirects to the buyer index page' do
+        expect(response).to redirect_to facilities_management_rm6232_path
       end
     end
   end

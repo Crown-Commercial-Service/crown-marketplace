@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Supplier do
   describe '.lot_data' do
     context 'when selecting a random supplier' do
       let(:supplier) { described_class.order(Arel.sql('RANDOM()')).first }

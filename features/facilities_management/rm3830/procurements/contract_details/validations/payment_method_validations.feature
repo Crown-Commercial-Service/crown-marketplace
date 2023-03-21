@@ -1,4 +1,3 @@
-@pipeline
 Feature: Payment method validations
 
   Scenario: Nothing selected on payment method

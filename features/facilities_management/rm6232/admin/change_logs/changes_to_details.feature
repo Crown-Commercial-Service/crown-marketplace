@@ -1,4 +1,3 @@
-@pipeline
 Feature: Change log for supplier details
 
   Scenario: Changes to the supplier details are logged

@@ -28,7 +28,7 @@ module Cognito
           client = new_client
 
           list_users_resp = client.list_users({
-                                                user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+                                                user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
                                                 attributes_to_get: ['email'],
                                                 filter: "email ^= \"#{email}\""
                                               })
@@ -43,7 +43,7 @@ module Cognito
 
           list_users_resp = client.list_users(
             {
-              user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+              user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
               attributes_to_get: ['email'],
               filter: "email = \"#{email}\""
             }
@@ -77,7 +77,7 @@ module Cognito
 
         def resend_temporary_password(email)
           new_client.admin_create_user(
-            user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
             username: email,
             message_action: 'RESEND',
             desired_delivery_mediums: ['EMAIL']
@@ -91,7 +91,7 @@ module Cognito
         private
 
         def new_client
-          Aws::CognitoIdentityProvider::Client.new(region: ENV['COGNITO_AWS_REGION'])
+          Aws::CognitoIdentityProvider::Client.new(region: ENV.fetch('COGNITO_AWS_REGION', nil))
         end
 
         # Methods relating to creating a user
@@ -101,7 +101,7 @@ module Cognito
 
         def determine_user_attributes(attributes, enable_mfa)
           user_attributes = {
-            user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
             username: attributes[:email],
             user_attributes: [
               {
@@ -132,7 +132,7 @@ module Cognito
               enabled: true,
               preferred_mfa: true,
             },
-            user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
             username: cognito_uuid,
           )
         end
@@ -140,7 +140,7 @@ module Cognito
         def add_user_to_groups(client, cognito_uuid, attributes)
           attributes[:groups].each do |group|
             client.admin_add_user_to_group(
-              user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+              user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
               username: cognito_uuid,
               group_name: group.to_s
             )
@@ -163,14 +163,14 @@ module Cognito
         # Methods relating to finding a user
         def find_user_in_cognito(client, cognito_uuid)
           get_user_resp = client.admin_get_user({
-                                                  user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+                                                  user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
                                                   username: cognito_uuid
                                                 })
 
           attributes = get_user_attributes_from_response(get_user_resp)
 
           get_groups_resp = client.admin_list_groups_for_user({
-                                                                user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+                                                                user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
                                                                 username: cognito_uuid
                                                               })
 
@@ -206,7 +206,7 @@ module Cognito
 
         def update_email_verification(client, cognito_uuid, attributes)
           client.admin_update_user_attributes(
-            user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
             username: cognito_uuid,
             user_attributes: [
               {
@@ -221,12 +221,12 @@ module Cognito
         def update_enabled_status(client, cognito_uuid, attributes)
           if attributes[:account_status]
             client.admin_enable_user(
-              user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+              user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
               username: cognito_uuid
             )
           else
             client.admin_disable_user(
-              user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+              user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
               username: cognito_uuid
             )
           end
@@ -234,7 +234,7 @@ module Cognito
 
         def update_telephone_number(client, cognito_uuid, attributes)
           client.admin_update_user_attributes(
-            user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
             username: cognito_uuid,
             user_attributes: [
               {
@@ -251,7 +251,7 @@ module Cognito
 
         def update_mfa_status(client, cognito_uuid, attributes)
           client.admin_set_user_mfa_preference(
-            user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
             username: cognito_uuid,
             sms_mfa_settings: {
               enabled: attributes[:mfa_enabled],
@@ -266,7 +266,7 @@ module Cognito
 
           groups_to_remove.each do |group|
             client.admin_remove_user_from_group(
-              user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+              user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
               username: cognito_uuid,
               group_name: group.to_s
             )
@@ -274,7 +274,7 @@ module Cognito
 
           groups_to_add.each do |group|
             client.admin_add_user_to_group(
-              user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+              user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
               username: cognito_uuid,
               group_name: group.to_s
             )

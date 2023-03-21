@@ -2,6 +2,8 @@ module FacilitiesManagement
   module RM3830
     module Admin
       class SublotServicesController < FacilitiesManagement::Admin::FrameworkController
+        before_action :set_framework_has_expired
+        before_action :redirect_if_framework_has_expired, only: :update
         before_action :set_supplier, :set_lot, :redirect_if_lot_out_of_range
         before_action :full_services
         before_action :set_service_data, only: :edit
@@ -28,10 +30,10 @@ module FacilitiesManagement
 
         def setup_checkboxes(supplier_services)
           @supplier_rate_data_checkboxes = @full_services.map do |service|
-            service['work_package'].map do |work_pckg|
+            service['work_package'].to_h do |work_pckg|
               code = work_pckg['code']
               [code, supplier_services.include?(code)]
-            end.to_h
+            end
           end.inject(:merge)
         end
 
@@ -85,6 +87,10 @@ module FacilitiesManagement
         def update_checkboxes
           @supplier.replace_services_for_lot(params[:checked_services], @lot)
           @supplier.save
+        end
+
+        def redirect_if_framework_has_expired
+          redirect_to edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path if @framework_has_expired
         end
       end
     end

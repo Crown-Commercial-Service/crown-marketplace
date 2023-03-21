@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
+RSpec.describe CrownMarketplace::ManageUsersController do
+  include_context 'with cognito structs'
+
   let(:default_params) { { service: 'crown_marketplace' } }
 
   let(:user) { Cognito::Admin::User.new(current_user_access, attributes) }
@@ -126,16 +128,16 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:list_users).with(
           {
-            user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
             attributes_to_get: ['email'],
             filter: 'email ^= "test"'
           }
         ).and_return(
-          OpenStruct.new(
+          list_users_resp_struct.new(
             users: [
               found_user_1,
               found_user_2
-            ].map { |found_user| OpenStruct.new(username: found_user[:cognito_uuid], enabled: found_user[:account_status], attributes: [OpenStruct.new(name: 'email', value: found_user[:email])]) }
+            ].map { |found_user| cognito_user_struct.new(username: found_user[:cognito_uuid], enabled: found_user[:account_status], attributes: [cognito_user_attribute_struct.new(name: 'email', value: found_user[:email])]) }
           )
         )
       end
@@ -335,7 +337,7 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
         aws_client = instance_double(Aws::CognitoIdentityProvider::Client)
 
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:list_users).and_return(OpenStruct.new(users: []))
+        allow(aws_client).to receive(:list_users).and_return(list_users_resp_struct.new(users: []))
 
         post :create_add_user, params: { section: section, cognito_admin_user: create_add_user_params }
       end
@@ -443,7 +445,7 @@ RSpec.describe CrownMarketplace::ManageUsersController, type: :controller do
 
     context 'when the user is successfully created' do
       before do
-        allow(aws_client).to receive(:admin_create_user).and_return(OpenStruct.new(user: { 'username' => SecureRandom.uuid }))
+        allow(aws_client).to receive(:admin_create_user).and_return(admin_create_user_resp_struct.new(user: { 'username' => SecureRandom.uuid }))
         allow(aws_client).to receive(:admin_add_user_to_group)
 
         post :create, params: { cognito_admin_user: { roles: ['buyer'], service_access: ['fm_access'], email: 'example@email.com' } }

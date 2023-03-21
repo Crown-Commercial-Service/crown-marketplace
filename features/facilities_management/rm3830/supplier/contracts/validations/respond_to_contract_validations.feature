@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier respond to contract offer validations
 
   Background: Navigate to respond to the contract offer

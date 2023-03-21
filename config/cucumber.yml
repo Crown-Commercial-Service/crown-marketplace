@@ -4,10 +4,8 @@ rerun = rerun.strip.gsub /\s/, ' '
 rerun_opts = rerun.empty? ? "--format #{ENV['CUCUMBER_FORMAT'] || 'progress'} features" : "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} #{rerun}"
 std_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict --tags 'not @wip and not @accessibility' --publish-quiet "
 accessibility_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict --tags '@accessibility' --publish-quiet "
-pipeline_opts = "--format progress --strict --tags '@pipeline' --publish-quiet"
 %>
 default: <%= std_opts %> features
 wip: --tags @wip:3 --wip features --publish-quiet
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags 'not @wip'
 accessibility: <%= accessibility_opts %> features/accessibility
-pipeline: <%= pipeline_opts %> features

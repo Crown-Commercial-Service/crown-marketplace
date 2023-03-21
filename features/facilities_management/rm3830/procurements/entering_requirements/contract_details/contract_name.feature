@@ -8,7 +8,6 @@ Feature: Contract name
     And I click on 'Contract name'
     Then I am on the 'Contract name' page
 
-  @pipeline
   Scenario: Change contract name
     And I enter 'My new contract name' into the contract name field
     And I click on 'Save and return'

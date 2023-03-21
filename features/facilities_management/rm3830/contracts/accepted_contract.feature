@@ -33,7 +33,7 @@ Feature: Accepeted contract
     And I click on 'Cancel'
     Then I am on the 'Contract summary' page
 
-  @pipeline @contract_emails
+  @contract_emails
   Scenario: The contract is signed
     Then I click on 'Confirm if contract signed or not'
     And I am on the 'Confirmation of signed contract' page
@@ -55,7 +55,7 @@ Feature: Accepeted contract
     And the contract summary footer has the following text:
       | If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.  |
 
-  @pipeline @contract_emails
+  @contract_emails
   Scenario: The contract is not signed and sent to the next supplier
     Then I click on 'Confirm if contract signed or not'
     And I am on the 'Confirmation of signed contract' page
@@ -121,7 +121,7 @@ Feature: Accepeted contract
     Then I click on 'Return to procurements dashboard'
     And I am on the 'Procurements dashboard' page
 
-  @pipeline @contract_emails
+  @contract_emails
   Scenario: The contract is not signed and the procurement is closed
     Then I click on 'Confirm if contract signed or not'
     And I am on the 'Confirmation of signed contract' page

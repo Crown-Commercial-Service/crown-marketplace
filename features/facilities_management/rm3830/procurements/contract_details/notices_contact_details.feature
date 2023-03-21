@@ -16,7 +16,7 @@ Feature: Notices contact detail
     Then I open the details for the 'Notices contact details'
     And my 'Notices contact details' contact details match the buyer details
 
-  @javascript @pipeline
+  @javascript
   Scenario: Entering new details is selected
     Given I select 'Enter a new contact for notices' for the contact details
     And I click on the button with text 'Continue'

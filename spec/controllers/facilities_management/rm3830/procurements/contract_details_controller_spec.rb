@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # rubocop:disable RSpec/NestedGroups
-RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsController do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
   let(:procurement) { create(:facilities_management_rm3830_procurement, user: subject.current_user, aasm_state: 'da_draft') }
@@ -803,7 +803,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
           end
 
           it 'updates security_policy_document' do
-            expect(procurement.reload.security_policy_document_required).to eq false
+            expect(procurement.reload.security_policy_document_required).to be false
           end
         end
 
@@ -826,7 +826,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
           end
 
           context 'and all the details are valid' do
-            let(:security_policy_document_file) { fixture_file_upload(Rails.root.join('public', 'facilities-management', 'rm3830', 'Attachment 1 - About the Direct Award v3.0.pdf'), 'application/pdf') }
+            let(:security_policy_document_file) { fixture_file_upload(Rails.public_path.join('facilities-management', 'rm3830', 'Attachment 1 - About the Direct Award v3.0.pdf'), 'application/pdf') }
 
             it 'redirects to show page' do
               expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
@@ -836,7 +836,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
               procurement.reload
               expect(procurement.security_policy_document_name).to eq 'Security policy document file'
               expect(procurement.security_policy_document_version_number).to eq security_policy_document_version_number
-              expect(procurement.security_policy_document_file.attachment.present?).to eq true
+              expect(procurement.security_policy_document_file.attachment.present?).to be true
             end
           end
         end
@@ -882,7 +882,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         context 'when valid pensions are entered' do
-          let(:procurement_pension_funds_attributes) { { '0': { case_sensitive_error: false, name: 'Pension 1', percentage: 10, "_destroy": false }, '1': { case_sensitive_error: false, name: 'Pension 2', percentage: 5, "_destroy": false }, '2': { case_sensitive_error: false, name: 'Pension 3', percentage: 2, "_destroy": false } } }
+          let(:procurement_pension_funds_attributes) { { '0': { case_sensitive_error: false, name: 'Pension 1', percentage: 10, _destroy: false }, '1': { case_sensitive_error: false, name: 'Pension 2', percentage: 5, _destroy: false }, '2': { case_sensitive_error: false, name: 'Pension 3', percentage: 2, _destroy: false } } }
 
           it 'redirects to facilities_management_rm3830_procurement_contract_details_path' do
             expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
@@ -904,14 +904,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
               procurement.reload
               pension_ids = procurement.procurement_pension_funds.order(:name).map(&:id)
 
-              put :update, params: { procurement_id: procurement.id, page: 'pension_funds', facilities_management_rm3830_procurement: { procurement_pension_funds_attributes: { '0': { id: pension_ids[0], case_sensitive_error: false, name: 'Pension 1', percentage: 10, "_destroy": false }, '1': { id: pension_ids[1], case_sensitive_error: false, name: 'Pension 2', percentage: 5, "_destroy": false }, '2': { id: pension_ids[2], case_sensitive_error: false, name: 'Pension 3', percentage: 2, "_destroy": true } } } }
+              put :update, params: { procurement_id: procurement.id, page: 'pension_funds', facilities_management_rm3830_procurement: { procurement_pension_funds_attributes: { '0': { id: pension_ids[0], case_sensitive_error: false, name: 'Pension 1', percentage: 10, _destroy: false }, '1': { id: pension_ids[1], case_sensitive_error: false, name: 'Pension 2', percentage: 5, _destroy: false }, '2': { id: pension_ids[2], case_sensitive_error: false, name: 'Pension 3', percentage: 2, _destroy: true } } } }
               expect(procurement.procurement_pension_funds.size).to eq 2
             end
           end
         end
 
         context 'when invalid pensions are entered' do
-          let(:procurement_pension_funds_attributes) { { '0': { case_sensitive_error: false, name: 'Pension 1', percentage: nil, "_destroy": false }, '1': { case_sensitive_error: false, name: nil, percentage: 10, "_destroy": false } } }
+          let(:procurement_pension_funds_attributes) { { '0': { case_sensitive_error: false, name: 'Pension 1', percentage: nil, _destroy: false }, '1': { case_sensitive_error: false, name: nil, percentage: 10, _destroy: false } } }
 
           it 'renders the edit page' do
             expect(response).to render_template('edit')
@@ -1256,7 +1256,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
     context 'when moving on and leaving invoicing contact details incomplete' do
       before do
-        create :facilities_management_rm3830_procurement_invoice_contact_detail_empty, procurement: procurement
+        create(:facilities_management_rm3830_procurement_invoice_contact_detail_empty, procurement: procurement)
         procurement.update(using_buyer_detail_for_invoice_details: false)
       end
 
@@ -1268,7 +1268,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         it 'resets the using_buyer_detail_for_invoice_details' do
-          expect(procurement.reload.using_buyer_detail_for_invoice_details).to be nil
+          expect(procurement.reload.using_buyer_detail_for_invoice_details).to be_nil
         end
       end
 
@@ -1280,7 +1280,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         it 'resets the using_buyer_detail_for_invoice_details' do
-          expect(procurement.reload.using_buyer_detail_for_invoice_details).to be nil
+          expect(procurement.reload.using_buyer_detail_for_invoice_details).to be_nil
         end
       end
 
@@ -1316,14 +1316,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         it 'resets the using_buyer_detail_for_invoice_details' do
-          expect(procurement.reload.using_buyer_detail_for_invoice_details).to be nil
+          expect(procurement.reload.using_buyer_detail_for_invoice_details).to be_nil
         end
       end
     end
 
     context 'when invoicing contact details are complete' do
       before do
-        create :facilities_management_rm3830_procurement_invoice_contact_detail, procurement: procurement
+        create(:facilities_management_rm3830_procurement_invoice_contact_detail, procurement: procurement)
         procurement.update(using_buyer_detail_for_invoice_details: false)
       end
 
@@ -1354,7 +1354,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
     context 'when moving on and leaving authorised representative details incomplete' do
       before do
-        create :facilities_management_rm3830_procurement_authorised_contact_detail_empty, procurement: procurement
+        create(:facilities_management_rm3830_procurement_authorised_contact_detail_empty, procurement: procurement)
         procurement.update(using_buyer_detail_for_authorised_detail: false)
       end
 
@@ -1366,7 +1366,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         it 'resets the using_buyer_detail_for_authorised_detail' do
-          expect(procurement.reload.using_buyer_detail_for_authorised_detail).to be nil
+          expect(procurement.reload.using_buyer_detail_for_authorised_detail).to be_nil
         end
       end
 
@@ -1378,7 +1378,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         it 'resets the using_buyer_detail_for_authorised_detail' do
-          expect(procurement.reload.using_buyer_detail_for_authorised_detail).to be nil
+          expect(procurement.reload.using_buyer_detail_for_authorised_detail).to be_nil
         end
       end
 
@@ -1414,14 +1414,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         it 'resets the using_buyer_detail_for_authorised_detail' do
-          expect(procurement.reload.using_buyer_detail_for_authorised_detail).to be nil
+          expect(procurement.reload.using_buyer_detail_for_authorised_detail).to be_nil
         end
       end
     end
 
     context 'when authorised representative details are complete' do
       before do
-        create :facilities_management_rm3830_procurement_authorised_contact_detail, procurement: procurement
+        create(:facilities_management_rm3830_procurement_authorised_contact_detail, procurement: procurement)
         procurement.update(using_buyer_detail_for_authorised_detail: false)
       end
 
@@ -1452,7 +1452,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
     context 'when moving on and leaving notices contact details incomplete' do
       before do
-        create :facilities_management_rm3830_procurement_notices_contact_detail_empty, procurement: procurement
+        create(:facilities_management_rm3830_procurement_notices_contact_detail_empty, procurement: procurement)
         procurement.update(using_buyer_detail_for_notices_detail: false)
       end
 
@@ -1464,7 +1464,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         it 'resets the using_buyer_detail_for_notices_detail' do
-          expect(procurement.reload.using_buyer_detail_for_notices_detail).to be nil
+          expect(procurement.reload.using_buyer_detail_for_notices_detail).to be_nil
         end
       end
 
@@ -1476,7 +1476,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         it 'resets the using_buyer_detail_for_notices_detail' do
-          expect(procurement.reload.using_buyer_detail_for_notices_detail).to be nil
+          expect(procurement.reload.using_buyer_detail_for_notices_detail).to be_nil
         end
       end
 
@@ -1512,14 +1512,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         it 'resets the using_buyer_detail_for_notices_detail' do
-          expect(procurement.reload.using_buyer_detail_for_notices_detail).to be nil
+          expect(procurement.reload.using_buyer_detail_for_notices_detail).to be_nil
         end
       end
     end
 
     context 'when notices contact details are complete' do
       before do
-        create :facilities_management_rm3830_procurement_notices_contact_detail, procurement: procurement
+        create(:facilities_management_rm3830_procurement_notices_contact_detail, procurement: procurement)
         procurement.update(using_buyer_detail_for_notices_detail: false)
       end
 
@@ -1591,7 +1591,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         it 'does change local_government_pension_scheme' do
-          expect(procurement.local_government_pension_scheme).to be nil
+          expect(procurement.local_government_pension_scheme).to be_nil
         end
       end
     end
@@ -1600,7 +1600,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
       context 'when the pension funds are not empty' do
         before do
           procurement.update(local_government_pension_scheme: true)
-          create_list :facilities_management_rm3830_procurement_pension_fund, 3, procurement: procurement
+          create_list(:facilities_management_rm3830_procurement_pension_fund, 3, procurement: procurement)
           get :show, params: { procurement_id: procurement.id }
         end
 

@@ -26,7 +26,7 @@ Feature: Declined contract
     Then I click on the 'Return to procurements dashboard' back link
     And I am on the 'Procurements dashboard' page
 
-  @pipeline @contract_emails
+  @contract_emails
   Scenario: Contract declined - send to next supplier
     Then I click on "View next supplier's price"
     And I am on the 'Offer to next supplier' page
@@ -47,29 +47,27 @@ Feature: Declined contract
     And the contract summary footer has the following text:
       | If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.  |
 
-    @pipeline
-    Scenario: Contract declined - close procurement
-      Then I click on 'Close this procurement'
-      And I am on the 'Are you sure you wish to close' page
-      And I enter the reason for closing the contract:
-        | The suppliers would not respond |
-        | I did not have enough time      |
-      Then I click on 'Close this procurement'
-      Then I am on the 'Your procurement has been closed' page
-      And I click on 'Return to procurements dashboard'
-      Then I am on the 'Procurements dashboard' page
-      Then I navigate to the contract 'Declined contract' in 'Closed'
-      Then there is a warning with the text 'Closed'
-      And the key details include:
-        | You closed this contract offer on |
-      And the reason for closing is:
-        | The suppliers would not respond |
-        | I did not have enough time      |
-      And I should see the following text within the contract offer history:
-        | The supplier declined this contract offer       |
-        | You sent this contract offer to the supplier on |
-      And the reason for declining is:
-        | I cannot be bothered with it  |
-      And the contract summary footer has the following text:
-        | If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.  |
-
+  Scenario: Contract declined - close procurement
+    Then I click on 'Close this procurement'
+    And I am on the 'Are you sure you wish to close' page
+    And I enter the reason for closing the contract:
+      | The suppliers would not respond |
+      | I did not have enough time      |
+    Then I click on 'Close this procurement'
+    Then I am on the 'Your procurement has been closed' page
+    And I click on 'Return to procurements dashboard'
+    Then I am on the 'Procurements dashboard' page
+    Then I navigate to the contract 'Declined contract' in 'Closed'
+    Then there is a warning with the text 'Closed'
+    And the key details include:
+      | You closed this contract offer on |
+    And the reason for closing is:
+      | The suppliers would not respond |
+      | I did not have enough time      |
+    And I should see the following text within the contract offer history:
+      | The supplier declined this contract offer       |
+      | You sent this contract offer to the supplier on |
+    And the reason for declining is:
+      | I cannot be bothered with it  |
+    And the contract summary footer has the following text:
+      | If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.  |

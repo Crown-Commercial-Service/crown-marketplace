@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Rate, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::Rate do
   it 'contains data' do
     benchmark_rates = {}
     framework_rates = {}

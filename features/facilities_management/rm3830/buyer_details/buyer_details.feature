@@ -1,4 +1,4 @@
-@javascript @pipeline
+@javascript
 Feature: Buyer details
 
   Background: Navigate to Buyer Details page

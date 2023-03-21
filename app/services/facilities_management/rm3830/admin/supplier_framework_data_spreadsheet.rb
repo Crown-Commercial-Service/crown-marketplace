@@ -34,7 +34,7 @@ module FacilitiesManagement::RM3830
 
         suppliers.each do |supplier|
           service_rows.each do |service_row|
-            sheet.add_row [supplier] + service_row + [nil] * 13, style: @styles[:standard_column_style]
+            sheet.add_row [supplier] + service_row + ([nil] * 13), style: @styles[:standard_column_style]
           end
         end
 
@@ -46,9 +46,9 @@ module FacilitiesManagement::RM3830
       @workbook.add_worksheet(name: 'Variances') do |sheet|
         sheet.add_row ['Supplier'] + suppliers, style: @styles[:heading_style]
 
-        VARIANCES.each { |variance| sheet.add_row([variance] + [nil] * suppliers.size, style: @styles[:standard_column_style]) }
+        VARIANCES.each { |variance| sheet.add_row([variance] + ([nil] * suppliers.size), style: @styles[:standard_column_style]) }
 
-        sheet.column_widths(*([40] + [10] * suppliers.size))
+        sheet.column_widths(*([40] + ([10] * suppliers.size)))
       end
     end
 

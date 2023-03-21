@@ -1,4 +1,4 @@
-@javascript @pipeline
+@javascript
 Feature: Manage users - User admin - Find users - JavaScript enabled - Validations
 
   Background: Navigate to manage users page

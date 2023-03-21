@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ProcurementsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::ProcurementsHelper do
   include ApplicationHelper
 
   describe '.section_id' do

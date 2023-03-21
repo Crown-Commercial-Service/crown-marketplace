@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::Procurement do
   subject(:procurement) { build(:facilities_management_rm3830_procurement, mobilisation_period_required: false, extensions_required: false, contract_name: 'contract_period_test', user: user) }
 
   let(:user) { build(:user) }
@@ -19,7 +19,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_years) { nil }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -32,7 +32,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_years) { '' }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -45,7 +45,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_years) { '    ' }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -58,7 +58,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_years) { -1 }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -71,7 +71,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_years) { 8 }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -84,7 +84,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_years) { 'TEN' }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -95,7 +95,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'and it is a number between 0 and 7' do
         it 'is valid' do
-          expect(procurement.valid?(:contract_period)).to eq true
+          expect(procurement.valid?(:contract_period)).to be true
         end
       end
     end
@@ -105,7 +105,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_months) { nil }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -118,7 +118,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_months) { '' }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -131,7 +131,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_months) { '    ' }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -144,7 +144,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_months) { -1 }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -157,7 +157,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_months) { 12 }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -170,7 +170,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_months) { 'NINE' }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -181,7 +181,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'and it is a number between 0 and 11' do
         it 'is valid' do
-          expect(procurement.valid?(:contract_period)).to eq true
+          expect(procurement.valid?(:contract_period)).to be true
         end
       end
     end
@@ -192,7 +192,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_months) { 0 }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -206,7 +206,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_months) { 1 }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -220,7 +220,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_months) { 0 }
 
         it 'is valid' do
-          expect(procurement.valid?(:contract_period)).to eq true
+          expect(procurement.valid?(:contract_period)).to be true
         end
 
         it 'has a contract length of 7 years' do
@@ -233,7 +233,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_period_months) { 1 }
 
         it 'is valid' do
-          expect(procurement.valid?(:contract_period)).to eq true
+          expect(procurement.valid?(:contract_period)).to be true
         end
 
         it 'has a contract length of 1 month' do
@@ -243,7 +243,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'and the total length is between 1 month and 7 years' do
         it 'is valid' do
-          expect(procurement.valid?(:contract_period)).to eq true
+          expect(procurement.valid?(:contract_period)).to be true
         end
 
         it 'has a contract length of 1 month' do
@@ -254,7 +254,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
   end
 
   describe 'validating the initial call off start date' do
-    let(:initial_call_off_start_date) { Time.zone.now + 1.day }
+    let(:initial_call_off_start_date) { 1.day.from_now }
     let(:initial_call_off_start_date_yyyy) { initial_call_off_start_date.year.to_s }
     let(:initial_call_off_start_date_mm) { initial_call_off_start_date.month.to_s }
     let(:initial_call_off_start_date_dd) { initial_call_off_start_date.day.to_s }
@@ -269,7 +269,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:initial_call_off_start_date_yyyy) { nil }
 
       it 'is not valid' do
-        expect(procurement.valid?(:contract_period)).to eq false
+        expect(procurement.valid?(:contract_period)).to be false
       end
 
       it 'has the correct error message' do
@@ -282,7 +282,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:initial_call_off_start_date_mm) { '' }
 
       it 'is not valid' do
-        expect(procurement.valid?(:contract_period)).to eq false
+        expect(procurement.valid?(:contract_period)).to be false
       end
 
       it 'has the correct error message' do
@@ -295,7 +295,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:initial_call_off_start_date_dd) { '    ' }
 
       it 'is not valid' do
-        expect(procurement.valid?(:contract_period)).to eq false
+        expect(procurement.valid?(:contract_period)).to be false
       end
 
       it 'has the correct error message' do
@@ -306,10 +306,10 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
     context 'when considering the full initial_call_off_start_date' do
       context 'and it is in the past' do
-        let(:initial_call_off_start_date) { Time.zone.now - 1.day }
+        let(:initial_call_off_start_date) { 1.day.ago }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -322,7 +322,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_start_date) { Time.new(2100).in_time_zone('London') }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -337,7 +337,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:initial_call_off_start_date_dd) { '30' }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -348,14 +348,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'and it is a real date' do
         it 'is valid' do
-          expect(procurement.valid?(:contract_period)).to eq true
+          expect(procurement.valid?(:contract_period)).to be true
         end
       end
     end
   end
 
   describe 'validating mobilisation period' do
-    let(:initial_call_off_start_date) { Time.zone.now + 1.year }
+    let(:initial_call_off_start_date) { 1.year.from_now }
     let(:tupe) { false }
     let(:mobilisation_period_required) { true }
 
@@ -374,7 +374,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:mobilisation_period_required) { false }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -387,7 +387,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:mobilisation_period) { 3 }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -400,7 +400,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:mobilisation_period) { 53 }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -411,7 +411,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'and mobilisation period is more than 4 weeks' do
         it 'is valid' do
-          expect(procurement.valid?(:contract_period)).to eq true
+          expect(procurement.valid?(:contract_period)).to be true
         end
       end
     end
@@ -423,7 +423,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:mobilisation_period_required) { nil }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -436,7 +436,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:mobilisation_period_required) { false }
 
         it 'is valid' do
-          expect(procurement.valid?(:contract_period)).to eq true
+          expect(procurement.valid?(:contract_period)).to be true
         end
       end
 
@@ -444,7 +444,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:mobilisation_period) { nil }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -457,7 +457,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:mobilisation_period) { 0 }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -470,7 +470,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:mobilisation_period) { 53 }
 
         it 'is not valid' do
-          expect(procurement.valid?(:contract_period)).to eq false
+          expect(procurement.valid?(:contract_period)).to be false
         end
 
         it 'has the correct error message' do
@@ -481,17 +481,17 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'and it is more than 0 weeks' do
         it 'is valid' do
-          expect(procurement.valid?(:contract_period)).to eq true
+          expect(procurement.valid?(:contract_period)).to be true
         end
       end
     end
 
     context 'when the mobilisation period start date is in the past' do
-      let(:initial_call_off_start_date) { Time.zone.now + 5.weeks + 1.day }
+      let(:initial_call_off_start_date) { 5.weeks.from_now + 1.day }
       let(:mobilisation_period) { 5 }
 
       it 'is not valid' do
-        expect(procurement.valid?(:contract_period)).to eq false
+        expect(procurement.valid?(:contract_period)).to be false
       end
 
       it 'has the correct error message' do
@@ -501,11 +501,11 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     end
 
     context 'when the mobilisation period start date is in the future' do
-      let(:initial_call_off_start_date) { Time.zone.now + 5.weeks + 2.days }
+      let(:initial_call_off_start_date) { 5.weeks.from_now + 2.days }
       let(:mobilisation_period) { 5 }
 
       it 'is valid' do
-        expect(procurement.valid?(:contract_period)).to eq true
+        expect(procurement.valid?(:contract_period)).to be true
       end
     end
   end
@@ -537,7 +537,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is not valid' do
-            expect(procurement.valid?(:contract_period)).to eq false
+            expect(procurement.valid?(:contract_period)).to be false
           end
 
           it 'has the correct error message' do
@@ -557,7 +557,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is not valid' do
-            expect(procurement.valid?(:contract_period)).to eq false
+            expect(procurement.valid?(:contract_period)).to be false
           end
 
           it 'has the correct error message' do
@@ -577,7 +577,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is not valid' do
-            expect(procurement.valid?(:contract_period)).to eq false
+            expect(procurement.valid?(:contract_period)).to be false
           end
 
           it 'has the correct error message' do
@@ -597,7 +597,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is not valid' do
-            expect(procurement.valid?(:contract_period)).to eq false
+            expect(procurement.valid?(:contract_period)).to be false
           end
 
           it 'has the correct error message' do
@@ -619,7 +619,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is valid' do
-            expect(procurement.valid?(:contract_period)).to eq true
+            expect(procurement.valid?(:contract_period)).to be true
           end
         end
 
@@ -634,7 +634,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is valid' do
-            expect(procurement.valid?(:contract_period)).to eq true
+            expect(procurement.valid?(:contract_period)).to be true
           end
         end
       end
@@ -656,7 +656,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is not valid' do
-            expect(procurement.valid?(:contract_period)).to eq false
+            expect(procurement.valid?(:contract_period)).to be false
           end
 
           it 'has the correct error message' do
@@ -677,7 +677,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is not valid' do
-            expect(procurement.valid?(:contract_period)).to eq false
+            expect(procurement.valid?(:contract_period)).to be false
           end
 
           it 'has the correct error message' do
@@ -700,7 +700,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is valid' do
-            expect(procurement.valid?(:contract_period)).to eq true
+            expect(procurement.valid?(:contract_period)).to be true
           end
         end
 
@@ -716,7 +716,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           end
 
           it 'is valid' do
-            expect(procurement.valid?(:contract_period)).to eq true
+            expect(procurement.valid?(:contract_period)).to be true
           end
         end
       end
@@ -745,7 +745,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       end
 
       it 'is not valid' do
-        expect(procurement.save(context: :contract_period)).to eq false
+        expect(procurement.save(context: :contract_period)).to be false
       end
 
       it 'has the correct error message' do
@@ -766,7 +766,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'is valid' do
-          expect(procurement.save(context: :contract_period)).to eq true
+          expect(procurement.save(context: :contract_period)).to be true
         end
 
         it 'only saves the one extension' do
@@ -788,7 +788,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'is valid' do
-          expect(procurement.save(context: :contract_period)).to eq true
+          expect(procurement.save(context: :contract_period)).to be true
         end
 
         it 'only saves two extensions' do
@@ -810,7 +810,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'is valid' do
-          expect(procurement.save(context: :contract_period)).to eq true
+          expect(procurement.save(context: :contract_period)).to be true
         end
 
         it 'only saves three extensions' do
@@ -832,7 +832,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'is valid' do
-          expect(procurement.save(context: :contract_period)).to eq true
+          expect(procurement.save(context: :contract_period)).to be true
         end
 
         it 'saves all four extensions' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::ManagementReportsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Admin::ManagementReportsController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
 
   login_fm_admin
@@ -36,7 +36,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::ManagementReportsController,
 
       it 'sets the framework variables' do
         expect(assigns(:unrecognised_framework)).to eq 'RM007'
-        expect(controller.params[:framework]).to eq FacilitiesManagement::Framework.default_framework
+        expect(controller.params[:framework]).to eq Framework.facilities_management.current_framework
       end
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::ManagementReportsController,
 
       it 'renders the aasm_state as JSON' do
         expect(response.content_type).to eq('application/json; charset=utf-8')
-        expect(JSON.parse(response.body)).to eq 'import_status' => 'generating_csv'
+        expect(response.parsed_body).to eq 'import_status' => 'generating_csv'
       end
     end
 
@@ -95,7 +95,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::ManagementReportsController,
 
       it 'renders the aasm_state as JSON' do
         expect(response.content_type).to eq('application/json; charset=utf-8')
-        expect(JSON.parse(response.body)).to eq 'import_status' => 'completed'
+        expect(response.parsed_body).to eq 'import_status' => 'completed'
       end
     end
   end

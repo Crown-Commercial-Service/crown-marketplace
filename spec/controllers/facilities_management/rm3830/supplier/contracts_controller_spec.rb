@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController do
   let(:default_params) { { service: 'facilities_management/supplier', framework: 'RM3830' } }
 
   describe 'PUT update' do
-    let(:user) { FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
+    let(:user) { create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user: user) }
     let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, facilities_management_rm3830_procurement_id: procurement.id, aasm_state: 'sent', offer_sent_date: Time.zone.now, supplier: supplier) }
     let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user: controller.current_user) }
@@ -71,8 +71,8 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
   describe '.authorize_user' do
     let(:contract) { create(:facilities_management_rm3830_procurement_supplier, supplier: supplier) }
     let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
-    let(:user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
-    let(:wrong_user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
+    let(:user) { create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
+    let(:wrong_user) { create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user: user) }
 
     before do
@@ -84,7 +84,8 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
 
       it 'will not be able to manage the contract' do
         ability = Ability.new(wrong_user)
-        assert ability.cannot?(:manage, contract)
+
+        expect(ability.cannot?(:manage, contract)).to be true
       end
 
       it 'redirects to the not permited page' do
@@ -99,7 +100,8 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
 
       it 'will be able to manage the contract' do
         ability = Ability.new(user)
-        assert ability.can?(:manage, contract)
+
+        expect(ability.can?(:manage, contract)).to be true
       end
 
       it 'renders the show page' do

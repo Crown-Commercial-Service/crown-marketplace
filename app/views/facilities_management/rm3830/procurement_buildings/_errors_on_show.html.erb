@@ -7,11 +7,11 @@
       <ul class="govuk-list govuk-error-summary__list">
         <% if internal_area_incomplete? %>
           <li>
-            <%= link_to t('facilities_management.rm3830.procurement_buildings.show.gia_error'), "#service_volumes" %>
+            <%= link_to t('facilities_management.rm3830.procurement_buildings.show.gia_error'), "#service_volumes", data: { turbolinks: false } %>
           </li>
         <% elsif external_area_incomplete? %>
           <li>
-            <%= link_to t('facilities_management.rm3830.procurement_buildings.show.external_area_error'), "#service_volumes" %>
+            <%= link_to t('facilities_management.rm3830.procurement_buildings.show.external_area_error'), "#service_volumes", data: { turbolinks: false } %>
           </li>
         <% end %>
       </ul>

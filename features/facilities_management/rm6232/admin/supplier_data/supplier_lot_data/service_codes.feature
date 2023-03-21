@@ -36,7 +36,6 @@ Feature: Selecting service codes
       | Tree Surgery (Arboriculture)    |
       | Trolley service                 |
 
-  @pipline
   Scenario: I change the services and it changes on View lot data - lot 2b
     Then I click on 'View lot data' for 'Terry-Greenholt'
     And I am on the 'View lot data' page
@@ -81,7 +80,6 @@ Feature: Selecting service codes
       | Clinical Waste                          |
       | Journal, magazine and newspaper supply  |
 
-  @pipline
   Scenario Outline: Breadcrumb links work from services
     Then I click on 'View lot data' for 'Yost LLC'
     And I am on the 'View lot data' page
@@ -97,7 +95,6 @@ Feature: Selecting service codes
       | Supplier data | Supplier data                   |
       | View lot data | View lot data                   |
 
-  @pipline
   Scenario: I can't select core services
     Then I click on 'View lot data' for 'Skiles LLC'
     And I am on the 'View lot data' page

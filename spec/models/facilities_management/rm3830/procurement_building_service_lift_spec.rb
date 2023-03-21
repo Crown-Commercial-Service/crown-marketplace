@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingServiceLift, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingServiceLift do
   describe '#valid?' do
     let(:lift) { create(:facilities_management_rm3830_lift, procurement_building_service: procurement_building_service) }
     let(:procurement_building_service) { create(:facilities_management_rm3830_procurement_building_service, procurement_building: procurement_building) }

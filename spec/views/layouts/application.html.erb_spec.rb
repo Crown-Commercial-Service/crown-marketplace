@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'layouts/application.html.erb', type: :view do
+RSpec.describe 'layouts/application.html.erb' do
   let(:support_link_feedback_address) { 'https://www.smartsurvey.co.uk/s/J1VQQI/' }
 
   before do

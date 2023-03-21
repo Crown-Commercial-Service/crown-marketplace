@@ -32,7 +32,6 @@ Feature: Removing services for suppliers on the admin tool and seeing the effect
       | 2000000         | 1b          | Turcotte and Sons |
       | 11000000        | 1c          | Berge-Koepp       |
 
-  @pipeline
   Scenario Outline: Hard services - service selection
     Given I go to a quick view with the following services, regions and annual contract cost:
       | F.2   | UKL18 | <contract_value>  |

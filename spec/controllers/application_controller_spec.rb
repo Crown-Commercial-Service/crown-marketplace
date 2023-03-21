@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationController, type: :controller do
+RSpec.describe ApplicationController do
   describe '.service_path_base' do
     before do
       controller.params[:service] = service if service

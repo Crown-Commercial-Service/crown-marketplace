@@ -16,7 +16,6 @@ Feature: Assigning services to buildings
     And I click on 'Assigning services to buildings'
     Then I am on the 'Assigning services to buildings summary' page
 
-  @pipeline
   Scenario: Select services for the buildings
     And the assigning services to buildings status should be 'INCOMPLETE'
     And the building named 'Test building' should have no services selected

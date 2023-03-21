@@ -7,7 +7,7 @@ RSpec.describe FacilitiesManagement::RM3830::SupplierShortlistSpreadsheetCreator
   let(:spreadsheet_builder) { described_class.new(procurement.id) }
   let(:work_book) do
     spreadsheet_builder.build
-    IO.write('/tmp/quick_view_results.xlsx', spreadsheet_builder.to_xlsx, binmode: true)
+    File.write('/tmp/quick_view_results.xlsx', spreadsheet_builder.to_xlsx, binmode: true)
     Roo::Excelx.new('/tmp/quick_view_results.xlsx')
   end
 

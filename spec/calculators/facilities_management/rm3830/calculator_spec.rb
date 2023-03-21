@@ -95,7 +95,7 @@ RSpec.describe FacilitiesManagement::RM3830::Calculator do
         end
 
         context 'when the contract length is 18 months' do
-          let(:contract_length) { 1 + 6.0 / 12 }
+          let(:contract_length) { 1 + (6.0 / 12) }
 
           context 'and the service is G.5' do
             let(:service_ref) { 'G.5' }
@@ -194,7 +194,7 @@ RSpec.describe FacilitiesManagement::RM3830::Calculator do
         end
 
         context 'when the contract length is 18 months' do
-          let(:contract_length) { 1 + 6.0 / 12 }
+          let(:contract_length) { 1 + (6.0 / 12) }
 
           context 'and the service is E.2' do
             let(:service_ref) { 'E.2' }
@@ -337,7 +337,7 @@ RSpec.describe FacilitiesManagement::RM3830::Calculator do
         end
 
         context 'when the contract length is 18 months' do
-          let(:contract_length) { 1 + 6.0 / 12 }
+          let(:contract_length) { 1 + (6.0 / 12) }
 
           context 'and the service is G.5' do
             let(:service_ref) { 'G.5' }
@@ -436,7 +436,7 @@ RSpec.describe FacilitiesManagement::RM3830::Calculator do
         end
 
         context 'when the contract length is 18 months' do
-          let(:contract_length) { 1 + 6.0 / 12 }
+          let(:contract_length) { 1 + (6.0 / 12) }
 
           context 'and the service is E.2' do
             let(:service_ref) { 'E.2' }
@@ -633,7 +633,7 @@ RSpec.describe FacilitiesManagement::RM3830::Calculator do
     end
 
     context 'when the contract length years is 3 6/12' do
-      let(:contract_length) { 3 + 6 / 12.0 }
+      let(:contract_length) { 3 + (6 / 12.0) }
 
       it 'is set to 2.5' do
         expect(calculator.instance_variable_get(:@subsequent_length_years)).to eq 2.5
@@ -641,7 +641,7 @@ RSpec.describe FacilitiesManagement::RM3830::Calculator do
     end
 
     context 'when the contract length years is 1 1/12' do
-      let(:contract_length) { 1 + 1 / 12.0 }
+      let(:contract_length) { 1 + (1 / 12.0) }
 
       it 'is set to 0.083' do
         expect(calculator.instance_variable_get(:@subsequent_length_years).round(3)).to eq 0.083
@@ -649,7 +649,7 @@ RSpec.describe FacilitiesManagement::RM3830::Calculator do
     end
 
     context 'when the contract length years is 4 7/12' do
-      let(:contract_length) { 4 + 7 / 12.0 }
+      let(:contract_length) { 4 + (7 / 12.0) }
 
       it 'is set to 3.583' do
         expect(calculator.instance_variable_get(:@subsequent_length_years).round(3)).to eq 3.583

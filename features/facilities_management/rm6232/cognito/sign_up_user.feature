@@ -1,4 +1,4 @@
-@allow_list @pipeline
+@allow_list
 Feature: Sign up to facilties management - RM6232
 
   Scenario: I sign in to my existing account

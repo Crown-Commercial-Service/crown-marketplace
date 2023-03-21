@@ -48,7 +48,7 @@ module FacilitiesManagement
 
               @review_your_contract_static_files.each do |file|
                 zip.put_next_entry file.split('/').last
-                zip.print IO.read(Rails.root + files_path + file)
+                zip.print File.read(Rails.root + files_path + file)
               end
 
               zip.put_next_entry 'Attachment 4 - Order Form and Call-Off Schedules (DA) v3.0.docx'

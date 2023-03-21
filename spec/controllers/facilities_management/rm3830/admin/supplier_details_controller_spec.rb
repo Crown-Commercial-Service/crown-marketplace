@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
   let(:supplier) { FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
 

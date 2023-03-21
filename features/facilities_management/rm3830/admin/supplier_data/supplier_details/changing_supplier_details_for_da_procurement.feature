@@ -1,4 +1,3 @@
-@pipeline
 Feature: Changing the supplier details and seeing how they affect procurements
 
   Background: I sign in and have procurements

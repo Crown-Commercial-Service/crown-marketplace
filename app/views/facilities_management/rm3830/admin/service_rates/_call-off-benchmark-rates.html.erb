@@ -1,4 +1,7 @@
 <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+
+<%= framework_expired_warning(t('facilities_management.rm3830.admin.you_cannot_update.rates')) %>
+
 <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
   <%= t('.leading_text') %><br/>
   <%= t('.percentage_note') %>
@@ -49,7 +52,7 @@
             <td class="govuk-table__cell supplier-rates-td">
               <% rate = work_pckg['rates'].find(&selector) %>
               <% if rate %>
-                <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(:benchmark), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate.errors.any?}", 'aria-label': "#{work_pckg['name']} #{rate.standard.blank? ? 'normal price' : "standard #{rate.standard}"}"  %>
+                <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(:benchmark), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate.errors.any?}", 'aria-label': "#{work_pckg['name']} #{rate.standard.blank? ? 'normal price' : "standard #{rate.standard}"}", disabled: @framework_has_expired  %>
               <% end %>
             </td>
           <% end %>

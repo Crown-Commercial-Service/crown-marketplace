@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
   let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: procurement) }
   let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }

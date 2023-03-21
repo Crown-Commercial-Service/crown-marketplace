@@ -38,7 +38,7 @@ module FacilitiesManagement
       private
 
       def cleanup_service_codes
-        self.service_codes = service_codes.reject(&:blank?)
+        self.service_codes = service_codes.compact_blank
       end
 
       def service_code_selection

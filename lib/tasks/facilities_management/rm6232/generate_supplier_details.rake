@@ -52,7 +52,6 @@ namespace :db do
     end
 
     desc 'Part of generating the full supplier details'
-    task generate_suppliers: :generate_supplier_details do
-    end
+    task generate_suppliers: :generate_supplier_details
   end
 end

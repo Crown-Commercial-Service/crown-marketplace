@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier contact information - validations
 
   Background: Navigate to the supplier contact informatin section

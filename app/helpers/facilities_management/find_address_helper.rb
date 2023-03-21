@@ -46,7 +46,7 @@ module FacilitiesManagement
     end
 
     def address_in_a_line
-      [address_line1, address_line2, address_town, address_county].reject(&:blank?).join(', ') + " #{address_postcode}"
+      [address_line1, address_line2, address_town, address_county].compact_blank.join(', ') + " #{address_postcode}"
     end
 
     ATTRIBUTES_TO_KEY = {

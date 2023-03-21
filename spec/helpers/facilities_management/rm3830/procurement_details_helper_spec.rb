@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsHelper do
   describe '.page_subtitle' do
     before { @procurement = create(:facilities_management_rm3830_procurement_no_procurement_buildings, contract_name: 'Zeon') }
 

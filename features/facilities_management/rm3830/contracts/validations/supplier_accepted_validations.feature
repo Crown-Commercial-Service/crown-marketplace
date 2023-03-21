@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier accepeted - validations
 
   Background: The contract I sent has been accepted

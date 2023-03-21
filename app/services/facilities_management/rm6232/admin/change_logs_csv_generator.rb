@@ -109,11 +109,11 @@ module FacilitiesManagement::RM6232
       end
 
       def self.service_codes_with_name
-        @service_codes_with_name ||= FacilitiesManagement::RM6232::Service.order(:work_package_code, :sort_order).map { |service| [service.code, "#{service.code} #{service.name}"] }.to_h
+        @service_codes_with_name ||= FacilitiesManagement::RM6232::Service.order(:work_package_code, :sort_order).to_h { |service| [service.code, "#{service.code} #{service.name}"] }
       end
 
       def self.region_codes_with_name
-        @region_codes_with_name ||= FacilitiesManagement::Region.all.map { |region| [region.code, "#{region.code} #{region.name}"] }.to_h
+        @region_codes_with_name ||= FacilitiesManagement::Region.all.to_h { |region| [region.code, "#{region.code} #{region.name}"] }
       end
 
       def self.item_names(attribute, codes)

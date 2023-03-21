@@ -26,7 +26,6 @@ Feature: Quick view results
     And I click on 'Continue'
     And I am on the 'Quick view results' page
 
-  @pipeline
   Scenario: Correct selection on quick view results
     Then 6 'services' are slected
     And the following 'services' are in the drop down:
@@ -87,7 +86,6 @@ Feature: Quick view results
     And the procurement 'Alba Cavanich search' is on the dashboard
     And the procurement 'Alba Cavanich search' should have the state 'Entering requirements'
 
-  @pipeline
   Scenario: Contract name and service selection saved in requirements
     Then I enter 'Mechonis field contract' into the contract name field
     And I click on 'Save and continue to procurement'

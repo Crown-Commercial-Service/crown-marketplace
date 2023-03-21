@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierDataSnapshotsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierDataSnapshotsController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM6232' } }
 
   login_fm_admin
@@ -26,7 +26,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierDataSnapshotsControl
   end
 
   describe 'POST create' do
-    let(:snapshot_generator) { instance_double('snapshot_generator') }
+    let(:snapshot_generator) { instance_double(FacilitiesManagement::RM6232::Admin::SupplierDataSnapshotGenerator) }
     let(:fake_zip_file) { Tempfile.new(['supplier_data', '.zip']) }
     let(:create_params) { { snapshot_date_yyyy: snapshot_date_time.year.to_s, snapshot_date_mm: snapshot_date_time.month.to_s, snapshot_date_dd: snapshot_date_time.day.to_s, snapshot_time_hh: '', snapshot_time_mm: '' } }
     let(:valid) { true }
@@ -61,7 +61,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierDataSnapshotsControl
     end
 
     context 'when the data is invliad' do
-      let(:snapshot_date_time) { Time.zone.now + 1.day }
+      let(:snapshot_date_time) { 1.day.from_now }
       let(:create_params) { { snapshot_date_yyyy: '', snapshot_date_mm: '', snapshot_date_dd: '', snapshot_time_hh: '', snapshot_time_mm: '' } }
 
       it 'renders the new page' do

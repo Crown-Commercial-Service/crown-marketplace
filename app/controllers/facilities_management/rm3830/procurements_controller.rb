@@ -34,6 +34,10 @@ module FacilitiesManagement
         @back_text = 'Return to regions'
       end
 
+      def edit
+        redirect_to facilities_management_rm3830_procurement_path(@procurement) if params[:step].nil?
+      end
+
       def create
         @procurement = current_user.rm3830_procurements.build(procurement_params)
 
@@ -44,17 +48,13 @@ module FacilitiesManagement
           elsif params[:save_for_later].present?
             redirect_to facilities_management_rm3830_procurements_path
           else
-            redirect_to facilities_management_rm3830_procurement_path(@procurement, 'what_happens_next': true)
+            redirect_to facilities_management_rm3830_procurement_path(@procurement, what_happens_next: true)
           end
         else
           @errors = @procurement.errors
           @back_path = back_path
           render :new
         end
-      end
-
-      def edit
-        redirect_to facilities_management_rm3830_procurement_path(@procurement) if params[:step].nil?
       end
 
       def update
@@ -155,13 +155,13 @@ module FacilitiesManagement
       end
 
       PARAMS_METHODS_SHOW = {
-        'bulk_upload_spreadsheet': :start_bulk_upload,
-        'change_the_contract_value': :change_the_contract_value,
-        'change_requirements': :continue_to_summary,
-        'continue_to_results': :continue_to_results,
-        'continue_from_change_contract_value': :continue_from_change_contract_value,
-        'continue_from_results': :continue_from_results,
-        'exit_bulk_upload': :exit_detailed_search_bulk_upload
+        bulk_upload_spreadsheet: :start_bulk_upload,
+        change_the_contract_value: :change_the_contract_value,
+        change_requirements: :continue_to_summary,
+        continue_to_results: :continue_to_results,
+        continue_from_change_contract_value: :continue_from_change_contract_value,
+        continue_from_results: :continue_from_results,
+        exit_bulk_upload: :exit_detailed_search_bulk_upload
       }.freeze
 
       def updates_for_show_pages

@@ -2,10 +2,11 @@
 require:
   - rubocop-rspec
   - rubocop-rails
+  - rubocop-capybara
   - './lib/cop/all'
 
 AllCops:
-    NewCops: disable
+    NewCops: enable
     TargetRubyVersion: 2.7
     Exclude:
         - 'db/schema.rb'

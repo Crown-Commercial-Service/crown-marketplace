@@ -13,6 +13,6 @@ FactoryBot.define do
 
   factory :facilities_management_rm3830_procurement_building_service_with_lifts, parent: :facilities_management_rm3830_procurement_building_service do
     code { 'C.5' }
-    lifts { build_list :facilities_management_rm3830_lift, 5 }
+    lifts { build_list(:facilities_management_rm3830_lift, 5) }
   end
 end
