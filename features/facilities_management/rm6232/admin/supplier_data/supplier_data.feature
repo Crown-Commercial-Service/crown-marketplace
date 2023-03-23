@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier data pages
 
   Background: Admin signs in

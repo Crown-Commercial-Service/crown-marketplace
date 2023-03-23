@@ -27,7 +27,7 @@ module FacilitiesManagement
 
       def service_names
         @service_names ||= begin
-          service_code_order = FacilitiesManagement::RM3830::StaticData.work_packages.map { |wp| wp['code'] }
+          service_code_order = FacilitiesManagement::RM3830::StaticData.work_packages.pluck('code')
 
           Service.where(code: service_codes).sort_by { |service| service_code_order.index(service.code) }.pluck(:name)
         end
@@ -72,7 +72,7 @@ module FacilitiesManagement
       end
 
       def sorted_procurement_building_services
-        service_order = StaticData.work_packages.map { |work_package| work_package['code'] }.freeze
+        service_order = StaticData.work_packages.pluck('code').freeze
         procurement_building_services.sort_by { |procurement_building_service| service_order.index(procurement_building_service.code) }
       end
 
@@ -120,7 +120,7 @@ module FacilitiesManagement
       end
 
       def cleanup_service_codes
-        self.service_codes = service_codes.reject(&:blank?)
+        self.service_codes = service_codes.compact_blank
       end
 
       def services_valid?

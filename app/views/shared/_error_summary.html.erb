@@ -7,7 +7,7 @@
       <ul class="govuk-list govuk-error-summary__list">
         <% errors.attribute_names.each do |attribute| %>
           <li>
-            <%= link_to "#{errors[attribute].first}", "##{error_id(attribute)}", data: {fieldname: attribute, errortype: get_client_side_error_type_from_errors(errors, attribute).to_s } %>
+            <%= link_to "#{errors[attribute].first}", "##{error_id(attribute)}", data: { turbolinks: false, fieldname: attribute, errortype: get_client_side_error_type_from_errors(errors, attribute).to_s } %>
           </li>
         <% end %>
       </ul>

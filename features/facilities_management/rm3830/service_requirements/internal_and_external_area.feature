@@ -3,7 +3,6 @@ Feature: Internal and external area validations
   Background: Internal and external area page
     Given I sign in and navigate to my account for 'RM3830'
 
-  @pipeline
   Scenario: Updating the area will change in buildings
     Given I have a procurement in detailed search named 'Area procurement' with the following services:
       | C.1 |
@@ -34,7 +33,6 @@ Feature: Internal and external area validations
     And the service 'Environmental cleaning service' should have the error message 'Gross internal area must be greater than 0'
     And the building should have the status 'INCOMPLETE'
 
-  @pipeline
   Scenario: When external area is 0 there is an error message
     Given I have a procurement in detailed search named 'Area procurement' with the following services:
       | G.5 |

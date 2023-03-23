@@ -1,4 +1,3 @@
-@pipeline
 Feature: Manage users - User admin - Resend temporary password
 
   Background: Navigate to the user show page

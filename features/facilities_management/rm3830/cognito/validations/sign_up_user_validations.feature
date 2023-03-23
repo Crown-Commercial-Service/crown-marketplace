@@ -1,4 +1,4 @@
-@allow_list @pipeline
+@allow_list
 Feature: Sign up user - RM3830 - Validations
 
   Background: navigate to create an account page

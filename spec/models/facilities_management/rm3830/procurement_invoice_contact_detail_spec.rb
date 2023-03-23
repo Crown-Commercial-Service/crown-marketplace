@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ProcurementInvoiceContactDetail, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementInvoiceContactDetail do
   let(:procurement_invoice_contact_detail) { create(:facilities_management_rm3830_procurement_invoice_contact_detail) }
 
   describe 'associations' do

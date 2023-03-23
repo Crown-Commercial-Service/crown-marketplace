@@ -60,8 +60,8 @@ module FacilitiesManagement::RakeModules::SupplierData
 
   def self.supplier_details_path
     if Rails.env.production?
-      s3_resource = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-      object = s3_resource.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['SUPPLIER_DETAILS_DATA_KEY'])
+      s3_resource = Aws::S3::Resource.new(region: ENV.fetch('COGNITO_AWS_REGION', nil))
+      object = s3_resource.bucket(ENV.fetch('CCS_APP_API_DATA_BUCKET', nil)).object(ENV.fetch('SUPPLIER_DETAILS_DATA_KEY', nil))
       response_target = 'data/facilities_management/rm3830/Supplier_details_data.xlsx'
       object.get(response_target: response_target)
       response_target
@@ -78,20 +78,20 @@ module FacilitiesManagement::RakeModules::SupplierData
 
   def self.awd_credentials(access_key, secret_key, bucket, region)
     Aws.config[:credentials] = Aws::Credentials.new(access_key, secret_key)
-    p "Importing from AWS bucket: #{bucket}, region: #{region}"
+    puts "Importing from AWS bucket: #{bucket}, region: #{region}"
 
     extend_timeout
   end
 
   # EDITOR=vim rails credentials:edit
   def self.fm_aws
-    s3_resource = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-    object = s3_resource.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['JSON_SUPPLIER_DATA_KEY'])
+    s3_resource = Aws::S3::Resource.new(region: ENV.fetch('COGNITO_AWS_REGION', nil))
+    object = s3_resource.bucket(ENV.fetch('CCS_APP_API_DATA_BUCKET', nil)).object(ENV.fetch('JSON_SUPPLIER_DATA_KEY', nil))
     object.get.body.string
   end
 
   def self.supplier_data_mapping
-    supplier_data.map { |supplier_data| [supplier_data['supplier_name'], supplier_data['supplier_id']] }.to_h
+    supplier_data.to_h { |supplier_data| [supplier_data['supplier_name'], supplier_data['supplier_id']] }
   end
 
   def self.current_supplier_data_mapping

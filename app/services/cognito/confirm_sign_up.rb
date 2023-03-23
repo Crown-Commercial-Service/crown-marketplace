@@ -11,7 +11,7 @@ module Cognito
               length: { is: 6, message: :invalid_length }
 
     def initialize(email, confirmation_code)
-      @email = email
+      @email = email.try(:downcase)
       @confirmation_code = confirmation_code
       @error = nil
     end
@@ -36,7 +36,7 @@ module Cognito
 
     def confirm_sign_up
       @response = client.confirm_sign_up(
-        client_id: ENV['COGNITO_CLIENT_ID'],
+        client_id: ENV.fetch('COGNITO_CLIENT_ID', nil),
         username: email,
         confirmation_code: confirmation_code
       )

@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier expired contract
 
   Scenario: Expired contract

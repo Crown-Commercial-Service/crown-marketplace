@@ -27,14 +27,14 @@ end
 def stub_list_users(aws_client, **options)
   users = options[:resp_email] ? [options[:resp_email]] : []
 
-  allow(aws_client).to receive(:list_users).with(**list_users_params(options[:search_email])).and_return(OpenStruct.new(users: users))
+  allow(aws_client).to receive(:list_users).with(**list_users_params(options[:search_email])).and_return(COGNITO_RESPONSE_STRUCTS[:list_users].new(users: users))
 end
 
 # rubocop:disable Metrics/AbcSize
 def stub_create_user(aws_client, **options)
   cognito_uuid = SecureRandom.uuid
 
-  allow(aws_client).to receive(:admin_create_user).with(**create_user_params(options[:email], options[:'telephone number'])).and_return(OpenStruct.new(user: { 'username' => cognito_uuid }))
+  allow(aws_client).to receive(:admin_create_user).with(**create_user_params(options[:email], options[:'telephone number'])).and_return(COGNITO_RESPONSE_STRUCTS[:admin_create_user].new(user: { 'username' => cognito_uuid }))
   allow(aws_client).to receive(:admin_set_user_mfa_preference).with(**enable_mfa_params(cognito_uuid))
 
   role_and_service_access_to_group_names([options[:role]], options[:'service access']&.split(',')).each do |group_name|
@@ -47,13 +47,13 @@ def stub_find_users(aws_client, **options)
   if options[:search]
     allow(aws_client).to receive(:list_users).with(
       {
-        user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+        user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
         attributes_to_get: ['email'],
         filter: "email ^= \"#{options[:search]}\""
       }
     ).and_return(
-      OpenStruct.new(
-        users: options[:users].map { |found_user| OpenStruct.new(username: SecureRandom.uuid, enabled: found_user[:account_status], attributes: [OpenStruct.new(name: 'email', value: found_user[:email])]) }
+      COGNITO_RESPONSE_STRUCTS[:list_users].new(
+        users: options[:users].map { |found_user| COGNITO_OBJECT_STRUCTS[:cognito_user].new(username: SecureRandom.uuid, enabled: found_user[:account_status], attributes: [COGNITO_OBJECT_STRUCTS[:cognito_user_attribute].new(name: 'email', value: found_user[:email])]) }
       )
     )
   else
@@ -79,7 +79,7 @@ end
 
 def list_users_params(email)
   {
-    user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+    user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
     attributes_to_get: ['email'],
     filter: "email = \"#{email}\""
   }
@@ -87,7 +87,7 @@ end
 
 def create_user_params(email, telephone_number)
   user_attributes = {
-    user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+    user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
     username: email,
     user_attributes: [
       {
@@ -118,14 +118,14 @@ def enable_mfa_params(cognito_uuid)
       enabled: true,
       preferred_mfa: true,
     },
-    user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+    user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
     username: cognito_uuid
   }
 end
 
 def add_user_to_group_params(cognito_uuid, group_name)
   {
-    user_pool_id: ENV['COGNITO_USER_POOL_ID'],
+    user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
     username: cognito_uuid,
     group_name: group_name
   }

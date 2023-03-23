@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::EditBuildingsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::EditBuildingsController do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
   let(:building) { create(:facilities_management_building, user: user) }

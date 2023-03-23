@@ -22,13 +22,12 @@ namespace :db do
     desc 'add building Security Types to the database'
     task security_types: :environment do
       DistributedLocks.distributed_lock(153) do
-        p 'Loading security types static data'
+        puts 'Loading security types static data'
         SecurityTypes.populate_security_types
       end
     end
   end
 
   desc 'add building Security Types to the database'
-  task static: :'rm3830:security_types' do
-  end
+  task static: :'rm3830:security_types'
 end

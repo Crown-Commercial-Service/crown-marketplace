@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ContractDatesHelper, type: :helper do
+RSpec.describe FacilitiesManagement::ContractDatesHelper do
   include ApplicationHelper
 
   let(:procurement) { create(:facilities_management_rm3830_procurement, user: create(:user)) }
@@ -125,7 +125,7 @@ RSpec.describe FacilitiesManagement::ContractDatesHelper, type: :helper do
       let(:initial_call_off_period_years) { 3 }
       let(:initial_call_off_period_months) { 6 }
 
-      it 'returns 7 December 2022 to  6 June 2026' do
+      it 'returns 7 December 2022 to 6 June 2026' do
         expect(helper.initial_call_off_period_description).to eq ' 7 December 2022 to  6 June 2026'
       end
     end
@@ -152,7 +152,7 @@ RSpec.describe FacilitiesManagement::ContractDatesHelper, type: :helper do
       let(:initial_call_off_start_date) { Time.new(2022, 11, 5).in_time_zone('London') }
       let(:mobilisation_period) { 2 }
 
-      it 'returns 21 October 2022 to  4 November 2022' do
+      it 'returns 21 October 2022 to 4 November 2022' do
         expect(helper.mobilisation_period_description).to eq '21 October 2022 to  4 November 2022'
       end
     end
@@ -161,7 +161,7 @@ RSpec.describe FacilitiesManagement::ContractDatesHelper, type: :helper do
       let(:initial_call_off_start_date) { Time.new(2024, 6, 5).in_time_zone('London') }
       let(:mobilisation_period) { 40 }
 
-      it 'returns 29 August 2023 to  4 June 2024' do
+      it 'returns 29 August 2023 to 4 June 2024' do
         expect(helper.mobilisation_period_description).to eq '29 August 2023 to  4 June 2024'
       end
     end
@@ -225,7 +225,7 @@ RSpec.describe FacilitiesManagement::ContractDatesHelper, type: :helper do
       let(:initial_call_off_period_years) { 1 }
 
       it 'returns one year after the icontract start date' do
-        expect(result).to eq (Time.zone.now + 6.months + 1.year).strftime '%e %B %Y'
+        expect(result).to eq (6.months.from_now + 1.year).strftime '%e %B %Y'
       end
     end
   end

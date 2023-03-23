@@ -12,9 +12,9 @@ class FacilitiesManagement::RM6232::ServiceSpecificationParser
     work_package = work_packages[work_package_code].group_by { |row| row[1] }
 
     unformatted_work_package_service_lines = work_package[work_package_code]
-    unformatted_service_lines = work_package[service_code].map { |service| service['Service Line'] }
+    unformatted_service_lines = work_package[service_code].pluck('Service Line')
 
-    @work_package_service_lines = split_service_lines(unformatted_work_package_service_lines.map { |service| service['Service Line'] })[1..] if unformatted_work_package_service_lines
+    @work_package_service_lines = split_service_lines(unformatted_work_package_service_lines.pluck('Service Line'))[1..] if unformatted_work_package_service_lines
     @service_lines = split_service_lines(unformatted_service_lines)
   end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Supplier::SupplierRegionsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Supplier::SupplierRegionsHelper do
   describe 'Supplier regions helper' do
     context 'when selected regions for lot 1a' do
       it 'will return region code with true' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierFrameworkDataController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierFrameworkDataController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
 
   login_fm_admin
@@ -28,9 +28,9 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierFrameworkDataControl
       # Abernathy and Sons
       supplier_id = 'ca57bf4c-e8a5-468a-95f4-39fcf730c770'
 
-      expect(assigns(:supplier_present)['1a'][supplier_id]).to eq true
-      expect(assigns(:supplier_present)['1b'][supplier_id]).to eq true
-      expect(assigns(:supplier_present)['1c'][supplier_id]).to eq nil
+      expect(assigns(:supplier_present)['1a'][supplier_id]).to be true
+      expect(assigns(:supplier_present)['1b'][supplier_id]).to be true
+      expect(assigns(:supplier_present)['1c'][supplier_id]).to be_nil
     end
   end
 end

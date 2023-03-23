@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe FacilitiesManagement::RM6232::BuyerAccountController, type: :controller do
+RSpec.describe FacilitiesManagement::RM6232::BuyerAccountController do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM6232' }
 
@@ -59,7 +59,7 @@ RSpec.describe FacilitiesManagement::RM6232::BuyerAccountController, type: :cont
 
       it 'sets the framework variables' do
         expect(assigns(:unrecognised_framework)).to eq 'RM9812'
-        expect(controller.params[:framework]).to eq FacilitiesManagement::Framework.default_framework
+        expect(controller.params[:framework]).to eq Framework.facilities_management.current_framework
       end
     end
   end

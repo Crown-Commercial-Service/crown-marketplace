@@ -53,7 +53,7 @@ module FM::RM6232
 
       file_stream.rewind
 
-      file_path = Rails.root.join('public', 'facilities-management', 'rm6232', 'Supplier spreadsheet templates.zip')
+      file_path = Rails.public_path.join('facilities-management', 'rm6232', 'Supplier spreadsheet templates.zip')
 
       File.write(file_path, file_stream.read)
     end
@@ -73,8 +73,7 @@ namespace :db do
     end
 
     desc 'Part of generating the full supplier spreadsheets'
-    task generate_supplier_spreadsheets: %i[generate_supplier_details_spreadsheet generate_supplier_lot_data_spreadsheets] do
-    end
+    task generate_supplier_spreadsheets: %i[generate_supplier_details_spreadsheet generate_supplier_lot_data_spreadsheets]
 
     desc 'Generate spreadsheet templates. This should be run if the service data is changed'
     task generate_template_zip: :environment do

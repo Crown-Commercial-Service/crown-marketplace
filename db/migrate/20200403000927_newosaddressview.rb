@@ -3,7 +3,7 @@ class Newosaddressview < ActiveRecord::Migration[5.2]
   def change
     reversible do |dir|
       dir.up do
-        execute <<~SQL
+        execute <<~SQL.squish
             CREATE OR replace VIEW public.os_address_view_2 AS
                  SELECT
                CASE
@@ -76,7 +76,7 @@ class Newosaddressview < ActiveRecord::Migration[5.2]
           FROM os_address adds;
         SQL
 
-        execute <<~SQL
+        execute <<~SQL.squish
           CREATE OR REPLACE VIEW public.postcode_region_view
           AS
           SELECT nuts.code AS region_code,
@@ -86,7 +86,7 @@ class Newosaddressview < ActiveRecord::Migration[5.2]
               JOIN nuts_regions nuts3 ON nuts3.code::text = nuts.code::text;
         SQL
 
-        execute <<~SQL
+        execute <<~SQL.squish
                CREATE OR REPLACE VIEW public.postcode_lookup
                AS
                SELECT ((((
@@ -140,7 +140,7 @@ class Newosaddressview < ActiveRecord::Migration[5.2]
       end
 
       dir.down do
-        execute <<~SQL
+        execute <<~SQL.squish
           DROP VIEW IF EXISTS public.postcode_lookup;
           DROP VIEW IF EXISTS public.postcode_region_view;
           DROP VIEW IF EXISTS public.os_address_view_2;

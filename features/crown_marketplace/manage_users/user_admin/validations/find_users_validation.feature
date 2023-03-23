@@ -1,4 +1,3 @@
-@pipeline
 Feature: Manage users - User admin - Find a users - JavaScript disabled - Validations
 
   Background: Navigate to manage users page

@@ -1,15 +1,27 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Supplier::SessionsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Supplier::SessionsController do
   let(:default_params) { { service: 'facilities_management/supplier', framework: 'RM3830' } }
 
   before { request.env['devise.mapping'] = Devise.mappings[:user] }
 
   describe 'GET new' do
-    before { get :new }
+    context 'when the framework is live' do
+      it 'renders the new page' do
+        get :new
 
-    it 'renders the new page' do
-      expect(response).to render_template(:new)
+        expect(response).to render_template(:new)
+      end
+    end
+
+    context 'when the framework is not live' do
+      include_context 'and RM3830 has expired'
+
+      it 'redirects to the buyer index page' do
+        get :new
+
+        expect(response).to redirect_to(facilities_management_rm6232_path)
+      end
     end
   end
 
@@ -57,19 +69,23 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::SessionsController, type:
     end
 
     context 'when the login attempt is successful' do
+      include_context 'with cognito structs'
+
       let(:username) { user.cognito_uuid }
       let(:session) { 'I_AM_THE_SESSION' }
       let(:cognito_groups) do
-        OpenStruct.new(groups: [
-                         OpenStruct.new(group_name: 'supplier'),
-                         OpenStruct.new(group_name: 'fm_access')
-                       ])
+        admin_list_groups_for_user_resp_struct.new(
+          groups: [
+            cognito_group_struct.new(group_name: 'buyer'),
+            cognito_group_struct.new(group_name: 'fm_access')
+          ]
+        )
       end
 
       before do
-        allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => username }))
+        allow(aws_client).to receive(:initiate_auth).and_return(initiate_auth_resp_struct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => username }))
         allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
-        allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(OpenStruct.new(user: user))
+        allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user: user))
 
         post :create, params: { user: { email: email, password: 'Password12345!' } }
         cookies.update(response.cookies)
@@ -96,15 +112,25 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::SessionsController, type:
         end
       end
     end
+
+    context 'when the framework is not live' do
+      include_context 'and RM3830 has expired'
+
+      it 'redirects to the buyer index page' do
+        post :create, params: { user: { email: email, password: 'Password12345!' } }
+
+        expect(response).to redirect_to(facilities_management_rm6232_path)
+      end
+    end
   end
 
   describe 'DELETE destroy' do
     login_fm_buyer
 
     it 'signs the user out' do
-      expect(controller.current_user).not_to be nil
+      expect(controller.current_user).not_to be_nil
       delete :destroy
-      expect(controller.current_user).to be nil
+      expect(controller.current_user).to be_nil
     end
   end
 end

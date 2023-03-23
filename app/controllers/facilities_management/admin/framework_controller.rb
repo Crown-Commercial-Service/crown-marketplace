@@ -1,9 +1,10 @@
 module FacilitiesManagement
   module Admin
     class FrameworkController < ::ApplicationController
+      include FrameworkStatusConcern
+
       before_action :authenticate_user!
       before_action :authorize_user
-      before_action :raise_if_unrecognised_framework
 
       protected
 
@@ -33,6 +34,14 @@ module FacilitiesManagement
 
       def set_lot
         @lot = params[:lot]
+      end
+
+      def service_scope
+        :facilities_management
+      end
+
+      def set_framework_has_expired
+        @framework_has_expired = Framework.find_by(framework: params[:framework]).status == :expired
       end
     end
   end

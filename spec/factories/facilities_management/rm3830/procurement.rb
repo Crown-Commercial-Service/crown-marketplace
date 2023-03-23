@@ -8,13 +8,13 @@ FactoryBot.define do
     extensions_required { false }
     initial_call_off_period_years { 1 }
     initial_call_off_period_months { 0 }
-    initial_call_off_start_date { Time.zone.now + 6.months }
+    initial_call_off_start_date { 6.months.from_now }
     service_codes { ['C.1', 'C.2'] }
     association :user
   end
 
   factory :facilities_management_rm3830_procurement, parent: :facilities_management_rm3830_procurement_no_procurement_buildings do
-    procurement_buildings { build_list :facilities_management_rm3830_procurement_building, 1 }
+    procurement_buildings { build_list(:facilities_management_rm3830_procurement_building, 1) }
   end
 
   factory :facilities_management_rm3830_procurement_with_extension_periods, parent: :facilities_management_rm3830_procurement do
@@ -50,7 +50,7 @@ FactoryBot.define do
 
   factory :facilities_management_rm3830_procurement_direct_award, parent: :facilities_management_rm3830_procurement do
     aasm_state { 'da_draft' }
-    procurement_suppliers { build_list :facilities_management_rm3830_procurement_supplier, 3 }
+    procurement_suppliers { build_list(:facilities_management_rm3830_procurement_supplier, 3) }
   end
 
   factory :facilities_management_rm3830_procurement_further_competition, parent: :facilities_management_rm3830_procurement do
@@ -74,23 +74,23 @@ FactoryBot.define do
     using_buyer_detail_for_notices_detail { false }
     using_buyer_detail_for_authorised_detail { false }
     local_government_pension_scheme { true }
-    procurement_pension_funds { build_list :facilities_management_rm3830_procurement_pension_fund, 3 }
-    invoice_contact_detail { create :facilities_management_rm3830_procurement_invoice_contact_detail }
-    authorised_contact_detail { create :facilities_management_rm3830_procurement_authorised_contact_detail }
-    notices_contact_detail { create :facilities_management_rm3830_procurement_notices_contact_detail }
-    procurement_suppliers { build_list :facilities_management_rm3830_procurement_supplier, 3 }
+    procurement_pension_funds { build_list(:facilities_management_rm3830_procurement_pension_fund, 3) }
+    invoice_contact_detail { create(:facilities_management_rm3830_procurement_invoice_contact_detail) }
+    authorised_contact_detail { create(:facilities_management_rm3830_procurement_authorised_contact_detail) }
+    notices_contact_detail { create(:facilities_management_rm3830_procurement_notices_contact_detail) }
+    procurement_suppliers { build_list(:facilities_management_rm3830_procurement_supplier, 3) }
     governing_law { 'english' }
   end
 
   factory :facilities_management_rm3830_procurement_with_contact_details_with_buildings, parent: :facilities_management_rm3830_procurement_with_contact_details do
     tupe { true }
-    procurement_buildings { build_list :facilities_management_rm3830_procurement_building, 2 }
+    procurement_buildings { build_list(:facilities_management_rm3830_procurement_building, 2) }
     association :user, :with_detail
   end
 
   factory :facilities_management_rm3830_procurement_with_contact_details_with_buildings_no_tupe_london, parent: :facilities_management_rm3830_procurement_with_contact_details do
     tupe { false }
-    procurement_buildings { build_list :facilities_management_rm3830_procurement_building_london, 2 }
+    procurement_buildings { build_list(:facilities_management_rm3830_procurement_building_london, 2) }
   end
 
   factory :facilities_management_rm3830_procurement_for_further_competition, class: 'FacilitiesManagement::RM3830::Procurement' do
@@ -101,13 +101,13 @@ FactoryBot.define do
     initial_call_off_period_months { 0 }
     service_codes { ['C.1', 'C.2'] }
     association :user
-    procurement_buildings { build_list :facilities_management_rm3830_procurement_building_for_further_competition, 1 }
+    procurement_buildings { build_list(:facilities_management_rm3830_procurement_building_for_further_competition, 1) }
   end
 
   factory :facilities_management_rm3830_procurement_for_further_competition_with_gia, parent: :facilities_management_rm3830_procurement_for_further_competition do
-    initial_call_off_start_date { Time.zone.now + 6.months }
+    initial_call_off_start_date { 6.months.from_now }
     association :user, :with_detail
-    procurement_buildings { build_list :facilities_management_rm3830_procurement_building_for_further_competition_with_gia, 1 }
+    procurement_buildings { build_list(:facilities_management_rm3830_procurement_building_for_further_competition_with_gia, 1) }
   end
 
   factory :facilities_management_rm3830_procurement_with_security_document, parent: :facilities_management_rm3830_procurement do
@@ -115,7 +115,7 @@ FactoryBot.define do
   end
 
   factory :facilities_management_rm3830_procurement_with_lifts, parent: :facilities_management_rm3830_procurement_no_procurement_buildings do
-    procurement_buildings { build_list :facilities_management_rm3830_procurement_building_with_lifts, 1 }
+    procurement_buildings { build_list(:facilities_management_rm3830_procurement_building_with_lifts, 1) }
   end
 
   factory :facilities_management_rm3830_procurement_entering_requirements, class: 'FacilitiesManagement::RM3830::Procurement' do
@@ -129,7 +129,7 @@ FactoryBot.define do
     tupe { false }
     initial_call_off_period_years { 1 }
     initial_call_off_period_months { 0 }
-    initial_call_off_start_date { Time.zone.now + 6.months }
+    initial_call_off_start_date { 6.months.from_now }
     mobilisation_period_required { false }
     extensions_required { false }
     service_codes { ['C.1', 'C.2'] }
@@ -154,6 +154,6 @@ FactoryBot.define do
     security_policy_document_required { false }
     local_government_pension_scheme { false }
     governing_law { 'english' }
-    procurement_buildings { build_list :facilities_management_rm3830_procurement_building, 2 }
+    procurement_buildings { build_list(:facilities_management_rm3830_procurement_building, 2) }
   end
 end

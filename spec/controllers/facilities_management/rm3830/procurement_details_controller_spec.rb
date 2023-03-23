@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
   let(:procurement) { create(:facilities_management_rm3830_procurement_entering_requirements, user: user) }
   let(:user) { controller.current_user }
@@ -62,7 +62,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementDetailsController, type:
       end
 
       context 'when the contract periods are complete' do
-        let(:procurement_options) { { initial_call_off_start_date: Time.zone.now + 6.months, initial_call_off_period_years: 1, initial_call_off_period_months: 0, mobilisation_period_required: false, extensions_required: false } }
+        let(:procurement_options) { { initial_call_off_start_date: 6.months.from_now, initial_call_off_period_years: 1, initial_call_off_period_months: 0, mobilisation_period_required: false, extensions_required: false } }
 
         render_views
 

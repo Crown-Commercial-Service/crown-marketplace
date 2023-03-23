@@ -49,7 +49,7 @@ module FacilitiesManagement
       end
 
       def suppliers_for_lot(lot)
-        SupplierDetail.long_list_suppliers_lot(@region_codes, @service_codes, lot).map { |supplier| supplier['name'] }
+        SupplierDetail.long_list_suppliers_lot(@region_codes, @service_codes, lot).pluck('name')
       end
     end
   end

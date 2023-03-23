@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Region, type: :model do
+RSpec.describe FacilitiesManagement::Region do
   subject(:regions) { described_class.all }
 
   let(:all_codes) { described_class.all_codes }
 
   it 'only has unique codes' do
-    expect(all_codes.uniq).to contain_exactly(*all_codes)
+    expect(all_codes.uniq).to match_array(all_codes)
   end
 
   it 'all have names' do

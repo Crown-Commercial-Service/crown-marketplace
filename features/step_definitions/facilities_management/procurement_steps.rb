@@ -35,11 +35,11 @@ Given('I have a completed procurement for entering requirements named {string} w
 end
 
 Given('I have a completed procurement for entering requirements named {string} with an initial call off period in the past') do |contract_name|
-  create_completed_procurement(contract_name, initial_call_off_start_date: Time.zone.now - 6.months)
+  create_completed_procurement(contract_name, initial_call_off_start_date: 6.months.ago)
 end
 
 Given('I have a completed procurement for entering requirements named {string} with an mobilisation period in the past') do |contract_name|
-  create_completed_procurement(contract_name, initial_call_off_start_date: Time.zone.now + 1.day, mobilisation_period_required: true, mobilisation_period: 4)
+  create_completed_procurement(contract_name, initial_call_off_start_date: 1.day.from_now, mobilisation_period_required: true, mobilisation_period: 4)
 end
 
 Given('I have a completed procurement for entering requirements named {string} with mobilisation less than four weeks') do |contract_name|

@@ -1,4 +1,3 @@
-@pipeline
 Feature: Notices contact detail validations
 
   Background: Navigate to the Notices contact detail question

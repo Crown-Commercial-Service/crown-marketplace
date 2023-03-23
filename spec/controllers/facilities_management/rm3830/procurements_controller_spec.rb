@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/AnyInstance
 # rubocop:disable RSpec/NestedGroups
-RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementsController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
   let(:procurement) { create(:facilities_management_rm3830_procurement, contract_name: 'New search', user: subject.current_user) }
 
@@ -44,7 +44,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         end
 
         context 'when the user continues from quick search' do
-          before { get :show, params: { id: procurement.id, 'what_happens_next': true } }
+          before { get :show, params: { id: procurement.id, what_happens_next: true } }
 
           it 'renders the show page' do
             expect(response).to render_template('show')
@@ -266,7 +266,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
           it 'redirects to facilities_management_rm3830_procurement_path for the new record' do
             post :create, params: { facilities_management_rm3830_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
             new_procurement = FacilitiesManagement::RM3830::Procurement.all.order(created_at: :asc).first
-            expect(response).to redirect_to facilities_management_rm3830_procurement_path(new_procurement.id, 'what_happens_next': true)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(new_procurement.id, what_happens_next: true)
           end
         end
 
@@ -432,7 +432,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         end
       end
 
-      context 'when change contract value is selected on the results page ' do
+      context 'when change contract value is selected on the results page' do
         before do
           procurement.update(aasm_state: 'results')
           patch :update, params: { id: procurement.id, change_the_contract_value: 'Change contract value' }
@@ -647,7 +647,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
           let(:state) { 'detailed_search_bulk_upload' }
 
           it 'changes the state to detailed_search' do
-            expect(procurement.detailed_search?).to eq true
+            expect(procurement.detailed_search?).to be true
           end
 
           it 'redirects to the show page' do
@@ -659,7 +659,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
           let(:state) { 'quick_search' }
 
           it 'does not change the state' do
-            expect(procurement.quick_search?).to eq true
+            expect(procurement.quick_search?).to be true
           end
 
           it 'redirects to the show page' do

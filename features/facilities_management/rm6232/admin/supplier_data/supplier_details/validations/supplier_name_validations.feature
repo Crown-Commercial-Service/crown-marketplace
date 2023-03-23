@@ -1,4 +1,3 @@
-@pipeline
 Feature: Supplier name - validations
 
   Background: Navigate to the supplier name section

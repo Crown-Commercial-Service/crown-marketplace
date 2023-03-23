@@ -5,7 +5,7 @@ module FacilitiesManagement::RM3830
     # This can be added as more parts of the bulk upload are completed
     IMPORT_PROCESS_ORDER = %i[check_file process_file check_processed_data].freeze
     TEMPLATE_FILE_NAME = 'facilities-management/rm3830/Services and buildings template v1.0.xlsx'.freeze
-    TEMPLATE_FILE_PATH = Rails.root.join('public', TEMPLATE_FILE_NAME).freeze
+    TEMPLATE_FILE_PATH = Rails.public_path.join(TEMPLATE_FILE_NAME).freeze
 
     def initialize(spreadsheet_import)
       @spreadsheet_import = spreadsheet_import
@@ -183,7 +183,7 @@ module FacilitiesManagement::RM3830
       if errors.include?(attribute)
         return true unless type
 
-        errors.details[attribute.to_sym].map { |e| e[:error] }.include? type
+        errors.details[attribute.to_sym].pluck(:error).include? type
       else
         false
       end
@@ -296,7 +296,7 @@ module FacilitiesManagement::RM3830
     end
 
     def add_service_volumes(services, building_index)
-      procurement_building_services = @procurement_array[building_index][:procurement_building][:procurement_building_services].map { |pbs| pbs[:object] }
+      procurement_building_services = @procurement_array[building_index][:procurement_building][:procurement_building_services].pluck(:object)
       procurement_building_services.each do |pbs|
         next unless VOLUME_CODES.include?(pbs.code)
 
@@ -309,7 +309,7 @@ module FacilitiesManagement::RM3830
     def import_lift_data
       service_volume_lifts_sheet = @user_uploaded_spreadsheet.sheet('Service Volumes 2')
       spreadsheet_import_loop([service_volume_lifts_sheet, 1, 'OK'], [service_volume_lifts_sheet, 2, 1], 6, :lifts_incomplete) do |col, building_index|
-        procurement_building_service = @procurement_array[building_index][:procurement_building][:procurement_building_services].map { |pbs| pbs[:object] }.find { |pbs| pbs.code == 'C.5' }
+        procurement_building_service = @procurement_array[building_index][:procurement_building][:procurement_building_services].pluck(:object).find { |pbs| pbs.code == 'C.5' }
         next if procurement_building_service.nil?
 
         service_volume_column = service_volume_lifts_sheet.column(col)[6..45]
@@ -347,7 +347,7 @@ module FacilitiesManagement::RM3830
 
         procurement_building_services = procurement_building_hash[:procurement_building_services]
         service_hours = get_service_hours_from_sheet(service_hours_sheet, col)
-        add_service_hour_data(procurement_building_services.map { |pbs| pbs[:object] }, service_hours)
+        add_service_hour_data(procurement_building_services.pluck(:object), service_hours)
       end
     end
 
@@ -358,7 +358,7 @@ module FacilitiesManagement::RM3830
     def get_service_hours_from_sheet(sheet, col)
       service_hour_column = sheet.column(col)[3..]
       SERVICE_HOUR_CODES.map.with_index do |code, index|
-        [code, { service_hours: service_hour_column[index * 2], detail_of_requirement: ActionController::Base.helpers.strip_tags(service_hour_column[index * 2 + 1].to_s) }]
+        [code, { service_hours: service_hour_column[index * 2], detail_of_requirement: ActionController::Base.helpers.strip_tags(service_hour_column[(index * 2) + 1].to_s) }]
       end.to_h
     end
 
@@ -398,14 +398,14 @@ module FacilitiesManagement::RM3830
 
     ########## Shared methods ##########
     def sheet_complete?(sheet, row, message)
-      status_indicator = sheet.row(row).compact.reject(&:blank?)
+      status_indicator = sheet.row(row).compact.compact_blank
       status_indicator.shift
       status_indicator.count(message).positive? && status_indicator.reject { |status| status == message }.empty?
     end
 
     def sheet_contains_all_buildings?(sheet, row, shift_number)
       buildings = complete_procurement_array.map { |building| building[:object].building_name }
-      sheet_buildings = sheet.row(row).compact.reject(&:blank?)
+      sheet_buildings = sheet.row(row).compact.compact_blank
       sheet_buildings.shift(shift_number)
       (buildings.map(&:to_s).sort - sheet_buildings.map(&:to_s).map(&:squish).sort).empty?
     end
@@ -457,7 +457,7 @@ module FacilitiesManagement::RM3830
              building_name: building[:object].building_name || "Building #{index}",
              building_errors: building[:errors],
              procurement_building_errors: building[:procurement_building][:errors],
-             procurement_building_services_errors: building[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code.to_sym, pbs[:errors]] }.to_h
+             procurement_building_services_errors: building[:procurement_building][:procurement_building_services].to_h { |pbs| [pbs[:object].code.to_sym, pbs[:errors]] }
            }
          end]
       end.compact.to_h

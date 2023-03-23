@@ -24,8 +24,8 @@ Given('select {string} for sublot {string} for {string}') do |option, sublot, su
 end
 
 Then('I go to a quick view with the following services and regions:') do |services_and_regions|
-  service_codes = services_and_regions.transpose.raw[0].reject(&:blank?)
-  region_codes = services_and_regions.transpose.raw[1].reject(&:blank?)
+  service_codes = services_and_regions.transpose.raw[0].compact_blank
+  region_codes = services_and_regions.transpose.raw[1].compact_blank
 
   visit new_facilities_management_rm3830_procurement_path(journey: 'facilities-management', service_codes: service_codes, region_codes: region_codes)
   expect(page.find('h1')).to have_content('Quick view results')

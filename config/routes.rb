@@ -74,6 +74,10 @@ Rails.application.routes.draw do
     get '/start', to: 'home#framework'
   end
 
+  concern :admin_frameworks do
+    resources :frameworks, only: %i[index edit update]
+  end
+
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
     concern :buildings do
       resources :buildings, only: %i[index show edit update new create]
@@ -106,8 +110,7 @@ Rails.application.routes.draw do
     end
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-      concerns :framework
-      resources :frameworks, only: %i[index edit update]
+      concerns :framework, :admin_frameworks
     end
 
     resources :admin_supplier_details, path: '/:framework/admin/supplier-details', only: %i[show edit update], defaults: { service: 'facilities_management/admin' }, controller: 'admin/supplier_details'

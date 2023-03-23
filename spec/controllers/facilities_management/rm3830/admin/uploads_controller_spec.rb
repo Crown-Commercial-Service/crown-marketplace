@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
 
   describe 'GET index' do
@@ -149,7 +149,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
 
     it 'renders the aasm_state as JSON' do
       expect(response.content_type).to eq('application/json; charset=utf-8')
-      expect(JSON.parse(response.body)).to eq 'import_status' => 'publishing_data'
+      expect(response.parsed_body).to eq 'import_status' => 'publishing_data'
     end
   end
 end

@@ -1,4 +1,3 @@
-@pipeline
 Feature: Change log for supplier lot status
 
   Scenario: Changes to the supplier services are logged

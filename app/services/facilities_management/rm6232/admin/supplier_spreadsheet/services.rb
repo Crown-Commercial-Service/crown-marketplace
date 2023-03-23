@@ -32,8 +32,8 @@ module FacilitiesManagement::RM6232
 
       def add_header_rows(sheet, lot_code, suppliers)
         sheet.add_row ["If you are bidding for Lot #{lot_code}, please confirm within the Yellow highlighted cells, that you are able to provide the relevant additional service"], style: @styles[:header_row]
-        sheet.add_row [nil, nil, nil, 'Supplier name'] + suppliers.map { |supplier_data| supplier_data['supplier_name'] }, style: @styles[:header_row]
-        sheet.add_row [nil, nil, nil, 'DUNS number'] + suppliers.map { |supplier_data| supplier_data['duns'] }, types: [:string] * (4 + suppliers.length), style: @styles[:header_row]
+        sheet.add_row [nil, nil, nil, 'Supplier name'] + suppliers.pluck('supplier_name'), style: @styles[:header_row]
+        sheet.add_row [nil, nil, nil, 'DUNS number'] + suppliers.pluck('duns'), types: [:string] * (4 + suppliers.length), style: @styles[:header_row]
         sheet.add_row ['Work package Description', 'Work Package Standard Reference (where applicable)', 'Work Package Section Reference', 'Service'] + (['Are you able to provide this additional service?'] * suppliers.length), style: @styles[:header_row]
       end
 

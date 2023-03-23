@@ -37,19 +37,13 @@ unless ARGV.any? { |a| a =~ /^gems/ } # Don't load anything when running the gem
         t.profile = 'accessibility'
       end
 
-      Cucumber::Rake::Task.new({ pipeline: 'test:prepare' }, 'Run cut down suite for the pipeline') do |t|
-        t.binary = vendored_cucumber_bin
-        t.fork = true # You may get faster startup if you set this to false
-        t.profile = 'pipeline'
-      end
-
       desc 'Run all features'
       task all: %i[ok wip]
 
       task statsetup: :environment do
         require 'rails/code_statistics'
-        ::STATS_DIRECTORIES << %w[Cucumber\ features features] if File.exist?('features')
-        ::CodeStatistics::TEST_TYPES << 'Cucumber features' if File.exist?('features')
+        STATS_DIRECTORIES << %w[Cucumber\ features features] if File.exist?('features')
+        CodeStatistics::TEST_TYPES << 'Cucumber features' if File.exist?('features')
       end
 
       task annotations_setup: :environment do
@@ -71,8 +65,7 @@ unless ARGV.any? { |a| a =~ /^gems/ } # Don't load anything when running the gem
     end
 
     # In case we don't have the generic Rails test:prepare hook, append a no-op task that we can depend upon.
-    task 'test:prepare' => :environment do
-    end
+    task 'test:prepare' => :environment
 
     task stats: 'cucumber:statsetup'
 

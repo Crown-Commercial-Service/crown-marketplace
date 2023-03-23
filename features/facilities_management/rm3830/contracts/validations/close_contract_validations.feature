@@ -1,4 +1,3 @@
-@pipeline
 Feature: Close contract - validations
 
   Scenario: No reason for closing

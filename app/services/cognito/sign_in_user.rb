@@ -26,9 +26,6 @@ module Cognito
       @error = e.message
       errors.add(:base, e.message)
       @needs_confirmation = true
-    rescue Aws::CognitoIdentityProvider::Errors::UserNotFoundException
-      @error = I18n.t('facilities_management.users.sign_in_error')
-      errors.add(:base, @error)
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError
       @error = I18n.t('facilities_management.users.sign_in_error')
       errors.add(:base, @error)
@@ -59,7 +56,7 @@ module Cognito
     def initiate_auth
       go_then_wait do
         @auth_response = client.initiate_auth(
-          client_id: ENV['COGNITO_CLIENT_ID'],
+          client_id: ENV.fetch('COGNITO_CLIENT_ID', nil),
           auth_flow: 'USER_PASSWORD_AUTH',
           auth_parameters: {
             'USERNAME' => email,

@@ -17,8 +17,8 @@ module FacilitiesManagement
 
         vals.map do |s|
           { 'name' => s.supplier_name,
-            'service_code': s.lot_data[for_lot]['services'],
-            'region_code': s.lot_data[for_lot]['regions'] }
+            service_code: s.lot_data[for_lot]['services'],
+            region_code: s.lot_data[for_lot]['regions'] }
         end
       end
 
@@ -35,7 +35,7 @@ module FacilitiesManagement
       end
 
       def full_organisation_address
-        [address_line_1, address_line_2, address_town, address_county].reject(&:nil?).reject(&:empty?).join(', ') + " #{address_postcode}"
+        [address_line_1, address_line_2, address_town, address_county].compact.reject(&:empty?).join(', ') + " #{address_postcode}"
       end
     end
   end

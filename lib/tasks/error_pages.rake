@@ -10,7 +10,7 @@ module ErrorPages
       out_file = Tempfile.new('page-inline')
 
       command = "npx juice --web-resources-relative-to #{site}/ --apply-style-tags false " \
-               '--remove-style-tags false --preserve-media-queries false'
+                '--remove-style-tags false --preserve-media-queries false'
 
       sh "#{command} #{html_file.path} #{out_file.path}"
 

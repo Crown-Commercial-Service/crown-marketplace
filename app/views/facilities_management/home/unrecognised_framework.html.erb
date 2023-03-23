@@ -1,0 +1,17 @@
+<%= content_for :page_title, t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <p><%= t('.make_sure_listed', framework: @unrecognised_framework) %></p>
+    <p><%= t('.the_recognised_are') %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <% Framework.facilities_management.live_frameworks.each do |framework| %>
+        <li>
+          <%= link_to framework, facilities_management_index_path(framework: framework), class: 'govuk-link' %>
+        </li>
+      <% end %>
+    </ul>
+    <%= render partial: 'errors/contact_ccs' %>
+  </div>
+</div>

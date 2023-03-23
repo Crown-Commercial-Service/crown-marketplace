@@ -6,6 +6,7 @@
 
 <h2 class="govuk-caption-l govuk-!-margin-bottom-2 govuk-!-font-weight-regular"><%= @supplier.supplier_name %></h1>
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-2"><%= @sublot_region_name %></h2>
+<%= framework_expired_warning(t('facilities_management.rm3830.admin.you_cannot_update.regions')) %>
 <p class="govuk-body govuk-!-font-weight-regular govuk-hint"><%= t('.leading_text') %></p>
 
 <%= form_with url: facilities_management_rm3830_admin_supplier_framework_datum_sublot_region_path, method: 'put', local: 'false', html: { specialvalidation: true }  do |f| %>
@@ -25,7 +26,8 @@
                           key2,
                           @selected_supplier_regions[key2],
                           class: "govuk-checkboxes__input",
-                          id: "#{key2}"
+                          id: "#{key2}",
+                          disabled: @framework_has_expired
                       ) %>
                   <label id="<%= key2 %>_label" class="govuk-label govuk-checkboxes__label" for="<%= key2 %>">
                     <%= value2 %>
@@ -39,6 +41,6 @@
     </fieldset>
   <% end %>
 
-  <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_supplier_regions', aria: { label: t('.update_button') }%>
+  <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_supplier_regions', aria: { label: t('.update_button') }, disabled: @framework_has_expired%>
 <% end %>
 <%= link_to t('.return_link'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link govuk-caption-m' %>

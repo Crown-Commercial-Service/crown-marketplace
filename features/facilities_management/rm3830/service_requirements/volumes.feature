@@ -40,7 +40,6 @@ Feature: Volumes
     Then the volume question is 'How many units are to be serviced each year within this building?'
     And the volume unit is 'units'
 
-  @pipeline
   Scenario: The answer to the volume question saves
     Given I choose to answer the service volume question for 'Portable appliance testing'
     And I am on the page with secondary heading 'Portable appliance testing'

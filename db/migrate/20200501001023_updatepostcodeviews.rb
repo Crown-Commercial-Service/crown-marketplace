@@ -3,12 +3,12 @@ class Updatepostcodeviews < ActiveRecord::Migration[5.2]
   def change
     reversible do |dir|
       dir.up do
-        execute <<~SQL
+        execute <<~SQL.squish
           DROP VIEW IF EXISTS public.postcode_lookup;
           DROP VIEW IF EXISTS public.os_address_view_2;
         SQL
 
-        execute <<~SQL
+        execute <<~SQL.squish
            CREATE or replace VIEW os_address_view_2
                       (building, street_address, postal_town, postcode_locator, sub_building_name, building_name, pao_name,
                        sao_name, house_number, street_description, village, post_town, formatted_postcode, building_ref, uprn,
@@ -78,7 +78,7 @@ class Updatepostcodeviews < ActiveRecord::Migration[5.2]
                 AND adds.class::TEXT !~~ 'CU11%'::TEXT;
         SQL
 
-        execute <<~SQL
+        execute <<~SQL.squish
           CREATE or replace VIEW postcode_lookup
                       (summary_line, address_line_1, address_line_2, address_town, address_postcode, address_region,
                        address_region_code) AS
@@ -113,12 +113,12 @@ class Updatepostcodeviews < ActiveRecord::Migration[5.2]
       end
 
       dir.down do
-        execute <<~SQL
+        execute <<~SQL.squish
           DROP VIEW IF EXISTS public.postcode_lookup;
           DROP VIEW IF EXISTS public.os_address_view_2;
         SQL
 
-        execute <<~SQL
+        execute <<~SQL.squish
             CREATE OR replace VIEW public.os_address_view_2 AS
                  SELECT
                CASE
@@ -191,7 +191,7 @@ class Updatepostcodeviews < ActiveRecord::Migration[5.2]
           FROM os_address adds;
         SQL
 
-        execute <<~SQL
+        execute <<~SQL.squish
                CREATE OR REPLACE VIEW public.postcode_lookup
                AS
                SELECT ((((

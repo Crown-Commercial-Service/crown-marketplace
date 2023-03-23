@@ -22,7 +22,6 @@ Feature: Removing regions for suppliers on the admin tool
       | C.2 |       |
     And 'Bode and Sons' is not a supplier in Sub-lot '1a'
 
-  @pipeline
   Scenario: Deselecting a service for lot 1b
     Given I go to a quick view with the following services and regions:
       | C.1 | UKH1  |

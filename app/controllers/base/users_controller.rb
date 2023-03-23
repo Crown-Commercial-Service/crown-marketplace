@@ -67,7 +67,7 @@ module Base
 
     def set_user_phone
       user_phone_full = User.find_by(cognito_uuid: cookies[:crown_marketplace_challenge_username]).try(:phone_number) || Cognito::CreateUserFromCognito.call(cookies[:crown_marketplace_challenge_username]).try(:user).try(:phone_number)
-      @user_phone = '*' * 9 + user_phone_full.last(3) if user_phone_full
+      @user_phone = ('*' * 9) + user_phone_full.last(3) if user_phone_full
     end
   end
 end

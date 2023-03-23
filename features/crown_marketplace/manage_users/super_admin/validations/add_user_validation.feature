@@ -1,4 +1,3 @@
-@pipeline
 Feature: Manage users - Super admin - Add user - Validations
 
   Background: Navigate to add user page

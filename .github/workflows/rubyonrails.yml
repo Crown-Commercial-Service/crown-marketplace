@@ -19,5 +19,3 @@ jobs:
 
   run-feature-tests:
     uses: ./.github/workflows/feature_tests.yml
-    with:
-      run_all_feature_tests: ${{ github.event.pull_request.base.ref == 'preview' || github.event.pull_request.base.ref == 'production' }}

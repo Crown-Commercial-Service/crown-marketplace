@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Journey::AnnualContractValue, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Journey::AnnualContractValue do
   let(:annual_contract_value) { described_class.new(annual_contract_value: estimated_annual_contract_value) }
   let(:estimated_annual_contract_value) { 123_456 }
 

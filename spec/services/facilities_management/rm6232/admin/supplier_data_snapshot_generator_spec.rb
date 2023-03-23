@@ -99,7 +99,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierDataSnapshotGenerato
     let(:snapshot_date_time) { get_time(2022, 3, 6, 13, 0) }
     let(:supplier_data) { snapshot_generator.instance_variable_get(:@supplier_data) }
 
-    let(:supplier_spreadsheet) { instance_double('supplier_spreadsheet') }
+    let(:supplier_spreadsheet) { instance_double(FacilitiesManagement::RM6232::Admin::SupplierSpreadsheet) }
     let(:fake_spreadsheet_file) { Tempfile.new(['supplier_data', '.xlsx']) }
 
     before do

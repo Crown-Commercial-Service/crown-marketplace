@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::Procurement do
   subject(:procurement) { build(:facilities_management_rm3830_procurement, user: user) }
 
   let(:user) { build(:user) }
@@ -60,12 +60,12 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       context 'when it is blank' do
         it 'expected to be invalid' do
           procurement.tupe = ''
-          expect(procurement.valid?(:tupe)).to eq false
+          expect(procurement.valid?(:tupe)).to be false
         end
 
         it 'expected to be invalid when nil' do
           procurement.tupe = nil
-          expect(procurement.valid?(:tupe)).to eq false
+          expect(procurement.valid?(:tupe)).to be false
         end
       end
     end
@@ -74,24 +74,24 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       context 'when it is not a boolean value' do
         it 'is invalid' do
           procurement.tupe = 'nottupe'
-          expect(procurement.tupe).to eq true
-          expect(procurement.valid?(:tupe)).to eq true
+          expect(procurement.tupe).to be true
+          expect(procurement.valid?(:tupe)).to be true
         end
       end
 
       context 'when it is a string representation of TRUE' do
         it 'is invalid' do
           procurement.tupe = 'true'
-          expect(procurement.tupe).to eq true
-          expect(procurement.valid?(:tupe)).to eq true
+          expect(procurement.tupe).to be true
+          expect(procurement.valid?(:tupe)).to be true
         end
       end
 
       context 'when it is a string representation of FALSE' do
         it 'is invalid' do
           procurement.tupe = 'false'
-          expect(procurement.tupe).to eq false
-          expect(procurement.valid?(:tupe)).to eq true
+          expect(procurement.tupe).to be false
+          expect(procurement.valid?(:tupe)).to be true
         end
       end
     end
@@ -100,24 +100,24 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       context 'when it is true' do
         it 'is valid' do
           procurement.tupe = true
-          expect(procurement.tupe).to eq true
-          expect(procurement.valid?(:tupe)).to eq true
+          expect(procurement.tupe).to be true
+          expect(procurement.valid?(:tupe)).to be true
         end
       end
 
       context 'when it is false' do
         it 'is valid' do
           procurement.tupe = false
-          expect(procurement.tupe).to eq false
-          expect(procurement.valid?(:tupe)).to eq true
+          expect(procurement.tupe).to be false
+          expect(procurement.valid?(:tupe)).to be true
         end
       end
 
       context 'when it is yes' do
         it 'is valid' do
           procurement.tupe = 'yes'
-          expect(procurement.tupe).to eq true
-          expect(procurement.valid?(:tupe)).to eq true
+          expect(procurement.tupe).to be true
+          expect(procurement.valid?(:tupe)).to be true
         end
       end
     end
@@ -134,7 +134,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       it 'is not valid' do
         procurement.lot_number = nil
         procurement.assessed_value = 5000000
-        expect(procurement.valid?(:choose_contract_value)).to eq false
+        expect(procurement.valid?(:choose_contract_value)).to be false
       end
     end
 
@@ -146,13 +146,13 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       context 'when lot_number is 1a' do
         it 'is valid' do
           procurement.lot_number = '1a'
-          expect(procurement.valid?(:choose_contract_value)).to eq true
+          expect(procurement.valid?(:choose_contract_value)).to be true
         end
 
         context 'when the lot_number_selected_by_customer' do
           it 'is not valid' do
             procurement.lot_number_selected_by_customer = false
-            expect(procurement.valid?(:choose_contract_value)).to eq false
+            expect(procurement.valid?(:choose_contract_value)).to be false
           end
         end
       end
@@ -160,21 +160,21 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       context 'when lot_number is 1b' do
         it 'is valid' do
           procurement.lot_number = '1b'
-          expect(procurement.valid?(:choose_contract_value)).to eq true
+          expect(procurement.valid?(:choose_contract_value)).to be true
         end
       end
 
       context 'when lot_number is 1c' do
         it 'is valid' do
           procurement.lot_number = '1c'
-          expect(procurement.valid?(:choose_contract_value)).to eq true
+          expect(procurement.valid?(:choose_contract_value)).to be true
         end
       end
 
       context 'when lot_number is not 1a, 1b or 1c' do
         it 'is not valid' do
           procurement.lot_number = '1d'
-          expect(procurement.valid?(:choose_contract_value)).to eq false
+          expect(procurement.valid?(:choose_contract_value)).to be false
         end
       end
     end
@@ -187,20 +187,20 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       context 'when lot_number is 1a' do
         it 'is not valid' do
           procurement.lot_number = '1a'
-          expect(procurement.valid?(:choose_contract_value)).to eq false
+          expect(procurement.valid?(:choose_contract_value)).to be false
         end
       end
 
       context 'when lot_number is 1b' do
         it 'is valid' do
           procurement.lot_number = '1b'
-          expect(procurement.valid?(:choose_contract_value)).to eq true
+          expect(procurement.valid?(:choose_contract_value)).to be true
         end
 
         context 'when the lot_number_selected_by_customer' do
           it 'is not valid' do
             procurement.lot_number_selected_by_customer = false
-            expect(procurement.valid?(:choose_contract_value)).to eq false
+            expect(procurement.valid?(:choose_contract_value)).to be false
           end
         end
       end
@@ -208,14 +208,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       context 'when lot_number is 1c' do
         it 'is valid' do
           procurement.lot_number = '1c'
-          expect(procurement.valid?(:choose_contract_value)).to eq true
+          expect(procurement.valid?(:choose_contract_value)).to be true
         end
       end
 
       context 'when lot_number is not 1a, 1b or 1c' do
         it 'is not valid' do
           procurement.lot_number = '1d'
-          expect(procurement.valid?(:choose_contract_value)).to eq false
+          expect(procurement.valid?(:choose_contract_value)).to be false
         end
       end
     end
@@ -228,27 +228,27 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       context 'when lot_number is 1a' do
         it 'is not valid' do
           procurement.lot_number = '1a'
-          expect(procurement.valid?(:choose_contract_value)).to eq false
+          expect(procurement.valid?(:choose_contract_value)).to be false
         end
       end
 
       context 'when lot_number is 1b' do
         it 'is valid' do
           procurement.lot_number = '1b'
-          expect(procurement.valid?(:choose_contract_value)).to eq false
+          expect(procurement.valid?(:choose_contract_value)).to be false
         end
       end
 
       context 'when lot_number is 1c' do
         it 'is valid' do
           procurement.lot_number = '1c'
-          expect(procurement.valid?(:choose_contract_value)).to eq true
+          expect(procurement.valid?(:choose_contract_value)).to be true
         end
 
         context 'when the lot_number_selected_by_customer' do
           it 'is not valid' do
             procurement.lot_number_selected_by_customer = false
-            expect(procurement.valid?(:choose_contract_value)).to eq false
+            expect(procurement.valid?(:choose_contract_value)).to be false
           end
         end
       end
@@ -256,7 +256,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       context 'when lot_number is not 1a, 1b or 1c' do
         it 'is not valid' do
           procurement.lot_number = '1d'
-          expect(procurement.valid?(:choose_contract_value)).to eq false
+          expect(procurement.valid?(:choose_contract_value)).to be false
         end
       end
     end
@@ -295,7 +295,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:initial_call_off_start_date) { Time.now.in_time_zone('London') - 10.days }
 
       it 'returns true' do
-        expect(procurement.send(:contract_period_in_past?)).to eq true
+        expect(procurement.send(:contract_period_in_past?)).to be true
       end
     end
 
@@ -303,7 +303,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:initial_call_off_start_date) { Time.now.in_time_zone('London') + 10.days }
 
       it 'returns false' do
-        expect(procurement.send(:contract_period_in_past?)).to eq false
+        expect(procurement.send(:contract_period_in_past?)).to be false
       end
     end
   end
@@ -319,7 +319,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:mobilisation_period) { 10 }
 
       it 'returns true' do
-        expect(procurement.send(:mobilisation_period_in_past?)).to eq true
+        expect(procurement.send(:mobilisation_period_in_past?)).to be true
       end
     end
 
@@ -327,7 +327,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:mobilisation_period) { 4 }
 
       it 'returns false' do
-        expect(procurement.send(:mobilisation_period_in_past?)).to eq false
+        expect(procurement.send(:mobilisation_period_in_past?)).to be false
       end
     end
   end
@@ -347,7 +347,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'when mobilisation period required is false' do
         it 'returns false' do
-          expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to eq false
+          expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to be false
         end
       end
 
@@ -356,7 +356,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:mobilisation_period) { 3 }
 
         it 'returns false' do
-          expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to eq false
+          expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to be false
         end
       end
 
@@ -365,7 +365,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         let(:mobilisation_period) { 4 }
 
         it 'returns true' do
-          expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to eq true
+          expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to be true
         end
       end
     end
@@ -374,7 +374,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:tupe) { false }
 
       it 'returns true' do
-        expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to eq true
+        expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to be true
       end
     end
   end

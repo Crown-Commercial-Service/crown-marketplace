@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReport, type: :model do
+RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReport do
   subject(:management_report) { build(:facilities_management_rm6232_admin_management_report, user: user) }
 
   let(:user) { create(:user) }
@@ -138,7 +138,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReport, type: :mod
       end
 
       it 'is valid' do
-        expect(management_report.valid?).to eq(true)
+        expect(management_report.valid?).to be(true)
       end
     end
   end

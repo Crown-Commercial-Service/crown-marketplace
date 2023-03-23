@@ -61,7 +61,6 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
       | 2000000         | 2b          | Lind, Stehr and Dickinson     |
       | 11000000        | 2c          | Wiegand LLC                   |
 
-  @pipeline
   Scenario Outline: Soft services - region selection
     Given I go to a quick view with the following services, regions and annual contract cost:
       | G.6 | UKG2  | <contract_value>  |

@@ -1,7 +1,25 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Supplier::HomeController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/supplier' } }
+RSpec.describe FacilitiesManagement::Supplier::HomeController do
+  let(:default_params) { { service: 'facilities_management' } }
+
+  describe 'GET framework' do
+    context 'when RM3830 is live' do
+      include_context 'and RM6232 is live in the future'
+
+      it 'redirects to the RM3830 admin home page' do
+        get :framework
+        expect(response).to redirect_to facilities_management_rm3830_supplier_path
+      end
+    end
+
+    context 'when RM6232 is live' do
+      it 'redirects to the RM3830 admin home page' do
+        get :framework
+        expect(response).to redirect_to facilities_management_rm3830_supplier_path
+      end
+    end
+  end
 
   describe 'validate service' do
     context 'when the service is not a valid service' do
@@ -12,13 +30,6 @@ RSpec.describe FacilitiesManagement::Supplier::HomeController, type: :controller
 
         expect(response).to redirect_to errors_404_path
       end
-    end
-  end
-
-  describe 'GET framework' do
-    it 'redirects to the RM3830 home page' do
-      get :framework
-      expect(response).to redirect_to facilities_management_rm3830_supplier_path
     end
   end
 end

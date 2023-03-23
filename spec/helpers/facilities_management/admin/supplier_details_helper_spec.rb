@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::SupplierDetailsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::Admin::SupplierDetailsHelper do
   describe '.supplier_details_index_path' do
     let(:result) { helper.supplier_details_index_path }
 
@@ -26,7 +26,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsHelper, type: :helper
       let(:framework) { 'RM1007' }
 
       it 'returns nil' do
-        expect(result).to be nil
+        expect(result).to be_nil
       end
     end
   end

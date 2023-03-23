@@ -187,13 +187,13 @@ module FacilitiesManagement
       end
 
       VARIANCE_KEY_TRANSFORMATION = {
-        "Profit %": 'M142',
-        "Corporate Overhead %": 'M141',
-        "Management Overhead %": 'M140',
-        "Mobilisation Cost (DA %)": 'B1',
-        "TUPE Risk Premium (DA %)": 'M148',
-        "London Location Variance Rate (%)": 'M144',
-        "Cleaning Consumables per Building User (£)": 'M146'
+        'Profit %': 'M142',
+        'Corporate Overhead %': 'M141',
+        'Management Overhead %': 'M140',
+        'Mobilisation Cost (DA %)': 'B1',
+        'TUPE Risk Premium (DA %)': 'M148',
+        'London Location Variance Rate (%)': 'M144',
+        'Cleaning Consumables per Building User (£)': 'M146'
       }.freeze
     end
   end

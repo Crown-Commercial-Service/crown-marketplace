@@ -26,7 +26,7 @@ Feature: Sent contract
     Then I click on the 'Return to procurements dashboard' back link
     And I am on the 'Procurements dashboard' page
 
-  @pipeline @contract_emails
+  @contract_emails
   Scenario: Close sent procurement
     Then I click on 'Close this procurement'
     And I am on the 'Are you sure you wish to close' page

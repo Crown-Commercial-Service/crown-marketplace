@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::Rates, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::Admin::Rates do
   subject(:rate) { described_class.new(code: rate_code) }
 
   let(:rate_code) { 'M.1' }

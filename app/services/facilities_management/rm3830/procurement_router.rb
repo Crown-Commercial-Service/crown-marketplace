@@ -17,10 +17,10 @@ module FacilitiesManagement::RM3830
     end
 
     STATES_TO_VIEWS = {
-      'quick_search': 'quick_search',
-      'choose_contract_value': 'choose_contract_value',
-      'results': 'results',
-      'further_competition': 'further_competition'
+      quick_search: 'quick_search',
+      choose_contract_value: 'choose_contract_value',
+      results: 'results',
+      further_competition: 'further_competition'
     }.freeze
 
     def view

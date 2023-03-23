@@ -32,7 +32,7 @@ Then('there is a warning with the text {string}') do |warning_text|
 end
 
 Then('the key details include:') do |key_details_table|
-  key_details = contract_page.key_details.native.text.split("\n").reject(&:blank?).map(&:strip)
+  key_details = contract_page.key_details.native.text.split("\n").compact_blank.map(&:strip)
 
   key_details.zip(key_details_table.raw.flatten).each do |actual, expected|
     expect(actual).to include(expected)
@@ -40,7 +40,7 @@ Then('the key details include:') do |key_details_table|
 end
 
 Then('I should see the following text within the contract offer history:') do |contract_offer_history_table|
-  contract_offer_history = contract_page.contract_offer_history.native.text.split("\n").reject(&:blank?).map(&:strip)
+  contract_offer_history = contract_page.contract_offer_history.native.text.split("\n").compact_blank.map(&:strip)
 
   contract_offer_history.zip(contract_offer_history_table.raw.flatten).each do |actual, expected|
     expect(actual).to include(expected)
@@ -123,7 +123,7 @@ Then('the what happens next {string} titles are:') do |option, what_happens_next
 end
 
 Then('the contract summary footer has the following text:') do |summary_footer_table|
-  summary_footer = contract_page.contract_summary_footer.native.text.split("\n").reject(&:blank?).map(&:strip)
+  summary_footer = contract_page.contract_summary_footer.native.text.split("\n").compact_blank.map(&:strip)
 
   summary_footer.zip(summary_footer_table.raw.flatten).each do |actual, expected|
     expect(actual).to include(expected)

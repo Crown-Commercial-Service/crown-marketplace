@@ -8,13 +8,15 @@ gem 'rails', '~> 6.1.7'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 6.0'
+gem 'puma', '~> 6.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.1', '>= 5.1.0'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
+
+gem 'shakapacker', '~> 6.5.6'
+
+gem 'turbolinks', '~> 5'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'
@@ -37,19 +39,18 @@ gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
 gem 'caxlsx_rails', '>= 0.6.3'
 gem 'virtus'
-gem 'jquery-rails', '~> 4.5.1'
 
-gem 'rollbar', '~> 3.3.2'
+gem 'rollbar', '~> 3.4.0'
 
 # for dfe sign in
-gem 'omniauth', '~> 2.1.0'
+gem 'omniauth', '~> 2.1.1'
 gem 'omniauth-oauth2', '~> 1.8.0'
 
 # for authentication
-gem 'devise', '~> 4.8.1'
+gem 'devise', '~> 4.9.0'
 
 # for timing out when session expires
-gem 'auto-session-timeout', '~> 0.9.9'
+gem 'auto-session-timeout', '~> 1.0'
 
 # for cognito
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.73.0'
@@ -61,14 +62,14 @@ gem 'kaminari', '~> 1.2.2'
 gem 'aws-sdk-s3', '~> 1'
 
 # handles spreadsheets
-gem 'roo', '~> 2.9.0'
+gem 'roo', '~> 2.10.0'
 
 # state machine
-gem 'aasm', '~> 5.4'
+gem 'aasm', '~> 5.5'
 gem 'after_commit_everywhere', '~> 1.3'
 
 # for running background jobs
-gem 'sidekiq', '~> 6.5.7'
+gem 'sidekiq', '~> 7.0.6'
 gem 'sinatra', '~> 3.0.5', require: false
 gem 'slim', '~> 5.0.0'
 gem 'sidekiq-cron'
@@ -79,7 +80,6 @@ gem 'cancancan', '~> 3.4.0'
 gem 'role_model', '~> 0.8.2'
 
 gem 'sprockets', '>= 3.7.2'
-gem 'sprockets-bumble_d', '>= 2.2.0'
 
 gem 'smarter_csv'
 
@@ -128,7 +128,7 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
-  gem 'faker', '~> 3.0.0'
+  gem 'faker', '~> 3.1.1'
 end
 
 group :development do

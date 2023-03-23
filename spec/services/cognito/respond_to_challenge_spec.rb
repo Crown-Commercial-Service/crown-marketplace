@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Cognito::RespondToChallenge do
+  include_context 'with cognito structs'
+
   let(:username) { '123456' }
   let(:challenge_name) { 'NEW_PASSWORD_REQUIRED' }
   let(:session) { 'Session' }
@@ -11,12 +13,13 @@ RSpec.describe Cognito::RespondToChallenge do
   let(:new_session) { 'New session' }
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
+  before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
+
   describe '#validations' do
     let(:response) { described_class.new(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
 
     before do
-      allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-      allow(aws_client).to receive(:respond_to_auth_challenge).and_return(OpenStruct.new(challenge_name: new_challenge_name, session: new_session))
+      allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
       allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(true)
     end
 
@@ -25,7 +28,7 @@ RSpec.describe Cognito::RespondToChallenge do
       let(:new_password_confirmation) { 'Pass!' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
 
@@ -34,7 +37,7 @@ RSpec.describe Cognito::RespondToChallenge do
       let(:new_password_confirmation) { 'password!' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
 
@@ -43,7 +46,7 @@ RSpec.describe Cognito::RespondToChallenge do
       let(:new_password_confirmation) { 'ValidPass123!' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
 
@@ -52,7 +55,7 @@ RSpec.describe Cognito::RespondToChallenge do
       let(:new_password_confirmation) { 'ValidPass123!' }
 
       it 'is invalid' do
-        expect(response.valid?).to eq false
+        expect(response.valid?).to be false
       end
     end
   end
@@ -62,17 +65,16 @@ RSpec.describe Cognito::RespondToChallenge do
       let(:response) { described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
 
       before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:respond_to_auth_challenge).and_return(OpenStruct.new(challenge_name: new_challenge_name, session: new_session))
+        allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
         allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(true)
       end
 
       it 'returns success' do
-        expect(response.success?).to eq true
+        expect(response.success?).to be true
       end
 
       it 'returns no error' do
-        expect(response.error).to eq nil
+        expect(response.error).to be_nil
       end
 
       it 'returns new_challenge_name' do
@@ -80,7 +82,7 @@ RSpec.describe Cognito::RespondToChallenge do
       end
 
       it 'returns challenge?' do
-        expect(response.challenge?).to eq true
+        expect(response.challenge?).to be true
       end
 
       it 'returns new_session' do
@@ -92,17 +94,14 @@ RSpec.describe Cognito::RespondToChallenge do
       let(:challenge_name) { 'SMS_MFA' }
       let(:response) { described_class.call(challenge_name, username, session, access_code: access_code) }
 
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:respond_to_auth_challenge).and_return(OpenStruct.new(challenge_name: new_challenge_name, session: new_session))
-      end
+      before { allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session)) }
 
       it 'returns success' do
-        expect(response.success?).to eq true
+        expect(response.success?).to be true
       end
 
       it 'returns no error' do
-        expect(response.error).to eq nil
+        expect(response.error).to be_nil
       end
 
       it 'returns new_challenge_name' do
@@ -110,7 +109,7 @@ RSpec.describe Cognito::RespondToChallenge do
       end
 
       it 'returns challenge?' do
-        expect(response.challenge?).to eq true
+        expect(response.challenge?).to be true
       end
 
       it 'returns new_session' do
@@ -119,18 +118,15 @@ RSpec.describe Cognito::RespondToChallenge do
     end
 
     context 'when cognito error' do
-      before do
-        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-        allow(aws_client).to receive(:respond_to_auth_challenge).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
-      end
+      let(:response) { described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
+
+      before { allow(aws_client).to receive(:respond_to_auth_challenge).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops')) }
 
       it 'does not return success' do
-        response = described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation)
-        expect(response.success?).to eq false
+        expect(response.success?).to be false
       end
 
       it 'does returns cognito error' do
-        response = described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation)
         expect(response.errors.full_messages.to_sentence).to eq 'Oops'
       end
     end
