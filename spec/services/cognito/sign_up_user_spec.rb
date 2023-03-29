@@ -1,11 +1,50 @@
 require 'rails_helper'
 
 RSpec.describe Cognito::SignUpUser do
+  let(:email) { 'user@crowncommercial.gov.uk' }
+  let(:password) { 'ValidPass123!' }
+  let(:password_confirmation) { 'ValidPass123!' }
+  let(:roles) { %i[buyer st_access] }
+
+  describe '#initialize' do
+    let(:sign_up_user) { described_class.new(email, password, password_confirmation, roles) }
+
+    let(:email) { 'user@test.com' }
+
+    let(:sign_up_user_attributes) do
+      {
+        email: sign_up_user.email,
+        password: sign_up_user.password,
+        password_confirmation: sign_up_user.password_confirmation,
+        roles: sign_up_user.roles,
+        user: sign_up_user.user,
+        not_on_safelist: sign_up_user.not_on_safelist
+      }
+    end
+
+    it 'initialises the object with the attributes' do
+      expect(sign_up_user_attributes).to eq(
+        {
+          email: 'user@test.com',
+          password: 'ValidPass123!',
+          password_confirmation: 'ValidPass123!',
+          roles: %i[buyer st_access],
+          user: nil,
+          not_on_safelist: nil
+        }
+      )
+    end
+
+    context 'when the email has uppercase letters' do
+      let(:email) { 'Test@Test.com' }
+
+      it 'does not change the email case' do
+        expect(sign_up_user.email).to eq('Test@Test.com')
+      end
+    end
+  end
+
   describe '#call' do
-    let(:email) { 'user@crowncommercial.gov.uk' }
-    let(:password) { 'ValidPass123!' }
-    let(:password_confirmation) { 'ValidPass123!' }
-    let(:roles) { %i[buyer st_access] }
     let(:email_list) { ['crowncommercial.gov.uk', 'email.com', 'tmail.com', 'kmail.com', 'cmail.com', 'jmail.com', 'cheemail.com'] }
     let(:allow_list_file) { Tempfile.new('allow_list.txt') }
 

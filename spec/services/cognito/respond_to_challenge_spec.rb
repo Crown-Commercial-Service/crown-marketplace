@@ -15,6 +15,78 @@ RSpec.describe Cognito::RespondToChallenge do
 
   before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
 
+  # rubocop:disable RSpec/ExampleLength
+  describe '#initialize' do
+    let(:respond_to_challenge_attributes) do
+      {
+        challenge_name: respond_to_challenge.challenge_name,
+        session: respond_to_challenge.session,
+        new_password: respond_to_challenge.new_password,
+        new_password_confirmation: respond_to_challenge.new_password_confirmation,
+        access_code: respond_to_challenge.access_code,
+        username: respond_to_challenge.username,
+        roles: respond_to_challenge.roles
+      }
+    end
+
+    context 'when no options are passed' do
+      let(:respond_to_challenge) { described_class.new(challenge_name, username, session) }
+
+      it 'initialises the object with the optional attributes as nil' do
+        expect(respond_to_challenge_attributes).to eq(
+          {
+            challenge_name: 'NEW_PASSWORD_REQUIRED',
+            session: 'Session',
+            new_password: nil,
+            new_password_confirmation: nil,
+            access_code: nil,
+            username: '123456',
+            roles: nil
+          }
+        )
+      end
+    end
+
+    context 'when the NEW_PASSWORD_REQUIRED params are passed' do
+      let(:respond_to_challenge) { described_class.new(challenge_name, username, session, new_password:, new_password_confirmation:) }
+
+      it 'initialises the object with the NEW_PASSWORD_REQUIRED attributes present' do
+        expect(respond_to_challenge_attributes).to eq(
+          {
+            challenge_name: 'NEW_PASSWORD_REQUIRED',
+            session: 'Session',
+            new_password: 'ValidPass123!',
+            new_password_confirmation: 'ValidPass123!',
+            access_code: nil,
+            username: '123456',
+            roles: nil
+          }
+        )
+      end
+    end
+
+    context 'when the SMS_MFA params are passed' do
+      let(:respond_to_challenge) { described_class.new(challenge_name, username, session, access_code:) }
+
+      let(:challenge_name) { 'SMS_MFA' }
+
+      it 'initialises the object with the SMS_MFA attributes present' do
+        expect(respond_to_challenge_attributes).to eq(
+          {
+            challenge_name: 'SMS_MFA',
+            session: 'Session',
+            new_password: nil,
+            new_password_confirmation: nil,
+            access_code: '123467',
+            username: '123456',
+            roles: nil
+          }
+        )
+      end
+    end
+  end
+  # rubocop:enable RSpec/ExampleLength
+
   describe '#validations' do
     let(:response) { described_class.new(challenge_name, username, session, new_password:, new_password_confirmation:) }
 

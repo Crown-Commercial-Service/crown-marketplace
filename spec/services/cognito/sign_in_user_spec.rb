@@ -1,15 +1,60 @@
 require 'rails_helper'
 
 RSpec.describe Cognito::SignInUser do
+  let(:email) { 'user@email.com' }
+  let(:password) { 'ValidPass123!' }
+  let(:cookies_disabled) { false }
+
+  describe '#initialize' do
+    let(:sign_in_user) { described_class.new(email, password, cookies_disabled) }
+
+    let(:sign_in_user_attributes) do
+      {
+        email: sign_in_user.email,
+        password: sign_in_user.password,
+        error: sign_in_user.error,
+        needs_password_reset: sign_in_user.needs_password_reset,
+        cookies_disabled: sign_in_user.cookies_disabled,
+        needs_confirmation: sign_in_user.needs_confirmation
+      }
+    end
+
+    it 'initialises the object with the attributes' do
+      expect(sign_in_user_attributes).to eq(
+        {
+          email: 'user@email.com',
+          password: 'ValidPass123!',
+          error: nil,
+          needs_password_reset: false,
+          cookies_disabled: false,
+          needs_confirmation: nil
+        }
+      )
+    end
+
+    context 'when the email has uppercase letters' do
+      let(:email) { 'Test@Test.com' }
+
+      it 'makes the email lower case' do
+        expect(sign_in_user.email).to eq('test@test.com')
+      end
+    end
+
+    context 'when the email is nil' do
+      let(:email) { nil }
+
+      it 'returns nil for the email' do
+        expect(sign_in_user.email).to be_nil
+      end
+    end
+  end
+
   describe '#call' do
     include_context 'with cognito structs'
 
-    let(:email) { 'user@email.com' }
-    let(:password) { 'ValidPass123!' }
     let(:challenge_name) { 'Challenge name' }
     let(:session) { 'Session' }
     let(:user_id_for_srp) { 'User id' }
-    let(:cookies_disabled) { false }
 
     let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
