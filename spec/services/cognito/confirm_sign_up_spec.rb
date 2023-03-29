@@ -8,6 +8,45 @@ RSpec.describe Cognito::ConfirmSignUp do
 
   before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
 
+  describe '#initialize' do
+    let(:confirm_sign_up) { described_class.new(email, confirmation_code) }
+
+    let(:confirm_sign_up_attributes) do
+      {
+        email: confirm_sign_up.email,
+        confirmation_code: confirm_sign_up.confirmation_code,
+        user: confirm_sign_up.user
+      }
+    end
+
+    it 'initialises the object with the attributes' do
+      expect(confirm_sign_up_attributes).to eq(
+        {
+          email: 'user@test.com',
+          confirmation_code: '123456',
+          user: nil
+        }
+      )
+    end
+
+    context 'when the email has uppercase letters' do
+      let(:email) { 'Test@Test.com' }
+
+      it 'makes the email lower case' do
+        expect(confirm_sign_up.email).to eq('test@test.com')
+      end
+    end
+
+    context 'when the email is nil' do
+      let(:email) { nil }
+      let(:user) { nil }
+
+      it 'returns nil for the email' do
+        expect(confirm_sign_up.email).to be_nil
+      end
+    end
+  end
+
   describe '#validations' do
     let(:response) { described_class.new(email, confirmation_code) }
 

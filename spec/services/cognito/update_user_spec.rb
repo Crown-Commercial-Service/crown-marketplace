@@ -1,10 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe Cognito::UpdateUser do
+  let(:user) { create(:user, :without_detail, roles: %i[mc_access fm_acess ls_access]) }
+
+  describe '#initialize' do
+    let(:update_user) { described_class.new(user) }
+
+    let(:update_user_attributes) do
+      {
+        user: update_user.user,
+        error: update_user.error
+      }
+    end
+
+    it 'initialises the object with the attributes' do
+      expect(update_user_attributes).to eq(
+        {
+          user: user,
+          error: nil
+        }
+      )
+    end
+  end
+
   describe '#call' do
     include_context 'with cognito structs'
 
-    let(:user) { create(:user, :without_detail, roles: %i[mc_access fm_acess ls_access]) }
     let(:cognito_groups) do
       admin_list_groups_for_user_resp_struct.new(
         groups: [
