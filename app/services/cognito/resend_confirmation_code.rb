@@ -4,7 +4,7 @@ module Cognito
     attr_accessor :error
 
     def initialize(email)
-      @email = email
+      @email = email.try(:downcase)
       @error = nil
     end
 
