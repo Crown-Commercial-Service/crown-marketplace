@@ -1,4 +1,4 @@
-FROM ruby:2.7.7-alpine
+FROM ruby:3.2.1-alpine
 
 # Build information
 ARG GIT_OWNER
@@ -84,8 +84,6 @@ ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata clamav cla
 RUN apk update \
     && apk upgrade \
     && apk add bash $BUILD_PACKAGES npm git
-
-RUN npm config set unsafe-perm true
 
 # Install yarn to manage Node.js dependencies
 RUN npm install yarn -g

@@ -4,7 +4,7 @@ module Cognito
     attr_accessor :error
 
     def initialize(email)
-      @email = email
+      @email = email.try(:downcase)
       @error = nil
     end
 
@@ -21,7 +21,7 @@ module Cognito
     private
 
     def username
-      User.find_for_authentication(email: email).cognito_uuid
+      User.find_for_authentication(email:).cognito_uuid
     end
   end
 end

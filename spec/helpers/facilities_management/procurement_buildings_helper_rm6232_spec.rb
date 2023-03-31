@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper do
-  let(:building) { create(:facilities_management_building, user: user) }
-  let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: user) }
-  let(:procurement_building) { create(:facilities_management_rm6232_procurement_building_no_services, procurement: procurement, building: building) }
+  let(:building) { create(:facilities_management_building, user:) }
+  let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user:) }
+  let(:procurement_building) { create(:facilities_management_rm6232_procurement_building_no_services, procurement:, building:) }
   let(:user) { create(:user) }
 
   before do

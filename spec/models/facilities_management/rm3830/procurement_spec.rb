@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::Procurement do
-  subject(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, user: user) }
+  subject(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, user:) }
 
   let(:user) { create(:user) }
 
@@ -205,12 +205,12 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
   end
 
   describe 'validations on :continue' do
-    let(:procurement) { create(:facilities_management_rm3830_procurement_without_procurement_buildings, user: user) }
-    let(:building) { create(:facilities_management_building, user: user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_without_procurement_buildings, user:) }
+    let(:building) { create(:facilities_management_building, user:) }
 
     context 'with valid scenarios' do
       before do
-        procurement.update(service_codes: service_codes)
+        procurement.update(service_codes:)
         procurement.procurement_buildings.create(building_id: building.id, service_codes: service_codes, active: true)
       end
 
@@ -503,7 +503,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
     end
 
     describe 'changing state' do
-      let(:procurement_building) { create(:facilities_management_rm3830_procurement_building_no_services, procurement: procurement) }
+      let(:procurement_building) { create(:facilities_management_rm3830_procurement_building_no_services, procurement:) }
       let(:estimated_cost_known) { nil }
       let(:services_standard) { nil }
 
@@ -1120,14 +1120,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
   end
 
   describe 'services missing prices' do
-    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building_no_services, procurement: procurement) }
+    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building_no_services, procurement:) }
 
     before do
       procurement.procurement_buildings.destroy_all
       codes.each do |code|
-        create(:facilities_management_rm3830_procurement_building_service, code: code, procurement_building: procurement_building)
+        create(:facilities_management_rm3830_procurement_building_service, code:, procurement_building:)
       end
-      procurement.update(estimated_cost_known: estimated_cost_known)
+      procurement.update(estimated_cost_known:)
     end
 
     context 'when buyer input not present' do
@@ -1357,7 +1357,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
   describe '.contract_name_status' do
     subject(:status) { procurement.contract_name_status }
 
-    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, contract_name: contract_name) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, contract_name:) }
 
     context 'when the contract name section has not been completed' do
       let(:contract_name) { '' }
@@ -1379,7 +1379,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
   describe '.estimated_annual_cost_status' do
     subject(:status) { procurement.estimated_annual_cost_status }
 
-    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, estimated_cost_known: estimated_cost_known) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, estimated_cost_known:) }
 
     context 'when the estimated cost section has not been completed' do
       let(:estimated_cost_known) { nil }
@@ -1401,7 +1401,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
   describe '.tupe_status' do
     subject(:status) { procurement.tupe_status }
 
-    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, tupe: tupe) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, tupe:) }
 
     context 'when the tupe section has not been completed' do
       let(:tupe) { nil }
@@ -1451,7 +1451,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
   describe '.services_status' do
     subject(:status) { procurement.services_status }
 
-    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, service_codes: service_codes) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, service_codes:) }
 
     context 'when user has not yet selected services' do
       let(:service_codes) { [] }
@@ -1492,7 +1492,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
 
   shared_context 'with buildings and services' do
     let(:procurement) do
-      create(:facilities_management_rm3830_procurement_detailed_search, procurement_buildings: procurement_buildings)
+      create(:facilities_management_rm3830_procurement_detailed_search, procurement_buildings:)
     end
 
     let(:procurement_buildings) { [procurement_building1, procurement_building2] }
@@ -1509,7 +1509,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
     include_context 'with buildings and services'
 
     before do
-      procurement_building1.update(service_codes: service_codes)
+      procurement_building1.update(service_codes:)
       procurement_building2.update(service_codes: %w[C.1 C.2])
     end
 
@@ -1858,7 +1858,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       end
 
       context 'when there is invoice_contact_detail and it is complete' do
-        before { create(:facilities_management_rm3830_procurement_invoice_contact_detail, procurement: procurement) }
+        before { create(:facilities_management_rm3830_procurement_invoice_contact_detail, procurement:) }
 
         it 'returns false' do
           expect(result).to be false
@@ -1866,7 +1866,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       end
 
       context 'when there is invoice_contact_detail and it is incomplete' do
-        before { create(:facilities_management_rm3830_procurement_invoice_contact_detail_empty, procurement: procurement) }
+        before { create(:facilities_management_rm3830_procurement_invoice_contact_detail_empty, procurement:) }
 
         it 'returns true' do
           expect(result).to be true
@@ -1884,7 +1884,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       end
 
       context 'when there is authorised_contact_detail and it is complete' do
-        before { create(:facilities_management_rm3830_procurement_authorised_contact_detail, procurement: procurement) }
+        before { create(:facilities_management_rm3830_procurement_authorised_contact_detail, procurement:) }
 
         it 'returns false' do
           expect(result).to be false
@@ -1892,7 +1892,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       end
 
       context 'when there is authorised_contact_detail and it is incomplete' do
-        before { create(:facilities_management_rm3830_procurement_authorised_contact_detail_empty, procurement: procurement) }
+        before { create(:facilities_management_rm3830_procurement_authorised_contact_detail_empty, procurement:) }
 
         it 'returns true' do
           expect(result).to be true
@@ -1910,7 +1910,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       end
 
       context 'when there is notices_contact_detail and it is complete' do
-        before { create(:facilities_management_rm3830_procurement_notices_contact_detail, procurement: procurement) }
+        before { create(:facilities_management_rm3830_procurement_notices_contact_detail, procurement:) }
 
         it 'returns false' do
           expect(result).to be false
@@ -1918,7 +1918,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       end
 
       context 'when there is notices_contact_detail and it is incomplete' do
-        before { create(:facilities_management_rm3830_procurement_notices_contact_detail_empty, procurement: procurement) }
+        before { create(:facilities_management_rm3830_procurement_notices_contact_detail_empty, procurement:) }
 
         it 'returns true' do
           expect(result).to be true

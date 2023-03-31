@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::Procurement do
-  subject(:procurement) { build(:facilities_management_rm3830_procurement, user: user) }
+  subject(:procurement) { build(:facilities_management_rm3830_procurement, user:) }
 
   let(:user) { build(:user) }
 
@@ -288,7 +288,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
 
   describe '.contract_period_in_past?' do
     before do
-      procurement.update(initial_call_off_start_date: initial_call_off_start_date)
+      procurement.update(initial_call_off_start_date:)
     end
 
     context 'when initial call off period is in the past' do
@@ -312,7 +312,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
     before do
       procurement.update(initial_call_off_start_date: Time.now.in_time_zone('London') + 5.weeks)
       procurement.update(mobilisation_period_required: true)
-      procurement.update(mobilisation_period: mobilisation_period)
+      procurement.update(mobilisation_period:)
     end
 
     context 'when mobilisation period is in the past' do
@@ -337,9 +337,9 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
     let(:mobilisation_period) { 4 }
 
     before do
-      procurement.update(tupe: tupe)
-      procurement.update(mobilisation_period_required: mobilisation_period_required)
-      procurement.update(mobilisation_period: mobilisation_period)
+      procurement.update(tupe:)
+      procurement.update(mobilisation_period_required:)
+      procurement.update(mobilisation_period:)
     end
 
     context 'when tupe is true' do

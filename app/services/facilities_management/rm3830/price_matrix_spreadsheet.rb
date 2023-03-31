@@ -180,7 +180,7 @@ module FacilitiesManagement::RM3830
       selected_building_types = @active_procurement_buildings.pluck(:building_type).uniq
       @building_types_with_service_codes = selected_building_types.map do |building_type|
         service_codes = @active_procurement_buildings.select { |apb| apb.building_type == building_type }.pluck(:service_codes).flatten.uniq
-        { building_type: building_type, service_codes: service_codes }
+        { building_type:, service_codes: }
       end
     end
 

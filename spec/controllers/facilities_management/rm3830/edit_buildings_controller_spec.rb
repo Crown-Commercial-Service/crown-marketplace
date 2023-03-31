@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM3830::EditBuildingsController do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
-  let(:building) { create(:facilities_management_building, user: user) }
-  let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, user: user) }
+  let(:building) { create(:facilities_management_building, user:) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, user:) }
   let(:user) { controller.current_user }
 
   describe 'GET #show' do

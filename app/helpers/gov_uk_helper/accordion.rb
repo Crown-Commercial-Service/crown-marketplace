@@ -1,13 +1,13 @@
 # rubocop:disable Metrics/ModuleLength
 module GovUKHelper::Accordion
-  def govuk_accordion(name, sections, &block)
+  def govuk_accordion(name, sections, &)
     tag.div(class: 'govuk-accordion', id: "accordion-with-summary-sections-for-#{name}", data: { module: 'govuk-accordion' }) do
       capture do
         sections.each.with_index(1) do |section, index|
           concat(tag.div(class: 'govuk-accordion__section') do
             capture do
               concat(govuk_accordion_heading(index, section[:name]))
-              concat(govuk_accordion_content(index, name, section, &block))
+              concat(govuk_accordion_content(index, name, section, &))
             end
           end)
         end
@@ -15,7 +15,7 @@ module GovUKHelper::Accordion
     end
   end
 
-  def govuk_accordion_with_checkboxes(name, sections, model_name, attribute, &block)
+  def govuk_accordion_with_checkboxes(name, sections, model_name, attribute, &)
     tag.div(class: 'govuk-accordion', id: "accordion-with-summary-sections-for-#{name}", data: { module: 'govuk-accordion' }) do
       capture do
         sections.each.with_index(1) do |(section_id, section), index|
@@ -23,7 +23,7 @@ module GovUKHelper::Accordion
             capture do
               concat(govuk_accordion_heading(index, section[:name]))
               concat(govuk_accordion_content(index, section[:name], section) do
-                check_boxes_for_section(section_id, model_name, attribute, section[:name], section[:items], &block)
+                check_boxes_for_section(section_id, model_name, attribute, section[:name], section[:items], &)
               end)
             end
           end)
@@ -48,7 +48,7 @@ module GovUKHelper::Accordion
     end
   end
 
-  def check_boxes_for_section(section_id, model_name, attribute, section_name, items, &block)
+  def check_boxes_for_section(section_id, model_name, attribute, section_name, items, &)
     tag.div(class: 'govuk-form-group chooser-input', sectionname: section_name, section: section_id) do
       tag.div(class: 'govuk-checkboxes') do
         capture do
@@ -56,7 +56,7 @@ module GovUKHelper::Accordion
             concat(tag.div(class: 'govuk-checkboxes__item') do
               capture do
                 concat(check_box_item(section_id, model_name, attribute, item))
-                concat(check_box_label(section_id, model_name, item, &block))
+                concat(check_box_label(section_id, model_name, item, &))
               end
             end)
           end

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesHelper do
-  let(:procurement_building_service) { create(:facilities_management_rm3830_procurement_building_service, code: code, procurement_building: procurement_building) }
-  let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: procurement) }
+  let(:procurement_building_service) { create(:facilities_management_rm3830_procurement_building_service, code:, procurement_building:) }
+  let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement:) }
   let(:procurement) { create(:facilities_management_rm3830_procurement) }
 
   describe 'volume_question' do

@@ -5,7 +5,7 @@ RSpec.describe FacilitiesManagement::RM3830::FrozenRate do
 
   before { frozen_rate.save }
 
-  let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement, user:) }
   let(:user) { create(:user) }
 
   it 'has no benchmark rates' do

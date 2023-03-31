@@ -116,7 +116,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsHelper do
 
     context 'when the state is declined' do
       let(:aasm_state) { :declined }
-      let(:attributes) { { supplier_response_date: supplier_response_date } }
+      let(:attributes) { { supplier_response_date: } }
       let(:supplier_response_date) { Time.new(2021, 7, 7, 20, 29, 0).in_time_zone('London') }
 
       it 'has the correct warning' do
@@ -142,7 +142,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsHelper do
 
     context 'when the state is not_signed' do
       let(:aasm_state) { :not_signed }
-      let(:attributes) { { contract_signed_date: contract_signed_date } }
+      let(:attributes) { { contract_signed_date: } }
       let(:contract_signed_date) { Time.new(2021, 7, 7, 20, 39, 0).in_time_zone('London') }
 
       it 'has the correct warning' do
@@ -156,7 +156,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsHelper do
 
     context 'when the state is withdrawn' do
       let(:aasm_state) { :withdrawn }
-      let(:attributes) { { contract_closed_date: contract_closed_date } }
+      let(:attributes) { { contract_closed_date: } }
       let(:contract_closed_date) { Time.new(2021, 7, 7, 22, 13, 0).in_time_zone('London') }
 
       it 'has the correct warning' do

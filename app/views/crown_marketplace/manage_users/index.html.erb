@@ -11,7 +11,7 @@
 
 <div class="govuk-grid-row" id="users-search-container">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: crown_marketplace_manage_users_path, method: :get, remote: true, html: { specialvalidation: true } do |f| %>
+    <%= form_with url: crown_marketplace_manage_users_path, method: :get, html: { specialvalidation: true, remote: true } do |f| %>
       <div class="govuk-form-group <%= 'govuk-form-group--error' if @search[:error] %>" id="email-form-group">
         <%= govuk_label(
           f,

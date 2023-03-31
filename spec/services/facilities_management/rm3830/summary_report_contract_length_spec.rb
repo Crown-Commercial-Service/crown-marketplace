@@ -5,8 +5,8 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
 
   let(:procurement) do
     create(:facilities_management_rm3830_procurement_with_contact_details_with_buildings,
-           initial_call_off_period_years: initial_call_off_period_years,
-           initial_call_off_period_months: initial_call_off_period_months)
+           initial_call_off_period_years:,
+           initial_call_off_period_months:)
   end
 
   let(:supplier_id) { '24bde4cf-6ccc-4367-ba16-77deb593d3c3' }

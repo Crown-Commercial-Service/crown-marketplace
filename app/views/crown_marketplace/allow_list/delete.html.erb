@@ -12,7 +12,7 @@
   <%= t('.re_add') %>
 </p>
 
-<%= form_with url: destroy_crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :delete, local: true, html: { specialvalidation: true } do |f| %>
+<%= form_with url: destroy_crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :delete, html: { specialvalidation: true } do |f| %>
   <%= f.hidden_field :email_domain, value: params[:email_domain] %>
 
   <%= f.submit t('.remove'), class: 'govuk-button govuk-button--warning govuk-!-margin-right-4' %>

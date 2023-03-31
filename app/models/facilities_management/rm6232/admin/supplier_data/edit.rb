@@ -29,7 +29,7 @@ module FacilitiesManagement
           @current_supplier_data ||= begin
             supplier = supplier_data.data.find { |supplier_item| supplier_item['id'] == supplier_id }.dup
 
-            supplier_data.edits.where(supplier_id: supplier_id).where('created_at <= ?', created_at).order(created_at: :asc).each do |edit|
+            supplier_data.edits.where(supplier_id:).where('created_at <= ?', created_at).order(created_at: :asc).each do |edit|
               if edit.change_type == 'lot_data'
                 supplier_lot_data = supplier['lot_data'].find { |lot_data| lot_data['lot_code'] == edit.data['lot_code'] }
 
@@ -50,7 +50,7 @@ module FacilitiesManagement
         end
 
         def previous_supplier_data
-          supplier_data.edits.where(supplier_id: supplier_id).where('created_at < ?', created_at).order(created_at: :desc).first&.current_supplier_data || supplier_data.data.find { |supplier_item| supplier_item['id'] == supplier_id }
+          supplier_data.edits.where(supplier_id:).where('created_at < ?', created_at).order(created_at: :desc).first&.current_supplier_data || supplier_data.data.find { |supplier_item| supplier_item['id'] == supplier_id }
         end
       end
     end

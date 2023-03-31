@@ -1,6 +1,6 @@
 class FacilitiesManagement::RM6232::ServiceSpecificationParser
   DATA_FILE_PATH = Rails.root.join('data', 'facilities_management', 'rm6232', 'service_specifications.csv')
-  SERVICE_LINE_REGEX = /\A[\d+.]+/.freeze
+  SERVICE_LINE_REGEX = /\A[\d+.]+/
 
   attr_reader :work_package_service_lines, :service_lines
 

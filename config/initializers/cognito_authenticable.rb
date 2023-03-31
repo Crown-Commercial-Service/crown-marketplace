@@ -24,7 +24,7 @@ module Devise
       end
 
       def find_or_create_user
-        user = User.find_for_authentication(email: email)
+        user = User.find_for_authentication(email:)
         user ? update_if_needed(user) : create_user_in_database
       end
 

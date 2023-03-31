@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseLocations do
-  let(:choose_locations) { described_class.new(region_codes: region_codes, annual_contract_value: annual_contract_value) }
+  let(:choose_locations) { described_class.new(region_codes:, annual_contract_value:) }
   let(:region_codes) { ['UKC1', 'UKC2'] }
   let(:annual_contract_value) { 123_456 }
 

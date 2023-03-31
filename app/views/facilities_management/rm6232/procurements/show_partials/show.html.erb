@@ -17,7 +17,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= form_with url: facilities_management_rm6232_procurement_update_show_path(@procurement), method: :put, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
+    <%= form_with url: facilities_management_rm6232_procurement_update_show_path(@procurement), method: :put, html: { specialvalidation: true, novalidate: true } do |f| %>
       <div class="govuk-button-group govuk-!-margin-top-5">
         <%= f.submit t('.save_and_continue'), class: 'govuk-button', data: { module: 'govuk-button' } unless @procurement.further_information? %>
         <%= f.submit t('.change_requirements'), class: 'govuk-button govuk-button--secondary', data: { module: 'govuk-button' }, name: :change_requirements if @procurement.results? %>

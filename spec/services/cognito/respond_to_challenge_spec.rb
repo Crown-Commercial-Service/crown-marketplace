@@ -15,8 +15,80 @@ RSpec.describe Cognito::RespondToChallenge do
 
   before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
 
+  # rubocop:disable RSpec/ExampleLength
+  describe '#initialize' do
+    let(:respond_to_challenge_attributes) do
+      {
+        challenge_name: respond_to_challenge.challenge_name,
+        session: respond_to_challenge.session,
+        new_password: respond_to_challenge.new_password,
+        new_password_confirmation: respond_to_challenge.new_password_confirmation,
+        access_code: respond_to_challenge.access_code,
+        username: respond_to_challenge.username,
+        roles: respond_to_challenge.roles
+      }
+    end
+
+    context 'when no options are passed' do
+      let(:respond_to_challenge) { described_class.new(challenge_name, username, session) }
+
+      it 'initialises the object with the optional attributes as nil' do
+        expect(respond_to_challenge_attributes).to eq(
+          {
+            challenge_name: 'NEW_PASSWORD_REQUIRED',
+            session: 'Session',
+            new_password: nil,
+            new_password_confirmation: nil,
+            access_code: nil,
+            username: '123456',
+            roles: nil
+          }
+        )
+      end
+    end
+
+    context 'when the NEW_PASSWORD_REQUIRED params are passed' do
+      let(:respond_to_challenge) { described_class.new(challenge_name, username, session, new_password:, new_password_confirmation:) }
+
+      it 'initialises the object with the NEW_PASSWORD_REQUIRED attributes present' do
+        expect(respond_to_challenge_attributes).to eq(
+          {
+            challenge_name: 'NEW_PASSWORD_REQUIRED',
+            session: 'Session',
+            new_password: 'ValidPass123!',
+            new_password_confirmation: 'ValidPass123!',
+            access_code: nil,
+            username: '123456',
+            roles: nil
+          }
+        )
+      end
+    end
+
+    context 'when the SMS_MFA params are passed' do
+      let(:respond_to_challenge) { described_class.new(challenge_name, username, session, access_code:) }
+
+      let(:challenge_name) { 'SMS_MFA' }
+
+      it 'initialises the object with the SMS_MFA attributes present' do
+        expect(respond_to_challenge_attributes).to eq(
+          {
+            challenge_name: 'SMS_MFA',
+            session: 'Session',
+            new_password: nil,
+            new_password_confirmation: nil,
+            access_code: '123467',
+            username: '123456',
+            roles: nil
+          }
+        )
+      end
+    end
+  end
+  # rubocop:enable RSpec/ExampleLength
+
   describe '#validations' do
-    let(:response) { described_class.new(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
+    let(:response) { described_class.new(challenge_name, username, session, new_password:, new_password_confirmation:) }
 
     before do
       allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
@@ -62,7 +134,7 @@ RSpec.describe Cognito::RespondToChallenge do
 
   describe '#call' do
     context 'when NEW_PASSWORD_REQUIRED challenge success' do
-      let(:response) { described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
+      let(:response) { described_class.call(challenge_name, username, session, new_password:, new_password_confirmation:) }
 
       before do
         allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
@@ -92,7 +164,7 @@ RSpec.describe Cognito::RespondToChallenge do
 
     context 'when SMS_MFA challenge success' do
       let(:challenge_name) { 'SMS_MFA' }
-      let(:response) { described_class.call(challenge_name, username, session, access_code: access_code) }
+      let(:response) { described_class.call(challenge_name, username, session, access_code:) }
 
       before { allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session)) }
 
@@ -118,7 +190,7 @@ RSpec.describe Cognito::RespondToChallenge do
     end
 
     context 'when cognito error' do
-      let(:response) { described_class.call(challenge_name, username, session, new_password: new_password, new_password_confirmation: new_password_confirmation) }
+      let(:response) { described_class.call(challenge_name, username, session, new_password:, new_password_confirmation:) }
 
       before { allow(aws_client).to receive(:respond_to_auth_challenge).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops')) }
 

@@ -12,10 +12,10 @@ RSpec.describe FacilitiesManagement::RM3830::PriceMatrixSpreadsheet do
   end
 
   let(:user) { create(:user, :with_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
-  let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details_with_buildings, user: user) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details_with_buildings, user:) }
   let(:supplier_name) { 'Bogan-Koch' }
   let(:supplier_details) { create(:facilities_management_rm3830_supplier_detail_with_lots) }
-  let(:supplier) { FacilitiesManagement::RM3830::SupplierDetail.find_by(supplier_name: supplier_name) }
+  let(:supplier) { FacilitiesManagement::RM3830::SupplierDetail.find_by(supplier_name:) }
   let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
 
   before { supplier.update(lot_data: supplier_details.lot_data) }

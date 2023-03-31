@@ -259,7 +259,7 @@ module FacilitiesManagement
       SEARCH = %i[quick_search detailed_search detailed_search_bulk_upload choose_contract_value results].freeze
       SEARCH_ORDER = SEARCH.map(&:to_s)
 
-      DIRECT_AWARD_VALUE_RANGE = (0..1.49999999e6).freeze
+      DIRECT_AWARD_VALUE_RANGE = (0..1.49999999e6)
 
       MAX_NUMBER_OF_PENSIONS = 99
 
@@ -401,7 +401,7 @@ module FacilitiesManagement
       end
 
       def services_require_questions?
-        (procurement_building_service_codes & services_requiring_questions).any?
+        procurement_building_service_codes.intersect?(services_requiring_questions)
       end
 
       def can_be_deleted?

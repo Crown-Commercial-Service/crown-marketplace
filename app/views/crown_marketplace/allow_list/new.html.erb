@@ -6,7 +6,7 @@
 
 <%= render partial: 'shared/error_summary', locals: { errors: @allowed_email_domain.errors } %>
 
-<%= form_with url: crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :post, local: true, html: { specialvalidation: true } do |f| %>
+<%= form_with url: crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :post, html: { specialvalidation: true } do |f| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.heading'), nil, nil, nil, nil)) %>

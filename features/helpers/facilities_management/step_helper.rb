@@ -20,7 +20,7 @@ def format_date_period(start_date, end_date)
 end
 
 def find_building(building_name)
-  @user.buildings.find_by(building_name: building_name)
+  @user.buildings.find_by(building_name:)
 end
 
 def find_supplier

@@ -125,7 +125,7 @@ module OrdnanceSurvey
     return upsert_csv_data(csv_stream) unless type == :dat
   end
 
-  def self.handle_tar_contents(tar, summary, &block)
+  def self.handle_tar_contents(tar, summary, &)
     tar.each do |entry|
       next unless entry.file?
 
@@ -138,11 +138,11 @@ module OrdnanceSurvey
       else
         :dat
       end)) and file_stream.rewind
-      summary[:md5] = chunk_file_data(file_stream, meta_type, &block)
+      summary[:md5] = chunk_file_data(file_stream, meta_type, &)
     end
   end
 
-  def self.handle_gzip_contents(gzip, summary, &block)
+  def self.handle_gzip_contents(gzip, summary, &)
     header_line = gzip.readline
     (meta_type = (
     if header_line.downcase.include?('uprn')
@@ -150,11 +150,11 @@ module OrdnanceSurvey
     else
       :dat
     end)) and gzip.rewind
-    summary[:md5]    = chunk_file_data(gzip, meta_type, &block)
+    summary[:md5]    = chunk_file_data(gzip, meta_type, &)
     summary[:length] = gzip.pos
   end
 
-  def self.handle_zip_contents(io, summary, &block)
+  def self.handle_zip_contents(io, summary, &)
     while (entry = io.get_next_entry)
       next if entry.name_is_directory?
 
@@ -166,13 +166,13 @@ module OrdnanceSurvey
         :dat
       end)) and io.rewind
       summary[:length] = entry.size
-      summary[:md5]    = chunk_file_data(io, meta_type, &block)
+      summary[:md5]    = chunk_file_data(io, meta_type, &)
     end
   end
 
   # rubocop:disable Lint/MixedRegexpCaptureTypes
-  MATCH_1 = /dataPostcode_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)_(?<outcode>\w{1,2}))/.freeze
-  MATCH_2 = /AddressBasePlus_.*?_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)((?>.csv-)(?<outcode>\w{1,2}))?)/.freeze
+  MATCH_1 = /dataPostcode_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)_(?<outcode>\w{1,2}))/
+  MATCH_2 = /AddressBasePlus_.*?_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)((?>.csv-)(?<outcode>\w{1,2}))?)/
   # rubocop:enable Lint/MixedRegexpCaptureTypes
 
   def self.extract_metadata(filename, outcode = nil)

@@ -19,7 +19,7 @@ RSpec.describe FacilitiesManagement::RM6232::ServiceSpecificationController do
 
       service_codes.each do |service_code|
         context "and the service code is #{service_code}" do
-          before { get :show, params: { service_code: service_code } }
+          before { get :show, params: { service_code: } }
 
           it 'renders the show page successfully' do
             expect(response).to render_template(:show)

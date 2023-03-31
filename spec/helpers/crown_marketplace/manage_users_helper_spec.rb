@@ -13,10 +13,10 @@ RSpec.describe CrownMarketplace::ManageUsersHelper do
 
     let(:attributes) do
       {
-        email: email,
-        telephone_number: telephone_number,
-        roles: roles,
-        service_access: service_access,
+        email:,
+        telephone_number:,
+        roles:,
+        service_access:,
       }
     end
 

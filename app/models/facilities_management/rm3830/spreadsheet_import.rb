@@ -171,7 +171,7 @@ module FacilitiesManagement
       end
 
       def error_hash(building_name, service_name, attribute, errors)
-        { building_name: building_name, service_name: service_name, attribute: attribute, errors: errors }.compact
+        { building_name:, service_name:, attribute:, errors: }.compact
       end
 
       def errors_from_import

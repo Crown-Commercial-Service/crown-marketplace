@@ -13,7 +13,7 @@ class AddDataToFmSuppliers < ActiveRecord::Migration[5.2]
 
     SupplierDetail.all.each do |supplier_detail|
       contact_email = supplier_detail.contact_email
-      fm_supplier = FMSupplier.find_by(contact_email: contact_email)
+      fm_supplier = FMSupplier.find_by(contact_email:)
       next if fm_supplier.blank?
 
       fm_supplier.assign_attributes(

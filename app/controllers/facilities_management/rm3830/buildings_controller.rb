@@ -12,7 +12,7 @@ module FacilitiesManagement
       end
 
       def edit_path(building, section)
-        edit_facilities_management_rm3830_building_path(building, section: section)
+        edit_facilities_management_rm3830_building_path(building, section:)
       end
 
       def create_path
@@ -20,7 +20,7 @@ module FacilitiesManagement
       end
 
       def update_path
-        facilities_management_rm3830_building_path(@building, section: section)
+        facilities_management_rm3830_building_path(@building, section:)
       end
 
       def start_a_procurement_path

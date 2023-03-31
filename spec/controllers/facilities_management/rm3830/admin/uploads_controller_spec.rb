@@ -96,7 +96,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
     let(:file) { Tempfile.new(['valid_file', '.xlsx']) }
     let(:fake_file) { File.open(file.path) }
     let(:upload) do
-      create(:facilities_management_rm3830_admin_upload, aasm_state: aasm_state) do |admin_upload|
+      create(:facilities_management_rm3830_admin_upload, aasm_state:) do |admin_upload|
         admin_upload.supplier_data_file.attach(io: fake_file, filename: 'test_supplier_framework_data_file.xlsx')
       end
     end

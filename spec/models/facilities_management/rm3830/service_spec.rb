@@ -48,7 +48,7 @@ RSpec.describe FacilitiesManagement::RM3830::Service do
 
   it 'DA contains an example service using a frozen rate' do
     user = create(:user)
-    procurement = create(:facilities_management_rm3830_procurement, user: user)
+    procurement = create(:facilities_management_rm3830_procurement, user:)
 
     frozen_rate = FacilitiesManagement::RM3830::FrozenRate.new(facilities_management_rm3830_procurement_id: procurement.id, code: 'C.1', framework: 1.2, benchmark: 2.2, standard: 'Y', direct_award: true)
     frozen_rate.save!
@@ -56,7 +56,7 @@ RSpec.describe FacilitiesManagement::RM3830::Service do
   end
 
   describe '#mandatory?' do
-    let(:service) { described_class.new(mandatory: mandatory) }
+    let(:service) { described_class.new(mandatory:) }
 
     context 'when mandatory is "true"' do
       let(:mandatory) { 'true' }

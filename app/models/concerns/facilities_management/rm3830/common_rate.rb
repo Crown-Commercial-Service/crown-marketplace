@@ -25,7 +25,7 @@ module FacilitiesManagement::RM3830
       end
 
       def priced_at_framework(code, standard)
-        find_by(code: code, standard: standard)&.framework.present?
+        find_by(code:, standard:)&.framework.present?
       end
 
       # read in the benchmark and framework rates - these were taken from the Damolas spreadsheet and put in the postgres database numbers are to 15dp
@@ -41,8 +41,8 @@ module FacilitiesManagement::RM3830
           framework_rates[code_and_standard] = row['framework'].to_f
         end
         {
-          benchmark_rates: benchmark_rates,
-          framework_rates: framework_rates
+          benchmark_rates:,
+          framework_rates:
         }
       end
 

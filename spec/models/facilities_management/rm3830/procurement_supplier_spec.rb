@@ -176,7 +176,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
   end
 
   describe 'contract methods' do
-    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, user: user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, user:) }
     let(:user) { create(:user) }
     let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: FacilitiesManagement::RM3830::SupplierDetail.first) }
 
@@ -735,7 +735,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
   # rubocop:enable RSpec/NestedGroups
 
   describe '.closed_date' do
-    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, user: user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, user:) }
     let(:user) { create(:user) }
     let(:contract_signed_date) { Time.now.in_time_zone('London') }
     let(:supplier_response_date) { Time.now.in_time_zone('London') - 1.week }

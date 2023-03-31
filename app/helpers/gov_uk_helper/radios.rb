@@ -1,6 +1,6 @@
 module GovUKHelper::Radios
-  def govuk_radios_conditional(&block)
-    tag.div(class: 'govuk-radios govuk-radios--conditional', data: { module: 'govuk-radios' }, &block)
+  def govuk_radios_conditional(&)
+    tag.div(class: 'govuk-radios govuk-radios--conditional', data: { module: 'govuk-radios' }, &)
   end
 
   def govuk_radios_conditional_item(form, attribute, value, label_text)
@@ -13,11 +13,11 @@ module GovUKHelper::Radios
     end
   end
 
-  def govuk_radios_conditional_area(attribute, value, **options, &block)
+  def govuk_radios_conditional_area(attribute, value, **options, &)
     class_list = ['govuk-radios__conditional govuk-radios__conditional--hidden']
     class_list << options.delete(:class)
 
-    tag.div(class: class_list.compact.join(' '), id: govuk_radios_conditional_id(attribute, value), **options, &block)
+    tag.div(class: class_list.compact.join(' '), id: govuk_radios_conditional_id(attribute, value), **options, &)
   end
 
   def govuk_radios_conditional_id(attribute, value)

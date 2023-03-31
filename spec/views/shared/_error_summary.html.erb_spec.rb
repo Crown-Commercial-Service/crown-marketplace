@@ -10,7 +10,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
 
   context 'when errors are empty' do
     before do
-      render partial: 'shared/error_summary', locals: { errors: errors }
+      render partial: 'shared/error_summary', locals: { errors: }
     end
 
     it 'does not render error summary' do
@@ -37,7 +37,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
     before do
       errors.add(:attribute_name, 'error-message-1')
       errors.add(:attribute_name, 'error-message-2')
-      render partial: 'shared/error_summary', locals: { errors: errors }
+      render partial: 'shared/error_summary', locals: { errors: }
     end
 
     it 'displays the first error message in the summary' do
@@ -55,7 +55,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
       errors.add(:attribute_name, 'error-message-2')
       errors.add(:attribute_name_2, 'error-message-3')
       errors.add(:attribute_name_2, 'error-message-4')
-      render partial: 'shared/error_summary', locals: { errors: errors }
+      render partial: 'shared/error_summary', locals: { errors: }
     end
 
     it 'displays the first error message for the first attribute in the summary' do

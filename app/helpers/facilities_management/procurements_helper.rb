@@ -3,7 +3,7 @@ module FacilitiesManagement
     def section_has_error?(section)
       return false unless @procurement.errors.any?
 
-      (requirements_errors_list.keys & section_errors(section)).any?
+      requirements_errors_list.keys.intersect?(section_errors(section))
     end
 
     def section_id(section)

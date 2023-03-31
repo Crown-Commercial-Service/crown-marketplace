@@ -191,7 +191,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport do
 
   describe 'methods for processing errors' do
     before do
-      import.update(import_errors: import_errors)
+      import.update(import_errors:)
     end
 
     describe '.building_error' do

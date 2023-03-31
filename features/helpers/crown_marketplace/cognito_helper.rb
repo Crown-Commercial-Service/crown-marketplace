@@ -27,7 +27,7 @@ end
 def stub_list_users(aws_client, **options)
   users = options[:resp_email] ? [options[:resp_email]] : []
 
-  allow(aws_client).to receive(:list_users).with(**list_users_params(options[:search_email])).and_return(COGNITO_RESPONSE_STRUCTS[:list_users].new(users: users))
+  allow(aws_client).to receive(:list_users).with(**list_users_params(options[:search_email])).and_return(COGNITO_RESPONSE_STRUCTS[:list_users].new(users:))
 end
 
 # rubocop:disable Metrics/AbcSize

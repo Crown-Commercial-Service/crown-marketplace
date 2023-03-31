@@ -197,7 +197,7 @@ Then('I should see the following changes to the lot status:') do |changes_table|
 end
 
 Given('the user {string} has uploaded some data') do |email|
-  new_user = create(:user, email: email)
+  new_user = create(:user, email:)
   new_upload = create(:facilities_management_rm6232_admin_upload, user: new_user, aasm_state: 'published')
   FacilitiesManagement::RM6232::Admin::SupplierData.create(upload: new_upload)
 end

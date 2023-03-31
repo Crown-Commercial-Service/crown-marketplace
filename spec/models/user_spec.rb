@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User do
-  subject(:user) { build(:user, :without_detail, confirmed_at: confirmed_at) }
+  subject(:user) { build(:user, :without_detail, confirmed_at:) }
 
   describe '#confirmed?' do
     context 'when confirmed_at blank' do

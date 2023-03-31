@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData do
   describe '.oldest_data_created_at' do
     let(:created_at) { Time.zone.local(2022, 7, 5, 13, 45) }
 
-    before { described_class.latest_data.update(created_at: created_at) }
+    before { described_class.latest_data.update(created_at:) }
 
     it 'returns the 5th of July 2022' do
       expect(described_class.oldest_data_created_at).to eq(created_at)
@@ -27,7 +27,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData do
   describe '.oldest_data_created_at_string' do
     let(:created_at) { Time.zone.local(2022, 7, 5, 12, 45) }
 
-    before { described_class.latest_data.update(created_at: created_at) }
+    before { described_class.latest_data.update(created_at:) }
 
     it 'returns 5 July 2022, 13:45' do
       expect(described_class.oldest_data_created_at_string).to eq(' 5 July 2022, 13:45')

@@ -26,10 +26,10 @@ module FacilitiesManagement::RM6232
 
       private
 
-      def add_styles(&block)
+      def add_styles(&)
         @styles = {}
 
-        @workbook.styles(&block)
+        @workbook.styles(&)
       end
 
       def lot_suppliers(lot_code)

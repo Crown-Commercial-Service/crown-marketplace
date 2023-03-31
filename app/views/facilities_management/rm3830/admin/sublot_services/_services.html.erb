@@ -13,7 +13,7 @@
   <%= t('.note') %>
 </p>
 
-<%= form_with url: facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path, class: 'ccs-form', method: :put, local: 'false', html: { specialvalidation: false } do |f| %>
+<%= form_with url: facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path, class: 'ccs-form', method: :put, html: { specialvalidation: false } do |f| %>
   <% @full_services.each do |service| %>
     <fieldset class="govuk-fieldset">
       <table class="govuk-table">

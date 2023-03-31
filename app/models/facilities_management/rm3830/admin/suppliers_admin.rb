@@ -47,7 +47,7 @@ module FacilitiesManagement
         end
 
         def user_unique?
-          self.class.where.not(supplier_id: supplier_id).pluck(:user_id).exclude? user.id
+          self.class.where.not(supplier_id:).pluck(:user_id).exclude? user.id
         end
       end
     end

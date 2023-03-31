@@ -1,6 +1,46 @@
 require 'rails_helper'
 
 RSpec.describe Cognito::CreateUserFromCognito do
+  describe '#initialize' do
+    let(:create_user_from_cognito) { described_class.new(username) }
+
+    let(:username) { 'user@test.com' }
+
+    let(:create_user_from_cognito_attributes) do
+      {
+        username: create_user_from_cognito.username,
+        error: create_user_from_cognito.error,
+        user: create_user_from_cognito.user,
+      }
+    end
+
+    it 'initialises the object with the attributes' do
+      expect(create_user_from_cognito_attributes).to eq(
+        {
+          username: 'user@test.com',
+          error: nil,
+          user: nil
+        }
+      )
+    end
+
+    context 'when the username has uppercase letters' do
+      let(:username) { 'Test@Test.com' }
+
+      it 'makes the username lower case' do
+        expect(create_user_from_cognito.username).to eq('test@test.com')
+      end
+    end
+
+    context 'when the username is nil' do
+      let(:username) { nil }
+
+      it 'returns nil for the username' do
+        expect(create_user_from_cognito.username).to be_nil
+      end
+    end
+  end
+
   describe '#call' do
     include_context 'with cognito structs'
 

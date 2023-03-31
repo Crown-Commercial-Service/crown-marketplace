@@ -7,6 +7,44 @@ RSpec.describe Cognito::ForgotPassword do
   let(:invalid_email) { 'someRandomString' }
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
+  describe '#initialize' do
+    let(:forgot_password) { described_class.new(email) }
+
+    let(:email) { 'user@test.com' }
+
+    let(:forgot_password_attributes) do
+      {
+        email: forgot_password.email,
+        error: forgot_password.error
+      }
+    end
+
+    it 'initialises the object with the attributes' do
+      expect(forgot_password_attributes).to eq(
+        {
+          email: 'user@test.com',
+          error: nil
+        }
+      )
+    end
+
+    context 'when the email has uppercase letters' do
+      let(:email) { 'Test@Test.com' }
+
+      it 'makes the email lower case' do
+        expect(forgot_password.email).to eq('test@test.com')
+      end
+    end
+
+    context 'when the email is nil' do
+      let(:email) { nil }
+
+      it 'returns nil for the email' do
+        expect(forgot_password.email).to be_nil
+      end
+    end
+  end
+
   describe '#call' do
     let(:response) { described_class.call(email) }
 

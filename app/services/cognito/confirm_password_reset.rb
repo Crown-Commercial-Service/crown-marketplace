@@ -14,7 +14,7 @@ module Cognito
     validates_format_of :password, with: /(?=.*[0-9])/, message: :invalid_no_number
 
     def initialize(email, password, password_confirmation, confirmation_code)
-      @email = email
+      @email = email.try(:downcase)
       @password = password
       @password_confirmation = password_confirmation
       @confirmation_code = confirmation_code
@@ -47,7 +47,7 @@ module Cognito
     end
 
     def create_user_if_needed
-      user = User.find_for_authentication(email: email)
+      user = User.find_for_authentication(email:)
       return user if user
 
       resp = CreateUserFromCognito.call(email)

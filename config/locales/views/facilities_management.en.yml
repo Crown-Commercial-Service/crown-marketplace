@@ -257,7 +257,7 @@ en:
           help_text: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a building type can be direct awarded.
           view_more: View more building types
         other:
-          other: Other
+          other_label: Other
         security_type:
           describe_security: Describe security level
           security_description_html: Select the level of security clearance a supplier’s staff will need to access this building. This is the security level of the contractor’s staff.

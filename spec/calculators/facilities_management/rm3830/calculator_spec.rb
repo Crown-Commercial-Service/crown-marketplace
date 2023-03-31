@@ -507,7 +507,7 @@ RSpec.describe FacilitiesManagement::RM3830::Calculator do
   describe 'calculate total with different building types' do
     let(:supplier_id) { 'ef44b65d-de46-4297-8d2c-2c6130cecafc' }
     let(:calculator) { described_class.new(2.5, false, false, false, false, rates, rate_card, supplier_id, building) }
-    let(:building) { create(:facilities_management_building, building_type: building_type) }
+    let(:building) { create(:facilities_management_building, building_type:) }
     let(:service_standard) { 'A' }
     let(:occupants) { 0 }
 

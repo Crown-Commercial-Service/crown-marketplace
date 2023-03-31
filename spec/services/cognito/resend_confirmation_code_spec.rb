@@ -8,6 +8,44 @@ RSpec.describe Cognito::ResendConfirmationCode do
 
   before { allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client) }
 
+  describe '#initialize' do
+    let(:resend_confirmation_code) { described_class.new(email) }
+
+    let(:email) { 'user@test.com' }
+
+    let(:resend_confirmation_code_attributes) do
+      {
+        email: resend_confirmation_code.email,
+        error: resend_confirmation_code.error
+      }
+    end
+
+    it 'initialises the object with the attributes' do
+      expect(resend_confirmation_code_attributes).to eq(
+        {
+          email: 'user@test.com',
+          error: nil
+        }
+      )
+    end
+
+    context 'when the email has uppercase letters' do
+      let(:email) { 'Test@Test.com' }
+
+      it 'makes the email lower case' do
+        expect(resend_confirmation_code.email).to eq('test@test.com')
+      end
+    end
+
+    context 'when the email is nil' do
+      let(:email) { nil }
+
+      it 'returns nil for the email' do
+        expect(resend_confirmation_code.email).to be_nil
+      end
+    end
+  end
+
   describe '#call' do
     context 'when success' do
       include_context 'with cognito structs'

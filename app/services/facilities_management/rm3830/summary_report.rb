@@ -223,10 +223,10 @@ module FacilitiesManagement
           sum_benchmark = uvals_remove_cafm_help.sum { |v| calc_fm.initialize_service_variables(v[:service_code], v[:service_standard], v[:uom_value], v[:occupants]).calculate_total }
         end
 
-        return { sum_uom: sum_uom, results: results } if supplier_id
+        return { sum_uom:, results: } if supplier_id
 
-        { sum_uom: sum_uom,
-          sum_benchmark: sum_benchmark }
+        { sum_uom:,
+          sum_benchmark: }
       end
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/CyclomaticComplexity

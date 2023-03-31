@@ -589,7 +589,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
       context 'when lift_data has elements are zero or 100 in value' do
         it 'validates to false' do
           [0, 99, 3, 4, 5, 6, 7, 8, 9, 10].each do |number_of_floors|
-            procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+            procurement_building_service.lifts.build(number_of_floors:)
           end
 
           expect(procurement_building_service.valid?(:lifts)).to be false
@@ -597,7 +597,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
 
         it 'has an error collection containing corresponding index positions' do
           [3, 300, 4, 0, 5, 6, 7, 8, 9, 10].each do |number_of_floors|
-            procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+            procurement_building_service.lifts.build(number_of_floors:)
           end
 
           expect(procurement_building_service.valid?(:lifts)).to be false
@@ -689,7 +689,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
       before do
         procurement_building_service.code = 'C.5'
         lift_data.each do |number_of_floors|
-          procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+          procurement_building_service.lifts.build(number_of_floors:)
         end
       end
 
@@ -849,7 +849,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
 
     before do
       lift_data.each do |number_of_floors|
-        procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+        procurement_building_service.lifts.create(number_of_floors:)
       end
     end
 

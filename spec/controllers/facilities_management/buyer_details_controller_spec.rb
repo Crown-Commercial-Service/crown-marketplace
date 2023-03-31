@@ -77,7 +77,7 @@ module FacilitiesManagement
       login_fm_buyer_with_details
 
       context 'when updating from the edit page' do
-        before { put :update, params: { id: subject.current_user.id, facilities_management_buyer_detail: { full_name: full_name } } }
+        before { put :update, params: { id: subject.current_user.id, facilities_management_buyer_detail: { full_name: } } }
 
         context 'when there are errors' do
           let(:full_name) { '' }
@@ -91,7 +91,7 @@ module FacilitiesManagement
           let(:full_name) { 'Fred Flintstone' }
 
           it 'redirects to facilities_management_index_path' do
-            expect(response).to redirect_to facilities_management_index_path(framework: framework)
+            expect(response).to redirect_to facilities_management_index_path(framework:)
           end
 
           it 'updates the buyer name' do
@@ -103,7 +103,7 @@ module FacilitiesManagement
       end
 
       context 'when updating from the edit_address page' do
-        before { put :update, params: { id: subject.current_user.id, context: :update_address, facilities_management_buyer_detail: { organisation_address_line_1: organisation_address_line_1 } } }
+        before { put :update, params: { id: subject.current_user.id, context: :update_address, facilities_management_buyer_detail: { organisation_address_line_1: } } }
 
         context 'when there are errors' do
           let(:organisation_address_line_1) { '' }

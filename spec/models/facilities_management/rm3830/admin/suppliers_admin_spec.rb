@@ -874,7 +874,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin do
         let(:user) { create(:user, roles: :supplier) }
         let(:user_email) { user.email }
 
-        before { described_class.find('ef44b65d-de46-4297-8d2c-2c6130cecafc').update(user: user) }
+        before { described_class.find('ef44b65d-de46-4297-8d2c-2c6130cecafc').update(user:) }
 
         it 'is not valid' do
           expect(supplier.valid?(:supplier_user)).to be false
@@ -891,7 +891,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin do
         let(:user_email) { user.email }
 
         before do
-          supplier.update(user: user)
+          supplier.update(user:)
           supplier.user_email = user_email
         end
 

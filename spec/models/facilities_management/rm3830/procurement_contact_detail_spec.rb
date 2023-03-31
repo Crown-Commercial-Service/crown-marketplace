@@ -283,7 +283,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementContactDetail do
       let(:organisation_address_line_1) { 'The Globe Theatre' }
       let(:organisation_address_town) { 'London Town' }
 
-      before { procurement_contact_detail.assign_attributes(organisation_address_postcode: organisation_address_postcode, organisation_address_line_1: organisation_address_line_1, organisation_address_town: organisation_address_town) }
+      before { procurement_contact_detail.assign_attributes(organisation_address_postcode:, organisation_address_line_1:, organisation_address_town:) }
 
       context 'when the postcode is not valid' do
         let(:organisation_address_postcode) { '' }

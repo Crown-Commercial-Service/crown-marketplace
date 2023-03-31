@@ -10,7 +10,7 @@ RSpec.describe FacilitiesManagement::RM3830::SupplierDetail do
         { lot => { regions: %w[r0 r2], services: %w[s0 s2] } },
         { lot => { regions: %w[r0 r3], services: %w[s0 s3] } }
       ].each do |lot_data|
-        create(:facilities_management_rm3830_supplier_detail, lot_data: lot_data)
+        create(:facilities_management_rm3830_supplier_detail, lot_data:)
       end
     end
 

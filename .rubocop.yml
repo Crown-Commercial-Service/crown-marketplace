@@ -1,13 +1,13 @@
 ---
 require:
-  - rubocop-rspec
-  - rubocop-rails
-  - rubocop-capybara
-  - './lib/cop/all'
+    - rubocop-capybara
+    - rubocop-rspec
+    - rubocop-rails
+    - './lib/cop/all'
 
 AllCops:
     NewCops: enable
-    TargetRubyVersion: 2.7
+    TargetRubyVersion: 3.2
     Exclude:
         - 'db/schema.rb'
         - 'db/seeds.rb'
@@ -163,3 +163,6 @@ Rails/HelperInstanceVariable:
 
 Style/OptionalBooleanParameter:
     Enabled: false
+
+Style/HashSyntax:
+    EnforcedShorthandSyntax: consistent

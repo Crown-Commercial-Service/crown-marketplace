@@ -26,7 +26,7 @@ module FacilitiesManagement::RM6232
     end
 
     def check_service_and_buildings_completed
-      errors.add(:base, :buildings_and_services_incomplete) if (error_list & %i[services_incomplete buildings_incomplete]).any? || !buildings_and_services_completed?
+      errors.add(:base, :buildings_and_services_incomplete) if error_list.intersect?(%i[services_incomplete buildings_incomplete]) || !buildings_and_services_completed?
     end
   end
 end

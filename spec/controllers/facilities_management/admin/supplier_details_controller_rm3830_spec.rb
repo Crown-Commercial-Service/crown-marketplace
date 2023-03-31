@@ -220,7 +220,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController do
 
       context 'when updating on the supplier name page' do
         let(:page) { :supplier_name }
-        let(:supplier_params) { { supplier_name: supplier_name } }
+        let(:supplier_params) { { supplier_name: } }
 
         context 'and the data is not valid' do
           let(:supplier_name) { '' }
@@ -305,7 +305,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController do
       context 'when updating on the supplier user page' do
         let(:user) { create(:user, roles: :supplier) }
         let(:page) { :supplier_user }
-        let(:supplier_params) { { user_email: user_email } }
+        let(:supplier_params) { { user_email: } }
 
         context 'and the data is not valid' do
           let(:user_email) { 'AAA111' }

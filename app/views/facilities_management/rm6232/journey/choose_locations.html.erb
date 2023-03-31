@@ -4,7 +4,7 @@
 <div class="procurement">
   <div class="locations chooser-component">
     <div id="ccs-accordion-with-basket" class="govuk-grid-row">
-      <%= form_with url: @form_path, method: :get, local: true, html: { specialvalidation: true, novalidate: true } do %>
+      <%= form_with url: @form_path, method: :get, html: { specialvalidation: true, novalidate: true } do %>
         <div class="govuk-grid-column-two-thirds">
           <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
           <%= govuk_form_group_with_optional_error(@journey, :region_codes) do %>
