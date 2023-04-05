@@ -15,5 +15,4 @@ Rails.application.config.assets.paths += [
 # folder are already added.
 Rails.application.config.assets.precompile += %w[
   govuk-frontend/assets/images/*
-  html5shiv/dist/html5shiv.js
 ]

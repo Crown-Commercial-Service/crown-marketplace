@@ -67,4 +67,7 @@ Rails.application.configure do
   #   Bullet.bullet_logger = true
   #   Bullet.raise = true
   # end
+
+  # Turn of css compressor in tests
+  config.assets.css_compressor = nil
 end
