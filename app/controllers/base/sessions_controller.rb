@@ -41,9 +41,9 @@ module Base
       session[:return_to] = params[:url]
 
       begin
-        redirect_to session_expired_sign_in_path
+        redirect_to "#{params[:service_path_base]}/sign-in?expired=true"
       rescue ActionController::RoutingError
-        redirect_to default_sign_in_path
+        redirect_to "#{service_path_base}/sign-in?expired=true"
       end
     end
 
@@ -51,10 +51,6 @@ module Base
 
     def after_sign_out_path_for(_resource)
       sign_in_url
-    end
-
-    def session_expired_sign_in_path
-      "#{service_path_base}/sign-in?expired=true"
     end
 
     def result_unsuccessful_path
