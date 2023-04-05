@@ -1,16 +1,24 @@
-<%= warning_text(t('.session_expired')) if params[:expired] == 'true' %>
-
-<% unless local_header_text.nil? %>
-  <%= content_for :page_title, local_header_text %>
-  <h1 class="govuk-heading-xl">
-    <%= local_header_text %>
-  </h1>
-<% end %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= warning_text(t('.session_expired')) if params[:expired] == 'true' %>
 
     <%= render partial: 'shared/error_summary', locals: { errors: @result.errors } %>
+  </div>
+</div>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <% unless local_header_text.nil? %>
+      <%= content_for :page_title, local_header_text %>
+      <h1 class="govuk-heading-xl">
+        <%= local_header_text %>
+      </h1>
+    <% end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     <%= form_for resource, as: resource_name, url: new_user_session_path, method: :post, html: { specialvalidation: true, novalidate: true, class: 'ccs-form', id: 'cop_sign_in_form'} do |f| %>
       <input type="hidden" name="expired" value="<%= params[:expired]%>"/>
       <div class="govuk-form-group govuk-!-margin-bottom-4 <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
@@ -62,6 +70,3 @@
     </ul>
   </div>
 </div>
-
-
-
