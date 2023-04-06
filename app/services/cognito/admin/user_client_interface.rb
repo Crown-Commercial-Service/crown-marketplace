@@ -27,11 +27,11 @@ module Cognito
         def find_users_from_email(email)
           client = new_client
 
-          list_users_resp = client.list_users({
-                                                user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
-                                                attributes_to_get: ['email'],
-                                                filter: "email ^= \"#{email}\""
-                                              })
+          list_users_resp = client.list_users(
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
+            attributes_to_get: ['email'],
+            filter: "email ^= \"#{email}\""
+          )
 
           { users: get_users_attributes_from_response(list_users_resp) }
         rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
@@ -42,11 +42,9 @@ module Cognito
           client = new_client
 
           list_users_resp = client.list_users(
-            {
-              user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
-              attributes_to_get: ['email'],
-              filter: "email = \"#{email}\""
-            }
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
+            attributes_to_get: ['email'],
+            filter: "email = \"#{email}\""
           )
 
           { result: list_users_resp.users.any? }
@@ -162,17 +160,17 @@ module Cognito
 
         # Methods relating to finding a user
         def find_user_in_cognito(client, cognito_uuid)
-          get_user_resp = client.admin_get_user({
-                                                  user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
-                                                  username: cognito_uuid
-                                                })
+          get_user_resp = client.admin_get_user(
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
+            username: cognito_uuid
+          )
 
           attributes = get_user_attributes_from_response(get_user_resp)
 
-          get_groups_resp = client.admin_list_groups_for_user({
-                                                                user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
-                                                                username: cognito_uuid
-                                                              })
+          get_groups_resp = client.admin_list_groups_for_user(
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
+            username: cognito_uuid
+          )
 
           attributes[:roles], attributes[:service_access] = Roles.get_roles_and_service_access_from_cognito_roles(get_groups_resp.groups.map(&:group_name))
 
