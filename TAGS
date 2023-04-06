@@ -1,1459 +1,0 @@
-
-app/mailers/application_mailer.rb,67
-class ApplicationMailer < ActionMailer::BaseApplicationMailer1,0
-
-app/models/login.rb,557
-module LoginLogin1,0
-  UnknownProvider = Class.new(StandardError)UnknownProvider2,0
-  UnknownProvider = Class.new(StandardError)Login::UnknownProvider2,0
-  EMAIL_REGEX = /([\w+\-.]+)@([a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+)/i.freezeEMAIL_REGEX4,0
-  EMAIL_REGEX = /([\w+\-.]+)@([a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+)/i.freezeLogin::EMAIL_REGEX4,0
-  def self.class_for_provider(provider)class_for_provider6,0
-  def self.from_session(str)from_session17,0
-  def self.from_omniauth(hash)from_omniauth27,0
-  def self.redact_email(string)redact_email31,0
-
-app/models/nuts1_region.rb,226
-class Nuts1RegionNuts1Region1,0
-  attr_accessor :code, :namecode4,0
-  attr_accessor :code, :namecode=4,0
-  attr_accessor :code, :namename4,0
-  attr_accessor :code, :namename=4,0
-  def nuts2_regionsnuts2_regions6,0
-
-app/models/supply_teachers.rb,92
-module SupplyTeachersSupplyTeachers1,0
-  def self.table_name_prefixtable_name_prefix2,0
-
-app/models/supply_teachers/supplier.rb,931
-module SupplyTeachersSupplyTeachers1,0
-  class Supplier < ApplicationRecordSupplier2,0
-  class Supplier < ApplicationRecordSupplyTeachers::Supplier2,0
-    has_many :branches,branches3,0
-    has_many :branches,branches=3,0
-    has_many :branches,branche_ids3,0
-    has_many :branches,branche_ids=3,0
-    has_many :rates,rates7,0
-    has_many :rates,rates=7,0
-    has_many :rates,rate_ids7,0
-    has_many :rates,rate_ids=7,0
-    def self.with_master_vendor_rateswith_master_vendor_rates14,0
-    def self.with_neutral_vendor_rateswith_neutral_vendor_rates18,0
-    def nominated_worker_ratenominated_worker_rate22,0
-    def fixed_term_ratefixed_term_rate28,0
-    def rate_for(job_type:, term:)rate_for34,0
-    def master_vendor_rates_grouped_by_job_typemaster_vendor_rates_grouped_by_job_type38,0
-    def rates_grouped_by_job_typerates_grouped_by_job_type42,0
-    def scoped_ratesscoped_rates46,0
-
-app/models/supply_teachers/job_type.rb,287
-module SupplyTeachersSupplyTeachers1,0
-  class JobTypeJobType2,0
-  class JobTypeSupplyTeachers::JobType2,0
-    def self.[](code)[]10,0
-    def self.find_role_by(code:)find_role_by14,0
-    def self.rolesroles18,0
-    def self.all_codesall_codes22,0
-    def role?role?26,0
-
-app/models/supply_teachers/journey.rb,369
-module SupplyTeachersSupplyTeachers1,0
-  class Journey < GenericJourneyJourney2,0
-  class Journey < GenericJourneySupplyTeachers::Journey2,0
-    def initialize(slug, params)initialize5,0
-    def self.journey_namejourney_name10,0
-    def self.first_step_classfirst_step_class14,0
-    def start_pathstart_path18,0
-    def next_step_pathnext_step_path22,0
-
-app/models/supply_teachers/rate_term.rb,388
-module SupplyTeachersSupplyTeachers1,0
-  class RateTermRateTerm2,0
-  class RateTermSupplyTeachers::RateTerm2,0
-    attr_accessor :code, :descriptioncode5,0
-    attr_accessor :code, :descriptioncode=5,0
-    attr_accessor :code, :descriptiondescription5,0
-    attr_accessor :code, :descriptiondescription=5,0
-    def self.[](code)[]7,0
-    def self.all_codesall_codes11,0
-
-app/models/supply_teachers/branch_search_result.rb,961
-module SupplyTeachersSupplyTeachers1,0
-  class BranchSearchResultBranchSearchResult2,0
-  class BranchSearchResultSupplyTeachers::BranchSearchResult2,0
-    attr_reader :idid3,0
-    attr_reader :supplier_namesupplier_name4,0
-    attr_reader :namename5,0
-    attr_reader :contact_namecontact_name6,0
-    attr_reader :telephone_numbertelephone_number7,0
-    attr_reader :contact_emailcontact_email8,0
-    attr_reader :slugslug9,0
-    attr_accessor :raterate10,0
-    attr_accessor :raterate=10,0
-    attr_accessor :distancedistance11,0
-    attr_accessor :distancedistance=11,0
-    attr_accessor :daily_ratedaily_rate12,0
-    attr_accessor :daily_ratedaily_rate=12,0
-    attr_accessor :worker_costworker_cost13,0
-    attr_accessor :worker_costworker_cost=13,0
-    attr_accessor :agency_feeagency_fee14,0
-    attr_accessor :agency_feeagency_fee=14,0
-    def initialize(id:, supplier_name:, name:, contact_name:,initialize16,0
-
-app/models/supply_teachers/journey/agency_payroll.rb,209
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::AgencyPayrollAgencyPayroll2,0
-  class Journey::AgencyPayrollSupplyTeachers::Journey::AgencyPayroll2,0
-    def next_step_classnext_step_class12,0
-
-app/models/supply_teachers/journey/managed_service_provider.rb,244
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::ManagedServiceProviderManagedServiceProvider2,0
-  class Journey::ManagedServiceProviderSupplyTeachers::Journey::ManagedServiceProvider2,0
-    def next_step_classnext_step_class8,0
-
-app/models/supply_teachers/journey/school_postcode_agency_supplied_worker.rb,292
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::SchoolPostcodeAgencySuppliedWorkerSchoolPostcodeAgencySuppliedWorker2,0
-  class Journey::SchoolPostcodeAgencySuppliedWorkerSupplyTeachers::Journey::SchoolPostcodeAgencySuppliedWorker2,0
-    def next_step_classnext_step_class6,0
-
-app/models/supply_teachers/journey/looking_for.rb,197
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::LookingForLookingFor2,0
-  class Journey::LookingForSupplyTeachers::Journey::LookingFor2,0
-    def next_step_classnext_step_class13,0
-
-app/models/supply_teachers/journey/payroll_provider.rb,216
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::PayrollProviderPayrollProvider2,0
-  class Journey::PayrollProviderSupplyTeachers::Journey::PayrollProvider2,0
-    def next_step_classnext_step_class8,0
-
-app/models/supply_teachers/journey/temp_to_perm_fee.rb,164
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::TempToPermFeeTempToPermFee2,0
-  class Journey::TempToPermFeeSupplyTeachers::Journey::TempToPermFee2,0
-
-app/models/supply_teachers/journey/worker_type.rb,196
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::WorkerTypeWorkerType2,0
-  class Journey::WorkerTypeSupplyTeachers::Journey::WorkerType2,0
-    def next_step_classnext_step_class8,0
-
-app/models/supply_teachers/journey/school_postcode_nominated_worker.rb,272
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::SchoolPostcodeNominatedWorkerSchoolPostcodeNominatedWorker2,0
-  class Journey::SchoolPostcodeNominatedWorkerSupplyTeachers::Journey::SchoolPostcodeNominatedWorker2,0
-    def next_step_classnext_step_class6,0
-
-app/models/supply_teachers/journey/nominated_worker_results.rb,282
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::NominatedWorkerResultsNominatedWorkerResults2,0
-  class Journey::NominatedWorkerResultsSupplyTeachers::Journey::NominatedWorkerResults2,0
-    def ratesrates7,0
-    def rate(branch)rate11,0
-    def inputsinputs15,0
-
-app/models/supply_teachers/journey/master_vendor_managed_service.rb,242
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::MasterVendorManagedServiceMasterVendorManagedService2,0
-  class Journey::MasterVendorManagedServiceSupplyTeachers::Journey::MasterVendorManagedService2,0
-    def inputsinputs5,0
-
-app/models/supply_teachers/journey/temp_to_perm_calculator.rb,1283
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::TempToPermCalculatorTempToPermCalculator2,0
-  class Journey::TempToPermCalculatorSupplyTeachers::Journey::TempToPermCalculator2,0
-    PARSED_DATE_FORMAT = '%Y-%m-%d'.freezePARSED_DATE_FORMAT119,0
-    PARSED_DATE_FORMAT = '%Y-%m-%d'.freezeSupplyTeachers::Journey::TempToPermCalculator::PARSED_DATE_FORMAT119,0
-    def next_step_classnext_step_class121,0
-    def contract_start_datecontract_start_date125,0
-    def hire_datehire_date134,0
-    def notice_datenotice_date143,0
-    def holiday_1_start_dateholiday_1_start_date152,0
-    def holiday_1_end_dateholiday_1_end_date161,0
-    def holiday_2_start_dateholiday_2_start_date170,0
-    def holiday_2_end_dateholiday_2_end_date179,0
-    def ensure_hire_date_is_after_contract_start_dateensure_hire_date_is_after_contract_start_date190,0
-    def ensure_notice_date_is_after_contract_start_dateensure_notice_date_is_after_contract_start_date197,0
-    def ensure_notice_date_is_before_hire_dateensure_notice_date_is_before_hire_date204,0
-    def ensure_holiday_1_end_date_is_after_start_dateensure_holiday_1_end_date_is_after_start_date211,0
-    def ensure_holiday_2_end_date_is_after_start_dateensure_holiday_2_end_date_is_after_start_date218,0
-
-app/models/supply_teachers/journey/agency_payroll_results.rb,329
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::AgencyPayrollResultsAgencyPayrollResults2,0
-  class Journey::AgencyPayrollResultsSupplyTeachers::Journey::AgencyPayrollResults2,0
-    def ratesrates10,0
-    def rate(branch)rate14,0
-    def job_typejob_type18,0
-    def termterm22,0
-    def inputsinputs26,0
-
-app/models/supply_teachers/journey/fixed_term_results.rb,258
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::FixedTermResultsFixedTermResults2,0
-  class Journey::FixedTermResultsSupplyTeachers::Journey::FixedTermResults2,0
-    def ratesrates7,0
-    def rate(branch)rate11,0
-    def inputsinputs15,0
-
-app/models/supply_teachers/journey/all_suppliers.rb,160
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::AllSuppliersAllSuppliers2,0
-  class Journey::AllSuppliersSupplyTeachers::Journey::AllSuppliers2,0
-
-app/models/supply_teachers/journey/results.rb,319
-module SupplyTeachersSupplyTeachers1,0
-  module Journey::ResultsResults2,0
-  module Journey::ResultsSupplyTeachers::Journey::Results2,0
-    def branches(daily_rates = {})branches7,0
-    def search_result_for(branch)search_result_for20,0
-    def supplier_mark_up(daily_rate, markup_rate)supplier_mark_up34,0
-
-app/models/supply_teachers/journey/neutral_vendor_managed_service.rb,246
-module SupplyTeachersSupplyTeachers1,0
-  class Journey::NeutralVendorManagedServiceNeutralVendorManagedService2,0
-  class Journey::NeutralVendorManagedServiceSupplyTeachers::Journey::NeutralVendorManagedService2,0
-    def inputsinputs5,0
-
-app/models/supply_teachers/branch.rb,540
-module SupplyTeachersSupplyTeachers1,0
-  class Branch < ApplicationRecordBranch2,0
-  class Branch < ApplicationRecordSupplyTeachers::Branch2,0
-    belongs_to :supplier,supplier6,0
-    belongs_to :supplier,supplier=6,0
-    belongs_to :supplier,build_supplier6,0
-    belongs_to :supplier,create_supplier6,0
-    belongs_to :supplier,create_supplier!6,0
-    def self.near(point, within_metres:)near16,0
-    def self.search(point, rates:, radius:)search25,0
-    delegate :name, to: :supplier, prefix: truesupplier_name35,0
-
-app/models/supply_teachers/organisation_category.rb,202
-module SupplyTeachersSupplyTeachers1,0
-  class OrganisationCategoryOrganisationCategory2,0
-  class OrganisationCategorySupplyTeachers::OrganisationCategory2,0
-    def non_profit?non_profit?10,0
-
-app/models/supply_teachers/rate.rb,781
-module SupplyTeachersSupplyTeachers1,0
-  class Rate < ApplicationRecordRate2,0
-  class Rate < ApplicationRecordSupplyTeachers::Rate2,0
-    belongs_to :supplier,supplier3,0
-    belongs_to :supplier,supplier=3,0
-    belongs_to :supplier,build_supplier3,0
-    belongs_to :supplier,create_supplier3,0
-    belongs_to :supplier,create_supplier!3,0
-    def self.nominated_workernominated_worker28,0
-    def self.fixed_termfixed_term32,0
-    def self.direct_provisiondirect_provision36,0
-    def self.master_vendormaster_vendor40,0
-    def self.neutral_vendorneutral_vendor44,0
-    def self.rate_for(job_type:, term:)rate_for48,0
-    def daily_fee?daily_fee?52,0
-    def percentage_mark_up?percentage_mark_up?56,0
-    def term_required?term_required?60,0
-
-app/models/supply_teachers/supplier_mark_up.rb,212
-module SupplyTeachersSupplyTeachers1,0
-  class SupplierMarkUpSupplierMarkUp2,0
-  class SupplierMarkUpSupplyTeachers::SupplierMarkUp2,0
-    def worker_costworker_cost8,0
-    def agency_feeagency_fee12,0
-
-app/models/supply_teachers/audit_spreadsheet.rb,284
-class SupplyTeachers::AuditSpreadsheetAuditSpreadsheet1,0
-class SupplyTeachers::AuditSpreadsheetSupplyTeachers::AuditSpreadsheet1,0
-  def to_xlsxto_xlsx4,0
-  def add_branch_worksheet(workbook)add_branch_worksheet14,0
-  def add_rate_worksheet(workbook)add_rate_worksheet40,0
-
-app/models/supply_teachers/lot.rb,354
-module SupplyTeachersSupplyTeachers1,0
-  class LotLot2,0
-  class LotSupplyTeachers::Lot2,0
-    attr_accessor :number, :descriptionnumber5,0
-    attr_accessor :number, :descriptionnumber=5,0
-    attr_accessor :number, :descriptiondescription5,0
-    attr_accessor :number, :descriptiondescription=5,0
-    def self.all_numbersall_numbers7,0
-
-app/models/supply_teachers/term.rb,482
-module SupplyTeachersSupplyTeachers1,0
-  class TermTerm2,0
-  class TermSupplyTeachers::Term2,0
-    attr_accessor :code, :description, :rate_termcode5,0
-    attr_accessor :code, :description, :rate_termcode=5,0
-    attr_accessor :code, :description, :rate_termdescription5,0
-    attr_accessor :code, :description, :rate_termdescription=5,0
-    attr_accessor :code, :description, :rate_termrate_term5,0
-    attr_accessor :code, :description, :rate_termrate_term=5,0
-
-app/models/supply_teachers/school_type.rb,162
-module SupplyTeachersSupplyTeachers1,0
-  class SchoolTypeSchoolType2,0
-  class SchoolTypeSupplyTeachers::SchoolType2,0
-    def non_profit?non_profit?10,0
-
-app/models/supply_teachers/upload.rb,531
-module SupplyTeachersSupplyTeachers1,0
-  class Upload < ApplicationRecordUpload2,0
-  class Upload < ApplicationRecordSupplyTeachers::Upload2,0
-    def self.upload!(suppliers)upload!3,0
-    def self.all_or_none(transaction_class)all_or_none15,0
-    def self.create_supplier!(data)create_supplier!26,0
-    def self.supplier_attributes(data)supplier_attributes43,0
-    def self.branch_attributes(branch)branch_attributes59,0
-    def self.create_supplier_rates!(supplier, lot_number, rates)create_supplier_rates!80,0
-
-app/models/supply_teachers/spreadsheet.rb,944
-class SupplyTeachers::SpreadsheetSpreadsheet1,0
-class SupplyTeachers::SpreadsheetSupplyTeachers::Spreadsheet1,0
-  class DataDownloadDataDownload2,0
-  class DataDownloadSupplyTeachers::Spreadsheet::DataDownload2,0
-    def sheet_namesheet_name5,0
-    def titletitle9,0
-    def headersheaders13,0
-    def typestypes17,0
-    def row(branch, _row_num)row21,0
-    def style(workbook, sheet); endstyle29,0
-  class Shortlist < DataDownloadShortlist32,0
-  class Shortlist < DataDownloadSupplyTeachers::Spreadsheet::Shortlist32,0
-    def sheet_namesheet_name33,0
-    def titletitle37,0
-    def headersheaders43,0
-    def typestypes49,0
-    def row(branch, row)row53,0
-    def formula(row_num, formula)formula59,0
-    def style(workbook, sheet)style63,0
-  def initialize(branches, with_calculations: false)initialize76,0
-  def to_xlsx(with_calculations: false)to_xlsx81,0
-  def spreadsheet(name)spreadsheet95,0
-
-app/models/location.rb,181
-class LocationLocation1,0
-  attr_reader :postcode, :pointpostcode2,0
-  attr_reader :postcode, :pointpoint2,0
-  def initialize(postcode)initialize4,0
-  def found?found?9,0
-
-app/models/management_consultancy/service_offering.rb,659
-module ManagementConsultancyManagementConsultancy1,0
-  class ServiceOffering < ApplicationRecordServiceOffering2,0
-  class ServiceOffering < ApplicationRecordManagementConsultancy::ServiceOffering2,0
-    belongs_to :supplier,supplier3,0
-    belongs_to :supplier,supplier=3,0
-    belongs_to :supplier,build_supplier3,0
-    belongs_to :supplier,create_supplier3,0
-    belongs_to :supplier,create_supplier!3,0
-    def self.for_lot(lot_number)for_lot15,0
-    def self.for_service_code(service_code)for_service_code19,0
-    def serviceservice23,0
-    def self.supplier_ids_for_service_codes(service_codes)supplier_ids_for_service_codes27,0
-
-app/models/management_consultancy/supplier.rb,1197
-module ManagementConsultancyManagementConsultancy1,0
-  class Supplier < ApplicationRecordSupplier2,0
-  class Supplier < ApplicationRecordManagementConsultancy::Supplier2,0
-    has_many :regional_availabilities,regional_availabilities3,0
-    has_many :regional_availabilities,regional_availabilities=3,0
-    has_many :regional_availabilities,regional_availabilitie_ids3,0
-    has_many :regional_availabilities,regional_availabilitie_ids=3,0
-    has_many :service_offerings,service_offerings8,0
-    has_many :service_offerings,service_offerings=8,0
-    has_many :service_offerings,service_offering_ids8,0
-    has_many :service_offerings,service_offering_ids=8,0
-    def self.available_in_lot(lot_number)available_in_lot15,0
-    def self.offering_services(lot_number, service_codes)offering_services22,0
-    def self.supplying_regions(lot_number, region_codes, expenses_paid = true)supplying_regions29,0
-    def self.offering_services_in_regions(lot_number, service_codes, region_codes, expenses_paid = true)offering_services_in_regions34,0
-    def self.delete_all_with_dependentsdelete_all_with_dependents38,0
-    def services_in_lot(lot_number)services_in_lot44,0
-
-app/models/management_consultancy/journey.rb,338
-module ManagementConsultancyManagementConsultancy1,0
-  class Journey < GenericJourneyJourney2,0
-  class Journey < GenericJourneyManagementConsultancy::Journey2,0
-    def initialize(slug, params)initialize5,0
-    def self.journey_namejourney_name11,0
-    def start_pathstart_path15,0
-    def next_step_pathnext_step_path19,0
-
-app/models/management_consultancy/regional_availability.rb,668
-module ManagementConsultancyManagementConsultancy1,0
-  class RegionalAvailability < ApplicationRecordRegionalAvailability2,0
-  class RegionalAvailability < ApplicationRecordManagementConsultancy::RegionalAvailability2,0
-    belongs_to :supplier,supplier3,0
-    belongs_to :supplier,supplier=3,0
-    belongs_to :supplier,build_supplier3,0
-    belongs_to :supplier,create_supplier3,0
-    belongs_to :supplier,create_supplier!3,0
-    def self.for_lot_and_regions(lot_number, region_codes, expenses_paid)for_lot_and_regions15,0
-    def self.supplier_ids_for_region_codes(lot_number, region_codes, expenses_paid = true)supplier_ids_for_region_codes24,0
-
-app/models/management_consultancy/journey/suppliers.rb,169
-module ManagementConsultancyManagementConsultancy1,0
-  class Journey::SuppliersSuppliers2,0
-  class Journey::SuppliersManagementConsultancy::Journey::Suppliers2,0
-
-app/models/management_consultancy/journey/choose_regions.rb,258
-module ManagementConsultancyManagementConsultancy1,0
-  class Journey::ChooseRegionsChooseRegions2,0
-  class Journey::ChooseRegionsManagementConsultancy::Journey::ChooseRegions2,0
-    def regionsregions8,0
-    def next_step_classnext_step_class12,0
-
-app/models/management_consultancy/journey/choose_expenses.rb,233
-module ManagementConsultancyManagementConsultancy1,0
-  class Journey::ChooseExpensesChooseExpenses2,0
-  class Journey::ChooseExpensesManagementConsultancy::Journey::ChooseExpenses2,0
-    def next_step_classnext_step_class8,0
-
-app/models/management_consultancy/journey/choose_lot.rb,214
-module ManagementConsultancyManagementConsultancy1,0
-  class Journey::ChooseLotChooseLot2,0
-  class Journey::ChooseLotManagementConsultancy::Journey::ChooseLot2,0
-    def next_step_classnext_step_class10,0
-
-app/models/management_consultancy/journey/choose_services.rb,285
-module ManagementConsultancyManagementConsultancy1,0
-  class Journey::ChooseServicesChooseServices2,0
-  class Journey::ChooseServicesManagementConsultancy::Journey::ChooseServices2,0
-    def services_for_lot(lot)services_for_lot8,0
-    def next_step_classnext_step_class12,0
-
-app/models/management_consultancy/lot.rb,454
-module ManagementConsultancyManagementConsultancy1,0
-  class LotLot2,0
-  class LotManagementConsultancy::Lot2,0
-    attr_accessor :number, :descriptionnumber5,0
-    attr_accessor :number, :descriptionnumber=5,0
-    attr_accessor :number, :descriptiondescription5,0
-    attr_accessor :number, :descriptiondescription=5,0
-    def self.[](number)[]7,0
-    def full_descriptionfull_description11,0
-    def self.all_numbersall_numbers15,0
-
-app/models/management_consultancy/upload.rb,333
-module ManagementConsultancyManagementConsultancy1,0
-  class Upload < ApplicationRecordUpload2,0
-  class Upload < ApplicationRecordManagementConsultancy::Upload2,0
-    def self.upload!(suppliers)upload!3,0
-    def self.all_or_none(transaction_class)all_or_none15,0
-    def self.create_supplier!(data)create_supplier!26,0
-
-app/models/management_consultancy/service.rb,504
-module ManagementConsultancyManagementConsultancy1,0
-  class ServiceService2,0
-  class ServiceManagementConsultancy::Service2,0
-    attr_accessor :code, :name, :lot_numbercode5,0
-    attr_accessor :code, :name, :lot_numbercode=5,0
-    attr_accessor :code, :name, :lot_numbername5,0
-    attr_accessor :code, :name, :lot_numbername=5,0
-    attr_accessor :code, :name, :lot_numberlot_number5,0
-    attr_accessor :code, :name, :lot_numberlot_number=5,0
-    def self.all_codesall_codes7,0
-
-app/models/nuts2_region.rb,466
-class Nuts2RegionNuts2Region1,0
-  attr_accessor :code, :nuts1_code, :namecode4,0
-  attr_accessor :code, :nuts1_code, :namecode=4,0
-  attr_accessor :code, :nuts1_code, :namenuts1_code4,0
-  attr_accessor :code, :nuts1_code, :namenuts1_code=4,0
-  attr_accessor :code, :nuts1_code, :namename4,0
-  attr_accessor :code, :nuts1_code, :namename=4,0
-  def nuts1_regionnuts1_region6,0
-  def nuts3_regionsnuts3_regions10,0
-  def self.all_codesall_codes14,0
-
-app/models/management_consultancy.rb,106
-module ManagementConsultancyManagementConsultancy1,0
-  def self.table_name_prefixtable_name_prefix2,0
-
-app/models/facilities_management/service_offering.rb,519
-module FacilitiesManagementFacilitiesManagement1,0
-  class ServiceOffering < ApplicationRecordServiceOffering2,0
-  class ServiceOffering < ApplicationRecordFacilitiesManagement::ServiceOffering2,0
-    belongs_to :supplier,supplier3,0
-    belongs_to :supplier,supplier=3,0
-    belongs_to :supplier,build_supplier3,0
-    belongs_to :supplier,create_supplier3,0
-    belongs_to :supplier,create_supplier!3,0
-    scope :for_lot, -> { where(lot_number: lot_number) }for_lot15,0
-    def serviceservice17,0
-
-app/models/facilities_management/supplier.rb,1081
-module FacilitiesManagementFacilitiesManagement1,0
-  class Supplier < ApplicationRecordSupplier2,0
-  class Supplier < ApplicationRecordFacilitiesManagement::Supplier2,0
-    has_many :regional_availabilities,regional_availabilities3,0
-    has_many :regional_availabilities,regional_availabilities=3,0
-    has_many :regional_availabilities,regional_availabilitie_ids3,0
-    has_many :regional_availabilities,regional_availabilitie_ids=3,0
-    has_many :service_offerings,service_offerings8,0
-    has_many :service_offerings,service_offerings=8,0
-    has_many :service_offerings,service_offering_ids8,0
-    has_many :service_offerings,service_offering_ids=8,0
-    def self.available_in_lot(lot_number)available_in_lot15,0
-    def self.delete_all_with_dependentsdelete_all_with_dependents22,0
-    def self.available_in_lot_and_regions(lot_number, region_codes)available_in_lot_and_regions28,0
-    def services_by_work_package_in_lot(lot_number)services_by_work_package_in_lot38,0
-    def service_offerings_in_lot(lot_number)service_offerings_in_lot42,0
-
-app/models/facilities_management/journey.rb,335
-module FacilitiesManagementFacilitiesManagement1,0
-  class Journey < GenericJourneyJourney2,0
-  class Journey < GenericJourneyFacilitiesManagement::Journey2,0
-    def initialize(slug, params)initialize5,0
-    def self.journey_namejourney_name11,0
-    def start_pathstart_path15,0
-    def next_step_pathnext_step_path19,0
-
-app/models/facilities_management/regional_availability.rb,680
-module FacilitiesManagementFacilitiesManagement1,0
-  class RegionalAvailability < ApplicationRecordRegionalAvailability2,0
-  class RegionalAvailability < ApplicationRecordFacilitiesManagement::RegionalAvailability2,0
-    belongs_to :supplier,supplier3,0
-    belongs_to :supplier,supplier=3,0
-    belongs_to :supplier,build_supplier3,0
-    belongs_to :supplier,create_supplier3,0
-    belongs_to :supplier,create_supplier!3,0
-    def self.for_lot(lot_number)for_lot15,0
-    def self.for_lot_and_regions(lot_number, region_codes)for_lot_and_regions19,0
-    def self.supplier_ids_for_lot_and_regions(lot_number, region_codes)supplier_ids_for_lot_and_regions23,0
-
-app/models/facilities_management/journey/suppliers.rb,166
-module FacilitiesManagementFacilitiesManagement1,0
-  class Journey::SuppliersSuppliers2,0
-  class Journey::SuppliersFacilitiesManagement::Journey::Suppliers2,0
-
-app/models/facilities_management/journey/value_band.rb,211
-module FacilitiesManagementFacilitiesManagement1,0
-  class Journey::ValueBandValueBand2,0
-  class Journey::ValueBandFacilitiesManagement::Journey::ValueBand2,0
-    def next_step_classnext_step_class10,0
-
-app/models/facilities_management/journey/supplier_region.rb,259
-module FacilitiesManagementFacilitiesManagement1,0
-  class Journey::SupplierRegionSupplierRegion2,0
-  class Journey::SupplierRegionFacilitiesManagement::Journey::SupplierRegion2,0
-    def regionsregions8,0
-    def next_step_classnext_step_class12,0
-
-app/models/facilities_management/work_package.rb,309
-module FacilitiesManagementFacilitiesManagement1,0
-  class WorkPackageWorkPackage2,0
-  class WorkPackageFacilitiesManagement::WorkPackage2,0
-    attr_accessor :code, :namecode5,0
-    attr_accessor :code, :namecode=5,0
-    attr_accessor :code, :namename5,0
-    attr_accessor :code, :namename=5,0
-
-app/models/facilities_management/region.rb,602
-module FacilitiesManagementFacilitiesManagement1,0
-  class RegionRegion2,0
-  class RegionFacilitiesManagement::Region2,0
-    attr_accessor :code, :namecode5,0
-    attr_accessor :code, :namecode=5,0
-    attr_accessor :code, :namename5,0
-    attr_accessor :code, :namename=5,0
-    def nuts1_codenuts1_code7,0
-    def nuts1_regionnuts1_region11,0
-    def nuts2_codenuts2_code15,0
-    def nuts2_regionnuts2_region19,0
-    def nuts3_codenuts3_code23,0
-    def nuts3_regionnuts3_region27,0
-    def nuts3?nuts3?31,0
-    def nuts2?nuts2?35,0
-    def self.all_codesall_codes39,0
-
-app/models/facilities_management/lot.rb,431
-module FacilitiesManagementFacilitiesManagement1,0
-  class LotLot2,0
-  class LotFacilitiesManagement::Lot2,0
-    attr_accessor :number, :descriptionnumber5,0
-    attr_accessor :number, :descriptionnumber=5,0
-    attr_accessor :number, :descriptiondescription5,0
-    attr_accessor :number, :descriptiondescription=5,0
-    def direct_award_possible?direct_award_possible?7,0
-    def self.all_numbersall_numbers11,0
-
-app/models/facilities_management/upload.rb,330
-module FacilitiesManagementFacilitiesManagement1,0
-  class Upload < ApplicationRecordUpload2,0
-  class Upload < ApplicationRecordFacilitiesManagement::Upload2,0
-    def self.upload!(suppliers)upload!3,0
-    def self.all_or_none(transaction_class)all_or_none15,0
-    def self.create_supplier!(data)create_supplier!26,0
-
-app/models/facilities_management/service.rb,243
-module FacilitiesManagementFacilitiesManagement1,0
-  class ServiceService2,0
-  class ServiceFacilitiesManagement::Service2,0
-    def work_packagework_package11,0
-    def mandatory?mandatory?15,0
-    def self.all_codesall_codes19,0
-
-app/models/generic_journey.rb,1107
-class GenericJourneyGenericJourney1,0
-  attr_reader :steps, :paramssteps2,0
-  attr_reader :steps, :paramsparams2,0
-  def initialize(first_step_class, slug, params, paths)initialize4,0
-  def first_stepfirst_step21,0
-  def current_stepcurrent_step25,0
-  def previous_stepprevious_step29,0
-  def next_stepnext_step33,0
-  def first_step_pathfirst_step_path37,0
-  def current_step_pathcurrent_step_path41,0
-  def previous_step_pathprevious_step_path45,0
-  def next_step_pathnext_step_path53,0
-  def form_pathform_path57,0
-  def start_pathstart_path61,0
-  def previous_questions_and_answersprevious_questions_and_answers65,0
-  def templatetemplate71,0
-  delegate :slug, to: :current_step, prefix: :current, allow_nil: truecurrent_slug75,0
-  delegate :slug, to: :previous_step, prefix: :previous, allow_nil: trueprevious_slug76,0
-  delegate :slug, to: :next_step, prefix: :next, allow_nil: truenext_slug77,0
-  delegate :valid?, :errors, to: :current_stepvalid?79,0
-  delegate :valid?, :errors, to: :current_steperrors79,0
-  delegate :inputs, to: :current_stepinputs80,0
-
-app/models/nuts3_region.rb,539
-class Nuts3RegionNuts3Region1,0
-  attr_accessor :code, :nuts2_code, :namecode4,0
-  attr_accessor :code, :nuts2_code, :namecode=4,0
-  attr_accessor :code, :nuts2_code, :namenuts2_code4,0
-  attr_accessor :code, :nuts2_code, :namenuts2_code=4,0
-  attr_accessor :code, :nuts2_code, :namename4,0
-  attr_accessor :code, :nuts2_code, :namename=4,0
-  def nuts2_regionnuts2_region6,0
-  delegate :nuts1_code, :nuts1_region, to: :nuts2_regionnuts1_code10,0
-  delegate :nuts1_code, :nuts1_region, to: :nuts2_regionnuts1_region10,0
-
-app/models/facilities_management.rb,104
-module FacilitiesManagementFacilitiesManagement1,0
-  def self.table_name_prefixtable_name_prefix2,0
-
-app/models/application_record.rb,67
-class ApplicationRecord < ActiveRecord::BaseApplicationRecord1,0
-
-app/models/login/cognito_login.rb,320
-module LoginLogin1,0
-  class CognitoLogin < Login::BaseLoginCognitoLogin2,0
-  class CognitoLogin < Login::BaseLoginLogin::CognitoLogin2,0
-    def self.from_omniauth(hash)from_omniauth3,0
-    def auth_providerauth_provider7,0
-    def logout_url(routable)logout_url11,0
-    def permit?(framework)permit?15,0
-
-app/models/login/base_login.rb,396
-module LoginLogin1,0
-  class BaseLoginBaseLogin2,0
-  class BaseLoginLogin::BaseLogin2,0
-    attr_reader :emailemail3,0
-    def initialize(email:, extra:)initialize5,0
-    def to_sessionto_session10,0
-    def auth_providerauth_provider18,0
-    def logout_url(_routable)logout_url22,0
-    def permit?(_framework)permit?26,0
-    def log_attempt(result, framework)log_attempt30,0
-
-app/models/login/dfe_login.rb,475
-module LoginLogin1,0
-  class DfeLogin < Login::BaseLoginDfeLogin2,0
-  class DfeLogin < Login::BaseLoginLogin::DfeLogin2,0
-    def self.from_omniauth(hash)from_omniauth3,0
-    def auth_providerauth_provider16,0
-    def logout_url(routable)logout_url20,0
-    def permit?(framework)permit?24,0
-    def school_typeschool_type32,0
-    def organisation_categoryorganisation_category36,0
-    def whitelisted?whitelisted?40,0
-    def non_profit?non_profit?46,0
-
-app/models/journey_paths.rb,182
-class JourneyPathsJourneyPaths1,0
-  def initialize(journey_name)initialize4,0
-  def homehome8,0
-  def question(slug, params = nil)question12,0
-  def answer(slug)answer23,0
-
-app/models/concerns/steppable.rb,197
-module SteppableSteppable1,0
-  def slugslug18,0
-  def templatetemplate22,0
-  def next_step_classnext_step_class26,0
-  def final?final?30,0
-  def translate_input(key)translate_input34,0
-
-app/models/concerns/static_record.rb,37
-module StaticRecordStaticRecord3,0
-
-app/models/concerns/geolocatable.rb,222
-module GeolocatableGeolocatable1,0
-  DEFAULT_SEARCH_RANGE_IN_MILES = 25DEFAULT_SEARCH_RANGE_IN_MILES4,0
-  DEFAULT_SEARCH_RANGE_IN_MILES = 25Geolocatable::DEFAULT_SEARCH_RANGE_IN_MILES4,0
-  def locationlocation13,0
-
-app/calculators/fm_calculator/calculator.rb,2032
-module FMCalculatorFMCalculator7,0
-  class CalculatorCalculator8,0
-  class CalculatorFMCalculator::Calculator8,0
-    attr_writer :uom, :framework_rateuom=9,0
-    attr_writer :uom, :framework_rateframework_rate=9,0
-    def initialize(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)initialize11,0
-    def read_benchmark_ratesread_benchmark_rates44,0
-    def uomduomd60,0
-    def cleanclean73,0
-    def subtotal1subtotal180,0
-    def variancevariance87,0
-    def subtotal2subtotal298,0
-    def cafmcafm104,0
-    def helpdeskhelpdesk114,0
-    def subtotal3subtotal3125,0
-    def mobilisationmobilisation131,0
-    def tupetupe137,0
-    def year1year1147,0
-    def managemanage153,0
-    def corporatecorporate159,0
-    def year1totalyear1total165,0
-    def profitprofit171,0
-    def year1totalchargesyear1totalcharges177,0
-    def subyearstotalsubyearstotal183,0
-    def totalchargestotalcharges189,0
-    def benchmarkedcostsbenchmarkedcosts195,0
-    def benchcleanbenchclean205,0
-    def benchsubtotal1benchsubtotal1212,0
-    def benchvariationbenchvariation218,0
-    def benchsubtotal2benchsubtotal2229,0
-    def benchcafmbenchcafm235,0
-    def benchhelpdeskbenchhelpdesk245,0
-    def benchsubtotal3benchsubtotal3257,0
-    def benchmobilisationbenchmobilisation263,0
-    def benchtupebenchtupe269,0
-    def benchyear1benchyear1279,0
-    def benchmanagebenchmanage285,0
-    def benchcorporatebenchcorporate291,0
-    def benchyear1totalbenchyear1total297,0
-    def benchprofitbenchprofit303,0
-    def benchyear1totalchargesbenchyear1totalcharges309,0
-    def benchsubyearstotalbenchsubyearstotal315,0
-    def benchtotalchargesbenchtotalcharges321,0
-    def sumunitofmeasure(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)sumunitofmeasure328,0
-    def benchmarkedcostssum(service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag)benchmarkedcostssum357,0
-
-app/calculators/temp_to_perm_calculator/calculator.rb,3876
-module TempToPermCalculatorTempToPermCalculator3,0
-  class CalculatorCalculator4,0
-  class CalculatorTempToPermCalculator::Calculator4,0
-    WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED = 60WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED5,0
-    WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED = 60TempToPermCalculator::Calculator::WORKING_DAYS_BEFORE_WHICH_EARLY_HIRE_FEE_CAN_BE_CHARGED5,0
-    WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED = 40WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED6,0
-    WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED = 40TempToPermCalculator::Calculator::WORKING_DAYS_AFTER_WHICH_LATE_NOTICE_FEE_CAN_BE_CHARGED6,0
-    WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE = 20WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE7,0
-    WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE = 20TempToPermCalculator::Calculator::WORKING_DAYS_NOTICE_PERIOD_REQUIRED_TO_AVOID_LATE_NOTICE_FEE7,0
-    MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK = 5MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK8,0
-    MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK = 5TempToPermCalculator::Calculator::MAXIMUM_NUMBER_OF_WORKING_DAYS_PER_WEEK8,0
-    DATE_NATIONAL_DEAL_BEGAN = Date.parse('23 Aug 2018')DATE_NATIONAL_DEAL_BEGAN9,0
-    DATE_NATIONAL_DEAL_BEGAN = Date.parse('23 Aug 2018')TempToPermCalculator::Calculator::DATE_NATIONAL_DEAL_BEGAN9,0
-    attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate, :notice_dateday_rate11,0
-    attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate, :notice_datedays_per_week11,0
-    attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate, :notice_datecontract_start_date11,0
-    attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate, :notice_datehire_date11,0
-    attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate, :notice_datemarkup_rate11,0
-    attr_reader :day_rate, :days_per_week, :contract_start_date, :hire_date, :markup_rate, :notice_datenotice_date11,0
-    def initialize(initialize13,0
-    def maximum_fee_for_lack_of_noticemaximum_fee_for_lack_of_notice41,0
-    def days_notice_requireddays_notice_required45,0
-    def days_notice_givendays_notice_given49,0
-    def hiring_within_8_weeks?hiring_within_8_weeks?53,0
-    def hiring_between_9_and_12_weeks?hiring_between_9_and_12_weeks?59,0
-    def hiring_after_12_weeks?hiring_after_12_weeks?68,0
-    def enough_notice?enough_notice?74,0
-    def feefee78,0
-    def chargeable_working_dayschargeable_working_days85,0
-    def chargeable_working_days_based_on_early_hirechargeable_working_days_based_on_early_hire96,0
-    def chargeable_working_days_based_on_lack_of_noticechargeable_working_days_based_on_lack_of_notice101,0
-    def daily_supplier_feedaily_supplier_fee109,0
-    def pro_rata_daily_supplier_feepro_rata_daily_supplier_fee113,0
-    def working_daysworking_days117,0
-    def ideal_hire_dateideal_hire_date123,0
-    def ideal_notice_dateideal_notice_date127,0
-    def before_national_deal_began?before_national_deal_began?131,0
-    def notice_date_based_on_hire_datenotice_date_based_on_hire_date135,0
-    def notice_period_required?notice_period_required?141,0
-    def late_notice_fee_can_be_charged_fromlate_notice_fee_can_be_charged_from147,0
-    def early_hire_fee_can_be_charged_untilearly_hire_fee_can_be_charged_until151,0
-    def working_days_after(date, number_of_days)working_days_after155,0
-    def working_days_before(date, number_of_days)working_days_before164,0
-    def working_days_between(earlier_date, later_date)working_days_between173,0
-    def working_day?(date)working_day?177,0
-    def school_holidaysschool_holidays181,0
-
-app/calculators/FMcalculator/calculator.rb,2114
-module FMCalculatorFMCalculator3,0
-  class CalculatorCalculator4,0
-  class CalculatorFMCalculator::Calculator4,0
-    attr_writer :uom, :framework_rateuom=5,0
-    attr_writer :uom, :framework_rateframework_rate=5,0
-    def initialize(service_ref,uom_vol,occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag )initialize7,0
-    def uomd()uomd45,0
-    def clean()clean59,0
-    def subtotal1()subtotal167,0
-    def variance()variance75,0
-    def subtotal2()subtotal291,0
-    def cafm()cafm99,0
-    def helpdesk()helpdesk110,0
-      def subtotal3()subtotal3123,0
-      def mobilisation()mobilisation130,0
-      def tupe()tupe137,0
-      def year1()year1148,0
-      def manage()manage155,0
-      def corporate()corporate162,0
-      def year1total()year1total169,0
-      def profit()profit176,0
-      def year1totalcharges()year1totalcharges183,0
-      def subyearstotal()subyearstotal190,0
-      def totalcharges()totalcharges195,0
-      def benchmarkedcosts()benchmarkedcosts202,0
-      def benchclean()benchclean219,0
-      def benchsubtotal1()benchsubtotal1230,0
-      def benchvariation()benchvariation237,0
-      def benchsubtotal2()benchsubtotal2250,0
-      def benchcafm()benchcafm257,0
-      def benchhelpdesk()benchhelpdesk268,0
-      def benchsubtotal3()benchsubtotal3283,0
-      def benchmobilisation()benchmobilisation290,0
-       def benchtupe()benchtupe297,0
-       def benchyear1()benchyear1308,0
-       def benchmanage()benchmanage315,0
-       def benchcorporate()benchcorporate322,0
-       def benchyear1total()benchyear1total329,0
-       def benchprofit()benchprofit336,0
-       def benchyear1totalcharges()benchyear1totalcharges343,0
-       def benchsubyearstotal()benchsubyearstotal350,0
-       def benchtotalcharges()benchtotalcharges357,0
-       def sumunitofmeasure(service_ref,uom_vol,occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag )sumunitofmeasure364,0
-    def benchmarkedcostssum(service_ref,uom_vol,occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag )benchmarkedcostssum393,0
-
-app/lib/cognito/user_pool.rb,351
-module CognitoCognito1,0
-  class UserPoolUserPool2,0
-  class UserPoolCognito::UserPool2,0
-    attr_reader :app_client_idapp_client_id3,0
-    def initialize(region, pool_id, app_client_id)initialize5,0
-    def find_key(key_id)find_key11,0
-    def json_web_keysjson_web_keys15,0
-    def keys_urlkeys_url20,0
-    def idp_urlidp_url24,0
-
-app/lib/cognito/encoded_token.rb,225
-module CognitoCognito1,0
-  class EncodedTokenEncodedToken2,0
-  class EncodedTokenCognito::EncodedToken2,0
-    def initialize(encoded_token)initialize3,0
-    def key_idkey_id7,0
-    def decode(user_pool)decode11,0
-
-app/lib/cognito/token.rb,384
-module CognitoCognito1,0
-  class TokenToken2,0
-  class TokenCognito::Token2,0
-    class VerificationFailure < StandardError; endVerificationFailure3,0
-    class VerificationFailure < StandardError; endCognito::Token::VerificationFailure3,0
-    def initialize(token)initialize5,0
-    def subjectsubject9,0
-    def emailemail13,0
-    def verify!(user_pool)verify!17,0
-
-app/lib/cognito.rb,145
-module CognitoCognito1,0
-  def self.pool_sitepool_site2,0
-  def self.client_idclient_id6,0
-  def self.logout_url(redirect)logout_url10,0
-
-app/validators/location_validator.rb,139
-class LocationValidator < ActiveModel::EachValidatorLocationValidator1,0
-  def validate_each(record, attribute, value)validate_each2,0
-
-app/validators/postcode_validator.rb,139
-class PostcodeValidator < ActiveModel::EachValidatorPostcodeValidator1,0
-  def validate_each(record, attribute, value)validate_each2,0
-
-app/jobs/application_job.rb,58
-class ApplicationJob < ActiveJob::BaseApplicationJob1,0
-
-app/controllers/postcode/postcodes_controller.rb,214
-module PostcodePostcode3,0
-  class PostcodesController < ApplicationControllerPostcodesController5,0
-  class PostcodesController < ApplicationControllerPostcode::PostcodesController5,0
-    def showshow16,0
-
-app/controllers/application_controller.rb,744
-class ApplicationController < ActionController::BaseApplicationController1,0
-  Unauthorized = Class.new(StandardError)Unauthorized2,0
-  Unauthorized = Class.new(StandardError)ApplicationController::Unauthorized2,0
-  PERMISSIONS = %i[PERMISSIONS4,0
-  PERMISSIONS = %i[ApplicationController::PERMISSIONS4,0
-  def self.require_permission(label, **kwargs)require_permission12,0
-  def gateway_urlgateway_url27,0
-  def current_logincurrent_login44,0
-  def current_login=(login)current_login=48,0
-  def delete_current_logindelete_current_login52,0
-  def verify_permissionverify_permission56,0
-  def logged_in?logged_in?69,0
-  def deny_accessdeny_access74,0
-  delegate :ccs_homepage_url, to: Marketplaceccs_homepage_url78,0
-
-app/controllers/supply_teachers/downloads_controller.rb,229
-module SupplyTeachersSupplyTeachers3,0
-  class DownloadsController < FrameworkControllerDownloadsController4,0
-  class DownloadsController < FrameworkControllerSupplyTeachers::DownloadsController4,0
-    def indexindex5,0
-
-app/controllers/supply_teachers/suppliers_controller.rb,453
-module SupplyTeachersSupplyTeachers1,0
-  class SuppliersController < FrameworkControllerSuppliersController2,0
-  class SuppliersController < FrameworkControllerSupplyTeachers::SuppliersController2,0
-    def master_vendorsmaster_vendors5,0
-    def neutral_vendorsneutral_vendors10,0
-    def all_suppliersall_suppliers15,0
-    def source_journeysource_journey24,0
-    def managed_service_provider_paramsmanaged_service_provider_params28,0
-
-app/controllers/supply_teachers/gateway_controller.rb,221
-module SupplyTeachersSupplyTeachers1,0
-  class GatewayController < FrameworkControllerGatewayController2,0
-  class GatewayController < FrameworkControllerSupplyTeachers::GatewayController2,0
-    def indexindex5,0
-
-app/controllers/supply_teachers/framework_controller.rb,213
-module SupplyTeachersSupplyTeachers1,0
-  class FrameworkController < ::ApplicationControllerFrameworkController2,0
-  class FrameworkController < ::ApplicationControllerSupplyTeachers::FrameworkController2,0
-
-app/controllers/supply_teachers/journey_controller.rb,237
-module SupplyTeachersSupplyTeachers1,0
-  class JourneyController < FrameworkControllerJourneyController2,0
-  class JourneyController < FrameworkControllerSupplyTeachers::JourneyController2,0
-    def journey_classjourney_class5,0
-
-app/controllers/supply_teachers/branches_controller.rb,502
-module SupplyTeachersSupplyTeachers1,0
-  class BranchesController < FrameworkControllerBranchesController2,0
-  class BranchesController < FrameworkControllerSupplyTeachers::BranchesController2,0
-    SEARCH_RADIUSES = [50, 25, 10, 5, 1].freezeSEARCH_RADIUSES3,0
-    SEARCH_RADIUSES = [50, 25, 10, 5, 1].freezeSupplyTeachers::BranchesController::SEARCH_RADIUSES3,0
-    def indexindex7,0
-    def showshow19,0
-    def render_branchesrender_branches25,0
-    def daily_ratesdaily_rates44,0
-
-app/controllers/supply_teachers/home_controller.rb,260
-module SupplyTeachersSupplyTeachers1,0
-  class HomeController < FrameworkControllerHomeController2,0
-  class HomeController < FrameworkControllerSupplyTeachers::HomeController2,0
-    def index; endindex5,0
-    def temp_to_perm_feetemp_to_perm_fee7,0
-
-app/controllers/supply_teachers/uploads_controller.rb,224
-module SupplyTeachersSupplyTeachers1,0
-  class UploadsController < FrameworkControllerUploadsController2,0
-  class UploadsController < FrameworkControllerSupplyTeachers::UploadsController2,0
-    def createcreate15,0
-
-app/controllers/requirements_controller.rb,80
-class RequirementsController < ApplicationControllerRequirementsController1,0
-
-app/controllers/apprenticeships/framework_controller.rb,216
-module ApprenticeshipsApprenticeships1,0
-  class FrameworkController < ::ApplicationControllerFrameworkController2,0
-  class FrameworkController < ::ApplicationControllerApprenticeships::FrameworkController2,0
-
-app/controllers/apprenticeships/requirements_controller.rb,80
-class RequirementsController < ApplicationControllerRequirementsController1,0
-
-app/controllers/apprenticeships/home_controller.rb,445
-module ApprenticeshipsApprenticeships1,0
-  class HomeController < FrameworkControllerHomeController2,0
-  class HomeController < FrameworkControllerApprenticeships::HomeController2,0
-    def index; endindex6,0
-    def search; endsearch8,0
-    def search_results; endsearch_results10,0
-    def training_providertraining_provider12,0
-    def training_provider_listtraining_provider_list59,0
-    def set_back_pathset_back_path79,0
-
-app/controllers/management_consultancy/suppliers_controller.rb,309
-module ManagementConsultancyManagementConsultancy1,0
-  class SuppliersController < FrameworkControllerSuppliersController2,0
-  class SuppliersController < FrameworkControllerManagementConsultancy::SuppliersController2,0
-    def indexindex5,0
-    def showshow20,0
-    def download; enddownload24,0
-
-app/controllers/management_consultancy/gateway_controller.rb,242
-module ManagementConsultancyManagementConsultancy1,0
-  class GatewayController < FrameworkControllerGatewayController2,0
-  class GatewayController < FrameworkControllerManagementConsultancy::GatewayController2,0
-    def indexindex5,0
-
-app/controllers/management_consultancy/framework_controller.rb,234
-module ManagementConsultancyManagementConsultancy1,0
-  class FrameworkController < ::ApplicationControllerFrameworkController2,0
-  class FrameworkController < ::ApplicationControllerManagementConsultancy::FrameworkController2,0
-
-app/controllers/management_consultancy/journey_controller.rb,258
-module ManagementConsultancyManagementConsultancy1,0
-  class JourneyController < FrameworkControllerJourneyController2,0
-  class JourneyController < FrameworkControllerManagementConsultancy::JourneyController2,0
-    def journey_classjourney_class5,0
-
-app/controllers/management_consultancy/home_controller.rb,235
-module ManagementConsultancyManagementConsultancy1,0
-  class HomeController < FrameworkControllerHomeController2,0
-  class HomeController < FrameworkControllerManagementConsultancy::HomeController2,0
-    def index; endindex5,0
-
-app/controllers/management_consultancy/uploads_controller.rb,245
-module ManagementConsultancyManagementConsultancy1,0
-  class UploadsController < FrameworkControllerUploadsController2,0
-  class UploadsController < FrameworkControllerManagementConsultancy::UploadsController2,0
-    def createcreate15,0
-
-app/controllers/home_controller.rb,184
-class HomeController < ApplicationControllerHomeController1,0
-  def indexindex4,0
-  def statusstatus8,0
-  def cookies; endcookies12,0
-  def landing_page; endlanding_page14,0
-
-app/controllers/facilities_management/gateway_controller.rb,239
-module FacilitiesManagementFacilitiesManagement1,0
-  class GatewayController < FrameworkControllerGatewayController2,0
-  class GatewayController < FrameworkControllerFacilitiesManagement::GatewayController2,0
-    def indexindex5,0
-
-app/controllers/facilities_management/select_services_controller.rb,276
-class FacilitiesManagement::SelectServicesController < ApplicationControllerSelectServicesController3,0
-class FacilitiesManagement::SelectServicesController < ApplicationControllerFacilitiesManagement::SelectServicesController3,0
-  def select_servicesselect_services6,0
-
-app/controllers/facilities_management/framework_controller.rb,231
-module FacilitiesManagementFacilitiesManagement1,0
-  class FrameworkController < ::ApplicationControllerFrameworkController2,0
-  class FrameworkController < ::ApplicationControllerFacilitiesManagement::FrameworkController2,0
-
-app/controllers/facilities_management/standard_contract_questions_controller.rb,344
-class FacilitiesManagement::StandardContractQuestionsController < ApplicationControllerStandardContractQuestionsController1,0
-class FacilitiesManagement::StandardContractQuestionsController < ApplicationControllerFacilitiesManagement::StandardContractQuestionsController1,0
-  def standard_contract_questionsstandard_contract_questions3,0
-
-app/controllers/facilities_management/journey_controller.rb,255
-module FacilitiesManagementFacilitiesManagement1,0
-  class JourneyController < FrameworkControllerJourneyController2,0
-  class JourneyController < FrameworkControllerFacilitiesManagement::JourneyController2,0
-    def journey_classjourney_class5,0
-
-app/controllers/facilities_management/select_locations_controller.rb,280
-class FacilitiesManagement::SelectLocationsController < ApplicationControllerSelectLocationsController1,0
-class FacilitiesManagement::SelectLocationsController < ApplicationControllerFacilitiesManagement::SelectLocationsController1,0
-  def select_locationselect_location4,0
-
-app/controllers/facilities_management/home_controller.rb,232
-module FacilitiesManagementFacilitiesManagement1,0
-  class HomeController < FrameworkControllerHomeController2,0
-  class HomeController < FrameworkControllerFacilitiesManagement::HomeController2,0
-    def index; endindex5,0
-
-app/controllers/facilities_management/long_list_controller.rb,240
-class FacilitiesManagement::LongListController < ApplicationControllerLongListController3,0
-class FacilitiesManagement::LongListController < ApplicationControllerFacilitiesManagement::LongListController3,0
-  def long_listlong_list5,0
-
-app/controllers/facilities_management/uploads_controller.rb,242
-module FacilitiesManagementFacilitiesManagement1,0
-  class UploadsController < FrameworkControllerUploadsController2,0
-  class UploadsController < FrameworkControllerFacilitiesManagement::UploadsController2,0
-    def createcreate15,0
-
-app/controllers/errors_controller.rb,68
-class ErrorsController < ApplicationControllerErrorsController1,0
-
-app/controllers/auth_controller.rb,120
-class AuthController < ApplicationControllerAuthController1,0
-  def callbackcallback4,0
-  def sign_outsign_out9,0
-
-app/controllers/concerns/journey_controller_actions.rb,211
-module JourneyControllerActionsJourneyControllerActions1,0
-  def startstart8,0
-  def questionquestion12,0
-  def answeranswer17,0
-  def render_formrender_form28,0
-  def build_journeybuild_journey34,0
-
-app/helpers/supply_teachers/branches_helper.rb,246
-module SupplyTeachers::BranchesHelperBranchesHelper1,0
-module SupplyTeachers::BranchesHelperSupplyTeachers::BranchesHelper1,0
-  def display_name_for_branch(branch)display_name_for_branch2,0
-  def link_to_calculator?link_to_calculator?6,0
-
-app/helpers/supply_teachers/temp_to_perm_calculator_helper.rb,1020
-module SupplyTeachers::TempToPermCalculatorHelperTempToPermCalculatorHelper1,0
-module SupplyTeachers::TempToPermCalculatorHelperSupplyTeachers::TempToPermCalculatorHelper1,0
-  def display_notice_period_required(calculator)display_notice_period_required2,0
-  def display_notice_period_given(calculator)display_notice_period_given7,0
-  def display_chargeable_days_for_lack_of_notice(calculator)display_chargeable_days_for_lack_of_notice14,0
-  def display_suppliers_daily_fee(calculator)display_suppliers_daily_fee19,0
-  def display_suppliers_pro_rata_daily_fee?(calculator)display_suppliers_pro_rata_daily_fee?26,0
-  def display_suppliers_pro_rata_daily_fee(calculator)display_suppliers_pro_rata_daily_fee30,0
-  def display_total_fee(calculator)display_total_fee36,0
-  def display_working_days(calculator)display_working_days41,0
-  def display_chargeable_days_for_early_hire(calculator)display_chargeable_days_for_early_hire48,0
-  def display_working_days_requireddisplay_working_days_required53,0
-
-app/helpers/supply_teachers/home_helper.rb,114
-module SupplyTeachers::HomeHelperHomeHelper1,0
-module SupplyTeachers::HomeHelperSupplyTeachers::HomeHelper1,0
-
-app/helpers/journey_helper.rb,85
-module JourneyHelperJourneyHelper1,0
-  def checked?(actual, expected)checked?2,0
-
-app/helpers/apprenticeships/home_helper.rb,729
-module Apprenticeships::HomeHelperHomeHelper1,0
-module Apprenticeships::HomeHelperApprenticeships::HomeHelper1,0
-  def levelslevels3,0
-  def routesroutes8,0
-  def sort_optionsort_option16,0
-  def resultsresults21,0
-  def ofsted_ratingofsted_rating36,0
-  def course_ratingcourse_rating40,0
-  def provider_experienceprovider_experience44,0
-  def delivery_methoddelivery_method48,0
-  def time_demandtime_demand52,0
-  def classroom_sharingclassroom_sharing56,0
-  def training_availabilitytraining_availability60,0
-  def supplier_resultssupplier_results64,0
-  def browse_routesbrowse_routes77,0
-  def option_availability(option)option_availability95,0
-  def list_from_array(array)list_from_array99,0
-
-app/helpers/facilities_management/standard_contract_questions_helper.rb,216
-module FacilitiesManagement::StandardContractQuestionsHelperStandardContractQuestionsHelper1,0
-module FacilitiesManagement::StandardContractQuestionsHelperFacilitiesManagement::StandardContractQuestionsHelper1,0
-
-app/helpers/telephone_number_helper.rb,118
-module TelephoneNumberHelperTelephoneNumberHelper1,0
-  def format_telephone_number(raw)format_telephone_number2,0
-
-app/helpers/application_helper.rb,1355
-module ApplicationHelperApplicationHelper1,0
-  def miles_to_metres(miles)miles_to_metres2,0
-  def metres_to_miles(metres)metres_to_miles6,0
-  def feedback_email_linkfeedback_email_link10,0
-  def support_email_link(label)support_email_link18,0
-  def dfe_account_request_urldfe_account_request_url26,0
-  def support_telephone_numbersupport_telephone_number30,0
-  def govuk_email_link(email_address, aria_label, css_class: 'govuk-link')govuk_email_link34,0
-  def govuk_form_group_with_optional_error(journey, *attributes)govuk_form_group_with_optional_error38,0
-  def govuk_fieldset_with_optional_error(journey, *attributes)govuk_fieldset_with_optional_error49,0
-  def display_errors(journey, *attributes)display_errors60,0
-  def display_error(journey, attribute)display_error64,0
-  def css_classes_for_input(journey, attribute, extra_classes = [])css_classes_for_input73,0
-  def error_id(attribute)error_id81,0
-  def page_titlepage_title85,0
-  def add_optional_error_prefix_to_page_title(errors)add_optional_error_prefix_to_page_title93,0
-  def hidden_fields_for_previous_steps_and_responses(journey)hidden_fields_for_previous_steps_and_responses99,0
-  def link_to_service_start_pagelink_to_service_start_page113,0
-  def service_start_page_pathservice_start_page_path119,0
-  def the_landing_pagethe_landing_page125,0
-
-app/services/postcode/postcode_checker.rb,268
-module PostcodePostcode3,0
-  class PostcodeCheckerPostcodeChecker5,0
-  class PostcodeCheckerPostcode::PostcodeChecker5,0
-    def self.in_london?(postcode)in_london?6,0
-    def self.location_info(postcode)location_info15,0
-    def self.msg(postcode)msg30,0
-
-app/services/distance_converter.rb,282
-class DistanceConverterDistanceConverter1,0
-  ONE_MILE_IN_METRES = 1609.34ONE_MILE_IN_METRES2,0
-  ONE_MILE_IN_METRES = 1609.34DistanceConverter::ONE_MILE_IN_METRES2,0
-  def self.miles_to_metres(miles)miles_to_metres4,0
-  def self.metres_to_miles(metres)metres_to_miles8,0
-
-app/services/geocoding.rb,317
-class GeocodingGeocoding1,0
-  DEFAULT_PARAMS = { params: { region: 'uk' } }.freezeDEFAULT_PARAMS2,0
-  DEFAULT_PARAMS = { params: { region: 'uk' } }.freezeGeocoding::DEFAULT_PARAMS2,0
-  def self.point(latitude:, longitude:)point4,0
-  def self.point_factorypoint_factory10,0
-  def point(postcode:)point14,0
-
-app/services/facilities_management/fm_supplier_data.rb,206
-class FMSupplierDataFMSupplierData2,0
-  def long_list_supplier_count(locations, services)long_list_supplier_count4,0
-  def long_list_suppliers_lot(locations, services, lot)long_list_suppliers_lot23,0
-
-app/services/static_data_loader.rb,186
-class StaticDataLoaderStaticDataLoader1,0
-  def self.load_static_data(static_data_class)load_static_data9,0
-  def self.call_rake(static_data_class, class_name, query)call_rake23,0
-
-config/application.rb,1602
-module MarketplaceMarketplace20,0
-  class Application < Rails::ApplicationApplication21,0
-  class Application < Rails::ApplicationMarketplace::Application21,0
-  def self.feedback_email_addressfeedback_email_address36,0
-  def self.support_email_addresssupport_email_address40,0
-  def self.support_telephone_numbersupport_telephone_number44,0
-  def self.ccs_homepage_urlccs_homepage_url48,0
-  def self.http_basic_auth_namehttp_basic_auth_name53,0
-  def self.http_basic_auth_passwordhttp_basic_auth_password57,0
-  def self.cognito_user_pool_sitecognito_user_pool_site62,0
-  def self.cognito_user_pool_idcognito_user_pool_id66,0
-  def self.cognito_client_idcognito_client_id70,0
-  def self.cognito_client_secretcognito_client_secret74,0
-  def self.cognito_aws_regioncognito_aws_region78,0
-  def self.google_analytics_tracking_idgoogle_analytics_tracking_id82,0
-  def self.google_geocoding_api_keygoogle_geocoding_api_key86,0
-  def self.dfe_signin_urldfe_signin_url90,0
-  def self.dfe_signin_enabled?dfe_signin_enabled?94,0
-  def self.supply_teachers_cognito_enabled?supply_teachers_cognito_enabled?98,0
-  def self.dfe_signin_uridfe_signin_uri102,0
-  def self.dfe_signin_client_iddfe_signin_client_id109,0
-  def self.dfe_signin_client_secretdfe_signin_client_secret113,0
-  def self.dfe_signin_redirect_uridfe_signin_redirect_uri117,0
-  def self.dfe_signin_whitelist_enabled?dfe_signin_whitelist_enabled?121,0
-  def self.dfe_signin_whitelisted_email_addressesdfe_signin_whitelisted_email_addresses125,0
-  def self.upload_privileges?upload_privileges?132,0
-
-config/initializers/omniauth_dfe.rb,101
-  class DfeSignInDfeSignIn18,0
-    def initialize(app)initialize19,0
-    def call(env)call23,0
-
-spec/support/stub_auth.rb,179
-module SpecSupportSpecSupport1,0
-  module StubAuthStubAuth2,0
-  module StubAuthSpecSupport::StubAuth2,0
-    def stub_authstub_auth3,0
-    def unstub_authunstub_auth34,0
-
-spec/support/fake_login.rb,268
-module SpecSupportSpecSupport1,0
-  module FakeLoginFakeLogin2,0
-  module FakeLoginSpecSupport::FakeLogin2,0
-    def ensure_logged_inensure_logged_in4,0
-    def ensure_not_logged_inensure_not_logged_in10,0
-    def permit_framework(name)permit_framework16,0
-
-spec/support/start_pages.rb,369
-module SpecSupportSpecSupport1,0
-  module VisitStartPagesVisitStartPages2,0
-  module VisitStartPagesSpecSupport::VisitStartPages2,0
-    def visit_supply_teachers_startvisit_supply_teachers_start3,0
-    def visit_facilities_management_startvisit_facilities_management_start9,0
-    def visit_management_consultancy_startvisit_management_consultancy_start15,0
-
-spec/support/fake_postcode.rb,178
-module SpecSupportSpecSupport1,0
-  module FakePostcodeFakePostcode2,0
-  module FakePostcodeSpecSupport::FakePostcode2,0
-    def valid_fake_postcodevalid_fake_postcode3,0
-
-lib/omniauth/strategies/cognito.rb,380
-module OmniAuthOmniAuth4,0
-  module StrategiesStrategies5,0
-  module StrategiesOmniAuth::Strategies5,0
-    class Cognito < OmniAuth::Strategies::OAuth2Cognito6,0
-    class Cognito < OmniAuth::Strategies::OAuth2OmniAuth::Strategies::Cognito6,0
-      def callback_urlcallback_url27,0
-      def id_tokenid_token33,0
-      def validated_id_tokenvalidated_id_token37,0
-
-lib/cop/migration/require_uuid_primary_keys.rb,689
-module RuboCopRuboCop1,0
-  module CopCop2,0
-  module CopRuboCop::Cop2,0
-    module MigrationMigration3,0
-    module MigrationRuboCop::Cop::Migration3,0
-      class RequireUUIDPrimaryKeys < RuboCop::Cop::CopRequireUUIDPrimaryKeys4,0
-      class RequireUUIDPrimaryKeys < RuboCop::Cop::CopRuboCop::Cop::Migration::RequireUUIDPrimaryKeys4,0
-        MSG = 'Use UUIDs for database primary keys (with the `id: :uuid` option)'.freezeMSG5,0
-        MSG = 'Use UUIDs for database primary keys (with the `id: :uuid` option)'.freezeRuboCop::Cop::Migration::RequireUUIDPrimaryKeys::MSG5,0
-        def on_send(node)on_send7,0
-        def uuid_option_set?(node)uuid_option_set?15,0
-
-lib/cop/migration/require_limit_on_string.rb,786
-module RuboCopRuboCop1,0
-  module CopCop2,0
-  module CopRuboCop::Cop2,0
-    module MigrationMigration3,0
-    module MigrationRuboCop::Cop::Migration3,0
-      class RequireLimitOnString < RuboCop::Cop::CopRequireLimitOnString4,0
-      class RequireLimitOnString < RuboCop::Cop::CopRuboCop::Cop::Migration::RequireLimitOnString4,0
-        MSG = 'Specify a limit when using the `string` column type. Use `text` if no limit is needed'.freezeMSG5,0
-        MSG = 'Specify a limit when using the `string` column type. Use `text` if no limit is needed'.freezeRuboCop::Cop::Migration::RequireLimitOnString::MSG5,0
-        def on_send(node)on_send7,0
-        def check_options(node, type, opts)check_options20,0
-        def length_option_set?(opts)length_option_set?26,0
-
-db/migrate/20181024091756_add_daily_fee_to_rates.rb,103
-class AddDailyFeeToRates < ActiveRecord::Migration[5.2]AddDailyFeeToRates1,0
-  def changechange2,0
-
-db/migrate/20181210121631_create_facilities_management_uploads.rb,133
-class CreateFacilitiesManagementUploads < ActiveRecord::Migration[5.2]CreateFacilitiesManagementUploads1,0
-  def changechange3,0
-
-db/migrate/20181015101044_add_supplier_rates.rb,99
-class AddSupplierRates < ActiveRecord::Migration[5.2]AddSupplierRates2,0
-  def changechange3,0
-
-db/migrate/20181004100733_create_branches.rb,95
-class CreateBranches < ActiveRecord::Migration[5.2]CreateBranches1,0
-  def changechange2,0
-
-db/migrate/20181105170817_add_index_to_facilities_management_service_offerings_lot_number.rb,177
-class AddIndexToFacilitiesManagementServiceOfferingsLotNumber < ActiveRecord::Migration[5.2]AddIndexToFacilitiesManagementServiceOfferingsLotNumber1,0
-  def changechange2,0
-
-db/migrate/20181017152819_change_job_type_string_to_text.rb,117
-class ChangeJobTypeStringToText < ActiveRecord::Migration[5.2]ChangeJobTypeStringToText1,0
-  def changechange2,0
-
-db/migrate/20181004100503_create_suppliers.rb,97
-class CreateSuppliers < ActiveRecord::Migration[5.2]CreateSuppliers1,0
-  def changechange2,0
-
-db/migrate/20181210112501_create_supply_teachers_uploads.rb,121
-class CreateSupplyTeachersUploads < ActiveRecord::Migration[5.2]CreateSupplyTeachersUploads1,0
-  def changechange3,0
-
-db/migrate/20181011132200_add_accreditation_body_to_suppliers.rb,129
-class AddAccreditationBodyToSuppliers < ActiveRecord::Migration[5.2]AddAccreditationBodyToSuppliers1,0
-  def changechange2,0
-
-db/migrate/20181031191036_add_contact_email_to_facilities_management_suppliers.rb,159
-class AddContactEmailToFacilitiesManagementSuppliers < ActiveRecord::Migration[5.2]AddContactEmailToFacilitiesManagementSuppliers1,0
-  def changechange2,0
-
-db/migrate/20181009104806_add_contact_name_and_contact_email_to_branches.rb,145
-class AddContactNameAndContactEmailToBranches < ActiveRecord::Migration[5.2]AddContactNameAndContactEmailToBranches1,0
-  def changechange2,0
-
-db/migrate/20181004130412_add_location_to_branches.rb,109
-class AddLocationToBranches < ActiveRecord::Migration[5.2]AddLocationToBranches1,0
-  def changechange2,0
-
-db/migrate/20181004100253_enable_pgcrypto_extension.rb,113
-class EnablePgcryptoExtension < ActiveRecord::Migration[5.2]EnablePgcryptoExtension1,0
-  def changechange2,0
-
-db/migrate/20181010170734_add_telephone_number_to_branches.rb,123
-class AddTelephoneNumberToBranches < ActiveRecord::Migration[5.2]AddTelephoneNumberToBranches1,0
-  def changechange2,0
-
-db/migrate/20181031200527_create_facilities_management_regional_availabilities.rb,163
-class CreateFacilitiesManagementRegionalAvailabilities < ActiveRecord::Migration[5.2]CreateFacilitiesManagementRegionalAvailabilities1,0
-  def changechange2,0
-
-db/migrate/20181011135925_add_town_to_branches.rb,101
-class AddTownToBranches < ActiveRecord::Migration[5.2]AddTownToBranches1,0
-  def changechange2,0
-
-db/migrate/20181009113439_fix_lat_long_in_db.rb,87
-class FixLatLongInDb < ActiveRecord::Migration[5.2]FixLatLongInDb1,0
-  def upup2,0
-
-db/migrate/20181016161033_remove_accreditation_body_from_suppliers.rb,139
-class RemoveAccreditationBodyFromSuppliers < ActiveRecord::Migration[5.2]RemoveAccreditationBodyFromSuppliers1,0
-  def changechange2,0
-
-db/migrate/20181113140044_create_management_consultancy_service_offerings.rb,153
-class CreateManagementConsultancyServiceOfferings < ActiveRecord::Migration[5.2]CreateManagementConsultancyServiceOfferings1,0
-  def changechange2,0
-
-db/migrate/20181105142503_add_index_to_facilities_management_regional_availabilities_lot_number.rb,189
-class AddIndexToFacilitiesManagementRegionalAvailabilitiesLotNumber < ActiveRecord::Migration[5.2]AddIndexToFacilitiesManagementRegionalAvailabilitiesLotNumber1,0
-  def changechange2,0
-
-db/migrate/20181011134015_add_name_to_branches.rb,101
-class AddNameToBranches < ActiveRecord::Migration[5.2]AddNameToBranches1,0
-  def changechange2,0
-
-db/migrate/20181120114606_add_expenses_required_to_mcra.rb,130
-class AddExpensesRequiredToMcra < ActiveRecord::Migration[5.2]AddExpensesRequiredToMcra1,0
-  def upup2,0
-  def downdown11,0
-
-db/migrate/20181113163200_add_supply_teachers_prefixes.rb,130
-class AddSupplyTeachersPrefixes < ActiveRecord::Migration[5.2]AddSupplyTeachersPrefixes1,0
-  def upup2,0
-  def downdown10,0
-
-db/migrate/20181113133921_create_management_consultancy_suppliers.rb,139
-class CreateManagementConsultancySuppliers < ActiveRecord::Migration[5.2]CreateManagementConsultancySuppliers1,0
-  def changechange2,0
-
-db/migrate/20181004124616_enable_postgis_extension.rb,111
-class EnablePostgisExtension < ActiveRecord::Migration[5.2]EnablePostgisExtension1,0
-  def changechange2,0
-
-db/migrate/20181031183251_create_facilities_management_suppliers.rb,137
-class CreateFacilitiesManagementSuppliers < ActiveRecord::Migration[5.2]CreateFacilitiesManagementSuppliers1,0
-  def changechange2,0
-
-db/migrate/20181018161626_add_lot_to_rates.rb,93
-class AddLotToRates < ActiveRecord::Migration[5.2]AddLotToRates1,0
-  def changechange2,0
-
-db/migrate/20190315144216_add_address_1_address_2_county_and_region_to_supply_teachers_branches.rb,183
-class AddAddress1Address2CountyAndRegionToSupplyTeachersBranches < ActiveRecord::Migration[5.2]AddAddress1Address2CountyAndRegionToSupplyTeachersBranches1,0
-  def changechange2,0
-
-db/migrate/20181119160741_create_management_consultancy_regional_availabilities.rb,165
-class CreateManagementConsultancyRegionalAvailabilities < ActiveRecord::Migration[5.2]CreateManagementConsultancyRegionalAvailabilities1,0
-  def changechange2,0
-
-db/migrate/20181031185939_add_contact_name_to_facilities_management_suppliers.rb,157
-class AddContactNameToFacilitiesManagementSuppliers < ActiveRecord::Migration[5.2]AddContactNameToFacilitiesManagementSuppliers1,0
-  def changechange2,0
-
-db/migrate/20181105142644_create_facilities_management_service_offerings.rb,151
-class CreateFacilitiesManagementServiceOfferings < ActiveRecord::Migration[5.2]CreateFacilitiesManagementServiceOfferings1,0
-  def changechange2,0
-
-db/migrate/20181206152712_add_msp_contacts_to_st_suppliers.rb,121
-class AddMspContactsToStSuppliers < ActiveRecord::Migration[5.2]AddMspContactsToStSuppliers1,0
-  def changechange2,0
-
-db/migrate/20181210122557_create_management_consultancy_uploads.rb,135
-class CreateManagementConsultancyUploads < ActiveRecord::Migration[5.2]CreateManagementConsultancyUploads1,0
-  def changechange3,0
-
-db/migrate/20190320114608_add_sme_to_management_consultancy_suppliers.rb,143
-class AddSmeToManagementConsultancySuppliers < ActiveRecord::Migration[5.2]AddSmeToManagementConsultancySuppliers1,0
-  def changechange2,0
-
-db/migrate/20190318122002_add_slug_to_supply_teachers_branches.rb,129
-class AddSlugToSupplyTeachersBranches < ActiveRecord::Migration[5.2]AddSlugToSupplyTeachersBranches1,0
-  def changechange2,0
-
-db/migrate/20181017115202_add_term_to_rates.rb,95
-class AddTermToRates < ActiveRecord::Migration[5.2]AddTermToRates1,0
-  def changechange2,0
-
-db/migrate/20181031191820_add_telephone_number_to_facilities_management_suppliers.rb,165
-class AddTelephoneNumberToFacilitiesManagementSuppliers < ActiveRecord::Migration[5.2]AddTelephoneNumberToFacilitiesManagementSuppliers1,0
-  def changechange2,0
-
-db/migrate/20181114181626_add_contact_fields_to_management_consultancy_suppliers.rb,163
-class AddContactFieldsToManagementConsultancySuppliers < ActiveRecord::Migration[5.2]AddContactFieldsToManagementConsultancySuppliers1,0
-  def changechange2,0
