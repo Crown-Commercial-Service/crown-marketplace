@@ -1,4 +1,3 @@
-# rubocop:disable Rails/CreateTableWithTimestamps
 class FmStaticData < ActiveRecord::Migration[5.2]
   def change
     return if table_exists?(:fm_static_data)
@@ -10,4 +9,3 @@ class FmStaticData < ActiveRecord::Migration[5.2]
     end
   end
 end
-# rubocop:enable Rails/CreateTableWithTimestamps
