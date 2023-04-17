@@ -1,4 +1,3 @@
-# rubocop:disable Rails/CreateTableWithTimestamps
 class CreateLondonPostcodes < ActiveRecord::Migration[5.2]
   def change
     create_table :london_postcodes, id: false, force: :cascade do |t|
@@ -9,4 +8,3 @@ class CreateLondonPostcodes < ActiveRecord::Migration[5.2]
     end
   end
 end
-# rubocop:enable Rails/CreateTableWithTimestamps

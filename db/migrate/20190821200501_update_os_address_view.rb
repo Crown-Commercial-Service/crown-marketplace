@@ -1,7 +1,6 @@
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
 # rubocop:disable Metrics/BlockLength
-# rubocop:disable Rails/CreateTableWithTimestamps
 # rubocop:disable Migration/RequireLimitOnString
 class UpdateOsAddressView < ActiveRecord::Migration[5.2]
   def up
@@ -112,5 +111,4 @@ end
 # rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/BlockLength
 # rubocop:enable Metrics/MethodLength
-# rubocop:enable Rails/CreateTableWithTimestamps
 # rubocop:enable Migration/RequireLimitOnString
