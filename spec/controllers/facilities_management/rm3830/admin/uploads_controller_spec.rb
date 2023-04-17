@@ -7,6 +7,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
     context 'when not logged in' do
       it 'redirects to the sign-in' do
         get :index
+
         expect(response).to redirect_to facilities_management_rm3830_admin_new_user_session_path
       end
     end
@@ -16,6 +17,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
 
       it 'redirects to not permitted' do
         get :index
+
         expect(response).to redirect_to '/facilities-management/RM3830/admin/not-permitted'
       end
     end
@@ -25,7 +27,18 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
 
       it 'renders the page' do
         get :index
+
         expect(response).to render_template(:index)
+      end
+
+      context 'and the framework has expired' do
+        include_context 'and RM3830 has expired'
+
+        it 'renders the page' do
+          get :index
+
+          expect(response).to render_template(:index)
+        end
       end
     end
   end
@@ -49,6 +62,16 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
       get :new
 
       expect(response).to render_template(:new)
+    end
+
+    context 'and the framework has expired' do
+      include_context 'and RM3830 has expired'
+
+      it 'redirects to the facilities_management_rm3830_admin_uploads_path path' do
+        get :new
+
+        expect(response).to redirect_to facilities_management_rm3830_admin_uploads_path
+      end
     end
   end
 
@@ -80,6 +103,16 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
 
       it 'changes the state to in_progress' do
         expect(upload.in_progress?).to be true
+      end
+
+      context 'and the framework has expired' do
+        include_context 'and RM3830 has expired'
+
+        it 'redirects to the facilities_management_rm3830_admin_uploads_path path' do
+          post :create, params: { facilities_management_rm3830_admin_upload: { supplier_data_file: fake_file } }
+
+          expect(response).to redirect_to facilities_management_rm3830_admin_uploads_path
+        end
       end
     end
 
@@ -114,6 +147,16 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
 
       it 'renders the show template' do
         expect(response).to render_template(:show)
+      end
+
+      context 'and the framework has expired' do
+        include_context 'and RM3830 has expired'
+
+        it 'renders the show template' do
+          get :show, params: { id: upload.id }
+
+          expect(response).to render_template(:show)
+        end
       end
     end
 
