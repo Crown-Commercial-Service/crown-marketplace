@@ -401,7 +401,7 @@ GEM
     raabro (1.4.0)
     racc (1.6.2)
     rack (2.2.6.4)
-    rack-protection (3.0.5)
+    rack-protection (3.0.6)
       rack
     rack-proxy (0.7.6)
       rack
@@ -550,10 +550,10 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    sinatra (3.0.5)
+    sinatra (3.0.6)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
-      rack-protection (= 3.0.5)
+      rack-protection (= 3.0.6)
       tilt (~> 2.0)
     site_prism (3.7.3)
       addressable (~> 2.6)
@@ -690,7 +690,7 @@ DEPENDENCIES
   sidekiq (~> 7.0.8)
   sidekiq-cron
   simplecov (>= 0.16.1)
-  sinatra (~> 3.0.5)
+  sinatra (~> 3.0.6)
   site_prism (>= 3.7.3)
   slim (~> 5.1.0)
   smarter_csv
