@@ -6,6 +6,7 @@ import initDetailsLinks from '../src/facilitiesManagement/detailsLinks'
 import initFilterTable from '../src/facilitiesManagement/filterTable'
 import initFindAddress from '../src/facilitiesManagement/findAddress'
 import initGoogleAnalyticsDataLayer from '../src/shared/googleAnalyticsDataLayer'
+import initHeader from '../src/shared/header'
 import initLimitInputToInteger from '../src/facilitiesManagement/integerInput'
 import initManagementReport from '../src/facilitiesManagement/rm3830/admin/managementReport'
 import initNumberWithCommas from '../src/facilitiesManagement/numberWithCommas'
@@ -41,6 +42,7 @@ $(document).on('turbolinks:load', () => {
   initCheckboxAccordion()
   initCookieBanner()
   initGoogleAnalyticsDataLayer()
+  initHeader()
   initPasswordStrength()
   initStepByStepNav()
 })

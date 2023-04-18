@@ -4,7 +4,7 @@ Given('I sign in without details for {string}') do |framework|
   create_user_without_details
   fill_in 'email', with: @user.email
   fill_in 'password', with: 'ValidPassword'
-  click_on 'Sign in'
+  click_button 'Sign in'
   expect(page.find('h1')).to have_content('Manage your details')
 end
 
@@ -28,7 +28,7 @@ end
 Then('I sign in') do
   fill_in 'email', with: @user.email
   fill_in 'password', with: 'ValidPassword'
-  click_on 'Sign in'
+  click_button 'Sign in'
 end
 
 Then('the cookie banner {string} visible') do |option|
