@@ -2,8 +2,8 @@
 Feature: Cookie settings
 
   Background: Go to start page
-    Given I go to the admin dashboard for 'RM3830'
-    Then I am on the 'Sign in to the RM3830 administration dashboard' page
+    Given I go to the admin dashboard for 'RM6232'
+    Then I am on the 'Sign in to the RM6232 administration dashboard' page
     And the cookie banner 'is' visible
 
   Scenario: Selecting links in the banner - view cookies
@@ -15,7 +15,7 @@ Feature: Cookie settings
     When I click on 'Accept analytics cookies'
     Then the cookie banner shows I have 'accepted' the cookies
     And I click on the 'Sign in' link
-    Then I am on the 'Sign in to the RM3830 administration dashboard' page
+    Then I am on the 'Sign in to the RM6232 administration dashboard' page
     And the cookie banner 'is not' visible
     And the cookies have been saved
     And the 'ga' cookies have been 'accepted'
@@ -25,7 +25,7 @@ Feature: Cookie settings
     When I click on 'Reject analytics cookies'
     Then the cookie banner shows I have 'rejected' the cookies
     And I click on the 'Sign in' link
-    Then I am on the 'Sign in to the RM3830 administration dashboard' page
+    Then I am on the 'Sign in to the RM6232 administration dashboard' page
     And the cookie banner 'is not' visible
     And the cookies have been saved
     And the 'ga' cookies have been 'rejected'
