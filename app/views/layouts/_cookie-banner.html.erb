@@ -1,42 +1,58 @@
-<div class="govuk-cookie-banner " role="region" aria-label="Cookies on Crown Marketplace">
-  <div class="govuk-cookie-banner__message govuk-width-container">
-    <div id="cookie-options-container">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-          <h2 class="govuk-cookie-banner__heading govuk-heading-m"><%= t('.cookies_on_crown_marketplace') %></h2>
-
-          <div class="govuk-cookie-banner__content">
-            <p><%= t('.we_use_some_essential_cookies') %></p>
-            <p><%= t('.we_use_some_analytics_cookies') %></p>
-          </div>
-
-          <div id="cookie-settings-not-saved" hidden>
-            <%= govuk_warning_text(t('.cookies_not_saved')) %>
-          </div>
-        </div>
-      </div>
-
-      <div class="govuk-button-group">
-        <button value="accept" type="button" name="cookies" class="govuk-button" data-module="govuk-button" id="accept-cookies">
-          <%= t('.accept_cookies') %>
-        </button>
-        <button value="reject" type="button" name="cookies" class="govuk-button" data-module="govuk-button" id="reject-cookies">
-          <%= t('.reject_cookies') %>
-        </button>
-        <%= link_to t('.view_cookies'), cookie_policy_path, class: 'govuk-link--no-visited-state' %>
-      </div>
-    </div>
-    <div id="cookies-accepted-container" hidden>
-      <p>
-        <%= t('.cookies_accepted') %>
-        <%= t('.change_cookie_settings_html', cookie_settings_link:  link_to(t('.change_cookie_settings_link'), cookie_settings_path, class: 'govuk-link--no-visited-state')) %>
-      </p>
-    </div>
-    <div id="cookies-rejected-container" hidden>
-      <p>
-        <%= t('.cookies_rejected') %>
-        <%= t('.change_cookie_settings_html', cookie_settings_link:  link_to(t('.change_cookie_settings_link'), cookie_settings_path, class: 'govuk-link--no-visited-state')) %>
-      </p>
-    </div>
-  </div>
-</div>
+<%= govuk_cookie_banner(
+  [
+    {
+      heading_text: t('.cookies_on_crown_marketplace'),
+      text: capture do
+        concat(tag.p(t('.we_use_some_essential_cookies')))
+        concat(tag.p(t('.we_use_some_analytics_cookies')))
+        concat(tag.div(govuk_warning_text(t('.cookies_not_saved')), id: 'cookie-settings-not-saved', hidden: ''))
+      end,
+      actions: [
+        {
+          text: t('.accept_cookies'),
+          attributes: {
+            id: 'accept-cookies',
+            name: 'cookies',
+            value: 'accept'
+          },
+        },
+        {
+          text: t('.reject_cookies'),
+          attributes: {
+            id: 'reject-cookies',
+            name: 'cookies',
+            value: 'reject'
+          },
+        },
+        {
+          text: t('.view_cookies'),
+          href: cookie_policy_path,
+          classes: 'govuk-link--no-visited-state'
+        },
+      ],
+      attributes: {
+        id: 'cookie-options-container'
+      }
+    },
+    {
+      text: capture do
+        concat(t('.cookies_accepted'))
+        concat(t('.change_cookie_settings_html', cookie_settings_link:  link_to(t('.change_cookie_settings_link'), cookie_settings_path, class: 'govuk-link govuk-link--no-visited-state')))
+      end,
+      attributes: {
+        id: 'cookies-accepted-container',
+        hidden: true
+      }
+    },
+    {
+      text: capture do
+        concat(t('.cookies_rejected'))
+        concat(t('.change_cookie_settings_html', cookie_settings_link:  link_to(t('.change_cookie_settings_link'), cookie_settings_path, class: 'govuk-link govuk-link--no-visited-state')))
+      end,
+      attributes: {
+        id: 'cookies-rejected-container',
+        hidden: true
+      }
+    }
+  ]
+) %>

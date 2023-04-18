@@ -428,10 +428,10 @@ en:
       accept_cookies: Accept analytics cookies
       change_cookie_settings_html: You can %{cookie_settings_link} at any time.
       change_cookie_settings_link: change your cookie settings
-      cookies_accepted: You’ve accepted all analytics cookies.
+      cookies_accepted: 'You’ve accepted all analytics cookies. '
       cookies_not_saved: Something went wrong, your cookie preferences were not saved. Please try again.
       cookies_on_crown_marketplace: Cookies on Crown Marketplace
-      cookies_rejected: You’ve rejected all analytics cookies.
+      cookies_rejected: 'You’ve rejected all analytics cookies. '
       reject_cookies: Reject analytics cookies
       view_cookies: View cookies
       we_use_some_analytics_cookies: We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
