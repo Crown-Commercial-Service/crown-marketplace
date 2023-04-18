@@ -4,7 +4,7 @@ Given('I sign in as an {string} user go to the crown marketplace dashboard') do 
   create_admin_user(user)
   fill_in 'email', with: @user.email
   fill_in 'password', with: 'ValidPassword'
-  click_on 'Sign in'
+  click_button 'Sign in'
   expect(page.find('h1')).to have_content('Crown Marketplace dashboard')
 end
 

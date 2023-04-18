@@ -115,7 +115,7 @@ en:
         lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
-        create_ccs_account_html: Create an account
+        create_ccs_account_html: Create a CCS account
         email_address: Email address
         email_hint:
           register: Enter the email address you used to register
@@ -209,7 +209,9 @@ en:
     crown_marketplace: Crown Marketplace dashboard
     my_account: My account
     my_dashboard: My dashboard
+    sign_in: Sign in
     sign_out: Sign out
+    sign_up: Create an account
   home:
     accessibility_statement:
       CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
@@ -399,20 +401,23 @@ en:
       title: Sorry, you are not authorised to view this page
   layouts:
     application:
-      accessibility_statement_link: Accessibility statement
-      accessibility_statement_link_aria_label: View our accessibility statement
+      accessibility_statement_link:
+        aria_label: View our accessibility statement
+        text: Accessibility statement
       back: Back
       back_aria_label: Back to the previous page
       beta: beta
-      cookie_policy_link: Cookie policy
-      cookie_policy_link_aria_label: How we use cookies
-      cookie_settings_link: Cookie settings
-      cookie_settings_link_aria_label: Change you cookie settings
-      crown_copyright: "© Crown copyright"
+      cookie_policy_link:
+        aria_label: How we use cookies
+        text: Cookie policy
+      cookie_settings_link:
+        aria_label: Change you cookie settings
+        text: Cookie settings
       error_prefix: Error
       feedback_html: This is a new service – your %{link} will help us to improve it.
-      privacy_link: Privacy policy
-      privacy_link_aria_label: View our privacy policy
+      privacy_link:
+        aria_label: View our privacy policy
+        text: Privacy policy
       skip: Skip to main content
       title: Crown Commercial Service
     contact_us:
@@ -431,8 +436,6 @@ en:
       view_cookies: View cookies
       we_use_some_analytics_cookies: We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
       we_use_some_essential_cookies: We use some essential cookies to make this service work.
-    logotype:
-      ccs_logo_title: Crown Commercial Service logo
   miles:
     unit:
       one: mile

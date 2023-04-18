@@ -10,7 +10,6 @@ $govuk-compatibility-govuktemplate: false;
 $govuk-compatibility-govukelements: false;
 
 $ccs-colours: (
-  "dark-grey": #2F2F2F,
   "primary": #9B1A47,
   "grey-1": #6f777b,
   "grey-2": #bfc1c3,
@@ -19,6 +18,12 @@ $ccs-colours: (
   "green-2": #F0FFF1,
   "green-3": #006435,
   "button-green": #007E8A,
+  "red": #9b1a47,
+  "dark-red": #85163d,
+  "white": #ffffff,
+
+  "mid-grey": #b1b4b6,
+  "black": #2f2f2f
 );
 
 @function ccs-colour($colour) {
@@ -45,6 +50,8 @@ $govuk-heading-xl: 48px;
 $govuk-heading-l: 27px;
 
 $govuk-button-background-colour: ccs-colour("button-green");
+$ccs-border-colour: ccs-colour("mid-grey");
+$ccs-brand-colour: ccs-colour("red") !default;
 
 #main-footer .ccs-footer__links {
   text-decoration: underline;
