@@ -169,3 +169,6 @@ Style/HashSyntax:
 
 Rails/ThreeStateBooleanColumn:
     Enabled: false
+
+RSpec/IndexedLet:
+    Enabled: false
