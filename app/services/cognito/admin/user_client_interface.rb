@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ModuleLength
 module Cognito
   module Admin
     module UserClientInterface
@@ -291,4 +290,3 @@ module Cognito
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength
