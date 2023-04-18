@@ -240,6 +240,43 @@ module ApplicationHelper
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
+  def pagination_params(paginator)
+    template = paginator.instance_variable_get(:@template)
+    options = paginator.instance_variable_get(:@options)
+    current_page = options[:current_page]
+
+    parameters = {}
+
+    parameters[:pagination_previous] = { href: Kaminari::Helpers::PrevPage.new(template, **options).url } unless current_page.first?
+
+    last_page_gap = false
+
+    parameters[:pagination_items] = paginator.each_page.map do |page|
+      if page.display_tag?
+        last_page_gap = false
+
+        {
+          type: :number,
+          href: Kaminari::Helpers::Page.new(template, **options.merge(page:)).url,
+          number: page.number,
+          current: page.current?
+        }
+      elsif !last_page_gap
+        last_page_gap = true
+
+        {
+          type: :ellipsis
+        }
+      end
+    end.compact
+
+    parameters[:pagination_next] = { href: Kaminari::Helpers::NextPage.new(template, **options).url } if !current_page.out_of_range? && !current_page.last?
+
+    parameters
+  end
+  # rubocop:enable Metrics/AbcSize
+
   STATUS_TO_COLOUR = {
     cannot_start: :grey,
     incomplete: :red,
