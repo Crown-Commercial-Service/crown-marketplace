@@ -47,7 +47,7 @@
         <% end %>
       </fieldset>
       <div class="govuk-!-margin-top-4">
-        <%= f.submit t('.submit'), class: "govuk-button", 'aria-label': t('.submit') %>
+        <%= govuk_button(t('.submit'), form: f, attributes: { aria: { label: t('.submit') } }) %>
       </div>
     <% end %>
     </div>

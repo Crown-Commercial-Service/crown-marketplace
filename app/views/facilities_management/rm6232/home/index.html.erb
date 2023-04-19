@@ -27,7 +27,7 @@
 
       <%= link_to t('.further_information'), 'https://www.crowncommercial.gov.uk/agreements/rm6232', target: "_blank", class: 'govuk-link--no-visited-state' %>
       <br/>
-      <%= govuk_button_start(t('.startnow'), facilities_management_rm6232_new_user_session_path, class: 'govuk-!-margin-top-6 govuk-!-margin-bottom-8', aria: { label: t('.startnow') }) %>
+      <%= govuk_button(t('.startnow'), href: facilities_management_rm6232_new_user_session_path, is_start_button: true, classes: 'govuk-!-margin-top-6 govuk-!-margin-bottom-8', attributes: { aria: { label: t('.startnow') } }) %>
     </div>
   </div>
 </div>

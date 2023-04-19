@@ -26,16 +26,16 @@
         }
       )%>
 
-      <%= button_tag(
+      <%= govuk_button(
         t('.find_address'),
-        type: 'button',
-        id: 'find-address-button',
-        class: 'govuk-button -govuk-!-margin-top-4',
-        aria: {
-          label: t('.find_address')
-        },
-        tabindex: input_visible?(find_address_helper.postcode_search_visible?))
-      %>
+        attributes: {
+          id: 'find-address-button',
+          aria: {
+            label: t('.find_address')
+          },
+          tabindex: input_visible?(find_address_helper.postcode_search_visible?)
+        }
+      ) %>
     </div>
 
     <div id="postcode-change" class="<%=hidden_class(find_address_helper.postcode_change_visible?)%>">

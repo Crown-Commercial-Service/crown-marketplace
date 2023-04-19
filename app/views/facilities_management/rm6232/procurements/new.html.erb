@@ -118,7 +118,7 @@
         <%= f.text_field :contract_name, class: "govuk-input govuk-input--width-20 #{'govuk-input--error' if any_errors}" %>
       <% end %>
 
-      <%= f.submit t('.save_and_continue'), class: 'govuk-button govuk-!-margin-right-4', name: 'save_and_continue' %>
+      <%= govuk_button(t('.save_and_continue'), form: f, attributes: { name: 'save_and_continue' }) %>
       <p>
         <%= link_to t('.return_to_dashboard'), facilities_management_rm6232_path, class: 'govuk-body govuk-link--no-visited-state' %>
       </p>
