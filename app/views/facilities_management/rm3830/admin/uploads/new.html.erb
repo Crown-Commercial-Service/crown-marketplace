@@ -37,7 +37,7 @@
           </span>
         </div>
       <% end  %>
-      <%= f.submit t('.upload_data'), class: 'govuk-button', name: t('.upload_data') %>
+      <%= govuk_button(t('.upload_data'), form: f, attributes: { name: t('.upload_data') }) %>
       <br/>
       <%= link_to t('.return'), facilities_management_rm3830_admin_uploads_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
     <% end %>
