@@ -222,13 +222,13 @@ module ApplicationHelper
   end
 
   # rubocop:disable Metrics/ParameterLists
-  def link_to_add_row(name, number_of_items, form, association, partial_prefix, **args)
+  def link_to_add_row(name, number_of_items, form, association, partial_prefix, **options)
     new_object = form.object.send(association).klass.new
     id = new_object.object_id
     fields = form.fields_for(association, new_object, child_index: id) do |builder|
       render("#{partial_prefix}/#{association.to_s.singularize}", ff: builder)
     end
-    link_to(name.gsub('<number_of_items>', number_of_items.to_s), '#', class: args[:class], data: { id: id, fields: fields.gsub('\n', ''), 'button-text': name })
+    govuk_button(name.gsub('<number_of_items>', number_of_items.to_s), href: '#', classes: options[:class], attributes: { data: { id: id, fields: fields.gsub('\n', ''), 'button-text': name } })
   end
   # rubocop:enable Metrics/ParameterLists
 
