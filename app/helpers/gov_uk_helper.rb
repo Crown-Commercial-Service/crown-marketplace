@@ -1,6 +1,5 @@
 module GovUKHelper
   include Accordion
-  include Button
   include CharacterCount
   include ErrorMessage
   include Radios

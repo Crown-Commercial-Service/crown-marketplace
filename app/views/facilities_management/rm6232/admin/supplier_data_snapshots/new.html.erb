@@ -59,7 +59,7 @@
         <% end %>
       <% end %>
 
-      <%= f.submit t('.generate_spreadsheets'), class: 'govuk-button', id: 'generate-supplier-zip-button', data: { module: 'govuk-button' }, aria: { label: t('.generate_spreadsheets')} %>
+      <%= govuk_button(t('.generate_spreadsheets'), form: f, attributes: { id: 'generate-supplier-zip-button', aria: { label: t('.generate_spreadsheets') } }) %>
     <% end %>
   </div>
 </div>
