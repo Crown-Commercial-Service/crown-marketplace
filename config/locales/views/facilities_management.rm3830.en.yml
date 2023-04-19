@@ -476,7 +476,6 @@ en:
             manage_supplier_framework_data: "'Manage supplier framework data'"
             manage_supplier_framework_data_html: You can navigate to %{link}, to bulk upload the supplier framework data.
             regions: Regions
-            return_link: Return to admin dashboard
             service_prices: Services, prices and variances
             services: Services
             sub_lot:

@@ -48,7 +48,7 @@
         </fieldset>
       <% end %>
       <hr class="govuk-section-break govuk-section-break--m">
-      <%= f.submit t('.generate_report'), class: 'govuk-button', data: { module: 'govuk-button' }, aria: { label: t('.generate_report') } %>
+      <%= govuk_button(t('.generate_report'), form: f, attributes: { aria: { label: t('.generate_report') } }) %>
     </div>
   </div>
 <% end %>

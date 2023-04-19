@@ -15,6 +15,8 @@
 <%= form_with url: destroy_crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :delete, html: { specialvalidation: true } do |f| %>
   <%= f.hidden_field :email_domain, value: params[:email_domain] %>
 
-  <%= f.submit t('.remove'), class: 'govuk-button govuk-button--warning govuk-!-margin-right-4' %>
-  <%= link_to t('.return_to_allow_list'), crown_marketplace_allow_list_index_path, class: 'govuk-button govuk-button--secondary', 'aria-label': t('.return_to_allow_list') %>
+  <div class="govuk-button-group">
+    <%= govuk_button(t('.remove'), form: f, classes: 'govuk-button--warning') %>
+    <%= govuk_button(t('.return_to_allow_list'), href: crown_marketplace_allow_list_index_path, classes: 'govuk-button--secondary', attributes: { aria: { label: t('.return_to_allow_list') } }) %>
+  </div>
 <% end %>
