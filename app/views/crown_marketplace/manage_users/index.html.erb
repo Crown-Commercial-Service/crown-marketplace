@@ -41,7 +41,7 @@
             }
           }
         ) %>
-        <%= f.submit t('.search'), class: 'govuk-button govuk-button--secondary' %>
+        <%= govuk_button(t('.search'), form: f, classes: 'govuk-button--secondary') %>
       </div>
     <% end %>
   </div>

@@ -29,7 +29,7 @@
       <% end %>
 
       <div class="govuk-!-margin-top-5">
-        <%= f.submit t('.save_and_continue'), class: 'govuk-button' %>
+        <%= govuk_button(t('.save_and_continue'), form: f) %>
         <br />
         <%= link_to t('.return_to_allow_list'), crown_marketplace_allow_list_index_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': t('.return_to_allow_list') %>
       </div>
