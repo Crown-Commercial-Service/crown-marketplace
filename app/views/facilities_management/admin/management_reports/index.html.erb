@@ -13,7 +13,7 @@
     <p>
       <%= t('.you_can_generate_a_new_report') %>
     </p>
-    <%= link_to t('.generate_a_new_report'), new_path, class: 'govuk-button', aria: { label: t('.generate_a_new_report') } %>
+    <%= govuk_button(t('.generate_a_new_report'), href: new_path, attributes: { aria: { label: t('.generate_a_new_report') } }) %>
   </div>
 </div>
 

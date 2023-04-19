@@ -42,7 +42,7 @@
         <%= t('.you_can_add') %>
       </p>
       <div class='govuk-!-margin-bottom-4'>
-        <%= link_to t('.add_new_email_domain'), new_crown_marketplace_allow_list_path, class: 'govuk-button govuk-button' %>
+        <%= govuk_button(t('.add_new_email_domain'), href: new_crown_marketplace_allow_list_path) %>
       </div>
     <% end %>
   </div>
@@ -57,7 +57,7 @@
         <%= t('.enter_an_email_domain') %>
       </p>
       <%= f.text_field  :email_domain, class: 'govuk-input govuk-!-width-three-quarters govuk-!-margin-right-2', type: 'search', aria: { describedby: 'allow-list-search-hint' } %>
-      <%= f.submit t('.search'), class: 'govuk-button govuk-button--secondary' %>
+      <%= govuk_button(t('.search'), form: f, classes: 'govuk-button--secondary') %>
     <% end %>
   </div>
 </div>
