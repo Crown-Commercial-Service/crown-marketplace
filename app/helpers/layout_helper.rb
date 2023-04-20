@@ -28,25 +28,4 @@ module LayoutHelper
 
     result
   end
-
-  def ccs_account_panel_row(**options, &)
-    class_list = ['govuk-grid-row govuk-!-margin-bottom-6 fm-buyer-account-panel__container']
-    class_list << options.delete(:class)
-
-    tag.div(class: class_list, **options, &)
-  end
-
-  def ccs_account_panel(title, title_url, **options, &)
-    class_list = ['govuk-grid-column-one-third fm-buyer-account-panel']
-    class_list << options.delete(:class)
-
-    tag.div(class: class_list, **options) do
-      capture do
-        concat(tag.p do
-          link_to(title, title_url, class: 'ccs-font-weight-semi-bold fm-buyer-account-panel__title_no_link govuk-!-margin-bottom-2 govuk-link--no-visited-state')
-        end)
-        concat(tag.p(class: 'govuk-!-top-padding-4', &))
-      end
-    end
-  end
 end
