@@ -1,37 +1,37 @@
 <% content_for :page_title, t('.buyer_account_dashboard') %>
-<div class="govuk-width-container">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">
-        <span class="govuk-caption-l"><%= @current_login_email %></span>
-        <%= t('.buyer_account_title') %>
-      </h1>
-    </div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-l"><%= @current_login_email %></span>
+      <%= t('.buyer_account_title') %>
+    </h1>
   </div>
-  <%= ccs_account_panel_row do %>
-    <%= ccs_account_panel(t('.search_for_suppliers_link'), facilities_management_journey_question_path(slug: 'choose-services')) do %>
-      <%= t('.search_for_suppliers_desc') %>
-    <% end %>
-    <%= ccs_account_panel(t('.view_your_searches_link'), facilities_management_rm6232_procurements_path) do %>
-      <%= t('.view_your_searches_desc') %>
-    <% end %>
-  <% end %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <%= link_to t('.manage_account_link'), edit_facilities_management_buyer_detail_path(params[:framework], @buyer_detail), class: 'govuk-!-font-size-19 fm-buyer-account-panel__title govuk-link--no-visited-state' %>
-        <p>
-          <%= t('.manage_account_desc') %>
-        </p>
-    </div>
-  </div>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <p>
-        <%= t('.further_information_help_html', fm_link: link_to(t('.further_information_link_description'), t('.further_information_link'), class: 'govuk-!-font-size-19 fm-buyer-account-panel__title govuk-link--no-visited-state', target: '_blank')) %>
-      </p>
-    </div>
-  </div>
-  <div class="govuk-!-margin-top-6 ">
+</div>
+
+<%= ccs_dashboard_section(
+  [
+    {
+      title: t('.search_for_suppliers_link'),
+      href: facilities_management_journey_question_path(slug: 'choose-services'),
+      description: t('.search_for_suppliers_desc')
+    },
+    {
+      title: t('.view_your_searches_link'),
+      href: facilities_management_rm6232_procurements_path,
+      description: t('.view_your_searches_desc')
+    }
+  ]
+) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= link_to t('.manage_account_link'), edit_facilities_management_buyer_detail_path(params[:framework], @buyer_detail), class: 'govuk-!-font-size-19 govuk-link govuk-link--no-visited-state' %>
+    <p>
+      <%= t('.manage_account_desc') %>
+    </p>
+    <p>
+      <%= t('.further_information_help_html', fm_link: link_to(t('.further_information_link_description'), t('.further_information_link'), class: 'govuk-!-font-size-19 govuk-link govuk-link--no-visited-state', target: '_blank')) %>
+    </p>
     <strong class="govuk-heading-s">
       <%= t('.return_to_page') %>
     </strong>
