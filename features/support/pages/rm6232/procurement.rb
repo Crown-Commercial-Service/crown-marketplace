@@ -5,7 +5,7 @@ module Pages::RM6232
   end
 
   class Procurement < SitePrism::Page
-    element :view_procurements, '#main-content > div.govuk-width-container > div.govuk-grid-row.govuk-\!-margin-bottom-6.fm-buyer-account-panel__container > div:nth-child(2) > p:nth-child(1) > a'
+    element :view_procurements, '#main-content > div.ccs-dashboard-section > div > div > div > div:nth-child(2) > a'
     element :contract_name_field, '#facilities_management_rm6232_procurement_contract_name'
     element :contract_name, '#main-content > div.govuk-body > div > span'
 
