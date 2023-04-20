@@ -12,7 +12,7 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
   before do
     procurement.send(:copy_procurement_buildings_data)
     lift_data&.each do |number_of_floors|
-      procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+      procurement_building_service.lifts.create(number_of_floors:)
     end
     report.calculate_services_for_buildings
   end
@@ -39,7 +39,7 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
              no_of_units_to_be_serviced: no_of_units_to_be_serviced,
              service_hours: service_hours,
              procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
-                                          procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, estimated_annual_cost: estimated_annual_cost, estimated_cost_known: estimated_cost_known)))
+                                          procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, estimated_annual_cost:, estimated_cost_known:)))
     end
 
     context 'when one building and one service' do
@@ -1558,7 +1558,7 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
       before do
         procurement_building_service.procurement_building.freeze_building_data
         lift_data.each do |number_of_floors|
-          procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+          procurement_building_service.lifts.create(number_of_floors:)
         end
       end
 

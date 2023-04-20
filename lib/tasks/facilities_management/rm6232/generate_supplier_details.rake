@@ -29,7 +29,7 @@ module FM::RM6232
           address_postcode: Faker::Address.postcode,
         }
 
-        supplier.update(**data)
+        supplier.update(data)
       end
     end
   end

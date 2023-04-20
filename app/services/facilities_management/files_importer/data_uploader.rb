@@ -1,7 +1,7 @@
 module FacilitiesManagement
   class FilesImporter::DataUploader
-    def self.upload!(modle, &block)
-      error = all_or_none(modle, &block)
+    def self.upload!(modle, &)
+      error = all_or_none(modle, &)
       raise error if error
     end
 

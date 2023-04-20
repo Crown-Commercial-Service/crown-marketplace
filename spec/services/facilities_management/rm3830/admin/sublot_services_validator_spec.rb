@@ -5,7 +5,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesValidator do
   let(:supplier_id) { FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons').supplier_id.to_sym }
 
   describe '.save' do
-    let(:params) { ActionController::Parameters.new(data: data, rate: rate) }
+    let(:params) { ActionController::Parameters.new(data:, rate:) }
     let(:latest_rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
     let(:prices) { latest_rate_card[:data][:Prices][supplier_id].deep_stringify_keys! }
     let(:discounts) { latest_rate_card[:data][:Discounts][supplier_id].deep_stringify_keys! }

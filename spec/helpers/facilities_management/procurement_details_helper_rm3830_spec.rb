@@ -230,7 +230,7 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper do
 
   describe '.call_off_extension_visible?' do
     let(:extensions_required) { true }
-    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, extensions_required: extensions_required) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, extensions_required:) }
     let(:result) { helper.call_off_extension_visible?(0) }
 
     before { @procurement = procurement }
@@ -253,7 +253,7 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper do
       let(:extension_required) { nil }
       let(:years) { nil }
       let(:months) { nil }
-      let(:call_off_extension) { create(:facilities_management_rm3830_procurement_call_off_extension, years: years, months: months, extension_required: extension_required) }
+      let(:call_off_extension) { create(:facilities_management_rm3830_procurement_call_off_extension, years:, months:, extension_required:) }
 
       before { procurement.update(call_off_extensions: [call_off_extension]) }
 

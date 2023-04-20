@@ -24,7 +24,7 @@
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= form_with model: @lot_data, url: facilities_management_rm6232_admin_supplier_lot_datum_update_path, method: :put, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
+    <%= form_with model: @lot_data, url: facilities_management_rm6232_admin_supplier_lot_datum_update_path, method: :put, html: { specialvalidation: true, novalidate: true } do |f| %>
       <%= form_group_with_error(f.object, @lot_data_type.to_sym) do |displayed_error, any_errors| %>
         <%= displayed_error %>
         <%= render(partial: "#{@lot_data_type}", locals: { f: f }) %>

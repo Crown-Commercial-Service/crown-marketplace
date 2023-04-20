@@ -75,7 +75,7 @@ RSpec.describe FacilitiesManagement::RM3830::DeleteProcurement do
         procurement.update(aasm_state: 'results')
         procurement.send(:copy_fm_rates_to_frozen)
         procurement.send(:copy_fm_rate_cards_to_frozen)
-        create(:facilities_management_rm3830_procurement_supplier, procurement: procurement)
+        create(:facilities_management_rm3830_procurement_supplier, procurement:)
       end
 
       context 'when the procurement has not been deleted' do

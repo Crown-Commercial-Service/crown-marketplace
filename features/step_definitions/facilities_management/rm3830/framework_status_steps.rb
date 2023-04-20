@@ -1,5 +1,5 @@
 Given('the {string} framework has expired') do |framework|
-  Framework.find_by(framework: framework).update(expires_at: 1.day.ago)
+  Framework.find_by(framework:).update(expires_at: 1.day.ago)
 end
 
 Then('I should see the following warning text:') do |warning_text_table|

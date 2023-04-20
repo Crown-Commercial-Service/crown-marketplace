@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::AssessedValueCalculator do
   let(:user) { create(:user, :with_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
-  let(:procurement_lot1a) { create(:facilities_management_rm3830_procurement_with_contact_details_with_buildings, user: user) }
+  let(:procurement_lot1a) { create(:facilities_management_rm3830_procurement_with_contact_details_with_buildings, user:) }
   let(:procurement_lot1c) { create(:facilities_management_rm3830_procurement_with_contact_details_with_buildings, user: user, lot_number: '1c', lot_number_selected_by_customer: true) }
 
   describe '.sorted_list' do

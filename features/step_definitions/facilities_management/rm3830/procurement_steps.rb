@@ -32,11 +32,11 @@ Given('I have direct award procurements') do
 end
 
 Given('the GIA for {string} is {int}') do |building_name, gia|
-  find_building(building_name).update(gia: gia)
+  find_building(building_name).update(gia:)
 end
 
 Given('the external area for {string} is {int}') do |building_name, external_area|
-  find_building(building_name).update(external_area: external_area)
+  find_building(building_name).update(external_area:)
 end
 
 Given('I navigate to the service requirements page') do

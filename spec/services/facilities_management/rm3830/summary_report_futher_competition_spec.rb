@@ -38,8 +38,8 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
              procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
                                           building_id: create(:facilities_management_building_london).id,
                                           procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings,
-                                                              estimated_annual_cost: estimated_annual_cost,
-                                                              estimated_cost_known: estimated_cost_known)))
+                                                              estimated_annual_cost:,
+                                                              estimated_cost_known:)))
     end
     let(:procurement_building_service_1) do
       create(:facilities_management_rm3830_procurement_building_service,
@@ -56,7 +56,7 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
 
     before do
       lift_data.each do |number_of_floors|
-        procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+        procurement_building_service.lifts.create(number_of_floors:)
       end
 
       report.calculate_services_for_buildings
