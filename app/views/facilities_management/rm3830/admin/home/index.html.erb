@@ -5,44 +5,46 @@
     <h1 class="govuk-heading-xl"><%= t('.dashboard_header') %></span>
   </div>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.dashboard_assessed_value') %></span>
-    </div>
-  </div>
-  <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
-  <%= ccs_account_panel_row do %>
-    <%= ccs_account_panel(t('.dashboard_average_rate'), facilities_management_rm3830_admin_service_rate_path(slug: 'average-framework-rates')) do %>
-      <%= t('.dashboard_manage_rate') %>
-    <% end %>
-    <%= ccs_account_panel(t('.dashboard_calloff_rate'), facilities_management_rm3830_admin_service_rate_path(slug: 'call-off-benchmark-rates')) do %>
-      <%= t('.dashboard_manage_calloff_rate') %>
-    <% end %>
-  <% end %>
+  <%= ccs_dashboard_section(
+    [
+      {
+        title: t('.dashboard_average_rate'),
+        href: facilities_management_rm3830_admin_service_rate_path(slug: 'average-framework-rates'),
+        description: t('.dashboard_manage_rate')
+      },
+      {
+        title: t('.dashboard_calloff_rate'),
+        href: facilities_management_rm3830_admin_service_rate_path(slug: 'call-off-benchmark-rates'),
+        description: t('.dashboard_manage_calloff_rate')
+      }
+    ],
+    t('.dashboard_assessed_value')
+  ) %>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.dashboard_supplier_data') %></span>
-    </div>
-  </div>
-  <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
-  <%= ccs_account_panel_row do %>
-    <%= ccs_account_panel(t('.dashboard_supplier_framework_data'), facilities_management_rm3830_admin_supplier_framework_data_path) do %>
-      <%= t('.dashboard_supplier_prices') %>
-    <% end %>
-    <%= ccs_account_panel(t('.dashboard_supplier_details'), facilities_management_rm3830_admin_supplier_details_path) do %>
-      <%= t('.dashboard_manage_supplier_details') %>
-    <% end %>
-  <% end %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-third">
-      <span class="govuk-heading-m govuk-!-margin-0"><%= t('.dashboard_management_report_header') %></span>
-    </div>
-  </div>
-  <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
-  <%= ccs_account_panel_row do %>
-    <%= ccs_account_panel(t('.dashboard_management_report_header'), facilities_management_rm3830_admin_management_reports_path) do %>
-      <%= t('.dashboard_management_report_detail') %>
-    <% end %>
-  <% end %>
+  <%= ccs_dashboard_section(
+    [
+      {
+        title: t('.dashboard_supplier_framework_data'),
+        href: facilities_management_rm3830_admin_supplier_framework_data_path,
+        description: t('.dashboard_supplier_prices')
+      },
+      {
+        title: t('.dashboard_supplier_details'),
+        href: facilities_management_rm3830_admin_supplier_details_path,
+        description: t('.dashboard_manage_supplier_details')
+      }
+    ],
+    t('.dashboard_supplier_data')
+  ) %>
+
+  <%= ccs_dashboard_section(
+    [
+      {
+        title: t('.dashboard_management_report_header'),
+        href: facilities_management_rm3830_admin_management_reports_path,
+        description: t('.dashboard_management_report_detail')
+      }
+    ],
+    t('.dashboard_management_report_header')
+  ) %>
 </div>
