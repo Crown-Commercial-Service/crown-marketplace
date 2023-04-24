@@ -54,7 +54,7 @@ jobs:
         run: bin/rake
 
       - name: publish code coverage
-        uses: paambaati/codeclimate-action@v3.2.0
+        uses: paambaati/codeclimate-action@v4.0.0
         with:
           debug: true
         if: ${{ inputs.publish_test_report }}
