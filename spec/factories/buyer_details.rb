@@ -10,5 +10,6 @@ FactoryBot.define do
     organisation_address_county { 'MyString' }
     organisation_address_postcode { 'SW1W 9SZ' }
     central_government { true }
+    contact_opt_in { true }
   end
 end
