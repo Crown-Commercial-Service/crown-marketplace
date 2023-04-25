@@ -65,6 +65,7 @@ RSpec.describe User do
         user.buyer_detail.organisation_name = 'org name'
         user.buyer_detail.organisation_address_postcode = 'SW1W 9SZ'
         user.buyer_detail.central_government = false
+        user.buyer_detail.contact_opt_in = false
       end
 
       it 'will return true' do
@@ -84,6 +85,7 @@ RSpec.describe User do
         user.buyer_detail.organisation_address_town = 'Address town'
         user.buyer_detail.organisation_address_postcode = 'SW1W 9SZ'
         user.buyer_detail.central_government = false
+        user.buyer_detail.contact_opt_in = false
       end
 
       it 'will return false' do

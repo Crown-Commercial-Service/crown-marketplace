@@ -97,31 +97,50 @@
           address_title: t('.organisation_address')
         } %>
 
-        <h2 class="govuk-heading-m">
-          <%= t('.sector') %>
-        </h2>
+        <hr class="govuk-section-break govuk-section-break--m">
+
         <%= form_group_with_error(f.object, :central_government) do |displayed_error| %>
-
-          <div class="govuk-heading-s govuk-!-margin-bottom-0">
-            <%= t('.which_type_of_public_sector_org') %>
-          </div>
-
-          <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-3">
-            <span class="govuk-caption-m"><%= t('.search_html', url: 'https://www.gov.uk/government/organisations') %></span>
-          </div>
-          <%= displayed_error %>
-          <div class="govuk-radios govuk-radios--inline govuk-!-margin-bottom-6 govuk-!-margin-top-6">
-            <div class="govuk-radios govuk-radios--inline">
+          <fieldset class="govuk-fieldset" aria-describedby="central_government-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <%= t('.central_government.legend') %>
+            </legend>
+            <div id="central_government-hint" class="govuk-hint">
+              <%= t('.search_html', url: 'https://www.gov.uk/government/organisations') %>
+            </div>
+            <%= displayed_error %>
+            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <%= f.radio_button :central_government, true, value: true, class: 'govuk-radios__input', required: true %>
-                <%= f.label :central_government, t('.central_gov'), value: true, class: 'govuk-label govuk-radios__label' %>
+                <%= f.radio_button :central_government, true, class: 'govuk-radios__input' %>
+                <%= f.label :central_government, t('.central_government.options.true'), value: true, class: 'govuk-label govuk-radios__label' %>
               </div>
               <div class="govuk-radios__item">
-                <%= f.radio_button :central_government, false, value: false, class: 'govuk-radios__input', required: true %>
-                <%= f.label :central_government, t('.wider_public_sector'), value: false, class: 'govuk-label govuk-radios__label' %>
+                <%= f.radio_button :central_government, false, class: 'govuk-radios__input' %>
+                <%= f.label :central_government, t('.central_government.options.false'), value: false, class: 'govuk-label govuk-radios__label' %>
               </div>
             </div>
-          </div>
+          </fieldset>
+        <% end %>
+
+        <%= form_group_with_error(f.object, :contact_opt_in) do |displayed_error| %>
+          <fieldset class="govuk-fieldset" aria-describedby="contact_opt_in-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <%= t('.contact_opt_in.legend') %>
+            </legend>
+            <div id="contact_opt_in-hint" class="govuk-hint">
+              <%= t('.contact_opt_in.hint') %>
+            </div>
+            <%= displayed_error %>
+            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <%= f.radio_button :contact_opt_in, true, class: 'govuk-radios__input' %>
+                <%= f.label :contact_opt_in, t('.contact_opt_in.options.true'), value: true, class: 'govuk-label govuk-radios__label' %>
+              </div>
+              <div class="govuk-radios__item">
+                <%= f.radio_button :contact_opt_in, false, class: 'govuk-radios__input' %>
+                <%= f.label :contact_opt_in, t('.contact_opt_in.options.false'), value: false, class: 'govuk-label govuk-radios__label' %>
+              </div>
+            </div>
+          </fieldset>
         <% end %>
 
         <div>
