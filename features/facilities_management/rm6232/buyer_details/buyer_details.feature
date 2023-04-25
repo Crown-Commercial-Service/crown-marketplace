@@ -9,7 +9,7 @@ Feature: Buyer details
       | Telephone number  | 01610161016       |
       | Organisation name | Feel Good inc.    |
       | Postcode          | ST16 1AA          |
-    And I check 'Wider public sector' for the sector
+    And I check 'Local Community and Housing' for the sector
     And I check 'No' for being contacted
 
   Scenario: Save details for the buyer - add address normally
@@ -25,7 +25,7 @@ Feature: Buyer details
       | Telephone number      | 01610161016                                     |
       | Organisation name     | Feel Good inc.                                  |
       | Organisation address  | The Goods Shed, Newport Road, Stafford ST16 1AA |
-      | Sector                | Wider public sector                             |
+      | Sector                | Local Community and Housing                     |
       | Contact opt in        | No                                              |
 
   Scenario: Save details for the buyer - add address manually
@@ -48,5 +48,5 @@ Feature: Buyer details
       | Telephone number      | 01610161016                           |
       | Organisation name     | Feel Good inc.                        |
       | Organisation address  | 112 Test street, Westminister AA1 1AA |
-      | Sector                | Wider public sector                   |
+      | Sector                | Local Community and Housing           |
       | Contact opt in        | No                                    |

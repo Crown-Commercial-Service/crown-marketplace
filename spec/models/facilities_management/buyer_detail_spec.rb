@@ -303,37 +303,38 @@ RSpec.describe FacilitiesManagement::BuyerDetail do
     end
     # rubocop:enable RSpec/NestedGroups
 
-    context 'when considering central_government' do
-      before { buyer_detail.central_government = central_government }
+    context 'when considering sector' do
+      before { buyer_detail.sector = sector }
 
       context 'and it is blank' do
-        let(:central_government) { '' }
+        let(:sector) { '' }
 
         it 'is invalid and has the correct error message' do
           expect(buyer_detail).not_to be_valid(:update)
-          expect(buyer_detail.errors[:central_government].first).to eq 'Select the type of public sector organisation you’re buying for'
+          expect(buyer_detail.errors[:sector].first).to eq 'Select the type of public sector organisation you’re buying for'
         end
       end
 
       context 'and it is nil' do
-        let(:central_government) { nil }
+        let(:sector) { nil }
 
         it 'is invalid and has the correct error message' do
           expect(buyer_detail).not_to be_valid(:update)
-          expect(buyer_detail.errors[:central_government].first).to eq 'Select the type of public sector organisation you’re buying for'
+          expect(buyer_detail.errors[:sector].first).to eq 'Select the type of public sector organisation you’re buying for'
         end
       end
 
-      context 'and it is true' do
-        let(:central_government) { true }
+      context 'and it is not in the list' do
+        let(:sector) { true }
 
-        it 'is valid' do
-          expect(buyer_detail).to be_valid(:update)
+        it 'is invalid and has the correct error message' do
+          expect(buyer_detail).not_to be_valid(:update)
+          expect(buyer_detail.errors[:sector].first).to eq 'Select the type of public sector organisation you’re buying for'
         end
       end
 
-      context 'and it is false' do
-        let(:central_government) { false }
+      context 'and it is in the list' do
+        let(:sector) { 'government_policy' }
 
         it 'is valid' do
           expect(buyer_detail).to be_valid(:update)
@@ -389,6 +390,90 @@ RSpec.describe FacilitiesManagement::BuyerDetail do
       buyer_detail.organisation_address_line_2 = nil
       buyer_detail.organisation_address_county = nil
       expect(buyer_detail.full_organisation_address).to eq "#{buyer_detail.organisation_address_line_1}, #{buyer_detail.organisation_address_town} #{buyer_detail.organisation_address_postcode}"
+    end
+  end
+
+  describe '#sector_name' do
+    let(:result) { buyer_detail.sector_name }
+
+    before { buyer_detail.sector = sector }
+
+    context 'when sector is nil' do
+      let(:sector) { nil }
+
+      before { buyer_detail.central_government = central_government }
+
+      context 'and central_government is true' do
+        let(:central_government) { true }
+
+        it 'returns Central government' do
+          expect(result).to eq 'Central government'
+        end
+      end
+
+      context 'and central_government is false' do
+        let(:central_government) { false }
+
+        it 'returns Wider public sector' do
+          expect(result).to eq 'Wider public sector'
+        end
+      end
+    end
+
+    context 'when sector is defence_and_security' do
+      let(:sector) { 'defence_and_security' }
+
+      it 'returns Defence and Security' do
+        expect(result).to eq 'Defence and Security'
+      end
+    end
+
+    context 'when sector is health' do
+      let(:sector) { 'health' }
+
+      it 'returns Health' do
+        expect(result).to eq 'Health'
+      end
+    end
+
+    context 'when sector is government_policy' do
+      let(:sector) { 'government_policy' }
+
+      it 'returns Government Policy' do
+        expect(result).to eq 'Government Policy'
+      end
+    end
+
+    context 'when sector is local_community_and_housing' do
+      let(:sector) { 'local_community_and_housing' }
+
+      it 'returns Local Community and Housing' do
+        expect(result).to eq 'Local Community and Housing'
+      end
+    end
+
+    context 'when sector is infrastructure' do
+      let(:sector) { 'infrastructure' }
+
+      it 'returns Infrastructure' do
+        expect(result).to eq 'Infrastructure'
+      end
+    end
+
+    context 'when sector is education' do
+      let(:sector) { 'education' }
+
+      it 'returns Education' do
+        expect(result).to eq 'Education'
+      end
+    end
+
+    context 'when sector is culture_media_and_sport' do
+      let(:sector) { 'culture_media_and_sport' }
+
+      it 'returns Culture, Media and Sport' do
+        expect(result).to eq 'Culture, Media and Sport'
+      end
     end
   end
 end

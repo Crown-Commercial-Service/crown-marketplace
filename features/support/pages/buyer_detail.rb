@@ -8,9 +8,14 @@ module Pages
       element :'Organisation address', '#address-text'
     end
 
-    section :sector, '#central_government-form-group' do
-      element :'Central government', '#facilities_management_buyer_detail_central_government_true'
-      element :'Wider public sector', '#facilities_management_buyer_detail_central_government_false'
+    section :sector, '#sector-form-group' do
+      element :'Defence and Security', '#facilities_management_buyer_detail_sector_defence_and_security'
+      element :Health, '#facilities_management_buyer_detail_sector_health'
+      element :'Government Policy', '#facilities_management_buyer_detail_sector_government_policy'
+      element :'Local Community and Housing', '#facilities_management_buyer_detail_sector_local_community_and_housing'
+      element :Infrastructure, '#facilities_management_buyer_detail_sector_infrastructure'
+      element :Education, '#facilities_management_buyer_detail_sector_education'
+      element :'Culture, Media and Sport', '#facilities_management_buyer_detail_sector_culture_media_and_sport'
     end
 
     section :contact_opt_in, '#contact_opt_in-form-group' do
