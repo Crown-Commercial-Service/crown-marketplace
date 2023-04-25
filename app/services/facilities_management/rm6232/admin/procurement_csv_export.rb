@@ -42,7 +42,7 @@ module FacilitiesManagement::RM6232
         localised_datetime(procurement.created_at),
         procurement.user.buyer_detail.organisation_name,
         procurement.user.buyer_detail.full_organisation_address,
-        procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
+        procurement.user.buyer_detail.sector_name,
         procurement.user.buyer_detail.contact_opt_in ? procurement.user.buyer_detail.full_name : '',
         procurement.user.buyer_detail.job_title,
         procurement.user.buyer_detail.contact_opt_in ? procurement.user.email : '',
