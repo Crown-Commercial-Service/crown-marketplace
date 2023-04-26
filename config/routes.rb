@@ -108,10 +108,10 @@ Rails.application.routes.draw do
         concerns :shared_pages, :admin_uploads, :management_reports
 
         get '/', to: 'home#index'
-        resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
+        resources :service_rates, path: 'service-rates', param: :slug, only: :show
         resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
-          resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
-          resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
+          resources :sublot_regions, path: 'sublot-regions', param: :lot, only: :show
+          resources :sublot_services, path: 'sublot-services', param: :lot, only: :show
         end
         resources :supplier_details, path: 'supplier-details', only: :index
       end

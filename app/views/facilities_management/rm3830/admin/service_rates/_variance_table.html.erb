@@ -1,4 +1,4 @@
-<table class="govuk-table ccs-errors">
+<table class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left">
@@ -10,19 +10,16 @@
     </tr>
   </thead>
   <tbody class="govuk-table__body">
-    <% @variances.each do |rate_label, rate| %>
-      <% rate_invalid = rate.errors.any? %>
+    <% @variances.each do |rate_label, variance_rate| %>
       <tr class="govuk-table__row">
-        <td class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
-          <div class="<%= 'govuk-form-group--error' if rate_invalid %>">
-            <label id="rates_<%= rate.id %>_label" for="rates_<%= rate.id %>">
-              <%= raw t(".#{rate_label}") %>
-            </label>
-            <%= display_error rate, attribue %>
-          </div>
-        </td>
+        <th class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td" scop="row">
+          <%= t(".#{rate_label}").html_safe %>
+        </th>
         <td class="govuk-table__cell supplier-rates-td">
-          <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(attribue), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate_invalid }", disabled: @framework_has_expired %>
+          <% rate = variance_rate.read_attribute_before_type_cast(attribue) %>
+          <% rate_is_money = rate_label == :td_cleaning %>
+
+          <%= "#{rate_is_money ? '£' : ''}#{rate * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}" if rate %>
         </td>
       </tr>
     <% end %>

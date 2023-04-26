@@ -402,43 +402,41 @@ en:
             heading_two: Average framework variances
             leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
             percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
-            rate_percentage_a: Rate (%)
-            rate_pound_a: Rate (£)
+            rate: Rate
           call-off-benchmark-rates:
             benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
             heading: Call-off benchmark rates
             heading_two: Benchmark variances
             leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
-            note: "*Use this column for normal price if Standard A isn’t applicable"
             percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
-            rate_a: Rate (£) *Standard A
-            rate_b: Rate (£) Standard B
-            rate_c: Rate (£) Standard C
-            rate_percentage_a: Rate (%)
-            rate_pound_a: Rate (£)
-          edit:
+            rate: Rate
+            rate_a: Rate Standard A
+            rate_b: Rate Standard B
+            rate_c: Rate Standard C
+          show:
             return_link: Return to admin dashboard
-            update_button: Save and return to dashboard
           variance_table:
             item: Item
             rate: Rate
-            td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
-            td_corporate: Corporate overhead (%)
-            td_london: London location percentage variance (%)
-            td_mobilisation: Direct award mobilisation (%)
-            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
-            td_profit: Profit (%)
-            td_tupe: Direct award TUPE risk premium (%)
+            td_cleaning: 'Cleaning consumables per building user <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
+            td_corporate: Corporate overhead
+            td_london: London location percentage variance
+            td_mobilisation: Direct award mobilisation
+            td_overhead: Management overhead <br /> Workpackage A - contract management
+            td_profit: Profit
+            td_tupe: Direct award TUPE risk premium
         sublot_regions:
-          edit:
-            leading_text: The tick boxes indicate the regions to which this supplier can provide services.
+          show:
+            leading_text: The ticks indicate the regions to which this supplier can provide services.
+            region: Region
             return_link: Return to supplier framework data
-            update_button: Save and return to supplier framework data
+            selected: Selected
         sublot_services:
           services:
-            note: The tick boxes in the first column indicate the services this supplier can provide.
+            note: The ticks indicate the services this supplier can provide.
             return_button: Return to supplier framework data
-            update_button: Save and return to supplier framework data
+            selected: Selected
+            service: Service
           services_prices_and_variances:
             error_message:
               greater_than_or_equal_to: The rate must be greater than or equal to 0
@@ -451,16 +449,18 @@ en:
             percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
             rate: Rate
             return_link: Return to supplier framework data
+            selected: Selected
+            service: Service
             services_and_prices: Services and prices
-            td_cleaning: 'Cleaning consumables per building user (£)<br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
-            td_cleaning_html: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
-            td_corporate: Corporate overhead (%)
-            td_london: London location percentage variance (%)
-            td_mobilisation: Mobilisation (%)
-            td_overhead: Management overhead  (%) <br /> Workpackage A - contract management
-            td_overhead_html: Management overhead (%) <br /> Workpackage A - contract management
-            td_profit: Profit (%)
-            td_tupe: TUPE risk premium (%)
+            td_cleaning: 'Cleaning consumables per building user <br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
+            td_cleaning_html: 'Cleaning consumables per building user <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
+            td_corporate: Corporate overhead
+            td_london: London location percentage variance
+            td_mobilisation: Mobilisation
+            td_overhead: Management overhead <br /> Workpackage A - contract management
+            td_overhead_html: Management overhead <br /> Workpackage A - contract management
+            td_profit: Profit
+            td_tupe: TUPE risk premium
             update_button: Save and return to supplier framework data
             variances: Variances
         supplier_details:

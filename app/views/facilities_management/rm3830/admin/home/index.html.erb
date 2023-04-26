@@ -12,10 +12,10 @@
   </div>
   <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
   <%= ccs_account_panel_row do %>
-    <%= ccs_account_panel(t('.dashboard_average_rate'), edit_facilities_management_rm3830_admin_service_rate_path(slug: 'average-framework-rates')) do %>
+    <%= ccs_account_panel(t('.dashboard_average_rate'), facilities_management_rm3830_admin_service_rate_path(slug: 'average-framework-rates')) do %>
       <%= t('.dashboard_manage_rate') %>
     <% end %>
-    <%= ccs_account_panel(t('.dashboard_calloff_rate'), edit_facilities_management_rm3830_admin_service_rate_path(slug: 'call-off-benchmark-rates')) do %>
+    <%= ccs_account_panel(t('.dashboard_calloff_rate'), facilities_management_rm3830_admin_service_rate_path(slug: 'call-off-benchmark-rates')) do %>
       <%= t('.dashboard_manage_calloff_rate') %>
     <% end %>
   <% end %>
