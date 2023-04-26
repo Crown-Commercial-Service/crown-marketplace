@@ -12,9 +12,9 @@ Feature: Supplier framework data - Framework expired
     Then I am on the '<page>' page
     And I should see the following warning text:
       | The RM3830 has expired, you cannot update the supplier's services. |
-    And all the text inputs are disabled
-    And all the checkbox inputs are disabled
-    And the submit button is disabled
+    And there are no text inputs
+    And there are no checkbox inputs
+    And there is no submit button
 
     Examples:
       | lot | supplier            | page                                        |
@@ -27,8 +27,8 @@ Feature: Supplier framework data - Framework expired
     Then I am on the 'Sub-lot <lot> regions' page
     And I should see the following warning text:
       | The RM3830 has expired, you cannot update the supplier's regions. |
-    And all the checkbox inputs are disabled
-    And the submit button is disabled
+    And there are no checkbox inputs
+    And there is no submit button
 
     Examples:
       | lot | supplier            |
