@@ -99,27 +99,24 @@
 
         <hr class="govuk-section-break govuk-section-break--m">
 
-        <%= form_group_with_error(f.object, :central_government) do |displayed_error| %>
-          <fieldset class="govuk-fieldset" aria-describedby="central_government-hint">
+        <%= form_group_with_error(f.object, :sector) do |displayed_error| %>
+          <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-              <%= t('.central_government.legend') %>
+              <%= t('.sector.legend') %>
             </legend>
-            <div id="central_government-hint" class="govuk-hint">
-              <%= t('.search_html', url: 'https://www.gov.uk/government/organisations') %>
-            </div>
             <%= displayed_error %>
-            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
-              <div class="govuk-radios__item">
-                <%= f.radio_button :central_government, true, class: 'govuk-radios__input' %>
-                <%= f.label :central_government, t('.central_government.options.true'), value: true, class: 'govuk-label govuk-radios__label' %>
-              </div>
-              <div class="govuk-radios__item">
-                <%= f.radio_button :central_government, false, class: 'govuk-radios__input' %>
-                <%= f.label :central_government, t('.central_government.options.false'), value: false, class: 'govuk-label govuk-radios__label' %>
-              </div>
+            <div class="govuk-radios" data-module="govuk-radios">
+              <% FacilitiesManagement::BuyerDetail::SECTORS.each do |sector| %>
+                <div class="govuk-radios__item">
+                  <%= f.radio_button :sector, sector, class: 'govuk-radios__input' %>
+                  <%= f.label :sector, t(".sector.options.#{sector}"), value: sector, class: 'govuk-label govuk-radios__label' %>
+                </div>
+              <% end %>
             </div>
           </fieldset>
         <% end %>
+
+        <hr class="govuk-section-break govuk-section-break--m">
 
         <%= form_group_with_error(f.object, :contact_opt_in) do |displayed_error| %>
           <fieldset class="govuk-fieldset" aria-describedby="contact_opt_in-hint">

@@ -9,7 +9,7 @@ Feature: Buyer details
       | Telephone number  | 01610161016       |
       | Organisation name | Feel Good inc.    |
       | Postcode          | ST16 1AA          |
-    And I check 'Central government' for the sector
+    And I check 'Health' for the sector
     And I check 'Yes' for being contacted
 
   Scenario: Save details for the buyer - add address normally
@@ -25,7 +25,7 @@ Feature: Buyer details
       | Telephone number      | 01610161016                                               |
       | Organisation name     | Feel Good inc.                                            |
       | Organisation address  | Stafford Delivery Office, Newport Road, Stafford ST16 1AA |
-      | Sector                | Central government                                        |
+      | Sector                | Health                                                    |
       | Contact opt in        | Yes                                                       |
 
   Scenario: Save details for the buyer - add address manually
@@ -48,5 +48,5 @@ Feature: Buyer details
       | Telephone number      | 01610161016                           |
       | Organisation name     | Feel Good inc.                        |
       | Organisation address  | 112 Test street, Westminister AA1 1AA |
-      | Sector                | Central government                    |
+      | Sector                | Health                                |
       | Contact opt in        | Yes                                   |

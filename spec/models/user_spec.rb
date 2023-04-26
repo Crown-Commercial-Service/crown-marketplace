@@ -65,6 +65,7 @@ RSpec.describe User do
         user.buyer_detail.organisation_name = 'org name'
         user.buyer_detail.organisation_address_postcode = 'SW1W 9SZ'
         user.buyer_detail.central_government = false
+        user.buyer_detail.sector = 'defence_and_security'
         user.buyer_detail.contact_opt_in = false
       end
 
@@ -85,11 +86,22 @@ RSpec.describe User do
         user.buyer_detail.organisation_address_town = 'Address town'
         user.buyer_detail.organisation_address_postcode = 'SW1W 9SZ'
         user.buyer_detail.central_government = false
+        user.buyer_detail.sector = 'defence_and_security'
         user.buyer_detail.contact_opt_in = false
       end
 
-      it 'will return false' do
-        expect(user.fm_buyer_details_incomplete?).to be false
+      context 'when including central_government' do
+        before { user.buyer_detail.central_government = false }
+
+        it 'will return false' do
+          expect(user.fm_buyer_details_incomplete?).to be false
+        end
+      end
+
+      context 'when excluding central_government' do
+        it 'will return false' do
+          expect(user.fm_buyer_details_incomplete?).to be false
+        end
       end
     end
   end
