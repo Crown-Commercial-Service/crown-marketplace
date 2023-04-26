@@ -1,0 +1,48 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= content_for :page_title, @sublot_region_name %>
+    <%= admin_breadcrumbs(
+      { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), link: facilities_management_rm3830_admin_supplier_framework_data_path },
+      { text: @sublot_region_name }
+    )%>
+
+    <h2 class="govuk-caption-l govuk-!-margin-bottom-2 govuk-!-font-weight-regular"><%= @supplier.supplier_name %></h1>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2"><%= @sublot_region_name %></h2>
+    <%= warning_text(t('facilities_management.rm3830.admin.you_cannot_update.regions')) %>
+    <p class="govuk-body govuk-!-font-weight-regular govuk-hint"><%= t('.leading_text') %></p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <% @regions.each do |region, region_name| %>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m"><%= region_name %></caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-three-quarters"><%= t('.region') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.selected') %></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @subregions.each do |sub_region, sub_region_name| %>
+            <% if sub_region.start_with?(region) %>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header supplier-rates-td"><%= sub_region_name %></th>
+                <td class="govuk-table__cell supplier-rates-td supplier-lot-data">
+                  <% if @selected_supplier_regions[sub_region] %>
+                    <span class="supplier-lot-data__true"></span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <p>
+      <%= link_to t('.return_link'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link' %>
+    </p>
+  </div>
+</div>

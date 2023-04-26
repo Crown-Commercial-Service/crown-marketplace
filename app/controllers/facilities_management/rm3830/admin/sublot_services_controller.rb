@@ -3,13 +3,12 @@ module FacilitiesManagement
     module Admin
       class SublotServicesController < FacilitiesManagement::Admin::FrameworkController
         before_action :set_framework_has_expired
-        before_action :redirect_if_framework_has_expired, only: :update
         before_action :set_supplier, :set_lot, :redirect_if_lot_out_of_range
         before_action :full_services
-        before_action :set_service_data, only: :edit
-        before_action :set_lot_1a_service_data, :initialize_errors, if: proc { @lot == '1a' }
+        before_action :set_service_data, only: :show
+        before_action :set_lot_1a_service_data, if: proc { @lot == '1a' }
 
-        def edit; end
+        def show; end
 
         def update
           if @lot == '1a'
@@ -56,41 +55,6 @@ module FacilitiesManagement
 
         def setup_variance_supplier_data
           @variance_supplier_data = latest_rate_card[:data][:Variances][@supplier_id]
-        end
-
-        def initialize_errors
-          @invalid_services = {}
-        end
-
-        def update_lots
-          update_checkboxes
-          redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
-        end
-
-        def update_lot_1a
-          @services_validator = SublotServicesValidator.new(params, latest_rate_card, @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts, @variance_supplier_data)
-
-          if @services_validator.save
-            update_checkboxes
-            redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
-          else
-            @supplier.replace_services_for_lot(params[:checked_services], @lot)
-            set_service_data
-            @supplier_data_ratecard_prices = @services_validator.supplier_data_ratecard_prices
-            @supplier_data_ratecard_discounts = @services_validator.supplier_data_ratecard_discounts
-            @variance_supplier_data = @services_validator.variance_supplier_data
-            @invalid_services = @services_validator.invalid_services
-            render :edit
-          end
-        end
-
-        def update_checkboxes
-          @supplier.replace_services_for_lot(params[:checked_services], @lot)
-          @supplier.save
-        end
-
-        def redirect_if_framework_has_expired
-          redirect_to edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path if @framework_has_expired
         end
       end
     end

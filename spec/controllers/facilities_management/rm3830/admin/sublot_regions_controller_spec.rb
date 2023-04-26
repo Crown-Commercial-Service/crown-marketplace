@@ -15,20 +15,20 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController do
                     })
   end
 
-  describe 'GET edit' do
+  describe 'GET show' do
     context 'when checking permissions' do
       context 'when an fm amdin' do
-        before { get :edit, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
+        before { get :show, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
 
-        it 'renders the edit page' do
-          expect(response).to render_template(:edit)
+        it 'renders the show page' do
+          expect(response).to render_template(:show)
         end
       end
 
       context 'when not an fm admin' do
         login_fm_buyer
 
-        before { get :edit, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
+        before { get :show, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
 
         it 'redirects to not permitted page' do
           expect(response).to redirect_to '/facilities-management/RM3830/admin/not-permitted'
@@ -36,14 +36,14 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController do
       end
     end
 
-    context 'when viewing the edit page' do
-      before { get :edit, params: { supplier_framework_datum_id: supplier_id, lot: lot_number } }
+    context 'when viewing the show page' do
+      before { get :show, params: { supplier_framework_datum_id: supplier_id, lot: lot_number } }
 
       context 'and the lot is 1a' do
         let(:lot_number) { '1a' }
 
-        it 'renders the edit page' do
-          expect(response).to render_template(:edit)
+        it 'renders the show page' do
+          expect(response).to render_template(:show)
         end
 
         it 'assigns the sublot region name' do
@@ -54,8 +54,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController do
       context 'and the lot is 1b' do
         let(:lot_number) { '1b' }
 
-        it 'renders the edit page' do
-          expect(response).to render_template(:edit)
+        it 'renders the show page' do
+          expect(response).to render_template(:show)
         end
 
         it 'assigns the sublot region name' do
@@ -66,8 +66,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController do
       context 'and the lot is 1c' do
         let(:lot_number) { '1c' }
 
-        it 'renders the edit page' do
-          expect(response).to render_template(:edit)
+        it 'renders the show page' do
+          expect(response).to render_template(:show)
         end
 
         it 'assigns the sublot region name' do
@@ -81,48 +81,6 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController do
         it 'redirect to admin home page' do
           expect(response).to redirect_to facilities_management_rm3830_admin_path
         end
-      end
-    end
-  end
-
-  describe 'PUT update' do
-    context 'when the framework is live' do
-      include_context 'and RM3830 is live'
-
-      before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1a', regions: regions } }
-
-      context 'when updating the data with regions' do
-        let(:regions) { ['UKC1', 'UKC2'] }
-
-        it 'redirects to the supplier_framework_data_path' do
-          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
-        end
-
-        it 'updates the regions correctly' do
-          supplier.reload
-          expect(supplier.lot_data['1a']['regions']).to eq regions
-        end
-      end
-
-      context 'when updating the data without regions' do
-        let(:regions) { [] }
-
-        it 'redirects to the supplier_framework_data_path' do
-          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
-        end
-
-        it 'updates the regions correctly' do
-          supplier.reload
-          expect(supplier.lot_data['1a']['regions']).to eq regions
-        end
-      end
-    end
-
-    context 'when the framework has expired' do
-      before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
-
-      it 'redirects to the edit page' do
-        expect(response).to redirect_to edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_region_path
       end
     end
   end

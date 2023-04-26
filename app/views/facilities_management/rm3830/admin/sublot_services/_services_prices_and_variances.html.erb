@@ -1,132 +1,101 @@
-<%= content_for :page_title, t('.heading') %>
-<%= admin_breadcrumbs(
-  { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), link: facilities_management_rm3830_admin_supplier_framework_data_path },
-  { text: t('.heading') }
-)%>
-
-<% if @invalid_services.any? %>
-  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-    <h2 class="govuk-error-summary__title" id="error-summary-title">
-      <%= t('common.error_summary_title')%>
-    </h2>
-    <div class="govuk-error-summary__body">
-      <ul class="govuk-list govuk-error-summary__list">
-          <li>
-            <%= link_to t(".error_message.#{first_error_type}"), "##{ @invalid_services.keys.first}_label", data: { turbolinks: false, errortype: 'invalid-input'} %>
-          </li>
-      </ul>
-    </div>
-  </div>
-<% end %>
-
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
+    <%= content_for :page_title, t('.heading') %>
+    <%= admin_breadcrumbs(
+      { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), link: facilities_management_rm3830_admin_supplier_framework_data_path },
+      { text: t('.heading') }
+    )%>
+
+
     <span class="govuk-caption-l"><%= @supplier.supplier_name %></span>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <h2 class="govuk-heading-l govuk-!-font-weight-bold "><%= t('.services_and_prices') %></h2>
+    <%= warning_text(t('facilities_management.rm3830.admin.you_cannot_update.services')) %>
+
+    <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+      <%= t('.note') %><br/>
+      <%= t('.percentage_note') %>
+    </p>
   </div>
 </div>
-<h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-<h2 class="govuk-heading-l govuk-!-font-weight-bold "><%= t('.services_and_prices') %></h2>
-<%= framework_expired_warning(t('facilities_management.rm3830.admin.you_cannot_update.services')) %>
 
-<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
-  <%= t('.note') %><br/>
-  <%= t('.percentage_note') %>
-</p>
-
-<div style="width: 3000px !important;">
-<%= form_with url: facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path, class: 'ccs-form', method: :put, html: { specialvalidation: true } do |f| %>
+<div style="width: 4000px !important;">
   <% @full_services.each do |service| %>
-    <fieldset class="govuk-fieldset">
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m"><%= service['name'] %></caption>
+      <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold  left">
-            <legend class="govuk-!-padding-left-0">
-              <%= service['name'] %>
-            </legend>
+          <th scope="col" class="govuk-table__header" style="width: 500px !important;">
+            <%= t('.service') %>
+          </th>
+          <th scope="col" class="govuk-table__header">
+            <%= t('.selected') %>
           </th>
           <% list_service_types(service['code']).each do |service_type| %>
-            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= service_type %></th>
+            <th scope="col" class="govuk-table__header">
+              <%= service_type[..-4] %>
+            </th>
           <% end %>
         </tr>
-        </thead>
-        <tbody class="govuk-table__body">
+      </thead>
+      <tbody class="govuk-table__body">
         <% service['work_package'].each do |work_pckg| %>
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
-              <div class="<%= 'govuk-form-group--error' if service_has_error?(work_pckg['code']) %>">
-                <div class="govuk-checkboxes__item">
-                <%= check_box_tag(
-                        "checked_services[]",
-                        work_pckg['code'],
-                        @supplier_rate_data_checkboxes[work_pckg['code']],
-                        class: "govuk-checkboxes__input",
-                        id: "rates_#{work_pckg['code']}",
-                        'aria-label': "#{work_pckg['name']} checkbox",
-                        disabled: @framework_has_expired
-                    ) %>
-
-                <%= label_tag "rates_#{work_pckg['code']}", "#{work_pckg['code']} #{work_pckg['name']}", id: "#{work_pckg['code']}_label", class: 'govuk-label govuk-checkboxes__label' %>
-              </div>
-                <%= sublot_1a_error_message(@invalid_services[work_pckg['code']].first[1][:error_type]) if service_has_error?(work_pckg['code']) %>
-              </div>
+            <th scope="row" class="govuk-table__header supplier-rates-td">
+              <%= "#{work_pckg['code']} #{work_pckg['name']}" %>
             </th>
-            <% list_service_types_price.each do |service_type|   %>
+            <td class="govuk-table__cell supplier-rates-td supplier-lot-data">
+              <% if @supplier_rate_data_checkboxes[work_pckg['code']] %>
+                <span class="supplier-lot-data__true"></span>
+              <% end %>
+            </td>
+            <% list_service_types_price.each do |service_type| %>
+              <% rate = determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>
+              <% rate_is_money = service_type != 'Direct Award Discount (%)' %>
+  
               <td class="govuk-table__cell supplier-rates-td">
-                <% if service_type_has_error(work_pckg['code'], service_type) %>
-                  <% input_value = @invalid_services[work_pckg['code']][service_type][:value] %>
-                  <% class_list = 'govuk-input govuk-input--width-3 govuk-input--error' %>
-                <% else %>
-                  <% input_value = determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>
-                  <% class_list = 'govuk-input govuk-input--width-3' %>
-                <% end %>
-                <%= text_field_tag "data[#{work_pckg['code']}][#{service_type}]", input_value, class: class_list, aria: { label: work_pckg['name'] }, disabled: @framework_has_expired %>
+                <%= "#{rate_is_money ? '£' : ''}#{rate * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}" if rate.present? %>
               </td>
             <% end %>
           </tr>
         <% end %>
-        </tbody>
-      </table>
-    </fieldset>
+      </tbody>
+    </table>
   <% end %>
+</div>
 
-  <h2 class="govuk-heading-xl govuk-!-font-weight-bold"><%= t('.variances') %></h2>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-xl"><%= t('.variances') %></h2>
 
-  <table class="govuk-table" style="width: 1100px !important;">
-    <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-one-quarter left">
-        <%= t('.item') %>
-      </th>
-      <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
-        <%= t('.rate') %>
-      </th>
-    <tr>
-    </thead>
-    <tbody class="govuk-table__body">
-    <% variances.each.with_index do |variance, i| %>
-      <% variance_has_error = service_has_error?(variance) %>
-      <tr class="govuk-table__row <%= 'govuk-form-group--error' if variance_has_error %>">
-      <th scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td  <%= 'govuk-!-padding-left-2' if variance_has_error %>">
-        <%= label_tag "rate[#{variance}]", t(".#{variance_names[i]}"), id: "#{variance}_label" %>
-        <%= sublot_1a_error_message(@invalid_services[variance][:error_type]) if variance_has_error %>
-      </th>
-      <td class="govuk-table__cell supplier-rates-td">
-        <% if variance_has_error %>
-          <% input_value =  @invalid_services[variance][:value] %>
-          <% class_list = 'govuk-input govuk-input--width-3 govuk-input--error' %>
-        <% else %>
-          <% input_value = @variance_supplier_data[variance_values[i].to_sym] %>
-          <% class_list = 'govuk-input govuk-input--width-3' %>
+    <table class="govuk-table ccs-errors">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left" style="width: 500px !important;">
+            <%= t('.item') %>
+          </th>
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
+            <%= t('.rate') %>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% variances.each.with_index do |variance, index| %>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td" scop="row">
+              <%= t(".#{variance_names[index]}") %>
+            </th>
+            <td class="govuk-table__cell supplier-rates-td">
+              <% rate = @variance_supplier_data[variance_values[index].to_sym] %>
+              <% rate_is_money = variance_names[index] == 'td_cleaning_html'%>
+
+              <%= "#{rate_is_money ? '£' : ''}#{rate * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}" if rate %>
+            </td>
+          </tr>
         <% end %>
-        <%= text_field_tag "rate[#{variance}]", input_value, class: class_list, disabled: @framework_has_expired %>
-      </td>
-    </tr>
-    <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
 
-  <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_sublot_data_services_prices', aria: { label: 'update_sublot_data_services_prices' }, disabled: @framework_has_expired %><br/>
-  <%= link_to t('.return_link'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link govuk-!-font-size-19' %>
-  <% end %>
+    <%= link_to t('.return_link'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link govuk-!-font-size-19' %>
+  </div>
 </div>

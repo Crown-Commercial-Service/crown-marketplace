@@ -20,8 +20,8 @@
             <%= t(".sub_lot.#{lot_number}") %>
           </span>
           <br />
-          <%= link_to lot_number == '1a' ? t('.service_prices') : t('.services'), edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path(supplier_id, lot_number), class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-right-3' %>
-          <%= link_to t('.regions'), edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_region_path(supplier_id, lot_number), class: 'govuk-link govuk-!-font-size-19' %>
+          <%= link_to lot_number == '1a' ? t('.service_prices') : t('.services'), facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path(supplier_id, lot_number), class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-right-3' %>
+          <%= link_to t('.regions'), facilities_management_rm3830_admin_supplier_framework_datum_sublot_region_path(supplier_id, lot_number), class: 'govuk-link govuk-!-font-size-19' %>
         </div>
       <% end %>
     <% end %>

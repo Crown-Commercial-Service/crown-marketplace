@@ -1,59 +1,51 @@
 <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-<%= framework_expired_warning(t('facilities_management.rm3830.admin.you_cannot_update.rates')) %>
+<%= warning_text(t('facilities_management.rm3830.admin.you_cannot_update.rates')) %>
 
 <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
   <%= t('.leading_text') %><br/>
   <%= t('.percentage_note') %>
 </p>
-<p class="govuk-body govuk-body govuk-!-font-weight-bold">
-  <%= t('.note') %>
-</p>
 
 <% @full_services.each do |service| %>
-  <table class="govuk-table ccs-errors">
+  <% rate_is_money = service['value_type'] == 'money' %>
+
+  <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-one-quarter left"><%= service['name'] %></th>
-        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
-          <% if service['value_type'] == 'money' %>
-            <% if service['standard_b'] || service['standard_c'] %>
+          <% if rate_is_money && service['standard_b'] || service['standard_c']%>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
               <%= t('.rate_a') %>
-            <% else %>
-              <%= t('.rate_pound_a') %>
-            <% end %>
+            </th>
           <% else %>
-            <%= t('.rate_percentage_a') %>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left" colspan="3">
+              <%= t('.rate') %>
+            </th>
           <% end %>
         </th>
         <% if service['standard_b']  %>
           <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= t('.rate_b') %> </th>
         <% end %>
         <% if service['standard_c'] %>
-          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"> <%= raw t('.rate_c') %> </th>
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"> <%= t('.rate_c') %> </th>
         <% end %>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
       <% service['work_package'].each do |work_pckg| %>
         <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
-            <% invalid_rate = work_pckg['rates'].find { |rate| rate.errors.any? } %>
-            <div class="<%= 'govuk-form-group--error' if invalid_rate %>">
-              <%= work_pckg['code'] %>
-              <%= work_pckg['name'] %>
-              <%= display_error invalid_rate, :benchmark if invalid_rate %>
-            </div>
+          <th class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td" scop="row">
+            <%= "#{work_pckg['code']} #{work_pckg['name']}" %>
           </th>
 
           <% [Proc.new {|rate| rate.standard.blank? || rate.standard == 'A'},
               Proc.new {|rate| rate.standard == 'B'},
               Proc.new {|rate| rate.standard == 'C'}].each do |selector| %>
             <td class="govuk-table__cell supplier-rates-td">
-              <% rate = work_pckg['rates'].find(&selector) %>
-              <% if rate %>
-                <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(:benchmark), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate.errors.any?}", 'aria-label': "#{work_pckg['name']} #{rate.standard.blank? ? 'normal price' : "standard #{rate.standard}"}", disabled: @framework_has_expired  %>
-              <% end %>
+              <% rate = rate = work_pckg['rates'].find(&selector) %>
+
+              <%= "#{rate_is_money ? '£' : ''}#{rate.read_attribute_before_type_cast(:benchmark) * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}" if rate && rate.read_attribute_before_type_cast(:benchmark)%>
             </td>
           <% end %>
         </tr>
