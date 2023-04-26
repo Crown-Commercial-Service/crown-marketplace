@@ -18,7 +18,8 @@ module FacilitiesManagement
 
     include AddressValidator
 
-    validates :central_government, length: { maximum: MAX_FIELD_LENGTH }, inclusion: { in: [true, false], message: :blank }, on: :update
+    validates :central_government, inclusion: { in: [true, false] }, on: :update
+    validates :contact_opt_in, inclusion: { in: [true, false] }, on: :update
 
     delegate :email, to: :user
 

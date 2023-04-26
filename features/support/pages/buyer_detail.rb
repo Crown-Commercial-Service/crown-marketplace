@@ -13,6 +13,11 @@ module Pages
       element :'Wider public sector', '#facilities_management_buyer_detail_central_government_false'
     end
 
+    section :contact_opt_in, '#contact_opt_in-form-group' do
+      element :Yes, '#facilities_management_buyer_detail_contact_opt_in_true'
+      element :No, '#facilities_management_buyer_detail_contact_opt_in_false'
+    end
+
     element :postcode_error_message, '#organisation_address_postcode-error'
     element :change_address, '#change-input-2'
   end

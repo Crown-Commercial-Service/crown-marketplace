@@ -10,6 +10,7 @@ Feature: Buyer details
       | Organisation name | Feel Good inc.    |
       | Postcode          | ST16 1AA          |
     And I check 'Wider public sector' for the sector
+    And I check 'No' for being contacted
 
   Scenario: Save details for the buyer - add address normally
     And I click on 'Find address'
@@ -25,6 +26,7 @@ Feature: Buyer details
       | Organisation name     | Feel Good inc.                                  |
       | Organisation address  | The Goods Shed, Newport Road, Stafford ST16 1AA |
       | Sector                | Wider public sector                             |
+      | Contact opt in        | No                                              |
 
   Scenario: Save details for the buyer - add address manually
     And I click on 'Find address'
@@ -47,3 +49,4 @@ Feature: Buyer details
       | Organisation name     | Feel Good inc.                        |
       | Organisation address  | 112 Test street, Westminister AA1 1AA |
       | Sector                | Wider public sector                   |
+      | Contact opt in        | No                                    |

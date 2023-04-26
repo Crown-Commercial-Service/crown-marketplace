@@ -43,6 +43,16 @@ const initContactDetailsInStorage = (): void => {
       name: 'contactDetailsSectorFalse',
       $element: $(`#${modelName}_central_government_false`),
       type: ContactDetailType.RadioInput
+    },
+    {
+      name: 'contactDetailsContactOptInTrue',
+      $element: $(`#${modelName}_contact_opt_in_true`),
+      type: ContactDetailType.RadioInput
+    },
+    {
+      name: 'contactDetailsContactOptInFalse',
+      $element: $(`#${modelName}_contact_opt_in_false`),
+      type: ContactDetailType.RadioInput
     }
   ]
 
