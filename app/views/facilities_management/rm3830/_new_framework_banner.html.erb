@@ -1,7 +1,0 @@
-<% if can_show_new_framework_banner? %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <%= govuk_notification_banner(:neutral, t('.new_fm_framework_html', new_framework_link: link_to(t('.new_agreement'), facilities_management_rm6232_path, class: 'govuk-notification-banner__link'))) %>
-    </div>
-  </div>
-<% end %>

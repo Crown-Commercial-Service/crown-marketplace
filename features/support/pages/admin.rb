@@ -6,7 +6,7 @@ module Pages
 
   class Admin < SitePrism::Page
     section :supplier_details, '#main-content' do
-      element :supplier_name_title, '#main_title > span'
+      element :supplier_name_title, 'h1 > span'
 
       section :'Current user', SupplierDetailsSection, '#supplier-details--supplier_user'
       section :'Supplier status', SupplierDetailsSection, '#supplier-details--supplier_status'

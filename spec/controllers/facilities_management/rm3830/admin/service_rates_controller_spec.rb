@@ -42,6 +42,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::ServiceRatesController do
 
     # rubocop:disable RSpec/NestedGroups
     context 'when the framework is live' do
+      include_context 'and RM3830 is live'
+
       before { put :update, params: { slug: rate_type, rates: rates } }
 
       context 'when updating the average framework rates' do
@@ -112,8 +114,6 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::ServiceRatesController do
     # rubocop:enable RSpec/NestedGroups
 
     context 'when the framework has expired' do
-      include_context 'and RM3830 has expired'
-
       before { put :update, params: { slug: rate_type } }
 
       context 'when updating the average framework rates' do

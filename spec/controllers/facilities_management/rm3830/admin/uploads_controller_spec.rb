@@ -25,15 +25,17 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
     context 'when logged in as an admin' do
       login_fm_admin
 
-      it 'renders the page' do
-        get :index
+      context 'and the framework is live' do
+        include_context 'and RM3830 is live'
 
-        expect(response).to render_template(:index)
+        it 'renders the page' do
+          get :index
+
+          expect(response).to render_template(:index)
+        end
       end
 
       context 'and the framework has expired' do
-        include_context 'and RM3830 has expired'
-
         it 'renders the page' do
           get :index
 
@@ -58,15 +60,17 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
   describe 'GET new' do
     login_fm_admin
 
-    it 'renders the new page' do
-      get :new
+    context 'and the framework is live' do
+      include_context 'and RM3830 is live'
 
-      expect(response).to render_template(:new)
+      it 'renders the new page' do
+        get :new
+
+        expect(response).to render_template(:new)
+      end
     end
 
     context 'and the framework has expired' do
-      include_context 'and RM3830 has expired'
-
       it 'redirects to the facilities_management_rm3830_admin_uploads_path path' do
         get :new
 
@@ -82,45 +86,47 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
 
     login_fm_admin
 
-    before do
-      allow(upload).to receive(:save).and_return(valid)
-      allow(upload).to receive(:save).with(context: :upload).and_return(valid)
-      allow(FacilitiesManagement::RM3830::Admin::Upload).to receive(:new).with(anything).and_return(upload)
-      allow(FacilitiesManagement::RM3830::Admin::FileUploadWorker).to receive(:perform_async).with(upload.id).and_return(true)
-      post :create, params: { facilities_management_rm3830_admin_upload: { supplier_data_file: fake_file } }
-    end
-
     after do
       file.unlink
     end
 
-    context 'when the upload is valid' do
-      let(:valid) { true }
+    context 'and the framework is live' do
+      include_context 'and RM3830 is live'
 
-      it 'redirects to the show page' do
-        expect(response).to redirect_to facilities_management_rm3830_admin_upload_path(upload)
+      before do
+        allow(upload).to receive(:save).and_return(valid)
+        allow(upload).to receive(:save).with(context: :upload).and_return(valid)
+        allow(FacilitiesManagement::RM3830::Admin::Upload).to receive(:new).with(anything).and_return(upload)
+        allow(FacilitiesManagement::RM3830::Admin::FileUploadWorker).to receive(:perform_async).with(upload.id).and_return(true)
+        post :create, params: { facilities_management_rm3830_admin_upload: { supplier_data_file: fake_file } }
       end
 
-      it 'changes the state to in_progress' do
-        expect(upload.in_progress?).to be true
+      context 'when the upload is valid' do
+        let(:valid) { true }
+
+        it 'redirects to the show page' do
+          expect(response).to redirect_to facilities_management_rm3830_admin_upload_path(upload)
+        end
+
+        it 'changes the state to in_progress' do
+          expect(upload.in_progress?).to be true
+        end
       end
 
-      context 'and the framework has expired' do
-        include_context 'and RM3830 has expired'
+      context 'when the upload is invalid' do
+        let(:valid) { false }
 
-        it 'redirects to the facilities_management_rm3830_admin_uploads_path path' do
-          post :create, params: { facilities_management_rm3830_admin_upload: { supplier_data_file: fake_file } }
-
-          expect(response).to redirect_to facilities_management_rm3830_admin_uploads_path
+        it 'renders the new page' do
+          expect(response).to render_template(:new)
         end
       end
     end
 
-    context 'when the upload is invalid' do
-      let(:valid) { false }
+    context 'and the framework has expired' do
+      it 'redirects to the facilities_management_rm3830_admin_uploads_path path' do
+        post :create, params: { facilities_management_rm3830_admin_upload: { supplier_data_file: fake_file } }
 
-      it 'renders the new page' do
-        expect(response).to render_template(:new)
+        expect(response).to redirect_to facilities_management_rm3830_admin_uploads_path
       end
     end
   end
@@ -145,13 +151,15 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController do
     context 'when the upload is published' do
       let(:aasm_state) { 'published' }
 
-      it 'renders the show template' do
-        expect(response).to render_template(:show)
+      context 'and the framework is live' do
+        include_context 'and RM3830 is live'
+
+        it 'renders the show template' do
+          expect(response).to render_template(:show)
+        end
       end
 
       context 'and the framework has expired' do
-        include_context 'and RM3830 has expired'
-
         it 'renders the show template' do
           get :show, params: { id: upload.id }
 

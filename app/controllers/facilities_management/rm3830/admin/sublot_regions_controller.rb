@@ -21,7 +21,7 @@ module FacilitiesManagement
           @regions = Nuts1Region.all.to_h { |region| [region.code, region.name] }
           supplier_lot_data = @supplier.lot_data[@lot]['regions']
           @sublot_region_name = "Sub-lot #{@lot} regions"
-          @selected_supplier_regions = Supplier::SupplierRegionsHelper.supllier_selected_regions(supplier_lot_data)
+          @selected_supplier_regions = SupplierRegionsHelper.supllier_selected_regions(supplier_lot_data)
           @subregions = FacilitiesManagement::Region.all.to_h { |region| [region.code, region.name] }
         end
 
