@@ -1,4 +1,0 @@
-<%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t(".heading.#{@summary_page}"), @procurement.contract_name, nil, nil, nil)) %>
-<%= content_for :page_title, t(".heading.#{@summary_page}") %>
-<%= render "facilities_management/rm3830/procurements/summary/#{@summary_page}" %>
-<%= link_to t('.return_to_requirements'), facilities_management_rm3830_procurement_path(@procurement), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19'%>

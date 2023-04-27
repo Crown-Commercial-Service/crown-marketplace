@@ -50,6 +50,8 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController do
     login_fm_admin
 
     context 'when the framework is live' do
+      include_context 'and RM3830 is live'
+
       render_views
 
       before { get :edit, params: { id: supplier_id, page: page } }
@@ -165,8 +167,6 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController do
     end
 
     context 'when the framework has expired' do
-      include_context 'and RM3830 has expired'
-
       before { get :edit, params: { id: supplier_id, page: page } }
 
       context 'when on the supplier user page' do
@@ -216,6 +216,8 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController do
 
     # rubocop:disable RSpec/NestedGroups
     context 'when the framework is live' do
+      include_context 'and RM3830 is live'
+
       before { put :update, params: { id: supplier.supplier_id, page: page, facilities_management_rm3830_admin_suppliers_admin: supplier_params } }
 
       context 'when updating on the supplier name page' do
@@ -327,8 +329,6 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController do
     # rubocop:enable RSpec/NestedGroups
 
     context 'when the framework has expired' do
-      include_context 'and RM3830 has expired'
-
       before { put :update, params: { id: supplier.supplier_id, page: page } }
 
       context 'when updating on the supplier name page' do

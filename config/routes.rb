@@ -37,10 +37,6 @@ Rails.application.routes.draw do
 
     namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
       namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
-        concerns %i[authenticatable registrable]
-        namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
-          concerns :authenticatable
-        end
         namespace :admin, defaults: { service: 'facilities_management/admin' } do
           concerns :authenticatable
         end
@@ -79,34 +75,10 @@ Rails.application.routes.draw do
   end
 
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
-    concern :buildings do
-      resources :buildings, only: %i[index show edit update new create]
-    end
-
-    concern :edit_buildings do
-      resources :edit_buildings, path: 'edit-buildings', only: %i[show edit update new create]
-    end
-
-    concern :procurement_details do
-      resources :procurement_details, path: 'procurement-details', param: :section, only: %i[show edit update]
-    end
-
-    concern :procurement_buildings do
-      namespace 'procurement_buildings', path: 'procurement-buildings/:id' do
-        get '/:section/edit', action: :edit
-        put '/:section/', action: :update
-      end
-      get 'procurements/:procurement_id/missing-regions', as: :missing_regions, to: 'procurement_buildings#missing_regions'
-    end
-
     concerns :framework
 
     resources :buyer_details, path: '/:framework/buyer-details', only: %i[edit update] do
       get 'edit-address', as: :edit_address
-    end
-
-    namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
-      concerns :framework
     end
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
@@ -130,53 +102,6 @@ Rails.application.routes.draw do
     end
 
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
-      concerns :shared_pages, :buildings, :procurement_buildings
-
-      get '/start', to: 'home#index'
-      get '/', to: 'buyer_account#index'
-      get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
-      get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
-      resources :procurements do
-        concerns :procurement_details, :edit_buildings
-
-        get 'delete'
-        get 'quick_view_results_spreadsheet'
-        get 'further_competition_spreadsheet'
-        get 'deliverables_matrix'
-        get 'price_matrix'
-        namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/rm3830/procurements/contract_details' do
-          get '/', action: 'show'
-          put '/', action: 'update'
-          patch '/', action: 'update'
-          get '/edit', action: 'edit'
-        end
-        resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
-          resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
-          resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
-          namespace :documents, controller: '/facilities_management/rm3830/procurements/contracts/documents' do
-            get '/call-off-schedule', action: :call_off_schedule
-            get '/call-off-schedule-2', action: :call_off_schedule_2
-            get '/zip', action: :zip_contracts
-          end
-        end
-        resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
-        resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
-          get '/progress', action: :progress
-        end
-      end
-      resources :procurement_buildings, path: 'procurement-buildings', only: :show
-      resources :procurement_buildings_services, only: %i[edit update]
-
-      namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
-        concerns :shared_pages
-
-        get '/', to: 'home#index'
-        resources :dashboard, only: :index
-        resources :contracts, only: %i[show edit update], controller: 'contracts' do
-          resources :sent, only: %i[index], controller: 'sent'
-        end
-      end
-
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
         get '/uploads/spreadsheet_template', controller: 'facilities_management/rm3830/admin/uploads'
 
@@ -194,16 +119,12 @@ Rails.application.routes.draw do
 
     namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
       concerns :shared_pages
-      # This has been cut but it may return on the future: concerns :buildings, :procurement_buildings
 
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
       get '/service-specification/:service_code', to: 'service_specification#show', as: 'service_specification'
 
       resources :procurements, only: %i[index show new create] do
-        # This has been cut but it may return on the future: concerns :procurement_details, :edit_buildings
-        # put 'update-show', action: 'update_show'
-
         get 'supplier_shortlist_spreadsheet'
       end
 

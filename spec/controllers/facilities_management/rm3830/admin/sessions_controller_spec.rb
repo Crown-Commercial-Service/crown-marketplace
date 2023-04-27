@@ -7,6 +7,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SessionsController do
 
   describe 'GET new' do
     context 'when the framework is live' do
+      include_context 'and RM3830 is live'
+
       it 'renders the new page' do
         get :new
 
@@ -15,8 +17,6 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SessionsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM3830 has expired'
-
       it 'renders the new page' do
         get :new
 
@@ -89,6 +89,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SessionsController do
 
       # rubocop:disable RSpec/NestedGroups
       context 'and the framework is live' do
+        include_context 'and RM3830 is live'
+
         before do
           post :create, params: { user: { email: email, password: 'Password12345!' } }
           cookies.update(response.cookies)
@@ -119,8 +121,6 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SessionsController do
 
       context 'when the framework is not live' do
         let(:challenge_name) { nil }
-
-        include_context 'and RM3830 has expired'
 
         before do
           post :create, params: { user: { email: email, password: 'Password12345!' } }

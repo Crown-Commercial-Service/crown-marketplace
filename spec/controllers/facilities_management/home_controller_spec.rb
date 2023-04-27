@@ -4,19 +4,18 @@ RSpec.describe FacilitiesManagement::HomeController do
   let(:default_params) { { service: 'facilities_management' } }
 
   describe 'GET framework' do
-    context 'when RM3830 is live' do
+    it 'redirects to the RM6232 home page' do
+      get :framework
+      expect(response).to redirect_to facilities_management_index_path('RM6232')
+    end
+
+    context 'when RM3830 is still live and RM6232 is not' do
+      include_context 'and RM3830 is live'
       include_context 'and RM6232 is live in the future'
 
       it 'redirects to the RM3830 home page' do
         get :framework
-        expect(response).to redirect_to facilities_management_rm3830_path
-      end
-    end
-
-    context 'when RM6232 is live' do
-      it 'redirects to the RM6232 home page' do
-        get :framework
-        expect(response).to redirect_to facilities_management_index_path('RM6232')
+        expect(response).to redirect_to '/facilities-management/RM3830'
       end
     end
   end
@@ -43,24 +42,12 @@ RSpec.describe FacilitiesManagement::HomeController do
       end
 
       context 'and the framework is RM3830' do
-        it 'raises the MissingExactTemplate error' do
-          expect do
-            get :index, params: { framework: 'RM3830' }
-          end.to raise_error(ActionController::MissingExactTemplate)
+        it 'renders the unrecognised framework page with the right http status' do
+          get :index, params: { framework: 'RM3830' }
+
+          expect(response).to render_template('facilities_management/home/unrecognised_framework')
+          expect(response).to have_http_status(:bad_request)
         end
-
-        # rubocop:disable RSpec/NestedGroups
-        context 'and RM3830 framework expires today' do
-          include_context 'and RM3830 has expired'
-
-          it 'renders the unrecognised framework page with the right http status' do
-            get :index, params: { framework: 'RM3830' }
-
-            expect(response).to render_template('facilities_management/home/unrecognised_framework')
-            expect(response).to have_http_status(:bad_request)
-          end
-        end
-        # rubocop:enable RSpec/NestedGroups
       end
     end
 
@@ -86,10 +73,11 @@ RSpec.describe FacilitiesManagement::HomeController do
       end
 
       context 'and the framework is RM3830' do
-        it 'raises the MissingExactTemplate error' do
-          expect do
-            get :index, params: { framework: 'RM3830' }
-          end.to raise_error(ActionController::MissingExactTemplate)
+        it 'renders the unrecognised framework page with the right http status' do
+          get :index, params: { framework: 'RM3830' }
+
+          expect(response).to render_template('facilities_management/home/unrecognised_framework')
+          expect(response).to have_http_status(:bad_request)
         end
       end
     end

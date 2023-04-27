@@ -1,8 +1,0 @@
-<%= govuk_page_content(*show_page_content) do |pd| %>
-  <%= content_for :page_title, pd.heading_details.text %>
-
-  <%= form_with model: @procurement, url: facilities_management_rm3830_procurement_contract_details_path(page: @page_name), method: :put, html: { specialvalidation: true } do |f| %>
-    <%= render(partial: "facilities_management/rm3830/procurements/contract_details/da_journey/#{@page_name}", locals: { f: f }) %>
-    <%= govuk_continuation_buttons(pd, f) %>
-  <% end %>
-<% end %>

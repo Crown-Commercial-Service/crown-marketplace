@@ -1,9 +1,0 @@
-<%= govuk_page_content(@page_description, @procurement) do |pd| %>
-  <%= content_for :page_title, pd.heading_details.text %>
-
-  <%= form_with model: @procurement, url: facilities_management_rm3830_procurement_contract_details_path(page: @page_name), method: :put, html: { specialvalidation: true, novalidate: true } do |f| %>
-    <%= f.hidden_field :page, value: params[:page] %>
-    <%= render(partial: "#{partial_prefix}/#{@page_name}", locals: { f: f }) %>
-    <%= govuk_continuation_buttons(pd, f, false) %>
-  <% end %>
-<% end %>
