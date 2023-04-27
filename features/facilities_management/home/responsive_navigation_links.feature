@@ -9,4 +9,4 @@ Feature: Headers are responsive
     Then I click on 'Menu'
     And the header navigation links 'are' visible
     Then I click on 'My account'
-    And I am on the Your account page
+    And I am on the 'Your account' page

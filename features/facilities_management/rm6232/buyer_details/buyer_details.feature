@@ -16,7 +16,7 @@ Feature: Buyer details
     And I click on 'Find address'
     And I select 'The Goods Shed, Newport Road, Stafford' from the address drop down
     And I click on 'Save and continue'
-    And I am on the Your account page
+    And I am on the 'Your account' page
     And I click on 'Manage my details'
     Then I am on the 'Manage your details' page
     And the following buyer details have been entered:
@@ -39,7 +39,7 @@ Feature: Buyer details
     And I click on 'Save and continue'
     Then I am on the 'Manage your details' page
     And I click on 'Save and continue'
-    And I am on the Your account page
+    And I am on the 'Your account' page
     And I click on 'Manage my details'
     Then I am on the 'Manage your details' page
     And the following buyer details have been entered:
