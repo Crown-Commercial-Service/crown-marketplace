@@ -111,7 +111,7 @@ en:
         create_password: Create a password you'll remember
         email: Email address
         email_hint: We will send a confirmation code to this address.
-        heading: Create an account
+        heading: Create a CCS account
         lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
