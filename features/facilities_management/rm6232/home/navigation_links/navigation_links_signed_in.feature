@@ -8,75 +8,60 @@ Feature: Navigation links when signed in
     And I should see the following navigation links:
       | Sign out |
 
-  Scenario: Not permitted page - My accout
+  Scenario Outline: Not permitted page 
     And I go to the 'buyer' not permitted page for 'RM6232'
     And I should see the following navigation links:
       | My account  |
       | Sign out    |
-    And I click on 'My account'
-    And I am on the Your account page
+    And I click on '<link_text>'
+    And I am on the '<page_title>' page
 
-  Scenario: Not permitted page - sign out
-    And I go to the 'buyer' not permitted page for 'RM6232'
-    And I should see the following navigation links:
-      | My account  |
-      | Sign out    |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to your account' page
+    Examples:
+      | link_text   | page_title              |
+      | My account  | Your account            |
+      | Sign out    | Sign in to your account |
 
-  Scenario: Cookies policy - My accout
+  Scenario Outline: Cookies policy
     When I click on 'Cookie policy'
     Then I am on the 'Details about cookies on Crown Marketplace' page
     And I should see the following navigation links:
       | My account  |
       | Sign out    |
-    And I click on 'My account'
-    And I am on the Your account page
+    And I click on '<link_text>'
+    And I am on the '<page_title>' page
 
-  Scenario: Cookies policy - Sign out
-    When I click on 'Cookie policy'
-    Then I am on the 'Details about cookies on Crown Marketplace' page
-    And I should see the following navigation links:
-      | My account  |
-      | Sign out    |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to your account' page
+    Examples:
+      | link_text   | page_title              |
+      | My account  | Your account            |
+      | Sign out    | Sign in to your account |
 
-  Scenario: Cookies settings - My accout
+  Scenario Outline: Cookies settings
     When I click on 'Cookie settings'
     Then I am on the 'Cookies on Crown Marketplace' page
     And I should see the following navigation links:
       | My account  |
       | Sign out    |
-    And I click on 'My account'
-    And I am on the Your account page
+    And I click on '<link_text>'
+    And I am on the '<page_title>' page
 
-  Scenario: Cookies settings - Sign out
-    When I click on 'Cookie settings'
-    Then I am on the 'Cookies on Crown Marketplace' page
-    And I should see the following navigation links:
-      | My account  |
-      | Sign out    |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to your account' page
+    Examples:
+      | link_text   | page_title              |
+      | My account  | Your account            |
+      | Sign out    | Sign in to your account |
 
-  Scenario: Accessibility statement - My accout
+  Scenario Outline: Accessibility statement
     When I click on 'Accessibility statement'
     Then I am on the 'Facilities Management (FM) Accessibility statement' page
     And I should see the following navigation links:
       | My account  |
       | Sign out    |
-    And I click on 'My account'
-    And I am on the Your account page
+    And I click on '<link_text>'
+    And I am on the '<page_title>' page
 
-  Scenario: Accessibility statement - Sign out
-    When I click on 'Accessibility statement'
-    Then I am on the 'Facilities Management (FM) Accessibility statement' page
-    And I should see the following navigation links:
-      | My account  |
-      | Sign out    |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to your account' page
+    Examples:
+      | link_text   | page_title              |
+      | My account  | Your account            |
+      | Sign out    | Sign in to your account |
 
   Scenario: Home page - Sign out
     And I should see the following navigation links:
@@ -84,43 +69,21 @@ Feature: Navigation links when signed in
     And I click on 'Sign out'
     And I am on the 'Sign in to your account' page
 
-  # To be added when the page is implimented
-  # Scenario: Procurement dashboard - My account
-  #   Then I click on 'View your saved searches'
-  #   Then I am on the 'Saved searches' page
-  #   And I should see the following navigation links:
-  #     | My account  |
-  #     | Sign out    |
-  #   And I click on 'My account'
-  #   And I am on the Your account page
-  # Scenario: Procurement dashboard - Sign out
-  #   Then I click on 'View your saved searches'
-  #   Then I am on the 'Saved searches' page
-  #   And I should see the following navigation links:
-  #     | My account  |
-  #     | Sign out    |
-  #   And I click on 'Sign out'
-  #   And I am on the 'Sign in to your account' page
-
-  Scenario: Buyer details - My account
+  Scenario Outline: Buyer details
     Then I click on 'Manage my details'
     Then I am on the 'Manage your details' page
     And I should see the following navigation links:
       | My account  |
       | Sign out    |
-    And I click on 'My account'
-    And I am on the Your account page
+    And I click on '<link_text>'
+    And I am on the '<page_title>' page
 
-  Scenario: Buyer details - Sign out
-    Then I click on 'Manage my details'
-    Then I am on the 'Manage your details' page
-    And I should see the following navigation links:
-      | My account  |
-      | Sign out    |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to your account' page
+    Examples:
+      | link_text   | page_title              |
+      | My account  | Your account            |
+      | Sign out    | Sign in to your account |
 
-  Scenario: Buyer details - Add address - My account
+  Scenario Outline: Buyer details - Add address
     Then I click on 'Manage my details'
     Then I am on the 'Manage your details' page
     And I click on 'Enter address manually, if you can’t find address'
@@ -128,16 +91,10 @@ Feature: Navigation links when signed in
     And I should see the following navigation links:
       | My account  |
       | Sign out    |
-    And I click on 'My account'
-    And I am on the Your account page
+    And I click on '<link_text>'
+    And I am on the '<page_title>' page
 
-  Scenario: Buyer details - Add address - Sign out
-    Then I click on 'Manage my details'
-    Then I am on the 'Manage your details' page
-    And I click on 'Enter address manually, if you can’t find address'
-    Then I am on the 'Add address' page
-    And I should see the following navigation links:
-      | My account  |
-      | Sign out    |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to your account' page
+    Examples:
+      | link_text   | page_title              |
+      | My account  | Your account            |
+      | Sign out    | Sign in to your account |

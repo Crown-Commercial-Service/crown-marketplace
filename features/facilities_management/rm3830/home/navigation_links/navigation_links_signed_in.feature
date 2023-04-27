@@ -14,7 +14,7 @@ Feature: Navigation links when signed in
       | My account  |
       | Sign out    |
     And I click on 'My account'
-    And I am on the Your account page
+    And I am on the 'Your account' page
 
   Scenario: Not permitted page - sign out
     And I go to the 'buyer' not permitted page for 'RM3830'
@@ -31,7 +31,7 @@ Feature: Navigation links when signed in
       | My account  |
       | Sign out    |
     And I click on 'My account'
-    And I am on the Your account page
+    And I am on the 'Your account' page
 
   Scenario: Cookies policy - Sign out
     When I click on 'Cookie policy'
@@ -49,7 +49,7 @@ Feature: Navigation links when signed in
       | My account  |
       | Sign out    |
     And I click on 'My account'
-    And I am on the Your account page
+    And I am on the 'Your account' page
 
   Scenario: Cookies settings - Sign out
     When I click on 'Cookie settings'
@@ -67,7 +67,7 @@ Feature: Navigation links when signed in
       | My account  |
       | Sign out    |
     And I click on 'My account'
-    And I am on the Your account page
+    And I am on the 'Your account' page
 
   Scenario: Accessibility statement - Sign out
     When I click on 'Accessibility statement'
@@ -91,7 +91,7 @@ Feature: Navigation links when signed in
       | My account  |
       | Sign out    |
     And I click on 'My account'
-    And I am on the Your account page
+    And I am on the 'Your account' page
 
   Scenario: Procurement dashboard - Sign out
     Then I click on 'Continue a procurement'
@@ -109,7 +109,7 @@ Feature: Navigation links when signed in
       | My account  |
       | Sign out    |
     And I click on 'My account'
-    And I am on the Your account page
+    And I am on the 'Your account' page
 
   Scenario: Buyer details - Sign out
     Then I click on 'Manage my details'
@@ -129,7 +129,7 @@ Feature: Navigation links when signed in
       | My account  |
       | Sign out    |
     And I click on 'My account'
-    And I am on the Your account page
+    And I am on the 'Your account' page
 
   Scenario: Buyer details - Add address - Sign out
     Then I click on 'Manage my details'

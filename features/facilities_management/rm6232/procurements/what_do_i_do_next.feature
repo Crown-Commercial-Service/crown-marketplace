@@ -26,4 +26,4 @@ Feature: What do I do next
 
   Scenario: Return link
     And I click on 'Return to your account'
-    And I am on the Your account page
+    And I am on the 'Your account' page
