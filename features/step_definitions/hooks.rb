@@ -11,10 +11,6 @@ Before('@javascript') do
   @javascript = true
 end
 
-Before('@add_address') do
-  stub_address_region_finder
-end
-
 Before('@allow_list') do
   stub_allow_list
 end
@@ -25,10 +21,6 @@ end
 
 Before('not @javascript') do
   page.driver.browser.set_cookie('cookie_preferences=%7B%22settings_viewed%22%3Atrue%2C%22usage%22%3Afalse%2C%22glassbox%22%3Afalse%7D')
-end
-
-Before('@contract_emails') do
-  stub_contract_emails
 end
 
 Before('@management_report') do

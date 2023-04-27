@@ -5,7 +5,10 @@
 <% end %>
 
 <%= form_group_with_error(f.object, :contact_email) do |displayed_error, any_errors| %>
-  <%= label_details(f, :contact_email, t('.contact_email_question'), t('.contact_email_info')) %>
+  <%= f.label(:contact_email, t('.contact_email_question'), class: 'govuk-label govuk-label--m') %>
+  <div class="govuk-hint">
+    <%= t('.contact_email_info') %>
+  </div>
   <%= displayed_error %>
   <%= f.text_field :contact_email, class: "govuk-input govuk-input--width-20 govuk-!-margin-top-2 #{'govuk-input--error' if any_errors }" %>
 <% end %>

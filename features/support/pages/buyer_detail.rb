@@ -24,6 +24,7 @@ module Pages
     end
 
     element :postcode_error_message, '#organisation_address_postcode-error'
+    element :address_drop_down, '#address-results-container'
     element :change_address, '#change-input-2'
   end
 end

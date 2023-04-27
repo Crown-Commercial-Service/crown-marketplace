@@ -19,8 +19,8 @@ module FacilitiesManagement
       def full_services
         services = FacilitiesManagement::RM3830::StaticData.services
         work_packages = FacilitiesManagement::RM3830::StaticData.work_packages
-        work_packages_with_rates = FacilitiesManagement::RM3830::Supplier::SupplierRatesHelper.add_rates_to_work_packages(work_packages, rates)
-        @full_services = FacilitiesManagement::RM3830::Supplier::SupplierRatesHelper.work_package_to_services(services, work_packages_with_rates)
+        work_packages_with_rates = FacilitiesManagement::RM3830::Admin::SupplierRatesHelper.add_rates_to_work_packages(work_packages, rates)
+        @full_services = FacilitiesManagement::RM3830::Admin::SupplierRatesHelper.work_package_to_services(services, work_packages_with_rates)
       end
 
       def redirect_if_lot_out_of_range

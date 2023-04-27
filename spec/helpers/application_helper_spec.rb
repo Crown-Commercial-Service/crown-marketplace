@@ -127,27 +127,6 @@ RSpec.describe ApplicationHelper do
         expect(validation_message.empty?).to be false
       end
     end
-
-    context 'when rendering HTML' do
-      it 'will list elements' do
-        validation_output = helper.display_potential_errors(FacilitiesManagement::RM3830::Procurement.new, :initial_call_off_period_years, 'facilities_management_rm3830_procurement_initial_call_off_period')
-        expect(validation_output).to include('div')
-      end
-    end
-  end
-
-  describe '#da_eligible?' do
-    context 'when the code belongs to a DA eligable service' do
-      it 'returns true' do
-        expect(helper.da_eligible?('C.1')).to be true
-      end
-    end
-
-    context 'when the code belongs to a non-DA service' do
-      it 'returns false' do
-        expect(helper.da_eligible?('C.14')).to be false
-      end
-    end
   end
 
   describe '.can_show_new_framework_banner?' do

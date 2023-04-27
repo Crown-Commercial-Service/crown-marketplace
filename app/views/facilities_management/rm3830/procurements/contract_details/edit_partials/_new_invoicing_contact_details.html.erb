@@ -1,4 +1,0 @@
-<%= f.fields_for :invoice_contact_detail do |ff| %>
-  <%= render partial: "#{partial_prefix}/new_contact_details",
-              locals: { f: f, ff: ff, page_contact: 'invoice_contact_detail', address_step: 'new_invoicing_contact_details_address', telephone_number: false }%>
-<% end %>

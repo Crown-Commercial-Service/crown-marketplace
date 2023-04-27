@@ -1,9 +1,0 @@
-<%= form_group_with_error(f.object, other_attribute) do |displayed_error| %>
-  <%= govuk_radios_conditional_item(f, attribute, 'other', t('.other_label')) %>
-  <%= govuk_radios_conditional_area(attribute, 'other') do %>
-    <%= f.label other_attribute, description, class: 'govuk-label' %>
-    <%= displayed_error %>
-    <%= govuk_character_count(f, other_attribute, 150, 3) %>
-  <% end %>
-<% end %>
-

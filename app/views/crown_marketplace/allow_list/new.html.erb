@@ -9,10 +9,15 @@
 <%= form_with url: crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :post, html: { specialvalidation: true } do |f| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.heading'), nil, nil, nil, nil)) %>
+      <h1 class="govuk-heading-xl">
+        <%= t('.heading') %>
+      </h1>
 
       <%= form_group_with_error f.object, :email_domain do |displayed_error| %>
-        <%= label_details(f, :email_domain, t('.email_domain_label'), t('.email_domain_hint')) %>
+        <%= f.label(:email_domain, t('.email_domain_label'), class: 'govuk-label govuk-label--m') %>
+        <div id="email_domain-hint" class="govuk-hint">
+          <%= t('.email_domain_hint') %>
+        </div>
         <p class="govuk-body govuk-!-margin-top-4"><%= t('.email_domain_must') %></p>
         <ul class="govuk-list govuk-list--bullet">
           <li><%= t('.email_domain_must_1') %></li>
@@ -20,7 +25,7 @@
           <li><%= t('.email_domain_must_3') %></li>
         </ul>
         <%= displayed_error %>
-        <%= f.text_field :email_domain, class: 'govuk-input govuk-input--width-30 govuk-!-margin-top-4' %>
+        <%= f.text_field :email_domain, class: 'govuk-input govuk-input--width-30 govuk-!-margin-top-4', aria: { describedby: 'email_domain-hint' } %>
       <% end %>
 
       <div class="govuk-!-margin-top-5">

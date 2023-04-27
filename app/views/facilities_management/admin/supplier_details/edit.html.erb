@@ -7,7 +7,14 @@
 
 <%= form_with model: @supplier, url: facilities_management_admin_supplier_detail_path(page: @page), html: { specialvalidation: true, novalidate: true } do |f| %>
   <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
-  <%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t(".page_title.#{@page}"), current_supplier_name, nil, nil, nil)) %>
+
+  <h1 class="govuk-heading-xl">
+    <span class="govuk-caption-xl">
+      <%= current_supplier_name %>
+    </span>
+    <%= t(".page_title.#{@page}") %>
+  </h1>
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= render partial: @page.to_s, locals: { f: f } %>

@@ -1,4 +1,0 @@
-<%= render partial: 'accepted_offer' if @contract.aasm_state == 'accepted' %>
-<%= render partial: 'declined_offer' if @contract.aasm_state == 'declined' %>
-
-<%= link_to t('.link_text'), facilities_management_rm3830_supplier_dashboard_index_path, class: 'govuk-button govuk-button--secondary govuk-!-margin-top-9', 'aria-label': "#{t('.link_text')}" %>

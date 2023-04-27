@@ -28,3 +28,7 @@ end
 Then('I change my contact detail address') do
   buyer_detail_page.change_address.click
 end
+
+Then('I select {string} from the address drop down') do |address|
+  buyer_detail_page.address_drop_down.find(:option, address).select_option
+end

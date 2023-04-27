@@ -87,6 +87,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController do
 
   describe 'PUT update' do
     context 'when the framework is live' do
+      include_context 'and RM3830 is live'
+
       before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1a', regions: regions } }
 
       context 'when updating the data with regions' do
@@ -117,8 +119,6 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController do
     end
 
     context 'when the framework has expired' do
-      include_context 'and RM3830 has expired'
-
       before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
 
       it 'redirects to the edit page' do
