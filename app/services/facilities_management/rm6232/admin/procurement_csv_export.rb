@@ -31,7 +31,7 @@ module FacilitiesManagement::RM6232
     end
 
     def self.find_procurements(start_date, end_date)
-      Procurement.where(created_at: (start_date..(end_date + 1))).order(created_at: :desc)
+      Procurement.where(created_at: (start_date..(end_date + 1))).where.not(user_id: test_user_ids).order(created_at: :desc)
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -103,6 +103,10 @@ module FacilitiesManagement::RM6232
 
     def self.helpers
       @helpers ||= ActionController::Base.helpers
+    end
+
+    def self.test_user_ids
+      User.where(email: ENV.fetch('TEST_USER_EMAILS', '').split(',')).pluck(:id)
     end
   end
 end

@@ -48,6 +48,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportCsvGenerator
   end
 
   describe 'generate_csv' do
+    let(:test_users) { '' }
     let(:user_1) { create(:user, :with_detail) }
     let(:user_2) { create(:user) }
 
@@ -61,6 +62,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportCsvGenerator
     let(:generated_csv) { CSV.parse(management_report.management_report_csv.download, headers: true) }
 
     before do
+      ENV['TEST_USER_EMAILS'] = test_users
       buyer_detail
       procurement_1
       procurement_2
@@ -127,6 +129,24 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportCsvGenerator
         expect(generated_csv[4][0..1] + generated_csv[4][3..]).to eq ['RM6232-000001-2022',  'Procurement 1',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Defence and Security', 'MyString', 'MyString', user_1.email, '="07500404040"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '12,345.00', '2a', "Abshire, Schumm and Farrell;\nBrakus, Lueilwitz and Blanda;\nConn, Hayes and Lakin;\nDach Inc;\nFeest Group;\nHarber LLC;\nHudson, Spinka and Schuppe;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nO'Reilly, Emmerich and Reichert;\nRoob-Kessler;\nSchulist-Wuckert;\nSkiles LLC;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurner-Pouros"]
       end
       # rubocop:enable RSpec/MultipleExpectations
+    end
+
+    context 'when the buyer email is in the TEST_USER_EMAILS list' do
+      let(:test_users) { user_2.email }
+      let(:start_date) { 5.days.ago }
+      let(:end_date) { Time.zone.now }
+
+      let(:generated_csv) { CSV.parse(management_report.management_report_csv.download) }
+
+      it 'has the correct headers' do
+        expect(generated_csv.first).to eq ['Reference number', 'Contract name', 'Date created', 'Buyer organisation', 'Buyer organisation address', 'Buyer sector', 'Buyer contact name', 'Buyer contact job title', 'Buyer contact email address', 'Buyer contact telephone number', 'Buyer opted in to be contacted', 'Services', 'Regions', 'Annual contract cost', 'Lot', 'Shortlisted Suppliers']
+      end
+
+      it 'has the correct data' do
+        expect(generated_csv.length).to eq 3
+        expect(generated_csv[1][0..1] + generated_csv[1][3..]).to eq ['RM6232-000003-2022',  'Procurement 3',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Defence and Security', 'MyString', 'MyString', user_1.email, '="07500404040"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nG.1 Hard Landscaping Services;\nJ.1 Mail Services;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '50,000,000.00', '1c', "Berge-Koepp;\nBernier, Luettgen and Bednar;\nBins, Yost and Donnelly;\nBlick, O'Kon and Larkin;\nBreitenberg-Mante;\nCummerata, Lubowitz and Ebert;\nGoyette Group;\nHarris LLC;\nHeidenreich Inc;\nLind, Stehr and Dickinson;\nLowe, Abernathy and Toy;\nMiller, Walker and Leffler;\nMuller Inc;\nRohan-Windler;\nSatterfield LLC;\nSchmeler Inc;\nSchmeler-Leffler;\nSchultz-Wilkinson;\nTerry-Greenholt;\nYost LLC;\nZboncak and Sons"]
+        expect(generated_csv[2][0..1] + generated_csv[2][3..]).to eq ['RM6232-000001-2022',  'Procurement 1',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Defence and Security', 'MyString', 'MyString', user_1.email, '="07500404040"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '12,345.00', '2a', "Abshire, Schumm and Farrell;\nBrakus, Lueilwitz and Blanda;\nConn, Hayes and Lakin;\nDach Inc;\nFeest Group;\nHarber LLC;\nHudson, Spinka and Schuppe;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nO'Reilly, Emmerich and Reichert;\nRoob-Kessler;\nSchulist-Wuckert;\nSkiles LLC;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurner-Pouros"]
+      end
     end
   end
 end
