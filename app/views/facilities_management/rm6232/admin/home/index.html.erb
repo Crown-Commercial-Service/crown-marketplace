@@ -1,8 +1,10 @@
 <%= content_for :page_title, t('.header') %>
 <div class="govuk-body">
   <div class="govuk-grid-row govuk-!-padding-left-3">
-    <span class="govuk-caption-l"><%= @current_login_email %></span>
-    <h1 class="govuk-heading-xl"><%= t('.header') %></span>
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-l"><%= @current_login_email %></span>
+      <%= t('.header') %>
+    </h1>
   </div>
 
   <div class="govuk-grid-row">

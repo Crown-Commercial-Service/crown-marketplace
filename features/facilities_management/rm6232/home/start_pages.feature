@@ -24,7 +24,7 @@ Feature: Start pages
     When I click on 'Start now'
     And I am on the 'Sign in to your account' page
     Then I should sign in as an fm buyer with details
-    And I am on the Your account page
+    And I am on the 'Your account' page
 
   Scenario: Viewing the home page
     When I go to the facilities management RM6232 start page
@@ -32,7 +32,7 @@ Feature: Start pages
     When I click on 'Start now'
     And I am on the 'Sign in to your account' page
     Then I should sign in as an fm buyer with details
-    And I am on the Your account page
+    And I am on the 'Your account' page
     Then the following content should be displayed on the page:
       | Your account                                                              |
       | Search for suppliers                                                      |
