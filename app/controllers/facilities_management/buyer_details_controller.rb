@@ -55,7 +55,8 @@ module FacilitiesManagement
               :organisation_address_town,
               :organisation_address_county,
               :organisation_address_postcode,
-              :central_government
+              :sector,
+              :contact_opt_in
             )
     end
 

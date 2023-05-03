@@ -25,10 +25,6 @@ When('I go to the {string} not permitted page for {string}') do |user_type, fram
   visit "#{not_permitted_path_base}/not-permitted"
 end
 
-Then('I am on the Your account page') do
-  expect(page.find('#main-content > div.govuk-width-container > div:nth-child(1) > div > span')).to have_content('Your account')
-end
-
 Then('I sign in') do
   fill_in 'email', with: @user.email
   fill_in 'password', with: 'ValidPassword'

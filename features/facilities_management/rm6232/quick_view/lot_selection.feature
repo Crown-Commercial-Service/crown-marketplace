@@ -1,4 +1,4 @@
-Feature: Service and selection and annual contract cost result in correct sub lot
+Feature: Service selection and annual contract cost result in correct sub lot
 
   Background: Navigate to the services page
     Given I sign in and navigate to my account for 'RM6232'

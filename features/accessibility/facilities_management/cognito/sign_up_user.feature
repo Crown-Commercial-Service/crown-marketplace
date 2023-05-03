@@ -7,5 +7,5 @@ Feature: Sign up to facilties management - RM6232 - Accessibility
     When I click on 'Start now'
     And I am on the 'Sign in to your account' page
     And I click on 'Create an account'
-    Then I am on the 'Create an account' page
+    Then I am on the 'Create a CCS account' page
     Then the page should be axe clean

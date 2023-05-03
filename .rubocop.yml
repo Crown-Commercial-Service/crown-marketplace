@@ -166,3 +166,9 @@ Style/OptionalBooleanParameter:
 
 Style/HashSyntax:
     EnforcedShorthandSyntax: consistent
+
+Rails/ThreeStateBooleanColumn:
+    Enabled: false
+
+RSpec/IndexedLet:
+    Enabled: false

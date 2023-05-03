@@ -1,4 +1,3 @@
-# rubocop:disable Rails/CreateTableWithTimestamps
 class CreateNutsRegions < ActiveRecord::Migration[5.2]
   def change
     create_table :nuts_regions, id: false, force: :cascade do |t|
@@ -10,4 +9,3 @@ class CreateNutsRegions < ActiveRecord::Migration[5.2]
     end
   end
 end
-# rubocop:enable Rails/CreateTableWithTimestamps

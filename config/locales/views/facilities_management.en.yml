@@ -71,9 +71,8 @@ en:
           attributes:
             base:
               not_selected: You must select an address to save your details
-            central_government:
-              blank: Select the type of public sector organisation you’re buying for
-              inclusion: Select the type of public sector organisation you’re buying for
+            contact_opt_in:
+              inclusion: You must select an option
             full_name:
               blank: Enter your full name
               invalid: Enter your full name
@@ -93,6 +92,8 @@ en:
             organisation_name:
               blank: Enter your organisation name
               invalid: Enter your organisation name
+            sector:
+              inclusion: Select the type of public sector organisation you’re buying for
             telephone_number:
               blank: Enter a UK telephone number, for example 020 7946 0000
               invalid: Enter a UK telephone number, for example 020 7946 0000
@@ -310,18 +311,33 @@ en:
         back: Return to your account
         buyer_details: Manage your details
         cant_find_address: Enter address manually, if you can’t find address
-        central_gov: Central government
+        central_government:
+          options:
+            'false': Wider public sector
+            'true': Central government
+        contact_opt_in:
+          hint: You can change these settings at any time.
+          legend: Can CCS contact you about any searches you save?
+          options:
+            'false': 'No'
+            'true': 'Yes'
         job_title: Job title
         name: Name
         organisation_address: Organisation address
         organisation_details: Organisation details
         organisation_name: Organisation name
-        search_html: Search <a href="%{url}" target="_blank">central government departments, agencies and public bodies</a> if you’re unsure.
-        sector: Sector
+        sector:
+          legend: Which type of public sector organisation are you buying for?
+          options:
+            culture_media_and_sport: Culture, Media and Sport
+            defence_and_security: Defence and Security
+            education: Education
+            government_policy: Government Policy
+            health: Health
+            infrastructure: Infrastructure
+            local_community_and_housing: Local Community and Housing
         submit: Save and continue
         telephone_number: Telephone number
-        which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
-        wider_public_sector: Wider public sector
         your_details: Personal details
       edit_address:
         add_address: Add address

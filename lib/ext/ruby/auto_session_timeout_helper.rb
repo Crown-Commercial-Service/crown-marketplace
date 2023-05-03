@@ -18,8 +18,10 @@ module AutoSessionTimeoutHelper
           setTimeout(PeriodicalQuery, (#{frequency} * 1000));
         }
 
-      var current_url = encodeURIComponent(window.location.pathname +  window.location.search)
-      var timout_url = '#{timeout_path}' + '?url=' + current_url;
+      var current_url = encodeURIComponent(window.location.pathname +  window.location.search);
+      var service_path_base = encodeURIComponent('#{service_path_base}');
+
+      var timout_url = `#{timeout_path}?url=${current_url}&service_path_base=${service_path_base}`;
 
       setTimeout(PeriodicalQuery, (#{frequency} * 1000));
     JS

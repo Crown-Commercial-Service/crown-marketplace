@@ -9,13 +9,14 @@ Feature: Buyer details
       | Telephone number  | 01610161016       |
       | Organisation name | Feel Good inc.    |
       | Postcode          | ST16 1AA          |
-    And I check 'Wider public sector' for the sector
+    And I check 'Local Community and Housing' for the sector
+    And I check 'No' for being contacted
 
   Scenario: Save details for the buyer - add address normally
     And I click on 'Find address'
     And I select 'The Goods Shed, Newport Road, Stafford' from the address drop down
     And I click on 'Save and continue'
-    And I am on the Your account page
+    And I am on the 'Your account' page
     And I click on 'Manage my details'
     Then I am on the 'Manage your details' page
     And the following buyer details have been entered:
@@ -24,7 +25,8 @@ Feature: Buyer details
       | Telephone number      | 01610161016                                     |
       | Organisation name     | Feel Good inc.                                  |
       | Organisation address  | The Goods Shed, Newport Road, Stafford ST16 1AA |
-      | Sector                | Wider public sector                             |
+      | Sector                | Local Community and Housing                     |
+      | Contact opt in        | No                                              |
 
   Scenario: Save details for the buyer - add address manually
     And I click on 'Find address'
@@ -37,7 +39,7 @@ Feature: Buyer details
     And I click on 'Save and continue'
     Then I am on the 'Manage your details' page
     And I click on 'Save and continue'
-    And I am on the Your account page
+    And I am on the 'Your account' page
     And I click on 'Manage my details'
     Then I am on the 'Manage your details' page
     And the following buyer details have been entered:
@@ -46,4 +48,5 @@ Feature: Buyer details
       | Telephone number      | 01610161016                           |
       | Organisation name     | Feel Good inc.                        |
       | Organisation address  | 112 Test street, Westminister AA1 1AA |
-      | Sector                | Wider public sector                   |
+      | Sector                | Local Community and Housing           |
+      | Contact opt in        | No                                    |

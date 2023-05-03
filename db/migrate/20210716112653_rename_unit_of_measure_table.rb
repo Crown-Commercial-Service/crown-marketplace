@@ -7,7 +7,7 @@ class RenameUnitOfMeasureTable < ActiveRecord::Migration[6.0]
     self.table_name = :facilities_management_rm3830_units_of_measurements
   end
 
-  # rubocop:disable Rails/CreateTableWithTimestamps, Migration/RequireLimitOnString
+  # rubocop:disable Migration/RequireLimitOnString
   def up
     create_table 'facilities_management_rm3830_units_of_measurements', id: false, force: :cascade do |t|
       t.serial 'id', null: false
@@ -53,5 +53,5 @@ class RenameUnitOfMeasureTable < ActiveRecord::Migration[6.0]
 
     drop_table :facilities_management_rm3830_units_of_measurements
   end
-  # rubocop:enable Rails/CreateTableWithTimestamps, Migration/RequireLimitOnString
+  # rubocop:enable Migration/RequireLimitOnString
 end

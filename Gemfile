@@ -4,11 +4,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.4'
+gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 6.1'
+gem 'puma', '~> 6.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.1', '>= 5.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -49,7 +49,7 @@ gem 'omniauth', '~> 2.1.1'
 gem 'omniauth-oauth2', '~> 1.8.0'
 
 # for authentication
-gem 'devise', '~> 4.9.0'
+gem 'devise', '~> 4.9.2'
 
 # for timing out when session expires
 gem 'auto-session-timeout', '~> 1.0'
@@ -71,8 +71,8 @@ gem 'aasm', '~> 5.5'
 gem 'after_commit_everywhere', '~> 1.3'
 
 # for running background jobs
-gem 'sidekiq', '~> 7.0.7'
-gem 'sinatra', '~> 3.0.5', require: false
+gem 'sidekiq', '~> 7.0.9'
+gem 'sinatra', '~> 3.0.6', require: false
 gem 'slim', '~> 5.1.0'
 gem 'sidekiq-cron'
 
@@ -123,14 +123,14 @@ group :development, :test do
   gem 'shoulda-matchers', '>= 5.1.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
-  gem 'rubocop-rails', '>= 2.15.2', require: false
+  gem 'rubocop-rails', '>= 2.18.0', require: false
   gem 'rubyXL', '>= 3.4.23'
-  gem 'i18n-tasks', '>= 1.0.11'
+  gem 'i18n-tasks', '>= 1.0.12'
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
-  gem 'faker', '~> 3.1.1'
+  gem 'faker', '~> 3.2.0'
 end
 
 group :development do
