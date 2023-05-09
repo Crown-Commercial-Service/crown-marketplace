@@ -11,6 +11,7 @@ module FacilitiesManagement::RM6232
       'Buyer contact job title',
       'Buyer contact email address',
       'Buyer contact telephone number',
+      'Buyer opted in to be contacted',
       'Services',
       'Regions',
       'Annual contract cost',
@@ -30,7 +31,7 @@ module FacilitiesManagement::RM6232
     end
 
     def self.find_procurements(start_date, end_date)
-      Procurement.where(created_at: (start_date..(end_date + 1))).order(created_at: :desc)
+      Procurement.where(created_at: (start_date..(end_date + 1))).where.not(user_id: test_user_ids).order(created_at: :desc)
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -41,11 +42,12 @@ module FacilitiesManagement::RM6232
         localised_datetime(procurement.created_at),
         procurement.user.buyer_detail.organisation_name,
         procurement.user.buyer_detail.full_organisation_address,
-        procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
-        procurement.user.buyer_detail.full_name,
-        procurement.user.buyer_detail.job_title, # 10
-        procurement.user.email,
-        string_as_formula(procurement.user.buyer_detail.telephone_number),
+        procurement.user.buyer_detail.sector_name,
+        procurement.user.buyer_detail.contact_opt_in ? procurement.user.buyer_detail.full_name : '',
+        procurement.user.buyer_detail.job_title,
+        procurement.user.buyer_detail.contact_opt_in ? procurement.user.email : '',
+        procurement.user.buyer_detail.contact_opt_in ? string_as_formula(procurement.user.buyer_detail.telephone_number) : '',
+        procurement.user.buyer_detail.contact_opt_in ? 'Yes' : 'No',
         expand_services(procurement.service_codes),
         expand_regions(procurement.region_codes),
         delimited_contract_value(procurement.annual_contract_value),
@@ -101,6 +103,10 @@ module FacilitiesManagement::RM6232
 
     def self.helpers
       @helpers ||= ActionController::Base.helpers
+    end
+
+    def self.test_user_ids
+      User.where(email: ENV.fetch('TEST_USER_EMAILS', '').split(',')).pluck(:id)
     end
   end
 end

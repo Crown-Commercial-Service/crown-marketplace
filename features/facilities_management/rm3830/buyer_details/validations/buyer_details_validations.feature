@@ -12,6 +12,7 @@ Feature: Buyer details - validations
       | Enter your organisation name                                    |
       | Enter a valid postcode, for example SW1A 1AA                    |
       | Select the type of public sector organisation you’re buying for |
+      | You must select an option                                       |
 
   @javascript
   Scenario Outline: Add address - frontend
@@ -32,7 +33,8 @@ Feature: Buyer details - validations
       | Telephone number  | 01610161016       |
       | Organisation name | Feel Good inc.    |
       | Postcode          | test              |
-    And I check 'Central government' for the sector
+    And I check 'Defence and Security' for the sector
+    And I check 'Yes' for being contacted
     And I click on 'Save and continue'
     Then I should see the following error messages:
       | Enter a valid postcode, for example SW1A 1AA  |
@@ -44,7 +46,8 @@ Feature: Buyer details - validations
       | Telephone number  | 01610161016       |
       | Organisation name | Feel Good inc.    |
       | Postcode          | ST16 1AA          |
-    And I check 'Central government' for the sector
+    And I check 'Defence and Security' for the sector
+    And I check 'Yes' for being contacted
     And I click on 'Save and continue'
     Then I should see the following error messages:
       | You must select an address to save your details |

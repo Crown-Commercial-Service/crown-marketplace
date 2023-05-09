@@ -33,18 +33,28 @@ const initContactDetailsInStorage = (): void => {
       name: 'contactDetailsOrgName',
       $element: $(`#${modelName}_organisation_name`),
       type: ContactDetailType.TextInput
-    },
-    {
-      name: 'contactDetailsSectorTrue',
-      $element: $(`#${modelName}_central_government_true`),
-      type: ContactDetailType.RadioInput
-    },
-    {
-      name: 'contactDetailsSectorFalse',
-      $element: $(`#${modelName}_central_government_false`),
-      type: ContactDetailType.RadioInput
     }
   ]
+
+  Array<string>('defence_and_security', 'health', 'government_policy', 'local_community_and_housing', 'infrastructure', 'education', 'culture_media_and_sport').forEach(sector => {
+    contactDetailsOptions.push(
+      {
+        name: `contactDetailsSector_${sector}`,
+        $element: $(`#${modelName}_sector_${sector}`),
+        type: ContactDetailType.RadioInput
+      }
+    )
+  })
+
+  Array<string>('true', 'false').forEach(sector => {
+    contactDetailsOptions.push(
+      {
+        name: `contactDetailsContactOptIn_${sector}`,
+        $element: $(`#${modelName}_contact_opt_in_${sector}`),
+        type: ContactDetailType.RadioInput
+      }
+    )
+  })
 
   initDetailsStorage(
     'contactDetails',

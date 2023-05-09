@@ -45,7 +45,7 @@ Then('I enter {string} as the {string} date') do |date, date_type|
 end
 
 Then('the management report has the correct date range') do
-  date_range = "The date range for this report is: #{Time.zone.yesterday.strftime('%d/%-m/%Y')} - #{Time.zone.today.strftime('%d/%-m/%Y')}"
+  date_range = "The date range for this report is: #{Time.zone.yesterday.strftime('%d/%m/%Y')} - #{Time.zone.today.strftime('%d/%m/%Y')}"
 
   expect(admin_page.management_report_date).to have_content(date_range)
 end

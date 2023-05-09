@@ -7,7 +7,7 @@ Feature: Sign up to facilties management - RM3830
     When I click on 'Start now'
     And I am on the 'Sign in to your account' page
     And I click on 'Create an account'
-    Then I am on the 'Create an account' page
+    Then I am on the 'Create a CCS account' page
     And I am able to create an 'fm' account
     Then I am on the 'Activate your account' page
     And I enter the following details into the form:

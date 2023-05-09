@@ -48,10 +48,11 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportCsvGenerator
   end
 
   describe 'generate_csv' do
+    let(:test_users) { '' }
     let(:user_1) { create(:user, :with_detail) }
     let(:user_2) { create(:user) }
 
-    let(:buyer_detail) { create(:buyer_detail, user: user_2, full_name: 'Obi-Wan Kenobi', job_title: 'Jedi', telephone_number: '0750050607', organisation_name: 'The Jedi Council', organisation_address_line_1: 'The Jedi Temple', organisation_address_line_2: nil, organisation_address_town: 'Coruscant', organisation_address_county: nil, organisation_address_postcode: 'SW1R 0TS', central_government: false) }
+    let(:buyer_detail) { create(:buyer_detail, user: user_2, full_name: 'Obi-Wan Kenobi', job_title: 'Jedi', telephone_number: '0750050607', organisation_name: 'The Jedi Council', organisation_address_line_1: 'The Jedi Temple', organisation_address_line_2: nil, organisation_address_town: 'Coruscant', organisation_address_county: nil, organisation_address_postcode: 'SW1R 0TS', central_government: false, sector: nil, contact_opt_in: true) }
 
     let(:procurement_1) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user_1, created_at: 3.days.ago, contract_name: 'Procurement 1') }
     let(:procurement_2) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user_2, created_at: 2.days.ago, contract_name: 'Procurement 2', contract_number: 'RM6232-000002-2022') }
@@ -61,6 +62,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportCsvGenerator
     let(:generated_csv) { CSV.parse(management_report.management_report_csv.download, headers: true) }
 
     before do
+      ENV['TEST_USER_EMAILS'] = test_users
       buyer_detail
       procurement_1
       procurement_2
@@ -95,17 +97,56 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportCsvGenerator
       let(:generated_csv) { CSV.parse(management_report.management_report_csv.download) }
 
       it 'has the correct headers' do
-        expect(generated_csv.first).to eq ['Reference number', 'Contract name', 'Date created', 'Buyer organisation', 'Buyer organisation address', 'Buyer sector', 'Buyer contact name', 'Buyer contact job title', 'Buyer contact email address', 'Buyer contact telephone number', 'Services', 'Regions', 'Annual contract cost', 'Lot', 'Shortlisted Suppliers']
+        expect(generated_csv.first).to eq ['Reference number', 'Contract name', 'Date created', 'Buyer organisation', 'Buyer organisation address', 'Buyer sector', 'Buyer contact name', 'Buyer contact job title', 'Buyer contact email address', 'Buyer contact telephone number', 'Buyer opted in to be contacted', 'Services', 'Regions', 'Annual contract cost', 'Lot', 'Shortlisted Suppliers']
       end
 
       # rubocop:disable RSpec/MultipleExpectations
       it 'has the correct data' do
-        expect(generated_csv[1][0..1] + generated_csv[1][3..]).to eq ['RM6232-000004-2022', 'Procurement 4', 'The Jedi Council', 'The Jedi Temple, Coruscant SW1R 0TS', 'Wider public sector', 'Obi-Wan Kenobi', 'Jedi', user_2.email, '="0750050607"', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKN01 Belfast;\n", '5,000,000.00', '2a', "Conn, Hayes and Lakin;\nDach Inc;\nDonnelly, Wiegand and Krajcik;\nEmard, Green and Zboncak;\nFeest Group;\nHowell, Sanford and Shanahan;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nSchulist-Wuckert;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurcotte and Sons;\nTurner-Pouros"]
-        expect(generated_csv[2][0..1] + generated_csv[2][3..]).to eq ['RM6232-000003-2022',  'Procurement 3',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Central government', 'MyString', 'MyString', user_1.email, '="07500404040"', "E.1 Mechanical and Electrical Engineering Maintenance;\nG.1 Hard Landscaping Services;\nJ.1 Mail Services;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '50,000,000.00', '1c', "Berge-Koepp;\nBernier, Luettgen and Bednar;\nBins, Yost and Donnelly;\nBlick, O'Kon and Larkin;\nBreitenberg-Mante;\nCummerata, Lubowitz and Ebert;\nGoyette Group;\nHarris LLC;\nHeidenreich Inc;\nLind, Stehr and Dickinson;\nLowe, Abernathy and Toy;\nMiller, Walker and Leffler;\nMuller Inc;\nRohan-Windler;\nSatterfield LLC;\nSchmeler Inc;\nSchmeler-Leffler;\nSchultz-Wilkinson;\nTerry-Greenholt;\nYost LLC;\nZboncak and Sons"]
-        expect(generated_csv[3][0..1] + generated_csv[3][3..]).to eq ['RM6232-000002-2022',  'Procurement 2',  'The Jedi Council', 'The Jedi Temple, Coruscant SW1R 0TS',  'Wider public sector', 'Obi-Wan Kenobi', 'Jedi', user_2.email, '="0750050607"', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '12,345.00', '2a', "Abshire, Schumm and Farrell;\nBrakus, Lueilwitz and Blanda;\nConn, Hayes and Lakin;\nDach Inc;\nFeest Group;\nHarber LLC;\nHudson, Spinka and Schuppe;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nO'Reilly, Emmerich and Reichert;\nRoob-Kessler;\nSchulist-Wuckert;\nSkiles LLC;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurner-Pouros"]
-        expect(generated_csv[4][0..1] + generated_csv[4][3..]).to eq ['RM6232-000001-2022',  'Procurement 1',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Central government', 'MyString', 'MyString', user_1.email, '="07500404040"', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '12,345.00', '2a', "Abshire, Schumm and Farrell;\nBrakus, Lueilwitz and Blanda;\nConn, Hayes and Lakin;\nDach Inc;\nFeest Group;\nHarber LLC;\nHudson, Spinka and Schuppe;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nO'Reilly, Emmerich and Reichert;\nRoob-Kessler;\nSchulist-Wuckert;\nSkiles LLC;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurner-Pouros"]
+        expect(generated_csv[1][0..1] + generated_csv[1][3..]).to eq ['RM6232-000004-2022', 'Procurement 4', 'The Jedi Council', 'The Jedi Temple, Coruscant SW1R 0TS', 'Wider public sector', 'Obi-Wan Kenobi', 'Jedi', user_2.email, '="0750050607"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKN01 Belfast;\n", '5,000,000.00', '2a', "Conn, Hayes and Lakin;\nDach Inc;\nDonnelly, Wiegand and Krajcik;\nEmard, Green and Zboncak;\nFeest Group;\nHowell, Sanford and Shanahan;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nSchulist-Wuckert;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurcotte and Sons;\nTurner-Pouros"]
+        expect(generated_csv[2][0..1] + generated_csv[2][3..]).to eq ['RM6232-000003-2022',  'Procurement 3',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Defence and Security', 'MyString', 'MyString', user_1.email, '="07500404040"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nG.1 Hard Landscaping Services;\nJ.1 Mail Services;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '50,000,000.00', '1c', "Berge-Koepp;\nBernier, Luettgen and Bednar;\nBins, Yost and Donnelly;\nBlick, O'Kon and Larkin;\nBreitenberg-Mante;\nCummerata, Lubowitz and Ebert;\nGoyette Group;\nHarris LLC;\nHeidenreich Inc;\nLind, Stehr and Dickinson;\nLowe, Abernathy and Toy;\nMiller, Walker and Leffler;\nMuller Inc;\nRohan-Windler;\nSatterfield LLC;\nSchmeler Inc;\nSchmeler-Leffler;\nSchultz-Wilkinson;\nTerry-Greenholt;\nYost LLC;\nZboncak and Sons"]
+        expect(generated_csv[3][0..1] + generated_csv[3][3..]).to eq ['RM6232-000002-2022',  'Procurement 2',  'The Jedi Council', 'The Jedi Temple, Coruscant SW1R 0TS',  'Wider public sector', 'Obi-Wan Kenobi', 'Jedi', user_2.email, '="0750050607"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '12,345.00', '2a', "Abshire, Schumm and Farrell;\nBrakus, Lueilwitz and Blanda;\nConn, Hayes and Lakin;\nDach Inc;\nFeest Group;\nHarber LLC;\nHudson, Spinka and Schuppe;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nO'Reilly, Emmerich and Reichert;\nRoob-Kessler;\nSchulist-Wuckert;\nSkiles LLC;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurner-Pouros"]
+        expect(generated_csv[4][0..1] + generated_csv[4][3..]).to eq ['RM6232-000001-2022',  'Procurement 1',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Defence and Security', 'MyString', 'MyString', user_1.email, '="07500404040"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '12,345.00', '2a', "Abshire, Schumm and Farrell;\nBrakus, Lueilwitz and Blanda;\nConn, Hayes and Lakin;\nDach Inc;\nFeest Group;\nHarber LLC;\nHudson, Spinka and Schuppe;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nO'Reilly, Emmerich and Reichert;\nRoob-Kessler;\nSchulist-Wuckert;\nSkiles LLC;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurner-Pouros"]
       end
       # rubocop:enable RSpec/MultipleExpectations
+    end
+
+    context 'when the buyer has not opted into being contacted' do
+      let(:start_date) { 5.days.ago }
+      let(:end_date) { Time.zone.now }
+      let(:buyer_detail) { create(:buyer_detail, user: user_2, full_name: 'Obi-Wan Kenobi', job_title: 'Jedi', telephone_number: '0750050607', organisation_name: 'The Jedi Council', organisation_address_line_1: 'The Jedi Temple', organisation_address_line_2: nil, organisation_address_town: 'Coruscant', organisation_address_county: nil, organisation_address_postcode: 'SW1R 0TS', central_government: false, sector: nil, contact_opt_in: false) }
+
+      let(:generated_csv) { CSV.parse(management_report.management_report_csv.download) }
+
+      it 'has the correct headers' do
+        expect(generated_csv.first).to eq ['Reference number', 'Contract name', 'Date created', 'Buyer organisation', 'Buyer organisation address', 'Buyer sector', 'Buyer contact name', 'Buyer contact job title', 'Buyer contact email address', 'Buyer contact telephone number', 'Buyer opted in to be contacted', 'Services', 'Regions', 'Annual contract cost', 'Lot', 'Shortlisted Suppliers']
+      end
+
+      # rubocop:disable RSpec/MultipleExpectations
+      it 'has blank contact data for user 2' do
+        expect(generated_csv[1][0..1] + generated_csv[1][3..]).to eq ['RM6232-000004-2022', 'Procurement 4', 'The Jedi Council', 'The Jedi Temple, Coruscant SW1R 0TS', 'Wider public sector', '', 'Jedi', '', '', 'No', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKN01 Belfast;\n", '5,000,000.00', '2a', "Conn, Hayes and Lakin;\nDach Inc;\nDonnelly, Wiegand and Krajcik;\nEmard, Green and Zboncak;\nFeest Group;\nHowell, Sanford and Shanahan;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nSchulist-Wuckert;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurcotte and Sons;\nTurner-Pouros"]
+        expect(generated_csv[2][0..1] + generated_csv[2][3..]).to eq ['RM6232-000003-2022',  'Procurement 3',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Defence and Security', 'MyString', 'MyString', user_1.email, '="07500404040"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nG.1 Hard Landscaping Services;\nJ.1 Mail Services;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '50,000,000.00', '1c', "Berge-Koepp;\nBernier, Luettgen and Bednar;\nBins, Yost and Donnelly;\nBlick, O'Kon and Larkin;\nBreitenberg-Mante;\nCummerata, Lubowitz and Ebert;\nGoyette Group;\nHarris LLC;\nHeidenreich Inc;\nLind, Stehr and Dickinson;\nLowe, Abernathy and Toy;\nMiller, Walker and Leffler;\nMuller Inc;\nRohan-Windler;\nSatterfield LLC;\nSchmeler Inc;\nSchmeler-Leffler;\nSchultz-Wilkinson;\nTerry-Greenholt;\nYost LLC;\nZboncak and Sons"]
+        expect(generated_csv[3][0..1] + generated_csv[3][3..]).to eq ['RM6232-000002-2022',  'Procurement 2',  'The Jedi Council', 'The Jedi Temple, Coruscant SW1R 0TS',  'Wider public sector', '', 'Jedi', '', '', 'No', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '12,345.00', '2a', "Abshire, Schumm and Farrell;\nBrakus, Lueilwitz and Blanda;\nConn, Hayes and Lakin;\nDach Inc;\nFeest Group;\nHarber LLC;\nHudson, Spinka and Schuppe;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nO'Reilly, Emmerich and Reichert;\nRoob-Kessler;\nSchulist-Wuckert;\nSkiles LLC;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurner-Pouros"]
+        expect(generated_csv[4][0..1] + generated_csv[4][3..]).to eq ['RM6232-000001-2022',  'Procurement 1',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Defence and Security', 'MyString', 'MyString', user_1.email, '="07500404040"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '12,345.00', '2a', "Abshire, Schumm and Farrell;\nBrakus, Lueilwitz and Blanda;\nConn, Hayes and Lakin;\nDach Inc;\nFeest Group;\nHarber LLC;\nHudson, Spinka and Schuppe;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nO'Reilly, Emmerich and Reichert;\nRoob-Kessler;\nSchulist-Wuckert;\nSkiles LLC;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurner-Pouros"]
+      end
+      # rubocop:enable RSpec/MultipleExpectations
+    end
+
+    context 'when the buyer email is in the TEST_USER_EMAILS list' do
+      let(:test_users) { user_2.email }
+      let(:start_date) { 5.days.ago }
+      let(:end_date) { Time.zone.now }
+
+      let(:generated_csv) { CSV.parse(management_report.management_report_csv.download) }
+
+      it 'has the correct headers' do
+        expect(generated_csv.first).to eq ['Reference number', 'Contract name', 'Date created', 'Buyer organisation', 'Buyer organisation address', 'Buyer sector', 'Buyer contact name', 'Buyer contact job title', 'Buyer contact email address', 'Buyer contact telephone number', 'Buyer opted in to be contacted', 'Services', 'Regions', 'Annual contract cost', 'Lot', 'Shortlisted Suppliers']
+      end
+
+      it 'has the correct data' do
+        expect(generated_csv.length).to eq 3
+        expect(generated_csv[1][0..1] + generated_csv[1][3..]).to eq ['RM6232-000003-2022',  'Procurement 3',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Defence and Security', 'MyString', 'MyString', user_1.email, '="07500404040"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nG.1 Hard Landscaping Services;\nJ.1 Mail Services;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '50,000,000.00', '1c', "Berge-Koepp;\nBernier, Luettgen and Bednar;\nBins, Yost and Donnelly;\nBlick, O'Kon and Larkin;\nBreitenberg-Mante;\nCummerata, Lubowitz and Ebert;\nGoyette Group;\nHarris LLC;\nHeidenreich Inc;\nLind, Stehr and Dickinson;\nLowe, Abernathy and Toy;\nMiller, Walker and Leffler;\nMuller Inc;\nRohan-Windler;\nSatterfield LLC;\nSchmeler Inc;\nSchmeler-Leffler;\nSchultz-Wilkinson;\nTerry-Greenholt;\nYost LLC;\nZboncak and Sons"]
+        expect(generated_csv[2][0..1] + generated_csv[2][3..]).to eq ['RM6232-000001-2022',  'Procurement 1',  'MyString', 'MyString, MyString, MyString, MyString SW1W 9SZ', 'Defence and Security', 'MyString', 'MyString', user_1.email, '="07500404040"', 'Yes', "E.1 Mechanical and Electrical Engineering Maintenance;\nE.2 Ventilation and air conditioning systems maintenance;\n", "UKI4 Inner London - East;\nUKI5 Outer London - East and North East;\n", '12,345.00', '2a', "Abshire, Schumm and Farrell;\nBrakus, Lueilwitz and Blanda;\nConn, Hayes and Lakin;\nDach Inc;\nFeest Group;\nHarber LLC;\nHudson, Spinka and Schuppe;\nJenkins, Price and White;\nKirlin-Glover;\nMetz Inc;\nMoore Inc;\nO'Reilly, Emmerich and Reichert;\nRoob-Kessler;\nSchulist-Wuckert;\nSkiles LLC;\nTorphy Inc;\nTremblay, Jacobi and Kozey;\nTurner-Pouros"]
+      end
     end
   end
 end
