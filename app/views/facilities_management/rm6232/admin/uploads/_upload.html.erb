@@ -1,5 +1,0 @@
-<tr class="govuk-table__row">
-  <td class="govuk-table__cell"><%= link_to t('.upload_name', number: upload.short_uuid), upload %></td>
-  <td class="govuk-table__cell"><%= format_date_time upload.created_at %></td>
-  <td class="govuk-table__cell"><%= govuk_tag(*upload_status_tag(upload.aasm_state)) %></td>
-</tr>

@@ -1,32 +1,56 @@
 <%= paginate paginated_allow_list, views_prefix: 'shared', params: { controller: 'allow_list', action: 'index' } %>
-<table class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('.email_domain') %></th>
-      <td class="govuk-table__header"></td>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% if paginated_allow_list.empty? %>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell govuk-!-padding-right-2" colspan="2"><%= t('.no_email_domains_found') %></td>
-      </tr>
-    <% elsif can? :manage, AllowedEmailDomain %>
-      <% paginated_allow_list.each do |domain| %>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= domain %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2">
-            <%= link_to t('.remove'), delete_crown_marketplace_allow_list_index_path(email_domain: domain), class: 'govuk-link--no-visited-state' %>
-          </td>
-        </tr>
-      <% end %>
-    <% else %>
-      <% paginated_allow_list.each do |domain| %>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2" colspan="2"><%= domain %></td>
-        </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
+
+<% if paginated_allow_list.empty? %>
+  <%= govuk_table(
+    [
+      {
+        text: t('.email_domain')
+      }
+    ],
+    [
+      [
+        {
+          text: t('.no_email_domains_found')
+        }
+      ]
+    ]
+  ) %>
+<% elsif can? :manage, AllowedEmailDomain %>
+  <%= govuk_table(
+    [
+      {
+        text: t('.email_domain')
+      },
+      {
+        text: t('.remove')
+      }
+    ],
+    paginated_allow_list.map do |domain|
+      [
+        {
+          text: domain
+        },
+        {
+          text: link_to(t('.remove'), delete_crown_marketplace_allow_list_index_path(email_domain: domain), class: 'govuk-link--no-visited-state')
+        }
+      ]
+    end
+  ) %>
+<% else %>
+  <%= govuk_table(
+    [
+      {
+        text: t('.email_domain')
+      }
+    ],
+    paginated_allow_list.map do |domain|
+      [
+        {
+          text: domain
+        }
+      ]
+    end
+  ) %>
+<% end %>
+
 <%= paginate paginated_allow_list, views_prefix: 'shared', params: { controller: 'allow_list', action: 'index' } %>

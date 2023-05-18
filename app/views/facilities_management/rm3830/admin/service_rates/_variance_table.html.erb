@@ -1,27 +1,28 @@
-<table class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left">
-        <%= t('.item') %>
-      </th>
-      <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
-        <%= t('.rate') %>
-      </th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% @variances.each do |rate_label, variance_rate| %>
-      <tr class="govuk-table__row">
-        <th class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td" scop="row">
-          <%= t(".#{rate_label}").html_safe %>
-        </th>
-        <td class="govuk-table__cell supplier-rates-td">
-          <% rate = variance_rate.read_attribute_before_type_cast(attribue) %>
-          <% rate_is_money = rate_label == :td_cleaning %>
+<%= govuk_table(
+  [
+    {
+      text: t('.item'),
+      classes: 'app-custom-class govuk-!-font-weight-bold govuk-!-width-two-thirds left'
+    },
+    {
+      text: t('.rate'),
+      classes: 'app-custom-class govuk-!-font-weight-bold left'
+    }
+  ],
+  @variances.map do |rate_label, variance_rate|
+    rate = variance_rate.read_attribute_before_type_cast(attribue)
+    rate_is_money = rate_label == :td_cleaning
 
-          <%= "#{rate_is_money ? '£' : ''}#{rate * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}" if rate %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    [
+      {
+        text: t(".#{rate_label}").html_safe,
+        classes: 'govuk-!-font-weight-regular supplier-rates-td'
+      },
+      {
+        text: rate ? "#{rate_is_money ? '£' : ''}#{rate * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}" : '',
+        classes: 'supplier-rates-td'
+      }
+    ]
+  end,
+  first_cell_is_header: true
+) %>

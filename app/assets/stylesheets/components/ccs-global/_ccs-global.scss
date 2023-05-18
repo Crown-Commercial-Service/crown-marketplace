@@ -462,25 +462,6 @@ ul.ccs-checklist {
 
   }
 
-.govuk-table {
-  @media (min-width : 992px) {
-    th:first-child[class$="width-one-half"] ~ :last-child {
-      text-align : right;
-      }
-    th:first-child[class$="width-one-half"] ~ :nth-last-child(2) {
-      padding-left : govuk-spacing(8);
-      }
-    }
-  @media (max-width : 991px) {
-    th:first-child[class$="width-one-half"] ~ th,
-    th:first-child[class$="width-one-half"] ~ td {
-      text-align    : right;
-      padding-left  : govuk-spacing(2);
-      padding-right : govuk-spacing(0);
-      }
-    }
-  }
-
 .ccs-govuk-checkboxes--s {
 
   .govuk-checkboxes__input + .govuk-checkboxes__label::before,
