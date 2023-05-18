@@ -18,33 +18,34 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <% @full_services.each do |service| %>
-      <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m"><%= service['name'] %></caption>
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header govuk-!-width-three-quarters">
-              <%= t('.service') %>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <%= t('.selected') %>
-            </th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <% service['work_package'].each do |work_pckg| %>
-            <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header supplier-rates-td">
-                <%= "#{work_pckg['code']} #{work_pckg['name']}" %>
-              </th>
-              <td class="govuk-table__cell supplier-rates-td supplier-lot-data">
-                <% if @supplier_rate_data_checkboxes[work_pckg['code']] %>
-                  <span class="supplier-lot-data__true"></span>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%= govuk_table(
+        [
+          {
+            text: t('.service'),
+            classes: 'govuk-!-width-three-quarters'
+          },
+          {
+            text: t('.selected')
+          }
+        ],
+        service['work_package'].map do |work_pckg|
+          [
+            {
+              text: "#{work_pckg['code']} #{work_pckg['name']}",
+              classes: 'supplier-rates-td'
+            },
+            {
+              text: @supplier_rate_data_checkboxes[work_pckg['code']] ? tag.span('', class: 'supplier-lot-data__true') : '',
+              classes: 'supplier-rates-td supplier-lot-data'
+            }
+          ]
+        end,
+        first_cell_is_header: true,
+        caption: {
+          text: service['name'],
+          classes: 'govuk-table__caption--m'
+        }
+      ) %>
     <% end %>
 
     <p>

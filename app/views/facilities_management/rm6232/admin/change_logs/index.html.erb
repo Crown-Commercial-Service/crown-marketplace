@@ -22,34 +22,50 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col" width="15%"><%= t('.change_log_item') %></th>
-          <th class="govuk-table__header" scope="col" width="20%"><%= t('.date_of_change') %></th>
-          <td class="govuk-table__header" scope="col" width="40%"><%= t('.user') %></td>
-          <td class="govuk-table__header" scope="col" width="25%"><%= t('.change') %></td>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% @audit_logs.each do |audit_log| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-padding-right-2">
-              <%= link_to audit_log[:short_id], facilities_management_rm6232_admin_change_log_show_path(audit_log[:id], audit_log[:change_type]), class: 'govuk-link govuk-link--no-visited-state' %>
-            </td>
-            <td class="govuk-table__cell govuk-!-padding-right-2">
-              <%= format_date_time audit_log[:created_at] %>
-            </td>
-            <td class="govuk-table__cell govuk-!-padding-right-2">
-              <%= audit_log[:user_email] || t('.during_a_deployment') %>
-            </td>
-            <td class="govuk-table__cell govuk-!-padding-right-2">
-              <%= t(".change_made.#{audit_log[:true_change_type]}") %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= govuk_table(
+      [
+        {
+          text: t('.change_log_item'),
+          attributes: {
+            width: '15%'
+          }
+        },
+        {
+          text: t('.date_of_change'),
+          attributes: {
+            width: '20%'
+          }
+        },
+        {
+          text: t('.user'),
+          attributes: {
+            width: '40%'
+          }
+        },
+        {
+          text: t('.change'),
+          attributes: {
+            width: '25%'
+          }
+        }
+      ],
+      @audit_logs.map do |audit_log|
+        [
+          {
+            text: link_to(audit_log[:short_id], facilities_management_rm6232_admin_change_log_show_path(audit_log[:id], audit_log[:change_type]), class: 'govuk-link govuk-link--no-visited-state')
+          },
+          {
+            text: format_date_time(audit_log[:created_at])
+          },
+          {
+            text: audit_log[:user_email] || t('.during_a_deployment')
+          },
+          {
+            text: t(".change_made.#{audit_log[:true_change_type]}")
+          }
+        ]
+      end
+    ) %>
     <%= paginate @audit_logs, views_prefix: 'shared' %>
   </div>
 </div>

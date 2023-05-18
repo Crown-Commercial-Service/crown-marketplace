@@ -11,29 +11,33 @@
 
 <% @full_services.each do |service| %>
   <% rate_is_money = service['value_type'] == 'money' %>
+  <%= govuk_table(
+    [
+      {
+        text: service['name'],
+        classes: 'app-custom-class govuk-!-font-weight-bold govuk-!-width-two-thirds left'
+      },
+      {
+        text: t('.rate'),
+        classes: 'app-custom-class govuk-!-font-weight-bold left'
+      }
+    ],
+    service['work_package'].map do |work_pckg|
+      rate = work_pckg['rate_standard_a_or_blank'].read_attribute_before_type_cast(:framework)
 
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-one-quarter left"><%= service['name'] %></th>
-        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= t('.rate') %></th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      <% service['work_package'].each do |work_pckg| %>
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td" scop="row">
-            <%= "#{work_pckg['code']} #{work_pckg['name']}" %>
-          </th>
-          <td class="govuk-table__cell supplier-rates-td">
-            <% rate = work_pckg['rate_standard_a_or_blank'].read_attribute_before_type_cast(:framework) %>
-
-            <%= "#{rate_is_money ? '£' : ''}#{rate * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}" if rate %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+      [
+        {
+          text: "#{work_pckg['code']} #{work_pckg['name']}",
+          classes: 'govuk-!-font-weight-regular supplier-rates-td'
+        },
+        {
+          text: rate ? "#{rate_is_money ? '£' : ''}#{rate * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}" : '',
+          classes: 'supplier-rates-td'
+        }
+      ]
+    end,
+    first_cell_is_header: true
+  ) %>
 <% end %>
 
 <h2 class="govuk-heading-xl govuk-!-font-weight-bold govuk-!-margin-bottom-2">
