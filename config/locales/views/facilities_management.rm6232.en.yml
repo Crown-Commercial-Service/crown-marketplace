@@ -384,6 +384,7 @@ en:
             no_uploads: There are currently no uploads for this framework. Click on ‘Create a new data upload’ and follow the instructions to upload supplier data for facilities management.
             status: Status
             table_caption: Previous uploads
+            upload_name: 'Upload session #%{number}'
           new:
             caption: Facilities Management (RM6232)
             download_templates: Download file templates
@@ -413,8 +414,6 @@ en:
             return: Return to 'Manage supplier data'
             status: 'Status:'
             uploaded_by: 'Uploaded by:'
-          upload:
-            upload_name: 'Upload session #%{number}'
         you_cannot_update:
           details: The RM6232 has expired, you cannot update the supplier's details.
       buyer_account:
