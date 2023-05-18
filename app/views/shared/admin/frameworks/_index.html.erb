@@ -15,36 +15,51 @@
       <%= t('.the_admin_section') %>
     </p>
   
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header"><%= t('.framework') %></th>
-          <th scope="col" class="govuk-table__header"><%= t('.live_at') %></th>
-          <th scope="col" class="govuk-table__header"><%= t('.expires_at') %></th>
-          <th scope="col" class="govuk-table__header"><%= t('.status') %></th>
-          <td class="govuk-table__header"></td>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% @frameworks.each do |framework| %>
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header"><%= framework.framework %></th>
-            <td class="govuk-table__cell"><%= format_date(framework.live_at) %></td>
-            <td class="govuk-table__cell"><%= format_date(framework.expires_at) %></td>
-            <td class="govuk-table__cell">
-              <% case framework.status %>
-              <% when :live %>
-                <%= govuk_tag(t('.live')) %>
-              <% when :coming %>
-                <%= govuk_tag(t('.coming'), :grey) %>
-              <% else %>
-                <%= govuk_tag(t('.expired'), :red) %>
-              <% end %>
-            </td>
-            <td class="govuk-table__cell"><%= link_to t('.change'), "/#{service_param}/admin/frameworks/#{framework.id}/edit" %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= govuk_table(
+      [
+        {
+          text: t('.framework')
+        },
+        {
+          text: t('.live_at')
+        },
+        {
+          text: t('.expires_at')
+        },
+        {
+          text: t('.status')
+        },
+        {
+          text: t('.change')
+        }
+      ],
+      @frameworks.map do |framework|
+        [
+          {
+            text: framework.framework
+          },
+          {
+            text: format_date(framework.live_at)
+          },
+          {
+            text: format_date(framework.expires_at)
+          },
+          {
+            text: case framework.status
+                  when :live
+                    govuk_tag(t('.live'))
+                  when :coming
+                    govuk_tag(t('.coming'), :grey)
+                  else
+                    govuk_tag(t('.expired'), :red)
+                  end
+          },
+          {
+            text: link_to(t('.change'), "/#{service_param}/admin/frameworks/#{framework.id}/edit", class: 'govuk-link govuk-link--no-visited-state')
+          }
+        ]
+      end,
+      first_cell_is_header: true
+    ) %>
   </div>
 </div>

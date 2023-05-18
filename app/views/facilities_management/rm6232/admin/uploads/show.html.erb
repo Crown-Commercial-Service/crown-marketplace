@@ -46,24 +46,29 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <table class="govuk-table">
-      <caption class="govuk-table__caption"><%= t('.files') %></caption>
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col"><%= t('.name') %></th>
-          <th class="govuk-table__header" scope="col"><%= t('.download') %></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% FacilitiesManagement::RM6232::Admin::Upload::ATTRIBUTES.each do |file| %>
-          <% next unless @upload.send(file).attached? %>
-          <tr>
-            <td class="govuk-table__cell"><%= t(".file_name.#{file}") %></td>
-            <td class="govuk-table__cell"><%= link_to_file_for_download("#{rails_blob_path(@upload.send(file), disposition: 'attachment', key: :rm6232_admin_upload_id, value: @upload.id)}&format=xlsx", :xlsx, t('.download'), false) %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= govuk_table(
+      [
+        {
+          text: t('.name')
+        },
+        {
+          text: t('.download')
+        }
+      ],
+      FacilitiesManagement::RM6232::Admin::Upload::ATTRIBUTES.select { |file| @upload.send(file).attached? }.map do |file|
+        [
+          {
+            text: t(".file_name.#{file}")
+          },
+          {
+            text: link_to_file_for_download("#{rails_blob_path(@upload.send(file), disposition: 'attachment', key: :rm6232_admin_upload_id, value: @upload.id)}&format=xlsx", :xlsx, t('.download'), false)
+          }
+        ]
+      end,
+      caption: {
+        text: t('.files')
+      }
+    ) %>
     <%= link_to t('.return'), facilities_management_rm6232_admin_uploads_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
   </div>
 </div>
