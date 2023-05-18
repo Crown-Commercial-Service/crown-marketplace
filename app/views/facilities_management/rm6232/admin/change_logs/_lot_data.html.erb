@@ -3,23 +3,33 @@
 <% if @change_log.data['attribute'] == 'active' %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header"><%= t('.attribute') %></th>
-            <th scope="col" class="govuk-table__header"><%= t('.prev_value') %></th>
-            <th scope="col" class="govuk-table__header"><%= t('.new_value') %></th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header"><%= t('.lot_status') %></th>
-            <td class="govuk-table__cell"><%= get_attribute_value(@change_log.data['attribute'], @change_log.data['removed']) %></td>
-            <td class="govuk-table__cell"><%= get_attribute_value(@change_log.data['attribute'], @change_log.data['added']) %></td>
-          </tr>
-        </tbody>
-      </table>
+      <%= govuk_table(
+        [
+          {
+            text: t('.attribute')
+          },
+          {
+            text: t('.prev_value')
+          },
+          {
+            text: t('.new_value')
+          }
+        ],
+        [
+          [
+            {
+              text: t('.lot_status')
+            },
+            {
+              text: get_attribute_value(@change_log.data['attribute'], @change_log.data['removed'])
+            },
+            {
+              text: get_attribute_value(@change_log.data['attribute'], @change_log.data['added'])
+            }
+          ]
+        ],
+        first_cell_is_header: true
+      ) %>
     </div>
   </div>
 <% else %>
