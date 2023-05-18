@@ -21,29 +21,38 @@
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <table class="govuk-table" id="fm-table-filter">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-half" scope="col"><%= t('.supplier_name') %></th>
-          <td class="govuk-table__header govuk-!-width-one-quarter"></td>
-          <td class="govuk-table__header govuk-!-width-one-quarter"></td>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% @suppliers.each do |supplier| %>
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
-              <%= supplier.supplier_name %>
-            </th>
-            <td class="govuk-table__cell govuk-!-padding-right-2">
-              <%= link_to t('.view_details'), facilities_management_admin_supplier_detail_path(id: supplier.id), class: 'govuk-link govuk-link--no-visited-state' %>
-            </td>
-            <td class="govuk-table__cell govuk-!-padding-right-2">
-              <%= link_to t('.view_lot_data'), facilities_management_rm6232_admin_supplier_lot_datum_path(supplier.id), class: 'govuk-link govuk-link--no-visited-state' %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= govuk_table(
+      [
+        {
+          text: t('.supplier_name'),
+          classes: 'govuk-!-font-weight-bold govuk-!-width-one-half'
+        },
+        {
+          text: t('.view_details'),
+          classes: 'govuk-!-width-one-quarter'
+        },
+        {
+          text: t('.view_lot_data'),
+          classes: 'govuk-!-width-one-quarter'
+        }
+      ],
+      @suppliers.map do |supplier|
+        [
+          {
+            text: supplier.supplier_name
+          },
+          {
+            text: link_to(t('.view_details'), facilities_management_admin_supplier_detail_path(id: supplier.id), class: 'govuk-link govuk-link--no-visited-state')
+          },
+          {
+            text: link_to(t('.view_lot_data'), facilities_management_rm6232_admin_supplier_lot_datum_path(supplier.id), class: 'govuk-link govuk-link--no-visited-state')
+          }
+        ]
+      end,
+      first_cell_is_header: true,
+      attributes: {
+        id: 'fm-table-filter'
+      }
+    ) %>
   </div>
 </div>

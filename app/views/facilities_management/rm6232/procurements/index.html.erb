@@ -13,30 +13,36 @@
   <div class="govuk-grid-column-full">
     <div class="ccs-info-panel">
       <% if @searches.length > 0 %>
-        <table class="govuk-table">
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th scope="col" class="govuk-table__header" style="width: 25%"><%= t('.name') %></th>
-              <th scope="col" class="govuk-table__header" style="width: 25%"><%= t('.ref_number') %></th>
-              <th scope="col" class="govuk-table__header" style="width: 50%"><%= t('.date_saved') %></th>
-            </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-            <% @searches.each do |search| %>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__cell">
-                  <%= link_to search.contract_name, facilities_management_rm6232_procurement_path(search), class: ' govuk-link--no-visited-state' %>
-                </td>
-                <td class="govuk-table__cell">
-                  <%= search.contract_number %>
-                </td>
-                <td class="govuk-table__cell">
-                  <%= format_date_time(search.updated_at) %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <%= govuk_table(
+          [
+            {
+              text: t('.name'),
+              classes: 'govuk-!-width-one-quarter'
+            },
+            {
+              text: t('.ref_number'),
+              classes: 'govuk-!-width-one-quarter'
+            },
+            {
+              text: t('.date_saved'),
+              classes: 'govuk-!-width-two-quarters'
+            }
+          ],
+          @searches.map do |search|
+            [
+              {
+                text: link_to(search.contract_name, facilities_management_rm6232_procurement_path(search), class: 'govuk-link govuk-link--no-visited-state')
+              },
+              {
+                text: search.contract_number
+              },
+              {
+                text: format_date_time(search.updated_at)
+              }
+            ]
+          end,
+          first_cell_is_header: true
+        ) %>
       <% else %>
         <hr class="govuk-section-break govuk-section-break--visible">
         <p class="govuk-!-margin-top-4">
