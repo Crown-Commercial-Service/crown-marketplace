@@ -14,7 +14,7 @@
     "jquery": "^3.7.0",
     "js-cookie": "^3.0.5",
     "shakapacker": "6.6.0",
-    "terser-webpack-plugin": "^5.3.8",
+    "terser-webpack-plugin": "^5.3.9",
     "turbolinks": "^5.2.0",
     "typescript": "^5.0.4",
     "webpack": "^5.83.1",
