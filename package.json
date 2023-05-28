@@ -5,7 +5,7 @@
     "@babel/core": "^7.21.8",
     "@babel/plugin-transform-runtime": "^7.21.4",
     "@babel/preset-typescript": "^7.21.5",
-    "@babel/runtime": "^7.21.5",
+    "@babel/runtime": "^7.22.3",
     "@rails/ujs": "^7.0.4",
     "babel-loader": "^9.1.2",
     "compression-webpack-plugin": "^10.0.0",
