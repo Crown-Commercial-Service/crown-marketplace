@@ -296,7 +296,7 @@ module OrdnanceSurvey
     object.bucket(bucket).objects.each do |obj|
       next if obj.key == "#{folder_root}/" || !obj.key.starts_with?(folder_root)
 
-      next if %w[.sh].select { |ext| obj.key.include? ext }.any?
+      next if %w[.sh].any? { |ext| obj.key.include? ext }
 
       next if postcode_file_already_loaded(extract_metadata(File.basename(obj.key, File.extname(obj.key))))
 
