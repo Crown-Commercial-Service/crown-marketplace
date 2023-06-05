@@ -3,6 +3,7 @@ require:
     - rubocop-capybara
     - rubocop-rspec
     - rubocop-rails
+    - rubocop-factory_bot
     - './lib/cop/all'
 
 AllCops:
