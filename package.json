@@ -4,7 +4,7 @@
   "dependencies": {
     "@babel/core": "^7.22.1",
     "@babel/plugin-transform-runtime": "^7.22.4",
-    "@babel/preset-typescript": "^7.21.5",
+    "@babel/preset-typescript": "^7.22.5",
     "@babel/runtime": "^7.22.3",
     "@rails/ujs": "^7.0.5",
     "babel-loader": "^9.1.2",
