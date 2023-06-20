@@ -535,7 +535,7 @@
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-import-attributes/-/plugin-syntax-import-attributes-7.22.3.tgz#d7168f22b9b49a6cc1792cec78e06a18ad2e7b4b"
   integrity sha512-i35jZJv6aO7hxEbIWQ41adVfOzjm9dcYDNeWlBMd8p0ZQRtNUCBrmGwZt+H5lb+oOC9a3svp956KP0oWGA1YsA==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.21.5"
+    "@babel/helper-plugin-utils" "^7.22.5"
 
 "@babel/plugin-syntax-import-meta@^7.10.4":
   version "7.10.4"
