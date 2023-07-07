@@ -353,7 +353,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.2)
+    nokogiri (1.15.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     notifications-ruby-client (5.4.0)
@@ -560,11 +560,11 @@ GEM
       rack (~> 2.2, >= 2.2.4)
       rack-protection (= 3.0.6)
       tilt (~> 2.0)
-    site_prism (4.0.2)
+    site_prism (4.0.3)
       addressable (~> 2.8)
       capybara (~> 3.27)
       site_prism-all_there (~> 2.0)
-    site_prism-all_there (2.0)
+    site_prism-all_there (2.0.1)
     slim (5.1.1)
       temple (~> 0.10.0)
       tilt (>= 2.1.0)
@@ -696,7 +696,7 @@ DEPENDENCIES
   sidekiq-cron
   simplecov (>= 0.16.1)
   sinatra (~> 3.0.6)
-  site_prism (>= 3.7.3)
+  site_prism (>= 4.0.3)
   slim (~> 5.1.1)
   smarter_csv
   sprockets (>= 3.7.2)
@@ -712,4 +712,4 @@ RUBY VERSION
    ruby 3.2.1p31
 
 BUNDLED WITH
-   2.4.8
+   2.4.6

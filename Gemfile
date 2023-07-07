@@ -148,7 +148,7 @@ group :test do
   gem 'cucumber-rails', '>= 2.6.1', require: false
   gem 'capybara', '>= 3.38.0'
   gem 'database_cleaner', '>= 2.0.1'
-  gem 'site_prism', '>= 3.7.3'
+  gem 'site_prism', '>= 4.0.3'
   gem 'axe-core-capybara', '>= 4.2.1'
   gem 'axe-core-cucumber', '>= 4.2.1'
   gem 'show_me_the_cookies', '>= 6.0.0'
