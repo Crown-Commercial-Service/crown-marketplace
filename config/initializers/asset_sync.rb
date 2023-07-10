@@ -9,7 +9,7 @@ if defined?(AssetSync)
 
     config.add_local_file_paths do
       Dir.chdir(Rails.public_path) do
-        packs_dir = Webpacker.config.public_output_path.relative_path_from(Rails.public_path)
+        packs_dir = Shakapacker.config.public_output_path.relative_path_from(Rails.public_path)
         Dir[File.join(packs_dir, '/**/**')]
       end
     end
