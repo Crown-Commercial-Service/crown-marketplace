@@ -95,7 +95,7 @@ GEM
       actionpack (>= 3.2, < 7.1)
     aws-eventstream (1.2.0)
     aws-partitions (1.786.0)
-    aws-sdk-cognitoidentityprovider (1.77.0)
+    aws-sdk-cognitoidentityprovider (1.79.0)
       aws-sdk-core (~> 3, >= 3.177.0)
       aws-sigv4 (~> 1.1)
     aws-sdk-core (3.178.0)
@@ -639,7 +639,7 @@ DEPENDENCIES
   amoeba (>= 3.2.0)
   asset_sync
   auto-session-timeout (~> 1.0)
-  aws-sdk-cognitoidentityprovider (~> 1.77.0)
+  aws-sdk-cognitoidentityprovider (~> 1.79.0)
   aws-sdk-s3 (~> 1)
   axe-core-capybara (>= 4.2.1)
   axe-core-cucumber (>= 4.2.1)
