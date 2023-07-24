@@ -4,7 +4,7 @@ Then('I enter {string} into the contract name field') do |contract_name|
 end
 
 Then('I have a procurement with the name {string}') do |contract_name|
-  @procurement =  create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:initial], user: @user, contract_name: contract_name)
+  @procurement = create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:initial], user: @user, contract_name: contract_name)
 end
 
 Given('I have an empty procurement for entering requirements named {string}') do |contract_name|

@@ -12,7 +12,7 @@ module FacilitiesManagement::Admin
       @package = Axlsx::Package.new
       @sheets = options[:sheets] || SHEETS
       @headers = options[:headers] || HEADERS
-      @error_type =  options[:error_type]
+      @error_type = options[:error_type]
       @normal_supplier = options[:normal_supplier]
     end
 

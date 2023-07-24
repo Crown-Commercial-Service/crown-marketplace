@@ -12,7 +12,7 @@ interface AccordionSectionInterface {
   toggleCheckAll: (isAllChecked?: boolean) => void
 }
 
-interface BasketItem {
+interface BasketItemInterface {
   removeBasketItem: () => void
 }
 
@@ -124,7 +124,7 @@ class AccordionSection implements AccordionSectionInterface {
   }
 }
 
-class BasketItem implements BasketItem {
+class BasketItem implements BasketItemInterface {
   private readonly basket: Basket
   private readonly accordionNamedItem: AccordionNamedItem
   private readonly $basketItem: JQuery<HTMLElement>

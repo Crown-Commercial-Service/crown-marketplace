@@ -11,7 +11,7 @@ module FacilitiesManagement
     end
 
     def extension_periods_error?
-      %i[extensions_required call_off_extensions.months call_off_extensions.years call_off_extensions.base].any? { |extension_error| @procurement.errors.attribute_names.include? extension_error }
+      %i[extensions_required call_off_extensions.months call_off_extensions.years call_off_extensions].any? { |extension_error| @procurement.errors.attribute_names.include? extension_error }
     end
 
     def total_contract_length_error?
@@ -21,9 +21,11 @@ module FacilitiesManagement
     def display_extension_error_anchor
       error_list = []
 
-      %i[years months base].each do |attribute|
+      %i[years months].each do |attribute|
         error_list << "call_off_extensions.#{attribute}-error" if @procurement.errors.include?(:"call_off_extensions.#{attribute}")
       end
+
+      error_list << 'call_off_extensions-error' if @procurement.errors.include?(:call_off_extensions)
 
       error_list.each do |error|
         concat(tag.span(id: error))
