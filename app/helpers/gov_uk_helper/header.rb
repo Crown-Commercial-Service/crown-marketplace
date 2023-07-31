@@ -49,9 +49,9 @@ module GovUKHelper::Header
     end
   end
 
-  def govuk_header_navigation_item(link_text, link_url, **options)
+  def govuk_header_navigation_item(link_text, link_url, **)
     tag.li(class: 'govuk-header__navigation-item') do
-      link_to(link_text, link_url, class: 'govuk-header__link', **options)
+      link_to(link_text, link_url, class: 'govuk-header__link', **)
     end
   end
 end
