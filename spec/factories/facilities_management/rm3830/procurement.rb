@@ -10,7 +10,7 @@ FactoryBot.define do
     initial_call_off_period_months { 0 }
     initial_call_off_start_date { 6.months.from_now }
     service_codes { ['C.1', 'C.2'] }
-    association :user
+    user
   end
 
   factory :facilities_management_rm3830_procurement, parent: :facilities_management_rm3830_procurement_no_procurement_buildings do
@@ -85,7 +85,7 @@ FactoryBot.define do
   factory :facilities_management_rm3830_procurement_with_contact_details_with_buildings, parent: :facilities_management_rm3830_procurement_with_contact_details do
     tupe { true }
     procurement_buildings { build_list(:facilities_management_rm3830_procurement_building, 2) }
-    association :user, :with_detail
+    user factory: %i[user with_detail]
   end
 
   factory :facilities_management_rm3830_procurement_with_contact_details_with_buildings_no_tupe_london, parent: :facilities_management_rm3830_procurement_with_contact_details do
@@ -100,13 +100,13 @@ FactoryBot.define do
     initial_call_off_period_years { 1 }
     initial_call_off_period_months { 0 }
     service_codes { ['C.1', 'C.2'] }
-    association :user
+    user
     procurement_buildings { build_list(:facilities_management_rm3830_procurement_building_for_further_competition, 1) }
   end
 
   factory :facilities_management_rm3830_procurement_for_further_competition_with_gia, parent: :facilities_management_rm3830_procurement_for_further_competition do
     initial_call_off_start_date { 6.months.from_now }
-    association :user, :with_detail
+    user factory: %i[user with_detail]
     procurement_buildings { build_list(:facilities_management_rm3830_procurement_building_for_further_competition_with_gia, 1) }
   end
 
@@ -121,7 +121,7 @@ FactoryBot.define do
   factory :facilities_management_rm3830_procurement_entering_requirements, class: 'FacilitiesManagement::RM3830::Procurement' do
     contract_name { Faker::Name.unique.name }
     aasm_state { 'detailed_search' }
-    association :user
+    user
   end
 
   factory :facilities_management_rm3830_procurement_entering_requirements_complete, parent: :facilities_management_rm3830_procurement_entering_requirements do

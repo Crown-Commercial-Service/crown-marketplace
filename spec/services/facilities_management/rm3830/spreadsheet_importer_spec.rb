@@ -47,17 +47,14 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
       fake_spreadsheet.write
 
       # Stub out import methods not under test
-      allow(spreadsheet_importer).to receive(:check_file).and_return(nil)
+      allow(spreadsheet_importer).to receive_messages(check_file: nil, procurement_buildings_valid?: true, procurement_building_services_valid?: true, service_codes: ['C.1'])
 
       (process_file_order - %i[import_buildings]).each do |other_process_method|
         allow(spreadsheet_importer).to receive(other_process_method).and_return(nil)
       end
 
-      allow(spreadsheet_importer).to receive(:procurement_buildings_valid?).and_return(true)
-      allow(spreadsheet_importer).to receive(:procurement_building_services_valid?).and_return(true)
       allow(spreadsheet_importer).to receive(:save_procurement_building).with(anything).and_return(nil)
       allow(spreadsheet_importer).to receive(:save_procurement_building_services).with(anything).and_return(nil)
-      allow(spreadsheet_importer).to receive(:service_codes).and_return(['C.1'])
 
       allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).and_return(true)
       allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
