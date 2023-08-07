@@ -391,9 +391,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController do
         before do
           allow(FacilitiesManagement::RM3830::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
           allow_any_instance_of(procurement.class).to receive(:copy_fm_rate_cards_to_frozen)
-          allow(obj).to receive(:assessed_value).and_return(0.1234)
-          allow(obj).to receive(:lot_number).and_return('1a')
-          allow(obj).to receive(:sorted_list).and_return([])
+          allow(obj).to receive_messages(assessed_value: 0.1234, lot_number: '1a', sorted_list: [])
           procurement.update(aasm_state: 'detailed_search')
         end
 

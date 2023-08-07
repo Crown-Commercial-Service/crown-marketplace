@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :facilities_management_rm6232_admin_upload, class: 'FacilitiesManagement::RM6232::Admin::Upload' do
-    association :user
+    user
   end
 
   factory :facilities_management_rm6232_admin_upload_with_upload, parent: :facilities_management_rm6232_admin_upload do

@@ -778,8 +778,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
     context 'when both Services and Buildings tasks are not COMPLETED yet' do
       before do
-        allow(procurement).to receive(:services_status).and_return(:not_started)
-        allow(procurement).to receive(:buildings_status).and_return(:not_started)
+        allow(procurement).to receive_messages(services_status: :not_started, buildings_status: :not_started)
       end
 
       it 'shown with the CANNOT START YET status label' do
@@ -789,8 +788,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
     context 'when both Services and Buildings tasks are COMPLETED' do
       before do
-        allow(procurement).to receive(:services_status).and_return(:completed)
-        allow(procurement).to receive(:buildings_status).and_return(:completed)
+        allow(procurement).to receive_messages(services_status: :completed, buildings_status: :completed)
       end
 
       context 'when no service has been assigned to any building yet' do
