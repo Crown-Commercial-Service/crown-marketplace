@@ -16,7 +16,7 @@ gem 'sass-rails', '~> 5.1', '>= 5.1.0'
 
 gem 'sprockets-rails'
 
-gem 'shakapacker', '~> 7.0.2'
+gem 'shakapacker', '~> 7.0.3'
 
 gem 'turbolinks', '~> 5'
 

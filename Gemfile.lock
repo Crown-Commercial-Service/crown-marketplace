@@ -336,7 +336,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2023.0218.1)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.2)
+    mini_portile2 (2.8.4)
     minitest (5.19.0)
     msgpack (1.6.0)
     multi_json (1.15.0)
@@ -354,7 +354,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.3)
+    nokogiri (1.15.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     notifications-ruby-client (5.4.0)
@@ -402,7 +402,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.7.1)
-    rack (2.2.7)
+    rack (2.2.8)
     rack-protection (3.0.6)
       rack
     rack-proxy (0.7.6)
@@ -427,7 +427,7 @@ GEM
       actionpack (>= 5.0.1.rc1)
       actionview (>= 5.0.1.rc1)
       activesupport (>= 5.0.1.rc1)
-    rails-dom-testing (2.1.1)
+    rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
@@ -534,7 +534,7 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
-    shakapacker (7.0.2)
+    shakapacker (7.0.3)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
@@ -624,7 +624,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.8)
+    zeitwerk (2.6.11)
 
 PLATFORMS
   ruby
@@ -692,7 +692,7 @@ DEPENDENCIES
   rubyzip (>= 1.2.1)
   sass-rails (~> 5.1, >= 5.1.0)
   selenium-webdriver (>= 3.142.3)
-  shakapacker (~> 7.0.2)
+  shakapacker (~> 7.0.3)
   shoulda-matchers (>= 5.1.0)
   show_me_the_cookies (>= 6.0.0)
   sidekiq (~> 7.1.2)
@@ -715,4 +715,4 @@ RUBY VERSION
    ruby 3.2.1p31
 
 BUNDLED WITH
-   2.4.8
+   2.4.6
