@@ -933,22 +933,17 @@ RSpec.describe Cognito::Admin::User do
 
     before do
       allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-      allow(aws_client).to receive(:admin_get_user).and_return(
-        admin_get_user_resp_struct.new(
-          user_attributes: [
-            cognito_user_attribute_struct.new({ name: 'email', value: email }),
-            cognito_user_attribute_struct.new({ name: 'phone_number', value: cognito_telephone_number })
-          ],
-          enabled: cognio_enabled,
-          user_status: 'CONFIRMED',
-          user_mfa_setting_list: cognito_mfa_setting_list
-        )
-      )
-      allow(aws_client).to receive(:admin_list_groups_for_user).and_return(
-        admin_list_groups_for_user_resp_struct.new(
-          groups: cognito_groups.map { |cognito_role| cognito_group_struct.new(group_name: cognito_role) }
-        )
-      )
+      allow(aws_client).to receive_messages(admin_get_user: admin_get_user_resp_struct.new(
+        user_attributes: [
+          cognito_user_attribute_struct.new({ name: 'email', value: email }),
+          cognito_user_attribute_struct.new({ name: 'phone_number', value: cognito_telephone_number })
+        ],
+        enabled: cognio_enabled,
+        user_status: 'CONFIRMED',
+        user_mfa_setting_list: cognito_mfa_setting_list
+      ), admin_list_groups_for_user: admin_list_groups_for_user_resp_struct.new(
+        groups: cognito_groups.map { |cognito_role| cognito_group_struct.new(group_name: cognito_role) }
+      ))
     end
 
     context 'when considering the attributes' do

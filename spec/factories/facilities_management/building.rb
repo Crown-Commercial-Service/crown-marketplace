@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :facilities_management_building_defaults, class: 'FacilitiesManagement::Building' do
     id { SecureRandom.uuid }
     updated_by { Faker::Internet.unique.email }
-    association :user
+    user
   end
 
   factory :facilities_management_building, parent: :facilities_management_building_defaults do
