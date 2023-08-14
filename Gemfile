@@ -130,7 +130,7 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
-  gem 'faker', '~> 3.2.0'
+  gem 'faker', '~> 3.2.1'
 end
 
 group :development do
