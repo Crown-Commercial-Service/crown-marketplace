@@ -15,13 +15,13 @@ module Cognito
       def role_selection_valid
         return :role_selection_required if @roles.empty?
 
-        return :invalid_role_selection unless @roles.all? { |role| @available_roles.include?(role) }
+        :invalid_role_selection unless @roles.all? { |role| @available_roles.include?(role) }
       end
 
       def service_access_selection_valid
         return :invalid_service_access_selection unless @service_access.all? { |service_access| SERVICE_ROLES_ACCESS.include?(service_access) }
 
-        return :service_access_selection_required if (@roles.include?('buyer') || @roles.include?('ccs_employee')) && @service_access.empty?
+        :service_access_selection_required if (@roles.include?('buyer') || @roles.include?('ccs_employee')) && @service_access.empty?
       end
 
       def combine_roles
