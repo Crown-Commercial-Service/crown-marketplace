@@ -15,7 +15,7 @@ RSpec.describe 'layouts/application.html.erb' do
     }
 
     allow(cookies.class).to receive(:new).and_return(cookies)
-    allow(Marketplace).to receive_messages(google_analytics_tracking_id: '123', google_tag_manager_tracking_id: '456', fm_survey_link: support_link_feedback_address)
+    allow(Marketplace).to receive_messages(google_tag_manager_tracking_id: '456', fm_survey_link: support_link_feedback_address)
   end
 
   describe 'feedback links' do
@@ -43,12 +43,6 @@ RSpec.describe 'layouts/application.html.erb' do
         expect(rendered).to have_css(".footer-feedback #{support_link_selector}")
       end
     end
-  end
-
-  it 'includes google analytics partial' do
-    stub_template 'shared/google/_analytics.html.erb' => 'GA GA GA GA'
-    render
-    expect(rendered).to match(/GA GA GA GA/)
   end
 
   it 'includes google tag manager partials' do
