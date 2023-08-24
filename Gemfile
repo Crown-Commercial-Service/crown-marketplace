@@ -4,13 +4,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.7'
+gem 'rails', '~> 7.0.7', '>= 7.0.7.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 6.3'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.1', '>= 5.1.0'
+gem 'sass-rails', '~> 6.0', '>= 6.0.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
@@ -95,7 +95,7 @@ gem 'ratonvirus-clamby', '>= 0.3.0'
 # for active storage validation
 gem 'active_storage_validations', '>= 1.0.3'
 # gem for  bulk inserts
-gem 'activerecord-import', '~> 1.4.1'
+gem 'activerecord-import', '~> 1.5.0'
 # gov notify
 gem 'notifications-ruby-client'
 # DOCX generation
