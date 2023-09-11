@@ -112,10 +112,10 @@ RSpec.describe FacilitiesManagement::RM3830::AssessedValueCalculator do
       before do
         create(:facilities_management_rm3830_procurement_building_av_normal_building, procurement:, service_codes:)
         create(:facilities_management_rm3830_procurement_building_av_london_building, procurement:, service_codes:)
-        procurement.procurement_building_services.where(code: %w[C.1 C.2 C.3]).each { |pbs| pbs.update(service_standard: 'A') }
-        procurement.procurement_building_services.where(code: 'G.1').each { |pbs| pbs.update(service_standard: 'A', no_of_building_occupants: no_of_building_occupants) }
-        procurement.procurement_building_services.where(code: 'I.1').each { |pbs| pbs.update(service_hours: 6240) }
-        procurement.procurement_building_services.where(code: %w[K.2 K.3]).each { |pbs| pbs.update(tones_to_be_collected_and_removed:) }
+        procurement.procurement_building_services.where(code: %w[C.1 C.2 C.3]).find_each { |pbs| pbs.update(service_standard: 'A') }
+        procurement.procurement_building_services.where(code: 'G.1').find_each { |pbs| pbs.update(service_standard: 'A', no_of_building_occupants: no_of_building_occupants) }
+        procurement.procurement_building_services.where(code: 'I.1').find_each { |pbs| pbs.update(service_hours: 6240) }
+        procurement.procurement_building_services.where(code: %w[K.2 K.3]).find_each { |pbs| pbs.update(tones_to_be_collected_and_removed:) }
       end
 
       context 'and the variance is just below 30%' do

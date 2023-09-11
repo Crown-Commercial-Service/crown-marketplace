@@ -41,7 +41,7 @@ module FacilitiesManagement
 
         return frozen_rate.where(direct_award: true).map(&:code) if frozen_rate.exists?
 
-        Rate.all.where(direct_award: true).map(&:code) unless frozen_rate.exists?
+        Rate.where(direct_award: true).map(&:code) unless frozen_rate.exists?
       end
     end
 

@@ -257,7 +257,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController do
         context 'when Save and continue is selected with no region codes' do
           it 'redirects to facilities_management_rm3830_procurement_path for the new record' do
             post :create, params: { facilities_management_rm3830_procurement: { contract_name: 'New procurement' } }
-            new_procurement = FacilitiesManagement::RM3830::Procurement.all.order(created_at: :asc).first
+            new_procurement = FacilitiesManagement::RM3830::Procurement.order(created_at: :asc).first
             expect(response).to redirect_to facilities_management_rm3830_procurement_path(new_procurement.id)
           end
         end
@@ -265,7 +265,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController do
         context 'when Save and continue is selected with region codes' do
           it 'redirects to facilities_management_rm3830_procurement_path for the new record' do
             post :create, params: { facilities_management_rm3830_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
-            new_procurement = FacilitiesManagement::RM3830::Procurement.all.order(created_at: :asc).first
+            new_procurement = FacilitiesManagement::RM3830::Procurement.order(created_at: :asc).first
             expect(response).to redirect_to facilities_management_rm3830_procurement_path(new_procurement.id, what_happens_next: true)
           end
         end

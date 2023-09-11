@@ -1377,7 +1377,7 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
 
   describe '#selected_suppliers' do
     def selected_suppliers_for_no_region(for_lot, for_regions, for_services)
-      FacilitiesManagement::RM3830::SupplierDetail.all.select do |s|
+      FacilitiesManagement::RM3830::SupplierDetail.select do |s|
         s.lot_data[for_lot] && (for_regions - s.lot_data[for_lot]['regions']).any? && (for_services - s.lot_data[for_lot]['services']).empty?
       end
     end
@@ -1548,7 +1548,7 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
       end
 
       let(:supplier_name_lot1a) do
-        FacilitiesManagement::RM3830::SupplierDetail.all.select do |s|
+        FacilitiesManagement::RM3830::SupplierDetail.select do |s|
           s.lot_data['1a'] && s.lot_data['1b'].nil? && ([procurement_building_service.procurement_building.address_region_code] - s.lot_data['1a']['regions']).any? && ([procurement_building_service.code] - s.lot_data['1a']['services']).empty?
         end.first.supplier_name
       end

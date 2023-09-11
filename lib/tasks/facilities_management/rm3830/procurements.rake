@@ -6,7 +6,7 @@ namespace :procurements do
 
       FacilitiesManagement::RM3830::Procurement
         .includes(:procurement_suppliers)
-        .where(aasm_state: %w[results da_draft direct_award further_competition closed]).each do |procurement|
+        .where(aasm_state: %w[results da_draft direct_award further_competition closed]).find_each do |procurement|
         if procurement.procurement_suppliers.none?
           puts "Deleting procurement with ID #{procurement.id}"
           procurement.destroy

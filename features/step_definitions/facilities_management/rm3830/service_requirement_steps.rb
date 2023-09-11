@@ -11,7 +11,7 @@ Then('I choose to answer the first Service volume question for {string}') do |se
 end
 
 Then('I choose to answer the second Service volume question for {string}') do |service|
-  service_requirement_page.service_volume_questions.all('td', text: service).last.find(:xpath, './parent::tr').find('a').click
+  service_requirement_page.service_volume_questions.('td', text: service)last.find(:xpath, './parent::tr').find('a').click
 end
 
 Then('the volume for {string} is {int}') do |service, volume|
@@ -72,7 +72,7 @@ Then('the add lift button has text {string}') do |button_text|
 end
 
 Then('I remove a lift') do
-  service_requirement_page.all('.lift-row').last.find('.remove-lift-record').click
+  service_requirement_page.('.lift-row')last.find('.remove-lift-record').click
 end
 
 Then('I am on the Internal and external areas page in service requirements') do

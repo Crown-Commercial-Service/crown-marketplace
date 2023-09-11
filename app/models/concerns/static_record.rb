@@ -19,6 +19,10 @@ module StaticRecord
       @all ||= []
     end
 
+    def count
+      all.length
+    end
+
     def find_by(arg)
       all.find { |term| arg.all? { |k, v| term.public_send(k) == v } }
     end

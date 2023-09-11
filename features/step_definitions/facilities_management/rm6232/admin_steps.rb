@@ -43,7 +43,7 @@ Then('I change the {string} for lot {string}') do |lot_data_type, lot_code|
 end
 
 Then('I deselect all checkboxes') do
-  admin_page.all('input[type="checkbox"][checked="checked"]').each(&:uncheck)
+  admin_page.('input[type="checkbox"][checked="checked"]')find_each(&:uncheck)
 end
 
 Then('I select {string} for the lot status') do |option|

@@ -331,7 +331,7 @@ def building_status(building_name)
 end
 
 Then('there are {int} buildings missing a region') do |number_of_buildings|
-  expect(entering_requirements_page.all('tbody > tr').count).to eq number_of_buildings
+  expect(entering_requirements_page.('tbody > tr')count).to eq number_of_buildings
 end
 
 Then('there is {int} building missing a region') do |number_of_buildings|

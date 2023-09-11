@@ -314,7 +314,7 @@ module ApplicationHelper
   def accordion_region_items(region_codes, with_overseas: false)
     nuts1_regions = Nuts1Region.send(with_overseas ? :all_with_overseas : :all).to_h { |region| [region.code, { name: region.name, items: [] }] }
 
-    FacilitiesManagement::Region.all.each do |region|
+    FacilitiesManagement::Region.find_each do |region|
       region_group_code = region.code[..2]
 
       next unless nuts1_regions[region_group_code]
