@@ -9,7 +9,6 @@ import initCookieBanner from '../src/shared/cookieBanner'
 import initDetailsLinks from '../src/facilitiesManagement/detailsLinks'
 import initFilterTable from '../src/facilitiesManagement/filterTable'
 import initFindAddress from '../src/facilitiesManagement/findAddress'
-import initGoogleAnalytics from '../src/shared/googleAnalytics'
 import initLimitInputToInteger from '../src/facilitiesManagement/integerInput'
 import initManagementReport from '../src/facilitiesManagement/rm3830/admin/managementReport'
 import initNestedAttributesFields from '../src/facilitiesManagement/rm3830/addNestedAttributes'
@@ -54,7 +53,6 @@ $(document).on('turbolinks:load', () => {
   // Shared TS
   initCheckboxAccordion()
   initCookieBanner()
-  initGoogleAnalytics()
   initPasswordStrength()
   initStepByStepNav()
 })

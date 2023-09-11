@@ -93,10 +93,6 @@ module Marketplace
 
   # :nocov:
 
-  def self.google_analytics_tracking_id
-    @google_analytics_tracking_id ||= ENV.fetch('GA_TRACKING_ID', nil)
-  end
-
   def self.google_tag_manager_tracking_id
     @google_tag_manager_tracking_id ||= ENV.fetch('GTM_TRACKING_ID', nil)
   end
