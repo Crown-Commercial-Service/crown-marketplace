@@ -239,13 +239,13 @@ end
 
 Then('the following buildings can be selected:') do |building_names|
   building_names.raw.flatten.each do |building_name|
-    expect(entering_requirements_page).to have_selector('label', text: building_name)
+    expect(entering_requirements_page).to have_css('label', text: building_name)
   end
 end
 
 Then('the following buildings cannot be selected:') do |building_names|
   building_names.raw.flatten.each do |building_name|
-    expect(entering_requirements_page).not_to have_selector('label', text: building_name)
+    expect(entering_requirements_page).not_to have_css('label', text: building_name)
   end
 end
 
