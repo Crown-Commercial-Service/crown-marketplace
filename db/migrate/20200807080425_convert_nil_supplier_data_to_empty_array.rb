@@ -4,7 +4,7 @@ class ConvertNilSupplierDataToEmptyArray < ActiveRecord::Migration[5.2]
   end
 
   def self.up
-    FMSupplier.all.each do |supplier|
+    FMSupplier.find_each do |supplier|
       supplier.data['lots'].each do |lot|
         lot['services'] = [] if lot['services'].nil?
       end

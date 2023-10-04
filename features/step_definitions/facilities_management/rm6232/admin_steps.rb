@@ -43,7 +43,9 @@ Then('I change the {string} for lot {string}') do |lot_data_type, lot_code|
 end
 
 Then('I deselect all checkboxes') do
+  # rubocop:disable Rails/FindEach
   admin_page.all('input[type="checkbox"][checked="checked"]').each(&:uncheck)
+  # rubocop:enable Rails/FindEach
 end
 
 Then('I select {string} for the lot status') do |option|
