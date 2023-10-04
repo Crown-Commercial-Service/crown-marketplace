@@ -197,8 +197,8 @@ RSpec.describe ApplicationHelper do
     let(:default_cookie_settings) do
       {
         'settings_viewed' => false,
-        'google_analytics_enabled' => false,
-        'glassbox_enabled' => false
+        'usage' => false,
+        'glassbox' => false
       }
     end
 
@@ -209,14 +209,14 @@ RSpec.describe ApplicationHelper do
     end
 
     context 'when the cookie has been set' do
-      before { helper.request.cookies['crown_marketplace_cookie_options_v1'] = cookie_settings }
+      before { helper.request.cookies['cookie_preferences'] = cookie_settings }
 
       context 'and it is a hash' do
         let(:expected_cookie_settings) do
           {
             'settings_viewed' => true,
-            'google_analytics_enabled' => true,
-            'glassbox_enabled' => false
+            'usage' => true,
+            'glassbox' => false
           }
         end
         let(:cookie_settings) { expected_cookie_settings.to_json }

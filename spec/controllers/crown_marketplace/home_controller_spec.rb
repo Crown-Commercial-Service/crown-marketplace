@@ -42,11 +42,11 @@ RSpec.describe CrownMarketplace::HomeController do
       let(:update_params) { { ga_cookie_usage: 'true', glassbox_cookie_usage: 'false' } }
 
       it 'updates the cookie preferences' do
-        expect(JSON.parse(response.cookies['crown_marketplace_cookie_options_v1'])).to eq(
+        expect(JSON.parse(response.cookies['cookie_preferences'])).to eq(
           {
             'settings_viewed' => true,
-            'google_analytics_enabled' => true,
-            'glassbox_enabled' => false
+            'usage' => true,
+            'glassbox' => false
           }
         )
       end
@@ -78,11 +78,11 @@ RSpec.describe CrownMarketplace::HomeController do
       let(:update_params) { { ga_cookie_usage: 'false', glassbox_cookie_usage: 'true' } }
 
       it 'updates the cookie preferences' do
-        expect(JSON.parse(response.cookies['crown_marketplace_cookie_options_v1'])).to eq(
+        expect(JSON.parse(response.cookies['cookie_preferences'])).to eq(
           {
             'settings_viewed' => true,
-            'google_analytics_enabled' => false,
-            'glassbox_enabled' => true
+            'usage' => false,
+            'glassbox' => true
           }
         )
       end
@@ -114,11 +114,11 @@ RSpec.describe CrownMarketplace::HomeController do
       let(:update_params) { { ga_cookie_usage: 'true', glassbox_cookie_usage: 'true' } }
 
       it 'updates the cookie preferences' do
-        expect(JSON.parse(response.cookies['crown_marketplace_cookie_options_v1'])).to eq(
+        expect(JSON.parse(response.cookies['cookie_preferences'])).to eq(
           {
             'settings_viewed' => true,
-            'google_analytics_enabled' => true,
-            'glassbox_enabled' => true
+            'usage' => true,
+            'glassbox' => true
           }
         )
       end
@@ -142,11 +142,11 @@ RSpec.describe CrownMarketplace::HomeController do
       let(:update_params) { { ga_cookie_usage: 'false', glassbox_cookie_usage: 'false' } }
 
       it 'updates the cookie preferences' do
-        expect(JSON.parse(response.cookies['crown_marketplace_cookie_options_v1'])).to eq(
+        expect(JSON.parse(response.cookies['cookie_preferences'])).to eq(
           {
             'settings_viewed' => true,
-            'google_analytics_enabled' => false,
-            'glassbox_enabled' => false
+            'usage' => false,
+            'glassbox' => false
           }
         )
       end
