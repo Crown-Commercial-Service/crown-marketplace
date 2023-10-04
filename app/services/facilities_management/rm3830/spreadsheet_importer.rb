@@ -479,7 +479,7 @@ module FacilitiesManagement::RM3830
     end
 
     def delete_existing_procurement_buildings_and_services
-      @procurement.procurement_buildings.where.not(id: nil).each(&:destroy)
+      @procurement.procurement_buildings.where.not(id: nil).find_each(&:destroy)
     end
 
     def save_building(building_hash)

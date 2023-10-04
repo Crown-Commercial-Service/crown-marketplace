@@ -4,7 +4,7 @@ RSpec.describe FacilitiesManagement::RM3830::Rate do
   it 'contains data' do
     benchmark_rates = {}
     framework_rates = {}
-    described_class.all.each do |row|
+    described_class.find_each do |row|
       code = row['code'].remove('.')
       benchmark_rates[code] = row['benchmark'].to_f
       framework_rates[code] = row['framework'].to_f

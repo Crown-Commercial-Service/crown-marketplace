@@ -23,7 +23,7 @@ class RenameUnitOfMeasureTable < ActiveRecord::Migration[6.0]
     OldUnitOfMeasurement.reset_column_information
     NewUnitOfMeasurement.reset_column_information
 
-    OldUnitOfMeasurement.all.each do |row|
+    OldUnitOfMeasurement.find_each do |row|
       NewUnitOfMeasurement.create(row.attributes)
     end
 
@@ -47,7 +47,7 @@ class RenameUnitOfMeasureTable < ActiveRecord::Migration[6.0]
     OldUnitOfMeasurement.reset_column_information
     NewUnitOfMeasurement.reset_column_information
 
-    NewUnitOfMeasurement.all.each do |row|
+    NewUnitOfMeasurement.find_each do |row|
       OldUnitOfMeasurement.create(row.attributes)
     end
 
