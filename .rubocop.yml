@@ -177,6 +177,5 @@ RSpec/IndexedLet:
 FactoryBot/FactoryAssociationWithStrategy:
     Enabled: false
 
-
 Capybara/ClickLinkOrButtonStyle:
     Enabled: false
