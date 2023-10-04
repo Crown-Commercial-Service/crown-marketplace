@@ -6,11 +6,11 @@ RSpec.describe 'layouts/application.html.erb' do
   before do
     allow(view).to receive_messages(user_signed_in?: false, ccs_homepage_url: 'https://CCSHOMEPAGE', service_path_base: '/supply-teachers')
 
-    cookies[:crown_marketplace_cookie_options_v1] = {
+    cookies[:cookie_preferences] = {
       value: {
         'settings_viewed' => true,
-        'google_analytics_enabled' => true,
-        'glassbox_enabled' => true
+        'usage' => true,
+        'glassbox' => true
       }.to_json
     }
 

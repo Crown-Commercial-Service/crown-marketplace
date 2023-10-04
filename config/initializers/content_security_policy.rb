@@ -11,7 +11,7 @@ Rails.application.configure do
     policy.img_src     :self, :https, :data, 'https://*.google-analytics.com', 'https://*.googletagmanager.com'
     policy.object_src  :none
     policy.script_src  :self, :https, 'https://*.googletagmanager.com'
-    policy.style_src   :self, :https
+    policy.style_src   :self, "'unsafe-inline'", :https
 
     connect_src = ['https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com']
     connect_src += ['http://localhost:3035', 'ws://localhost:3035'] if Rails.env.development?
