@@ -159,14 +159,14 @@ module Marketplace
   end
 
   def self.cookie_settings_name
-    :crown_marketplace_cookie_options_v1
+    :cookie_preferences
   end
 
   def self.default_cookie_options
     {
       settings_viewed: false,
-      google_analytics_enabled: false,
-      glassbox_enabled: false
+      usage: false,
+      glassbox: false
     }.stringify_keys
   end
 end

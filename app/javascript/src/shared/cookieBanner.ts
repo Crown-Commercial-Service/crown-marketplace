@@ -4,8 +4,8 @@ type CookieBannerFormData = Record<string, string>
 
 interface CookiePreferences {
   settings_viewed: boolean
-  google_analytics_enabled: boolean
-  glassbox_enabled: boolean
+  usage: boolean
+  glassbox: boolean
 }
 
 interface CookieUpdateOption {
@@ -15,24 +15,24 @@ interface CookieUpdateOption {
 
 const cookieUpdateOptions: CookieUpdateOption[] = [
   {
-    cookieName: 'google_analytics_enabled',
+    cookieName: 'usage',
     cookiePrefixes: ['_ga', '_gi']
   },
   {
-    cookieName: 'glassbox_enabled',
+    cookieName: 'glassbox',
     cookiePrefixes: ['_cls']
   }
 ]
 
 const getCookiePreferences = (): CookiePreferences => {
-  const defaultCookieSettings = '{"google_analytics_enabled":true,"glassbox_enabled":false}'
+  const defaultCookieSettings = '{"usage":true,"glassbox":false}'
 
-  return JSON.parse(Cookies.get('crown_marketplace_cookie_options_v1') ?? defaultCookieSettings)
+  return JSON.parse(Cookies.get('cookie_preferences') ?? defaultCookieSettings)
 }
 
 const removeUnwantedCookies = (): void => {
   const cookieList: string[] = Object.keys(Cookies.get())
-  const cookiesToRemove: string[] = ['crown_marketplace_cookie_settings_viewed', 'crown_marketplace_google_analytics_enabled']
+  const cookiesToRemove: string[] = ['crown_marketplace_cookie_settings_viewed', 'crown_marketplace_google_analytics_enabled', 'crown_marketplace_cookie_options_v1']
   const cookiePreferences: CookiePreferences = getCookiePreferences()
   const cookiePrefixes: string[] = []
 
@@ -145,3 +145,4 @@ const initCookieBanner = (): void => {
 }
 
 export default initCookieBanner
+export { CookiePreferences }
