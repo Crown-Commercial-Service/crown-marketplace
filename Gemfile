@@ -4,13 +4,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.1.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 6.4'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.1', '>= 5.1.0'
+gem 'sass-rails', '~> 6.0', '>= 6.0.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
