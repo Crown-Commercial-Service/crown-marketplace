@@ -66,11 +66,11 @@
 
         <div class="govuk-radios">
           <div class="govuk-radios__item">
-            <%= radio_button_tag :ga_cookie_usage, true, cookie_preferences_settings['google_analytics_enabled'], class: 'govuk-radios__input' %>
+            <%= radio_button_tag :ga_cookie_usage, true, cookie_preferences_settings['usage'], class: 'govuk-radios__input' %>
             <%= label_tag :ga_cookie_usage, t('.use_cookies.ga'), for: :ga_cookie_usage_true, class: 'govuk-label govuk-radios__label' %>
           </div>
           <div class="govuk-radios__item">
-            <%= radio_button_tag :ga_cookie_usage, false, !cookie_preferences_settings['google_analytics_enabled'], class: 'govuk-radios__input' %>
+            <%= radio_button_tag :ga_cookie_usage, false, !cookie_preferences_settings['usage'], class: 'govuk-radios__input' %>
             <%= label_tag :ga_cookie_usage, t('.dont_use_cookies.ga'), for: :ga_cookie_usage_false, class: 'govuk-label govuk-radios__label' %>
           </div>
         </div>
@@ -89,11 +89,11 @@
 
         <div class="govuk-radios">
           <div class="govuk-radios__item">
-            <%= radio_button_tag :glassbox_cookie_usage, true, cookie_preferences_settings['glassbox_enabled'], class: 'govuk-radios__input' %>
+            <%= radio_button_tag :glassbox_cookie_usage, true, cookie_preferences_settings['glassbox'], class: 'govuk-radios__input' %>
             <%= label_tag :glassbox_cookie_usage, t('.use_cookies.glassbox'), for: :glassbox_cookie_usage_true, class: 'govuk-label govuk-radios__label' %>
           </div>
           <div class="govuk-radios__item">
-            <%= radio_button_tag :glassbox_cookie_usage, false, !cookie_preferences_settings['glassbox_enabled'], class: 'govuk-radios__input' %>
+            <%= radio_button_tag :glassbox_cookie_usage, false, !cookie_preferences_settings['glassbox'], class: 'govuk-radios__input' %>
             <%= label_tag :glassbox_cookie_usage, t('.dont_use_cookies.glassbox'), for: :glassbox_cookie_usage_false, class: 'govuk-label govuk-radios__label' %>
           </div>
         </div>

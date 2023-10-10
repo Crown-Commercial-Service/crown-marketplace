@@ -4,6 +4,6 @@ FactoryBot.define do
     years { 1 }
     months { 1 }
     extension_required { 'true' }
-    association :procurement, factory: :facilities_management_rm6232_procurement_entering_requirements
+    procurement factory: %i[facilities_management_rm6232_procurement_entering_requirements]
   end
 end

@@ -16,7 +16,7 @@ class StaticDataLoader
       query = @queries[class_name.to_sym]
       static_data_class.load_db(query)
     rescue StandardError
-      call_rake static_data_class, class_name, query if static_data_class.all.count.zero?
+      call_rake static_data_class, class_name, query if static_data_class.count.zero?
     end
   end
 

@@ -11,7 +11,7 @@ class AddDataToFmSuppliers < ActiveRecord::Migration[5.2]
     SupplierDetail.reset_column_information
     FMSupplier.reset_column_information
 
-    SupplierDetail.all.each do |supplier_detail|
+    SupplierDetail.find_each do |supplier_detail|
       contact_email = supplier_detail.contact_email
       fm_supplier = FMSupplier.find_by(contact_email:)
       next if fm_supplier.blank?

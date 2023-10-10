@@ -7,7 +7,7 @@ module FacilitiesManagement
       # rubocop:enable Rails/HasManyOrHasOneDependent
 
       def self.selected_suppliers(for_lot, for_regions, for_services)
-        all.order(:supplier_name).select do |s|
+        order(:supplier_name).select do |s|
           s.lot_data[for_lot] && (for_regions - s.lot_data[for_lot]['regions']).empty? && (for_services - s.lot_data[for_lot]['services']).empty?
         end
       end

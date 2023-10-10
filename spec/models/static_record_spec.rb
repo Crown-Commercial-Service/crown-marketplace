@@ -65,7 +65,7 @@ RSpec.describe StaticRecord do
     end
 
     it 'freezes individual records' do
-      expect { klass.all.first.name = 'NEW' }
+      expect { klass.first.name = 'NEW' }
         .to raise_exception(FrozenError)
     end
 

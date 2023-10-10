@@ -170,7 +170,7 @@ module FacilitiesManagement
 
       def copy_fm_rates_to_frozen
         ActiveRecord::Base.transaction do
-          Rate.all.find_each do |rate|
+          Rate.find_each do |rate|
             new_rate = FrozenRate.new
             new_rate.facilities_management_rm3830_procurement_id = id
             new_rate.code = rate.code

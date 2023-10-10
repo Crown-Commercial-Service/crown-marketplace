@@ -50,8 +50,8 @@ Given('I have a completed procurement for entering requirements named {string}')
   create_completed_procurement(contract_name)
 end
 
-def create_completed_procurement(contract_name, **options)
-  procurement = create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:entering_requirements], user: @user, contract_name: contract_name, **options)
+def create_completed_procurement(contract_name, **)
+  procurement = create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:entering_requirements], user: @user, contract_name: contract_name, **)
   building = create(:facilities_management_building, building_name: 'Test building', user: @user)
 
   procurement.procurement_buildings.create(building: building, active: true, service_codes: procurement.service_codes)

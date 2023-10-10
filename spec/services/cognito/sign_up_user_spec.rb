@@ -67,8 +67,7 @@ RSpec.describe Cognito::SignUpUser do
       let(:response) { described_class.new(email, password, password_confirmation, roles) }
 
       before do
-        allow(aws_client).to receive(:sign_up).and_return(JSON[{ user_sub: '12345'.to_json }])
-        allow(aws_client).to receive(:admin_add_user_to_group).and_return(JSON[{ user_sub: '12345'.to_json }])
+        allow(aws_client).to receive_messages(sign_up: JSON[{ user_sub: '12345'.to_json }], admin_add_user_to_group: JSON[{ user_sub: '12345'.to_json }])
       end
 
       context 'when password shorter than 8 characters' do
@@ -234,8 +233,7 @@ RSpec.describe Cognito::SignUpUser do
       let(:response) { described_class.call(email, password, password_confirmation, roles) }
 
       before do
-        allow(aws_client).to receive(:sign_up).and_return(JSON[{ user_sub: '12345'.to_json }])
-        allow(aws_client).to receive(:admin_add_user_to_group).and_return(JSON[{ user_sub: '12345'.to_json }])
+        allow(aws_client).to receive_messages(sign_up: JSON[{ user_sub: '12345'.to_json }], admin_add_user_to_group: JSON[{ user_sub: '12345'.to_json }])
       end
 
       it 'creates user' do

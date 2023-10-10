@@ -78,8 +78,7 @@ RSpec.describe Cognito::CreateUserFromCognito do
 
     context 'when success' do
       before do
-        allow(aws_client).to receive(:admin_get_user).and_return(cognito_user)
-        allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
+        allow(aws_client).to receive_messages(admin_get_user: cognito_user, admin_list_groups_for_user: cognito_groups)
       end
 
       it 'creates user' do
@@ -134,8 +133,7 @@ RSpec.describe Cognito::CreateUserFromCognito do
 
     context 'when user already exists' do
       before do
-        allow(aws_client).to receive(:admin_get_user).and_return(cognito_user)
-        allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
+        allow(aws_client).to receive_messages(admin_get_user: cognito_user, admin_list_groups_for_user: cognito_groups)
         create(:user, :without_detail, cognito_uuid: '0987', email: email, roles: %i[buyer fm_access])
       end
 
@@ -184,8 +182,7 @@ RSpec.describe Cognito::CreateUserFromCognito do
       end
 
       before do
-        allow(aws_client).to receive(:admin_get_user).and_return(cognito_user)
-        allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
+        allow(aws_client).to receive_messages(admin_get_user: cognito_user, admin_list_groups_for_user: cognito_groups)
       end
 
       context 'when supplier detail exists with the same contact_name' do

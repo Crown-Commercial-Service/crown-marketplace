@@ -142,8 +142,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper do
     let(:result) { helper.return_link }
 
     before do
-      allow(helper).to receive(:section).and_return(section_name)
-      allow(helper).to receive(:procurement_show_path).and_return('procurement_show_path')
+      allow(helper).to receive_messages(section: section_name, procurement_show_path: 'procurement_show_path')
       helper.params[:framework] = 'RM3830'
     end
 

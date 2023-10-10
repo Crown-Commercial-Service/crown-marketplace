@@ -1,4 +1,4 @@
-def stub_admin_cognito(option, **options)
+def stub_admin_cognito(option, **)
   aws_client = instance_double(Aws::CognitoIdentityProvider::Client)
   allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
 
@@ -7,7 +7,7 @@ def stub_admin_cognito(option, **options)
   send(
     method,
     aws_client,
-    **options
+    **
   )
 end
 

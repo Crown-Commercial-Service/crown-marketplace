@@ -73,10 +73,10 @@ RSpec.describe FacilitiesManagement::RM3830::AssessedValueCalculator do
       before do
         create(:facilities_management_rm3830_procurement_building_av_normal_building, procurement:, service_codes:)
         create(:facilities_management_rm3830_procurement_building_av_london_building, procurement:, service_codes:)
-        procurement.procurement_building_services.where(code: %w[C.2 C.5 G.1]).each { |pbs| pbs.update(service_standard: 'A') }
-        procurement.procurement_building_services.where(code: 'G.1').each { |pbs| pbs.update(no_of_building_occupants: volume) }
-        procurement.procurement_building_services.where(code: 'E.4').each { |pbs| pbs.update(no_of_appliances_for_testing: volume) }
-        procurement.procurement_building_services.where(code: 'C.5').each { |pbs| no_of_lifts.times { pbs.lifts.create(number_of_floors:) } }
+        procurement.procurement_building_services.where(code: %w[C.2 C.5 G.1]).find_each { |pbs| pbs.update(service_standard: 'A') }
+        procurement.procurement_building_services.where(code: 'G.1').find_each { |pbs| pbs.update(no_of_building_occupants: volume) }
+        procurement.procurement_building_services.where(code: 'E.4').find_each { |pbs| pbs.update(no_of_appliances_for_testing: volume) }
+        procurement.procurement_building_services.where(code: 'C.5').find_each { |pbs| no_of_lifts.times { pbs.lifts.create(number_of_floors:) } }
       end
 
       context 'and the lot is 1a' do

@@ -278,16 +278,16 @@ module ApplicationHelper
     text_field_tag 'fm-table-filter-input', nil, class: 'govuk-input', placeholder: placeholder_text, data: { column: }
   end
 
-  def link_to_public_file_for_download(filename, file_type, text, show_doc_image, **html_options)
-    link_to_file_for_download("/#{filename}?format=#{file_type}", file_type, text, show_doc_image, **html_options)
+  def link_to_public_file_for_download(filename, file_type, text, show_doc_image, **)
+    link_to_file_for_download("/#{filename}?format=#{file_type}", file_type, text, show_doc_image, **)
   end
 
-  def link_to_generated_file_for_download(filename, file_type, text, show_doc_image, **html_options)
-    link_to_file_for_download("#{filename}?format=#{file_type}", file_type, text, show_doc_image, **html_options)
+  def link_to_generated_file_for_download(filename, file_type, text, show_doc_image, **)
+    link_to_file_for_download("#{filename}?format=#{file_type}", file_type, text, show_doc_image, **)
   end
 
-  def link_to_file_for_download(file_link, file_type, text, show_doc_image, **html_options)
-    link_to(file_link, class: ('supplier-record__file-download' if show_doc_image).to_s, type: t("common.type_#{file_type}"), download: '', **html_options) do
+  def link_to_file_for_download(file_link, file_type, text, show_doc_image, **)
+    link_to(file_link, class: ('supplier-record__file-download' if show_doc_image).to_s, type: t("common.type_#{file_type}"), download: '', **) do
       capture do
         concat(text)
         concat(tag.span(t("common.#{file_type}_html"), class: 'govuk-visually-hidden')) if show_doc_image
@@ -314,7 +314,7 @@ module ApplicationHelper
   def accordion_region_items(region_codes, with_overseas: false)
     nuts1_regions = Nuts1Region.send(with_overseas ? :all_with_overseas : :all).to_h { |region| [region.code, { name: region.name, items: [] }] }
 
-    FacilitiesManagement::Region.all.each do |region|
+    FacilitiesManagement::Region.find_each do |region|
       region_group_code = region.code[..2]
 
       next unless nuts1_regions[region_group_code]

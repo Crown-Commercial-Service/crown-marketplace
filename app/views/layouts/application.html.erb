@@ -22,14 +22,13 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'govuk', 'ccs', 'data-turbolinks-track': 'reload', defer: false %>
 
-    <%= render partial: '/shared/google/analytics' if cookie_preferences_settings['google_analytics_enabled'] && Marketplace.google_analytics_tracking_id.present? %>
     <%= render partial: '/shared/google/tag_manager_head' if Marketplace.google_tag_manager_tracking_id.present? %>
   </head>
   <body class="govuk-template__body">
     <%= render partial: '/shared/google/tag_manager_body' if Marketplace.google_tag_manager_tracking_id.present? %>
-    <script>
+    <%= javascript_tag nonce: true do -%>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-    </script>
+    <% end -%>
     <% if Rails.env.production? && user_signed_in? %>
       <%= auto_session_timeout_js %>
     <% end %>

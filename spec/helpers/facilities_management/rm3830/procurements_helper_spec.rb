@@ -617,7 +617,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper do
     context 'when the contract_datetime is 06/09/2021 - 2:26am' do
       let(:contract_datetime) { '06/09/2021 - 2:26am' }
 
-      it 'returns 6 September 2021, 3:26am	' do
+      it 'returns 6 September 2021, 3:26am' do
         expect(helper.further_competition_saved_date(procurement)).to eq ' 6 September 2021,  3:26am'
       end
     end

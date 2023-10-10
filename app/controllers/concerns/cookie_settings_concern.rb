@@ -48,12 +48,12 @@ module CookieSettingsConcern
   COOKIE_UPDATE_OPTIONS = [
     {
       param_name: :ga_cookie_usage,
-      cookie_name: 'google_analytics_enabled',
+      cookie_name: 'usage',
       cookie_prefixes: %w[_ga _gi]
     },
     {
       param_name: :glassbox_cookie_usage,
-      cookie_name: 'glassbox_enabled',
+      cookie_name: 'glassbox',
       cookie_prefixes: %w[_cls]
     }
   ].freeze

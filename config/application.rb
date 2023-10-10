@@ -93,10 +93,6 @@ module Marketplace
 
   # :nocov:
 
-  def self.google_analytics_tracking_id
-    @google_analytics_tracking_id ||= ENV.fetch('GA_TRACKING_ID', nil)
-  end
-
   def self.google_tag_manager_tracking_id
     @google_tag_manager_tracking_id ||= ENV.fetch('GTM_TRACKING_ID', nil)
   end
@@ -163,14 +159,14 @@ module Marketplace
   end
 
   def self.cookie_settings_name
-    :crown_marketplace_cookie_options_v1
+    :cookie_preferences
   end
 
   def self.default_cookie_options
     {
       settings_viewed: false,
-      google_analytics_enabled: false,
-      glassbox_enabled: false
+      usage: false,
+      glassbox: false
     }.stringify_keys
   end
 end

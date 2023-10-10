@@ -1,4 +1,5 @@
 class ChangeProcurementBuildingServicePrimaryKey < ActiveRecord::Migration[5.2]
+  # rubocop:disable Rails/DangerousColumnNames
   def up
     add_column :facilities_management_procurement_building_services, :uuid, :uuid, default: 'gen_random_uuid()', null: false
 
@@ -9,4 +10,5 @@ class ChangeProcurementBuildingServicePrimaryKey < ActiveRecord::Migration[5.2]
 
     execute 'ALTER TABLE facilities_management_procurement_building_services ADD PRIMARY KEY (id);'
   end
+  # rubocop:enable Rails/DangerousColumnNames
 end

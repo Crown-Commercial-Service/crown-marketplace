@@ -103,7 +103,7 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper do
       end
     end
 
-    context 'when there are errors on call_off_extensions' do
+    context 'when there are errors on call_off_extensions.base' do
       let(:months) { 0 }
       let(:years) { 0 }
 
@@ -202,8 +202,8 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper do
       let(:months) { 0 }
       let(:years) { 0 }
 
-      it 'returns an array with -error' do
-        expect(helper.display_extension_error_anchor).to eq ['call_off_extensions-error']
+      it 'returns an array with base-error' do
+        expect(helper.display_extension_error_anchor).to eq ['call_off_extensions.base-error']
       end
     end
   end

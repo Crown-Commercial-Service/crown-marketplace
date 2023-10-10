@@ -4,7 +4,7 @@ FactoryBot.define do
     region_codes { ['UKI4', 'UKI5'] }
     annual_contract_value { 12_345 }
     contract_name { Faker::Name.unique.name }
-    association :user
+    user
 
     trait :skip_generate_contract_number do
       before(:create) { |procurement| procurement.class.skip_callback(:create, :before, :generate_contract_number, raise: false) }
