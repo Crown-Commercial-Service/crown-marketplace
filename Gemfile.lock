@@ -545,7 +545,7 @@ GEM
       activesupport (>= 5.2.0)
     show_me_the_cookies (6.0.0)
       capybara (>= 2, < 4)
-    sidekiq (7.1.5)
+    sidekiq (7.1.6)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
@@ -697,7 +697,7 @@ DEPENDENCIES
   shakapacker (~> 7.1.0)
   shoulda-matchers (>= 5.1.0)
   show_me_the_cookies (>= 6.0.0)
-  sidekiq (~> 7.1.5)
+  sidekiq (~> 7.1.6)
   sidekiq-cron
   simplecov (>= 0.16.1)
   sinatra (~> 3.1.0)
@@ -717,4 +717,4 @@ RUBY VERSION
    ruby 3.2.2p53
 
 BUNDLED WITH
-   2.4.8
+   2.4.6
