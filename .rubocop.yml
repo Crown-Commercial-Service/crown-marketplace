@@ -173,3 +173,9 @@ Rails/ThreeStateBooleanColumn:
 
 RSpec/IndexedLet:
     Enabled: false
+
+FactoryBot/FactoryAssociationWithStrategy:
+    Enabled: false
+
+Capybara/ClickLinkOrButtonStyle:
+    Enabled: false

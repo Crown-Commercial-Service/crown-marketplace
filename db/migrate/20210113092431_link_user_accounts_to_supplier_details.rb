@@ -10,7 +10,7 @@ class LinkUserAccountsToSupplierDetails < ActiveRecord::Migration[5.2]
   def up
     SupplierDetail.reset_column_information
 
-    SupplierDetail.all.each do |supplier_detail|
+    SupplierDetail.find_each do |supplier_detail|
       next if supplier_detail.user_id.present?
 
       contact_email = supplier_detail.contact_email

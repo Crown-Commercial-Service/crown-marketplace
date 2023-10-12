@@ -41,12 +41,14 @@ module HeaderNavigationLinksHelper
 
   def facilites_management_supplier_navigation_link
     return { link_text: supplier_back_to_start_text, link_url: service_path_base } unless sign_in_or_dashboard?('dashboard')
-    return { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: service_path_base } if not_permitted_page? && user_signed_in?
+
+    { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: service_path_base } if not_permitted_page? && user_signed_in?
   end
 
   def facilities_management_navigation_link
     return back_to_start_link unless page_does_not_require_back_to_start?
-    return { link_text: t('header_navigation_links_helper.my_account'), link_url: service_path_base } if not_permitted_page? && user_signed_in?
+
+    { link_text: t('header_navigation_links_helper.my_account'), link_url: service_path_base } if not_permitted_page? && user_signed_in?
   end
 
   def back_to_start_link

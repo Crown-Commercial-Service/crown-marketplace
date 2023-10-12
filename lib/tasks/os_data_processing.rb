@@ -122,7 +122,7 @@ module OrdnanceSurvey
   def self.process_csv_data(type, csv_stream)
     return inject_data(csv_stream.read) if type == :dat
 
-    return upsert_csv_data(csv_stream) unless type == :dat
+    upsert_csv_data(csv_stream) unless type == :dat
   end
 
   def self.handle_tar_contents(tar, summary, &)

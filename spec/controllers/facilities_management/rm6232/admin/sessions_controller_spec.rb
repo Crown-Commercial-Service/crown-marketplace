@@ -83,8 +83,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SessionsController do
       end
 
       before do
-        allow(aws_client).to receive(:initiate_auth).and_return(initiate_auth_resp_struct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => username }))
-        allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
+        allow(aws_client).to receive_messages(initiate_auth: initiate_auth_resp_struct.new(challenge_name: challenge_name, session: session, challenge_parameters: { 'USER_ID_FOR_SRP' => username }), admin_list_groups_for_user: cognito_groups)
         allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user:))
       end
 

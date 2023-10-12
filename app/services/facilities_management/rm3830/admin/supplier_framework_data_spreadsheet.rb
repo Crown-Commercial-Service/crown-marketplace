@@ -57,7 +57,7 @@ module FacilitiesManagement::RM3830
     end
 
     def da_service_codes
-      @da_service_codes ||= Rate.all.where(direct_award: true).pluck(:code)
+      @da_service_codes ||= Rate.where(direct_award: true).pluck(:code)
     end
 
     def work_packages

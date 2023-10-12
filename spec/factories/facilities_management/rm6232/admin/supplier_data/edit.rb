@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :facilities_management_rm6232_admin_supplier_data_edit, class: 'FacilitiesManagement::RM6232::Admin::SupplierData::Edit' do
     id { SecureRandom.uuid }
-    association :user
+    user
 
     supplier_data do |edit|
       supplier_data = FacilitiesManagement::RM6232::Admin::SupplierData.latest_data

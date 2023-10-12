@@ -27,10 +27,10 @@ jobs:
         uses: browser-actions/setup-geckodriver@latest
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@v1.152.0
+        uses: ruby/setup-ruby@v1.155.0
         with:
           bundler-cache: true
 

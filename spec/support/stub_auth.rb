@@ -49,17 +49,17 @@ end
 
 RSpec.configure do |config|
   config.include SpecSupport::StubAuth, type: :feature
-  config.around(:example, supply_teachers: true, type: :feature) do |example|
+  config.around(:example, :supply_teachers, type: :feature) do |example|
     stub_auth_st
     example.run
     unstub_auth
   end
-  config.around(:example, management_consultancy: true, type: :feature) do |example|
+  config.around(:example, :management_consultancy, type: :feature) do |example|
     stub_auth_mc
     example.run
     unstub_auth
   end
-  config.around(:example, dfe: true, type: :feature) do |example|
+  config.around(:example, :dfe, type: :feature) do |example|
     stub_dfe
     example.run
     unstub_dfe
