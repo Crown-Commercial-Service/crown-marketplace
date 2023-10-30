@@ -34,7 +34,7 @@
   ],
   "devDependencies": {
     "@babel/preset-env": "^7.23.2",
-    "@types/jquery": "^3.5.22",
+    "@types/jquery": "^3.5.25",
     "@types/js-cookie": "^3.0.5",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
