@@ -45,7 +45,7 @@ RSpec.configure do |config|
   config.extend APIRequestStubs, type: :model
   config.include SpreadsheetImportHelper, type: :service
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = Rails.root.join('spec', 'fixtures')
+  config.fixture_paths = [Rails.root.join('spec', 'fixtures')]
 
   # finds N+1 queries
   # if Bullet.enable?

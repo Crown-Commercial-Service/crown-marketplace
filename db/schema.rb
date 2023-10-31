@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_25_131936) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_31_103327) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -88,6 +88,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131936) do
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
   end
 
+  create_table "facilities_management_procurement_building_service_lifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm3830_procurement_building_service_id", null: false
+    t.integer "number_of_floors"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["facilities_management_rm3830_procurement_building_service_id"], name: "index_fmpbs_procurement_lifts_on_fmp_building_services_id"
+  end
+
   create_table "facilities_management_regions", id: false, force: :cascade do |t|
     t.text "code"
     t.text "name"
@@ -136,14 +144,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131936) do
     t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.index ["facilities_management_rm3830_procurement_id"], name: "index_frozen_fm_rates_procurement"
-  end
-
-  create_table "facilities_management_rm3830_procurement_building_service_lifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "facilities_management_rm3830_procurement_building_service_id", null: false
-    t.integer "number_of_floors"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["facilities_management_rm3830_procurement_building_service_id"], name: "index_fmpbs_procurement_lifts_on_fmp_building_services_id"
   end
 
   create_table "facilities_management_rm3830_procurement_building_services", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -195,16 +195,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131936) do
     t.index ["service_codes"], name: "index_fm_procurement_buildings_on_service_codes"
   end
 
-  create_table "facilities_management_rm3830_procurement_call_off_extensions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "facilities_management_rm3830_procurement_id"
-    t.integer "extension"
-    t.integer "years"
-    t.integer "months"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["facilities_management_rm3830_procurement_id"], name: "index_optional_call_off_on_fm_procurements_id"
-  end
-
   create_table "facilities_management_rm3830_procurement_contact_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", limit: 100
     t.string "name", limit: 50
@@ -222,6 +212,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131936) do
     t.index ["email"], name: "facilities_management_procurement_contact_detail_email_idx"
     t.index ["facilities_management_rm3830_procurement_id"], name: "index_fm_procurement_contact_details_on_fm_procurement_id"
     t.index ["id"], name: "facilities_management_procurement_contact_detail_id_idx"
+  end
+
+  create_table "facilities_management_rm3830_procurement_extensions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm3830_procurement_id"
+    t.integer "extension"
+    t.integer "years"
+    t.integer "months"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["facilities_management_rm3830_procurement_id"], name: "index_optional_call_off_on_fm_procurements_id"
   end
 
   create_table "facilities_management_rm3830_procurement_pension_funds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -416,7 +416,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131936) do
     t.index ["facilities_management_rm6232_procurement_id"], name: "index_procurement_building_on_fm_rm6232_procurements_id"
   end
 
-  create_table "facilities_management_rm6232_procurement_call_off_extensions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "facilities_management_rm6232_procurement_extensions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_rm6232_procurement_id"
     t.integer "extension"
     t.integer "years"
@@ -650,16 +650,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131936) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "facilities_management_buyer_details", "users"
+  add_foreign_key "facilities_management_procurement_building_service_lifts", "facilities_management_rm3830_procurement_building_services"
   add_foreign_key "facilities_management_rm3830_admin_management_reports", "users"
   add_foreign_key "facilities_management_rm3830_admin_uploads", "users"
   add_foreign_key "facilities_management_rm3830_frozen_rate_cards", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_frozen_rates", "facilities_management_rm3830_procurements"
-  add_foreign_key "facilities_management_rm3830_procurement_building_service_lifts", "facilities_management_rm3830_procurement_building_services"
   add_foreign_key "facilities_management_rm3830_procurement_building_services", "facilities_management_rm3830_procurement_buildings"
   add_foreign_key "facilities_management_rm3830_procurement_building_services", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_procurement_buildings", "facilities_management_rm3830_procurements"
-  add_foreign_key "facilities_management_rm3830_procurement_call_off_extensions", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_procurement_contact_details", "facilities_management_rm3830_procurements"
+  add_foreign_key "facilities_management_rm3830_procurement_extensions", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_procurement_pension_funds", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_procurement_suppliers", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_procurements", "users"
@@ -672,7 +672,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131936) do
   add_foreign_key "facilities_management_rm6232_admin_uploads", "users"
   add_foreign_key "facilities_management_rm6232_procurement_buildings", "facilities_management_buildings", column: "building_id"
   add_foreign_key "facilities_management_rm6232_procurement_buildings", "facilities_management_rm6232_procurements"
-  add_foreign_key "facilities_management_rm6232_procurement_call_off_extensions", "facilities_management_rm6232_procurements"
+  add_foreign_key "facilities_management_rm6232_procurement_extensions", "facilities_management_rm6232_procurements"
   add_foreign_key "facilities_management_rm6232_procurements", "users"
   add_foreign_key "facilities_management_rm6232_services", "facilities_management_rm6232_work_packages", column: "work_package_code", primary_key: "code"
   add_foreign_key "facilities_management_rm6232_supplier_lot_data", "facilities_management_rm6232_suppliers"
