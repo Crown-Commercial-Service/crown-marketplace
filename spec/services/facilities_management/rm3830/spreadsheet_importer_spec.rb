@@ -705,7 +705,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
       it 'changes the state of the spreadsheet_import to failed and has the correct import_errors' do
         spreadsheet_import.reload
         expect(spreadsheet_import.failed?).to be true
-        expect(spreadsheet_import.service_matrix_errors.first.values).to eq ['Trumpy Towers', :service_codes, [:multiple_standards_for_one_service]]
+        expect(spreadsheet_import.service_matrix_errors.first.values).to eq ['Trumpy Towers', :service_codes, %w[multiple_standards_for_one_service]]
       end
 
       it 'has the correct error' do
@@ -853,8 +853,8 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
           expect(spreadsheet_import.failed?).to be true
 
           error_details = spreadsheet_import.service_volume_errors
-          expect(error_details[0].values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced, [:blank]]
-          expect(error_details[1].values).to eq ['Wollaton Hall', 'Medical waste', :tones_to_be_collected_and_removed, [:blank]]
+          expect(error_details[0].values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced, %w[blank]]
+          expect(error_details[1].values).to eq ['Wollaton Hall', 'Medical waste', :tones_to_be_collected_and_removed, %w[blank]]
         end
 
         it 'only makes K.1 and K.6 invalid and they have the correct errors' do
@@ -887,7 +887,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
           spreadsheet_import.reload
 
           expect(spreadsheet_import.failed?).to be true
-          expect(spreadsheet_import.service_volume_errors.first.values).to eq ['Wollaton Hall', 'Portable appliance testing', :no_of_appliances_for_testing, [:invalid]]
+          expect(spreadsheet_import.service_volume_errors.first.values).to eq ['Wollaton Hall', 'Portable appliance testing', :no_of_appliances_for_testing, %w[invalid]]
         end
 
         it 'only makes E.4 invalid and has the correct error' do
@@ -918,7 +918,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
           spreadsheet_import.reload
 
           expect(spreadsheet_import.failed?).to be true
-          expect(spreadsheet_import.service_volume_errors.first.values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced, [:invalid]]
+          expect(spreadsheet_import.service_volume_errors.first.values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced, %w[invalid]]
         end
 
         it 'only makes K.1 invalid and has the correct error' do
@@ -1266,7 +1266,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         it 'changes the state of the spreadsheet_import to failed and has the correct import_errors' do
           spreadsheet_import.reload
           expect(spreadsheet_import.failed?).to be true
-          expect(spreadsheet_import.service_hour_errors[0].values).to eq ['U.A. High', 'Move and space management - internal moves', :service_hours, [:not_a_number]]
+          expect(spreadsheet_import.service_hour_errors[0].values).to eq ['U.A. High', 'Move and space management - internal moves', :service_hours, %w[not_a_number]]
         end
 
         it 'is not valid and has an error' do
@@ -1541,7 +1541,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
 
       it 'has the correct import_errors' do
         spreadsheet_import.reload
-        expect(spreadsheet_import.service_hour_errors).to eq [{ building_name: normalised_name2, service_name: 'Reception service', attribute: :service_hours, errors: [:greater_than_or_equal_to] }]
+        expect(spreadsheet_import.service_hour_errors).to eq [{ building_name: normalised_name2, service_name: 'Reception service', attribute: :service_hours, errors: %w[greater_than_or_equal_to] }]
       end
     end
 

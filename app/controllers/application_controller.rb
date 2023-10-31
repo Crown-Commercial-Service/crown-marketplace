@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
   class UnrecognisedLiveFrameworkError < StandardError; end
   class UnrecognisedFrameworkError < StandardError; end
+  auto_session_timeout Devise.timeout_in
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery with: :exception
   before_action :authenticate_user!, :validate_service
-  auto_session_timeout Devise.timeout_in
 
   rescue_from CanCan::AccessDenied do
     redirect_to not_permitted_path
