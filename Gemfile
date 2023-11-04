@@ -74,7 +74,7 @@ gem 'after_commit_everywhere', '~> 1.3'
 gem 'sidekiq', '~> 7.1.6'
 gem 'sinatra', '~> 3.1.0', require: false
 gem 'slim', '~> 5.1.1'
-gem 'sidekiq-cron'
+gem 'sidekiq-cron', '>= 1.11.0'
 
 # for authorization
 gem 'cancancan', '~> 3.5.0'
@@ -145,7 +145,7 @@ group :test do
   gem 'webmock', '>= 3.12.1'
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
-  gem 'cucumber-rails', '>= 2.6.1', require: false
+  gem 'cucumber-rails', '>= 3.0.0', require: false
   gem 'capybara', '>= 3.38.0'
   gem 'database_cleaner', '>= 2.0.1'
   gem 'site_prism', '>= 3.7.3'
