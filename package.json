@@ -39,7 +39,7 @@
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.1",
     "@webpack-cli/serve": "^2.0.5",
-    "eslint": "^8.52.0",
+    "eslint": "^8.53.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "webpack-dev-server": "^4.15.1"
   }
