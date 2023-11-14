@@ -52,6 +52,11 @@ module Marketplace
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
 
+    # Using a sass css compressor causes a scss file to be processed twice (once
+    # to build, once to compress) which breaks the usage of "unquote" to use
+    # CSS that has same function names as SCSS such as max
+    config.assets.css_compressor = nil
+
     # do not add field-with-error div anymore
     ActionView::Base.field_error_proc = proc do |html_tag, _instance|
       html_tag
