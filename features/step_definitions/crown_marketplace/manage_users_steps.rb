@@ -63,13 +63,13 @@ Then('I cannot manage the user and there is the following warning:') do |warning
 end
 
 Then('the user has the following details:') do |user_details_table|
-  user_details = user_details_table.raw.to_h.symbolize_keys
+  user_details = user_details_table.raw
 
   user_details.each do |key, value|
     user_details_row = manage_users_page.view_user_summary.send(key)
 
-    expect(user_details_row.key).to have_content(key.to_s)
-    expect(user_details_row.value).to have_content(value)
+    expect(user_details_row.key).to have_content(key)
+    expect(user_details_row.value).to have_content(['Roles', 'Service access'].include?(key) ? value.split(', ').join : value)
   end
 end
 
