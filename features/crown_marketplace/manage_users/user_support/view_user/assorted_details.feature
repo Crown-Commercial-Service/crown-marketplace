@@ -28,7 +28,7 @@ Feature: Manage users - User support - View user - Assorted Details
       | Confirmation status     | <confirmation_status>                 |
       | Mobile telephone number | None                                  |
       | Roles                   | Buyer                                 |
-      | Service access          | Facilities Management Legal Services  |
+      | Service access          | Facilities Management, Legal Services |
 
     Examples:
       | confirmation_status   |
@@ -81,11 +81,11 @@ Feature: Manage users - User support - View user - Assorted Details
     And I cannot manage the user and there is the following warning:
       | You cannot make changes to this user. 'Super admins' can only be updated in the AWS Cognito console.  |
     And the user has the following details:
-      | Email address           | super_admin@test.com                                                        |
-      | Email status            | Verified                                                                    |
-      | Account status          | Enabled                                                                     |
-      | Confirmation status     | confirmed                                                                   |
-      | Mobile telephone number | 07123456789                                                                 |
-      | MFA status              | Enabled                                                                     |
-      | Roles                   | Buyer Service admin User support User admin Super admin                     |
-      | Service access          | Facilities Management Management Consultancy Legal Services Supply Teachers |
+      | Email address           | super_admin@test.com                                                            |
+      | Email status            | Verified                                                                        |
+      | Account status          | Enabled                                                                         |
+      | Confirmation status     | confirmed                                                                       |
+      | Mobile telephone number | 07123456789                                                                     |
+      | MFA status              | Enabled                                                                         |
+      | Roles                   | Buyer, Service admin, User support, User admin, Super admin                     |
+      | Service access          | Facilities Management, Management Consultancy, Legal Services, Supply Teachers  |
