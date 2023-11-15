@@ -26,7 +26,7 @@ Feature: Manage users - Super admin - Edit user - Accessibility
       | Confirmation status     | confirmed                             |
       | Mobile telephone number | None                                  |
       | Roles                   | Buyer                                 |
-      | Service access          | Facilities Management Legal Services  |
+      | Service access          | Facilities Management, Legal Services |
 
   Scenario: Email status - Accessibility
     And I change the 'Email status' for the user
