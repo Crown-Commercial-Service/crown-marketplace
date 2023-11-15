@@ -7,8 +7,8 @@ Feature: Service rates - Framework expired
     Then I am on the '<rates_page>' page
     And I should see the following warning text:
       | The RM3830 has expired, you cannot update these rates. |
-    And all the text inputs are disabled
-    And the submit button is disabled
+    And there are no text inputs
+    And there is no submit button
   
   Examples:
     | rates_page                |
