@@ -26,7 +26,7 @@ Feature: Manage users - Super admin - Edit user
       | Confirmation status     | confirmed                             |
       | Mobile telephone number | None                                  |
       | Roles                   | Buyer                                 |
-      | Service access          | Facilities Management Legal Services  |
+      | Service access          | Facilities Management, Legal Services |
 
   Scenario: Edit user - Email Status
     And I change the 'Email status' for the user
@@ -117,7 +117,7 @@ Feature: Manage users - Super admin - Edit user
     And I click on 'Save and return'
     Then I am on the 'View user' page
     And the user has the following details:
-      | Service access  | Facilities Management Supply Teachers  |
+      | Service access  | Facilities Management, Supply Teachers  |
 
   Scenario: Edit user - No Service access required
     And I change the 'Roles' for the user
