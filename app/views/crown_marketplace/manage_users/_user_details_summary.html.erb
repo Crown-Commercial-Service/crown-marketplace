@@ -1,73 +1,93 @@
 <h2 class="govuk-heading-m">
   <%= t('.user_details_summary') %>
 </h2>
-<dl id="add-user-details-summary" class="govuk-summary-list">
-  <% if allowed_attributes.include?(:roles) %>
-    <div id="add-user-details-summary--roles" class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= t('.role') %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= t("crown_marketplace.role_map.#{@user.roles.first}.text") %>
-      </dd>
-      <dd class="govuk-summary-list__actions">
-        <% if @current_user_access != :user_support %>
-          <%= link_to add_users_back_link(@user, 'select-role'), class: 'govuk-link govuk-link--no-visited-state' do %>
-            <%= t('.change') %><span class="govuk-visually-hidden"> <%= t('.role') %></span>
-          <% end %>
-        <% end %>
-      </dd>
-    </div>
-  <% end %>
-  <% if allowed_attributes.include?(:service_access) && role_requires_service_access?(@user.roles) %>
-    <div id="add-user-details-summary--service-access" class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= t('.service_access') %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <ul class="govuk-list govuk-list--bullet">
-          <% @user.service_access.each do |service_access| %>
-            <li>
-              <%= t("crown_marketplace.service_access_map.#{service_access}.text") %>
-            </li>
-          <% end %>
-        </ul>
-      </dd>
-      <dd class="govuk-summary-list__actions">
-        <%= link_to add_users_back_link(@user, 'select-service-access'), class: 'govuk-link govuk-link--no-visited-state' do %>
-          <%= t('.change') %><span class="govuk-visually-hidden"> <%= t('.service_access') %></span>
-        <% end %>
-      </dd>
-    </div>
-  <% end %>
-  <% if allowed_attributes.include?(:user_details) %>
-    <div id="add-user-details-summary--email" class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= t('.email_address') %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= @user.email %>
-      </dd>
-      <dd class="govuk-summary-list__actions">
-        <%= link_to add_users_back_link(@user, 'enter-user-details'), class: 'govuk-link govuk-link--no-visited-state' do %>
-          <%= t('.change') %><span class="govuk-visually-hidden"> <%= t('.email_address') %></span>
-        <% end %>
-      </dd>
-    </div>
-  <% end %>
-  <% if allowed_attributes.include?(:user_details) && @user.roles != ['buyer'] %>
-    <div id="add-user-details-summary--telephone-number" class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= t('.telephone_number') %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= @user.telephone_number %>
-      </dd>
-      <dd class="govuk-summary-list__actions">
-        <%= link_to add_users_back_link(@user, 'enter-user-details'), class: 'govuk-link govuk-link--no-visited-state' do %>
-          <%= t('.change') %><span class="govuk-visually-hidden"> <%= t('.telephone_number') %></span>
-        <% end %>
-      </dd>
-    </div>
-  <% end %>
-</dl>
+
+<%= govuk_summary_list(
+  [
+    if allowed_attributes.include?(:roles)
+      {
+        key: {
+          text: t('.role')
+        },
+        value: {
+          text: t("crown_marketplace.role_map.#{@user.roles.first}.text")
+        },
+        actions: if @current_user_access != :user_support
+                  {
+                    items: [
+                      {
+                        text: t('.change'),
+                        href: add_users_back_link(@user, 'select-role'),
+                        visually_hidden_text: t('.role')
+                      }
+                    ]
+                  }
+                end
+      }
+    end,
+    if allowed_attributes.include?(:service_access) && role_requires_service_access?(@user.roles)
+      {
+        key: {
+          text: t('.service_access')
+        },
+        value: {
+          text: tag.ul(class: 'govuk-list') do
+                  @user.service_access.each do |service_access|
+                    concat(tag.li(t("crown_marketplace.service_access_map.#{service_access}.text")))
+                  end
+                end
+        },
+        actions: {
+                   items: [
+                     {
+                       text: t('.change'),
+                       href: add_users_back_link(@user, 'select-service-access'),
+                       visually_hidden_text: t('.service_access')
+                     }
+                   ]
+                 }
+      }
+    end,
+    if allowed_attributes.include?(:user_details)
+      {
+        key: {
+          text: t('.email_address')
+        },
+        value: {
+          text: @user.email
+        },
+        actions: {
+                   items: [
+                     {
+                       text: t('.change'),
+                       href: add_users_back_link(@user, 'enter-user-details'),
+                       visually_hidden_text: t('.email_address')
+                     }
+                   ]
+                 }
+      }
+    end,
+    if allowed_attributes.include?(:user_details) && @user.roles != ['buyer']
+      {
+        key: {
+          text: t('.telephone_number')
+        },
+        value: {
+          text: @user.telephone_number
+        },
+        actions: {
+                   items: [
+                     {
+                       text: t('.change'),
+                       href: add_users_back_link(@user, 'enter-user-details'),
+                       visually_hidden_text: t('.telephone_number')
+                     }
+                   ]
+                 }
+      }
+    end
+  ].compact,
+  attributes: {
+    id: 'add-user-details-summary'
+  }
+) %>

@@ -53,141 +53,157 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row" id="view-user__email">
-        <dt class="govuk-summary-list__key">
-          <%= t('.email') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @user.email %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row" id="view-user__email-status">
-        <dt class="govuk-summary-list__key">
-          <%= t('.email_status') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= govuk_tag(*verified_unverified_status_tag(@user.email_verified)) %>
-        </dd>
-        <% if can_edit_user? %>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to(edit_crown_marketplace_manage_user_path(section: 'email-verified'), class: 'govuk-link govuk-link--no-visited-state') do %>
-              <%= t('.change') %>
-              <span class="govuk-visually-hidden"><%= t('.email_status') %></span>
-            <% end %>
-          </dd>
-        <% end %>
-      </div>
-      <div class="govuk-summary-list__row" id="view-user__account-status">
-        <dt class="govuk-summary-list__key">
-          <%= t('.account_status') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= govuk_tag(*enabled_disabled_status_tag(@user.account_status)) %>
-        </dd>
-        <% if can_edit_user? %>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to(edit_crown_marketplace_manage_user_path(section: 'account_status'), class: 'govuk-link govuk-link--no-visited-state') do %>
-              <%= t('.change') %>
-              <span class="govuk-visually-hidden"><%= t('.account_status') %></span>
-            <% end %>
-          </dd>
-        <% end %>
-      </div>
-      <div class="govuk-summary-list__row" id="view-user__confirmation-status">
-        <dt class="govuk-summary-list__key">
-          <%= t('.confirmation_status') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= govuk_tag(*user_confirmation_status_tag(@user.confirmation_status)) %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row" id="view-user__telephone-number">
-        <dt class="govuk-summary-list__key">
-          <%= t('.telephone_number') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @user.telephone_number.blank? ? t('.none') : @user.telephone_number %>
-        </dd>
-        <% if can_edit_user? && permitted_sections.include?(:telephone_number) %>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to(edit_crown_marketplace_manage_user_path(section: 'telephone-number'), class: 'govuk-link govuk-link--no-visited-state') do %>
-              <%= t('.change') %>
-              <span class="govuk-visually-hidden"><%= t('.telephone_number') %></span>
-            <% end %>
-          </dd>
-        <% end %>
-      </div>
-      <% unless @user.telephone_number.blank? %>
-        <div class="govuk-summary-list__row" id="view-user__mfa-status">
-          <dt class="govuk-summary-list__key">
-            <%= t('.mfa_status') %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= govuk_tag(*enabled_disabled_status_tag(@user.mfa_enabled)) %>
-          </dd>
-          <% if can_edit_user? && permitted_sections.include?(:mfa_enabled) %>
-            <dd class="govuk-summary-list__actions">
-              <%= link_to(edit_crown_marketplace_manage_user_path(section: 'mfa-enabled'), class: 'govuk-link govuk-link--no-visited-state') do %>
-                <%= t('.change') %>
-                <span class="govuk-visually-hidden"><%= t('.mfa_status') %></span>
-              <% end %>
-            </dd>
-          <% end %>
-        </div>
-      <% end %>
-      <div class="govuk-summary-list__row" id="view-user__roles">
-        <dt class="govuk-summary-list__key">
-          <%= t('.roles') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <% if @user.roles.any? %>
-            <ul class="govuk-list">
-              <% @user.roles.each do |role| %>
-                <li>
-                  <%= t("crown_marketplace.role_map.#{role}.text") %>
-                </li>
-              <% end %>
-            </ul>
-          <% else %>
-            <%= t('.none') %>
-          <% end %>
-        </dd>
-        <% if can_edit_user? && permitted_sections.include?(:roles) %>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to(edit_crown_marketplace_manage_user_path(section: 'roles'), class: 'govuk-link govuk-link--no-visited-state') do %>
-              <%= t('.change') %>
-              <span class="govuk-visually-hidden"><%= t('.roles') %></span>
-            <% end %>
-          </dd>
-        <% end %>
-      </div>
-      <div class="govuk-summary-list__row" id="view-user__service-access">
-        <dt class="govuk-summary-list__key">
-          <%= t('.service_access') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <% if @user.service_access.any? %>
-            <ul class="govuk-list">
-              <% @user.service_access.each do |service_access| %>
-                <li>
-                  <%= t("crown_marketplace.service_access_map.#{service_access}.text") %>
-                </li>
-              <% end %>
-            </ul>
-          <% else %>
-            <%= t('.none') %>
-          <% end %>
-        </dd>
-        <% if can_edit_user? %>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to(edit_crown_marketplace_manage_user_path(section: 'service-access'), class: 'govuk-link govuk-link--no-visited-state') do %>
-              <%= t('.change') %>
-              <span class="govuk-visually-hidden"><%= t('.service_access') %></span>
-            <% end %>
-          </dd>
-        <% end %>
-      </div>
-    </dl>
+    <%= govuk_summary_list(
+      [
+        {
+          key: {
+            text: t('.email')
+          },
+          value: {
+            text: @user.email
+          }
+        },
+        {
+          key: {
+            text: t('.email_status')
+          },
+          value: {
+            text: govuk_tag(*verified_unverified_status_tag(@user.email_verified))
+          },
+          actions: if can_edit_user?
+                     {
+                       items: [
+                         {
+                           text: t('.change'),
+                           href: edit_crown_marketplace_manage_user_path(section: 'email-verified'),
+                           visually_hidden_text: t('.email_status')
+                         }
+                       ]
+                     }
+                   end
+        },
+        {
+          key: {
+            text: t('.account_status')
+          },
+          value: {
+            text: govuk_tag(*enabled_disabled_status_tag(@user.account_status))
+          },
+          actions: if can_edit_user?
+                     {
+                       items: [
+                         {
+                           text: t('.change'),
+                           href: edit_crown_marketplace_manage_user_path(section: 'account_status'),
+                           visually_hidden_text: t('.account_status')
+                         }
+                       ]
+                     }
+                   end
+        },
+        {
+          key: {
+            text: t('.confirmation_status')
+          },
+          value: {
+            text: govuk_tag(*user_confirmation_status_tag(@user.confirmation_status))
+          }
+        },
+        {
+          key: {
+            text: t('.telephone_number')
+          },
+          value: {
+            text: @user.telephone_number.blank? ? t('.none') : @user.telephone_number
+          },
+          actions: if can_edit_user? && permitted_sections.include?(:telephone_number)
+                     {
+                       items: [
+                         {
+                           text: t('.change'),
+                           href: edit_crown_marketplace_manage_user_path(section: 'telephone-number'),
+                           visually_hidden_text: t('.telephone_number')
+                         }
+                       ]
+                     }
+                   end
+        },
+        unless @user.telephone_number.blank?
+          {
+            key: {
+              text: t('.mfa_status')
+            },
+            value: {
+              text: govuk_tag(*enabled_disabled_status_tag(@user.mfa_enabled))
+            },
+            actions: if can_edit_user? && permitted_sections.include?(:mfa_enabled)
+                      {
+                        items: [
+                          {
+                            text: t('.change'),
+                            href: edit_crown_marketplace_manage_user_path(section: 'mfa-enabled'),
+                            visually_hidden_text: t('.mfa_status')
+                          }
+                        ]
+                      }
+                    end
+          }
+        end,
+        {
+          key: {
+            text: t('.roles')
+          },
+          value: {
+            text: if @user.roles.any?
+                    tag.ul(class: 'govuk-list') do
+                      @user.roles.each do |role|
+                        concat(tag.li(t("crown_marketplace.role_map.#{role}.text")))
+                      end
+                    end
+                  else
+                    t('.none')
+                  end
+          },
+          actions: if can_edit_user? && permitted_sections.include?(:roles)
+                    {
+                      items: [
+                        {
+                          text: t('.change'),
+                          href: edit_crown_marketplace_manage_user_path(section: 'roles'),
+                          visually_hidden_text: t('.roles')
+                        }
+                      ]
+                    }
+                  end
+        },
+        {
+          key: {
+            text: t('.service_access')
+          },
+          value: {
+            text: if @user.service_access.any?
+                    tag.ul(class: 'govuk-list') do
+                      @user.service_access.each do |service_access|
+                        concat(tag.li(t("crown_marketplace.service_access_map.#{service_access}.text")))
+                      end
+                    end
+                  else
+                    t('.none')
+                  end
+          },
+          actions: if can_edit_user?
+                    {
+                      items: [
+                        {
+                          text: t('.change'),
+                          href: edit_crown_marketplace_manage_user_path(section: 'service-access'),
+                          visually_hidden_text: t('.service_access')
+                        }
+                      ]
+                    }
+                  end
+        },
+      ].compact
+    ) %>
   </div>
 </div>
