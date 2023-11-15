@@ -28,7 +28,7 @@ Feature: Manage users - Super admin - View user - accessibility
       | Confirmation status     | confirmed                             |
       | Mobile telephone number | None                                  |
       | Roles                   | Buyer                                 |
-      | Service access          | Facilities Management Legal Services  |
+      | Service access          | Facilities Management, Legal Services |
     And the page should be axe clean
 
   Scenario: View Service admin - Accessibility

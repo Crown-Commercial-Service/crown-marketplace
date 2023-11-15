@@ -8,24 +8,27 @@
     <span class="govuk-caption-l govuk-!-margin-bottom-0"><%= t('.caption') %></span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4"><%= t('.heading', number: @upload.short_uuid) %></h1>
 
-    <dl class="govuk-summary-list govuk-summary-list--no-border">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t('.status') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= govuk_tag(*upload_status_tag(@upload.aasm_state)) %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t('.datetime') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= format_date_time @upload.created_at %>
-        </dd>
-      </div>
-    </dl>
+    <%= govuk_summary_list(
+      [
+        {
+          key: {
+            text: t('.status')
+          },
+          value: {
+            text: govuk_tag(*upload_status_tag(@upload.aasm_state))
+          }
+        },
+        {
+          key: {
+            text: t('.datetime')
+          },
+          value: {
+            text: format_date_time(@upload.created_at)
+          }
+        }
+      ],
+      classes: 'govuk-summary-list--no-border'
+    ) %>
   </div>
 </div>
 
