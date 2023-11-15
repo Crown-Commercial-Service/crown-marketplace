@@ -98,6 +98,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController do
   describe 'PUT update' do
     # rubocop:disable RSpec/NestedGroups
     context 'when the framework is live' do
+      include_context 'and RM3830 is live'
+
       context 'when updating the data for lot 1a' do
         let(:checked_services) { ['C.1', 'D.4'] }
         let(:data) { { 'C.1': { 'Direct Award Discount (%)': '1.0', 'Call Centre Operations (£)': '12.0' }, 'G.4': { 'Direct Award Discount (%)': '0.5', 'Special Schools (£)': '4.6789' } } }
@@ -209,8 +211,6 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController do
     # rubocop:enable RSpec/NestedGroups
 
     context 'when the framework has expired' do
-      include_context 'and RM3830 has expired'
-
       before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: lot_number } }
 
       context 'when updating the data for lot 1a' do

@@ -159,7 +159,6 @@ en:
     continue: Continue
     create_account: Create account
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
-    da_eligible: DIRECT AWARD ELIGIBLE
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
     error_summary_title: There is a problem
     feedback: feedback
@@ -410,7 +409,6 @@ en:
       cookie_settings_link_aria_label: Change you cookie settings
       crown_copyright: "© Crown copyright"
       error_prefix: Error
-      feedback: feedback
       feedback_html: This is a new service – your %{link} will help us to improve it.
       privacy_link: Privacy policy
       privacy_link_aria_label: View our privacy policy

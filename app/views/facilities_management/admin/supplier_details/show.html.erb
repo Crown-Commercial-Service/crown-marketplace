@@ -3,7 +3,13 @@
   { text: t("facilities_management.#{@framework.downcase}.admin.supplier_details.index.heading"), link: supplier_details_index_path },
   { text: @supplier.supplier_name }
 ) %>
-<%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.supplier_details'), @supplier.supplier_name, nil, nil, nil)) %>
+
+<h1 class="govuk-heading-xl">
+  <span class="govuk-caption-xl">
+    <%= @supplier.supplier_name %>
+  </span>
+  <%= t('.supplier_details') %>
+</h1>
 
 <%= framework_expired_warning(t("facilities_management.#{params[:framework].downcase}.admin.you_cannot_update.details")) %>
 

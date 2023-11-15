@@ -32,10 +32,6 @@ Then('the {string} is {string} on the supplier details page') do |supplier_detai
   expect(admin_page.supplier_details.send(supplier_detail.to_sym).detail).to have_content(text)
 end
 
-Then('the current user has the user email') do
-  expect(admin_page.supplier_details.send(:'Current user').detail).to have_content(@user.email)
-end
-
 Then('I enter {string} into the {string} field') do |supplier_detail, field|
   admin_page.supplier_detail_form.send(field.to_sym).set(supplier_detail)
 end

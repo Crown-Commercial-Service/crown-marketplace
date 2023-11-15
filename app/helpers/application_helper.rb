@@ -8,39 +8,8 @@ module ApplicationHelper
     link_to(t('common.feedback'), Marketplace.fm_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link')
   end
 
-  def dfe_account_request_url
-    'https://ccsheretohelp.uk/contact/?type=ST18/19'
-  end
-
   def support_telephone_number
     Marketplace.support_telephone_number
-  end
-
-  def govuk_email_link(email_address, aria_label, css_class: 'govuk-link')
-    mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
-  end
-
-  # rubocop:disable Metrics/ParameterLists
-  def govuk_form_field(model_object, attribute, form_object_name, label_text, readable_property_name, top_level_data_options)
-    css_classes = %w[govuk-!-margin-top-3]
-    form_group_css = ['govuk-form-group']
-    form_group_css += ['govuk-form-group--error'] if model_object.errors[attribute].any?
-    label_for_id = form_object_name
-    id_for_label = "#{form_object_name}_#{attribute}-info"
-    label_for_id += "_#{attribute}" if form_object_name.exclude?(attribute.to_s)
-
-    tag.div(class: css_classes, data: { propertyname: readable_property_name }) do
-      tag.div(class: form_group_css, data: top_level_data_options) do
-        concat display_label(attribute, label_text, label_for_id, id_for_label) if label_text.present?
-        concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
-        yield
-      end
-    end
-  end
-  # rubocop:enable Metrics/ParameterLists
-
-  def display_label(_attribute, text, form_object_name, _id_for_label)
-    tag.label(text, class: 'govuk-label', for: form_object_name)
   end
 
   def govuk_form_group_with_optional_error(journey, *attributes, &)
@@ -59,42 +28,6 @@ module ApplicationHelper
     options['aria-describedby'] = attributes_with_errors.map { |a| error_id(a) } if attributes_with_errors.any?
 
     tag.fieldset(**options, &)
-  end
-
-  def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
-    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
-
-    collection.each do |key, val|
-      concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
-    end
-  end
-
-  def property_name(section_name, attributes)
-    return "#{section_name}_#{attributes.is_a?(Array) ? attributes.last : attributes}" unless section_name.nil?
-
-    (attributes.is_a?(Array) ? attributes.last : attributes).to_s
-  end
-
-  def display_potential_errors(model_object, attributes, form_object_name, section_name = nil)
-    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
-    return if collection.empty?
-
-    tag.div(class: 'error-collection potenital-error', property_name: property_name(section_name, attributes)) do
-      multiple_validation_errors(model_object, attributes, form_object_name, collection)
-    end
-  end
-
-  def model_attribute_has_error(model_object, *attributes)
-    result = false
-    attributes.any? { |a| result |= model_object.errors[a]&.any? }
-  end
-
-  def model_has_error?(model_object, error_type, *attributes)
-    attributes.any? { |a| model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil) == error_type }
-  end
-
-  def display_errors(journey, *attributes)
-    safe_join(attributes.map { |a| display_error(journey, a) })
   end
 
   def display_error(journey, attribute, margin = true, id_prefix = '')
@@ -126,39 +59,6 @@ module ApplicationHelper
     return ERROR_TYPES[errors.details[attribute].first[:error]] if ERROR_TYPES.key?(errors.details[attribute].try(:first)[:error])
 
     errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(errors.details[attribute].first[:error])
-  end
-
-  def get_client_side_error_type_from_model(model, attribute)
-    return ERROR_TYPES[model.errors.details[attribute].first[:error]] if ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
-
-    model.errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
-  end
-
-  def display_error_label(model, attribute, label_text, target)
-    error = model.errors[attribute].first
-    return if error.blank?
-
-    tag.label(data: { validation: get_client_side_error_type_from_model(model, attribute).to_s }, for: target, id: error_id(attribute), class: 'govuk-error-message') do
-      "#{label_text} #{error}"
-    end
-  end
-
-  def display_error_no_attr(object, attribute)
-    error = object.errors[attribute].first
-    return if error.blank?
-
-    tag.span(id: error_id(attribute.to_s), class: 'govuk-error-message govuk-!-margin-top-3') do
-      error.to_s
-    end
-  end
-
-  def display_error_nested_models(object, attribute)
-    error = object.errors[attribute].first
-    return if error.blank?
-
-    tag.span(id: error_id(object.id), class: 'govuk-error-message govuk-!-margin-top-3') do
-      error.to_s
-    end
   end
 
   def css_classes_for_input(journey, attribute, extra_classes = [])
@@ -236,10 +136,6 @@ module ApplicationHelper
     }
 
     tag.strong(text, class: ['govuk-tag'] << extra_classes[colour])
-  end
-
-  def da_eligible?(code)
-    FacilitiesManagement::RM3830::Rate.where.not(framework: nil).map(&:code).include? code
   end
 
   def service_specification_document(framework)
@@ -328,29 +224,6 @@ module ApplicationHelper
     end
 
     nuts1_regions
-  end
-
-  def rm3830_accordion_service_items(service_codes)
-    services = FacilitiesManagement::RM3830::StaticData.services
-    work_packages = FacilitiesManagement::RM3830::StaticData.work_packages
-
-    services.map do |service|
-      [
-        service['code'],
-        {
-          name: service['name'],
-          items: work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.map do |work_package|
-            {
-              code: work_package['code'].tr('.', '-'),
-              value: work_package['code'],
-              name: work_package['name'],
-              selected: service_codes&.include?(work_package['code']),
-              description: work_package['description']
-            }
-          end
-        }
-      ]
-    end
   end
 
   def rm6232_accordion_service_items(service_codes)
