@@ -101,12 +101,12 @@ class AccordionSection implements AccordionSectionInterface {
   private readonly selectAllcheckBox: AccordionSelectAllItem
 
   constructor (basket: Basket, $section: JQuery<HTMLElement>) {
-    $section.find('div.govuk-checkboxes__item:not(.ccs-select-all) > input.govuk-checkboxes__input').each((_index: number, checkBox: HTMLElement) => {
+    $section.find('input.govuk-checkboxes__input:not(.ccs-select-all)').each((_index: number, checkBox: HTMLElement) => {
       this.checkBoxes.push(new AccordionNamedItem(this, basket, $(checkBox) as JQuery<HTMLInputElement>))
     })
 
     this.numberOfCheckboxes = this.checkBoxes.length
-    this.selectAllcheckBox = new AccordionSelectAllItem(this, basket, $section.find('div.ccs-select-all > input') as JQuery<HTMLInputElement>)
+    this.selectAllcheckBox = new AccordionSelectAllItem(this, basket, $section.find('input.ccs-select-all') as JQuery<HTMLInputElement>)
   }
 
   private readonly numberOfCheckedItems = (): number => this.checkBoxes.filter((accordionItem: AccordionNamedItem): boolean => accordionItem.isChecked()).length
@@ -175,7 +175,7 @@ class Basket implements BasketInterface {
   }
 
   constructor () {
-    $('.govuk-accordion__section.chooser-section').each((_index: number, accordionSection: HTMLElement) => {
+    $('.govuk-accordion__section').each((_index: number, accordionSection: HTMLElement) => {
       this.accordionSections.push(new AccordionSection(this, $(accordionSection)))
     })
 
@@ -240,7 +240,7 @@ class Basket implements BasketInterface {
 }
 
 const initCheckboxAccordion = (): void => {
-  if ($('.govuk-accordion__section.chooser-section').length > 0) new Basket()
+  if ($('.govuk-accordion.ccs-basket-accordion').length > 0) new Basket()
 }
 
 export default initCheckboxAccordion

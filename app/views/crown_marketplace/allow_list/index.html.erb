@@ -48,19 +48,33 @@
   </div>
 </div>
 
-<div class="govuk-grid-row" id="allow-list-search-container">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: search_allow_list_crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :get, html: { specialvalidation: true, remote: true } do |f| %>
-      <%= hidden_field_tag :email_domain_added, params[:email_domain_added] %>
-      <%= f.label :email_domain, t('.find_an_email_domain'), class: 'govuk-label--m' %>
-      <p class="govuk-hint" id="allow-list-search-hint">
-        <%= t('.enter_an_email_domain') %>
-      </p>
-      <%= f.text_field  :email_domain, class: 'govuk-input govuk-!-width-three-quarters govuk-!-margin-right-2', type: 'search', aria: { describedby: 'allow-list-search-hint' } %>
-      <%= govuk_button(t('.search'), form: f, classes: 'govuk-button--secondary') %>
-    <% end %>
+<%= form_with url: search_allow_list_crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :get, html: { specialvalidation: true, remote: true } do |f| %>
+  <%= hidden_field_tag :email_domain_added, params[:email_domain_added] %>
+  <div class="govuk-grid-row" id="allow-list-search-container">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_input(
+        :email_domain,
+        form: f,
+        label: {
+          text: t('.find_an_email_domain'),
+          classes: 'govuk-label--m'
+        },
+        hint: {
+          text: t('.enter_an_email_domain')
+        },
+        classes: 'govuk-!-width-three-quarters',
+        attributes: {
+          type: 'search'
+        }
+      ) %>
+    </div>
   </div>
-</div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_button(t('.search'), form: f, classes: 'govuk-button--secondary') %>
+    </div>
+  </div>
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds" id="allow-list-table">
