@@ -8,7 +8,7 @@ Feature: Forgot my password - RM6232 - Admin - Validations
 
   Scenario Outline: I forgot my password - email invalid
     And I enter the following details into the form:
-      | email | <value> |
+      | Email address | <value> |
     And I click on 'Send reset email'
     Then I should see the following error messages:
       | Enter your email address in the correct format, like name@example.com |

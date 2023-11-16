@@ -1,6 +1,6 @@
 Then 'I sign in with cognito' do
-  fill_in 'email', with: @user_email
-  fill_in 'password', with: 'ValidPassword'
+  fill_in 'Email address', with: @user_email
+  fill_in 'Password', with: 'ValidPassword'
   click_button 'Sign in'
 end
 
