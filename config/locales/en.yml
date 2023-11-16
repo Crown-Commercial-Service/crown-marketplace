@@ -183,6 +183,10 @@ en:
     unit:
       one: company
       other: companies
+  date:
+    day: Day
+    month: Month
+    year: Year
   errors:
     contact_ccs:
       contact_ccs_html: "%{link} if you believe you are seeing this message in error."
