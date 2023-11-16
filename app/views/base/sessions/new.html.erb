@@ -1,61 +1,60 @@
+<%= content_for :page_title, local_header_text %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_warning_text(t('.session_expired')) if params[:expired] == 'true' %>
 
     <%= render partial: 'shared/error_summary', locals: { errors: @result.errors } %>
-  </div>
-</div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <% unless local_header_text.nil? %>
-      <%= content_for :page_title, local_header_text %>
-      <h1 class="govuk-heading-xl">
-        <%= local_header_text %>
-      </h1>
-    <% end %>
-  </div>
-</div>
+    <h1 class="govuk-heading-xl">
+      <%= local_header_text %>
+    </h1>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_for resource, as: resource_name, url: new_user_session_path, method: :post, html: { specialvalidation: true, novalidate: true, class: 'ccs-form', id: 'cop_sign_in_form'} do |f| %>
-      <input type="hidden" name="expired" value="<%= params[:expired]%>"/>
-      <div class="govuk-form-group govuk-!-margin-bottom-4 <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
-        <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="email">
-          <%=  t('.email_address')%>
-        </label>
-        <div id="email-hint" class="govuk-hint">
-          <%= local_email_hint_text %>
-        </div>
+    <%= form_with url: new_user_session_path, model: @result, method: :post, html: { novalidate: true } do |f| %>
+      <%= hidden_field_tag :expired, params[:expired] %>
 
-        <span id="email-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-          <%= t('.please_enter_a_valid_email_address') %>
-        </span>
-        <%= display_error(@result, :email) %>
-        <%=  f.email_field :email, value: "#{ @result.email unless @result.email.nil? }", class:"govuk-input govuk-!-width-two-thirds", id:"email", autocomplete: "off", spellcheck:'false', aria: {describedby: "email-hint"}  %>
-      </div>
+      <%= govuk_input(
+        :email,
+        form: f,
+        label: {
+          text: t('.email_address'),
+          classes: 'govuk-label--m'
+        },
+        hint: {
+          text: t('.email_hint')
+        },
+        field_type: :email,
+        classes: 'govuk-!-width-two-thirds',
+        attributes: {
+          name: "#{resource_name}[email]",
+          autofocus: true,
+          autocomplete: 'off',
+          spellcheck: false,
+          required: true
+        }
+      ) %>
 
-      <div class="govuk-form-group govuk-!-margin-bottom-7 <%= 'govuk-form-group--error' if @result.errors[:password].any? %>">
-        <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="password">
-          <%= t('.password') %>
-        </label>
+      <%= govuk_input(
+        :password,
+        form: f,
+        label: {
+          text: t('.password'),
+          classes: 'govuk-label--m'
+        },
+        field_type: :password,
+        classes: 'govuk-!-width-two-thirds',
+        attributes: {
+          name: "#{resource_name}[password]",
+          autocomplete: 'off',
+        }
+      ) %>
 
-        <span id="password-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-          <%= t('.enter_your_password') %>
-        </span>
-        <%= display_error(@result, :password) %>
-        <%= f.password_field :password, class: "govuk-input govuk-!-width-two-thirds", id: "password", autocomplete: "off" %>
-
-      </div>
-
-      <%= f.submit t('common.sign_in'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-label': "#{t('common.sign_in')}" %>
-
+      <%= govuk_button(t('common.sign_in'), form: f, classes: 'govuk-!-padding-left-7 govuk-!-padding-right-7', attributes: { aria: { label: t('common.sign_in') } }) %>
     <% end %>
 
     <% if service_has_registration? %>
       <p class="govuk-body govuk-!-margin-bottom-7">
-        <%= link_to t('.create_ccs_account_html'), sign_up_path, class: "govuk-link" %>
+        <%= link_to t('.create_ccs_account'), sign_up_path, class: "govuk-link" %>
       </p>
     <% end %>
 
@@ -63,10 +62,8 @@
       <%= t('.problems_signing_in') %>
     </h2>
 
-    <ul class="govuk-list">
-      <li>
-        <%= link_to t('.forgotten_password_html'), new_user_password_path, class: 'govuk-link' %>
-      </li>
-    </ul>
+    <p class="govuk-body">
+      <%= link_to t('.forgotten_password'), new_user_password_path, class: 'govuk-link' %>
+    </p>
   </div>
 </div>
