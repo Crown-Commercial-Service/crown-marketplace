@@ -32,15 +32,15 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
           # rubocop:disable RSpec/AnyInstance
           allow_any_instance_of(Cognito::ForgotPassword).to receive(:forgot_password).and_return(true)
           # rubocop:enable RSpec/AnyInstance
-          post :create, params: { email: }
+          post :create, params: { cognito_forgot_password: { email: } }
           cookies.update(response.cookies)
         end
 
         context 'when the email is invalid' do
           let(:email) { 'testtest.com' }
 
-          it 'redirects to the facilities_management_rm6232_new_user_password_path' do
-            expect(response).to redirect_to facilities_management_rm6232_new_user_password_path
+          it 'renders the new page' do
+            expect(response).to render_template(:new)
           end
 
           it 'does not set the crown_marketplace_reset_email cookie' do
@@ -66,7 +66,7 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
           # rubocop:disable RSpec/AnyInstance
           allow_any_instance_of(Cognito::ForgotPassword).to receive(:forgot_password).and_raise(error.new('Some context', 'Some message'))
           # rubocop:enable RSpec/AnyInstance
-          post :create, params: { email: 'test@test.com' }
+          post :create, params: { cognito_forgot_password: { email: 'test@test.com' } }
         end
 
         context 'and the error is UserNotFoundException' do
@@ -80,16 +80,16 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
         context 'and the error is InvalidParameterException' do
           let(:error) { Aws::CognitoIdentityProvider::Errors::InvalidParameterException }
 
-          it 'redirects to the new password page' do
-            expect(response).to redirect_to facilities_management_rm6232_new_user_password_path
+          it 'renders the new page' do
+            expect(response).to render_template(:new)
           end
         end
 
         context 'and the error is ServiceError' do
           let(:error) { Aws::CognitoIdentityProvider::Errors::ServiceError }
 
-          it 'redirects to the new password page' do
-            expect(response).to redirect_to facilities_management_rm6232_new_user_password_path
+          it 'renders the new page' do
+            expect(response).to render_template(:new)
           end
         end
       end
@@ -99,7 +99,7 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
       include_context 'and RM6232 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
-        post :create, params: { email: 'test@test.com' }
+        post :create, params: { cognito_forgot_password: { email: 'test@test.com' } }
 
         expect(response).to render_template('home/unrecognised_framework')
         expect(response).to have_http_status(:bad_request)
@@ -144,7 +144,7 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
         allow_any_instance_of(Cognito::ConfirmPasswordReset).to receive(:create_user_if_needed).and_return(true)
         allow_any_instance_of(Cognito::ConfirmPasswordReset).to receive(:confirm_forgot_password).and_return(true)
         # rubocop:enable RSpec/AnyInstance
-        put :update, params: { email: 'test@test.com', password: password, password_confirmation: password, confirmation_code: '123456' }
+        put :update, params: { cognito_confirm_password_reset: { email: 'test@test.com', password: password, password_confirmation: password, confirmation_code: '123456' } }
         cookies.update(response.cookies)
       end
 
@@ -177,7 +177,7 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
       include_context 'and RM6232 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
-        put :update, params: { email: 'test@test.com', password: 'Password12345!', password_confirmation: 'Password12345', confirmation_code: '123456' }
+        put :update, params: { cognito_confirm_password_reset: { email: 'test@test.com', password: 'Password12345!', password_confirmation: 'Password12345', confirmation_code: '123456' } }
 
         expect(response).to render_template('home/unrecognised_framework')
         expect(response).to have_http_status(:bad_request)

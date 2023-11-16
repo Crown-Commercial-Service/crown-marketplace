@@ -279,5 +279,3 @@ en:
           region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
           region_plural: regions found
           region_singular: region found
-    users:
-      sign_in_error: You must provide a correct username or password
