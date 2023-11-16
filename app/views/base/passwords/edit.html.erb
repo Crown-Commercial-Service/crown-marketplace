@@ -1,71 +1,88 @@
-<%= content_for :page_title, t(".heading") %>
+<%= content_for :page_title, t('.heading') %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
     <%= render partial: 'shared/error_summary', locals: { errors: @response.errors } %>
 
-    <h1 class="govuk-heading-xl">
-      <%= t('.heading') %>
-    </h1>
+    <%= govuk_fieldset(
+      legend: {
+        text: t('.heading'),
+        classes: 'govuk-fieldset__legend--l',
+        is_page_heading: true
+      }
+    ) do %>
+      <p class="govuk-body-l">
+        <%= t('.email_has_been_sent') %>
+      </p>
 
-    <p class="govuk-body-l">
-      <%= t('.heading1') %>
-    </p>
+      <p class="govuk-body-l">
+        <%= t('.if_the_email_address_entered') %>
+      </p>
 
-    <p class="govuk-body-l">
-      <%= t('.lead1') %>
-    </p>
+      <p class="govuk-body-l govuk-!-margin-bottom-7">
+        <%= t('.text_html') %>
+      </p>
 
-    <p class="govuk-body govuk-!-margin-bottom-7">
-      <%= t('.text_html') %>
-    </p>
+      <p class="govuk-body-l">
+        <%= t('.reset_password_for_html', email_link: mail_to(@response.email, @response.email, class: 'govuk-link')) %>
+      </p>
 
-    <p class="govuk-body-l">
-      <%= t('.lead') %> <span class="ccs-email-example"><%= @response.email %></span>
-    </p>
+      <%= form_with url: edit_password_path, model: @response, method: :put, html: { novalidate: true } do |f| %>
+        <%= govuk_input(
+          :password,
+          form: f,
+          label: {
+            text: t('.new_password'),
+            classes: 'govuk-label--m'
+          },
+          hint: {
+            text: capture do
+              concat(tag.p(t('.password'), class: 'govuk-body'))
+              concat(render('/layouts/password-strength', text: 'password01'))
+            end
+          },
+          field_type: :password,
+          classes: 'govuk-!-width-three-quarters',
+          attributes: {
+            id: "password01",
+            autocomplete: 'off',
+          }
+        ) %>
 
-    <%= form_tag edit_password_path, class: 'ccs-form', id: 'cog_forgot_password_reset_form', method: :put do %>
+        <%= govuk_input(
+          :password_confirmation,
+          form: f,
+          label: {
+            text: t('.confirm_new_password'),
+            classes: 'govuk-label--m'
+          },
+          field_type: :password,
+          classes: 'govuk-!-width-three-quarters',
+          attributes: {
+            id: "password02",
+            autocomplete: 'off',
+          }
+        ) %>
 
-      <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+        <%= govuk_input(
+          :confirmation_code,
+          form: f,
+          label: {
+            text: t('.verify_code'),
+            classes: 'govuk-label--m'
+          },
+          field_type: :number,
+          classes: 'govuk-!-width-three-quarters',
+          attributes: {
+            maxlength: '6',
+          }
+        ) %>
 
-        <div class="govuk-form-group <%= 'govuk-form-group--error' if @response.errors[:password].any? %>">
+        <%= f.hidden_field :email, value: @response.email %>
 
-          <p class="govuk-body govuk-!-margin-bottom-1"><%= t('.password') %>:</p>
-
-          <%= render '/layouts/password-strength', text: 'password01' %>
-
-          <label class="govuk-label" for="password01">
-            <%= t('.new_password') %>
-          </label>
-
-          <%= display_error(@response, :password) %>
-          <%= password_field_tag :password, nil, class: "govuk-input govuk-!-width-three-quarters", id: "password01", autocomplete: "off" %>
-        </div>
-
-        <div class="govuk-form-group <%= 'govuk-form-group--error' if @response.errors[:password_confirmation].any? %>">
-          <label class="govuk-label" for="password02">
-            <%= t('.confirm_new_password') %>
-          </label>
-
-          <%= display_error(@response, :password_confirmation) %>
-          <%= password_field_tag :password_confirmation, nil, class: "govuk-input govuk-!-width-three-quarters", id: "password02", autocomplete: "off" %>
-        </div>
-
-        <div class="govuk-form-group <%= 'govuk-form-group--error' if @response.errors[:confirmation_code].any? %>">
-          <label class="govuk-label" for="confirmation-code">
-            <%= t('.verify_code') %>
-          </label>
-
-          <%= display_error(@response, :confirmation_code) %>
-          <%= text_field_tag :confirmation_code, nil,:maxlength => 6, class: "govuk-input govuk-!-width-three-quarters", id: "confirmation-code" %>
-        </div>
-
-      </fieldset>
-
-      <%= hidden_field_tag :email, @response.email %>
-
-      <%= submit_tag t('common.reset_password'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-label': "#{t('common.reset_password')}" %>
-
+        <%= govuk_button(t('common.reset_password'), form: f, classes: 'govuk-!-padding-left-7 govuk-!-padding-right-7', attributes: { aria: { label: t('common.reset_password') } }) %>
+      <% end %>
     <% end %>
   </div>
 </div>
