@@ -1,17 +1,31 @@
-<%= form_group_with_error(f.object, :duns) do |displayed_error, any_errors| %>
-  <%= f.label(:duns, t('.duns_question'), class: 'govuk-label govuk-label--m') %>
-  <div class="govuk-hint">
-    <%= t('.duns_info') %>
-  </div>
-  <%= displayed_error %>
-  <%= f.text_field :duns, class: "govuk-input govuk-input--width-10 ccs-integer-field govuk-!-margin-top-2 #{'govuk-input--error' if any_errors }", maxlength: 9 %>
-<% end %>
+<%= govuk_input(
+  :duns,
+  form: f,
+  label: {
+    text: t('.duns_question'),
+    classes: 'govuk-label--m'
+  },
+  hint: {
+    text: t('.duns_info')
+  },
+  classes: 'govuk-input--width-10 ccs-integer-field',
+  attributes: {
+    maxlength: 9
+  }
+) %>
 
-<%= form_group_with_error(f.object, :registration_number) do |displayed_error, any_errors| %>
-  <%= f.label(:registration_number, t('.registration_number_question'), class: 'govuk-label govuk-label--m') %>
-  <div class="govuk-hint">
-    <%= t('.registration_number_info') %>
-  </div>
-  <%= displayed_error %>
-  <%= f.text_field :registration_number, class: "govuk-input govuk-input--width-10 govuk-!-margin-top-2 #{'govuk-input--error' if any_errors }", maxlength: 8 %>
-<% end %>
+<%= govuk_input(
+  :registration_number,
+  form: f,
+  label: {
+    text: t('.registration_number_question'),
+    classes: 'govuk-label--m'
+  },
+  hint: {
+    text: t('.registration_number_info')
+  },
+  classes: 'govuk-input--width-10 ccs-integer-field',
+  attributes: {
+    maxlength: 8
+  }
+) %>
