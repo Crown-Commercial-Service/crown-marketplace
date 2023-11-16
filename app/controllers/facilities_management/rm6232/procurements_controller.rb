@@ -15,9 +15,11 @@ module FacilitiesManagement
       end
 
       def new
-        @procurement = current_user.rm6232_procurements.build(service_codes: params[:service_codes],
-                                                              region_codes: params[:region_codes],
-                                                              annual_contract_value: params[:annual_contract_value])
+        @procurement = current_user.rm6232_procurements.build(
+          service_codes: params[:service_codes],
+          region_codes: params[:region_codes],
+          annual_contract_value: params[:annual_contract_value]
+        )
 
         @procurement.lot_number = @procurement.quick_view_suppliers.lot_number
         @suppliers = @procurement.quick_view_suppliers.selected_suppliers
