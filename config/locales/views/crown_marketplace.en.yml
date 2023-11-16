@@ -49,7 +49,7 @@ en:
       index:
         add_new_email_domain: Add a new email domain
         added: Email domain added
-        enter_an_email_domain: Enter an email domain and click 'Search' to see if it is in the Allow list.
+        enter_an_email_domain: Enter an email domain and click 'Search for email domain' to see if it is in the Allow list.
         facilities_management: Facilities Management
         find_an_email_domain: Find an email domain
         heading_title: Allow list
@@ -57,7 +57,7 @@ en:
         legal_services: Legal Services
         management_consultancy: Management Consultancy
         removed: Email domain removed
-        search: Search
+        search: Search for email domain
         the_four_Services_are: 'The three Crown Marketplace services are:'
         was_added: "'%{email_domain}' was added to the allow list"
         was_removed: "'%{email_domain}' was removed from the allow list"
@@ -146,10 +146,10 @@ en:
           label: Mobile telephone number
           section: mobile telephone number
       index:
-        enter_an_email: Enter the email of the user and click 'Search' to see if that user has an account in Crown Marketplace.
+        enter_an_email: Enter the email of the user and click 'Search for the user' to see if that user has an account in Crown Marketplace.
         find_a_user: Find a user
         heading: Manage users
-        search: Search
+        search: Search for the user
       new:
         heading: Add a user
         submit: Create user account
