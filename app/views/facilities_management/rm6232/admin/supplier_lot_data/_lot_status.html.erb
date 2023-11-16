@@ -1,24 +1,33 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_group_with_error(f.object, :active) do |displayed_error, any_errors| %>
-      <%= f.hidden_field :active %>
-      <%= f.label(:active, t('.supplier_status_question'), class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0') %>
-      <p class="govuk-body govuk-!-margin-top-4"><%= t('.status_hint') %></p>
-      <%= displayed_error %>
-      <div class="govuk-radios govuk-radios--inline">
-        <div class="govuk-radios__item">
-          <%= f.radio_button :active, true, class: 'govuk-radios__input', required: true %>
-          <%= f.label :active, value: true, class: 'govuk-label govuk-radios__label' do %>
-            <%= govuk_tag(t('.active')) %>
-          <% end %>
-        </div>
-        <div class="govuk-radios__item">
-          <%= f.radio_button :active, false, class: 'govuk-radios__input', required: true %>
-          <%= f.label :active, value: false , class: 'govuk-label govuk-radios__label' do %>
-            <%= govuk_tag(t('.inactive'), :red) %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
+    <%= f.hidden_field :active %>
+    <%= govuk_radios(
+      :active,
+      [
+        {
+          value: true,
+          label: {
+            text: govuk_tag(t('.active'))
+          }
+        },
+        {
+          value: false,
+          label: {
+            text: govuk_tag(t('.inactive'), :red)
+          }
+        }
+      ],
+      form: f,
+      fieldset: {
+        legend: {
+          text: t('.supplier_status_question'),
+          classes: 'govuk-fieldset__legend--m'
+        }
+      },
+      hint: {
+        text: t('.status_hint')
+      },
+      classes: 'govuk-radios--inline'
+    ) %>
   </div>
 </div>

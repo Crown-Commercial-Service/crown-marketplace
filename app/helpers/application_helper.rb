@@ -1,8 +1,6 @@
 # rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
   include CCS::FrontendHelpers
-  include LayoutHelper
-  include GovUKHelper
   include HeaderNavigationLinksHelper
 
   def feedback_email_link
@@ -11,24 +9,6 @@ module ApplicationHelper
 
   def support_telephone_number
     Marketplace.support_telephone_number
-  end
-
-  def govuk_form_group_with_optional_error(journey, *attributes, &)
-    attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
-
-    css_classes = ['govuk-form-group']
-    css_classes += ['govuk-form-group--error'] if attributes_with_errors.any?
-
-    tag.div(class: css_classes, &)
-  end
-
-  def govuk_fieldset_with_optional_error(journey, *attributes, &)
-    attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
-
-    options = { class: 'govuk-fieldset' }
-    options['aria-describedby'] = attributes_with_errors.map { |a| error_id(a) } if attributes_with_errors.any?
-
-    tag.fieldset(**options, &)
   end
 
   def display_error(journey, attribute, margin = true, id_prefix = '')
@@ -40,38 +20,21 @@ module ApplicationHelper
     end
   end
 
-  ERROR_TYPES = {
-    too_long: 'maxlength',
-    too_short: 'minlength',
-    blank: 'required',
-    inclusion: 'required',
-    after: 'max',
-    greater_than: 'min',
-    greater_than_or_equal_to: 'min',
-    before: 'min',
-    less_than: 'max',
-    less_than_or_equal_to: 'max',
-    not_a_date: 'pattern',
-    not_a_number: 'number',
-    not_an_integer: 'number'
-  }.freeze
-
-  def get_client_side_error_type_from_errors(errors, attribute)
-    return ERROR_TYPES[errors.details[attribute].first[:error]] if ERROR_TYPES.key?(errors.details[attribute].try(:first)[:error])
-
-    errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(errors.details[attribute].first[:error])
-  end
-
-  def css_classes_for_input(journey, attribute, extra_classes = [])
-    error = journey.errors[attribute].first
-
-    css_classes = ['govuk-input'] + extra_classes
-    css_classes += ['govuk-input--error'] if error.present?
-    css_classes
-  end
-
   def error_id(attribute)
     "#{attribute}-error"
+  end
+
+  def validation_messages(model_object_sym, *attribute_symbols)
+    translation_key = "errors.models.#{model_object_sym.downcase}.attributes"
+    translation_key += ".#{attribute_symbols.join('.')}"
+
+    %w[activerecord activemodel].each do |active_type|
+      result = t("#{active_type}.#{translation_key}")
+
+      return result unless result.include? 'translation_missing'
+    end
+
+    {}
   end
 
   def page_title
@@ -186,11 +149,20 @@ module ApplicationHelper
 
       next unless nuts1_regions[region_group_code]
 
+      region_name = "#{region.name.gsub(160.chr('UTF-8'), ' ')} (#{region.code})"
+
       nuts1_regions[region.code[..2]][:items] << {
-        code: region.code,
         value: region.code,
-        name: "#{region.name.gsub(160.chr('UTF-8'), ' ')} (#{region.code})",
-        selected: region_codes.include?(region.code)
+        label: {
+          text: region_name,
+        },
+        code: region.code,
+        checked: region_codes.include?(region.code),
+        attributes: {
+          id: "region_#{region.code}",
+          title: region_name,
+          sectionid: region_group_code
+        }
       }
     end
 
@@ -204,12 +176,26 @@ module ApplicationHelper
         {
           name: work_package.name,
           items: work_package.selectable_services.map do |service|
+            service_code = service.code.tr('.', '-')
+
             {
-              code: service.code.tr('.', '-'),
               value: service.code,
-              name: service.name,
-              selected: service_codes&.include?(service.code),
-              description: service.description
+              label: {
+                text: service.name,
+              },
+              hint: {
+                text: capture do
+                  concat(service.description)
+                  concat(tag.hr(class: 'govuk-section-break govuk-!-margin-top-4'))
+                  concat(link_to(t('facilities_management.rm6232.journey.choose_services.learn_more'), facilities_management_rm6232_service_specification_path(service_code), target: '_blank', rel: 'noopener'))
+                end
+              },
+              checked: service_codes&.include?(service.code),
+              attributes: {
+                id: "service_#{service_code}",
+                title: service.name,
+                sectionid: work_package.code
+              }
             }
           end
         }
@@ -276,6 +262,38 @@ module ApplicationHelper
     parameters
   end
   # rubocop:enable Metrics/AbcSize
+
+  def govuk_date_items
+    [
+      {
+        name: 'dd',
+        input: {
+          classes: 'govuk-input--width-2'
+        },
+        label: {
+          text: I18n.t('date.day')
+        }
+      },
+      {
+        name: 'mm',
+        input: {
+          classes: 'govuk-input--width-2'
+        },
+        label: {
+          text: I18n.t('date.month')
+        }
+      },
+      {
+        name: 'yyyy',
+        input: {
+          classes: 'govuk-input--width-4'
+        },
+        label: {
+          text: I18n.t('date.year')
+        }
+      }
+    ]
+  end
 
   STATUS_TO_COLOUR = {
     cannot_start: :grey,
