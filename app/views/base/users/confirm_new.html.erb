@@ -1,6 +1,7 @@
+<%= content_for :page_title, t('.heading') %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
 
     <%= render partial: 'shared/error_summary', locals: { errors: @result.errors }%>
 
@@ -9,43 +10,59 @@
     </h1>
 
     <p class="govuk-body-l">
-      <%= t('.lead_start') %> <span class="ccs-email-example"><%= cookies[:crown_marketplace_confirmation_email] %></span> <%= t('.lead_end') %>
+      <% if @result.email %>
+        <%= t('.lead_html', email_link: mail_to(@result.email, @result.email, class: 'govuk-link')) %>
+      <% else %>
+        <%= t('.lead_no_email') %>
+      <% end %>
     </p>
 
-    <%= form_tag confirm_email_path, class: 'ccs-form', id: 'cop_confirmation_code', specialvalidation: true, novalidate: true, method: :post do %>
+    <%= form_with url: confirm_email_path, model: @result, method: :post, html: { novalidate: true } do |f| %>
+      <%= govuk_input(
+        :confirmation_code,
+        form: f,
+        label: {
+          text: t('.confirmation_code'),
+          classes: 'govuk-label--m'
+        },
+        field_type: :number,
+        classes: 'govuk-!-width-one-third',
+        value: nil,
+        attributes: {
+          autocomplete: 'off',
+        }
+      ) %>
 
-      <div class="govuk-form-group govuk-!-margin-bottom-7  <%= 'govuk-form-group--error' if @result.errors[:confirmation_code].any? %>">
-        <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="confirmation">
-          <%= t('.confirmation_code') %>
-        </label>
-
-        <%= display_error(@result, :confirmation_code) %>
-        <%= text_field_tag :confirmation_code, nil, class: "govuk-input govuk-!-width-one-third", id: 'confirmation', type: 'number' %>
-      </div>
-
-      <% if cookies[:crown_marketplace_confirmation_email] %>
-        <%= hidden_field_tag :email, cookies[:crown_marketplace_confirmation_email], id: 'email' %>
+      <% if @result.email %>
+        <%= f.hidden_field :email, value: @result.email, id: 'email' %>
       <% else %>
-        <div class="govuk-form-group <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
-          <label class="govuk-label" for="email">
-            <%= t('.email') %>
-          </label>
-
-          <%= display_error(@result, :email) %>
-          <%= text_field_tag :email, nil, autofocus: true, autocomplete: "off", class:"govuk-input govuk-!-width-three-quarters", id: "email", spellcheck: false, aria: {describedby: "email-hint"} %>
-        </div>
+        <%= govuk_input(
+          :email,
+          form: f,
+          label: {
+            text: t('.email'),
+            classes: 'govuk-label--m'
+          },
+          field_type: :email,
+          classes: 'govuk-!-width-two-thirds',
+          attributes: {
+            autofocus: true,
+            autocomplete: 'off',
+            spellcheck: false,
+            required: true
+          }
+        ) %>
       <% end %>
 
-      <%= submit_tag t('common.continue'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-label': "#{t('common.continue')}" %>
-
+      <%= govuk_button(t('common.continue'), form: f, classes: 'govuk-!-padding-left-7 govuk-!-padding-right-7', attributes: { aria: { label: t('common.continue') } }) %>
     <% end %>
 
-    <% if cookies[:crown_marketplace_confirmation_email] %>
-      <%= form_tag resend_confirmation_email_path, class: 'ccs-form', id: 'cop_resend_confirmation_code', specialvalidation: true, novalidate: true, method: :post do %>
-        <%= hidden_field_tag :email, cookies[:crown_marketplace_confirmation_email], id: 'resend-email' %>
+    <% if @result.email %>
+      <%= form_with url: resend_confirmation_email_path, model: @result, method: :post, html: { novalidate: true } do |f| %>
+        <%= f.hidden_field :email, value: @result.email, id: 'resend-email' %>
 
         <p class="govuk-body govuk-!-margin-bottom-7">
-          <%= submit_tag t('.resend_the_confirmation_email'), id: "resend-the-confirmation-email", class: "govuk-link button_as_link", aria: { label: t('.resend_the_confirmation_email') } %>
+          <%= f.submit t('.resend_the_confirmation_email'), id: "resend-the-confirmation-email", class: "govuk-link button_as_link", aria: { label: t('.resend_the_confirmation_email') } %>
         </p>
       <% end %>
     <% end %>
