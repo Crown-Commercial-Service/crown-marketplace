@@ -37,7 +37,7 @@ RSpec.describe FacilitiesManagement::RM6232::UsersController do
           # rubocop:disable RSpec/AnyInstance
           allow_any_instance_of(Cognito::ConfirmSignUp).to receive(:confirm_sign_up).and_return(true)
           # rubocop:enable RSpec/AnyInstance
-          post :confirm, params: { email: user_email, confirmation_code: confirmation_code }
+          post :confirm, params: { cognito_confirm_sign_up: { email: user_email, confirmation_code: confirmation_code } }
           cookies.update(response.cookies)
         end
 
@@ -70,7 +70,7 @@ RSpec.describe FacilitiesManagement::RM6232::UsersController do
           # rubocop:disable RSpec/AnyInstance
           allow_any_instance_of(Cognito::ConfirmSignUp).to receive(:confirm_sign_up).and_raise(error.new('Some context', 'Some message'))
           # rubocop:enable RSpec/AnyInstance
-          post :confirm, params: { email: user_email, confirmation_code: confirmation_code }
+          post :confirm, params: { cognito_confirm_sign_up: { email: user_email, confirmation_code: confirmation_code } }
           cookies.update(response.cookies)
         end
 
@@ -105,7 +105,7 @@ RSpec.describe FacilitiesManagement::RM6232::UsersController do
       include_context 'and RM6232 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
-        post :confirm, params: { email: user_email, confirmation_code: '123456' }
+        post :confirm, params: { cognito_confirm_sign_up: { email: user_email, confirmation_code: '123456' } }
 
         expect(response).to render_template('home/unrecognised_framework')
         expect(response).to have_http_status(:bad_request)
@@ -119,7 +119,7 @@ RSpec.describe FacilitiesManagement::RM6232::UsersController do
     context 'when the framework is live' do
       before do
         allow(Cognito::ResendConfirmationCode).to receive(:call).with(email).and_return(Cognito::ResendConfirmationCode.new(email))
-        post :resend_confirmation_email, params: { email: }
+        post :resend_confirmation_email, params: { cognito_confirm_sign_up: { email: } }
       end
 
       it 'redirects to facilities_management_rm6232_users_confirm_path' do
@@ -131,7 +131,7 @@ RSpec.describe FacilitiesManagement::RM6232::UsersController do
       include_context 'and RM6232 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
-        post :resend_confirmation_email, params: { email: }
+        post :resend_confirmation_email, params: { cognito_confirm_sign_up: { email: } }
 
         expect(response).to render_template('home/unrecognised_framework')
         expect(response).to have_http_status(:bad_request)
@@ -204,7 +204,7 @@ RSpec.describe FacilitiesManagement::RM6232::UsersController do
           allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
           allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user:))
 
-          post :challenge, params: { challenge_name: challenge_name, username: username, session: session, new_password: password, new_password_confirmation: password }
+          post :challenge, params: { challenge_name: challenge_name, cognito_respond_to_challenge: { username: username, session: session, new_password: password, new_password_confirmation: password } }
           cookies.update(response.cookies)
         end
 
@@ -258,7 +258,7 @@ RSpec.describe FacilitiesManagement::RM6232::UsersController do
           allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new)
           allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user:))
 
-          post :challenge, params: { challenge_name:, username:, session:, access_code: }
+          post :challenge, params: { challenge_name: challenge_name, cognito_respond_to_challenge: { username:, session:, access_code: } }
           cookies.update(response.cookies)
         end
 
@@ -292,7 +292,7 @@ RSpec.describe FacilitiesManagement::RM6232::UsersController do
       include_context 'and RM6232 has expired'
 
       it 'renders the unrecognised framework page with the right http status' do
-        post :challenge, params: { challenge_name: 'SMS_MFA', username: username, session: session }
+        post :challenge, params: { challenge_name: 'SMS_MFA', cognito_respond_to_challenge: { username:, session: } }
 
         expect(response).to render_template('home/unrecognised_framework')
         expect(response).to have_http_status(:bad_request)
