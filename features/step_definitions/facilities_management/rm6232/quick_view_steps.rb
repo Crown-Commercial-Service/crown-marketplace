@@ -22,7 +22,7 @@ Given('I change the {string} from the selection summary') do |option|
 end
 
 Given('I click on the service specification for {string}') do |service_name|
-  quick_view_page.find('label', text: service_name).find('a').click
+  quick_view_page.find('label', text: service_name).find(:xpath, '../div/a').click
 end
 
 Then('the page sub title is {string}') do |sub_title|

@@ -108,15 +108,18 @@
       <% end %>
 
       <%= f.hidden_field :annual_contract_value %>
-
-      <%= form_group_with_error(f.object, :contract_name) do |displayed_error, any_errors| %>
-        <%= f.label :contract_name, t('.contract_name_label'), class: 'govuk-label govuk-label--m' %>
-        <%= displayed_error %>
-        <div class="govuk-hint">
-          <%= t('.contract_name_hint') %>
-        </div>
-        <%= f.text_field :contract_name, class: "govuk-input govuk-input--width-20 #{'govuk-input--error' if any_errors}" %>
-      <% end %>
+      <%= govuk_input(
+        :contract_name,
+        form: f,
+        label: {
+          text: t('.contract_name_label'),
+          classes: 'govuk-label--m'
+        },
+        hint: {
+          text: t('.contract_name_hint')
+        },
+        classes: 'govuk-input--width-20',
+      ) %>
 
       <%= govuk_button(t('.save_and_continue'), form: f, attributes: { name: 'save_and_continue' }) %>
       <p>
