@@ -55,7 +55,7 @@ RSpec.describe CrownMarketplace::UsersController do
         allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new(challenge_name: new_challenge_name, session: new_session))
         allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user:))
 
-        post :challenge, params: { challenge_name: challenge_name, username: username, session: session, new_password: password, new_password_confirmation: password }
+        post :challenge, params: { challenge_name: challenge_name, cognito_respond_to_challenge: { username: username, session: session, new_password: password, new_password_confirmation: password } }
         cookies.update(response.cookies)
       end
 
@@ -109,7 +109,7 @@ RSpec.describe CrownMarketplace::UsersController do
         allow(aws_client).to receive(:respond_to_auth_challenge).and_return(respond_to_auth_challenge_resp_struct.new)
         allow(Cognito::CreateUserFromCognito).to receive(:call).and_return(admin_create_user_resp_struct.new(user:))
 
-        post :challenge, params: { challenge_name:, username:, session:, access_code: }
+        post :challenge, params: { challenge_name: challenge_name, cognito_respond_to_challenge: { username:, session:, access_code: } }
         cookies.update(response.cookies)
       end
 
