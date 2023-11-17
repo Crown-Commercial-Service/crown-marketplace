@@ -1,0 +1,11 @@
+#ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__divider,
+#ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__item:last-child {
+  display: none;
+}
+
+body.js-enabled {
+  #ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__divider,
+  #ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__item:last-child {
+    display: block;
+  }
+}
