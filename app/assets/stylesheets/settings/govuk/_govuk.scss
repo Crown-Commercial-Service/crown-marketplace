@@ -1,0 +1,13 @@
+// Override font and image url functions due to location of those assets
+$govuk-assets-path: "assets/govuk-frontend/govuk/assets/";
+
+// Make sure that all p tags and a tags have the GOV.UK Styles by default
+$govuk-global-styles: true;
+
+// Set the button colour for the app
+$govuk-button-background-colour: ccs-colour("button-green");
+
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700');
+
+$govuk-font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
+$govuk-font-family-print: sans-serif;

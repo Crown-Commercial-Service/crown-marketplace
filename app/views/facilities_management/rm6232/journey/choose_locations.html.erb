@@ -2,91 +2,89 @@
 <% content_for :page_title, t('.question') %>
 
 <div class="procurement">
-  <div class="locations chooser-component">
-    <div id="ccs-accordion-with-basket" class="govuk-grid-row">
-      <%= form_with url: @form_path, method: :get, html: { specialvalidation: true, novalidate: true } do |f| %>
-        <div class="govuk-grid-column-two-thirds">
-          <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-          <%= govuk_form_group(:region_codes, model: @journey) do |error_message|%>
-            <%= govuk_fieldset(
-              legend: {
-                text: t('.heading'),
-                is_page_heading: true,
-                classes: 'govuk-fieldset__legend--l'
-              }
-            ) do %>
-              <h2 class="govuk-heading-m">
-                <%= t('.question') %>
-              </h2>
-              <div class="govuk-hint">
-                <%= t('.subtitle') %>
-              </div>
-              <%= govuk_details(t('.need_help')) do %>
-                <p>
-                  <%= t('.the_regions') %>
-                </p>
-                <p>
-                  <%= t('.more_information.sentence_html', ons_link:  link_to(t('.more_information.link_text'), t('.more_information.link_url'), class: 'govuk-link govuk-link--no-visited-state')) %>
-                </p>
-              <% end %>
-              <hr class="govuk-section-break govuk-section-break--s">
-              <%= error_message %>
-              <div class="chooser-input">
-                <%= govuk_accordion(
-                  'choose-locations',
-                  accordion_region_items(@journey.current_step.region_codes, with_overseas: true).map do |section_id, section|
-                    {
-                      heading: section[:name],
-                      content: govuk_checkboxes(
-                        :region_codes,
-                        section[:items] + if section[:items].length > 1
-                          [
-                            {
-                              divider: t('common.radio_driver')
-                            },
-                            {
-                              value: '',
-                              label: {
-                                text: 'Select all'
-                              },
-                              classes: 'ccs-select-all',
-                              attributes: {
-                                id: "regions_#{section_id}_all",
-                                name: "section-checkbox_select_all"
-                              }
-                            }
-                          ]
-                        else
-                          []
-                        end,
-                        fieldset: {
-                          legend: {
-                            text: t('.checkbox_legend', section: section[:name]),
-                            classes: 'govuk-visually-hidden'
-                          }
-                        },
-                        attributes: {
-                          'data-section': section_id,
-                          'data-sectionname': section[:name]
-                        }
-                      )
-                    }
-                  end,
-                  classes: 'ccs-basket-accordion'
-                ) %>
-              </div>
+  <div id="ccs-accordion-with-basket" class="govuk-grid-row">
+    <%= form_with url: @form_path, method: :get, html: { specialvalidation: true, novalidate: true } do |f| %>
+      <div class="govuk-grid-column-two-thirds">
+        <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+        <%= govuk_form_group(:region_codes, model: @journey) do |error_message|%>
+          <%= govuk_fieldset(
+            legend: {
+              text: t('.heading'),
+              is_page_heading: true,
+              classes: 'govuk-fieldset__legend--l'
+            }
+          ) do %>
+            <h2 class="govuk-heading-m">
+              <%= t('.question') %>
+            </h2>
+            <div class="govuk-hint">
+              <%= t('.subtitle') %>
+            </div>
+            <%= govuk_details(t('.need_help')) do %>
+              <p>
+                <%= t('.the_regions') %>
+              </p>
+              <p>
+                <%= t('.more_information.sentence_html', ons_link:  link_to(t('.more_information.link_text'), t('.more_information.link_url'), class: 'govuk-link govuk-link--no-visited-state')) %>
+              </p>
             <% end %>
+            <hr class="govuk-section-break govuk-section-break--s">
+            <%= error_message %>
+            <div class="chooser-input">
+              <%= govuk_accordion(
+                'choose-locations',
+                accordion_region_items(@journey.current_step.region_codes, with_overseas: true).map do |section_id, section|
+                  {
+                    heading: section[:name],
+                    content: govuk_checkboxes(
+                      :region_codes,
+                      section[:items] + if section[:items].length > 1
+                        [
+                          {
+                            divider: t('common.radio_driver')
+                          },
+                          {
+                            value: '',
+                            label: {
+                              text: 'Select all'
+                            },
+                            classes: 'ccs-select-all',
+                            attributes: {
+                              id: "regions_#{section_id}_all",
+                              name: "section-checkbox_select_all"
+                            }
+                          }
+                        ]
+                      else
+                        []
+                      end,
+                      fieldset: {
+                        legend: {
+                          text: t('.checkbox_legend', section: section[:name]),
+                          classes: 'govuk-visually-hidden'
+                        }
+                      },
+                      attributes: {
+                        'data-section': section_id,
+                        'data-sectionname': section[:name]
+                      }
+                    )
+                  }
+                end,
+                classes: 'ccs-basket-accordion'
+              ) %>
+            </div>
           <% end %>
-          <%= hidden_field_tag :annual_contract_value, params[:annual_contract_value] if params[:annual_contract_value] %>
-          <%= govuk_button(t('common.submit'), form: f, attributes: { aria: { label: t('common.submit') } }) %>
-          <p>
-            <%= link_to t('.return_text'), facilities_management_rm6232_path, class: 'govuk-link' %>
-          </p>
-        </div>
-        <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
-          <%= render partial: 'facilities_management/shared/baskets/regions_basket' %>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+        <%= hidden_field_tag :annual_contract_value, params[:annual_contract_value] if params[:annual_contract_value] %>
+        <%= govuk_button(t('common.submit'), form: f, attributes: { aria: { label: t('common.submit') } }) %>
+        <p>
+          <%= link_to t('.return_text'), facilities_management_rm6232_path, class: 'govuk-link' %>
+        </p>
+      </div>
+      <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
+        <%= render partial: 'facilities_management/shared/baskets/regions_basket' %>
+      </div>
+    <% end %>
   </div>
 </div>

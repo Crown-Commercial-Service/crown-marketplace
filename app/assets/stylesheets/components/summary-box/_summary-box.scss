@@ -1,7 +1,7 @@
 .ccs-summary-box {
   @extend %govuk-body-m;
 
-  background-color: #f8f8f8;
+  background-color: ccs-colour("light-grey");
   padding: govuk-spacing(3);
 }
 
@@ -27,7 +27,7 @@
 }
 
 .ccs-summary-box__content {
-  background-color: #ffffff;
+  background-color: ccs-colour("white");
   padding: govuk-spacing(2);
 
   & details {
