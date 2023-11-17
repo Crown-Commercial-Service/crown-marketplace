@@ -1,0 +1,83 @@
+#css-list-basket {
+  display: none;
+
+  .govuk-heading-m {
+    margin-left: govuk-spacing(2);
+    margin-bottom: 0;
+  }
+
+  #removeAll {
+    margin: govuk-spacing(2) 0 govuk-spacing(3) govuk-spacing(2);
+    display: inline-block;
+  }
+
+  & > .govuk-button {
+    width: 100%;
+  }
+
+  & > div {
+    background-color: ccs-colour("light-grey");
+    padding: govuk-spacing(3);
+  }
+
+  ul.govuk-list {
+    margin: 0;
+
+    li {
+      @include govuk-clearfix;
+
+      background-color: govuk-colour("white");
+      margin-bottom: 0;
+      padding: govuk-spacing(2) govuk-spacing(2);
+      border-top: 1px solid ccs-colour("mid-grey");
+
+      &:first-child {
+        border-top: none;
+      }
+
+      span {
+        text-align: left;
+        font-size: 1rem;
+        top: 0;
+        top: 0;
+        float: left;
+        padding-top: 2px;
+        width: 66%;
+      }
+
+      a {
+        width: 33%;
+        text-align: right;
+        font-size: 14px;
+        font-size: 0.9rem;
+        position: relative;
+        top: -2px;
+        display: inline-block;
+      }
+    }
+
+    li:first-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+      li {
+        span,
+        a {
+          width: 100% !important;
+          text-align: left !important;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 641px) {
+    & > .govuk-button {
+      display: inline-block;
+    }
+  }
+}
+
+body.js-enabled #css-list-basket {
+  display: block;
+}
