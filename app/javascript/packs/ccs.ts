@@ -11,7 +11,6 @@ import initLimitInputToInteger from '../src/facilitiesManagement/integerInput'
 import initManagementReport from '../src/facilitiesManagement/rm3830/admin/managementReport'
 import initNumberWithCommas from '../src/facilitiesManagement/numberWithCommas'
 import initPasswordStrength from '../src/shared/passwordStrength'
-import initResultsToggle from '../src/facilitiesManagement/procurements/resultsToggle'
 import initRM3830AdminAdminUpload from '../src/facilitiesManagement/rm3830/admin/adminUploadProgress'
 import initSelectRegion from '../src/facilitiesManagement/procurements/selectRegion'
 import initStepByStepNav from '../src/shared/stepByStepNav'
@@ -20,7 +19,6 @@ import initSupplierDataSnapshot from '../src/facilitiesManagement/rm6232/admin/s
 $(document).on('turbolinks:load', () => {
   // Facilities Management - Procurements TS
   initChooseServicesForBuilding()
-  initResultsToggle()
   initSelectRegion()
 
   // Facilities Management - RM3830 - Admin TS
