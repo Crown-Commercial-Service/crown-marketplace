@@ -162,7 +162,7 @@ class BasketItem implements BasketItemInterface {
 }
 
 class Basket implements BasketInterface {
-  private readonly $basket: JQuery<HTMLElement> = $('.basket')
+  private readonly $basket: JQuery<HTMLElement> = $('#css-list-basket')
   private readonly $itemList: JQuery<HTMLUListElement> = this.$basket.find('ul')
   private readonly $numberOfItems: JQuery<HTMLElement> = this.$basket.find('h3')
   private readonly $removeAllLink: JQuery<HTMLAnchorElement> = this.$basket.find('div > a') as JQuery<HTMLAnchorElement>
@@ -213,7 +213,6 @@ class Basket implements BasketInterface {
       isShown = false
     } else if (numberOfItems === 1) {
       numberOfItemsText = this.textOptions.single_item
-      isShown = false
     } else {
       numberOfItemsText = this.textOptions.plural_items
     }
@@ -223,7 +222,7 @@ class Basket implements BasketInterface {
   }
 
   private readonly toggleRemoveAllButton = (isShown: boolean): void => {
-    isShown ? this.$removeAllLink.show() : this.$removeAllLink.hide()
+    this.$removeAllLink.toggle(isShown)
   }
 
   private readonly removeAll = (event: JQuery.ClickEvent): void => {
