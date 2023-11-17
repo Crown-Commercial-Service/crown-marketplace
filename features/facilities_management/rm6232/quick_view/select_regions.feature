@@ -11,12 +11,12 @@ Feature: Select regions
     Then I am on the 'Regions' page
     And I show all sections
 
-  Scenario: Region selection appears in basked
+  Scenario: Region selection appears in basket
     Then the basket should say 'No regions selected'
     And the remove all link should not be visible
     When I select 'Tees Valley and Durham'
     Then the basket should say '1 region selected'
-    And the remove all link should not be visible
+    And the remove all link should be visible
     And the following items should appear in the basket:
       | Tees Valley and Durham (UKC1) |
     When I select the following items:
