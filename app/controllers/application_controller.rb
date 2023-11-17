@@ -54,13 +54,6 @@ class ApplicationController < ActionController::Base
   delegate :ccs_homepage_url, to: Marketplace
   helper_method :ccs_homepage_url
 
-  #       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
-  # to copy the cached choices
-  def set_current_choices
-    TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
-    TransientSessionInfo[session.id] = JSON.parse(flash['current_choices']) if flash['current_choices'] && params['current_choices'].nil?
-  end
-
   protected
 
   def configure_permitted_parameters
