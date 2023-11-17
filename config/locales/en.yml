@@ -166,7 +166,7 @@ en:
     passcap: at least one capital letter
     passeight: at least 8 characters
     passnum: at least one number
-    passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    passsymbol_html: at least one symbol (eg ?, !, &pound;, &percnt;)
     pdf_html: <abbr title="PDF">PDF</abbr>
     radio_driver: or
     reset_password: Reset password
