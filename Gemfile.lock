@@ -61,7 +61,7 @@ GEM
     activerecord (7.0.8)
       activemodel (= 7.0.8)
       activesupport (= 7.0.8)
-    activerecord-import (1.5.0)
+    activerecord-import (1.5.1)
       activerecord (>= 4.2)
     activerecord-postgis-adapter (8.0.3)
       activerecord (~> 7.0.0)
@@ -629,7 +629,7 @@ PLATFORMS
 DEPENDENCIES
   aasm (~> 5.5)
   active_storage_validations (>= 1.0.3)
-  activerecord-import (~> 1.5.0)
+  activerecord-import (~> 1.5.1)
   activerecord-postgis-adapter (>= 6.0.3)
   after_commit_everywhere (~> 1.3)
   amoeba (>= 3.2.0)
