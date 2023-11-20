@@ -245,7 +245,7 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faker (3.2.1)
+    faker (3.2.2)
       i18n (>= 1.8.11, < 2)
     faraday (2.3.0)
       faraday-net_http (~> 2.0)
@@ -658,7 +658,7 @@ DEPENDENCIES
   dotenv-rails (>= 2.8.1)
   email_validator
   factory_bot_rails (>= 6.2.0)
-  faker (~> 3.2.1)
+  faker (~> 3.2.2)
   fog-aws (>= 3.14.0)
   geocoder (>= 1.6.1)
   gov_uk_date_fields (>= 4.2.0)
