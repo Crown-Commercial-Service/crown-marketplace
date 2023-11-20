@@ -1,6 +1,6 @@
 <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-<%= warning_text(t('facilities_management.rm3830.admin.you_cannot_update.rates')) %>
+<%= govuk_warning_text(t('facilities_management.rm3830.admin.you_cannot_update.rates')) %>
 
 <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
   <%= t('.leading_text') %><br/>
@@ -10,52 +10,67 @@
 <% @full_services.each do |service| %>
   <% rate_is_money = service['value_type'] == 'money' %>
 
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-one-quarter left"><%= service['name'] %></th>
-          <% if rate_is_money && service['standard_b'] || service['standard_c']%>
-            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
-              <%= t('.rate_a') %>
-            </th>
-          <% else %>
-            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left" colspan="3">
-              <%= t('.rate') %>
-            </th>
-          <% end %>
-        </th>
-        <% if service['standard_b']  %>
-          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= t('.rate_b') %> </th>
-        <% end %>
-        <% if service['standard_c'] %>
-          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"> <%= t('.rate_c') %> </th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      <% service['work_package'].each do |work_pckg| %>
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td" scop="row">
-            <%= "#{work_pckg['code']} #{work_pckg['name']}" %>
-          </th>
+  <%= govuk_table(
+    [
+      {
+        text: service['name'],
+        classes: 'app-custom-class govuk-!-font-weight-bold govuk-!-width-two-thirds left'
+      }
+    ] + if rate_is_money && service['standard_b'] || service['standard_c']
+          [
+            {
+              text: t('.rate_a'),
+              classes: 'app-custom-class govuk-!-font-weight-bold left'
+            },
+            {
+              text: t('.rate_b'),
+              classes: 'app-custom-class govuk-!-font-weight-bold left'
+            },
+            {
+              text: t('.rate_c'),
+              classes: 'app-custom-class govuk-!-font-weight-bold left'
+            }
+          ]
+        else
+          [
+            {
+              text: t('.rate'),
+              classes: 'app-custom-class govuk-!-font-weight-bold left',
+              attributes: {
+                colspan: 3
+              }
+            }
+          ]
+        end,
+    service['work_package'].map do |work_pckg|
+      [
+        {
+          text: "#{work_pckg['code']} #{work_pckg['name']}",
+          classes: 'govuk-!-font-weight-regular supplier-rates-td'
+        }
+      ] + [
+        Proc.new {|rate| rate.standard.blank? || rate.standard == 'A'},
+        Proc.new {|rate| rate.standard == 'B'},
+        Proc.new {|rate| rate.standard == 'C'}
+      ].map do |selector|
+        rate = rate = work_pckg['rates'].find(&selector)
 
-          <% [Proc.new {|rate| rate.standard.blank? || rate.standard == 'A'},
-              Proc.new {|rate| rate.standard == 'B'},
-              Proc.new {|rate| rate.standard == 'C'}].each do |selector| %>
-            <td class="govuk-table__cell supplier-rates-td">
-              <% rate = rate = work_pckg['rates'].find(&selector) %>
-
-              <%= "#{rate_is_money ? '£' : ''}#{rate.read_attribute_before_type_cast(:benchmark) * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}" if rate && rate.read_attribute_before_type_cast(:benchmark)%>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+        {
+          text: if rate && rate.read_attribute_before_type_cast(:benchmark)
+                  "#{rate_is_money ? '£' : ''}#{rate.read_attribute_before_type_cast(:benchmark) * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}"
+                else
+                  ''
+                end,
+          classes: 'supplier-rates-td'
+        }
+      end
+    end,
+    first_cell_is_header: true
+  ) %>
 <% end %>
 
 <h2 class="govuk-heading-xl govuk-!-font-weight-bold govuk-!-margin-bottom-2"><%= t('.heading_two') %></h2>
-<p class="govuk-body govuk-brand-light-grey-benchmark">
+<p class="govuk-body govuk-hint">
   <%= t('.benchmark_text') %>
 </p>
 

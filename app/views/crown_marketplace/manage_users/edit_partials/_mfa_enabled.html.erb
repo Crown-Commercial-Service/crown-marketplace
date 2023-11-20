@@ -1,28 +1,28 @@
-<%= form_group_with_error(f.object, :mfa_enabled) do |displayed_error| %>
-  <fieldset class="govuk-fieldset" aria-describedby="mfa-enabled-hint">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-      <%= t('.legend') %>
-    </legend>
-  </fieldset>
-  <%= govuk_hint(
+<%= govuk_radios(
+  :mfa_enabled,
+  [
     {
-      text: t('.hint'),
-      id: 'mfa-enabled-hint'
+      value: true,
+      label: {
+        text: govuk_tag(*enabled_disabled_status_tag(true))
+      }
+    },
+    {
+      value: false,
+      label: {
+        text: govuk_tag(*enabled_disabled_status_tag(false))
+      }
     }
-  ) %>
-  <%= displayed_error %>
-  <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
-    <div class="govuk-radios__item">
-      <%= f.radio_button :mfa_enabled, true, class: 'govuk-radios__input', required: true, aria: { describedby: 'mfa-enabled-hint' } %>
-      <%= f.label :mfa_enabled, value: true, class: 'govuk-label govuk-radios__label' do %>
-        <%= govuk_tag_with_text(*enabled_disabled_status_tag(true)) %>
-      <% end %>
-    </div>
-    <div class="govuk-radios__item">
-      <%= f.radio_button :mfa_enabled, false, class: 'govuk-radios__input', required: true, aria: { describedby: 'mfa-enabled-hint' } %>
-      <%= f.label :mfa_enabled, value: false, class: 'govuk-label govuk-radios__label' do %>
-        <%= govuk_tag_with_text(*enabled_disabled_status_tag(false)) %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+  ],
+  form: f,
+  fieldset: {
+    legend: {
+      text: t('.legend'),
+      classes: 'govuk-fieldset__legend--m'
+    }
+  },
+  hint: {
+    text: t('.hint')
+  },
+  classes: 'govuk-radios--inline'
+) %>

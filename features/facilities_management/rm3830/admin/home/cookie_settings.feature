@@ -14,7 +14,7 @@ Feature: Cookie settings
   Scenario: Selecting links in the banner - accept cookies
     When I click on 'Accept analytics cookies'
     Then the cookie banner shows I have 'accepted' the cookies
-    And I click on 'Sign in'
+    And I click on the 'Sign in' link
     Then I am on the 'Sign in to the RM3830 administration dashboard' page
     And the cookie banner 'is not' visible
     And the cookies have been saved
@@ -24,7 +24,7 @@ Feature: Cookie settings
   Scenario: Selecting links in the banner - reject cookies
     When I click on 'Reject analytics cookies'
     Then the cookie banner shows I have 'rejected' the cookies
-    And I click on 'Sign in'
+    And I click on the 'Sign in' link
     Then I am on the 'Sign in to the RM3830 administration dashboard' page
     And the cookie banner 'is not' visible
     And the cookies have been saved

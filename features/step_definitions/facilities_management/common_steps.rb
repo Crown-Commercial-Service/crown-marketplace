@@ -2,9 +2,7 @@ Given 'I sign in and navigate to my account for {string}' do |framework|
   visit "/facilities-management/#{framework}/sign-in"
   update_banner_cookie(true) if @javascript
   create_user_with_details
-  fill_in 'email', with: @user.email
-  fill_in 'password', with: 'ValidPassword'
-  click_on 'Sign in'
+  step 'I sign in'
   expect(page.find('h1')).to have_content(@user.email)
 end
 
@@ -55,7 +53,7 @@ When('I navigate to the procurement {string}') do |contract_name|
 end
 
 Then('I am on a {string} page') do |option|
-  expect(page.find('#wrapper > header > div > div.govuk-header__content > div')).to have_content(PAGE_HEADING[option])
+  expect(page.find('.ccs-header__link--service-name')).to have_content(PAGE_HEADING[option])
 end
 
 Then('I show all sections') do
@@ -74,6 +72,14 @@ Then('I select the following items:') do |items|
   items.raw.flatten.each do |item|
     page.check(item)
   end
+end
+
+Then('I click on the {string} button') do |button_text|
+  page.click_button(button_text, class: 'govuk-button')
+end
+
+Then('I click on the {string} link') do |link_text|
+  page.click_link(link_text)
 end
 
 Then('I refresh the page') do

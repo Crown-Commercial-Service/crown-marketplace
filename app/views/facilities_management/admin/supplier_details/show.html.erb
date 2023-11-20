@@ -1,6 +1,6 @@
 <%= content_for :page_title, t('.page_title', supplier_name: @supplier.supplier_name).html_safe %>
 <%= admin_breadcrumbs(
-  { text: t("facilities_management.#{@framework.downcase}.admin.supplier_details.index.heading"), link: supplier_details_index_path },
+  { text: t("facilities_management.#{@framework.downcase}.admin.supplier_details.index.heading"), href: supplier_details_index_path },
   { text: @supplier.supplier_name }
 ) %>
 
@@ -24,21 +24,28 @@
         <%= t('.supplier_account_information')%>
       </h2>
       <hr class="govuk-section-break govuk-section-break--visible">
-      <dl class="govuk-summary-list">
-        <div id="supplier-details--supplier_user" class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t('.current_user') %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= supplier_user_email %>
-          </dd>
-          <% unless @framework_has_expired %>
-            <dd class="govuk-summary-list__actions">
-              <%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_user), class: 'govuk-link--no-visited-state') %>
-            </dd>
-          <% end %>
-        </div>
-      </dl>
+      <%= govuk_summary_list(
+        [
+          {
+            key: {
+              text: t('.current_user')
+            },
+            value: {
+              text: supplier_user_email
+            },
+            actions: unless @framework_has_expired
+                       {
+                         items: [
+                           {
+                             text: t('.change'),
+                             href: edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_user)
+                           }
+                         ]
+                       }
+                     end
+          }
+        ]
+      ) %>
     </div>
   </div>
 <% end %>
@@ -50,21 +57,28 @@
         <%= t('.supplier_status')%>
       </h2>
       <hr class="govuk-section-break govuk-section-break--visible">
-      <dl class="govuk-summary-list">
-        <div id="supplier-details--supplier_status" class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t('.current_status') %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= govuk_tag_with_text(*@supplier.current_status) %>
-          </dd>
-          <% unless @framework_has_expired %>
-            <dd class="govuk-summary-list__actions">
-              <%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_status), class: 'govuk-link--no-visited-state') %>
-            </dd>
-          <% end %>
-        </div>
-      </dl>
+      <%= govuk_summary_list(
+        [
+          {
+            key: {
+              text: t('.current_status')
+            },
+            value: {
+              text: govuk_tag(*@supplier.current_status)
+            },
+            actions: unless @framework_has_expired
+                       {
+                         items: [
+                           {
+                             text: t('.change'),
+                             href: edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_status)
+                           }
+                         ]
+                       }
+                     end
+          }
+        ]
+      ) %>
     </div>
   </div>
 <% end %>
@@ -75,38 +89,51 @@
       <%= t('.supplier_contact_information')%>
     </h2>
     <hr class="govuk-section-break govuk-section-break--visible">
-    <dl class="govuk-summary-list">
-        <div id="supplier-details--supplier_name" class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t('.supplier_name') %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= contact_detail(:supplier_name) %>
-          </dd>
-          <% unless @framework_has_expired %>
-            <dd class="govuk-summary-list__actions">
-              <%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_name), class: 'govuk-link--no-visited-state') %>
-            </dd>
-          <% end %>
-        </div>
-      <% if params[:framework] == 'RM3830' %>
-        <% %i[contact_name contact_email contact_phone].each do |attribute| %>
-          <div id="supplier-details--<%= attribute %>" class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              <%= t(".#{attribute}") %>
-            </dt>
-            <dd class="govuk-summary-list__value">
-              <%= contact_detail(attribute) %>
-            </dd>
-            <% unless @framework_has_expired %>
-              <dd class="govuk-summary-list__actions">
-                <%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_contact_information), class: 'govuk-link--no-visited-state') %>
-              </dd>
-            <% end %>
-          </div>
-        <% end %>
-      <% end %>
-    </dl>
+    <%= govuk_summary_list(
+      [
+        {
+          key: {
+            text: t('.supplier_name')
+          },
+          value: {
+            text: contact_detail(:supplier_name)
+          },
+          actions: unless @framework_has_expired
+                     {
+                       items: [
+                         {
+                           text: t('.change'),
+                           href: edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_name)
+                         }
+                       ]
+                     }
+                   end
+        }
+      ] + if params[:framework] == 'RM3830'
+        %i[contact_name contact_email contact_phone].map do |attribute|
+          {
+            key: {
+              text: t(".#{attribute}")
+            },
+            value: {
+              text: contact_detail(attribute)
+            },
+            actions: unless @framework_has_expired
+                       {
+                         items: [
+                           {
+                             text: t('.change'),
+                             href: edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_contact_information)
+                           }
+                         ]
+                       }
+                     end
+          }
+        end
+      else
+        []
+      end
+    ) %>
   </div>
 </div>
 
@@ -116,35 +143,46 @@
       <%= t('.additional_supplier_information')%>
     </h2>
     <hr class="govuk-section-break govuk-section-break--visible">
-    <dl class="govuk-summary-list">
-      <% %i[duns registration_number].each do |attribute| %>
-        <div id="supplier-details--<%= attribute %>" class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t(".#{attribute}") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= contact_detail(attribute) %>
-          </dd>
-          <% unless @framework_has_expired %>
-            <dd class="govuk-summary-list__actions">
-              <%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :additional_supplier_information), class: 'govuk-link--no-visited-state') %>
-            </dd>
-          <% end %>
-        </div>
-      <% end %>
-      <div id="supplier-details--full_address"class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t('.full_address') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= full_address %>
-        </dd>
-        <% unless @framework_has_expired %>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_address), class: 'govuk-link--no-visited-state') %>
-          </dd>
-        <% end %>
-      </div>
-    </dl>
+    <%= govuk_summary_list(
+      %i[duns registration_number].map do |attribute|
+        {
+          key: {
+            text: t(".#{attribute}")
+          },
+          value: {
+            text: contact_detail(attribute)
+          },
+          actions: unless @framework_has_expired
+                     {
+                       items: [
+                         {
+                           text: t('.change'),
+                           href: edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :additional_supplier_information)
+                         }
+                       ]
+                     }
+                    end
+        }
+      end + [
+        {
+          key: {
+            text: t('.full_address')
+          },
+          value: {
+            text: full_address
+          },
+          actions: unless @framework_has_expired
+                     {
+                       items: [
+                         {
+                           text: t('.change'),
+                           href: edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_address)
+                         }
+                       ]
+                     }
+                    end
+        }
+      ]
+    ) %>
   </div>
 </div>

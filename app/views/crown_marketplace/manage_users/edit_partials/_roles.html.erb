@@ -1,25 +1,24 @@
-<%= form_group_with_error(f.object, :roles) do |displayed_error| %>
-  <fieldset class="govuk-fieldset" aria-describedby="roles-hint">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-      <%= t('.legend') %>
-    </legend>
-  </fieldset>
-  <%= govuk_hint(
+<%= govuk_checkboxes(
+  :roles,
+  available_roles.map do |role|
     {
-      text: t('.hint'),
-      id: 'roles-hint'
+      value: role,
+      label: {
+        text: t("crown_marketplace.role_map.#{role}.text")
+      },
+      hint: {
+        text: t("crown_marketplace.role_map.#{role}.hint")
+      }
     }
-  ) %>
-  <%= displayed_error %>
-  <div class="govuk-checkboxes", data-module="govuk-checkboxes">
-    <% available_roles.each do |role| %>
-      <div class="govuk-checkboxes__item">
-        <%= f.check_box(:roles, { class: 'govuk-checkboxes__input', multiple: true, include_hidden: false }, role) %>
-        <%= f.label(:roles, t("crown_marketplace.role_map.#{role}.text"), value: role, class: 'govuk-label govuk-checkboxes__label') %>
-        <div class="govuk-hint govuk-checkboxes__hint">
-          <%= t("crown_marketplace.role_map.#{role}.hint") %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+  end,
+  form: f,
+  fieldset: {
+    legend: {
+      text: t('.legend'),
+      classes: 'govuk-fieldset__legend--m'
+    }
+  },
+  hint: {
+    text: t('.hint')
+  }
+) %>

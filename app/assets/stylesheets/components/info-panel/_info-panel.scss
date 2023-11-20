@@ -1,0 +1,36 @@
+.ccs-info-panel {
+  background-color: ccs-colour("light-grey");
+  padding: govuk-spacing(3);
+  margin: 0 0 govuk-spacing(7) 0;
+
+  @media (min-width: 40.0625em) {
+    &.ccs-info-panel--pull-up {
+      margin-top: -#{govuk-spacing(3)} !important;
+    }
+  }
+
+  dl.ccs-contact-details {
+    dt,
+    dd {
+      font-family: $govuk-font-family;
+      @include govuk-font($size: 19, $weight: normal);
+      width: 100%;
+      display: inline-block;
+      margin: 0;
+    }
+
+    dt {
+      font-weight: bold;
+      margin-top: govuk-spacing(4);
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    a {
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+  }
+}

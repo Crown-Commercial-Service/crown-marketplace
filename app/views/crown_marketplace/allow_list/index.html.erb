@@ -3,8 +3,28 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= govuk_notification_banner(:success, t('.added')) { t('.was_added', email_domain: flash[:email_domain_added]) } unless flash[:email_domain_added].blank? %>
-    <%= govuk_notification_banner(:success, t('.removed')) { t('.was_removed', email_domain: flash[:email_domain_removed]) } unless flash[:email_domain_removed].blank? %>
+    <% if flash[:email_domain_added] %>
+      <%= govuk_notification_banner(nil, true) do %>
+        <h3 class="govuk-notification-banner__heading">
+          <%= t('.added') %>
+        </h3>
+        <p class="govuk-body">
+          <%= t('.was_added', email_domain: flash[:email_domain_added]) %>
+        </p>
+      <% end %>
+    <% end %>
+
+    <% if flash[:email_domain_removed] %>
+      <%= govuk_notification_banner(nil, true) do %>
+        <h3 class="govuk-notification-banner__heading">
+          <%= t('.removed') %>
+        </h3>
+        <p class="govuk-body">
+          <%= t('.was_removed', email_domain: flash[:email_domain_removed]) %>
+        </p>
+      <% end %>
+    <% end %>
+
     <h1 class="govuk-heading-xl"><%= t('.heading_title') %></h1>
     <p>
       <%= t('.in_order_to') %>
@@ -22,25 +42,39 @@
         <%= t('.you_can_add') %>
       </p>
       <div class='govuk-!-margin-bottom-4'>
-        <%= link_to t('.add_new_email_domain'), new_crown_marketplace_allow_list_path, class: 'govuk-button govuk-button' %>
+        <%= govuk_button(t('.add_new_email_domain'), href: new_crown_marketplace_allow_list_path) %>
       </div>
     <% end %>
   </div>
 </div>
 
-<div class="govuk-grid-row" id="allow-list-search-container">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: search_allow_list_crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :get, html: { specialvalidation: true, remote: true } do |f| %>
-      <%= hidden_field_tag :email_domain_added, params[:email_domain_added] %>
-      <%= f.label :email_domain, t('.find_an_email_domain'), class: 'govuk-label--m' %>
-      <p class="govuk-hint" id="allow-list-search-hint">
-        <%= t('.enter_an_email_domain') %>
-      </p>
-      <%= f.text_field  :email_domain, class: 'govuk-input govuk-!-width-three-quarters govuk-!-margin-right-2', type: 'search', aria: { describedby: 'allow-list-search-hint' } %>
-      <%= f.submit t('.search'), class: 'govuk-button govuk-button--secondary' %>
-    <% end %>
+<%= form_with url: search_allow_list_crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :get, html: { specialvalidation: true, remote: true } do |f| %>
+  <%= hidden_field_tag :email_domain_added, params[:email_domain_added] %>
+  <div class="govuk-grid-row" id="allow-list-search-container">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_input(
+        :email_domain,
+        form: f,
+        label: {
+          text: t('.find_an_email_domain'),
+          classes: 'govuk-label--m'
+        },
+        hint: {
+          text: t('.enter_an_email_domain')
+        },
+        classes: 'govuk-!-width-three-quarters',
+        attributes: {
+          type: 'search'
+        }
+      ) %>
+    </div>
   </div>
-</div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_button(t('.search'), form: f, classes: 'govuk-button--secondary') %>
+    </div>
+  </div>
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds" id="allow-list-table">

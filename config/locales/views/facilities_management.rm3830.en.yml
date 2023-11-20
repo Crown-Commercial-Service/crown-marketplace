@@ -476,7 +476,6 @@ en:
             manage_supplier_framework_data: "'Manage supplier framework data'"
             manage_supplier_framework_data_html: You can navigate to %{link}, to bulk upload the supplier framework data.
             regions: Regions
-            return_link: Return to admin dashboard
             service_prices: Services, prices and variances
             services: Services
             sub_lot:
@@ -548,6 +547,7 @@ en:
             status: Status
             supplier_framework_data: Supplier framework data
             table_caption: Previous uploads
+            upload_name: 'Upload session #%{number}'
           new:
             caption: Facilities Management
             download_templates: Download file templates
@@ -574,8 +574,6 @@ en:
             return: Return to 'Manage supplier framework data'
             status: 'Status:'
             supplier_framework_data: Supplier framework data
-          upload:
-            upload_name: 'Upload session #%{number}'
         you_cannot_update:
           details: The RM3830 has expired, you cannot update the supplier's details.
           rates: The RM3830 has expired, you cannot update these rates.

@@ -10,12 +10,12 @@ end
 
 Then('the account {string} has been added') do |email|
   expect(manage_users_page.notification_banner.heading).to have_content('User account created')
-  expect(manage_users_page.notification_banner.content).to have_content("An email has been sent to #{email} with the details for them to sign in")
+  expect(manage_users_page.notification_banner.message).to have_content("An email has been sent to #{email} with the details for them to sign in")
 end
 
 Then('there is an error notification with the message {string}') do |error_message|
   expect(manage_users_page.notification_banner.heading).to have_content('Something went wrong')
-  expect(manage_users_page.notification_banner.content).to have_content("The following error occured: \"#{error_message}\"")
+  expect(manage_users_page.notification_banner.message).to have_content("The following error occured: \"#{error_message}\"")
 end
 
 Then('I change the {string} from the user summary') do |option|
@@ -63,13 +63,13 @@ Then('I cannot manage the user and there is the following warning:') do |warning
 end
 
 Then('the user has the following details:') do |user_details_table|
-  user_details = user_details_table.raw.to_h.symbolize_keys
+  user_details = user_details_table.raw
 
   user_details.each do |key, value|
     user_details_row = manage_users_page.view_user_summary.send(key)
 
-    expect(user_details_row.key).to have_content(key.to_s)
-    expect(user_details_row.value).to have_content(value)
+    expect(user_details_row.key).to have_content(key)
+    expect(user_details_row.value).to have_content(['Roles', 'Service access'].include?(key) ? value.split(', ').join : value)
   end
 end
 
@@ -124,5 +124,5 @@ end
 
 Then('an email has been sent to {string}') do |email|
   expect(manage_users_page.notification_banner.heading).to have_content('Password resent')
-  expect(manage_users_page.notification_banner.content).to have_content("A new email has been sent to #{email} with the temporary password for their account.")
+  expect(manage_users_page.notification_banner.message).to have_content("A new email has been sent to #{email} with the temporary password for their account.")
 end

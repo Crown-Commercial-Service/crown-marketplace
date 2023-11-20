@@ -3,91 +3,76 @@
 <div class="govuk-body govuk-grid-row buyer-details" id="buyer_details">
   <div class="govuk-grid-column-two-thirds" id="edit-contact-detail">
     <%= form_for @buyer_detail, url: facilities_management_buyer_detail_path(params[:framework]), method: :patch, html: { novalidate: true, specialvalidation: true, multipart: true } do |f| %>
-      <%= link_to t('.back'), facilities_management_index_path, class: "govuk-back-link govuk-!-margin-bottom-2" unless (current_user.nil? || current_user.fm_buyer_details_incomplete?) %>
-      <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: false} %>
+      <%= govuk_back_link( t('.back'), facilities_management_index_path) unless (current_user.nil? || current_user.fm_buyer_details_incomplete?) %>
+      <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors } %>
 
-      <div class="govuk-caption-l govuk-!-margin-top-2">
-        <%= current_user.email %>
-      </div>
-      <fieldset class="govuk-fieldset">
-        <h1 class='govuk-!-margin-0'>
-          <legend class="govuk-heading-xl">
-              <%= t('.buyer_details') %>
-          </legend>
-        </h1>
-
+      <%= govuk_fieldset(
+        legend: {
+          text: t('.buyer_details'),
+          classes: 'govuk-fieldset__legend--l',
+          is_page_heading: true,
+          caption: {
+            text: current_user.email,
+            classes: 'govuk-caption-l'
+          }
+        }
+      ) do %>
         <h2 class="govuk-heading-m">
           <%= t('.your_details') %>
         </h2>
 
-        <%= govuk_text_input(
-          f,
+        <%= govuk_input(
           :full_name,
-          {
-            label: {
-              text: t('.name')
-            },
-            input: {
-              attributes: {
-                required: true,
-                maxlength: 255,
-                autocomplete: 'off',
-              }
-            }
+          form: f,
+          label: {
+            text: t('.name')
+          },
+          attributes: {
+            required: true,
+            maxlength: 255,
+            autocomplete: 'off',
           }
-        )%>
+        ) %>
 
-        <%= govuk_text_input(
-          f,
+        <%= govuk_input(
           :job_title,
-          {
-            label: {
-              text: t('.job_title')
-            },
-            input: {
-              attributes: {
-                maxlength: 255
-              }
-            }
+          form: f,
+          label: {
+            text: t('.job_title')
+          },
+          attributes: {
+            maxlength: 255,
           }
-        )%>
+        ) %>
 
-        <%= govuk_text_input(
-          f,
+        <%= govuk_input(
           :telephone_number,
-          {
-            label: {
-              text: t('.telephone_number')
-            },
-            input: {
-              classes: 'govuk-!-width-one-half',
-              attributes: {
-                required: true,
-                autocomplete: "off"
-              }
-            }
+          form: f,
+          label: {
+            text: t('.telephone_number')
+          },
+          classes: 'govuk-!-width-one-half',
+          attributes: {
+            required: true,
+            autocomplete: "off"
           }
-        )%>
+        ) %>
 
         <h2 class="govuk-heading-m govuk-!-margin-top-3">
           <%= t('.organisation_details') %>
         </h2>
 
-        <%= govuk_text_input(
-          f,
+        <%= govuk_input(
           :organisation_name,
-          {
-            label: {
-              text: t('.organisation_name')
-            },
-            input: {
-              attributes: {
-                required: true,
-                maxlength: 255
-              }
-            }
+          form: f,
+          label: {
+            text: t('.organisation_name')
+          },
+          attributes: {
+            required: true,
+            maxlength: 255
           }
-        )%>
+        ) %>
 
         <%= render partial: 'facilities_management/shared/find_address/find_address', locals: {
           f: f,
@@ -99,52 +84,61 @@
 
         <hr class="govuk-section-break govuk-section-break--m">
 
-        <%= form_group_with_error(f.object, :sector) do |displayed_error| %>
-          <fieldset class="govuk-fieldset">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-              <%= t('.sector.legend') %>
-            </legend>
-            <%= displayed_error %>
-            <div class="govuk-radios" data-module="govuk-radios">
-              <% FacilitiesManagement::BuyerDetail::SECTORS.each do |sector| %>
-                <div class="govuk-radios__item">
-                  <%= f.radio_button :sector, sector, class: 'govuk-radios__input' %>
-                  <%= f.label :sector, t(".sector.options.#{sector}"), value: sector, class: 'govuk-label govuk-radios__label' %>
-                </div>
-              <% end %>
-            </div>
-          </fieldset>
-        <% end %>
+        <%= govuk_radios(
+          :sector,
+          FacilitiesManagement::BuyerDetail::SECTORS.map do |sector|
+            {
+              value: sector,
+              label: {
+                text: t(".sector.options.#{sector}")
+              }
+            }
+          end,
+          form: f,
+          fieldset: {
+            legend: {
+              text: t('.sector.legend'),
+              classes: 'govuk-fieldset__legend--m'
+            }
+          },
+        ) %>
 
         <hr class="govuk-section-break govuk-section-break--m">
 
-        <%= form_group_with_error(f.object, :contact_opt_in) do |displayed_error| %>
-          <fieldset class="govuk-fieldset" aria-describedby="contact_opt_in-hint">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-              <%= t('.contact_opt_in.legend') %>
-            </legend>
-            <div id="contact_opt_in-hint" class="govuk-hint">
-              <%= t('.contact_opt_in.hint') %>
-            </div>
-            <%= displayed_error %>
-            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
-              <div class="govuk-radios__item">
-                <%= f.radio_button :contact_opt_in, true, class: 'govuk-radios__input' %>
-                <%= f.label :contact_opt_in, t('.contact_opt_in.options.true'), value: true, class: 'govuk-label govuk-radios__label' %>
-              </div>
-              <div class="govuk-radios__item">
-                <%= f.radio_button :contact_opt_in, false, class: 'govuk-radios__input' %>
-                <%= f.label :contact_opt_in, t('.contact_opt_in.options.false'), value: false, class: 'govuk-label govuk-radios__label' %>
-              </div>
-            </div>
-          </fieldset>
-        <% end %>
+        <%= govuk_radios(
+          :contact_opt_in,
+          [
+            {
+              value: true,
+              label: {
+                text: t('.contact_opt_in.options.true')
+              }
+            },
+            {
+              value: false,
+              label: {
+                text: t('.contact_opt_in.options.false')
+              }
+            }
+          ],
+          form: f,
+          fieldset: {
+            legend: {
+              text: t('.contact_opt_in.legend'),
+              classes: 'govuk-fieldset__legend--m'
+            }
+          },
+          hint: {
+            text: t('.contact_opt_in.hint')
+          },
+          classes: 'govuk-radios--inline'
+        ) %>
 
         <div>
-          <%= f.submit t('.submit'), class: "govuk-button", 'aria-label': t('.submit')  %>
+          <%= govuk_button(t('.submit'), form: f, attributes: { aria: { label: t('.submit') } }) %>
         </div>
 
-      </fieldset>
+      <% end %>
     <% end %>
   </div>
 </div>

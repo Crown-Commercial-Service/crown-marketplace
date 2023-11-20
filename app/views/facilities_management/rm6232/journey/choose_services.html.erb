@@ -2,63 +2,94 @@
 <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
 
 <div class="procurement">
-  <div class="services chooser-component">
-    <div id="ccs-accordion-with-basket" class="govuk-grid-row">
-      <%= form_with url: @form_path, method: :get, html: { specialvalidation: true, novalidate: true } do %>
-        <div class="govuk-grid-column-two-thirds">
-          <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-          <%= govuk_form_group_with_optional_error(@journey, :service_codes) do %>
-            <%= govuk_fieldset_with_optional_error(@journey, :service_codes) do %>
-              <div>
-                <legend>
-                  <h1 class="govuk-heading-xl">
-                    <%= t('.heading') %>
-                  </h1>
-                </legend>
-                <h2 class="govuk-heading-m">
-                  <%= t('.question') %>
-                </h2>
-                <p class="govuk-caption-m">
-                  <%= t('.caption') %>
-                </p>
-                <p>
-                  <%= service_specification_document('rm6232') %>
-                </p>
-              </div>
-              <div class="govuk-grid-column-full" style="padding-left:0">
-                <%= form_tag 'choose-services/answer', method: :get do %>
-                  <%= display_error(@journey.steps[0], :service_codes)%>
-                  <div class="chooser-input">
-                    <%= govuk_accordion_with_checkboxes(
-                      'choose-services',
-                      rm6232_accordion_service_items(@journey.current_step.service_codes),
-                      'service',
-                      'service_codes'
-                    ) do |section_id, item| %>
-                      <%= link_to t('.learn_more'), facilities_management_rm6232_service_specification_path(item[:code]), target: '_blank' %>
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
-          <% end %>
-          <div>
-            <% params[:region_codes]&.split(" ") do |region_code| %>
-              <%= hidden_field_tag "region_codes[]", region_code %>
-            <% end %>
-            <%= hidden_field_tag :annual_contract_value, params[:annual_contract_value] if params[:annual_contract_value] %>
-          </div>
-          <div>
-            <%= submit_tag t('common.submit'), class: "govuk-button govuk-!-margin-bottom-4", aria: { label: t('common.submit') } %>
+  <div id="ccs-accordion-with-basket" class="govuk-grid-row">
+    <%= form_with url: @form_path, method: :get, html: { specialvalidation: true, novalidate: true } do |f| %>
+      <div class="govuk-grid-column-two-thirds">
+        <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+        <%= govuk_form_group(:service_codes, model: @journey) do |error_message|%>
+          <%= govuk_fieldset(
+            legend: {
+              text: t('.heading'),
+              is_page_heading: true,
+              classes: 'govuk-fieldset__legend--l'
+            }
+          ) do %>
+            <h2 class="govuk-heading-m">
+              <%= t('.question') %>
+            </h2>
+            <div class="govuk-hint">
+              <%= t('.caption') %>
+            </div>
             <p>
-              <%= link_to t('.return_text'), facilities_management_rm6232_path, class: 'govuk-link' %>
+              <%= service_specification_document('rm6232') %>
             </p>
-          </div>
+            <div class="govuk-grid-column-full" style="padding-left:0">
+              <%= form_tag 'choose-services/answer', method: :get do %>
+                <%= error_message %>
+                <div class="chooser-input">
+                  <%= govuk_accordion(
+                    'choose-services',
+                    rm6232_accordion_service_items(@journey.current_step.service_codes).map do |section_id, section|
+                      {
+                        heading: section[:name],
+                        content: govuk_checkboxes(
+                          :service_codes,
+                          section[:items] + if section[:items].length > 1
+                            [
+                              {
+                                divider: t('common.radio_driver')
+                              },
+                              {
+                                value: '',
+                                label: {
+                                  text: 'Select all'
+                                },
+                                classes: 'ccs-select-all',
+                                attributes: {
+                                  id: "services_#{section_id}_all",
+                                  name: "section-checkbox_select_all"
+                                }
+                              }
+                            ]
+                          else
+                            []
+                          end,
+                          fieldset: {
+                            legend: {
+                              text: t('.checkbox_legend', section: section[:name]),
+                              classes: 'govuk-visually-hidden'
+                            }
+                          },
+                          attributes: {
+                            'data-section': section_id,
+                            'data-sectionname': section[:name]
+                          }
+                        )
+                      }
+                    end,
+                    classes: 'ccs-basket-accordion'
+                  ) %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+        <div>
+          <% params[:region_codes]&.split(" ") do |region_code| %>
+            <%= hidden_field_tag "region_codes[]", region_code %>
+          <% end %>
+          <%= hidden_field_tag :annual_contract_value, params[:annual_contract_value] if params[:annual_contract_value] %>
         </div>
-        <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
-          <%= render partial: 'facilities_management/shared/baskets/services_basket' %>
+        <div>
+          <%= govuk_button(t('common.submit'), form: f, attributes: { aria: { label: t('common.submit') } }) %>
+          <p>
+            <%= link_to t('.return_text'), facilities_management_rm6232_path, class: 'govuk-link' %>
+          </p>
         </div>
-      <% end %>
-    </div>
+      </div>
+      <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
+        <%= render partial: 'facilities_management/shared/baskets/services_basket' %>
+      </div>
+    <% end %>
   </div>
 </div>

@@ -1,31 +1,43 @@
-<footer id="main-footer" role="contentinfo">
-  <%= render partial: '/layouts/contact_us' if Marketplace.support_form_link.present? %>
-  <div class="govuk-footer">
-    <div class="govuk-width-container">
-      <div class="govuk-footer__meta">
-        <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-          <%= render partial: '/layouts/logotype' %>
-        </div>
-        <div class="govuk-footer__meta-item">
-          <ul class="govuk-footer__inline-list govuk-!-margin-bottom-0">
-            <li class="govuk-footer__inline-list-item">
-              <%= link_to t("layouts.application.cookie_policy_link"), cookie_policy_path, class: "govuk-footer__link", aria: { label: t('layouts.application.cookie_policy_link_aria_label') } %>
-            </li>
-            <li class="govuk-footer__inline-list-item">
-              <%= link_to t("layouts.application.cookie_settings_link"), cookie_settings_path, class: "govuk-footer__link", aria: { label: t('layouts.application.cookie_settings_link_aria_label') } %>
-            </li>
-            <li class="govuk-footer__inline-list-item">
-              <%= link_to t("layouts.application.privacy_link"), 'https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice/crown-commercial-service-privacy-notice', class: 'govuk-footer__link', aria: { label: t('layouts.application.privacy_link_aria_label') }, target: "_blank" %>
-            </li>
-            <li class="govuk-footer__inline-list-item">
-              <%= link_to t("layouts.application.accessibility_statement_link"), accessibility_statement_path, class: 'govuk-footer__link', aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
-            </li>
-            <li class="govuk-footer__inline-list-item">
-              <%= t("layouts.application.crown_copyright") %>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+<%= render partial: '/layouts/contact_us' if Marketplace.support_form_link.present? %>
+<%= ccs_footer(
+  meta: {
+    items: [
+      {
+        text: t('layouts.application.cookie_policy_link.text'),
+        href: cookie_policy_path,
+        attributes: {
+          aria: {
+            label: t('layouts.application.cookie_policy_link.aria_label')
+          }
+        }
+      },
+      {
+        text: t('layouts.application.cookie_settings_link.text'),
+        href: cookie_settings_path,
+        attributes: {
+          aria: {
+            label: t('layouts.application.cookie_settings_link.aria_label')
+          }
+        }
+      },
+      {
+        text: t('layouts.application.privacy_link.text'),
+        href: 'https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice/crown-commercial-service-privacy-notice',
+        attributes: {
+          aria: {
+            label: t('layouts.application.privacy_link.aria_label')
+          }
+        }
+      },
+      {
+        text: t('layouts.application.accessibility_statement_link.text'),
+        href: accessibility_statement_path,
+        attributes: {
+          aria: {
+            label: t('layouts.application.accessibility_statement_link.aria_label')
+          }
+        }
+      }
+    ]
+  }
+) %>

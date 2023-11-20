@@ -27,6 +27,10 @@ en:
               invalid: Invalid verification code provided, please try again
               invalid_format: Confirmation code must contain numeric characters only
               invalid_length: Confirmation code must be 6 characters
+        cognito/forgot_password:
+          attributes:
+            email:
+              invalid: Enter your email address in the correct format, like name@example.com
         cognito/respond_to_challenge:
           attributes:
             access_code:
@@ -46,6 +50,7 @@ en:
           attributes:
             base:
               cookies_disabled: Your browser must have cookies enabled
+              sign_in_error: You must provide a correct username or password
             email:
               blank: You must provide your email address in the correct format, like name@example.com
               invalid: You must provide your email address in the correct format, like name@example.com
@@ -82,17 +87,17 @@ en:
     passwords:
       edit:
         confirm_new_password: Confirm new password
+        email_has_been_sent: A reset email has been sent.
         heading: Reset your password
-        heading1: A reset email has been sent.
-        lead: Reset password for
-        lead1: If the email address you’ve entered belongs to a Crown Commercial Service account, we’ll send instructions to reset the password.
+        if_the_email_address_entered: If the email address you’ve entered belongs to a Crown Commercial Service account, we’ll send instructions to reset the password.
         new_password: New password
-        password: Your password must have
+        password: 'Your password must have:'
+        reset_password_for_html: Reset password for %{email_link}
         text_html: If you don’t receive this, email <a href="mailto:support@crowncommercial.gov.uk" class="govuk-link govuk-link--no-visited-state">support@crowncommercial.gov.uk</a>
         verify_code: Verification code
       new:
         email: Email address
-        email_hint_html: This is the email address you used to set up your account.
+        email_hint: This is the email address you used to set up your account.
         heading: Reset password
         lead: Enter your email address and we’ll send you a verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
       password_reset_success:
@@ -100,6 +105,7 @@ en:
         lead: You can now sign in to your Crown Commercial Service account
     registrations:
       domain_not_on_safelist:
+        back_to_create: Back to create a CCS account
         heading: You must use a public sector email address
         lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
         line_01: The email you used doesn’t belong to a recognised public sector domain.
@@ -112,16 +118,15 @@ en:
         email: Email address
         email_hint: We will send a confirmation code to this address.
         heading: Create a CCS account
+        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
         lead: You must be employed by, or represent, a public sector organisation.
+        your_password_must_have: 'Your password must have:'
     sessions:
       new:
-        create_ccs_account_html: Create an account
+        create_ccs_account: Create a CCS account
         email_address: Email address
-        email_hint:
-          register: Enter the email address you used to register
-          set_up: Enter the email address you used to set up your account.
-        enter_your_password: Enter your password
-        forgotten_password_html: I’ve forgotten my password
+        email_hint: Enter the email address you used to set up your account.
+        forgotten_password: I’ve forgotten my password
         heading:
           admin:
             RM3830: Sign in to the RM3830 administration dashboard
@@ -129,7 +134,6 @@ en:
           crown_marketplace: Sign in to manage Crown Marketplace
           sign_in: Sign in to your account
         password: Password
-        please_enter_a_valid_email_address: You must provide your email address in the correct format, like name@example.com
         problems_signing_in: Problems signing in
         session_expired: Sorry, your session has timed out due to 30 minutes of inactivity. To continue using this service, you need to sign in again.
     users:
@@ -137,8 +141,8 @@ en:
         confirmation_code: Confirmation code
         email: Email address
         heading: Activate your account
-        lead_end: containing your confirmation code.
-        lead_start: An email has been sent to
+        lead_html: An email has been sent to %{email_link} containing your confirmation code.
+        lead_no_email: An email has been sent to the email you provided containing your confirmation code.
         resend_the_confirmation_email: Resend the email
       new_password_required:
         change_password_and_sign_in: Change password and sign in
@@ -152,21 +156,17 @@ en:
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
         resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}" class="govuk-link--no-visited-state"> sign in</a> again.
-  cognito/cog_forgot_password_request:
-    attributes:
-      please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
   common:
     continue: Continue
     create_account: Create account
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
-    error_summary_title: There is a problem
     feedback: feedback
     odt_html: <abbr title="OpenDocument Format">ODT</abbr>
     passcap: at least one capital letter
     passeight: at least 8 characters
     passnum: at least one number
-    passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    passsymbol_html: at least one symbol (eg ?, !, &pound;, &percnt;)
     pdf_html: <abbr title="PDF">PDF</abbr>
     radio_driver: or
     reset_password: Reset password
@@ -183,6 +183,10 @@ en:
     unit:
       one: company
       other: companies
+  date:
+    day: Day
+    month: Month
+    year: Year
   errors:
     contact_ccs:
       contact_ccs_html: "%{link} if you believe you are seeing this message in error."
@@ -209,7 +213,9 @@ en:
     crown_marketplace: Crown Marketplace dashboard
     my_account: My account
     my_dashboard: My dashboard
+    sign_in: Sign in
     sign_out: Sign out
+    sign_up: Create an account
   home:
     accessibility_statement:
       CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
@@ -331,7 +337,7 @@ en:
           expires: 20 minutes
           name: crown_marketplace_confirmation_email
           purpose: This cookie holds the email of the user when activating their account
-      reg_and_sign_in_cookies: These cookies are sometimes required to complete the regestration and sign in process.
+      reg_and_sign_in_cookies: These cookies are sometimes required to complete the registration and sign in process.
       what_are_cookies: Crown Marketplace puts small files (known as ‘cookies’) onto your computer to collect information about how you browse the site. Find out more about the cookies we use, what they’re for and when they expire.
       you_may_see_a_banner: You may see a banner when you visit Crown Marketplace inviting you to accept cookies or review your settings. We’ll set cookies so that your computer knows you’ve seen it and not to show it again, and also to store your settings.
     cookie_settings:
@@ -342,6 +348,7 @@ en:
       dont_use_cookies:
         ga: Do not use cookies that measure my website use (Google Analytics)
         glassbox: Do not use cookies that measure my website use (Glassbox)
+      error: Error
       essential_cookies: These essential cookies do things like remember the notifications you have seen so we do not show them to you again.
       find_out_more: Find out more about cookies on Crown Marketplace
       heading: Cookies on Crown Marketplace
@@ -398,20 +405,23 @@ en:
       title: Sorry, you are not authorised to view this page
   layouts:
     application:
-      accessibility_statement_link: Accessibility statement
-      accessibility_statement_link_aria_label: View our accessibility statement
+      accessibility_statement_link:
+        aria_label: View our accessibility statement
+        text: Accessibility statement
       back: Back
       back_aria_label: Back to the previous page
       beta: beta
-      cookie_policy_link: Cookie policy
-      cookie_policy_link_aria_label: How we use cookies
-      cookie_settings_link: Cookie settings
-      cookie_settings_link_aria_label: Change you cookie settings
-      crown_copyright: "© Crown copyright"
+      cookie_policy_link:
+        aria_label: How we use cookies
+        text: Cookie policy
+      cookie_settings_link:
+        aria_label: Change you cookie settings
+        text: Cookie settings
       error_prefix: Error
       feedback_html: This is a new service – your %{link} will help us to improve it.
-      privacy_link: Privacy policy
-      privacy_link_aria_label: View our privacy policy
+      privacy_link:
+        aria_label: View our privacy policy
+        text: Privacy policy
       skip: Skip to main content
       title: Crown Commercial Service
     contact_us:
@@ -422,16 +432,14 @@ en:
       accept_cookies: Accept analytics cookies
       change_cookie_settings_html: You can %{cookie_settings_link} at any time.
       change_cookie_settings_link: change your cookie settings
-      cookies_accepted: You’ve accepted all analytics cookies.
+      cookies_accepted: 'You’ve accepted all analytics cookies. '
       cookies_not_saved: Something went wrong, your cookie preferences were not saved. Please try again.
       cookies_on_crown_marketplace: Cookies on Crown Marketplace
-      cookies_rejected: You’ve rejected all analytics cookies.
+      cookies_rejected: 'You’ve rejected all analytics cookies. '
       reject_cookies: Reject analytics cookies
       view_cookies: View cookies
       we_use_some_analytics_cookies: We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
       we_use_some_essential_cookies: We use some essential cookies to make this service work.
-    logotype:
-      ccs_logo_title: Crown Commercial Service logo
   miles:
     unit:
       one: mile

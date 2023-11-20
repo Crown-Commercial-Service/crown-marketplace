@@ -14,23 +14,29 @@
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <table class="govuk-table" id="fm-table-filter">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('.supplier_name') %></th>
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('.supplier_contact_email') %></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% @suppliers.each do |supplier| %>
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
-              <%= link_to supplier.supplier_name, facilities_management_admin_supplier_detail_path(id: supplier.supplier_id), class: 'govuk-link--no-visited-state' %>
-            </th>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= contact_detail(:contact_email, supplier) %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= govuk_table(
+      [
+        {
+          text: t('.supplier_name')
+        },
+        {
+          text: t('.supplier_contact_email')
+        }
+      ],
+      @suppliers.map do |supplier|
+        [
+          {
+            text: link_to(supplier.supplier_name, facilities_management_admin_supplier_detail_path(id: supplier.supplier_id), class: 'govuk-link govuk-link--no-visited-state')
+          },
+          {
+            text: contact_detail(:contact_email, supplier)
+          }
+        ]
+      end,
+      first_cell_is_header: true,
+      attributes: {
+        id: 'fm-table-filter'
+      }
+    ) %>
   </div>
 </div>
