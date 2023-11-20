@@ -1,5 +1,5 @@
-$ccs-dashboard-panel-border-colour: #dee0e2;
-$ccs-dashboard-panel-background-colour: #f8f8f8;
+$ccs-dashboard-panel-border-colour: ccs-colour("grey");
+$ccs-dashboard-panel-background-colour: ccs-colour("light-grey");
 
 .ccs-dashboard-section__container {
   @extend %govuk-body-m;
