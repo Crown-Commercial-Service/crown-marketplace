@@ -1,17 +1,11 @@
-// We import the GOVUK settings and then override the ones we need to in
-// our own settings file.
-@import "govuk-frontend/govuk/settings/all";
-@import "settings";
+// Import our settings for CCS and GOV.UK
+@import "settings/all";
 
-// Import the other sections
-@import "govuk-frontend/govuk/tools/all";
-@import "govuk-frontend/govuk/helpers/all";
-@import "govuk-frontend/govuk/core/all";
-@import "govuk-frontend/govuk/objects/all";
-// We are importing all the GOVUK components within the components folder
+// Import the govuk-frontend assets
+@import "govuk-frontend/govuk/all";
+
+// Import the additional CCS components
 @import "components/all";
-@import "govuk-frontend/govuk/utilities/all";
-@import "govuk-frontend/govuk/overrides/all";
 
 // Import additional CCS SCSS
-@import "ccs/all";
+@import "ccs/ccs";
