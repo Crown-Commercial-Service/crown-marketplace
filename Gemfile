@@ -122,7 +122,7 @@ group :development, :test do
   gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
-  gem 'rspec-rails', '>= 6.0.1'
+  gem 'rspec-rails', '>= 6.0.4'
   gem 'shoulda-matchers', '>= 5.1.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
