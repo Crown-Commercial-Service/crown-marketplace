@@ -289,7 +289,7 @@ en:
           purpose: Saves your cookie consent preferences
         row_2:
           expires: 1 year
-          name: cookie_preferences_saved
+          name: cookie_preferences_cmp_saved
           purpose: Allows us to check when your cookie settings have changed
       cookies_banner: Cookies banner
       ga_cookies:

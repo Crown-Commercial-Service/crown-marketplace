@@ -164,7 +164,7 @@ module Marketplace
   end
 
   def self.cookie_settings_name
-    :cookie_preferences
+    :cookie_preferences_cmp
   end
 
   def self.default_cookie_options

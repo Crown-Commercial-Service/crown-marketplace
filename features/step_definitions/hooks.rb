@@ -20,7 +20,7 @@ After('@allow_list') do
 end
 
 Before('not @javascript') do
-  page.driver.browser.set_cookie('cookie_preferences=%7B%22settings_viewed%22%3Atrue%2C%22usage%22%3Afalse%2C%22glassbox%22%3Afalse%7D')
+  page.driver.browser.set_cookie('cookie_preferences_cmp=%7B%22settings_viewed%22%3Atrue%2C%22usage%22%3Afalse%2C%22glassbox%22%3Afalse%7D')
 end
 
 Before('@management_report') do

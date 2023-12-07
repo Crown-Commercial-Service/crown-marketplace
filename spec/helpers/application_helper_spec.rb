@@ -188,7 +188,7 @@ RSpec.describe ApplicationHelper do
     end
 
     context 'when the cookie has been set' do
-      before { helper.request.cookies['cookie_preferences'] = cookie_settings }
+      before { helper.request.cookies['cookie_preferences_cmp'] = cookie_settings }
 
       context 'and it is a hash' do
         let(:expected_cookie_settings) do
