@@ -108,5 +108,5 @@ COOKIE_TO_OPTION = {
 }.freeze
 
 def cookie_settings
-  JSON.parse(CGI.unescape(page.driver.browser.manage.cookie_named('cookie_preferences')[:value]))
+  JSON.parse(CGI.unescape(page.driver.browser.manage.cookie_named('cookie_preferences_cmp')[:value]))
 end
