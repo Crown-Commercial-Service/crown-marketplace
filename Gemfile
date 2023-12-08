@@ -74,7 +74,7 @@ gem 'after_commit_everywhere', '~> 1.3'
 gem 'sidekiq', '~> 7.2.0'
 gem 'sinatra', '~> 3.1.0', require: false
 gem 'slim', '~> 5.2.0'
-gem 'sidekiq-cron'
+gem 'sidekiq-cron', '>= 1.12.0'
 
 # for authorization
 gem 'cancancan', '~> 3.5.0'
