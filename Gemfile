@@ -93,7 +93,7 @@ gem 'date_validator', '>= 0.12.0'
 gem 'ratonvirus', '>= 0.3.2'
 gem 'ratonvirus-clamby', '>= 0.3.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 1.0.3'
+gem 'active_storage_validations', '>= 1.1.4'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 1.5.1'
 # gov notify
