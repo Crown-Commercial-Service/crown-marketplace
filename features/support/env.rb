@@ -11,6 +11,8 @@ require 'capybara'
 require 'capybara/cucumber'
 require 'capybara/rspec'
 require 'selenium-webdriver'
+
+ENV['SITEPRISM_DSL_VALIDATION_DISABLED'] = 'true'
 require 'site_prism'
 require 'capybara/poltergeist'
 require 'axe-capybara'
