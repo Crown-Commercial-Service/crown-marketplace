@@ -446,7 +446,7 @@ module FacilitiesManagement::RM3830
     ########## Collect errors to show to the user ##########
     def collect_errors
       @procurement_array.map.with_index(1) do |building, index|
-        ["Building #{index}".to_sym,
+        [:"Building #{index}",
          if building[:skip]
            {
              skip: true
