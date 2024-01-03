@@ -200,7 +200,7 @@ module FacilitiesManagement
 
       # Custom Validation
       def real_date?(date)
-        DateTime.valid_date? send("#{date}_yyyy".to_sym).to_i, send("#{date}_mm".to_sym).to_i, send("#{date}_dd".to_sym).to_i
+        DateTime.valid_date? send(:"#{date}_yyyy").to_i, send(:"#{date}_mm").to_i, send(:"#{date}_dd").to_i
       end
 
       def valid_date?(date)
