@@ -40,9 +40,11 @@ module CookieSettingsConcern
   def delete_unwanted_cookie(cookie_prefixes)
     return unless cookie_prefixes.any?
 
+    # rubocop:disable Style/HashEachMethods
     cookies.each do |cookie_name, _|
       cookies.delete(cookie_name, path: '/', domain: '.crowncommercial.gov.uk') if cookie_prefixes.any? { |cookie_prefix| cookie_name.start_with? cookie_prefix }
     end
+    # rubocop:enable Style/HashEachMethods
   end
 
   COOKIE_UPDATE_OPTIONS = [
