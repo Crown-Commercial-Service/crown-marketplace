@@ -179,3 +179,12 @@ FactoryBot/FactoryAssociationWithStrategy:
 
 Capybara/ClickLinkOrButtonStyle:
     Enabled: false
+
+Rails/BulkChangeTable:
+    Exclude:
+    - 'db/migrate/2018**'
+    - 'db/migrate/2019**'
+    - 'db/migrate/2020**'
+    - 'db/migrate/2021**'
+    - 'db/migrate/2022**'
+    - 'db/migrate/2023**'
