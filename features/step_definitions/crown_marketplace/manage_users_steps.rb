@@ -55,7 +55,7 @@ Then('I view the user with email {string}') do |email|
 end
 
 Then('I can manage the user') do
-  expect(manage_users_page).not_to have_css('strong.govuk-warning-text__text')
+  expect(manage_users_page).to have_no_css('strong.govuk-warning-text__text')
 end
 
 Then('I cannot manage the user and there is the following warning:') do |warning_text|
@@ -110,7 +110,7 @@ end
 
 Then('I cannot edit the users:') do |sections|
   sections.raw.flatten.each do |section|
-    expect(manage_users_page.view_user_summary.send(section)).not_to have_css('.govuk-summary-list__actions')
+    expect(manage_users_page.view_user_summary.send(section)).to have_no_css('.govuk-summary-list__actions')
   end
 end
 
@@ -118,7 +118,7 @@ Then('the resend temporary password is {string}') do |option|
   if option == 'visible'
     expect(manage_users_page.resend_temporary_password_button).to be_visible
   else
-    expect(manage_users_page).not_to have_css('#resend-temporary-password-button')
+    expect(manage_users_page).to have_no_css('#resend-temporary-password-button')
   end
 end
 

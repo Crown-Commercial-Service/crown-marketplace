@@ -15,9 +15,9 @@ Given('there are no checkbox inputs') do
 end
 
 Then('there is no submit button') do
-  expect(page).not_to have_field(type: :submit)
+  expect(page).to have_no_field(type: :submit)
 end
 
 Then('I cannot change the supplier details') do
-  expect(page).not_to have_css('dd.govuk-summary-list__actions')
+  expect(page).to have_no_css('dd.govuk-summary-list__actions')
 end

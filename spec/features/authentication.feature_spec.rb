@@ -36,7 +36,7 @@ RSpec.feature 'Authentication' do
     fill_in 'Email', with: user.email
     fill_in 'Password', with: 'ValidPassword!'
     click_button 'Sign in'
-    expect(page).not_to have_text('Not permitted')
+    expect(page).to have_no_text('Not permitted')
     expect(page).to have_text('Find a facilities management supplier')
   end
 
@@ -46,7 +46,7 @@ RSpec.feature 'Authentication' do
     fill_in 'Email', with: user.email.upcase
     fill_in 'Password', with: 'ValidPassword!'
     click_button 'Sign in'
-    expect(page).not_to have_text('Not permitted')
+    expect(page).to have_no_text('Not permitted')
     expect(page).to have_text('Find a facilities management supplier')
   end
 

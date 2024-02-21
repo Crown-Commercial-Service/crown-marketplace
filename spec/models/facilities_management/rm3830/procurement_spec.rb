@@ -394,7 +394,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       %i[choose_contract_value results da_draft direct_award further_competition closed].each do |state|
         before { procurement.update(aasm_state: state) }
 
-        it "will be nil for a state of #{state}" do
+        it "is nil for a state of #{state}" do
           expect(procurement.send(:all_complete)).to be_nil
         end
       end
@@ -410,11 +410,11 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       procurement.service_codes = ['C.3']
     end
 
-    it 'will remove any procurement_building_services that have a service code not included in the procurement service_codes' do
+    it 'removes any procurement_building_services that have a service code not included in the procurement service_codes' do
       expect { procurement.save }.to change { procurement.procurement_building_services.count }.by(-2)
     end
 
-    it 'will remove service codes from the procurement_buildings service codes that are not selected for the procurement' do
+    it 'removes service codes from the procurement_buildings service codes that are not selected for the procurement' do
       expect { procurement.save }.to change { procurement.procurement_buildings.first.service_codes }.from(['C.1', 'C.2']).to([])
     end
   end
@@ -722,19 +722,19 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
     stub_bank_holiday_json
 
     context 'when all contracts are unsent' do
-      it 'will return true and the first contract will be sent' do
+      it 'returns true and the first contract will be sent' do
         expect(procurement.offer_to_next_supplier).to be true
         procurement.reload
         expect(procurement.procurement_suppliers.first.aasm_state).to eq 'sent'
       end
 
-      it 'will set the first contract number' do
+      it 'sets the first contract number' do
         expect(procurement.offer_to_next_supplier).to be true
         procurement.reload
         expect(procurement.procurement_suppliers.first.contract_number).not_to be_nil
       end
 
-      it 'will not have a closed date' do
+      it 'does not have a closed date' do
         expect(procurement.offer_to_next_supplier).to be true
         procurement.reload
         expect(procurement.procurement_suppliers.first.contract_closed_date).to be_nil
@@ -744,13 +744,13 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
     context 'when some contracts are unsent' do
       before { procurement.offer_to_next_supplier }
 
-      it 'will return true and the next contract will be sent' do
+      it 'returns true and the next contract will be sent' do
         expect(procurement.offer_to_next_supplier).to be true
         procurement.reload
         expect(procurement.procurement_suppliers[1].aasm_state).to eq 'sent'
       end
 
-      it 'will set their contract numbers' do
+      it 'sets their contract numbers' do
         procurement.offer_to_next_supplier
         procurement.reload
         contract_numbers = procurement.procurement_suppliers[0..1].map(&:contract_number)
@@ -775,7 +775,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
     context 'when no contracts are unsent' do
       before { 4.times { procurement.offer_to_next_supplier } }
 
-      it 'will return false and no contract states will be changed' do
+      it 'returns false and no contract states will be changed' do
         expect(procurement.offer_to_next_supplier).to be false
         procurement.reload
         closed_contracts = procurement.procurement_suppliers.map(&:aasm_state)
@@ -791,7 +791,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
         expect(sorted_sent_contracts).to match_array(sorted_contracts)
       end
 
-      it 'will set their contract numbers' do
+      it 'sets their contract numbers' do
         procurement.reload
         contract_numbers = procurement.procurement_suppliers.map(&:contract_number)
         expect(contract_numbers.any?(nil)).to be false
@@ -2078,7 +2078,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       let(:local_government_pension_scheme) { nil }
       let(:governing_law) { nil }
 
-      it 'will not be valid and have the correct error messages' do
+      it 'is not valid and have the correct error messages' do
         expect(procurement).not_to be_valid(:contract_details)
         expect(procurement.errors.full_messages).to contain_exactly('Payment method You must answer the question about ‘Payment method’', 'Using buyer detail for invoice details You must answer the question about ‘Invoicing contact details’', 'Using buyer detail for authorised detail You must answer the question about ‘Authorised representative details’', 'Using buyer detail for notices detail You must answer the question about ‘Notices contact details’', 'Security policy document required You must answer the question about ‘Security policy’', 'Local government pension scheme You must answer the question about ‘Local Government Pension Scheme’', 'Governing law You must answer the question about ‘Governing law’')
       end
@@ -2089,14 +2089,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       let(:using_buyer_detail_for_authorised_detail) { nil }
       let(:using_buyer_detail_for_notices_detail) { nil }
 
-      it 'will not be valid and have the correct error messages' do
+      it 'is not valid and have the correct error messages' do
         expect(procurement).not_to be_valid(:contract_details)
         expect(procurement.errors.full_messages).to contain_exactly('Using buyer detail for invoice details You must answer the question about ‘Invoicing contact details’', 'Using buyer detail for authorised detail You must answer the question about ‘Authorised representative details’', 'Using buyer detail for notices detail You must answer the question about ‘Notices contact details’')
       end
     end
 
     context 'when all contact details hve been answered' do
-      it 'will be valid' do
+      it 'is valid' do
         expect(procurement).to be_valid(:contract_details)
       end
     end

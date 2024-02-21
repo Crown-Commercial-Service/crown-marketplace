@@ -55,15 +55,15 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
 
       describe '.sent' do
         context 'when the offer gets sent' do
-          it 'will call the GenerateContractZip' do
+          it 'calls the GenerateContractZip' do
             expect(FacilitiesManagement::RM3830::GenerateContractZip).to have_received(:perform_in)
           end
 
-          it 'will call the ChangeStateWorker' do
+          it 'calls the ChangeStateWorker' do
             expect(FacilitiesManagement::RM3830::ChangeStateWorker).to have_received(:perform_at)
           end
 
-          it 'will call the ContractSentReminder' do
+          it 'calls the ContractSentReminder' do
             expect(FacilitiesManagement::RM3830::ContractSentReminder).to have_received(:perform_at)
           end
         end
@@ -71,14 +71,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
 
       describe '.accept' do
         context 'when the supplier accepts' do
-          it 'will move the state to accepted' do
+          it 'moves the state to accepted' do
             expect(contract.aasm_state).to eq 'sent'
             expect(contract.accept!).to be true
             procurement.reload
             expect(contract.aasm_state).to eq 'accepted'
           end
 
-          it 'will call the AwaitingSignatureReminder' do
+          it 'calls the AwaitingSignatureReminder' do
             contract.accept!
             procurement.reload
             expect(FacilitiesManagement::RM3830::AwaitingSignatureReminder).to have_received(:perform_at)
@@ -88,7 +88,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
 
       describe '.decline' do
         context 'when the supplier declines' do
-          it 'will move the state to declined' do
+          it 'moves the state to declined' do
             expect(contract.aasm_state).to eq 'sent'
             expect(contract.decline!).to be true
             procurement.reload
@@ -107,7 +107,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
       end
 
       context 'when three contracts are sent' do
-        it 'will return true for the first 2 and false for the third' do
+        it 'returns true for the first 2 and false for the third' do
           procurement.procurement_suppliers[0].offer_to_supplier
           procurement.procurement_suppliers[1].offer_to_supplier
           closed_contracts = procurement.procurement_suppliers.map(&:closed?)
@@ -130,11 +130,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
               procurement.reload
             end
 
-            it 'will remain in a declined state on the procurement supplier' do
+            it 'remains in a declined state on the procurement supplier' do
               expect(contract.aasm_state).to eq 'declined'
             end
 
-            it 'will be closed' do
+            it 'is closed' do
               expect(contract.closed?).to be true
             end
           end
@@ -159,13 +159,13 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
       end
 
       context 'when the procurement state is closed' do
-        it 'will return true for all the contracts' do
+        it 'returns true for all the contracts' do
           procurement.aasm_state = 'closed'
           closed_contracts = procurement.procurement_suppliers.map(&:closed?)
           expect(closed_contracts.any?(false)).to be false
         end
 
-        it "will set the contract close date to today's date" do
+        it "sets the contract close date to today's date" do
           procurement.procurement_suppliers.last.offer_to_supplier!
           procurement.set_state_to_closed!
           procurement.procurement_suppliers.last.reload
@@ -238,14 +238,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
       before { contract.update(aasm_state: 'sent') }
 
       context 'when contract_response is nil' do
-        it 'will not be valid' do
+        it 'is not valid' do
           expect(contract.contract_response).to be_nil
           expect(contract.valid?(:contract_response)).to be false
         end
       end
 
       context 'when contract_response is true' do
-        it 'will be valid' do
+        it 'is valid' do
           contract.contract_response = true
           expect(contract.contract_response).to be true
           expect(contract.valid?(:contract_response)).to be true
@@ -256,11 +256,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
         before { contract.contract_response = false }
 
         context 'when contract_response is false and no reason is given' do
-          it 'will not be valid' do
+          it 'is not valid' do
             expect(contract.valid?(:contract_response)).to be false
           end
 
-          it 'will have the correct error message' do
+          it 'has the correct error message' do
             contract.valid?(:contract_response)
             expect(contract.errors[:reason_for_declining].first).to eq 'Enter a reason for declining this contract offer'
           end
@@ -269,7 +269,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
         context 'when contract_response is false and a reason is given' do
           before { contract.reason_for_declining = 'This is test string' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(contract.valid?(:contract_response)).to be true
           end
         end
@@ -277,11 +277,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
         context 'when contract_response is false and a reason is given that is more than 500 characters' do
           before { contract.reason_for_declining = (0...501).map { ('a'..'z').to_a[rand(26)] }.join }
 
-          it 'will not be valid' do
+          it 'is not valid' do
             expect(contract.valid?(:contract_response)).to be false
           end
 
-          it 'will have the correct error message' do
+          it 'has the correct error message' do
             contract.valid?(:contract_response)
             expect(contract.errors[:reason_for_declining].first).to eq 'Reason for declining must be 500 characters or less'
           end
@@ -293,11 +293,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
       before { contract.update(aasm_state: 'accepted') }
 
       context 'when nothing is selected' do
-        it 'will not be valid' do
+        it 'is not valid' do
           expect(contract.valid?(:confirmation_of_signed_contract)).to be false
         end
 
-        it 'will have the correct error message' do
+        it 'has the correct error message' do
           contract.valid?(:confirmation_of_signed_contract)
           expect(contract.errors[:contract_signed].first).to eq 'Select one option'
         end
@@ -312,11 +312,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
         context 'when reason for closing is nil' do
           let(:reason_for_not_signing) { nil }
 
-          it 'will not be valid' do
+          it 'is not valid' do
             expect(contract.valid?(:confirmation_of_signed_contract)).to be false
           end
 
-          it 'will have the correct error message' do
+          it 'has the correct error message' do
             contract.valid?(:confirmation_of_signed_contract)
             expect(contract.errors[:reason_for_not_signing].first).to eq 'Enter a reason why this contract will not be signed'
           end
@@ -325,11 +325,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
         context 'when reason for closing is more than max characters' do
           let(:reason_for_not_signing) { (0...101).map { ('a'..'z').to_a[rand(26)] }.join }
 
-          it 'will not be valid' do
+          it 'is not valid' do
             expect(contract.valid?(:confirmation_of_signed_contract)).to be false
           end
 
-          it 'will have the correct error message' do
+          it 'has the correct error message' do
             contract.valid?(:confirmation_of_signed_contract)
             expect(contract.errors[:reason_for_not_signing].first).to eq 'Reason for not signing must be 100 characters or less'
           end
@@ -338,7 +338,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
         context 'when reason for closing is less than max characters' do
           let(:reason_for_not_signing) { 'In my younger and more vulnerable years my father gave me some advice' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(contract.valid?(:confirmation_of_signed_contract)).to be true
           end
         end
@@ -368,11 +368,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
             let(:contract_end_date_mm) { string.chars.shuffle.join }
             let(:contract_end_date_yyyy) { string.chars.shuffle.join }
 
-            it 'will not be valid' do
+            it 'is not valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will have the correct error message' do
+            it 'has the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to eq 'Enter a valid start date'
               expect(contract.errors[:contract_end_date].first).to eq 'Enter a valid end date'
@@ -387,7 +387,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
             let(:contract_end_date_mm) { '11' }
             let(:contract_end_date_yyyy) { '2025' }
 
-            it 'will be valid' do
+            it 'is valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be true
             end
           end
@@ -400,11 +400,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
             let(:contract_end_date_mm) { '2' }
             let(:contract_end_date_yyyy) { '2025' }
 
-            it 'will not be valid' do
+            it 'is not valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will have the correct error message' do
+            it 'has the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to eq 'Enter a valid start date'
               expect(contract.errors[:contract_end_date].first).to be_nil
@@ -419,11 +419,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
             let(:contract_end_date_mm) { '2' }
             let(:contract_end_date_yyyy) { '2021' }
 
-            it 'will not be valid' do
+            it 'is not valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will have the correct error message' do
+            it 'has the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to be_nil
               expect(contract.errors[:contract_end_date].first).to eq 'Enter a valid end date'
@@ -441,11 +441,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
             let(:contract_start_date) { DateTime.now.in_time_zone('London') }
             let(:contract_end_date) { nil }
 
-            it 'will not be valid' do
+            it 'is not valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will have the correct error message' do
+            it 'has the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to be_nil
               expect(contract.errors[:contract_end_date].first).to eq 'Enter contract end date'
@@ -456,11 +456,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
             let(:contract_start_date) { nil }
             let(:contract_end_date) { DateTime.now.in_time_zone('London') }
 
-            it 'will not be valid' do
+            it 'is not valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will have the correct error message' do
+            it 'has the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to eq 'Enter contract start date'
               expect(contract.errors[:contract_end_date].first).to be_nil
@@ -471,11 +471,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
             let(:contract_start_date) { DateTime.now.in_time_zone('London') }
             let(:contract_end_date) { DateTime.now.in_time_zone('London') - 1.day }
 
-            it 'will not be valid' do
+            it 'is not valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will have the correct error message' do
+            it 'has the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to be_nil
               expect(contract.errors[:contract_end_date].first).to eq 'The contract end date must be after the contract start date'
@@ -486,11 +486,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
             let(:contract_start_date) { described_class::EARLIEST_CONTRACT_START_DATE - 1.day }
             let(:contract_end_date) { DateTime.now.in_time_zone('London') + 1.day }
 
-            it 'will not be valid' do
+            it 'is not valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will have the correct error message' do
+            it 'has the correct error message' do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to eq 'The contract start date must be on or after 1 June 2020'
               expect(contract.errors[:contract_end_date].first).to be_nil
@@ -501,7 +501,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
             let(:contract_start_date) { DateTime.now.in_time_zone('London') }
             let(:contract_end_date) { DateTime.now.in_time_zone('London') + 1.day }
 
-            it 'will be valid' do
+            it 'is valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be true
             end
           end
@@ -515,11 +515,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
       context 'when no reason is given' do
         let(:reason_for_closing) { nil }
 
-        it 'will not be valid' do
+        it 'is not valid' do
           expect(contract.valid?(:reason_for_closing)).to be false
         end
 
-        it 'will have the correct error message' do
+        it 'has the correct error message' do
           contract.valid?(:reason_for_closing)
           expect(contract.errors[:reason_for_closing].first).to eq 'Enter a reason for closing this procurement'
         end
@@ -528,7 +528,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
       context 'when a reason is given' do
         let(:reason_for_closing) { 'This is test string' }
 
-        it 'will be valid' do
+        it 'is valid' do
           expect(contract.valid?(:reason_for_closing)).to be true
         end
       end
@@ -536,11 +536,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
       context 'when a reason is given that is more than 500 characters' do
         let(:reason_for_closing) { (0...501).map { ('a'..'z').to_a[rand(26)] }.join }
 
-        it 'will not be valid' do
+        it 'is not valid' do
           expect(contract.valid?(:reason_for_closing)).to be false
         end
 
-        it 'will have the correct error message' do
+        it 'has the correct error message' do
           contract.valid?(:reason_for_closing)
           expect(contract.errors[:reason_for_closing].first).to eq 'Reason for closing must be 500 characters or less'
         end

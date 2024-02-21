@@ -107,19 +107,19 @@ RSpec.describe ApplicationHelper do
     end
 
     context 'when an attribute is also used' do
-      it 'will return an empty hash when the attribute cannot be found' do
+      it 'returns an empty hash when the attribute cannot be found' do
         validation_message = helper.validation_messages(:procurement, :blahblah)
         expect(validation_message.class.name).to eq 'Hash'
         expect(validation_message.empty?).to be true
       end
 
-      it 'will return an empty hash when the attribute has no translations' do
+      it 'returns an empty hash when the attribute has no translations' do
         validation_message = helper.validation_messages(:procurement, :blah)
         expect(validation_message.class.name).to eq 'Hash'
         expect(validation_message.empty?).to be true
       end
 
-      it 'will return a populated hash when the attribute has translations' do
+      it 'returns a populated hash when the attribute has translations' do
         proc = FacilitiesManagement::RM3830::Procurement.new
 
         validation_message = helper.validation_messages(proc.class.name.underscore.downcase.to_sym, :initial_call_off_period_years)
