@@ -34,7 +34,7 @@ Then('the cookie banner {string} visible') do |option|
   when 'is'
     expect(page.find_by_id('cookie-options-container')).to be_visible
   when 'is not'
-    expect(page).not_to have_css('#cookie-options-container')
+    expect(page).to have_no_css('#cookie-options-container')
   end
 end
 

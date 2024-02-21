@@ -70,7 +70,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
     describe 'import with valid data' do
       let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
-      it 'will save the data correctly' do
+      it 'saves the data correctly' do
         acceptable_attributes = %w[building_name description address_line_1 address_line_2 address_town gia external_area building_type other_building_type security_type other_security_type]
         expect(user.buildings.first.attributes.slice(*acceptable_attributes)).to eq spreadsheet_building.attributes.slice(*acceptable_attributes)
       end
@@ -1421,7 +1421,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         expect(spreadsheet_import.succeeded?).to be true
       end
 
-      it 'will save the building data correctly' do
+      it 'saves the building data correctly' do
         acceptable_attributes = %w[building_name description address_line_1 address_line_2 address_town gia external_area building_type other_building_type security_type other_security_type]
         expect(user.buildings.find_by(building_name: name1).attributes.slice(*acceptable_attributes)).to eq building1.attributes.slice(*acceptable_attributes)
         building2_data = building2.attributes.slice(*acceptable_attributes)
@@ -1430,7 +1430,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         expect(user.buildings.find_by(building_name: name3).attributes.slice(*acceptable_attributes)).to eq building3.attributes.slice(*acceptable_attributes)
       end
 
-      it 'will save the procurement data correctly' do
+      it 'saves the procurement data correctly' do
         services = [service_data1, service_data2, service_data3].flatten.map { |code| extract_code(code) }
 
         expect(procurement.service_codes.sort).to eq services.uniq.sort
@@ -1442,22 +1442,22 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         let(:procurement_building) { procurement.procurement_buildings.select { |pb| pb.name == name1 }.first }
         let(:procurement_building_services) { procurement_building.procurement_building_services }
 
-        it 'will save the procurement_buildings data correctly' do
+        it 'saves the procurement_buildings data correctly' do
           expect(procurement_building.service_codes.sort).to eq(service_data1.map { |code| extract_code(code) }.sort)
           expect(procurement_building.name).to eq name1
         end
 
-        it 'will save the procurement_building_service standards data correctly' do
+        it 'saves the procurement_building_service standards data correctly' do
           standards = procurement_building_services.select { |pbs| pbs.service_standard.present? }.map { |pbs| [pbs.code, pbs.service_standard] }.sort
           expect(standards).to eq service_standards_array(service_data1)
         end
 
-        it 'will save the procurement_building_service volume data correctly' do
+        it 'saves the procurement_building_service volume data correctly' do
           volumes = procurement_building_services.select(&:requires_volume?).map { |pbs| [pbs.code.to_sym, pbs.uval] }.sort
           expect(volumes).to eq service_volume_details1.sort
         end
 
-        it 'will save the procurement_building_service service hours data correctly' do
+        it 'saves the procurement_building_service service hours data correctly' do
           service_hour_services = procurement_building_services.select(&:requires_service_hours?)
           service_hours = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.service_hours] }.sort
           detail_of_requirements = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.detail_of_requirement] }.sort
@@ -1471,27 +1471,27 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         let(:procurement_building) { procurement.procurement_buildings.select { |pb| pb.name == normalised_name2 }.first }
         let(:procurement_building_services) { procurement_building.procurement_building_services }
 
-        it 'will save the procurement_buildings data correctly' do
+        it 'saves the procurement_buildings data correctly' do
           expect(procurement_building.service_codes.sort).to eq(service_data2.map { |code| extract_code(code) }.sort)
           expect(procurement_building.name).to eq normalised_name2
         end
 
-        it 'will save the procurement_building_service standards data correctly' do
+        it 'saves the procurement_building_service standards data correctly' do
           standards = procurement_building_services.select { |pbs| pbs.service_standard.present? }.to_h { |pbs| [pbs.code, pbs.service_standard] }.sort
           expect(standards).to eq service_standards_array(service_data2)
         end
 
-        it 'will save the procurement_building_service volume data correctly' do
+        it 'saves the procurement_building_service volume data correctly' do
           volumes = procurement_building_services.select(&:requires_volume?).map { |pbs| [pbs.code.to_sym, pbs.uval] }.sort
           expect(volumes).to eq service_volume_details2.sort
         end
 
-        it 'will save the procurement_building_service lift data correctly' do
+        it 'saves the procurement_building_service lift data correctly' do
           lifts = procurement_building_services.find_by(code: 'C.5').lift_data
           expect(lifts).to eq lift_details2
         end
 
-        it 'will save the procurement_building_service service hours data correctly' do
+        it 'saves the procurement_building_service service hours data correctly' do
           service_hour_services = procurement_building_services.select(&:requires_service_hours?)
           service_hours = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.service_hours] }.sort
           detail_of_requirements = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.detail_of_requirement] }.sort
@@ -1505,22 +1505,22 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         let(:procurement_building) { procurement.procurement_buildings.select { |pb| pb.name == name3 }.first }
         let(:procurement_building_services) { procurement_building.procurement_building_services }
 
-        it 'will save the procurement_buildings data correctly' do
+        it 'saves the procurement_buildings data correctly' do
           expect(procurement_building.service_codes.sort).to eq(service_data3.map { |code| extract_code(code) }.sort)
           expect(procurement_building.name).to eq name3
         end
 
-        it 'will save the procurement_building_service standards data correctly' do
+        it 'saves the procurement_building_service standards data correctly' do
           standards = procurement_building_services.select { |pbs| pbs.service_standard.present? }.map { |pbs| [pbs.code, pbs.service_standard] }.sort
           expect(standards).to eq service_standards_array(service_data3)
         end
 
-        it 'will save the procurement_building_service volume data correctly' do
+        it 'saves the procurement_building_service volume data correctly' do
           volumes = procurement_building_services.select(&:requires_volume?).map { |pbs| [pbs.code.to_sym, pbs.uval] }.sort
           expect(volumes).to eq service_volume_details3.sort
         end
 
-        it 'will save the procurement_building_service service hours data correctly' do
+        it 'saves the procurement_building_service service hours data correctly' do
           service_hour_services = procurement_building_services.select(&:requires_service_hours?)
           service_hours = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.service_hours] }.sort
           detail_of_requirements = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.detail_of_requirement] }.sort
