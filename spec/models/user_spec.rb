@@ -25,21 +25,21 @@ RSpec.describe User do
     let(:confirmed_at) { Time.zone.now }
 
     context 'when user is buyer without buyer details' do
-      it 'will return true' do
+      it 'returns true' do
         user.roles = %i[buyer fm_access]
         expect(user.fm_buyer_details_incomplete?).to be true
       end
     end
 
     context 'when user isn\'t a buyer' do
-      it 'will return false' do
+      it 'returns false' do
         user.roles = %i[fm_access]
         expect(user.fm_buyer_details_incomplete?).to be false
       end
     end
 
     context 'when user is a buyer and has empty details' do
-      it 'will return true' do
+      it 'returns true' do
         user.roles = %i[buyer fm_access]
         user.buyer_detail = nil
         expect(user.fm_buyer_details_incomplete?).to be true
@@ -47,7 +47,7 @@ RSpec.describe User do
     end
 
     context 'when user is a buyer is missing most of the details' do
-      it 'will return true' do
+      it 'returns true' do
         user.roles = %i[buyer fm_access]
         user.buyer_detail = FacilitiesManagement::BuyerDetail.new
         user.buyer_detail.full_name = 'Test name'
@@ -69,7 +69,7 @@ RSpec.describe User do
         user.buyer_detail.contact_opt_in = false
       end
 
-      it 'will return true' do
+      it 'returns true' do
         expect(user.fm_buyer_details_incomplete?).to be true
       end
     end
@@ -93,13 +93,13 @@ RSpec.describe User do
       context 'when including central_government' do
         before { user.buyer_detail.central_government = false }
 
-        it 'will return false' do
+        it 'returns false' do
           expect(user.fm_buyer_details_incomplete?).to be false
         end
       end
 
       context 'when excluding central_government' do
-        it 'will return false' do
+        it 'returns false' do
           expect(user.fm_buyer_details_incomplete?).to be false
         end
       end

@@ -9,7 +9,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController do
   context 'without buyer details' do
     login_fm_buyer
 
-    it 'will redirect to buyer details' do
+    it 'redirects to buyer details' do
       get :new
 
       expect(response).to redirect_to edit_facilities_management_buyer_detail_path(id: user.buyer_detail.id)

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierRatesHelper do
   describe 'Supplier rates helper tests' do
     context 'with rates in work_packages as sub array' do
-      it 'Will return a rates array' do
+      it 'returns a rates array' do
         rates_list = [
           { code: 'P.1', framework: '4.817413254', benchmark: '2.664327543', standard: 'A' },
           { code: 'P.2', framework: '4.817413254', benchmark: '2.664327543', standard: 'B' }

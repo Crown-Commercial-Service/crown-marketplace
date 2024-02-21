@@ -38,6 +38,6 @@ Then('there {string} generic requirements') do |option|
   when 'are'
     expect(quick_view_page).to have_css('details.govuk-details')
   when 'are not'
-    expect(quick_view_page).not_to have_css('details.govuk-details')
+    expect(quick_view_page).to have_no_css('details.govuk-details')
   end
 end

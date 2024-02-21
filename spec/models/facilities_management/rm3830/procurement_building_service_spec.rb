@@ -613,7 +613,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
         procurement_building_service.code = 'G.1'
       end
 
-      it 'will be invalid when only occupancy collected is invalid' do
+      it 'is invalid when only occupancy collected is invalid' do
         procurement_building_service.service_standard = 'B'
         procurement_building_service.no_of_building_occupants = -1
         expect(procurement_building_service.valid?(:cleaning_standards)).to be true
@@ -637,7 +637,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
         expect(procurement_building_service.valid?(:all)).to be true
       end
 
-      it 'will be invalid when only service_standard is blank' do
+      it 'is invalid when only service_standard is blank' do
         procurement_building_service.service_standard = nil
         procurement_building_service.no_of_building_occupants = 65
         expect(procurement_building_service.valid?(:cleaning_standards)).to be false
@@ -645,7 +645,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
         expect(procurement_building_service.valid?(:all)).to be false
       end
 
-      it 'will be valid when tonnes and service_standard are not blank' do
+      it 'is valid when tonnes and service_standard are not blank' do
         procurement_building_service.service_standard = 'B'
         procurement_building_service.no_of_building_occupants = 65
         expect(procurement_building_service.valid?(:cleaning_standards)).to be true
@@ -659,24 +659,24 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
         procurement_building_service.code = 'C.1'
       end
 
-      it 'will be invalid when service standard is not an option' do
+      it 'is invalid when service standard is not an option' do
         procurement_building_service.service_standard = 'D'
         expect(procurement_building_service.valid?(:ppm_standards)).to be false
         expect(procurement_building_service.valid?(:all)).to be false
       end
 
-      it 'will be valid' do
+      it 'is valid' do
         procurement_building_service.service_standard = 'B'
         expect(procurement_building_service.valid?(:ppm_standards)).to be true
       end
 
-      it 'will be invalid when service_standard is blank' do
+      it 'is invalid when service_standard is blank' do
         procurement_building_service.service_standard = nil
         expect(procurement_building_service.valid?(:ppm_standards)).to be false
         expect(procurement_building_service.valid?(:all)).to be false
       end
 
-      it 'will have the correct error message' do
+      it 'has the correct error message' do
         procurement_building_service.service_standard = nil
         procurement_building_service.valid?(:ppm_standards)
         expect(procurement_building_service.errors[:service_standard].first).to eq 'Select the level of standard'
@@ -693,7 +693,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
         end
       end
 
-      it 'will be invalid without lift data' do
+      it 'is invalid without lift data' do
         expect(procurement_building_service.valid?(:lifts)).to be false
         expect(procurement_building_service.valid?(:all)).to be false
       end
@@ -701,7 +701,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
       context 'with just valid lift data' do
         let(:lift_data) { [1, 50] }
 
-        it 'will be valid' do
+        it 'is valid' do
           expect(procurement_building_service.valid?(:lifts)).to be true
           expect(procurement_building_service.valid?(:ppm_standards)).to be false
           expect(procurement_building_service.valid?(:all)).to be false
@@ -719,7 +719,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
       end
 
       context 'with just service_standard data' do
-        it 'will be invalid' do
+        it 'is invalid' do
           procurement_building_service[:service_standard] = 'B'
           expect(procurement_building_service.valid?(:lifts)).to be false
           expect(procurement_building_service.valid?(:ppm_standards)).to be true
@@ -730,7 +730,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
       context 'with both lift and service_standard data' do
         let(:lift_data) { [1, 50] }
 
-        it 'will be valid with both lift and service standard data' do
+        it 'is valid with both lift and service standard data' do
           procurement_building_service[:service_standard] = 'B'
           expect(procurement_building_service.valid?(:lifts)).to be true
           expect(procurement_building_service.valid?(:all)).to be true
@@ -742,14 +742,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
   describe 'code lookups' do
     describe '#requires_volume?' do
       context 'when code is does not require volumn' do
-        it 'will be false when C.5' do
+        it 'is false when C.5' do
           procurement_building_service.code = 'C.5'
           expect(procurement_building_service.requires_volume?).to be false
         end
       end
 
       context 'when code does require volume' do
-        it 'will be be true' do
+        it 'is be true' do
           procurement_building_service.code = 'E.4'
           expect(procurement_building_service.requires_volume?).to be true
         end
@@ -758,28 +758,28 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
 
     describe '#requires_service_standard?' do
       context 'when code requires ppm standards' do
-        it 'will be true when C.5' do
+        it 'is true when C.5' do
           procurement_building_service.code = 'C.5'
           expect(procurement_building_service.requires_service_standard?).to be true
         end
       end
 
       context 'when code requires building standards' do
-        it 'will be true when C.7' do
+        it 'is true when C.7' do
           procurement_building_service.code = 'C.7'
           expect(procurement_building_service.requires_service_standard?).to be true
         end
       end
 
       context 'when code requires cleaning standards' do
-        it 'will be true when G.5' do
+        it 'is true when G.5' do
           procurement_building_service.code = 'G.5'
           expect(procurement_building_service.requires_service_standard?).to be true
         end
       end
 
       context "when code doesn't require a service standard" do
-        it 'will be false when K.6' do
+        it 'is false when K.6' do
           procurement_building_service.code = 'K.6'
           expect(procurement_building_service.requires_service_standard?).to be false
         end
@@ -788,14 +788,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
 
     describe '#requires_external_area?' do
       context 'when a service requires an external area' do
-        it 'will be true' do
+        it 'is true' do
           procurement_building_service.code = 'G.5'
           expect(procurement_building_service.requires_external_area?).to be true
         end
       end
 
       context 'when a service does not require an external area' do
-        it 'will be false' do
+        it 'is false' do
           procurement_building_service.code = 'K.1'
           expect(procurement_building_service.requires_external_area?).to be false
         end
@@ -805,7 +805,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
 
   describe '#lift_data' do
     context 'when more than 99 lifts are added' do
-      it 'will not be valid' do
+      it 'is not valid' do
         100.times do
           procurement_building_service.lifts.build(number_of_floors: 100)
         end
@@ -815,7 +815,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingService do
     end
 
     context 'when up to 99 lifts are added' do
-      it 'will be valid' do
+      it 'is valid' do
         99.times do
           procurement_building_service.lifts.build(number_of_floors: 100)
         end
