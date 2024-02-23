@@ -26,6 +26,8 @@ class FacilitiesManagement::FilesImporter
     @upload.update(import_errors: [{ error: 'upload_failed' }])
     @upload.fail!
 
+    puts e.message
+    puts e.backtrace
     Rollbar.log('error', e)
   end
 
@@ -43,6 +45,8 @@ class FacilitiesManagement::FilesImporter
   def check_files
     @errors += @import_module::FilesImporter::FilesChecker.new(self).check_files
   rescue StandardError => e
+    puts e.message
+    puts e.backtrace
     Rollbar.log('error', e)
     @errors << { error: 'file_check_failed' }
   end
@@ -50,6 +54,8 @@ class FacilitiesManagement::FilesImporter
   def process_files
     @supplier_data = @import_module::FilesImporter::FilesProcessor.new(self).process_files
   rescue StandardError => e
+    puts e.message
+    puts e.backtrace
     Rollbar.log('error', e)
     @errors << { error: 'file_process_failed' }
   end
@@ -61,6 +67,8 @@ class FacilitiesManagement::FilesImporter
   def publish_data
     @import_module::FilesImporter::DataUploader.upload!(@supplier_data, **other_data)
   rescue StandardError => e
+    puts e.message
+    puts e.backtrace
     Rollbar.log('error', e)
     @errors << { error: 'file_publish_failed' }
   end
