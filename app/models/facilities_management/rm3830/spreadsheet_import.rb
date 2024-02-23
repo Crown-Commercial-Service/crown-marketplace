@@ -13,8 +13,6 @@ module FacilitiesManagement
       validates :spreadsheet_file, size: { less_than: 10.megabytes, message: :too_large }, on: :upload
       validates :spreadsheet_file, content_type: { with: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', message: :wrong_content_type }, on: :upload
 
-      serialize :import_errors
-
       aasm do
         state :upload, initial: true
         state :importing, :succeeded, :failed
@@ -175,7 +173,7 @@ module FacilitiesManagement
       end
 
       def errors_from_import
-        @errors_from_import ||= import_errors
+        @errors_from_import ||= import_errors.deep_symbolize_keys
       end
 
       def error_building_name(building_index)
@@ -195,7 +193,7 @@ module FacilitiesManagement
       end
 
       def volume_error(error_list)
-        error_list.include?(:blank) ? :blank : :invalid
+        error_list.include?('blank') ? 'blank' : 'invalid'
       end
 
       def service_name(code)

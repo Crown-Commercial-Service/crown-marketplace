@@ -219,7 +219,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport do
         end
 
         it 'returns the error array' do
-          expect(import.send(:building_error, 1, :address_line_1).values).to eq ['Building 1', :address_line_1, %i[blank too_long]]
+          expect(import.send(:building_error, 1, :address_line_1).values).to eq ['Building 1', :address_line_1, %w[blank too_long]]
         end
       end
     end
@@ -275,9 +275,9 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport do
         it 'returns an array with the errors' do
           error_details = import.building_errors
 
-          expect(error_details[0].values).to eq ['Building 1', :building_name, [:blank]]
-          expect(error_details[1].values).to eq ['Building 1', :other_building_type, [:too_long]]
-          expect(error_details[2].values).to eq ['Building 3', :building_type, [:inclusion]]
+          expect(error_details[0].values).to eq ['Building 1', :building_name, %w[blank]]
+          expect(error_details[1].values).to eq ['Building 1', :other_building_type, %w[too_long]]
+          expect(error_details[2].values).to eq ['Building 3', :building_type, %w[inclusion]]
         end
       end
     end
@@ -309,7 +309,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport do
         end
 
         it 'returns the error array' do
-          expect(import.send(:service_matrix_error, 1, :building).values).to eq ['Building 1', :building, [:gia_too_small]]
+          expect(import.send(:service_matrix_error, 1, :building).values).to eq ['Building 1', :building, %w[gia_too_small]]
         end
       end
     end
@@ -369,9 +369,9 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport do
         it 'returns an array with the errors' do
           error_details = import.service_matrix_errors
 
-          expect(error_details[0].values).to eq ['Building 2', :service_codes, [:invalid]]
-          expect(error_details[1].values).to eq ['Building 2', :building, [:gia_too_small]]
-          expect(error_details[2].values).to eq ['Building 3', :service_codes, [:invalid_cafm_billable]]
+          expect(error_details[0].values).to eq ['Building 2', :service_codes, %w[invalid]]
+          expect(error_details[1].values).to eq ['Building 2', :building, %w[gia_too_small]]
+          expect(error_details[2].values).to eq ['Building 3', :service_codes, %w[invalid_cafm_billable]]
         end
       end
     end
@@ -405,7 +405,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport do
         end
 
         it 'returns the error array' do
-          expect(import.send(:service_error, 1, 'E.4', :no_of_appliances_for_testing).values).to eq ['Building 1', 'Portable appliance testing', :no_of_appliances_for_testing, [:blank]]
+          expect(import.send(:service_error, 1, 'E.4', :no_of_appliances_for_testing).values).to eq ['Building 1', 'Portable appliance testing', :no_of_appliances_for_testing, %w[blank]]
         end
       end
     end
@@ -469,9 +469,9 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport do
         it 'returns an array with the errors' do
           error_details = import.service_volume_errors
 
-          expect(error_details[0].values).to eq ['Building 1', 'Routine cleaning', :no_of_building_occupants, [:invalid]]
-          expect(error_details[1].values).to eq ['Building 1', 'Feminine hygiene waste', :no_of_units_to_be_serviced, [:blank]]
-          expect(error_details[2].values).to eq ['Building 3', 'General waste', :tones_to_be_collected_and_removed, [:invalid]]
+          expect(error_details[0].values).to eq ['Building 1', 'Routine cleaning', :no_of_building_occupants, %w[invalid]]
+          expect(error_details[1].values).to eq ['Building 1', 'Feminine hygiene waste', :no_of_units_to_be_serviced, %w[blank]]
+          expect(error_details[2].values).to eq ['Building 3', 'General waste', :tones_to_be_collected_and_removed, %w[invalid]]
         end
       end
     end
@@ -619,7 +619,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport do
         end
 
         it 'returns the error array' do
-          expect(import.send(:service_error, 1, 'H.4', :detail_of_requirement).values).to eq ['Building 1', 'Handyman services', :detail_of_requirement, [:blank]]
+          expect(import.send(:service_error, 1, 'H.4', :detail_of_requirement).values).to eq ['Building 1', 'Handyman services', :detail_of_requirement, %w[blank]]
         end
       end
     end
@@ -683,9 +683,9 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport do
         it 'returns an array with the errors' do
           error_details = import.service_hour_errors
 
-          expect(error_details[0].values).to eq ['Building 1', 'Handyman services', :service_hours, [:not_a_number]]
-          expect(error_details[1].values).to eq ['Building 2', 'Emergency response', :service_hours, [:greater_than_or_equal_to]]
-          expect(error_details[2].values).to eq ['Building 2', 'Emergency response', :detail_of_requirement, [:blank]]
+          expect(error_details[0].values).to eq ['Building 1', 'Handyman services', :service_hours, %w[not_a_number]]
+          expect(error_details[1].values).to eq ['Building 2', 'Emergency response', :service_hours, %w[greater_than_or_equal_to]]
+          expect(error_details[2].values).to eq ['Building 2', 'Emergency response', :detail_of_requirement, %w[blank]]
         end
       end
     end
