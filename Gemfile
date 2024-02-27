@@ -64,7 +64,7 @@ gem 'kaminari', '~> 1.2.2'
 gem 'aws-sdk-s3', '~> 1'
 
 # handles spreadsheets
-gem 'roo', '~> 2.10.0'
+gem 'roo', '~> 2.10.1'
 
 # state machine
 gem 'aasm', '~> 5.5'
