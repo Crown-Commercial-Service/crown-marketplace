@@ -71,8 +71,8 @@ gem 'aasm', '~> 5.5'
 gem 'after_commit_everywhere', '~> 1.3'
 
 # for running background jobs
-gem 'sidekiq', '~> 7.2.0'
-gem 'sinatra', '~> 3.2.0', require: false
+gem 'sidekiq', '~> 7.2.1'
+gem 'sinatra', '~> 4.0.0', require: false
 gem 'slim', '~> 5.2.0'
 gem 'sidekiq-cron'
 
@@ -117,12 +117,12 @@ gem 'ccs-frontend_helpers', '~> 0.1.2'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails', '>= 2.8.1'
+  gem 'dotenv-rails', '>= 3.0.0'
   gem 'factory_bot_rails', '>= 6.2.0'
   gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
-  gem 'rspec-rails', '>= 6.0.1'
+  gem 'rspec-rails', '>= 6.1.1'
   gem 'shoulda-matchers', '>= 5.1.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
@@ -133,7 +133,7 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
-  gem 'faker', '~> 3.2.3'
+  gem 'faker', '~> 3.2.2'
 end
 
 group :development do
@@ -149,9 +149,9 @@ group :test do
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
   gem 'cucumber-rails', '>= 2.6.1', require: false
-  gem 'capybara', '>= 3.38.0'
+  gem 'capybara', '>= 3.40.0'
   gem 'database_cleaner', '>= 2.0.1'
-  gem 'site_prism', '>= 3.7.3'
+  gem 'site_prism', '>= 5.0.1'
   gem 'axe-core-capybara', '>= 4.2.1'
   gem 'axe-core-cucumber', '>= 4.2.1'
   gem 'show_me_the_cookies', '>= 6.0.0'
