@@ -125,7 +125,7 @@ module OrdnanceSurvey
     upsert_csv_data(csv_stream) unless type == :dat
   end
 
-  def self.handle_tar_contents(tar, summary, &)
+  def self.handle_tar_contents(tar, summary, &block)
     tar.each do |entry|
       next unless entry.file?
 
@@ -138,7 +138,7 @@ module OrdnanceSurvey
       else
         :dat
       end)) and file_stream.rewind
-      summary[:md5] = chunk_file_data(file_stream, meta_type, &)
+      summary[:md5] = chunk_file_data(file_stream, meta_type, &block)
     end
   end
 

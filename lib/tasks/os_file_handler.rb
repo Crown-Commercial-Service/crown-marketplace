@@ -46,24 +46,24 @@ module OrdnanceSurvey
     file_io&.try(&:close)
   end
 
-  def self.untar_file(filename, summary, &)
+  def self.untar_file(filename, summary, &block)
     summary[:updated_time] = File.mtime(filename)
     Gem::Package::TarReader.new(Zlib::GzipReader.open(filename)) do |tar|
-      handle_tar_contents(tar, summary, &)
+      handle_tar_contents(tar, summary, &block)
     end
   end
 
-  def self.gunzip_file(filename, summary, &)
+  def self.gunzip_file(filename, summary, &block)
     summary[:updated_time] = File.mtime(filename)
     Zlib::GzipReader.open(filename) do |gz|
-      handle_gzip_contents(gz, summary, &)
+      handle_gzip_contents(gz, summary, &block)
     end
   end
 
-  def self.unzip_file(filename, summary, &)
+  def self.unzip_file(filename, summary, &block)
     summary[:updated_time] = File.mtime(filename)
     Zip::InputStream.open(filename) do |io|
-      handle_zip_contents(io, summary, &)
+      handle_zip_contents(io, summary, &block)
     end
   end
 end
