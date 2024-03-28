@@ -410,7 +410,7 @@ en:
         text: Accessibility statement
       back: Back
       back_aria_label: Back to the previous page
-      beta: beta
+      beta: Beta
       cookie_policy_link:
         aria_label: How we use cookies
         text: Cookie policy
@@ -506,12 +506,12 @@ en:
           update_the_framework_dates: Update the framework dates
         index:
           change: Change
-          coming: coming
+          coming: Coming
           expired: Expired
           expires_at: Expires at
           framework: Framework
           if_the_framework: If the framework 'live at' date is before the current date (%{current_date}), the buyer section for this framework will be accessible to our customers.
-          live: live
+          live: Live
           live_at: Live at
           page_title: "%{service_title} frameworks"
           status: Status
@@ -520,12 +520,12 @@ en:
     error_summary:
       there_is_a_problem: There is a problem
     tags:
-      cannot_start: cannot start yet
-      completed: completed
-      in_progress: in progress
-      incomplete: incomplete
-      not_required: not required
-      not_started: not started
+      cannot_start: Cannot start yet
+      completed: Completed
+      in_progress: In progress
+      incomplete: Incomplete
+      not_required: Not required
+      not_started: Not started
   suppliers:
     unit:
       one: agency

@@ -273,7 +273,7 @@ RSpec.describe ApplicationHelper do
                 { type: :number, href: '/crown-marketplace?page=', number: 1, current: true },
                 { type: :number, href: '/crown-marketplace?page=2', number: 2, current: false },
                 { type: :number, href: '/crown-marketplace?page=3', number: 3, current: false },
-                { type: :ellipsis },
+                { ellipsis: true },
                 { type: :number, href: '/crown-marketplace?page=12', number: 12, current: false }
               ],
               pagination_next: { href: '/crown-marketplace?page=2' }
@@ -314,13 +314,13 @@ RSpec.describe ApplicationHelper do
               pagination_previous: { href: '/crown-marketplace?page=5' },
               pagination_items: [
                 { type: :number, href: '/crown-marketplace?page=', number: 1, current: false },
-                { type: :ellipsis },
+                { ellipsis: true },
                 { type: :number, href: '/crown-marketplace?page=4', number: 4, current: false },
                 { type: :number, href: '/crown-marketplace?page=5', number: 5, current: false },
                 { type: :number, href: '/crown-marketplace?page=6', number: 6, current: true },
                 { type: :number, href: '/crown-marketplace?page=7', number: 7, current: false },
                 { type: :number, href: '/crown-marketplace?page=8', number: 8, current: false },
-                { type: :ellipsis },
+                { ellipsis: true },
                 { type: :number, href: '/crown-marketplace?page=12', number: 12, current: false }
               ],
               pagination_next: { href: '/crown-marketplace?page=7' }
@@ -360,7 +360,7 @@ RSpec.describe ApplicationHelper do
               pagination_previous: { href: '/crown-marketplace?page=11' },
               pagination_items: [
                 { type: :number, href: '/crown-marketplace?page=', number: 1, current: false },
-                { type: :ellipsis },
+                { ellipsis: true },
                 { type: :number, href: '/crown-marketplace?page=10', number: 10, current: false },
                 { type: :number, href: '/crown-marketplace?page=11', number: 11, current: false },
                 { type: :number, href: '/crown-marketplace?page=12', number: 12, current: true }
