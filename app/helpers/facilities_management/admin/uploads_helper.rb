@@ -2,11 +2,11 @@ module FacilitiesManagement::Admin::UploadsHelper
   def upload_status_tag(status)
     case status
     when 'published'
-      ['published on live']
+      ['Published on live']
     when 'failed'
-      ['failed', :red]
+      ['Failed', :red]
     else
-      ['in progress', :grey]
+      ['In progress', :grey]
     end
   end
 

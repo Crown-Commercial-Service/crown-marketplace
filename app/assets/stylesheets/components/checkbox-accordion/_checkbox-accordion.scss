@@ -1,11 +1,14 @@
 #ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__divider,
-#ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__item:last-child {
+#ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__item:has(> input.ccs-select-all) {
   display: none;
 }
 
 body.js-enabled {
-  #ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__divider,
-  #ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__item:last-child {
+  #ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__divider {
     display: block;
+  }
+
+  #ccs-accordion-with-basket .govuk-accordion__section-content div.govuk-checkboxes__item:has(> input.ccs-select-all) {
+    display: flex;
   }
 }
