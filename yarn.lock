@@ -336,17 +336,6 @@
     lodash.debounce "^4.0.8"
     resolve "^1.14.2"
 
-"@babel/helper-define-polyfill-provider@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@babel/helper-define-polyfill-provider/-/helper-define-polyfill-provider-0.5.0.tgz#465805b7361f461e86c680f1de21eaf88c25901b"
-  integrity sha512-NovQquuQLAQ5HuyjCz7WQP9MjRj7dx++yspwiyUiGl9ZyadHRSql1HZh5ogRd8W8w6YM6EQ/NTB8rgjLt5W65Q==
-  dependencies:
-    "@babel/helper-compilation-targets" "^7.22.6"
-    "@babel/helper-plugin-utils" "^7.22.5"
-    debug "^4.1.1"
-    lodash.debounce "^4.0.8"
-    resolve "^1.14.2"
-
 "@babel/helper-define-polyfill-provider@^0.6.1":
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/@babel/helper-define-polyfill-provider/-/helper-define-polyfill-provider-0.6.1.tgz#fadc63f0c2ff3c8d02ed905dcea747c5b0fb74fd"
@@ -749,7 +738,7 @@
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-import-attributes/-/plugin-syntax-import-attributes-7.22.3.tgz#d7168f22b9b49a6cc1792cec78e06a18ad2e7b4b"
   integrity sha512-i35jZJv6aO7hxEbIWQ41adVfOzjm9dcYDNeWlBMd8p0ZQRtNUCBrmGwZt+H5lb+oOC9a3svp956KP0oWGA1YsA==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.22.5"
+    "@babel/helper-plugin-utils" "^7.24.0"
 
 "@babel/plugin-syntax-import-attributes@^7.22.0":
   version "7.22.3"
@@ -763,7 +752,7 @@
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-import-attributes/-/plugin-syntax-import-attributes-7.22.3.tgz#d7168f22b9b49a6cc1792cec78e06a18ad2e7b4b"
   integrity sha512-i35jZJv6aO7hxEbIWQ41adVfOzjm9dcYDNeWlBMd8p0ZQRtNUCBrmGwZt+H5lb+oOC9a3svp956KP0oWGA1YsA==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.22.5"
+    "@babel/helper-plugin-utils" "^7.24.0"
 
 "@babel/plugin-syntax-import-meta@^7.10.4":
   version "7.10.4"
