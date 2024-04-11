@@ -10,7 +10,7 @@ RSpec.describe FacilitiesManagement::Admin::FrameworkHelper do
       let(:framework_has_expired) { true }
 
       it 'renders HTML with the text' do
-        expect(result).to eq('<div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span><strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span>The framework has expired</strong></div>')
+        expect(result).to eq('<div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span><strong class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span>The framework has expired</strong></div>')
       end
     end
 

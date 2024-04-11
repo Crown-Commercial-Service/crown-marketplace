@@ -243,7 +243,7 @@ module ApplicationHelper
         last_page_gap = true
 
         {
-          type: :ellipsis
+          ellipsis: true
         }
       end
     end.compact
