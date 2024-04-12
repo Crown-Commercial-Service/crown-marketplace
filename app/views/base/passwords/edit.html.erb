@@ -29,7 +29,7 @@
       </p>
 
       <%= form_with url: edit_password_path, model: @response, method: :put, html: { novalidate: true } do |f| %>
-        <%= govuk_input(
+        <%= govuk_password_input(
           :password,
           form: f,
           label: {
@@ -42,23 +42,25 @@
               concat(render('/layouts/password-strength', text: 'password01'))
             end
           },
-          field_type: :password,
-          classes: 'govuk-!-width-three-quarters',
+          form_group: {
+            classes: 'govuk-!-width-three-quarters'
+          },
           attributes: {
             id: "password01",
             autocomplete: 'off',
           }
         ) %>
 
-        <%= govuk_input(
+        <%= govuk_password_input(
           :password_confirmation,
           form: f,
           label: {
             text: t('.confirm_new_password'),
             classes: 'govuk-label--m'
           },
-          field_type: :password,
-          classes: 'govuk-!-width-three-quarters',
+          form_group: {
+            classes: 'govuk-!-width-three-quarters'
+          },
           attributes: {
             id: "password02",
             autocomplete: 'off',

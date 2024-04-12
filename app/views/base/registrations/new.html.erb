@@ -35,7 +35,7 @@
         }
       ) %>
 
-      <%= govuk_input(
+      <%= govuk_password_input(
         :password,
         form: f,
         label: {
@@ -48,8 +48,9 @@
             concat(render('/layouts/password-strength', text: 'password01'))
           end
         },
-        field_type: :password,
-        classes: 'govuk-!-width-three-quarters',
+        form_group: {
+          classes: 'govuk-!-width-three-quarters'
+        },
         attributes: {
           name: "#{resource_name}[password]",
           id: "password01",
@@ -57,15 +58,16 @@
         }
       ) %>
 
-      <%= govuk_input(
+      <%= govuk_password_input(
         :password_confirmation,
         form: f,
         label: {
           text: t('.confirm_password'),
           classes: 'govuk-label--m'
         },
-        field_type: :password,
-        classes: 'govuk-!-width-three-quarters',
+        form_group: {
+          classes: 'govuk-!-width-three-quarters'
+        },
         attributes: {
           name: "#{resource_name}[password_confirmation]",
           id: "password02",
