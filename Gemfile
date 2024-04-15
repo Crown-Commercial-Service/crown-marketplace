@@ -49,7 +49,7 @@ gem 'omniauth', '~> 2.1.2'
 gem 'omniauth-oauth2', '~> 1.8.0'
 
 # for authentication
-gem 'devise', '~> 4.9.3'
+gem 'devise', '~> 4.9.4'
 
 # for timing out when session expires
 gem 'auto-session-timeout', '~> 1.1'
