@@ -27,9 +27,9 @@ For any other services relating to the Crown Marketplace, please view [Crown Mar
 This guide assumes you have Homebrew installed
 
 #### Check the Ruby version
-> **_NOTE:_** The project currently runs on 3.3.0 (March 2024)
+> **_NOTE:_** The project currently runs on 3.3.1 (April 2024)
 
-Ensure that a ruby version manager (e.g. rvm or rbenv) is installed and set up properly, using 3.3.0 as the Ruby version before trying anything else. 
+Ensure that a ruby version manager (e.g. rvm or rbenv) is installed and set up properly, using 3.3.1 as the Ruby version before trying anything else. 
 
 #### Software requirements
 
