@@ -19,7 +19,7 @@
       <%= render partial: 'user_details_summary', locals: { allowed_attributes: %i[roles service_access user_details] } %>
       <%= render partial: 'hidden_answers', locals: { f: f, allow_anyway: false } %>
 
-      <%= f.submit t('.submit'), class: 'govuk-button' %>
+      <%= govuk_button(t('.submit'), form: f) %>
     <% end %>
   </div>
 </div>

@@ -1,0 +1,59 @@
+.error-box {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.error-content {
+  flex: 1 0 auto;
+}
+
+.button_as_link {
+  font-size: 1em;
+  border: 0;
+  text-decoration: underline;
+  color: $govuk-link-colour;
+  background-color: inherit;
+  padding: 0;
+  margin: 0;
+
+  &:link {
+    color: $govuk-link-colour;
+  }
+
+  &:visited {
+    color: $govuk-link-visited-colour;
+  }
+
+  &:hover:not(:focus),
+  &:active:not(:focus) {
+    color: $govuk-link-hover-colour;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.supplier-rates-td {
+  border: none !important;
+}
+
+.govuk-brand-light-grey-benchmark {
+  color: #6f777b !important;
+}
+
+%govuk-section-break--s {
+  @include govuk-responsive-margin(2, "top");
+  @include govuk-responsive-margin(2, "bottom");
+}
+
+.govuk-section-break--s {
+  @extend %govuk-section-break--s;
+}
+
+.ccs-no-underline,
+.govuk-warning-text abbr,
+abbr {
+  text-decoration: none;
+}

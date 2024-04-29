@@ -1,1 +1,9 @@
-<%= govuk_header(service_name_text, service_navigation_links) %>
+<%= ccs_header(
+  service: {
+    name: service_name_text
+  },
+  service_authentication_items: service_authentication_links,
+  navigation: {
+    primary_items: service_navigation_links
+  }
+) %>

@@ -22,7 +22,7 @@ Given('I change the {string} from the selection summary') do |option|
 end
 
 Given('I click on the service specification for {string}') do |service_name|
-  quick_view_page.find('label', text: service_name).find('a').click
+  quick_view_page.find('label', text: service_name).find(:xpath, '../div/a').click
 end
 
 Then('the page sub title is {string}') do |sub_title|
@@ -38,6 +38,6 @@ Then('there {string} generic requirements') do |option|
   when 'are'
     expect(quick_view_page).to have_css('details.govuk-details')
   when 'are not'
-    expect(quick_view_page).not_to have_css('details.govuk-details')
+    expect(quick_view_page).to have_no_css('details.govuk-details')
   end
 end

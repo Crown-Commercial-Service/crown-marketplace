@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :facilities_management_rm6232_admin_suppliers_admin, class: 'FacilitiesManagement::RM6232::Admin::SuppliersAdmin' do
-    id { SecureRandom.uuid }
     supplier_name { "CCS #{Faker::Company.unique.name}" }
     sme { true }
     duns { Faker::Company.unique.duns_number.gsub('-', '') }

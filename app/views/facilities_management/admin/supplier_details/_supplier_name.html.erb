@@ -1,5 +1,12 @@
-<%= form_group_with_error(f.object, :supplier_name) do |displayed_error, any_errors| %>
-  <%= f.label(:supplier_name, t('.supplier_name_question'), class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0') %>
-  <%= displayed_error %>
-  <%= f.text_field :supplier_name, class: "govuk-input govuk-input--width-30 govuk-!-margin-top-2 #{'govuk-input--error' if any_errors }", maxlength: 100 %>
-<% end %>
+<%= govuk_input(
+  :supplier_name,
+  form: f,
+  label: {
+    text: t('.supplier_name_question'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-30',
+  attributes: {
+    maxlength: 100    
+  }
+) %>

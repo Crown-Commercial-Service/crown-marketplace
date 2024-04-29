@@ -1,6 +1,6 @@
 <%= content_for :page_title, t('.heading') %>
 <%= admin_breadcrumbs(
-  { text: t('facilities_management.rm6232.admin.supplier_data.index.heading'), link: facilities_management_rm6232_admin_supplier_data_path },
+  { text: t('facilities_management.rm6232.admin.supplier_data.index.heading'), href: facilities_management_rm6232_admin_supplier_data_path },
   { text: t('.heading') }
 )%>
 
@@ -25,63 +25,73 @@
         <%= t('.lot_code', lot_code: lot_data[:lot_code]) %>
       </h2>
       <hr class="govuk-section-break govuk-section-break--visible">
-      <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t('.status') %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= govuk_tag_with_text(*lot_data[:current_status]) %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to facilities_management_rm6232_admin_supplier_lot_datum_edit_path(supplier_lot_datum_id: lot_data[:id], lot_data_type: 'lot_status'), class: 'govuk-link--no-visited-state' do %>
-              <%= t('.change') %> <span class="govuk-visually-hidden"><%= t('.lot_status', lot_code: lot_data[:lot_code]) %></span>
-            <% end %>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t('.services') %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= govuk_details(t('.show_services')) do %>
-              <ul class="govuk-list govuk-list--bullet">
-                <% lot_data[:service_names].each do |service_name| %>
-                  <li>
-                    <%= service_name %>
-                  </li>
-                <% end %>
-              </ul>
-            <% end %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to facilities_management_rm6232_admin_supplier_lot_datum_edit_path(supplier_lot_datum_id: lot_data[:id], lot_data_type: 'service_codes'), class: 'govuk-link--no-visited-state' do %>
-              <%= t('.change') %> <span class="govuk-visually-hidden"><%= t('.lot_services', lot_code: lot_data[:lot_code]) %></span>
-            <% end %>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t('.regions') %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= govuk_details(t('.show_regions')) do %>
-              <ul class="govuk-list govuk-list--bullet">
-                <% lot_data[:region_names].each do |region_name| %>
-                  <li>
-                    <%= region_name %>
-                  </li>
-                <% end %>
-              </ul>
-            <% end %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to facilities_management_rm6232_admin_supplier_lot_datum_edit_path(supplier_lot_datum_id: lot_data[:id], lot_data_type: 'region_codes'), class: 'govuk-link--no-visited-state' do %>
-              <%= t('.change') %> <span class="govuk-visually-hidden"><%= t('.lot_regions', lot_code: lot_data[:lot_code]) %></span>
-            <% end %>
-          </dd>
-        </div>
-      </dl>
+      <%= govuk_summary_list(
+        [
+          {
+            key: {
+              text: t('.status')
+            },
+            value: {
+              text: govuk_tag(*lot_data[:current_status])
+            },
+            actions: {
+              items: [
+                {
+                  text: t('.change'),
+                  href: facilities_management_rm6232_admin_supplier_lot_datum_edit_path(supplier_lot_datum_id: lot_data[:id], lot_data_type: 'lot_status'),
+                  visually_hidden_text: t('.lot_status', lot_code: lot_data[:lot_code])
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: t('.services')
+            },
+            value: {
+              text: govuk_details(t('.show_services')) do
+                      tag.ul(class: 'govuk-list govuk-list--bullet') do
+                        lot_data[:service_names].each do |service_name|
+                          concat(tag.li(service_name))
+                        end
+                      end
+                    end
+            },
+            actions: {
+              items: [
+                {
+                  text: t('.change'),
+                  href: facilities_management_rm6232_admin_supplier_lot_datum_edit_path(supplier_lot_datum_id: lot_data[:id], lot_data_type: 'service_codes'),
+                  visually_hidden_text: t('.lot_services', lot_code: lot_data[:lot_code])
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: t('.regions')
+            },
+            value: {
+              text: govuk_details(t('.show_regions')) do
+                      tag.ul(class: 'govuk-list govuk-list--bullet') do
+                        lot_data[:region_names].each do |region_name|
+                          concat(tag.li(region_name))
+                        end
+                      end
+                    end
+            },
+            actions: {
+              items: [
+                {
+                  text: t('.change'),
+                  href: facilities_management_rm6232_admin_supplier_lot_datum_edit_path(supplier_lot_datum_id: lot_data[:id], lot_data_type: 'region_codes'),
+                  visually_hidden_text: t('.lot_regions', lot_code: lot_data[:lot_code])
+                }
+              ]
+            }
+          },
+        ],
+      ) %>
     </div>
   </div>
 <% end %>

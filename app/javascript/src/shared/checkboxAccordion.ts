@@ -101,12 +101,12 @@ class AccordionSection implements AccordionSectionInterface {
   private readonly selectAllcheckBox: AccordionSelectAllItem
 
   constructor (basket: Basket, $section: JQuery<HTMLElement>) {
-    $section.find('div.govuk-checkboxes__item:not(.ccs-select-all) > input.govuk-checkboxes__input').each((_index: number, checkBox: HTMLElement) => {
+    $section.find('input.govuk-checkboxes__input:not(.ccs-select-all)').each((_index: number, checkBox: HTMLElement) => {
       this.checkBoxes.push(new AccordionNamedItem(this, basket, $(checkBox) as JQuery<HTMLInputElement>))
     })
 
     this.numberOfCheckboxes = this.checkBoxes.length
-    this.selectAllcheckBox = new AccordionSelectAllItem(this, basket, $section.find('div.ccs-select-all > input') as JQuery<HTMLInputElement>)
+    this.selectAllcheckBox = new AccordionSelectAllItem(this, basket, $section.find('input.ccs-select-all') as JQuery<HTMLInputElement>)
   }
 
   private readonly numberOfCheckedItems = (): number => this.checkBoxes.filter((accordionItem: AccordionNamedItem): boolean => accordionItem.isChecked()).length
@@ -162,7 +162,7 @@ class BasketItem implements BasketItemInterface {
 }
 
 class Basket implements BasketInterface {
-  private readonly $basket: JQuery<HTMLElement> = $('.basket')
+  private readonly $basket: JQuery<HTMLElement> = $('#css-list-basket')
   private readonly $itemList: JQuery<HTMLUListElement> = this.$basket.find('ul')
   private readonly $numberOfItems: JQuery<HTMLElement> = this.$basket.find('h3')
   private readonly $removeAllLink: JQuery<HTMLAnchorElement> = this.$basket.find('div > a') as JQuery<HTMLAnchorElement>
@@ -175,7 +175,7 @@ class Basket implements BasketInterface {
   }
 
   constructor () {
-    $('.govuk-accordion__section.chooser-section').each((_index: number, accordionSection: HTMLElement) => {
+    $('.govuk-accordion__section').each((_index: number, accordionSection: HTMLElement) => {
       this.accordionSections.push(new AccordionSection(this, $(accordionSection)))
     })
 
@@ -213,7 +213,6 @@ class Basket implements BasketInterface {
       isShown = false
     } else if (numberOfItems === 1) {
       numberOfItemsText = this.textOptions.single_item
-      isShown = false
     } else {
       numberOfItemsText = this.textOptions.plural_items
     }
@@ -223,7 +222,7 @@ class Basket implements BasketInterface {
   }
 
   private readonly toggleRemoveAllButton = (isShown: boolean): void => {
-    isShown ? this.$removeAllLink.show() : this.$removeAllLink.hide()
+    this.$removeAllLink.toggle(isShown)
   }
 
   private readonly removeAll = (event: JQuery.ClickEvent): void => {
@@ -240,7 +239,7 @@ class Basket implements BasketInterface {
 }
 
 const initCheckboxAccordion = (): void => {
-  if ($('.govuk-accordion__section.chooser-section').length > 0) new Basket()
+  if ($('.govuk-accordion.ccs-basket-accordion').length > 0) new Basket()
 }
 
 export default initCheckboxAccordion

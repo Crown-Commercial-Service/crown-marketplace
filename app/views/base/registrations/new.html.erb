@@ -1,64 +1,81 @@
+<%= content_for :page_title, t('.heading') %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
     <%= render partial: 'shared/error_summary', locals: { errors: @result.errors }%>
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-      <%= t('.heading') %>
+      <%= t('.heading_html') %>
     </h1>
 
     <p class="govuk-body-l govuk-!-margin-bottom-8">
       <%= t('.lead') %>
     </p>
-    <%= form_for resource, as: resource_name, url: sign_up_path, html: {specialvalidation: true, novalidate: true, class: 'ccs-form', id: 'cop_register'}, method: :post do |f| %>
-      <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
 
-        <div class="govuk-form-group <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
-          <label class="govuk-label" for="email">
-            <%= t('.email') %>
-          </label>
+    <%= form_with url: sign_up_path, model: @result, method: :post, html: { novalidate: true } do |f| %>
+      <%= govuk_input(
+        :email,
+        form: f,
+        label: {
+          text: t('.email'),
+          classes: 'govuk-label--m'
+        },
+        hint: {
+          text: t('.email_hint')
+        },
+        field_type: :email,
+        classes: 'govuk-!-width-three-quarters',
+        attributes: {
+          name: "#{resource_name}[email]",
+          autofocus: true,
+          autocomplete: 'off',
+          spellcheck: false,
+          required: true
+        }
+      ) %>
 
-          <div id="email-hint" class="govuk-hint govuk-!-width-three-quarters">
-            <%= t('.email_hint') %>
-          </div>
+      <%= govuk_password_input(
+        :password,
+        form: f,
+        label: {
+          text: t('.create_password'),
+          classes: 'govuk-label--m'
+        },
+        hint: {
+          text: capture do
+            concat(tag.p(t('.your_password_must_have'), class: 'govuk-body'))
+            concat(render('/layouts/password-strength', text: 'password01'))
+          end
+        },
+        form_group: {
+          classes: 'govuk-!-width-three-quarters'
+        },
+        attributes: {
+          name: "#{resource_name}[password]",
+          id: "password01",
+          autocomplete: 'off',
+        }
+      ) %>
 
-          <%= display_error(@result, :email) %>
-          <%= f.email_field :email, autofocus: true, autocomplete: "off", class:"govuk-input govuk-!-width-three-quarters", id: "email", spellcheck: false, required: true, aria: {describedby: "email-hint"} %>
-        </div>
+      <%= govuk_password_input(
+        :password_confirmation,
+        form: f,
+        label: {
+          text: t('.confirm_password'),
+          classes: 'govuk-label--m'
+        },
+        form_group: {
+          classes: 'govuk-!-width-three-quarters'
+        },
+        attributes: {
+          name: "#{resource_name}[password_confirmation]",
+          id: "password02",
+          autocomplete: 'off',
+        }
+      ) %>
 
-      </fieldset>
-
-      <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-
-
-        <label class="govuk-label govuk-label--m" for="password01">
-          <%= t('.create_password') %>
-        </label>
-
-        <div class="govuk-form-group <%= 'govuk-form-group--error' if @result.errors[:password].any? %>">
-
-          <p class="govuk-body govuk-!-margin-bottom-1">Your password must have:</p>
-
-          <%= render '/layouts/password-strength', text: 'password01' %>
-
-          <%= display_error(@result, :password) %>
-          <%= f.password_field :password, autocomplete: "off", id: "password01", class: "govuk-input govuk-!-width-three-quarters"  %>
-        </div>
-
-        <div class="govuk-form-group  <%= 'govuk-form-group--error' if @result.errors[:password_confirmation].any? %>">
-          <label class="govuk-label" for="password02">
-            <%= t('.confirm_password') %>
-          </label>
-
-          <%= display_error(@result, :password_confirmation) %>
-          <%= f.password_field :password_confirmation, autocomplete: "off", id: "password02", class: "govuk-input govuk-!-width-three-quarters"  %>
-        </div>
-
-      </fieldset>
-
-      <%= f.submit t('common.create_account'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7 govuk-!-margin-bottom-8", name: 'Create account', 'aria-label': t('common.create_account') %>
-
+      <%= govuk_button(t('common.create_account'), form: f, classes: 'govuk-!-padding-left-7 govuk-!-padding-right-7 govuk-!-margin-bottom-8', attributes: { aria: { label: t('common.create_account') } }) %>
     <% end %>
-
   </div>
 </div>

@@ -1,22 +1,24 @@
 <%= render partial: 'user_details_summary', locals: { allowed_attributes: %i[roles] } %>
 <%= render partial: 'hidden_answers', locals: { f: f, allow_anyway: true } %>
 
-<%= form_group_with_error(@user, :service_access) do |displayed_error| %>
-  <fieldset class="govuk-fieldset" aria-describedby="roles-hint">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-      <%= t('.legend') %>
-    </legend>
-    <div id="roles-hint" class="govuk-hint">
-      <%= t('.hint') %>
-    </div>
-    <%= displayed_error %>
-    <div class="govuk-checkboxes", data-module="govuk-checkboxes">
-      <% Cognito::Admin::Roles::SERVICE_ROLES_ACCESS.each do |service_access| %>
-        <div class="govuk-checkboxes__item">
-          <%= f.check_box(:service_access, { class: 'govuk-checkboxes__input', multiple: true, include_hidden: false }, service_access) %>
-          <%= f.label(:service_access, t("crown_marketplace.service_access_map.#{service_access}.text"), value: service_access, class: 'govuk-label govuk-checkboxes__label') %>
-        </div>
-      <% end %>
-    </div>
-  </fieldset>
-<% end %>
+<%= govuk_checkboxes(
+  :service_access,
+  Cognito::Admin::Roles::SERVICE_ROLES_ACCESS.map do |service_access|
+    {
+      value: service_access,
+      label: {
+        text: t("crown_marketplace.service_access_map.#{service_access}.text")
+      }
+    }
+  end,
+  form: f,
+  fieldset: {
+    legend: {
+      text: t('.legend'),
+      classes: 'govuk-fieldset__legend--m'
+    }
+  },
+  hint: {
+    text: t('.hint')
+  }
+) %>

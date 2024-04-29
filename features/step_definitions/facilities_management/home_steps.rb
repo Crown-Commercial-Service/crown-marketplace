@@ -2,9 +2,7 @@ Given('I sign in without details for {string}') do |framework|
   visit "/facilities-management/#{framework}/sign-in"
   update_banner_cookie(true) if @javascript
   create_user_without_details
-  fill_in 'email', with: @user.email
-  fill_in 'password', with: 'ValidPassword'
-  click_on 'Sign in'
+  step 'I sign in'
   expect(page.find('h1')).to have_content('Manage your details')
 end
 
@@ -26,9 +24,9 @@ When('I go to the {string} not permitted page for {string}') do |user_type, fram
 end
 
 Then('I sign in') do
-  fill_in 'email', with: @user.email
-  fill_in 'password', with: 'ValidPassword'
-  click_on 'Sign in'
+  fill_in 'Email address', with: @user.email
+  fill_in 'Password', with: 'ValidPassword'
+  click_button 'Sign in'
 end
 
 Then('the cookie banner {string} visible') do |option|
@@ -36,7 +34,7 @@ Then('the cookie banner {string} visible') do |option|
   when 'is'
     expect(page.find_by_id('cookie-options-container')).to be_visible
   when 'is not'
-    expect(page).not_to have_css('#cookie-options-container')
+    expect(page).to have_no_css('#cookie-options-container')
   end
 end
 
@@ -74,7 +72,7 @@ Then('I choose to {string} {string} cookies') do |option, cookie|
 end
 
 Given('I enter {string} for my email') do |email|
-  fill_in 'email', with: email
+  fill_in 'Email address', with: email
 end
 
 Given('I enter {string} for the password') do |password|
@@ -110,5 +108,5 @@ COOKIE_TO_OPTION = {
 }.freeze
 
 def cookie_settings
-  JSON.parse(CGI.unescape(page.driver.browser.manage.cookie_named('cookie_preferences')[:value]))
+  JSON.parse(CGI.unescape(page.driver.browser.manage.cookie_named('cookie_preferences_cmp')[:value]))
 end

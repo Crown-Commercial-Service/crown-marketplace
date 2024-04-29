@@ -45,7 +45,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
     end
 
     it 'does not display the second error message in the summary' do
-      expect(rendered).not_to have_link('error-message-2')
+      expect(rendered).to have_no_link('error-message-2')
     end
   end
 
@@ -63,7 +63,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
     end
 
     it 'does not display the second error message for the first attribute in the summary' do
-      expect(rendered).not_to have_link('error-message-2')
+      expect(rendered).to have_no_link('error-message-2')
     end
 
     it 'does not displays the first error message for the second attribute in the summary' do
@@ -71,7 +71,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
     end
 
     it 'does not display the second error message for the second attribute in the summary' do
-      expect(rendered).not_to have_link('error-message-4', href: '#attribute_name_2-error')
+      expect(rendered).to have_no_link('error-message-4', href: '#attribute_name_2-error')
     end
   end
 
@@ -89,7 +89,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
     end
 
     it 'does not display the second error message for the first attribute in the summary' do
-      expect(rendered).not_to have_link('error-message-2')
+      expect(rendered).to have_no_link('error-message-2')
     end
 
     it 'displays the first error message for the second attribute in the summary' do
@@ -97,7 +97,7 @@ RSpec.describe 'shared/_error_summary.html.erb' do
     end
 
     it 'does not display the second error message for the second attribute in the summary' do
-      expect(rendered).not_to have_link('error-message-4', href: '#attribute_name_2-error')
+      expect(rendered).to have_no_link('error-message-4', href: '#attribute_name_2-error')
     end
   end
 end

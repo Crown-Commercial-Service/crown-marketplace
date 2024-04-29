@@ -56,7 +56,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
         context 'when another service is included as well' do
           before { procurement_building.service_codes << 'H.1' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(procurement_building.valid?(:buildings_and_services)).to be true
           end
         end
@@ -73,7 +73,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
         context 'when another service is included as well' do
           before { procurement_building.service_codes << 'J.1' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(procurement_building.valid?(:buildings_and_services)).to be true
           end
         end
@@ -90,7 +90,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
         context 'when another service is included as well' do
           before { procurement_building.service_codes << 'K.1' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(procurement_building.valid?(:buildings_and_services)).to be true
           end
         end
@@ -107,7 +107,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
         context 'when another service is included as well' do
           before { procurement_building.service_codes << 'L.1' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(procurement_building.valid?(:buildings_and_services)).to be true
           end
         end
@@ -124,7 +124,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
         context 'when another service is included as well' do
           before { procurement_building.service_codes << 'M.1' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(procurement_building.valid?(:buildings_and_services)).to be true
           end
         end
@@ -141,7 +141,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
         context 'when another service is included as well' do
           before { procurement_building.service_codes << 'J.2' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(procurement_building.valid?(:buildings_and_services)).to be true
           end
         end
@@ -158,7 +158,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
         context 'when another service is included as well' do
           before { procurement_building.service_codes << 'K.2' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(procurement_building.valid?(:buildings_and_services)).to be true
           end
         end
@@ -169,7 +169,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding do
     context 'when the service selection is valid' do
       let(:service_codes) { %w[E.1 I.1 S.1] }
 
-      it 'will be valid' do
+      it 'is valid' do
         expect(procurement_building.valid?(:buildings_and_services)).to be true
       end
     end

@@ -1,6 +1,6 @@
 <%= content_for :page_title, t('.heading') %>
 <%= crown_marketplace_breadcrumbs(
-  { text: t('crown_marketplace.allow_list.index.heading_title'), link: crown_marketplace_allow_list_index_path },
+  { text: t('crown_marketplace.allow_list.index.heading_title'), href: crown_marketplace_allow_list_index_path },
   { text: t('.heading') }
 )%>
 
@@ -9,22 +9,33 @@
 <%= form_with url: crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :post, html: { specialvalidation: true } do |f| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.heading'), nil, nil, nil, nil)) %>
+      <h1 class="govuk-heading-xl">
+        <%= t('.heading') %>
+      </h1>
 
-      <%= form_group_with_error f.object, :email_domain do |displayed_error| %>
-        <%= label_details(f, :email_domain, t('.email_domain_label'), t('.email_domain_hint')) %>
-        <p class="govuk-body govuk-!-margin-top-4"><%= t('.email_domain_must') %></p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li><%= t('.email_domain_must_1') %></li>
-          <li><%= t('.email_domain_must_2') %></li>
-          <li><%= t('.email_domain_must_3') %></li>
-        </ul>
-        <%= displayed_error %>
-        <%= f.text_field :email_domain, class: 'govuk-input govuk-input--width-30 govuk-!-margin-top-4' %>
-      <% end %>
+      <%= govuk_input(
+        :email_domain,
+        form: f,
+        label: {
+          text: t('.email_domain_label'),
+          classes: 'govuk-label--m'
+        },
+        hint: {
+          text: capture do
+            concat(t('.email_domain_hint'))
+            concat(tag.p(t('.email_domain_must'), class: 'govuk-body govuk-!-margin-top-4'))
+            concat(tag.ul(class: 'govuk-list govuk-list--bullet') do
+              concat(tag.li(t('.email_domain_must_1')))
+              concat(tag.li(t('.email_domain_must_2')))
+              concat(tag.li(t('.email_domain_must_3')))
+            end)
+          end
+        },
+        classes: 'govuk-input--width-30 govuk-!-margin-top-4'
+      ) %>
 
       <div class="govuk-!-margin-top-5">
-        <%= f.submit t('.save_and_continue'), class: 'govuk-button' %>
+        <%= govuk_button(t('.save_and_continue'), form: f) %>
         <br />
         <%= link_to t('.return_to_allow_list'), crown_marketplace_allow_list_index_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': t('.return_to_allow_list') %>
       </div>

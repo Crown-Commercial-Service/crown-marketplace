@@ -1,11 +1,20 @@
-<%= form_group_with_error(f.object, :user_email) do |displayed_error, any_errors| %>
-  <%= f.label(:user_email, t('.user_email_question'), class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0') %>
-  <p class="govuk-body govuk-!-margin-top-4"><%= t('.email_must') %></p>
-  <ul class="govuk-list govuk-list--bullet">
-    <li><%= t('.email_must_1') %></li>
-    <li><%= t('.email_must_2') %></li>
-    <li><%= t('.email_must_3') %></li>
-  </ul>
-  <%= displayed_error %>
-  <%= f.text_field :user_email, class: "govuk-input govuk-input--width-20 govuk-!-margin-top-2 #{'govuk-input--error' if any_errors }" %>
-<% end %>
+<%= govuk_input(
+  :user_email,
+  form: f,
+  label: {
+    text: t('.user_email_question'),
+    classes: 'govuk-label--m'
+  },
+  hint: {
+    text: capture do
+      concat(tag.p(t('.email_must'), class: 'govuk-body govuk-!-margin-top-4'))
+      concat(tag.ul(class: 'govuk-list govuk-list--bullet') do
+        concat(tag.li(t('.email_must_1')))
+        concat(tag.li(t('.email_must_2')))
+        concat(tag.li(t('.email_must_3')))
+      end)
+    end
+  },
+  classes: 'govuk-input--width-20',
+  field_type: :email
+) %>

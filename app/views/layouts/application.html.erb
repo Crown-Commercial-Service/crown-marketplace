@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0b0c0c" />
 
-    <link rel="shortcut icon" href="<%= image_path('favicon.ico') %>" type="image/x-icon" />
+    <link rel="icon" sizes="48x48" href="<%= image_path('favicon.ico') %>">
+    <link rel="icon" sizes="any" href="<%= image_path('favicon.svg') %>" type="image/svg+xml">
     <link rel="mask-icon" href="<%= image_path('mask-icon.svg') %>" color="#0b0c0c">
-    <% %w[ 180x180 167x167 152x152 ].each do |size| %>
-      <link rel="apple-touch-icon" sizes="<%= size %>" href="<%= image_path("ccs-apple-touch-icon-#{size}.png") %>">
+    <% %w[ 180 192 512 ].each do |size| %>
+      <link rel="apple-touch-icon" sizes="<%= size %>x<%= size %>" href="<%= image_path("ccs-icon-#{size}.png") %>">
     <% end %>
 
-    <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
+    <meta property="og:image" content="<%= image_path("ccs-opengraph-image.png") %>">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -27,14 +28,14 @@
   <body class="govuk-template__body">
     <%= render partial: '/shared/google/tag_manager_body' if Marketplace.google_tag_manager_tracking_id.present? %>
     <%= javascript_tag nonce: true do -%>
-      document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+      document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
     <% end -%>
     <% if Rails.env.production? && user_signed_in? %>
-      <%= auto_session_timeout_js %>
+      <%= auto_session_timeout_js(attributes: { nonce: true }) %>
     <% end %>
 
     <div id="wrapper">
-      <%= link_to t('.skip'), '#main-content', class: 'govuk-skip-link', data: { module: 'govuk-skip-link', turbolinks: false } %>
+      <%= govuk_skip_link(t('.skip'), '#main-content', attributes: { data: { turbolinks: false } })%>
       <%= render partial: '/layouts/cookie-banner' unless cookie_preferences_settings['settings_viewed'] || controller.action_name == 'cookie_settings' %>
       <%= render partial: '/layouts/header' %>
 

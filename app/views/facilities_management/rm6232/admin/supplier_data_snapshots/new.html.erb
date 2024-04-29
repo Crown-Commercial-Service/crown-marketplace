@@ -1,6 +1,6 @@
 <%= content_for :page_title, t('.heading') %>
 <%= admin_breadcrumbs(
-  { text: t('facilities_management.rm6232.admin.change_logs.index.heading'), link: facilities_management_rm6232_admin_change_logs_path },
+  { text: t('facilities_management.rm6232.admin.change_logs.index.heading'), href: facilities_management_rm6232_admin_change_logs_path },
   { text: t('.heading') }
 )%>
 
@@ -18,7 +18,7 @@
       <%= t('.when_you_click') %>
     </p>
     <p>
-      <%= warning_text(t('.the_date_you_enter', oldest_data_created_at: FacilitiesManagement::RM6232::Admin::SupplierData.oldest_data_created_at_string )) %>
+      <%= govuk_warning_text(t('.the_date_you_enter', oldest_data_created_at: FacilitiesManagement::RM6232::Admin::SupplierData.oldest_data_created_at_string )) %>
     </p>
   </div>
 </div>
@@ -26,40 +26,60 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @snapshot, url: facilities_management_rm6232_admin_supplier_data_snapshots_path, method: :post, id: 'generate-supplier-zip', html: { specialvalidation: true, novalidate: true } do |f| %>
-      <%= form_group_with_error f.object, :snapshot_date_time do |displayed_date_time_error| %>
-        <%= displayed_date_time_error %>
+      <%= govuk_form_group(
+        :snapshot_date_time,
+        model: f.object
+      ) do |error_message| %>
+        <%= error_message %>
 
-        <%= form_group_with_error f.object, :snapshot_date do |displayed_error| %>
-          <%= f.label :snapshot_date, t('.snapshot_date_label'), class: 'govuk-label govuk-label--m' %>
-          <%= displayed_error %>
-          <%= f.gov_uk_date_field :snapshot_date, legend_options: { page_heading: false, visually_hidden: true } %>
-        <% end %>
+        <%= govuk_date_input(
+          :snapshot_date,
+          form: f,
+          fieldset: {
+            legend: {
+              text: t('.snapshot_date_label'),
+              classes: 'govuk-fieldset__legend--m'
+            }
+          },
+          date_items: govuk_date_items
+        ) %>
 
-        <%= form_group_with_error f.object, :snapshot_time do |displayed_error| %>
-          <%= f.label :snapshot_time, t('.snapshot_time_label'), class: 'govuk-label govuk-label--m' %>
-          <%= displayed_error %>
-
-          <div class="govuk-date-input">
-            <div class="govuk-date-input__item">
-              <div class="govuk-form-group">
-                <%= f.label :snapshot_time_hh, t('.hour'), class: 'govuk-label govuk-date-input__label' %>
-                <%= f.text_field :snapshot_time_hh, class: "govuk-input govuk-date-input__input govuk-input--width-2 #{ 'govuk-input--error' if f.object.errors[:snapshot_time].any? }", inputmode: :numeric %>
-              </div>
-            </div>
-            <div class="govuk-date-input__item govuk-!-font-size-27">
-              :
-            </div>
-            <div class="govuk-date-input__item">
-              <div class="govuk-form-group">
-                <%= f.label :snapshot_time_mm, t('.minute'), class: 'govuk-label govuk-date-input__label' %>
-                <%= f.text_field :snapshot_time_mm, class: "govuk-input govuk-date-input__input govuk-input--width-2 #{ 'govuk-input--error' if f.object.errors[:snapshot_time].any? }", inputmode: :numeric %>
-              </div>
-            </div>
-          </div>
-        <% end %>
+        <%= govuk_date_input(
+          :snapshot_time,
+          form: f,
+          fieldset: {
+            legend: {
+              text: t('.snapshot_time_label'),
+              classes: 'govuk-fieldset__legend--m'
+            }
+          },
+          date_items: [
+            {
+              name: 'hh',
+              input: {
+                classes: 'govuk-input--width-2'
+              },
+              label: {
+                text: t('.hour')
+              }
+            },
+            {
+              name: 'mm',
+              input: {
+                classes: 'govuk-input--width-2'
+              },
+              label: {
+                text: t('.minute')
+              },
+              attributes: {
+                inputmode: :numeric
+              }
+            },
+          ]
+        ) %>
       <% end %>
 
-      <%= f.submit t('.generate_spreadsheets'), class: 'govuk-button', id: 'generate-supplier-zip-button', data: { module: 'govuk-button' }, aria: { label: t('.generate_spreadsheets')} %>
+      <%= govuk_button(t('.generate_spreadsheets'), form: f, attributes: { id: 'generate-supplier-zip-button', aria: { label: t('.generate_spreadsheets') } }) %>
     <% end %>
   </div>
 </div>

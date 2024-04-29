@@ -26,7 +26,7 @@ Feature: Manage users - User support - Edit user - Validations
       | Confirmation status     | confirmed                             |
       | Mobile telephone number | None                                  |
       | Roles                   | Buyer                                 |
-      | Service access          | Facilities Management Legal Services  |
+      | Service access          | Facilities Management, Legal Services |
 
   Scenario: Service access - Validations
     And I change the 'Service access' for the user

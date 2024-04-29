@@ -1,7 +1,7 @@
 <%= content_for :page_title, t('.heading') %>
 <%= admin_breadcrumbs(
-  { text: t('facilities_management.rm6232.admin.supplier_data.index.heading'), link: facilities_management_rm6232_admin_supplier_data_path },
-  { text: t('facilities_management.rm6232.admin.uploads.index.heading'), link: facilities_management_rm6232_admin_uploads_path },
+  { text: t('facilities_management.rm6232.admin.supplier_data.index.heading'), href: facilities_management_rm6232_admin_supplier_data_path },
+  { text: t('facilities_management.rm6232.admin.uploads.index.heading'), href: facilities_management_rm6232_admin_uploads_path },
   { text: t('.heading') }
 )%>
 
@@ -28,18 +28,15 @@
     
     <%= form_with model: @upload, url: facilities_management_rm6232_admin_uploads_path, method: :post, html: { specialvalidation: true, novalidate: true } do |f| %>
       <% FacilitiesManagement::RM6232::Admin::Upload::ATTRIBUTES.each do |file| %>
-        <%= govuk_form_group_with_optional_error(f.object, file) do %>
-          <%= f.label file, t(".file_label.#{file}"), class: 'govuk-label' %>
-          <div class="govuk-!-margin-top-2 govuk-!-width-two-thirds">
-            <%= display_error f.object, file%>
-            <%= tag(:hr, class: 'govuk-section-break govuk-!-margin-top-4') if f.object.errors[file].any? %>
-            <span class="<%= 'govuk-file-upload--error' if f.object.errors[file].any? %>">
-              <%= f.file_field file, class: 'govuk-file-upload' %>
-            </span>
-          </div>
-        <% end  %>
+        <%= govuk_file_upload(
+          file,
+          form: f,
+          label: {
+            text: t(".file_label.#{file}")
+          }
+        ) %>
       <% end %>
-      <%= f.submit t('.upload_data'), class: 'govuk-button', name: t('.upload_data') %>
+      <%= govuk_button(t('.upload_data'), form: f, attributes: { name: t('.upload_data') }) %>
       <br/>
       <%= link_to t('.return'),  facilities_management_rm6232_admin_uploads_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
     <% end %>

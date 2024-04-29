@@ -86,7 +86,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ChangeLogsHelper do
         let(:value) { nil }
 
         it 'returns the active tag' do
-          expect(result).to eq '<strong class="govuk-tag govuk-tag">ACTIVE</strong>'
+          expect(result).to eq '<strong class="govuk-tag">ACTIVE</strong>'
         end
       end
 
@@ -94,7 +94,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ChangeLogsHelper do
         let(:value) { true }
 
         it 'returns the active tag' do
-          expect(result).to eq '<strong class="govuk-tag govuk-tag">ACTIVE</strong>'
+          expect(result).to eq '<strong class="govuk-tag">ACTIVE</strong>'
         end
       end
 

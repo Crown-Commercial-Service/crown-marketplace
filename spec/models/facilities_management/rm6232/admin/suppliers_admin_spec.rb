@@ -579,16 +579,16 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin do
     context 'when the supplier is active' do
       let(:active) { true }
 
-      it 'returns blue and ACTIVE' do
-        expect(supplier.current_status).to eq [:blue, 'ACTIVE']
+      it 'returns ACTIVE' do
+        expect(supplier.current_status).to eq ['ACTIVE']
       end
     end
 
     context 'when the supplier is not active' do
       let(:active) { false }
 
-      it 'returns red and INACTIVE' do
-        expect(supplier.current_status).to eq [:red, 'INACTIVE']
+      it 'returns INACTIVE and red' do
+        expect(supplier.current_status).to eq ['INACTIVE', :red]
       end
     end
   end

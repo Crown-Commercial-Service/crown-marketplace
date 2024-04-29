@@ -22,9 +22,9 @@ Feature: Manage users - User admin - View user - Mixed Roles
     Then I am on the 'View user' page
     And I can manage the user
     And the user has the following details:
-      | Email address | buyer@test.com      |
-      | Email status  | Verified            |
-      | Roles         | Buyer Service admin |
+      | Email address | buyer@test.com        |
+      | Email status  | Verified              |
+      | Roles         | Buyer, Service admin  |
   
   Scenario: View Service admin and User support
     And I search for 'service_admin@test.com' and there is a user with the following details:
@@ -43,7 +43,7 @@ Feature: Manage users - User admin - View user - Mixed Roles
     And the user has the following details:
       | Email address | service_admin@test.com      |
       | Email status  | Verified                    |
-      | Roles         | Service admin User support  |
+      | Roles         | Service admin, User support |
 
   Scenario: View User support and User admin
     And I search for 'user_support@test.com' and there is a user with the following details:
@@ -60,9 +60,9 @@ Feature: Manage users - User admin - View user - Mixed Roles
     And I cannot manage the user and there is the following warning:
       | You do not have the required permissions to make changes to this user. You must have the 'Super admin' role to make changes.  |
     And the user has the following details:
-      | Email address | user_support@test.com   |
-      | Email status  | Verified                |
-      | Roles         | User support User admin |
+      | Email address | user_support@test.com     |
+      | Email status  | Verified                  |
+      | Roles         | User support, User admin  |
   
   Scenario: View User admin and Super admin
     And I search for 'user_admin@test.com' and there is a user with the following details:
@@ -81,4 +81,4 @@ Feature: Manage users - User admin - View user - Mixed Roles
     And the user has the following details:
       | Email address | user_admin@test.com     |
       | Email status  | Verified                |
-      | Roles         | User admin Super admin  |
+      | Roles         | User admin, Super admin |

@@ -1,0 +1,53 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= content_for :page_title, @sublot_region_name %>
+    <%= admin_breadcrumbs(
+      { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), href: facilities_management_rm3830_admin_supplier_framework_data_path },
+      { text: @sublot_region_name }
+    )%>
+
+    <h2 class="govuk-caption-l govuk-!-margin-bottom-2 govuk-!-font-weight-regular"><%= @supplier.supplier_name %></h1>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2"><%= @sublot_region_name %></h2>
+    <%= govuk_warning_text(t('facilities_management.rm3830.admin.you_cannot_update.regions')) %>
+    <p class="govuk-body govuk-!-font-weight-regular govuk-hint"><%= t('.leading_text') %></p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <% @regions.each do |region, region_name| %>
+      <%= govuk_table(
+        [
+          {
+            text: t('.region'),
+            classes: 'govuk-!-width-three-quarters'
+          },
+          {
+            text: t('.selected')
+          }
+        ],
+        @subregions.select { |sub_region, _sub_region_name| sub_region.start_with?(region) }.map do |sub_region, sub_region_name|
+          [
+            {
+              text: sub_region_name,
+              classes: 'supplier-rates-td'
+            },
+            {
+              text: @selected_supplier_regions[sub_region] ? tag.span('', class: 'supplier-lot-data__true'): '',
+              classes: 'supplier-rates-td supplier-lot-data'
+            }
+          ]
+        end,
+        first_cell_is_header: true,
+        caption: {
+          text: region_name,
+          classes: 'govuk-table__caption--m'
+        }
+      ) %>
+    <% end %>
+
+    <p>
+      <%= link_to t('.return_link'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link' %>
+    </p>
+  </div>
+</div>

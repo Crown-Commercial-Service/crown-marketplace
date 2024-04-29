@@ -4,7 +4,7 @@ class FacilitiesManagement::Admin::Upload < ApplicationRecord
   self.abstract_class = true
 
   default_scope { order(created_at: :desc) }
-  serialize :import_errors, Array
+  serialize :import_errors, type: Array, coder: YAML
 
   validate :supplier_files_validation, on: :upload
 

@@ -13,37 +13,48 @@
     <p>
       <%= t('.you_can_generate_a_new_report') %>
     </p>
-    <%= link_to t('.generate_a_new_report'), new_path, class: 'govuk-button', aria: { label: t('.generate_a_new_report') } %>
+    <%= govuk_button(t('.generate_a_new_report'), href: new_path, attributes: { aria: { label: t('.generate_a_new_report') } }) %>
   </div>
 </div>
 
 <% if @management_reports.any? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="col" width="15%"><%= t('.management_report') %></th>
-            <th class="govuk-table__header" scope="col" width="20%"><%= t('.created_at') %></th>
-            <th class="govuk-table__header" scope="col" width="40%"><%= t('.user') %></th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <% @management_reports.each do |management_report| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell govuk-!-padding-right-2">
-                <%= link_to management_report.short_id, show_path(management_report.id), class: 'govuk-link govuk-link--no-visited-state' %>
-              </td>
-              <td class="govuk-table__cell govuk-!-padding-right-2">
-                <%= format_date_time management_report.created_at %>
-              </td>
-              <td class="govuk-table__cell govuk-!-padding-right-2">
-                <%= management_report&.user&.email || t('.user_deleted') %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%= govuk_table(
+        [
+          {
+            text: t('.management_report'),
+            attributes: {
+              width: '15%'
+            }
+          },
+          {
+            text: t('.created_at'),
+            attributes: {
+              width: '20%'
+            }
+          },
+          {
+            text: t('.user'),
+            attributes: {
+              width: '40%'
+            }
+          }
+        ],
+        @management_reports.map do |management_report|
+          [
+            {
+              text: link_to(management_report.short_id, show_path(management_report.id), class: 'govuk-link govuk-link--no-visited-state')
+            },
+            {
+              text: format_date_time(management_report.created_at)
+            },
+            {
+              text: management_report&.user&.email || t('.user_deleted')
+            }
+          ]
+        end
+      ) %>
       <%= paginate @management_reports, views_prefix: 'shared' %>
     </div>
   </div>

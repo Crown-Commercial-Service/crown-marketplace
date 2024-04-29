@@ -7,7 +7,7 @@ Feature: Supplier framework data
     Given I show all sections
 
   Scenario: Return to admin dashboard
-    Given I click on 'Return to admin dashboard'
+    Given I click on 'Home'
     Then I am on the 'RM3830 administration dashboard' page
 
   Scenario Outline: Return links for the service pages

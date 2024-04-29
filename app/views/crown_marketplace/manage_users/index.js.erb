@@ -1,7 +1,7 @@
 <% if @search[:error] %>
   if ($("#email-error").length === 0) {
     $("#email-form-group").addClass("govuk-form-group--error");
-    $("#email-search-label").after("<%= escape_javascript(govuk_error_message_format(:email, @search[:error])) %>");
+    $("#email-hint").after("<%= escape_javascript(govuk_error_message(@search[:error], :email)) %>");
   }
 <% else %>
   if ($("#email-error").length > 0) {

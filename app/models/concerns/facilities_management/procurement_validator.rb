@@ -145,7 +145,7 @@ module FacilitiesManagement
     def mobilisation_period_valid_when_tupe_required?
       return true unless tupe
 
-      (mobilisation_period_required && mobilisation_period >= 4)
+      mobilisation_period_required && mobilisation_period >= 4
     end
 
     # End of validation methods for contract period when continuing from the requirements page

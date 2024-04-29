@@ -42,16 +42,16 @@ RSpec.describe CrownMarketplace::ManageUsersHelper do
     context 'when the account is enabled' do
       let(:enabled) { true }
 
-      it 'returns blue with enabled' do
-        expect(result).to eq [:blue, 'Enabled']
+      it 'returns enabled' do
+        expect(result).to eq ['Enabled']
       end
     end
 
     context 'when the account is not enabled' do
       let(:enabled) { false }
 
-      it 'returns red with disabled' do
-        expect(result).to eq [:red, 'Disabled']
+      it 'returns disabled with red' do
+        expect(result).to eq ['Disabled', :red]
       end
     end
   end
@@ -62,16 +62,16 @@ RSpec.describe CrownMarketplace::ManageUsersHelper do
     context 'when the email is verified' do
       let(:verified) { true }
 
-      it 'returns blue with verified' do
-        expect(result).to eq [:blue, 'Verified']
+      it 'returns verified' do
+        expect(result).to eq ['Verified']
       end
     end
 
     context 'when the email is not verified' do
       let(:verified) { false }
 
-      it 'returns grey with Unverified' do
-        expect(result).to eq [:grey, 'Unverified']
+      it 'returns Unverified with grey' do
+        expect(result).to eq ['Unverified', :grey]
       end
     end
   end
@@ -82,56 +82,56 @@ RSpec.describe CrownMarketplace::ManageUsersHelper do
     context 'when the current status is UNCONFIRMED' do
       let(:status) { 'UNCONFIRMED' }
 
-      it 'returns grey and UNCONFIRMED' do
-        expect(result).to eq [:grey, 'UNCONFIRMED']
+      it 'returns UNCONFIRMED and grey' do
+        expect(result).to eq ['UNCONFIRMED', :grey]
       end
     end
 
     context 'when the current status is CONFIRMED' do
       let(:status) { 'CONFIRMED' }
 
-      it 'returns blue and CONFIRMED' do
-        expect(result).to eq [:blue, 'CONFIRMED']
+      it 'returns CONFIRMED and nil' do
+        expect(result).to eq ['CONFIRMED', nil]
       end
     end
 
     context 'when the current status is ARCHIVED' do
       let(:status) { 'ARCHIVED' }
 
-      it 'returns grey and ARCHIVED' do
-        expect(result).to eq [:grey, 'ARCHIVED']
+      it 'returns ARCHIVED and grey' do
+        expect(result).to eq ['ARCHIVED', :grey]
       end
     end
 
     context 'when the current status is COMPROMISED' do
       let(:status) { 'COMPROMISED' }
 
-      it 'returns red and COMPROMISED' do
-        expect(result).to eq [:red, 'COMPROMISED']
+      it 'returns COMPROMISED and red' do
+        expect(result).to eq ['COMPROMISED', :red]
       end
     end
 
     context 'when the current status is UNKNOWN' do
       let(:status) { 'UNKNOWN' }
 
-      it 'returns grey and UNKNOWN' do
-        expect(result).to eq [:grey, 'UNKNOWN']
+      it 'returns UNKNOWN and grey' do
+        expect(result).to eq ['UNKNOWN', :grey]
       end
     end
 
     context 'when the current status is RESET_REQUIRED' do
       let(:status) { 'RESET_REQUIRED' }
 
-      it 'returns grey and RESET_REQUIRED' do
-        expect(result).to eq [:grey, 'RESET_REQUIRED']
+      it 'returns RESET_REQUIRED and grey' do
+        expect(result).to eq ['RESET_REQUIRED', :grey]
       end
     end
 
     context 'when the current status is FORCE_CHANGE_PASSWORD' do
       let(:status) { 'FORCE_CHANGE_PASSWORD' }
 
-      it 'returns grey and FORCE_CHANGE_PASSWORD' do
-        expect(result).to eq [:grey, 'FORCE_CHANGE_PASSWORD']
+      it 'returns FORCE_CHANGE_PASSWORD and grey' do
+        expect(result).to eq ['FORCE_CHANGE_PASSWORD', :grey]
       end
     end
   end

@@ -3,39 +3,35 @@
     <hr class="govuk-section-break govuk-!-margin-top-3">
 
     <div id="postcode-search" class="<%=hidden_class(find_address_helper.postcode_search_visible?)%>" data-propertyname="<%= find_address_helper.address_keys[:address_postcode] %>">
-      <%= govuk_text_input(
-        f,
+      <%= govuk_input(
         find_address_helper.address_keys[:address_postcode],
-        {
-          label: {
-            text: t('.postcode'),
-            classes: 'govuk-heading-s'
-          },
-          input: {
-            classes: 'postcode-entry govuk-input--width-10',
-            attributes: {
-              pattern: '^(([A-Za-z][A-Za-z]{0,1})([0-9][A-Za-z0-9]{0,1})) {0,}(([0-9])([A-Za-z]{2}))$',
-              required: true,
-              maxlength: 8,
-              tabindex: input_visible?(find_address_helper.postcode_search_visible?),
-              data: {
-                error_messages: validation_messages(f.object.class.name.underscore, find_address_helper.address_keys[:address_postcode])
-              }
-            }
+        form: f,
+        label: {
+          text: t('.postcode'),
+          classes: 'govuk-!-font-weight-bold'
+        },
+        classes: 'postcode-entry govuk-input--width-10',
+        attributes: {
+          pattern: '^(([A-Za-z][A-Za-z]{0,1})([0-9][A-Za-z0-9]{0,1})) {0,}(([0-9])([A-Za-z]{2}))$',
+          required: true,
+          maxlength: 8,
+          tabindex: input_visible?(find_address_helper.postcode_search_visible?),
+          data: {
+            error_messages: validation_messages(f.object.class.name.underscore, find_address_helper.address_keys[:address_postcode])
           }
         }
-      )%>
+      ) %>
 
-      <%= button_tag(
+      <%= govuk_button(
         t('.find_address'),
-        type: 'button',
-        id: 'find-address-button',
-        class: 'govuk-button -govuk-!-margin-top-4',
-        aria: {
-          label: t('.find_address')
-        },
-        tabindex: input_visible?(find_address_helper.postcode_search_visible?))
-      %>
+        attributes: {
+          id: 'find-address-button',
+          aria: {
+            label: t('.find_address')
+          },
+          tabindex: input_visible?(find_address_helper.postcode_search_visible?)
+        }
+      ) %>
     </div>
 
     <div id="postcode-change" class="<%=hidden_class(find_address_helper.postcode_change_visible?)%>">
@@ -58,41 +54,36 @@
 
     <div id="select-an-address" class="<%=hidden_class(find_address_helper.select_an_address_visible?)%>"  data-propertyname="base">
       <%= govuk_select(
-        f,
         :base,
-        {
-          label: {
-            text: t('.select_an_address'),
-            class: 'govuk-heading-s govuk-!-margin-bottom-1',
-            for: 'address-results-container'
-          },
-          select: {
-            selected: find_address_helper.address_line1,
-            prompt: t('.option_text', number: find_address_helper.address_count, location: 'address'.pluralize(find_address_helper.address_count)),
-            options: find_address_helper.valid_addresses.map do |address|
-              {
-                value: address['summary_line'],
-                attributes: {
-                  data: {
-                    address_line1: address['address_line_1'],
-                    address_line2: address['address_line_2'],
-                    address_town: address['address_town'],
-                    address_postcode: address['address_postcode']
-                  }
-                }
-              }
-            end,
+        find_address_helper.valid_addresses.map do |address|
+          {
+            value: address['summary_line'],
             attributes: {
-              id: 'address-results-container',
-              tabindex: input_visible?(find_address_helper.select_an_address_visible?),
               data: {
-                text_single: t('.address_singular'),
-                text_plural: t('.address_plural')
+                address_line1: address['address_line_1'],
+                address_line2: address['address_line_2'],
+                address_town: address['address_town'],
+                address_postcode: address['address_postcode']
               }
             }
           }
-        }
-      )%>
+        end,
+        label: {
+          text: t('.select_an_address'),
+          classes: 'govuk-heading-s govuk-!-margin-bottom-1'
+        },
+        selected: find_address_helper.address_line1,
+        attributes: {
+          id: 'address-results-container',
+          tabindex: input_visible?(find_address_helper.select_an_address_visible?),
+          prompt: t('.option_text', number: find_address_helper.address_count, location: 'address'.pluralize(find_address_helper.address_count)),
+          data: {
+            text_single: t('.address_singular'),
+            text_plural: t('.address_plural')
+          }
+        },
+        error_message: f.object.errors[:base].first
+      ) %>
 
       <hr class="govuk-section-break govuk-!-margin-top-2">
 

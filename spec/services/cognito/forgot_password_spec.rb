@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Cognito::ForgotPassword do
   let(:email) { 'test@email.com' }
-  let(:email_upercase) { 'Test@Email.com' }
+  let(:email_uppercase) { 'Test@Email.com' }
   let(:invalid_email_char) { '@!"£$£"' }
   let(:invalid_email) { 'someRandomString' }
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
@@ -64,8 +64,8 @@ RSpec.describe Cognito::ForgotPassword do
       end
     end
 
-    context 'when success with an upercase email' do
-      let(:email) { email_upercase }
+    context 'when success with an uppercase email' do
+      let(:email) { email_uppercase }
 
       include_context 'with cognito structs'
 
@@ -80,7 +80,7 @@ RSpec.describe Cognito::ForgotPassword do
       end
 
       it 'returns no error' do
-        expect(response.error).to be_nil
+        expect(response.errors).to be_empty
       end
     end
 
@@ -92,7 +92,7 @@ RSpec.describe Cognito::ForgotPassword do
       end
 
       it 'does returns cognito error' do
-        expect(response.error).to eq 'Oops'
+        expect(response.errors[:base].first).to eq 'Oops'
       end
     end
 
@@ -104,31 +104,31 @@ RSpec.describe Cognito::ForgotPassword do
       end
 
       it 'does returns cognito error' do
-        expect(response.error).to be_nil
+        expect(response.errors).to be_empty
       end
     end
 
     context 'when user enter invalid_email_char' do
-      let(:email) { invalid_email_char }
+      let(:email) { '@!"£$£"' }
 
       it 'does not return success' do
         expect(response.success?).to be false
       end
 
       it 'does returns cognito error' do
-        expect(response.error).to eq 'Enter your email address in the correct format, like name@example.com'
+        expect(response.errors[:email].first).to eq 'Enter your email address in the correct format, like name@example.com'
       end
     end
 
     context 'when user enter invalid_email' do
-      let(:email) { invalid_email }
+      let(:email) { 'someRandomString' }
 
       it 'does not return success' do
         expect(response.success?).to be false
       end
 
       it 'does returns cognito error' do
-        expect(response.error).to eq 'Enter your email address in the correct format, like name@example.com'
+        expect(response.errors[:email].first).to eq 'Enter your email address in the correct format, like name@example.com'
       end
     end
   end

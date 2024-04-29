@@ -52,21 +52,21 @@ module OrdnanceSurvey
     raise e
   end
 
-  def self.untar_stream(url, summary, &)
+  def self.untar_stream(url, summary, &block)
     Gem::Package::TarReader.new(Zlib::GzipReader.new(File.open(url))) do |tar|
-      handle_tar_contents(tar, summary, &)
+      handle_tar_contents(tar, summary, &block)
     end
   end
 
-  def self.gunzip_url(url, summary, &)
+  def self.gunzip_url(url, summary, &block)
     Zlib::GzipReader.open(File.open(url)) do |gz|
-      handle_gzip_contents(gz, summary, &)
+      handle_gzip_contents(gz, summary, &block)
     end
   end
 
-  def self.unzip_url(url, summary, &)
+  def self.unzip_url(url, summary, &block)
     Zip::InputStream.open(IO.popen(url)) do |io|
-      handle_zip_contents(io, summary, &)
+      handle_zip_contents(io, summary, &block)
     end
   end
 end

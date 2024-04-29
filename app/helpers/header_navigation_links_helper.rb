@@ -1,4 +1,46 @@
+# rubocop:disable Metrics/ModuleLength
 module HeaderNavigationLinksHelper
+  def service_name_text
+    case params[:service]
+    when 'crown_marketplace'
+      t('home.index.crown_marketplace_link')
+    when 'facilities_management/admin'
+      t('home.index.facilities_management_admin_link')
+    when 'facilities_management/supplier'
+      t('home.index.facilities_management_supplier_link')
+    else
+      t('home.index.facilities_management_link')
+    end
+  end
+
+  def service_authentication_links
+    navigation_links = []
+
+    if user_signed_in?
+      navigation_links << {
+        text: t('header_navigation_links_helper.sign_out'),
+        href: "#{service_path_base}/sign-out",
+        attributes: {
+          method: :delete
+        }
+      }
+    else
+      if params[:service] == 'facilities_management'
+        navigation_links << {
+          text: t('header_navigation_links_helper.sign_up'),
+          href: "#{service_path_base}/sign-up"
+        }
+      end
+
+      navigation_links << {
+        text: t('header_navigation_links_helper.sign_in'),
+        href: "#{service_path_base}/sign-in"
+      }
+    end
+
+    navigation_links
+  end
+
   def service_navigation_links
     navigation_links = []
 
@@ -13,49 +55,32 @@ module HeaderNavigationLinksHelper
                           facilities_management_navigation_link
                         end
 
-    navigation_links << { link_text: t('header_navigation_links_helper.sign_out'), link_url: "#{service_path_base}/sign-out", options: { method: :delete } } if user_signed_in?
-
     navigation_links.compact
   end
 
-  def service_name_text
-    case params[:service]
-    when 'crown_marketplace'
-      t('home.index.crown_marketplace_link')
-    when 'facilities_management/admin'
-      t('home.index.facilities_management_admin_link')
-    when 'facilities_management/supplier'
-      t('home.index.facilities_management_supplier_link')
-    else
-      t('home.index.facilities_management_link')
-    end
-  end
-
   def crown_marketplace_navigation_link
-    { link_text: crown_marketplace_back_to_start_text, link_url: crown_marketplace_path } unless sign_in_or_dashboard?('home')
+    { text: crown_marketplace_back_to_start_text, href: crown_marketplace_path } unless sign_in_or_dashboard?('home')
   end
 
   def facilites_management_admin_navigation_link
-    { link_text: admin_back_to_start_text, link_url: service_path_base } unless sign_in_or_dashboard?('home')
+    { text: admin_back_to_start_text, href: service_path_base } unless sign_in_or_dashboard?('home')
   end
 
   def facilites_management_supplier_navigation_link
-    return { link_text: supplier_back_to_start_text, link_url: service_path_base } unless sign_in_or_dashboard?('dashboard')
-
-    { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: service_path_base } if not_permitted_page? && user_signed_in?
+    { text: supplier_back_to_start_text, href: service_path_base } unless sign_in_or_dashboard?('dashboard')
   end
 
   def facilities_management_navigation_link
     return back_to_start_link unless page_does_not_require_back_to_start?
 
-    { link_text: t('header_navigation_links_helper.my_account'), link_url: service_path_base } if not_permitted_page? && user_signed_in?
+    { text: t('header_navigation_links_helper.my_account'), href: service_path_base } if not_permitted_page? && user_signed_in?
   end
 
   def back_to_start_link
     if !current_user || page_with_back_to_start?
-      { link_text: t('header_navigation_links_helper.back_to_start'), link_url: "#{service_path_base}/start" }
+      { text: t('header_navigation_links_helper.back_to_start'), href: "#{service_path_base}/start" }
     elsif !current_user.fm_buyer_details_incomplete?
-      { link_text: t('header_navigation_links_helper.my_account'), link_url: service_path_base }
+      { text: t('header_navigation_links_helper.my_account'), href: service_path_base }
     end
   end
 
@@ -68,15 +93,19 @@ module HeaderNavigationLinksHelper
   end
 
   def crown_marketplace_back_to_start_text
-    passwords_page? || !user_signed_in? ? t('header_navigation_links_helper.back_to_start') : t('header_navigation_links_helper.crown_marketplace')
+    back_to_start_text(t('header_navigation_links_helper.crown_marketplace'))
   end
 
   def supplier_back_to_start_text
-    passwords_page? || !user_signed_in? ? t('header_navigation_links_helper.back_to_start') : t('header_navigation_links_helper.my_dashboard')
+    back_to_start_text(t('header_navigation_links_helper.my_dashboard'))
   end
 
   def admin_back_to_start_text
-    passwords_page? || !user_signed_in? ? t('header_navigation_links_helper.back_to_start') : t('header_navigation_links_helper.admin_dashboard')
+    back_to_start_text(t('header_navigation_links_helper.admin_dashboard'))
+  end
+
+  def back_to_start_text(default_text)
+    passwords_page? || !user_signed_in? ? t('header_navigation_links_helper.back_to_start') : default_text
   end
 
   def fm_buyer_account_page?
@@ -107,3 +136,4 @@ module HeaderNavigationLinksHelper
     (controller.controller_name == 'sessions' && controller.action_name == 'new') || (controller.controller_name == dashboard_controller && controller.action_name == 'index')
   end
 end
+# rubocop:enable Metrics/ModuleLength

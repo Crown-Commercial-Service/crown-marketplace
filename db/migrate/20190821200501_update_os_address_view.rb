@@ -1,7 +1,4 @@
-# rubocop:disable Metrics/AbcSize
-# rubocop:disable Metrics/MethodLength
-# rubocop:disable Metrics/BlockLength
-# rubocop:disable Migration/RequireLimitOnString
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/BlockLength, Migration/RequireLimitOnString, Rails/DangerousColumnNames
 class UpdateOsAddressView < ActiveRecord::Migration[5.2]
   def up
     unless ActiveRecord::Base.connection.table_exists?('os_address')
@@ -108,7 +105,4 @@ class UpdateOsAddressView < ActiveRecord::Migration[5.2]
     drop_table 'os_address'
   end
 end
-# rubocop:enable Metrics/AbcSize
-# rubocop:enable Metrics/BlockLength
-# rubocop:enable Metrics/MethodLength
-# rubocop:enable Migration/RequireLimitOnString
+# rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/BlockLength, Migration/RequireLimitOnString, Rails/DangerousColumnNames

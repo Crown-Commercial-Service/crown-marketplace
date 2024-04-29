@@ -28,7 +28,7 @@ Feature: Manage users - Super admin - View user - Full Details
       | Confirmation status     | confirmed                             |
       | Mobile telephone number | None                                  |
       | Roles                   | Buyer                                 |
-      | Service access          | Facilities Management Legal Services  |
+      | Service access          | Facilities Management, Legal Services |
 
   Scenario: View Service admin - Full details
     And I search for 'service_admin@test.com' and there is a user with the following details:

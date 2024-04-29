@@ -12,7 +12,7 @@ Feature: Select services
     And the remove all link should not be visible
     When I select 'Building Management System (BMS) maintenance'
     Then the basket should say '1 service selected'
-    And the remove all link should not be visible
+    And the remove all link should be visible
     And the following items should appear in the basket:
       | Building Management System (BMS) maintenance  |
     When I select the following items:

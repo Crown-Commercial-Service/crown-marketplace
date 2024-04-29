@@ -1,22 +1,22 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.2'
+ruby '3.3.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.1.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 6.4'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.1', '>= 5.1.0'
+gem 'sass-rails', '~> 6.0', '>= 6.0.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
 gem 'sprockets-rails'
 
-gem 'shakapacker', '~> 7.1.0'
+gem 'shakapacker', '~> 7.2.3'
 
 gem 'turbolinks', '~> 5'
 
@@ -42,20 +42,20 @@ gem 'caxlsx', '>= 3.2.0'
 gem 'caxlsx_rails', '>= 0.6.3'
 gem 'virtus'
 
-gem 'rollbar', '~> 3.4.0'
+gem 'rollbar', '~> 3.5.2'
 
 # for dfe sign in
-gem 'omniauth', '~> 2.1.1'
+gem 'omniauth', '~> 2.1.2'
 gem 'omniauth-oauth2', '~> 1.8.0'
 
 # for authentication
-gem 'devise', '~> 4.9.2'
+gem 'devise', '~> 4.9.4'
 
 # for timing out when session expires
-gem 'auto-session-timeout', '~> 1.0'
+gem 'auto-session-timeout', '~> 1.1'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.82.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.90.0'
 
 # for pagination
 gem 'kaminari', '~> 1.2.2'
@@ -64,16 +64,16 @@ gem 'kaminari', '~> 1.2.2'
 gem 'aws-sdk-s3', '~> 1'
 
 # handles spreadsheets
-gem 'roo', '~> 2.10.0'
+gem 'roo', '~> 2.10.1'
 
 # state machine
 gem 'aasm', '~> 5.5'
-gem 'after_commit_everywhere', '~> 1.3'
+gem 'after_commit_everywhere', '~> 1.4'
 
 # for running background jobs
-gem 'sidekiq', '~> 7.1.5'
-gem 'sinatra', '~> 3.1.0', require: false
-gem 'slim', '~> 5.1.1'
+gem 'sidekiq', '~> 7.2.4'
+gem 'sinatra', '~> 4.0.0', require: false
+gem 'slim', '~> 5.2.1'
 gem 'sidekiq-cron'
 
 # for authorization
@@ -95,7 +95,7 @@ gem 'ratonvirus-clamby', '>= 0.3.0'
 # for active storage validation
 gem 'active_storage_validations', '>= 1.0.3'
 # gem for  bulk inserts
-gem 'activerecord-import', '~> 1.5.0'
+gem 'activerecord-import', '~> 1.6.0'
 # gov notify
 gem 'notifications-ruby-client'
 # DOCX generation
@@ -111,12 +111,14 @@ gem 'email_validator', require: 'email_validator/strict'
 gem 'asset_sync'
 gem 'fog-aws', '>= 3.14.0'
 
+# Use CCS Frontend Helpers
+gem 'ccs-frontend_helpers', '~> 0.3.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails', '>= 2.8.1'
   gem 'factory_bot_rails', '>= 6.2.0'
-  gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
   gem 'rspec-rails', '>= 6.0.1'
@@ -130,12 +132,12 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
-  gem 'faker', '~> 3.2.1'
+  gem 'faker', '~> 3.3.1'
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'listen', '>= 3.0.5', '< 3.9'
+  gem 'listen', '>= 3.0.5', '< 3.10'
   gem 'pry-byebug'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'

@@ -2,9 +2,7 @@ Given('I sign in as an {string} user go to the crown marketplace dashboard') do 
   visit '/crown-marketplace/sign-in'
   update_banner_cookie(true) if @javascript
   create_admin_user(user)
-  fill_in 'email', with: @user.email
-  fill_in 'password', with: 'ValidPassword'
-  click_on 'Sign in'
+  step 'I sign in'
   expect(page.find('h1')).to have_content('Crown Marketplace dashboard')
 end
 

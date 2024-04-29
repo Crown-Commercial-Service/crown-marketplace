@@ -57,7 +57,7 @@ module FacilitiesManagement::RM3830
           yield(supplier, supplier_rates, supplier_errors)
         end
 
-        supplier_errors.each { |_, suppliers| suppliers.uniq! }
+        supplier_errors.each_value(&:uniq!)
       end
 
       def validation_type(key, code)

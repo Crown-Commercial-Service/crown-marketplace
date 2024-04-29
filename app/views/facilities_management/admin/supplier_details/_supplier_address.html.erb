@@ -1,25 +1,61 @@
-<%= form_group_with_error(f.object, :address_line_1) do |displayed_error, any_errors| %>
-  <%= f.label :address_line_1, t('.building_and_street'), class: 'govuk-label' %>
-  <%= displayed_error %>
-  <%= f.text_field :address_line_1, class: "govuk-input govuk-input--width-30 #{'govuk-input--error' if any_errors}", maxlength: 100 %>
-<% end %>
-<%= form_group_with_error(f.object, :address_line_2) do |displayed_error, any_errors| %>
-  <%= f.label :address_line_2, class: 'govuk-visually-hidden' %>
-  <%= displayed_error %>
-  <%= f.text_field :address_line_2, class: "govuk-input govuk-input--width-30 #{'govuk-input--error' if any_errors}", maxlength: 100 %>
-<% end %>
-<%= form_group_with_error(f.object, :address_town) do |displayed_error, any_errors| %>
-  <%= f.label :address_town, t('.town_or_city'), class: 'govuk-label' %>
-  <%= displayed_error %>
-  <%= f.text_field :address_town, class: "govuk-input govuk-input--width-20 #{'govuk-input--error' if any_errors}", maxlength: 50 %>
-<% end %>
-<%= form_group_with_error(f.object, :address_county) do |displayed_error, any_errors| %>
-  <%= f.label :address_county, t('.county'), class: 'govuk-label' %>
-  <%= displayed_error %>
-  <%= f.text_field :address_county, class: "govuk-input govuk-input--width-20 #{'govuk-input--error' if any_errors}", maxlength: 50 %>
-<% end %>
-<%= form_group_with_error(f.object, :address_postcode) do |displayed_error, any_errors| %>
-  <%= f.label :address_postcode, t('.postcode'), class: 'govuk-label' %>
-  <%= displayed_error %>
-  <%= f.text_field :address_postcode, class: "govuk-input govuk-input--width-10 #{'govuk-input--error' if any_errors}", maxlength: 10 %>
-<% end %>
+<%= govuk_input(
+  :address_line_1,
+  form: f,
+  label: {
+    text: t('.building_and_street')
+  },
+  classes: 'govuk-input--width-30',
+  attributes: {
+    maxlength: 100
+  }
+) %>
+
+<%= govuk_input(
+  :address_line_2,
+  form: f,
+  label: {
+    text: t('.building_and_street_line_2'),
+    classes: 'govuk-visually-hidden'
+  },
+  classes: 'govuk-input--width-30',
+  attributes: {
+    maxlength: 100
+  }
+) %>
+
+<%= govuk_input(
+  :address_town,
+  form: f,
+  label: {
+    text: t('.town_or_city')
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    maxlength: 50
+  }
+) %>
+
+<%= govuk_input(
+  :address_county,
+  form: f,
+  label: {
+    text: t('.county')
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    maxlength: 50
+  }
+) %>
+
+<%= govuk_input(
+  :address_postcode,
+  form: f,
+  label: {
+    text: t('.postcode')
+  },
+  classes: 'govuk-input--width-10',
+  attributes: {
+    maxlength: 10
+  }
+) %>
+

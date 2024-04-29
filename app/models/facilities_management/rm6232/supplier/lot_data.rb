@@ -18,9 +18,9 @@ module FacilitiesManagement
 
       def current_status
         if active
-          [:blue, 'ACTIVE']
+          ['ACTIVE']
         else
-          [:red, 'INACTIVE']
+          ['INACTIVE', :red]
         end
       end
 

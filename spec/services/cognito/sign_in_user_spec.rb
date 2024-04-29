@@ -103,7 +103,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'does returns cognito error' do
-        expect(sign_in_user.error).to eq I18n.t('facilities_management.users.sign_in_error')
+        expect(sign_in_user.errors[:base].first).to eq 'You must provide a correct username or password'
       end
     end
 
@@ -118,7 +118,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'does returns cognito error' do
-        expect(sign_in_user.error).to eq 'Oops'
+        expect(sign_in_user.errors[:base].first).to eq 'Oops'
       end
 
       it 'returns needs_confirmation true' do
@@ -137,7 +137,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'does returns cognito error' do
-        expect(sign_in_user.error).to eq 'Oops'
+        expect(sign_in_user.errors[:base].first).to eq 'Oops'
       end
 
       it 'returns need_password_reset true' do
@@ -156,7 +156,7 @@ RSpec.describe Cognito::SignInUser do
       end
 
       it 'does returns cognito error' do
-        expect(sign_in_user.error).to eq I18n.t('facilities_management.users.sign_in_error')
+        expect(sign_in_user.errors[:base].first).to eq 'You must provide a correct username or password'
       end
 
       it 'returns need_password_reset false' do

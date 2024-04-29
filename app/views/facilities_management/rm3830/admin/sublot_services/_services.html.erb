@@ -1,56 +1,55 @@
 <%= content_for :page_title, @lot_name %>
 <%= admin_breadcrumbs(
-  { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), link: facilities_management_rm3830_admin_supplier_framework_data_path },
+  { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), href: facilities_management_rm3830_admin_supplier_framework_data_path },
   { text: @lot_name }
 )%>
 
-<div class="govuk-grid-column-one-thirds">
-  <span class="govuk-caption-l"><%= @supplier.supplier_name %></span>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span class="govuk-caption-l"><%= @supplier.supplier_name %></span>
+    <h1 class="govuk-heading-xl"><%= @lot_name %></h1>
+    <%= govuk_warning_text(t('facilities_management.rm3830.admin.you_cannot_update.services')) %>
+    <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+      <%= t('.note') %>
+    </p>
+  </div>
 </div>
-<h1 class="govuk-heading-xl"><%= @lot_name %></h1>
-<%= framework_expired_warning(t('facilities_management.rm3830.admin.you_cannot_update.services')) %>
-<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
-  <%= t('.note') %>
-</p>
 
-<%= form_with url: facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path, class: 'ccs-form', method: :put, html: { specialvalidation: false } do |f| %>
-  <% @full_services.each do |service| %>
-    <fieldset class="govuk-fieldset">
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold  left">
-            <legend class="govuk-padding-left-0">
-              <%= service['name'] %>
-            </legend>
-          </th>
-        </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-        <% service['work_package'].each do |work_pckg| %>
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
-              <div class="govuk-checkboxes__item">
-                <%= check_box_tag(
-                        "checked_services[]",
-                        work_pckg['code'],
-                        @supplier_rate_data_checkboxes[work_pckg['code']],
-                        class: "govuk-checkboxes__input",
-                        id: "rates_#{work_pckg['code']}",
-                        disabled: @framework_has_expired
-                    ) %>
-                <label class="govuk-label govuk-checkboxes__label" for="rates_<%=work_pckg['code'] %>">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <% @full_services.each do |service| %>
+      <%= govuk_table(
+        [
+          {
+            text: t('.service'),
+            classes: 'govuk-!-width-three-quarters'
+          },
+          {
+            text: t('.selected')
+          }
+        ],
+        service['work_package'].map do |work_pckg|
+          [
+            {
+              text: "#{work_pckg['code']} #{work_pckg['name']}",
+              classes: 'supplier-rates-td'
+            },
+            {
+              text: @supplier_rate_data_checkboxes[work_pckg['code']] ? tag.span('', class: 'supplier-lot-data__true') : '',
+              classes: 'supplier-rates-td supplier-lot-data'
+            }
+          ]
+        end,
+        first_cell_is_header: true,
+        caption: {
+          text: service['name'],
+          classes: 'govuk-table__caption--m'
+        }
+      ) %>
+    <% end %>
 
-                  <%= work_pckg['code'] %> <%= work_pckg['name'] %>
-                </label>
-              </div>
-            </th>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </fieldset>
-  <% end %>
-  <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_benchmark_rates', aria: { label:  t('.update_button') }, disabled: @framework_has_expired %>
-  <%= link_to t('.return_button'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link govuk-caption-m' %>
-<% end %>
+    <p>
+      <%= link_to t('.return_button'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link' %>
+    </p>
+  </div>
+</div>

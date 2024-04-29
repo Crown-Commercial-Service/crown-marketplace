@@ -4,19 +4,20 @@ RSpec.describe FacilitiesManagement::Admin::HomeController do
   let(:default_params) { { service: 'facilities_management/admin' } }
 
   describe 'GET framework' do
+    it 'redirects to the RM6232 admin home page' do
+      get :framework
+
+      expect(response).to redirect_to facilities_management_admin_index_path('RM6232')
+    end
+
     context 'when RM3830 is live' do
+      include_context 'and RM3830 is live'
       include_context 'and RM6232 is live in the future'
 
       it 'redirects to the RM3830 admin home page' do
         get :framework
-        expect(response).to redirect_to facilities_management_rm3830_admin_path
-      end
-    end
 
-    context 'when RM6232 is live' do
-      it 'redirects to the RM6232 admin home page' do
-        get :framework
-        expect(response).to redirect_to facilities_management_admin_index_path('RM6232')
+        expect(response).to redirect_to facilities_management_rm3830_admin_path
       end
     end
   end

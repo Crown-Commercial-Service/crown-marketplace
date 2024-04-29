@@ -67,7 +67,7 @@ module Pages::RM6232
 
     element :updated_supplier, '#updated-supplier'
     element :updated_by_email, '#updated-by-email'
-    element :uploaded_by_email, '#uploaded-by-email'
+    element :uploaded_by_email, '#main-content > div:nth-child(3) > div > dl > div:nth-child(3) > dd'
     element :updated_lot, '#updated-lot'
 
     section :changes_table, '#main-content > div:nth-child(6) > div > table' do

@@ -20,12 +20,12 @@ declare global {
 }
 
 
-const getCookiePreferences = (): string => Cookies.get('cookie_preferences') ?? '{}'
+const getCookiePreferences = (): string => Cookies.get('cookie_preferences_cmp') ?? '{}'
 
-const getCookiePreferencesSaved = (): string => Cookies.get('cookie_preferences_saved') ?? '{}'
+const getCookiePreferencesSaved = (): string => Cookies.get('cookie_preferences_cmp_saved') ?? '{}'
 
 const setCookiePreferencesSaved = (cookiePreferences: CookiePreferences) => {
-  Cookies.set('cookie_preferences_saved', JSON.stringify(cookiePreferences), { expires: 365 })
+  Cookies.set('cookie_preferences_cmp_saved', JSON.stringify(cookiePreferences), { expires: 365 })
 }
 
 const getGrantedText = (state: boolean) => state ? GrantType.GRANTED : GrantType.NOT_GRANTED

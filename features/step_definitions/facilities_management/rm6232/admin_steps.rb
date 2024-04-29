@@ -119,17 +119,6 @@ Then('I {string} see the supplier {string} in the results') do |option, supplier
   end
 end
 
-Then('the supplier {string} {string} in the results') do |supplier, option|
-  supplier_list = quick_view_page.results_container.suppliers.map(&:text)
-
-  case option
-  when 'is not'
-    expect(supplier_list).not_to include supplier
-  when 'is'
-    expect(supplier_list).to include supplier
-  end
-end
-
 Then('I should see {int} logs') do |number_of_logs|
   expect(admin_page.log_table.log_rows.length).to eq number_of_logs
 end

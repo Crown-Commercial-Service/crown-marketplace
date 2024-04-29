@@ -1,28 +1,12 @@
-<div class="basket">
+<div id="css-list-basket">
   <div>
-    <h3
-      class="govuk-heading-m"
-      data-txt01="<%= number_selected_text[:many] %>"
-      data-txt02="<%= number_selected_text[:none] %>"
-      data-txt03="<%= number_selected_text[:one] %>"
-    >
-      <span id="selected-<%= basket_name %>-count">
-        0
-      </span>
-      <span>
-        <%= number_selected_text[:many] %>
-      </span>
+    <h3 class="govuk-heading-m" data-txt01="<%= number_selected_text[:many] %>" data-txt02="<%= number_selected_text[:none] %>" data-txt03="<%= number_selected_text[:one] %>">
+      <span id="selected-items-count"></span>
+      <span></span>
     </h3>
-    <a
-      class="govuk-!-padding-left-2 remove-link"
-      role="button"
-      href="#"
-      aria-label="<%= t('.remove_all') %>"
-    >
+    <a role="button" href="#" class="govuk-link--no-visited-state ccs-no-print" name="remove all" id="removeAll" style="display: none;">
       <%= t('.remove_all') %>
     </a>
-    <br/>
-    <ul style="margin-top:10px;" class="govuk-list">
-    </ul>
+    <ul class="govuk-list"></ul>
   </div>
 </div>

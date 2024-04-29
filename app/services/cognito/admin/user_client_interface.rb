@@ -1,5 +1,6 @@
 module Cognito
   module Admin
+    # rubocop:disable Metrics/ModuleLength
     module UserClientInterface
       class << self
         def find_user_from_cognito_uuid(cognito_uuid)
@@ -288,5 +289,6 @@ module Cognito
         end
       end
     end
+    # rubocop:enable Metrics/ModuleLength
   end
 end

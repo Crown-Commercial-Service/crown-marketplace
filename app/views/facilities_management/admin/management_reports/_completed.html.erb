@@ -1,5 +1,5 @@
 <p class="govuk-!-margin-bottom-8">
-  <%= govuk_tag_with_text(:blue, t('.generated')) %>
+  <%= govuk_tag(t('.generated')) %>
 </p>
 <p>
   <%= link_to_file_for_download("#{rails_blob_path(@management_report.management_report_csv, disposition: 'attachment', key: "#{params[:framework].downcase}_management_report_id", value: @management_report.id)}&format=csv", :csv, @management_report.management_report_csv.filename, true) %>

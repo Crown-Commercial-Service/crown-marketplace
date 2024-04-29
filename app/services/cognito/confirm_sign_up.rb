@@ -4,7 +4,7 @@ module Cognito
     attr_reader :email, :confirmation_code
     attr_accessor :user
 
-    validates_presence_of :email, :confirmation_code
+    validates_presence_of :confirmation_code, :email
     validates :confirmation_code,
               presence: true,
               format: { with: /\A\d+\z/, message: :invalid_format },

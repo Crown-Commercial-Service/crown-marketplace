@@ -6,7 +6,7 @@ RSpec.describe 'layouts/application.html.erb' do
   before do
     allow(view).to receive_messages(user_signed_in?: false, ccs_homepage_url: 'https://CCSHOMEPAGE', service_path_base: '/supply-teachers')
 
-    cookies[:cookie_preferences] = {
+    cookies[:cookie_preferences_cmp] = {
       value: {
         'settings_viewed' => true,
         'usage' => true,

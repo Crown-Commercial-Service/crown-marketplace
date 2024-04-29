@@ -7,11 +7,10 @@ const runTests = ($input: JQuery<HTMLElement>, theTests: Array<[RegExp, JQuery<H
   const inputText = String($input.val())
 
   theTests.forEach((test) => {
-    if (test[0].test(inputText)) {
-      test[1].removeClass('wrong').addClass('correct')
-    } else {
-      test[1].removeClass('correct').addClass('wrong')
-    }
+    const testPassed: boolean = test[0].test(inputText)
+
+    test[1].toggleClass('wrong', !testPassed)
+    test[1].toggleClass('correct', testPassed)
   })
 }
 
@@ -20,7 +19,7 @@ const passwordStrength = ($input: JQuery<HTMLElement>, theTests: Array<[RegExp, 
 }
 
 const initPasswordStrength = (): void => {
-  if ($('#passwordrules').length) {
+  if ($('#ccs-password-rules').length) {
     const theTests: Array<[RegExp, JQuery<HTMLElement>]> = [
       [cReg, $('#passeight')],
       [pReg, $('#passsymbol')],

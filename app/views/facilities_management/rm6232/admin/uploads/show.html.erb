@@ -1,7 +1,7 @@
 <%= content_for :page_title, t('.heading', number: @upload.short_uuid) %>
 <%= admin_breadcrumbs(
-  { text: t('facilities_management.rm6232.admin.supplier_data.index.heading'), link: facilities_management_rm6232_admin_supplier_data_path },
-  { text: t('facilities_management.rm6232.admin.uploads.index.heading'), link: facilities_management_rm6232_admin_uploads_path },
+  { text: t('facilities_management.rm6232.admin.supplier_data.index.heading'), href: facilities_management_rm6232_admin_supplier_data_path },
+  { text: t('facilities_management.rm6232.admin.uploads.index.heading'), href: facilities_management_rm6232_admin_uploads_path },
   { text: t('.heading', number: @upload.short_uuid) }
 )%>
 
@@ -10,32 +10,35 @@
     <span class="govuk-caption-xl"><%= t('.caption') %></span>
     <h1 class="govuk-heading-xl"><%= t('.heading', number: @upload.short_uuid) %></h1>
 
-    <dl class="govuk-summary-list govuk-summary-list--no-border">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t('.status') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= govuk_tag_with_text(*upload_status_tag(@upload.aasm_state)) %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t('.datetime') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= format_date_time @upload.created_at %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t('.uploaded_by') %>
-        </dt>
-        <dd id="uploaded-by-email" class="govuk-summary-list__value">
-          <%= @upload.user.email %>
-        </dd>
-      </div>
-    </dl>
+    <%= govuk_summary_list(
+      [
+        {
+          key: {
+            text: t('.status')
+          },
+          value: {
+            text: govuk_tag(*upload_status_tag(@upload.aasm_state))
+          }
+        },
+        {
+          key: {
+            text: t('.datetime')
+          },
+          value: {
+            text: format_date_time(@upload.created_at)
+          }
+        },
+        {
+          key: {
+            text: t('.uploaded_by')
+          },
+          value: {
+            text: @upload.user.email
+          }
+        }
+      ],
+      classes: 'govuk-summary-list--no-border'
+    ) %>
   </div>
 </div>
 
@@ -46,24 +49,29 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <table class="govuk-table">
-      <caption class="govuk-table__caption"><%= t('.files') %></caption>
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col"><%= t('.name') %></th>
-          <th class="govuk-table__header" scope="col"><%= t('.download') %></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% FacilitiesManagement::RM6232::Admin::Upload::ATTRIBUTES.each do |file| %>
-          <% next unless @upload.send(file).attached? %>
-          <tr>
-            <td class="govuk-table__cell"><%= t(".file_name.#{file}") %></td>
-            <td class="govuk-table__cell"><%= link_to_file_for_download("#{rails_blob_path(@upload.send(file), disposition: 'attachment', key: :rm6232_admin_upload_id, value: @upload.id)}&format=xlsx", :xlsx, t('.download'), false) %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= govuk_table(
+      [
+        {
+          text: t('.name')
+        },
+        {
+          text: t('.download')
+        }
+      ],
+      FacilitiesManagement::RM6232::Admin::Upload::ATTRIBUTES.select { |file| @upload.send(file).attached? }.map do |file|
+        [
+          {
+            text: t(".file_name.#{file}")
+          },
+          {
+            text: link_to_file_for_download("#{rails_blob_path(@upload.send(file), disposition: 'attachment', key: :rm6232_admin_upload_id, value: @upload.id)}&format=xlsx", :xlsx, t('.download'), false)
+          }
+        ]
+      end,
+      caption: {
+        text: t('.files')
+      }
+    ) %>
     <%= link_to t('.return'), facilities_management_rm6232_admin_uploads_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
   </div>
 </div>

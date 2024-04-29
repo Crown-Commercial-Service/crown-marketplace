@@ -42,24 +42,35 @@
         <%= t('.ga_sets_following_cookies') %>
       </p>
 
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.name') %></th>
-            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.purpose') %></th>
-            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.expires') %></th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <% (1..3).each do |i| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.name") %></td>
-              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.purpose") %></td>
-              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.expires") %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%= govuk_table(
+        [
+          {
+            text: t('home.cookies.name')
+          },
+          {
+            text: t('home.cookies.purpose')
+          },
+          {
+            text: t('home.cookies.expires')
+          }
+        ],
+        (1..3).map do |i|
+          [
+            {
+              text: t(".ga_cookies.row_#{i}.name"),
+              classes: 'govuk-!-padding-right-2'
+            },
+            {
+              text: t(".ga_cookies.row_#{i}.purpose"),
+              classes: 'govuk-!-padding-right-2'
+            },
+            {
+              text: t(".ga_cookies.row_#{i}.expires"),
+              classes: 'govuk-!-padding-right-2'
+            }
+          ]
+        end
+      ) %>
     </div>
 
     <hr class="govuk-section-break govuk-section-break--m">
@@ -75,24 +86,35 @@
         <%= t('.glassbox_sets_following_cookies') %>
       </p>
 
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.name') %></th>
-            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.purpose') %></th>
-            <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.expires') %></th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <% (1..2).each do |i| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".glassbox_cookies.row_#{i}.name") %></td>
-              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".glassbox_cookies.row_#{i}.purpose") %></td>
-              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".glassbox_cookies.row_#{i}.expires") %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%= govuk_table(
+        [
+          {
+            text: t('home.cookies.name')
+          },
+          {
+            text: t('home.cookies.purpose')
+          },
+          {
+            text: t('home.cookies.expires')
+          }
+        ],
+        (1..2).map do |i|
+          [
+            {
+              text: t(".glassbox_cookies.row_#{i}.name"),
+              classes: 'govuk-!-padding-right-2'
+            },
+            {
+              text: t(".glassbox_cookies.row_#{i}.purpose"),
+              classes: 'govuk-!-padding-right-2'
+            },
+            {
+              text: t(".glassbox_cookies.row_#{i}.expires"),
+              classes: 'govuk-!-padding-right-2'
+            }
+          ]
+        end
+      ) %>
     </div>
   </div>
 </div>
@@ -113,27 +135,55 @@
       <%= t('.you_may_see_a_banner') %>
     </p>
 
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.name') %></th>
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.purpose') %></th>
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.expires') %></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= Marketplace.cookie_settings_name %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".cookie_banner_cookies.row_1.purpose") %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".cookie_banner_cookies.row_1.expires") %></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= t(".cookie_banner_cookies.row_2.name") %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".cookie_banner_cookies.row_2.purpose") %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".cookie_banner_cookies.row_2.expires") %></td>
-        </tr>
-      </tbody>
-    </table>
+    <%= govuk_table(
+      [
+        {
+          text: t('home.cookies.name')
+        },
+        {
+          text: t('home.cookies.purpose')
+        },
+        {
+          text: t('home.cookies.expires')
+        }
+      ],
+      [
+        [
+          {
+            text: Marketplace.cookie_settings_name,
+            classes: 'govuk-!-padding-right-2',
+            attributes: {
+              style: 'word-break: break-all;'
+            }
+          },
+          {
+            text: t(".cookie_banner_cookies.row_1.purpose"),
+            classes: 'govuk-!-padding-right-2'
+          },
+          {
+            text: t(".cookie_banner_cookies.row_1.expires"),
+            classes: 'govuk-!-padding-right-2'
+          }
+        ],
+        [
+          {
+            text: t(".cookie_banner_cookies.row_2.name"),
+            classes: 'govuk-!-padding-right-2',
+            attributes: {
+              style: 'word-break: break-all;'
+            }
+          },
+          {
+            text: t(".cookie_banner_cookies.row_2.purpose"),
+            classes: 'govuk-!-padding-right-2'
+          },
+          {
+            text: t(".cookie_banner_cookies.row_2.expires"),
+            classes: 'govuk-!-padding-right-2'
+          }
+        ]
+      ]
+    ) %>
 
     <h3 class="govuk-heading-s">
       <%= t('.reg_and_sign_in') %>
@@ -143,24 +193,38 @@
       <%= t('.reg_and_sign_in_cookies') %>
     </p>
 
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.name') %></th>
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.purpose') %></th>
-          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.expires') %></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-      <% (1..4).each do |i| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= t(".reg_and_sign_in_cookie.row_#{i}.name") %></td>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".reg_and_sign_in_cookie.row_#{i}.purpose") %></td>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".reg_and_sign_in_cookie.row_#{i}.expires") %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= govuk_table(
+      [
+        {
+          text: t('home.cookies.name')
+        },
+        {
+          text: t('home.cookies.purpose')
+        },
+        {
+          text: t('home.cookies.expires')
+        }
+      ],
+      (1..4).map do |i|
+        [
+          {
+            text: t(".reg_and_sign_in_cookie.row_#{i}.name"),
+            classes: 'govuk-!-padding-right-2',
+            attributes: {
+              style: 'word-break: break-all;'
+            }
+          },
+          {
+            text: t(".reg_and_sign_in_cookie.row_#{i}.purpose"),
+            classes: 'govuk-!-padding-right-2'
+          },
+          {
+            text: t(".reg_and_sign_in_cookie.row_#{i}.expires"),
+            classes: 'govuk-!-padding-right-2'
+          }
+        ]
+      end
+    ) %>
   </div>
 </div>
 

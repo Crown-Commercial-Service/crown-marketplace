@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :facilities_management_building_defaults, class: 'FacilitiesManagement::Building' do
-    id { SecureRandom.uuid }
     updated_by { Faker::Internet.unique.email }
     user
   end

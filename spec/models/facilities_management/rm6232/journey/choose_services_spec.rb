@@ -29,7 +29,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices do
         context 'when another service is included as well' do
           before { choose_services.service_codes << 'H.1' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(choose_services.valid?).to be true
           end
         end
@@ -46,7 +46,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices do
         context 'when another service is included as well' do
           before { choose_services.service_codes << 'J.1' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(choose_services.valid?).to be true
           end
         end
@@ -63,7 +63,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices do
         context 'when another service is included as well' do
           before { choose_services.service_codes << 'K.1' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(choose_services.valid?).to be true
           end
         end
@@ -80,7 +80,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices do
         context 'when another service is included as well' do
           before { choose_services.service_codes << 'L.1' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(choose_services.valid?).to be true
           end
         end
@@ -97,7 +97,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices do
         context 'when another service is included as well' do
           before { choose_services.service_codes << 'M.1' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(choose_services.valid?).to be true
           end
         end
@@ -114,7 +114,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices do
         context 'when another service is included as well' do
           before { choose_services.service_codes << 'J.2' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(choose_services.valid?).to be true
           end
         end
@@ -131,7 +131,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices do
         context 'when another service is included as well' do
           before { choose_services.service_codes << 'K.2' }
 
-          it 'will be valid' do
+          it 'is valid' do
             expect(choose_services.valid?).to be true
           end
         end

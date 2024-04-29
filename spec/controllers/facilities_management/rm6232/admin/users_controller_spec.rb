@@ -83,7 +83,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::UsersController do
 
       context 'when the framework is live' do
         before do
-          post :challenge, params: { challenge_name: challenge_name, username: username, session: session, new_password: password, new_password_confirmation: password }
+          post :challenge, params: { challenge_name: challenge_name, cognito_respond_to_challenge: { username: username, session: session, new_password: password, new_password_confirmation: password } }
           cookies.update(response.cookies)
         end
 
@@ -131,7 +131,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::UsersController do
         include_context 'and RM6232 has expired'
 
         before do
-          post :challenge, params: { challenge_name: challenge_name, username: username, session: session, new_password: password, new_password_confirmation: password }
+          post :challenge, params: { challenge_name: challenge_name, cognito_respond_to_challenge: { username: username, session: session, new_password: password, new_password_confirmation: password } }
           cookies.update(response.cookies)
         end
 
@@ -159,7 +159,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::UsersController do
 
       context 'when the framework is live' do
         before do
-          post :challenge, params: { challenge_name:, username:, session:, access_code: }
+          post :challenge, params: { challenge_name: challenge_name, cognito_respond_to_challenge: { username:, session:, access_code: } }
           cookies.update(response.cookies)
         end
 
@@ -192,7 +192,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::UsersController do
         include_context 'and RM6232 has expired'
 
         before do
-          post :challenge, params: { challenge_name:, username:, session:, access_code: }
+          post :challenge, params: { challenge_name: challenge_name, cognito_respond_to_challenge: { username:, session:, access_code: } }
           cookies.update(response.cookies)
         end
 

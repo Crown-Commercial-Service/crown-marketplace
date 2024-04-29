@@ -6,7 +6,7 @@ class ActiveStorage::Blobs::RedirectController < ActiveStorage::BaseController
   include ActiveStorage::SetBlob
 
   rescue_from CanCan::AccessDenied do
-    redirect_to facilities_management_rm3830_not_permitted_path
+    redirect_to facilities_management_rm6232_not_permitted_path
   end
 
   def show

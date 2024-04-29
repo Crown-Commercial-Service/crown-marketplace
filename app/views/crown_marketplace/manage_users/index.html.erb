@@ -9,43 +9,33 @@
   </div>
 </div>
 
-<div class="govuk-grid-row" id="users-search-container">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: crown_marketplace_manage_users_path, method: :get, html: { specialvalidation: true, remote: true } do |f| %>
-      <div class="govuk-form-group <%= 'govuk-form-group--error' if @search[:error] %>" id="email-form-group">
-        <%= govuk_label(
-          f,
-          :email,
-          {
-            text: t('.find_a_user'),
-            classes: 'govuk-label--m',
-            id: 'email-search-label'
-          }
-        ) %>
-        <%= govuk_error_message_format(:email, @search[:error]) if @search[:error] %>
-        <%= govuk_hint(
-          {
-            text: t('.enter_an_email'),
-            id: 'email_hint'
-          }
-        ) %>
-        <%= govuk_input(
-          f,
-          :email,
-          false,
-          {
-            classes: 'govuk-input--width-20 govuk-!-margin-right-2',
-            attributes: {
-              type: 'search',
-              value: params[:email]
-            }
-          }
-        ) %>
-        <%= f.submit t('.search'), class: 'govuk-button govuk-button--secondary' %>
-      </div>
-    <% end %>
+<%= form_with url: crown_marketplace_manage_users_path, method: :get, html: { specialvalidation: true, remote: true } do |f| %>
+  <div class="govuk-grid-row" id="users-search-container">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_input(
+        :email,
+        label: {
+          text: t('.find_a_user'),
+          classes: 'govuk-label--m',
+        },
+        hint: {
+          text: t('.enter_an_email')
+        },
+        classes: 'govuk-input--width-20',
+        field_type: 'search',
+        attributes: {
+          value: params[:email]
+        },
+        error_message: @search[:error]
+      ) %>
+    </div>
   </div>
-</div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-quarter">
+      <%= govuk_button(t('.search'), form: f, classes: 'govuk-button--secondary') %>
+    </div>
+  </div>
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters" id="users-table">

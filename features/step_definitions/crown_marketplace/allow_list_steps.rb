@@ -33,7 +33,7 @@ Then('I enter {string} into the email domain search') do |email_domain|
 end
 
 Then('I cannot add an email domain') do
-  expect(allow_list_page).not_to have_link(href: '/crown-marketplace/allow-list/new')
+  expect(allow_list_page).to have_no_link(href: '/crown-marketplace/allow-list/new')
 end
 
 Then('I cannot remove an email domain') do

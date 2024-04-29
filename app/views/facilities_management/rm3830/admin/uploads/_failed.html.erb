@@ -9,27 +9,26 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col" width="25%"><%= t('.issue') %></th>
-          <th class="govuk-table__header" scope="col"><%= t('.details') %></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% @upload.import_errors.each do |error| %>
-          <tr>
-            <td class="govuk-table__cell"><%= t(".error_name.#{error[:error]}") %></td>
-            <td class="govuk-table__cell">
-              <% if error[:details] %>
-                <%= get_admin_upload_error_details(error[:error], error[:details]) %>
-              <% else %>
-                <%= t(".error_details.#{error[:error]}") %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= govuk_table(
+      [
+        {
+          text: t('.issue'),
+          classes: 'govuk-!-width-one-quarter'
+        },
+        {
+          text: t('.details')
+        }
+      ],
+      @upload.import_errors.map do |error|
+        [
+          {
+            text: t(".error_name.#{error[:error]}")
+          },
+          {
+            text: error[:details] ? get_admin_upload_error_details(error[:error], error[:details]) : t(".error_details.#{error[:error]}")
+          }
+        ]
+      end
+    ) %>
   </div>
 </div>

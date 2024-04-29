@@ -32,7 +32,7 @@ module FacilitiesManagement::RM3830::Admin
 
     def validate_data
       @data.each do |service_key, service|
-        service.each do |service_type_key, _|
+        service.each_key do |service_type_key|
           rate_validation = RateValidator.new(@data[service_key][service_type_key])
 
           next if rate_validation.valid?(rate_validation_type(service_type_key, service_key))
@@ -55,7 +55,7 @@ module FacilitiesManagement::RM3830::Admin
 
     def update_data
       @data.each do |service_key, service|
-        service.each do |service_type_key, _|
+        service.each_key do |service_type_key|
           key = service_type_key.remove(' (%)').remove(' (£)')
 
           new_value = @data[service_key][service_type_key]

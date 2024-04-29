@@ -27,7 +27,7 @@ const cookieUpdateOptions: CookieUpdateOption[] = [
 const getCookiePreferences = (): CookiePreferences => {
   const defaultCookieSettings = '{"usage":true,"glassbox":false}'
 
-  return JSON.parse(Cookies.get('cookie_preferences') ?? defaultCookieSettings)
+  return JSON.parse(Cookies.get('cookie_preferences_cmp') ?? defaultCookieSettings)
 }
 
 const removeUnwantedCookies = (): void => {

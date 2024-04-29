@@ -256,16 +256,16 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData do
     context 'when the lot data is active' do
       let(:active) { true }
 
-      it 'returns blue and ACTIVE' do
-        expect(lot_data.current_status).to eq [:blue, 'ACTIVE']
+      it 'returns ACTIVE' do
+        expect(lot_data.current_status).to eq ['ACTIVE']
       end
     end
 
     context 'when the lot data is not active' do
       let(:active) { false }
 
-      it 'returns red and INACTIVE' do
-        expect(lot_data.current_status).to eq [:red, 'INACTIVE']
+      it 'returns INACTIVE and red' do
+        expect(lot_data.current_status).to eq ['INACTIVE', :red]
       end
     end
   end

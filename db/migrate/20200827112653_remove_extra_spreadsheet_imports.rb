@@ -1,6 +1,6 @@
 class RemoveExtraSpreadsheetImports < ActiveRecord::Migration[5.2]
   def up
-    FacilitiesManagement::SpreadsheetImport.order(:updated_at).group_by(&:facilities_management_procurement_id).each do |_, spreadhseet_imports|
+    FacilitiesManagement::SpreadsheetImport.order(:updated_at).group_by(&:facilities_management_procurement_id).each_value do |spreadhseet_imports|
       next if spreadhseet_imports.count == 1
 
       spreadhseet_imports[0..-2].each do |spreadhseet_import|

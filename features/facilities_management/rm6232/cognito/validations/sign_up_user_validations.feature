@@ -6,7 +6,7 @@ Feature: Sign up user - RM6232 - Validations
     And I am on the 'Find a facilities management supplier' page
     When I click on 'Start now'
     Then I am on the 'Sign in to your account' page
-    And I click on 'Create an account'
+    And I click on 'Create a CCS account'
     Then I am on the 'Create a CCS account' page
 
   Scenario: Email validations

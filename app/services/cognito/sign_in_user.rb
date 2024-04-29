@@ -19,20 +19,17 @@ module Cognito
     def call
       initiate_auth if valid?
     rescue Aws::CognitoIdentityProvider::Errors::PasswordResetRequiredException => e
-      @error = e.message
       errors.add(:base, e.message)
       @needs_password_reset = true
     rescue Aws::CognitoIdentityProvider::Errors::UserNotConfirmedException => e
-      @error = e.message
       errors.add(:base, e.message)
       @needs_confirmation = true
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError
-      @error = I18n.t('facilities_management.users.sign_in_error')
-      errors.add(:base, @error)
+      errors.add(:base, :sign_in_error)
     end
 
     def success?
-      @auth_response.present? && @error.nil?
+      @auth_response.present? && errors.none?
     end
 
     def challenge?

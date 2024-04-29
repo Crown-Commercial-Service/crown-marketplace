@@ -22,11 +22,26 @@ Bundler.require(*Rails.groups)
 module Marketplace
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
+
+    config.active_support.cache_format_version = 7.1
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks cop ext])
 
     Rails.autoloaders.main.ignore(Rails.root.join('storage'))
 
     config.autoload_paths += %W[#{config.root}/app/workers #{config.root}/storage]
+
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = "Central Time (US & Canada)"
+    # config.eager_load_paths << Rails.root.join("extras")
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
@@ -51,6 +66,11 @@ module Marketplace
     config.i18n.default_locale = :en
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+
+    # Using a sass css compressor causes a scss file to be processed twice (once
+    # to build, once to compress) which breaks the usage of "unquote" to use
+    # CSS that has same function names as SCSS such as max
+    config.assets.css_compressor = nil
 
     # do not add field-with-error div anymore
     ActionView::Base.field_error_proc = proc do |html_tag, _instance|
@@ -159,7 +179,7 @@ module Marketplace
   end
 
   def self.cookie_settings_name
-    :cookie_preferences
+    :cookie_preferences_cmp
   end
 
   def self.default_cookie_options

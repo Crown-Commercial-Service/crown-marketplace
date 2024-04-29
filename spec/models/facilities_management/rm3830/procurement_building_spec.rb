@@ -144,11 +144,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
     context 'when the only service code selected is O.1' do
       before { procurement_building.service_codes = ['O.1'] }
 
-      it 'will not be valid' do
+      it 'is not valid' do
         expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
-      it 'will have the correct error message' do
+      it 'has the correct error message' do
         procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Management of billable works'"
       end
@@ -156,7 +156,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
       context 'when another service is included as well' do
         before { procurement_building.service_codes << 'C.1' }
 
-        it 'will be valid' do
+        it 'is valid' do
           expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
@@ -165,11 +165,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
     context 'when the only service code selected is N.1' do
       before { procurement_building.service_codes = ['N.1'] }
 
-      it 'will not be valid' do
+      it 'is not valid' do
         expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
-      it 'will have the correct error message' do
+      it 'has the correct error message' do
         procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services'"
       end
@@ -177,7 +177,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
       context 'when another service is included as well' do
         before { procurement_building.service_codes << 'C.1' }
 
-        it 'will be valid' do
+        it 'is valid' do
           expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
@@ -186,11 +186,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
     context 'when the only service code selected is M.1' do
       before { procurement_building.service_codes = ['M.1'] }
 
-      it 'will not be valid' do
+      it 'is not valid' do
         expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
-      it 'will have the correct error message' do
+      it 'has the correct error message' do
         procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system'"
       end
@@ -198,7 +198,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
       context 'when another service is included as well' do
         before { procurement_building.service_codes << 'C.1' }
 
-        it 'will be valid' do
+        it 'is valid' do
           expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
@@ -207,11 +207,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
     context 'when the only service codes selected are only O.1 and M.1' do
       before { procurement_building.service_codes = ['O.1', 'M.1'] }
 
-      it 'will not be valid' do
+      it 'is not valid' do
         expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
-      it 'will have the correct error message' do
+      it 'has the correct error message' do
         procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Management of billable works'"
       end
@@ -219,7 +219,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
       context 'when another service is included as well' do
         before { procurement_building.service_codes << 'C.1' }
 
-        it 'will be valid' do
+        it 'is valid' do
           expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
@@ -228,11 +228,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
     context 'when the only service codes selected are only O.1 and N.1' do
       before { procurement_building.service_codes = ['O.1', 'N.1'] }
 
-      it 'will not be valid' do
+      it 'is not valid' do
         expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
-      it 'will have the correct error message' do
+      it 'has the correct error message' do
         procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services', 'Management of billable works'"
       end
@@ -240,7 +240,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
       context 'when another service is included as well' do
         before { procurement_building.service_codes << 'C.1' }
 
-        it 'will be valid' do
+        it 'is valid' do
           expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
@@ -249,11 +249,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
     context 'when the only service codes selected are only M.1 and N.1' do
       before { procurement_building.service_codes = ['M.1', 'N.1'] }
 
-      it 'will not be valid' do
+      it 'is not valid' do
         expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
-      it 'will have the correct error message' do
+      it 'has the correct error message' do
         procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services'"
       end
@@ -261,7 +261,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
       context 'when another service is included as well' do
         before { procurement_building.service_codes << 'C.1' }
 
-        it 'will be valid' do
+        it 'is valid' do
           expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
@@ -270,11 +270,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
     context 'when the only service codes selected are only O.1, N.1 and M.1' do
       before { procurement_building.service_codes = ['O.1', 'N.1', 'M.1'] }
 
-      it 'will not be valid' do
+      it 'is not valid' do
         expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
-      it 'will have the correct error message' do
+      it 'has the correct error message' do
         procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works'"
       end
@@ -282,7 +282,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
       context 'when another service is included as well' do
         before { procurement_building.service_codes << 'C.1' }
 
-        it 'will be valid' do
+        it 'is valid' do
           expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
@@ -291,11 +291,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
     context 'when the only service codes selected include G.1 and G.3' do
       before { procurement_building.service_codes = ['G.1', 'G.3'] }
 
-      it 'will not be valid' do
+      it 'is not valid' do
         expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
-      it 'will have the correct error message' do
+      it 'has the correct error message' do
         procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only"
       end
@@ -303,7 +303,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
       context 'when another service is included as well' do
         before { procurement_building.service_codes << 'C.1' }
 
-        it 'will not be valid' do
+        it 'is not valid' do
           expect(procurement_building.valid?(:buildings_and_services)).to be false
         end
       end
@@ -483,14 +483,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
 
   describe '#requires_internal_area?' do
     context 'when a service requires an internal area' do
-      it 'will be true' do
+      it 'is true' do
         procurement_building.service_codes = FacilitiesManagement::RM3830::Service.full_gia_services.sample(4)
         expect(procurement_building.send(:requires_internal_area?)).to be true
       end
     end
 
     context 'when a service does not require an internal area' do
-      it 'will be false' do
+      it 'is false' do
         procurement_building.service_codes = ['G.5']
         expect(procurement_building.send(:requires_internal_area?)).to be false
       end
@@ -499,14 +499,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding do
 
   describe '#requires_external_area?' do
     context 'when a service requires an external area' do
-      it 'will be true' do
+      it 'is true' do
         procurement_building.service_codes = ['G.5']
         expect(procurement_building.send(:requires_external_area?)).to be true
       end
     end
 
     context 'when a service does not require an external area' do
-      it 'will be false' do
+      it 'is false' do
         procurement_building.service_codes = ['C.1']
         expect(procurement_building.send(:requires_external_area?)).to be false
       end

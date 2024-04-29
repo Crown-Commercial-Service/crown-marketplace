@@ -24,7 +24,7 @@ RSpec.feature 'Authentication' do
 
   scenario 'Unauthenticated users cannot access protected pages' do
     OmniAuth.config.test_mode = false
-    visit '/facilities-management/RM3830/sign-in'
+    visit '/facilities-management/RM6232/sign-in'
 
     expect(page).to have_text('Sign in to your account')
   end
@@ -32,33 +32,33 @@ RSpec.feature 'Authentication' do
   scenario 'Users can sign in using AWS Cognito' do
     OmniAuth.config.test_mode = false
     user = create(:user, :without_detail, roles: %i[buyer fm_access])
-    visit '/facilities-management/RM3830/sign-in'
+    visit '/facilities-management/RM6232/sign-in'
     fill_in 'Email', with: user.email
     fill_in 'Password', with: 'ValidPassword!'
     click_button 'Sign in'
-    expect(page).not_to have_text('Not permitted')
+    expect(page).to have_no_text('Not permitted')
     expect(page).to have_text('Find a facilities management supplier')
   end
 
   scenario 'Users can sign in using AWS Cognito with capitals in email' do
     user = create(:user, :without_detail, roles: %i[buyer fm_access])
-    visit '/facilities-management/RM3830/sign-in'
+    visit '/facilities-management/RM6232/sign-in'
     fill_in 'Email', with: user.email.upcase
     fill_in 'Password', with: 'ValidPassword!'
     click_button 'Sign in'
-    expect(page).not_to have_text('Not permitted')
+    expect(page).to have_no_text('Not permitted')
     expect(page).to have_text('Find a facilities management supplier')
   end
 
   scenario 'Users signed in using AWS Cognito can sign out' do
     user = create(:user, :with_detail, roles: %i[buyer fm_access])
-    visit '/facilities-management/RM3830/sign-in'
+    visit '/facilities-management/RM6232/sign-in'
     fill_in 'Email', with: user.email
     fill_in 'Password', with: 'ValidPassword!'
     click_button 'Sign in'
     click_on 'Sign out'
 
-    visit '/facilities-management/RM3830/sign-in'
+    visit '/facilities-management/RM6232/sign-in'
     expect(page).to have_text('Sign in to your account')
   end
 end

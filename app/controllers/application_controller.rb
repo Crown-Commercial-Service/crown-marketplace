@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
   class UnrecognisedLiveFrameworkError < StandardError; end
   class UnrecognisedFrameworkError < StandardError; end
+  auto_session_timeout Devise.timeout_in
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery with: :exception
   before_action :authenticate_user!, :validate_service
-  auto_session_timeout Devise.timeout_in
 
   rescue_from CanCan::AccessDenied do
     redirect_to not_permitted_path
@@ -53,13 +53,6 @@ class ApplicationController < ActionController::Base
 
   delegate :ccs_homepage_url, to: Marketplace
   helper_method :ccs_homepage_url
-
-  #       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json  %>
-  # to copy the cached choices
-  def set_current_choices
-    TransientSessionInfo[session.id] = JSON.parse(params['current_choices']) if params['current_choices']
-    TransientSessionInfo[session.id] = JSON.parse(flash['current_choices']) if flash['current_choices'] && params['current_choices'].nil?
-  end
 
   protected
 

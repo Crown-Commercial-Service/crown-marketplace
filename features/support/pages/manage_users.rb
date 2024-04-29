@@ -19,15 +19,15 @@ module Pages
 
   class ManageUsers < SitePrism::Page
     section :user_details_summary, '#add-user-details-summary' do
-      section :role, UserDetailRow, '#add-user-details-summary--roles'
-      section :'service access', UserDetailRow, '#add-user-details-summary--service-access'
-      section :email, UserDetailRow, '#add-user-details-summary--email'
-      section :'telephone number', UserDetailRow, '#add-user-details-summary--telephone-number'
+      section :role, UserDetailRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Role"]/..'
+      section :'service access', UserDetailRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Service access"]/..'
+      section :email, UserDetailRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Email address"]/..'
+      section :'telephone number', UserDetailRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Mobile telephone number"]/..'
     end
 
     section :notification_banner, 'div.govuk-notification-banner' do
-      element :heading, 'p.govuk-notification-banner__heading'
-      element :content, 'div.govuk-notification-banner__content'
+      element :heading, 'div.govuk-notification-banner__content > h3.govuk-notification-banner__heading'
+      element :message, 'div.govuk-notification-banner__content > p.govuk-body'
     end
 
     section :find_a_user, '#email-form-group' do
@@ -44,14 +44,14 @@ module Pages
     element :resend_temporary_password_button, '#resend-temporary-password-button'
 
     section :view_user_summary, 'dl.govuk-summary-list' do
-      section :'Email address', ViewUserRow, '#view-user__email'
-      section :'Email status', ViewUserRow, '#view-user__email-status'
-      section :'Account status', ViewUserRow, '#view-user__account-status'
-      section :'Confirmation status', ViewUserRow, '#view-user__confirmation-status'
-      section :'Mobile telephone number', ViewUserRow, '#view-user__telephone-number'
-      section :'MFA status', ViewUserRow, '#view-user__mfa-status'
-      section :Roles, ViewUserRow, '#view-user__roles'
-      section :'Service access', ViewUserRow, '#view-user__service-access'
+      section :'Email address', ViewUserRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Email address"]/..'
+      section :'Email status', ViewUserRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Email status"]/..'
+      section :'Account status', ViewUserRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Account status"]/..'
+      section :'Confirmation status', ViewUserRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Confirmation status"]/..'
+      section :'Mobile telephone number', ViewUserRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Mobile telephone number"]/..'
+      section :'MFA status', ViewUserRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="MFA status"]/..'
+      section :Roles, ViewUserRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Roles"]/..'
+      section :'Service access', ViewUserRow, :xpath, '//dt[@class="govuk-summary-list__key"][text()="Service access"]/..'
     end
 
     element :email_status_verified, '#cognito_admin_user_email_verified_true'
