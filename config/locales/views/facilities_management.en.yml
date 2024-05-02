@@ -175,6 +175,7 @@ en:
           supplier_status: Supplier status
         supplier_address:
           building_and_street: Building and street
+          building_and_street_line_2: Building and street line 2
           county: County (optional)
           postcode: Postcode
           town_or_city: Town or city
@@ -196,116 +197,6 @@ en:
           email_must_2: have supplier access
           email_must_3: not be the same user as another supplier
           user_email_question: Changing the user email will change who can view the supplier dashboard.
-    buildings:
-      add_address:
-        heading: Add building address
-        return_to_building_details: Return to building details
-        save_and_continue: Save and continue
-        step: Step 1 of 4
-        sub_title: Buildings
-      edit:
-        heading:
-          add_address: Add building address
-          building_area: Internal and external areas
-          building_details: Building details
-          building_type: Building type
-          security_type: Security clearance
-        next_step: 'Next: %{next_step}'
-        next_steps:
-          building_area: Building type
-          building_details: Building size
-          building_type: Security clearance
-        previous_step_back_text:
-          add_address: Return to building details
-          building_area: Return to building details
-          building_details: Return to building details summary
-          building_type: Return to building size
-          security_type: Return to building type
-        save_and_continue: Save and continue
-        save_and_return: Save and return to building details summary
-        skip_this_step: Skip this step
-        step: Step %{step_number} of 4
-        sub_title: Buildings — %{building_name}
-      edit_partials:
-        add_address:
-          add_address_header: Address
-          description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
-          line_1_of_2: Building and street line 1 of 2
-          line_2_of_2: Building and street line 2 of 2 (optional)
-          postcode: Postcode
-          town_or_city: Town or city
-        building_area:
-          description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 1800 square metres.
-          external_area_description_html: An external area can be the grounds surrounding a building, or an area without any building for example a park, and is measured in square metres.<br/> For example 18000 square metres.
-          external_area_header: What's the size of the external area?
-          further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link (opens in a new tab)</a>.'
-          gia_header: What’s the size of the internal area of this building?
-          guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
-        building_details:
-          address: Address
-          building_name:
-            hint: This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.
-            label: What is the name of your building?
-          cant_find_address: I can’t find my building’s address in the list
-          description:
-            hint: Enter a description or reference, for example, some users put cost centres in this field.
-            label: Add a description (optional)
-          what_is_address: What is the address?
-          what_is_address_description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
-        building_type:
-          choose_building_type: Choose the building type that best describes your building
-          describe_building: Describe building type
-          help_text: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a building type can be direct awarded.
-          view_more: View more building types
-        other:
-          other_label: Other
-        security_type:
-          describe_security: Describe security level
-          security_description_html: Select the level of security clearance a supplier’s staff will need to access this building. This is the security level of the contractor’s staff.
-          select_security: Select the level of security clearance needed
-      index:
-        column_desc_header: Description
-        column_lstup_header: Last updated
-        column_name_header: Building name
-        column_status_header: Status
-        create_new_button: Add a building
-        heading: Buildings
-        how_it_works: How it works
-        link_to_building_summary: View details for %{building_name}
-        my_buildings_header: My buildings
-        no_buildings_text: You have no saved buildings
-        return_to_your_account: Return to your account
-        start_a_procurement_link_text: Start a procurement
-        start_paragraph_html: You can set up your buildings individually using the 'Add a building' button, or alternatively, if you have a larger estate, there is an option to upload your building information using an excel spreadsheet when inputting your requirements - click on '%{start_a_procurement_link}' within your account for further information about this method. Your uploaded buildings will then also appear within this screen for future use.
-        start_warning_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
-        start_warning_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
-        start_warning_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
-      new:
-        heading: Add a building
-        next_step: 'Next: Building size'
-        return_to_buildings: Return to buildings
-        save_and_continue: Save and continue
-        save_and_return: Save and return to building details summary
-        step: Step 1 of 4
-        sub_title: Buildings
-      show:
-        answer_question: Answer question
-        change: Change
-        complete_text: This building is ready to use in procurements.
-        incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
-        page_title: Building details summary
-        return_to_buildings: Return to buildings
-        row_name:
-          address: Address
-          building_description: Description (optional)
-          building_name: Name
-          building_type: Building type
-          external_area: External area
-          gia: Gross internal area
-          region: Region
-          security_type: Security clearance
-        status: 'Status:'
-        sub_title: Buildings
     buyer_details:
       edit:
         back: Return to your account
@@ -343,6 +234,7 @@ en:
         add_address: Add address
         back: Return to manage your details
         building_and_street: Building and street
+        building_and_street_line_2: Building and street line 2
         county: County (optional)
         manage_details: Manage your details
         postcode: Postcode
@@ -355,159 +247,6 @@ en:
         make_sure_listed: The framework in the web address is '%{framework}'. Make sure the web address contains one of the listed frameworks.
         page_title: Unrecognised framework
         the_recognised_are: 'The Facilities Management frameworks are:'
-    procurement_buildings:
-      buildings_and_services:
-        hint_text_html: To add to, or change your list of services to select from, please go back to your Requirements summary page, and click on '%{services_link}' in section 2.
-        label: Which of your services are required within this building?
-        or: Or
-        select_all: Select all
-        services_link_text: Services
-      edit:
-        return_link:
-          buildings_and_services: Return to assigning services to buildings summary page
-          missing_region: Return to review your buildings
-        save_and_return: Save and return
-        title:
-          missing_region: Confirm your building's region
-      missing_region:
-        building_address: Building address
-        building_name: Building name
-        change_link: Change
-        change_link_aria_label: Change region
-        for_this_building: For this building, we have been unable to automatically place it into a single region, so could you please confirm the region below by selecting from the short list of regions displayed.
-        prompt: Please select a region
-        region: Region
-        select_region: Select region
-        we_use_your_buildings: We use your buildings’ address to assess the region that your building is located in. This helps us shortlist the suppliers who can deliver your services to your exact locations.
-      missing_regions:
-        before_you_proceed: Before you proceed to review your procurement, we have identified building(s) which we have been unable to automatically place into a geographical region, using their address. The regions help us shortlist the suppliers who can deliver your services to your exact locations.
-        building: building
-        building_address: Building address
-        building_name: Building name
-        building_region: Region
-        could_you_review: Could you review the building(s) below by clicking into each one and confirming the correct region by selecting from the short list of regions you will see displayed.
-        return_link: Return to procurements dashboard
-        return_to_dashboard: Return to procurements dashboard
-        review_buildings: Review %{building_count} with missing region
-        select_region: Select region
-        title: Review your buildings
-    procurement_details:
-      edit:
-        return_to_requirements: Return to requirements
-        save_and_return: Save and return
-        title:
-          annual_contract_value: Annual contract value
-          buildings: Buildings
-          contract_name: Contract name
-          contract_period: Contract period
-          estimated_annual_cost: Estimated annual cost
-          services: Services
-          tupe: TUPE
-      edit_partials:
-        annual_contract_value:
-          hint_text: Enter your estimate for the annual contract value. Include everything in your calculation.
-          label_text: What is your estimate for the annual contract value?
-        buildings:
-          add_a_building: Add a building
-          building_name_and_address: Building name and address
-          details: Details
-          details_link_aria_label: Details for "%{building_name}"
-          how_it_works: How it works
-          how_it_works_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
-          how_it_works_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
-          how_it_works_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
-          my_buildings: My buildings
-          new_buildings: New buildings
-          new_buildings_details: If you wish to set up a new building so that it can be included in this procurement, click on the 'Add a building' button below.
-          no_saved_buildings: You have no saved buildings. Click on 'Add a building' to start setting up your building(s)
-          page_details_1: Please select all of the buildings you want to include in your procurement. Only 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
-          page_details_2: Once you have selected all your buildings for this procurement, click on the 'save and continue' button.
-          status: Status
-        contract_name:
-          hint_text: This will help you to refer to your contracts when talking to suppliers.
-          label_text: What do you want to call your contract?
-        contract_period:
-          call_off_extensions:
-            add_extension_period: Add another extension period
-            description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
-            heading: Do you want the option to extend your call-off contract?
-          extension:
-            aria_label_months: Optional extension %{extension} months
-            aria_label_years: Optional extension %{extension} years
-            extension_period: Extension period %{extension}
-            months: months
-            remove: Remove
-            years: years
-          initial_call_off_period:
-            aria_label_months: The month part of the initial call off period
-            aria_label_years: The year part of the initial call off period
-            description: The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
-            example: For example, 01 11 2030.
-            heading: Initial call-off period
-            initial_call_off_period_start_date: Initial call-off period start date
-            unit_months: months
-            unit_years: years
-          mobilisation_period:
-            description: This is the period in which the supplier gets ready to start providing the services. A mobilisation period of between 3 to 6 months is recommended depending on the complexity of services and buildings. A shorter term can be entered if required, however enough time should be allowed for suitable mobilisation ready for service delivery.
-            heading: Do you need a mobilisation period?
-            hint_text: A minimum of 4 weeks required if TUPE is involved.
-            label_text: Enter mobilisation length
-            unit: weeks
-        estimated_annual_cost:
-          content: This will help us to place you into the correct sub-lot. The cost should include all the buildings and services included in the procurement. This annual cost should not include any additional billable works.
-          do_you_know: Do you know your current or estimated annual cost?
-          label: Enter the estimated annual cost, excluding VAT
-        services:
-          choose_the_required_services: Choose all facilities management services required within your estate, even if you want services in just one building.
-          learn_more: Further details (opens in a new tab)
-          select_the_services: Select the facilities management services that you need
-        tupe:
-          body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.<br/> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
-          first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
-          tupe_link: https://www.gov.uk/transfers-takeovers
-          tupe_link_text: Find out when TUPE applies (opens in a new tab)
-          what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees when the business or commercial contract that they are working on changes to new ownership.<br/>It ensures that employees who find themselves transferred to a new business, retain exactly the same hours and rate of pay as they were contracted to with the old employer.
-          what_you_need_to_know_title: What you need to know about TUPE
-      show:
-        return_to_requirements: Return to requirements
-        title:
-          buildings: Buildings summary
-          buildings_and_services: Assigning services to buildings summary
-          contract_period: Contract period summary
-          service_requirements: Service requirements summary
-          services: Services summary
-      show_partials:
-        buildings:
-          building: building
-          change: Change
-          table_caption: Buildings
-          the_buildings_below: The buildings below have been selected for this procurement. If you wish to add or remove buildings please click on the 'change' button.
-          you_have_selected: You have selected
-        buildings_and_services:
-          buildings: Building name and address
-          buildings_link_text: Buildings
-          no_service_selected: No service selected
-          service: service
-          services: Assigned services
-          status: Status
-          summary_html: Please click on each of your buildings listed below and select the services you require within each building. The status indicator above will show as 'complete' once services have been selected for all your buildings listed. To add to, or change your list of buildings, please go back to your Requirements summary page, and click on '%{buildings_link}' in section 2.
-        contract_period:
-          call_off_extension_period: Optional call-off extension period
-          call_off_extensions: Optional call-off extensions
-          change: Change
-          initial_call_off_period: Initial call-off period
-          mobilisation_period: Mobilisation period
-          none: None
-        service_requirements:
-          buildings: Buildings
-          instructions: We need to understand your requirements for your services within each of your buildings. For the list of your buildings below, please click on the buildings with an 'incomplete' status to see the service requirement questions that need to be answered. Once all the buildings show as 'completed' please click on the 'return to requirements' link.
-          status: Status
-        services:
-          caption: You have selected the services below as being required in one or more of your buildings. If you wish to add or remove services please click on the 'change' button.
-          change: Change
-          heading: You have selected
-          service: service
-          table_caption: Services
     select_services:
       servicespec_link_alttext: RM3830 Facilities Management Marketplace
     shared:
@@ -540,16 +279,3 @@ en:
           region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
           region_plural: regions found
           region_singular: region found
-      summary_tables:
-        contract_summary_table:
-          annual_contract_value: Annual contract value
-          buildings: Buildings
-          buildings_and_services: Assigning services to buildings
-          contract_name: Contract name
-          contract_period: Contract period
-          estimated_annual_cost: Estimated annual cost
-          service_requirements: Service requirements
-          services: Services
-          tupe: TUPE
-    users:
-      sign_in_error: You must provide a correct username or password

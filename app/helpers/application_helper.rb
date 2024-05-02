@@ -1,176 +1,31 @@
 # rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
-  include LayoutHelper
-  include GovUKHelper
+  include CCS::FrontendHelpers
   include HeaderNavigationLinksHelper
 
   def feedback_email_link
     link_to(t('common.feedback'), Marketplace.fm_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link')
   end
 
-  def dfe_account_request_url
-    'https://ccsheretohelp.uk/contact/?type=ST18/19'
-  end
-
   def support_telephone_number
     Marketplace.support_telephone_number
   end
 
-  def govuk_email_link(email_address, aria_label, css_class: 'govuk-link')
-    mail_to(email_address, t('layouts.application.feedback'), class: css_class, 'aria-label': aria_label)
-  end
-
-  # rubocop:disable Metrics/ParameterLists
-  def govuk_form_field(model_object, attribute, form_object_name, label_text, readable_property_name, top_level_data_options)
-    css_classes = %w[govuk-!-margin-top-3]
-    form_group_css = ['govuk-form-group']
-    form_group_css += ['govuk-form-group--error'] if model_object.errors[attribute].any?
-    label_for_id = form_object_name
-    id_for_label = "#{form_object_name}_#{attribute}-info"
-    label_for_id += "_#{attribute}" if form_object_name.exclude?(attribute.to_s)
-
-    tag.div(class: css_classes, data: { propertyname: readable_property_name }) do
-      tag.div(class: form_group_css, data: top_level_data_options) do
-        concat display_label(attribute, label_text, label_for_id, id_for_label) if label_text.present?
-        concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
-        yield
-      end
-    end
-  end
-  # rubocop:enable Metrics/ParameterLists
-
-  def display_label(_attribute, text, form_object_name, _id_for_label)
-    tag.label(text, class: 'govuk-label', for: form_object_name)
-  end
-
-  def govuk_form_group_with_optional_error(journey, *attributes, &)
-    attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
-
-    css_classes = ['govuk-form-group']
-    css_classes += ['govuk-form-group--error'] if attributes_with_errors.any?
-
-    tag.div(class: css_classes, &)
-  end
-
-  def govuk_fieldset_with_optional_error(journey, *attributes, &)
-    attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
-
-    options = { class: 'govuk-fieldset' }
-    options['aria-describedby'] = attributes_with_errors.map { |a| error_id(a) } if attributes_with_errors.any?
-
-    tag.fieldset(**options, &)
-  end
-
-  def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
-    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
-
-    collection.each do |key, val|
-      concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
-    end
-  end
-
-  def property_name(section_name, attributes)
-    return "#{section_name}_#{attributes.is_a?(Array) ? attributes.last : attributes}" unless section_name.nil?
-
-    (attributes.is_a?(Array) ? attributes.last : attributes).to_s
-  end
-
-  def display_potential_errors(model_object, attributes, form_object_name, section_name = nil)
-    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
-    return if collection.empty?
-
-    tag.div(class: 'error-collection potenital-error', property_name: property_name(section_name, attributes)) do
-      multiple_validation_errors(model_object, attributes, form_object_name, collection)
-    end
-  end
-
-  def model_attribute_has_error(model_object, *attributes)
-    result = false
-    attributes.any? { |a| result |= model_object.errors[a]&.any? }
-  end
-
-  def model_has_error?(model_object, error_type, *attributes)
-    attributes.any? { |a| model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil) == error_type }
-  end
-
-  def display_errors(journey, *attributes)
-    safe_join(attributes.map { |a| display_error(journey, a) })
-  end
-
-  def display_error(journey, attribute, margin = true, id_prefix = '')
-    error = journey.errors[attribute].first
-    return if error.blank?
-
-    tag.span(id: "#{id_prefix}#{error_id(attribute)}", class: "govuk-error-message #{'govuk-!-margin-top-3' if margin}") do
-      error.to_s
-    end
-  end
-
-  ERROR_TYPES = {
-    too_long: 'maxlength',
-    too_short: 'minlength',
-    blank: 'required',
-    inclusion: 'required',
-    after: 'max',
-    greater_than: 'min',
-    greater_than_or_equal_to: 'min',
-    before: 'min',
-    less_than: 'max',
-    less_than_or_equal_to: 'max',
-    not_a_date: 'pattern',
-    not_a_number: 'number',
-    not_an_integer: 'number'
-  }.freeze
-
-  def get_client_side_error_type_from_errors(errors, attribute)
-    return ERROR_TYPES[errors.details[attribute].first[:error]] if ERROR_TYPES.key?(errors.details[attribute].try(:first)[:error])
-
-    errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(errors.details[attribute].first[:error])
-  end
-
-  def get_client_side_error_type_from_model(model, attribute)
-    return ERROR_TYPES[model.errors.details[attribute].first[:error]] if ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
-
-    model.errors.details[attribute].first[:error].to_sym unless ERROR_TYPES.key?(model.errors.details[attribute].first[:error])
-  end
-
-  def display_error_label(model, attribute, label_text, target)
-    error = model.errors[attribute].first
-    return if error.blank?
-
-    tag.label(data: { validation: get_client_side_error_type_from_model(model, attribute).to_s }, for: target, id: error_id(attribute), class: 'govuk-error-message') do
-      "#{label_text} #{error}"
-    end
-  end
-
-  def display_error_no_attr(object, attribute)
-    error = object.errors[attribute].first
-    return if error.blank?
-
-    tag.span(id: error_id(attribute.to_s), class: 'govuk-error-message govuk-!-margin-top-3') do
-      error.to_s
-    end
-  end
-
-  def display_error_nested_models(object, attribute)
-    error = object.errors[attribute].first
-    return if error.blank?
-
-    tag.span(id: error_id(object.id), class: 'govuk-error-message govuk-!-margin-top-3') do
-      error.to_s
-    end
-  end
-
-  def css_classes_for_input(journey, attribute, extra_classes = [])
-    error = journey.errors[attribute].first
-
-    css_classes = ['govuk-input'] + extra_classes
-    css_classes += ['govuk-input--error'] if error.present?
-    css_classes
-  end
-
   def error_id(attribute)
     "#{attribute}-error"
+  end
+
+  def validation_messages(model_object_sym, *attribute_symbols)
+    translation_key = "errors.models.#{model_object_sym.downcase}.attributes"
+    translation_key += ".#{attribute_symbols.join('.')}"
+
+    %w[activerecord activemodel].each do |active_type|
+      result = t("#{active_type}.#{translation_key}")
+
+      return result unless result.include? 'translation_missing'
+    end
+
+    {}
   end
 
   def page_title
@@ -216,30 +71,8 @@ module ApplicationHelper
     number_to_currency(cost, precision: precision, unit: '£')
   end
 
-  def govuk_tag(status)
-    extra_classes = {
-      cannot_start: 'govuk-tag--grey',
-      incomplete: 'govuk-tag--red',
-      in_progress: 'govuk-tag--blue',
-      not_started: 'govuk-tag--grey',
-      not_required: 'govuk-tag--grey'
-    }
-
-    tag.strong(I18n.t(status, scope: 'shared.tags'), class: ['govuk-tag'] << extra_classes[status])
-  end
-
-  def govuk_tag_with_text(colour, text)
-    extra_classes = {
-      grey: 'govuk-tag--grey',
-      blue: 'govuk-tag',
-      red: 'govuk-tag--red'
-    }
-
-    tag.strong(text, class: ['govuk-tag'] << extra_classes[colour])
-  end
-
-  def da_eligible?(code)
-    FacilitiesManagement::RM3830::Rate.where.not(framework: nil).map(&:code).include? code
+  def govuk_tag_with_status(status)
+    govuk_tag(I18n.t(status, scope: 'shared.tags'), STATUS_TO_COLOUR[status])
   end
 
   def service_specification_document(framework)
@@ -248,18 +81,6 @@ module ApplicationHelper
 
   def govuk_radio_driver
     tag.div(t('common.radio_driver'), class: 'govuk-radios__divider')
-  end
-
-  def warning_text(text)
-    tag.div(class: 'govuk-warning-text') do
-      concat(tag.span('!', class: 'govuk-warning-text__icon', aria: { hidden: true }))
-      concat(
-        tag.strong(class: 'govuk-warning-text__text') do
-          concat(tag.span('Warning', class: 'govuk-warning-text__assistive'))
-          concat(text)
-        end
-      )
-    end
   end
 
   def find_address_helper(object, organisaiton_prefix)
@@ -319,38 +140,24 @@ module ApplicationHelper
 
       next unless nuts1_regions[region_group_code]
 
+      region_name = "#{region.name.gsub(160.chr('UTF-8'), ' ')} (#{region.code})"
+
       nuts1_regions[region.code[..2]][:items] << {
-        code: region.code,
         value: region.code,
-        name: "#{region.name.gsub(160.chr('UTF-8'), ' ')} (#{region.code})",
-        selected: region_codes.include?(region.code)
+        label: {
+          text: region_name,
+        },
+        code: region.code,
+        checked: region_codes.include?(region.code),
+        attributes: {
+          id: "region_#{region.code}",
+          title: region_name,
+          sectionid: region_group_code
+        }
       }
     end
 
     nuts1_regions
-  end
-
-  def rm3830_accordion_service_items(service_codes)
-    services = FacilitiesManagement::RM3830::StaticData.services
-    work_packages = FacilitiesManagement::RM3830::StaticData.work_packages
-
-    services.map do |service|
-      [
-        service['code'],
-        {
-          name: service['name'],
-          items: work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.map do |work_package|
-            {
-              code: work_package['code'].tr('.', '-'),
-              value: work_package['code'],
-              name: work_package['name'],
-              selected: service_codes&.include?(work_package['code']),
-              description: work_package['description']
-            }
-          end
-        }
-      ]
-    end
   end
 
   def rm6232_accordion_service_items(service_codes)
@@ -360,12 +167,26 @@ module ApplicationHelper
         {
           name: work_package.name,
           items: work_package.selectable_services.map do |service|
+            service_code = service.code.tr('.', '-')
+
             {
-              code: service.code.tr('.', '-'),
               value: service.code,
-              name: service.name,
-              selected: service_codes&.include?(service.code),
-              description: service.description
+              label: {
+                text: service.name,
+              },
+              hint: {
+                text: capture do
+                  concat(service.description)
+                  concat(tag.hr(class: 'govuk-section-break govuk-!-margin-top-4'))
+                  concat(link_to(t('facilities_management.rm6232.journey.choose_services.learn_more'), facilities_management_rm6232_service_specification_path(service_code), target: '_blank', rel: 'noopener'))
+                end
+              },
+              checked: service_codes&.include?(service.code),
+              attributes: {
+                id: "service_#{service_code}",
+                title: service.name,
+                sectionid: work_package.code
+              }
             }
           end
         }
@@ -378,13 +199,13 @@ module ApplicationHelper
   end
 
   # rubocop:disable Metrics/ParameterLists
-  def link_to_add_row(name, number_of_items, form, association, partial_prefix, **args)
+  def link_to_add_row(name, number_of_items, form, association, partial_prefix, **options)
     new_object = form.object.send(association).klass.new
     id = new_object.object_id
     fields = form.fields_for(association, new_object, child_index: id) do |builder|
       render("#{partial_prefix}/#{association.to_s.singularize}", ff: builder)
     end
-    link_to(name.gsub('<number_of_items>', number_of_items.to_s), '#', class: args[:class], data: { id: id, fields: fields.gsub('\n', ''), 'button-text': name })
+    govuk_button(name.gsub('<number_of_items>', number_of_items.to_s), href: '#', classes: options[:class], attributes: { data: { id: id, fields: fields.gsub('\n', ''), 'button-text': name } })
   end
   # rubocop:enable Metrics/ParameterLists
 
@@ -395,5 +216,81 @@ module ApplicationHelper
       !current_cookie_preferences.is_a?(Hash) || current_cookie_preferences.empty? ? Marketplace.default_cookie_options : current_cookie_preferences
     end
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def pagination_params(paginator)
+    template = paginator.instance_variable_get(:@template)
+    options = paginator.instance_variable_get(:@options)
+    current_page = options[:current_page]
+
+    parameters = {}
+
+    parameters[:pagination_previous] = { href: Kaminari::Helpers::PrevPage.new(template, **options).url } unless current_page.first?
+
+    last_page_gap = false
+
+    parameters[:pagination_items] = paginator.each_page.map do |page|
+      if page.display_tag?
+        last_page_gap = false
+
+        {
+          type: :number,
+          href: Kaminari::Helpers::Page.new(template, **options.merge(page:)).url,
+          number: page.number,
+          current: page.current?
+        }
+      elsif !last_page_gap
+        last_page_gap = true
+
+        {
+          ellipsis: true
+        }
+      end
+    end.compact
+
+    parameters[:pagination_next] = { href: Kaminari::Helpers::NextPage.new(template, **options).url } if !current_page.out_of_range? && !current_page.last?
+
+    parameters
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  def govuk_date_items
+    [
+      {
+        name: 'dd',
+        input: {
+          classes: 'govuk-input--width-2'
+        },
+        label: {
+          text: I18n.t('date.day')
+        }
+      },
+      {
+        name: 'mm',
+        input: {
+          classes: 'govuk-input--width-2'
+        },
+        label: {
+          text: I18n.t('date.month')
+        }
+      },
+      {
+        name: 'yyyy',
+        input: {
+          classes: 'govuk-input--width-4'
+        },
+        label: {
+          text: I18n.t('date.year')
+        }
+      }
+    ]
+  end
+
+  STATUS_TO_COLOUR = {
+    cannot_start: :grey,
+    incomplete: :red,
+    not_started: :grey,
+    not_required: :grey
+  }.freeze
 end
 # rubocop:enable Metrics/ModuleLength

@@ -1,7 +1,5 @@
 module FacilitiesManagement::RM6232
   module ProcurementsHelper
-    include FacilitiesManagement::ProcurementsHelper
-
     def page_subtitle
       "#{current_contract_name} - #{@procurement.contract_number}"
     end

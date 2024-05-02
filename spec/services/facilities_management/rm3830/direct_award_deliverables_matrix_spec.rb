@@ -78,8 +78,8 @@ RSpec.describe FacilitiesManagement::RM3830::DirectAwardDeliverablesMatrix do
     expect(wb.sheet('Service Information').row(1)).to contain_exactly('Work Package Ref', 'Service Reference', 'Work Package')
     expect(wb.sheet('Service Information').row(2)).to contain_exactly('Work Package A - Contract Management', nil, 'Work Package A – Contract Management')
     expect(wb.sheet('Service Information').row(3)).to contain_exactly('Work Package A - Contract Management', nil, nil)
-    expect(wb.sheet('Service Information').row(4)).to contain_exactly('Work Package A - Contract Management', nil, '1.       Service A:1 - Integration')
-    expect(wb.sheet('Service Information').row(5)).to contain_exactly('Work Package A - Contract Management', nil, '1.1.    Service A:1 – Integration is Mandatory for Lot 1a-1c.')
+    expect(wb.sheet('Service Information').row(4)).to contain_exactly('Work Package A - Contract Management', nil, '1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Service A:1 - Integration')
+    expect(wb.sheet('Service Information').row(5)).to contain_exactly('Work Package A - Contract Management', nil, '1.1.&nbsp;&nbsp;&nbsp; Service A:1 – Integration is Mandatory for Lot 1a-1c.')
   end
 
   context 'when contract is sent' do

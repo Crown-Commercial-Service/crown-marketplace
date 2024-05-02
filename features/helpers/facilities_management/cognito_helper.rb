@@ -4,7 +4,7 @@ def stub_cognito(option, roles)
   aws_client = instance_double(Aws::CognitoIdentityProvider::Client)
   allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
 
-  method = "stub_#{option}".to_sym
+  method = :"stub_#{option}"
 
   send(
     method,
@@ -24,7 +24,7 @@ def stub_cognito_with_error(option, error_key, roles = [])
   allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
   allow_any_instance_of(Cognito::SignInUser).to receive(:sleep)
 
-  method = "stub_#{option}_error".to_sym
+  method = :"stub_#{option}_error"
 
   send(
     method,

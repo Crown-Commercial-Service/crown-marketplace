@@ -1,30 +1,28 @@
-<table class="govuk-table ccs-errors">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left">
-        <%= t('.item') %>
-      </th>
-      <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
-        <%= t('.rate') %>
-      </th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% @variances.each do |rate_label, rate| %>
-      <% rate_invalid = rate.errors.any? %>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
-          <div class="<%= 'govuk-form-group--error' if rate_invalid %>">
-            <label id="rates_<%= rate.id %>_label" for="rates_<%= rate.id %>">
-              <%= raw t(".#{rate_label}") %>
-            </label>
-            <%= display_error rate, attribue %>
-          </div>
-        </td>
-        <td class="govuk-table__cell supplier-rates-td">
-          <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(attribue), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate_invalid }", disabled: @framework_has_expired %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= govuk_table(
+  [
+    {
+      text: t('.item'),
+      classes: 'app-custom-class govuk-!-font-weight-bold govuk-!-width-two-thirds left'
+    },
+    {
+      text: t('.rate'),
+      classes: 'app-custom-class govuk-!-font-weight-bold left'
+    }
+  ],
+  @variances.map do |rate_label, variance_rate|
+    rate = variance_rate.read_attribute_before_type_cast(attribue)
+    rate_is_money = rate_label == :td_cleaning
+
+    [
+      {
+        text: t(".#{rate_label}").html_safe,
+        classes: 'govuk-!-font-weight-regular supplier-rates-td'
+      },
+      {
+        text: rate ? "#{rate_is_money ? '£' : ''}#{rate * (rate_is_money ? 1.0 : 100.0)}#{rate_is_money ? '' : '%'}" : '',
+        classes: 'supplier-rates-td'
+      }
+    ]
+  end,
+  first_cell_is_header: true
+) %>

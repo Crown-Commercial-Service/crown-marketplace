@@ -26,7 +26,7 @@ Feature: Manage users - User admin - Edit user
       | Confirmation status     | confirmed                             |
       | Mobile telephone number | None                                  |
       | Roles                   | Buyer                                 |
-      | Service access          | Facilities Management Legal Services  |
+      | Service access          | Facilities Management, Legal Services |
 
   Scenario: Edit user - Email Status
     And I change the 'Email status' for the user
@@ -116,7 +116,7 @@ Feature: Manage users - User admin - Edit user
     And I click on 'Save and return'
     Then I am on the 'View user' page
     And the user has the following details:
-      | Service access  | Facilities Management Supply Teachers  |
+      | Service access  | Facilities Management, Supply Teachers  |
 
   Scenario: Edit user - Service error
     And I cannot edit the user account because of an error

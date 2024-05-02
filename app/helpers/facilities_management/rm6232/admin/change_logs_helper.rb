@@ -15,10 +15,10 @@ module FacilitiesManagement::RM6232::Admin::ChangeLogsHelper
   def get_attribute_value(attribute, value)
     return value unless attribute == 'active'
 
-    govuk_tag_with_text(*if value || value.nil?
-                           [:blue, 'ACTIVE']
-                         else
-                           [:red, 'INACTIVE']
-                         end)
+    govuk_tag(*if value || value.nil?
+                 ['ACTIVE']
+               else
+                 ['INACTIVE', :red]
+               end)
   end
 end

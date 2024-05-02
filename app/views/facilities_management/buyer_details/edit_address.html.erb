@@ -3,9 +3,9 @@
 <div class="govuk-body govuk-grid-row buyer-details">
   <div class="govuk-grid-column-two-thirds" id="edit-contact-detail-address">
     <%= form_for @buyer_detail, url: facilities_management_buyer_detail_path(params[:framework], @buyer_detail, context: :update_address), method: :patch, html: { multipart: true, special_validation: true} do |f| %>
-      <%= link_to t('.back'), edit_facilities_management_buyer_detail_path(params[:framework], @buyer_detail), class: "govuk-back-link govuk-!-margin-bottom-2" %>
+      <%= govuk_back_link( t('.back'), edit_facilities_management_buyer_detail_path(params[:framework], @buyer_detail)) %>
 
-      <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, render_empty: false } %>
+      <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
 
       <div class="govuk-caption-m govuk-!-margin-top-2 govuk-!-margin-bottom-1">
         <%= current_user.email %>
@@ -16,38 +16,75 @@
       <h1 class="govuk-heading-xl">
         <%= t('.add_address') %>
       </h1>
-      <fieldset class="govuk-fieldset">
-        <h2 class="govuk-heading-m">
-          <%= t('.your_details') %>
-        </h2>
-        <%= form_group_with_error(f.object, :organisation_address_line_1) do |displayed_error, any_errors| %>
-          <%= f.label :organisation_address_line_1, t('.building_and_street'), class: 'govuk-label' %>
-          <%= displayed_error %>
-          <%= f.text_field :organisation_address_line_1, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255 %>
-        <% end %>
-        <%= form_group_with_error(f.object, :organisation_address_line_2) do |displayed_error, any_errors| %>
-          <%= f.label :organisation_address_line_2, class: 'govuk-visually-hidden' %>
-          <%= displayed_error %>
-          <%= f.text_field :organisation_address_line_2, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255 %>
-        <% end %>
-        <%= form_group_with_error(f.object, :organisation_address_town) do |displayed_error, any_errors| %>
-          <%= f.label :organisation_address_town, t('.town_or_city'), class: 'govuk-label' %>
-          <%= displayed_error %>
-          <%= f.text_field :organisation_address_town, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255 %>
-        <% end %>
-        <%= form_group_with_error(f.object, :organisation_address_county) do |displayed_error, any_errors| %>
-          <%= f.label :organisation_address_county, t('.county'), class: 'govuk-label' %>
-          <%= displayed_error %>
-          <%= f.text_field :organisation_address_county, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255 %>
-        <% end %>
-        <%= form_group_with_error(f.object, :organisation_address_postcode) do |displayed_error, any_errors| %>
-          <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label' %>
-          <%= displayed_error %>
-          <%= f.text_field :organisation_address_postcode, class: "govuk-input govuk-input--width-10 #{'govuk-input--error' if any_errors}", maxlength: 10 %>
-        <% end %>
-      </fieldset>
+      <%= govuk_fieldset(
+        legend: {
+          text: t('.your_details'),
+          classes: 'govuk-fieldset__legend--m'
+        }
+      ) do %>
+        <%= govuk_input(
+          :organisation_address_line_1,
+          form: f,
+          label: {
+            text: t('.building_and_street')
+          },
+          classes: 'govuk-input--width-30',
+          attributes: {
+            maxlength: 255
+          }
+        ) %>
+
+        <%= govuk_input(
+          :organisation_address_line_2,
+          form: f,
+          label: {
+            text: t('.building_and_street_line_2'),
+            classes: 'govuk-visually-hidden'
+          },
+          classes: 'govuk-input--width-30',
+          attributes: {
+            maxlength: 255
+          }
+        ) %>
+
+        <%= govuk_input(
+          :organisation_address_town,
+          form: f,
+          label: {
+            text: t('.town_or_city')
+          },
+          classes: 'govuk-input--width-20',
+          attributes: {
+            maxlength: 255
+          }
+        ) %>
+
+        <%= govuk_input(
+          :organisation_address_county,
+          form: f,
+          label: {
+            text: t('.county')
+          },
+          classes: 'govuk-input--width-20',
+          attributes: {
+            maxlength: 255
+          }
+        ) %>
+
+        <%= govuk_input(
+          :organisation_address_postcode,
+          form: f,
+          label: {
+            text: t('.postcode')
+          },
+          classes: 'govuk-input--width-10',
+          attributes: {
+            maxlength: 10
+          }
+        ) %>
+      <% end %>
       <div class="govuk-!-margin-top-4">
-        <%= f.submit t('.submit'), class: "govuk-button", 'aria-label': t('.submit') %>
+        <%= govuk_button(t('.submit'), form: f, attributes: { aria: { label: t('.submit') } }) %>
       </div>
     <% end %>
     </div>

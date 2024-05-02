@@ -11,14 +11,18 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-!-font-size-19"><%= t('.subheading') %></p>
+      <h2 class="govuk-heading-m">
+        <%= t('.subheading') %>
+      </h2>
       <ul class="govuk-list govuk-list--bullet">
         <li><%= t('.usagelist.item_1') %></li>
         <li><%= t('.usagelist.item_2') %></li>
         <li><%= t('.usagelist.item_3') %></li>
       </ul>
 
-      <p class="govuk-!-font-size-24 ccs-font-weight-semi-bold"><%= t('.beforeyoustart') %></p>
+      <h2 class="govuk-heading-m">
+        <%= t('.beforeyoustart') %>
+      </h2>
       <p class="govuk-!-font-size-19"><%= t('.youneedtoknow') %></p>
       <ul class="govuk-list govuk-list--bullet">
         <li><%= t('.startlist.item_1') %></li>
@@ -27,7 +31,7 @@
 
       <%= link_to t('.further_information'), 'https://www.crowncommercial.gov.uk/agreements/rm6232', target: "_blank", class: 'govuk-link--no-visited-state' %>
       <br/>
-      <%= govuk_button_start(t('.startnow'), facilities_management_rm6232_new_user_session_path, class: 'govuk-!-margin-top-6 govuk-!-margin-bottom-8', aria: { label: t('.startnow') }) %>
+      <%= govuk_button(t('.startnow'), href: facilities_management_rm6232_new_user_session_path, is_start_button: true, classes: 'govuk-!-margin-top-6 govuk-!-margin-bottom-8', attributes: { aria: { label: t('.startnow') } }) %>
     </div>
   </div>
 </div>

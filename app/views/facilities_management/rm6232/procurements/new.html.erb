@@ -108,17 +108,20 @@
       <% end %>
 
       <%= f.hidden_field :annual_contract_value %>
+      <%= govuk_input(
+        :contract_name,
+        form: f,
+        label: {
+          text: t('.contract_name_label'),
+          classes: 'govuk-label--m'
+        },
+        hint: {
+          text: t('.contract_name_hint')
+        },
+        classes: 'govuk-input--width-20',
+      ) %>
 
-      <%= form_group_with_error(f.object, :contract_name) do |displayed_error, any_errors| %>
-        <%= f.label :contract_name, t('.contract_name_label'), class: 'govuk-label govuk-label--m' %>
-        <%= displayed_error %>
-        <div class="govuk-hint">
-          <%= t('.contract_name_hint') %>
-        </div>
-        <%= f.text_field :contract_name, class: "govuk-input govuk-input--width-20 #{'govuk-input--error' if any_errors}" %>
-      <% end %>
-
-      <%= f.submit t('.save_and_continue'), class: 'govuk-button govuk-!-margin-right-4', name: 'save_and_continue' %>
+      <%= govuk_button(t('.save_and_continue'), form: f, attributes: { name: 'save_and_continue' }) %>
       <p>
         <%= link_to t('.return_to_dashboard'), facilities_management_rm6232_path, class: 'govuk-body govuk-link--no-visited-state' %>
       </p>

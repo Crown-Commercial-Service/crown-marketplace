@@ -15,20 +15,20 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController do
                     })
   end
 
-  describe 'GET edit' do
+  describe 'GET show' do
     context 'when checking permissions' do
       context 'when an fm amdin' do
-        before { get :edit, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
+        before { get :show, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
 
-        it 'renders the edit page' do
-          expect(response).to render_template(:edit)
+        it 'renders the show page' do
+          expect(response).to render_template(:show)
         end
       end
 
       context 'when not an fm admin' do
         login_fm_buyer
 
-        before { get :edit, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
+        before { get :show, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
 
         it 'redirects to not permitted page' do
           expect(response).to redirect_to '/facilities-management/RM3830/admin/not-permitted'
@@ -36,16 +36,16 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController do
       end
     end
 
-    context 'when viewing the edit page' do
-      before { get :edit, params: { supplier_framework_datum_id: supplier_id, lot: lot_number } }
+    context 'when viewing the show page' do
+      before { get :show, params: { supplier_framework_datum_id: supplier_id, lot: lot_number } }
 
       render_views
 
       context 'and the lot is 1a' do
         let(:lot_number) { '1a' }
 
-        it 'renders the edit page' do
-          expect(response).to render_template(:edit)
+        it 'renders the show page' do
+          expect(response).to render_template(:show)
         end
 
         it 'renders the correct partial' do
@@ -56,8 +56,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController do
       context 'and the lot is 1b' do
         let(:lot_number) { '1b' }
 
-        it 'renders the edit page' do
-          expect(response).to render_template(:edit)
+        it 'renders the show page' do
+          expect(response).to render_template(:show)
         end
 
         it 'renders the correct partial' do
@@ -72,8 +72,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController do
       context 'and the lot is 1c' do
         let(:lot_number) { '1c' }
 
-        it 'renders the edit page' do
-          expect(response).to render_template(:edit)
+        it 'renders the show page' do
+          expect(response).to render_template(:show)
         end
 
         it 'renders the correct partial' do
@@ -90,150 +90,6 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController do
 
         it 'redirect to admin home page' do
           expect(response).to redirect_to facilities_management_rm3830_admin_path
-        end
-      end
-    end
-  end
-
-  describe 'PUT update' do
-    # rubocop:disable RSpec/NestedGroups
-    context 'when the framework is live' do
-      context 'when updating the data for lot 1a' do
-        let(:checked_services) { ['C.1', 'D.4'] }
-        let(:data) { { 'C.1': { 'Direct Award Discount (%)': '1.0', 'Call Centre Operations (£)': '12.0' }, 'G.4': { 'Direct Award Discount (%)': '0.5', 'Special Schools (£)': '4.6789' } } }
-        let(:rate) { { 'M.141': '0.1123', 'B.1': '0.35' } }
-
-        before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1a', checked_services: checked_services, data: data, rate: rate } }
-
-        context 'when updating the service selection for lot 1a' do
-          it 'redirects to the supplier_framework_data_path' do
-            expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
-          end
-
-          it 'updates the services correctly' do
-            supplier.reload
-            expect(supplier.lot_data['1a']['services']).to eq checked_services
-          end
-        end
-
-        context 'and the service discount and prices are updated' do
-          let(:latest_rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
-
-          context 'and the data is valid' do
-            it 'redirects to the supplier_framework_data_path' do
-              expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
-            end
-
-            it 'updates the discount data correctly' do
-              expect(latest_rate_card[:data][:Discounts][supplier_id.to_sym][:'C.1'][:'Disc %']).to eq 1.0
-              expect(latest_rate_card[:data][:Discounts][supplier_id.to_sym][:'G.4'][:'Disc %']).to eq 0.5
-            end
-
-            it 'updates the discount prices data correctly' do
-              expect(latest_rate_card[:data][:Prices][supplier_id.to_sym][:'C.1'][:'Call Centre Operations']).to eq 12.0
-              expect(latest_rate_card[:data][:Prices][supplier_id.to_sym][:'G.4'][:'Special Schools']).to eq 4.6789
-            end
-          end
-
-          context 'and the data is not valid' do
-            let(:data) { { 'C.1': { 'Direct Award Discount (%)': '1.0', 'Call Centre Operations (£)': 'TARDIS' }, 'G.4': { 'Direct Award Discount (%)': '1.005', 'Special Schools (£)': 'Doctor' } } }
-
-            it 'renders the edit page' do
-              expect(response).to render_template(:edit)
-            end
-
-            it 'has the correct errors' do
-              expect(assigns(:invalid_services)).to match('C.1' => { 'Call Centre Operations (£)' => { value: 'TARDIS', error_type: 'not_a_number' } }, 'G.4' => { 'Direct Award Discount (%)' => { value: '1.005', error_type: 'less_than_or_equal_to' }, 'Special Schools (£)' => { value: 'Doctor', error_type: 'not_a_number' } })
-            end
-          end
-        end
-
-        context 'and the variance is updated' do
-          let(:latest_rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
-
-          context 'and the data is valid' do
-            it 'redirects to the supplier_framework_data_path' do
-              expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
-            end
-
-            it 'updated the variances correctly' do
-              expect(latest_rate_card[:data][:Variances][supplier_id.to_sym][:'Corporate Overhead %']).to eq 0.1123
-              expect(latest_rate_card[:data][:Variances][supplier_id.to_sym][:'Mobilisation Cost (DA %)']).to eq 0.35
-            end
-          end
-
-          context 'and the data is not valid' do
-            let(:rate) { { 'M.141': '0.1123', 'B.1': '1.0001' } }
-
-            it 'renders the edit page' do
-              expect(response).to render_template(:edit)
-            end
-
-            it 'has the correct errors' do
-              expect(assigns(:invalid_services)).to match('B.1' => { value: '1.0001', error_type: 'less_than_or_equal_to' })
-            end
-          end
-        end
-      end
-
-      context 'when updating the checkboxes for lots 1b and 1c' do
-        before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1b', checked_services: services } }
-
-        context 'when updating the data with services' do
-          let(:services) { ['C.1', 'D.4'] }
-
-          it 'redirects to the supplier_framework_data_path' do
-            expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
-          end
-
-          it 'updates the services correctly' do
-            supplier.reload
-            expect(supplier.lot_data['1b']['services']).to eq services
-          end
-        end
-
-        context 'when updating the data without services' do
-          let(:services) { [] }
-
-          it 'redirects to the supplier_framework_data_path' do
-            expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
-          end
-
-          it 'updates the services correctly' do
-            supplier.reload
-            expect(supplier.lot_data['1b']['services']).to eq services
-          end
-        end
-      end
-    end
-    # rubocop:enable RSpec/NestedGroups
-
-    context 'when the framework has expired' do
-      include_context 'and RM3830 has expired'
-
-      before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: lot_number } }
-
-      context 'when updating the data for lot 1a' do
-        let(:lot_number) { '1a' }
-
-        it 'redirects to the edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path
-        end
-      end
-
-      context 'when updating the data for lot 1b' do
-        let(:lot_number) { '1b' }
-
-        it 'redirects to the edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path
-        end
-      end
-
-      context 'when updating the data for lot 1c' do
-        let(:lot_number) { '1c' }
-
-        it 'redirects to the edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path
         end
       end
     end

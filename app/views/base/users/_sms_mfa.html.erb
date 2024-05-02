@@ -1,25 +1,8 @@
+<%= content_for :page_title, t('.heading') %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-
-
-
-    <div id="ccs-error-sum" class="govuk-error-summary  <%= 'govuk-visually-hidden' unless @challenge.errors.any? %> ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
-      <h2 class="govuk-error-summary__title" id="error-summary-title">
-        <%= t('common.error_summary_title') %>
-      </h2>
-      <div class="govuk-error-summary__body">
-        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
-          <% @challenge.errors.attribute_names.each do |attribute| %>
-            <li>
-              <%= link_to @challenge.errors[attribute].first, "##{error_id(attribute)}", data: { turbolinks: false } %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-
-
+    <%= render partial: 'shared/error_summary', locals: { errors: @challenge.errors } %>
 
     <h1 class="govuk-heading-xl">
       <%= t('.heading') %>
@@ -33,38 +16,29 @@
       <%= t('.content') %>
     </p>
 
-    <%= form_tag challenge_user_path, class: 'ccs-form', id: 'cop_confirmation_code', method: :post do %>
+    <%= form_with url: challenge_user_path, model: @challenge, method: :post, html: { novalidate: true } do |f| %>
+      <%= govuk_input(
+        :access_code,
+        form: f,
+        label: {
+          text: t('.access_code'),
+          classes: 'govuk-label--m'
+        },
+        field_type: :number,
+        classes: 'govuk-!-width-one-third',
+        value: nil
+      ) %>
 
-      <div class="govuk-form-group govuk-!-margin-bottom-7 <%= 'govuk-form-group--error' if @challenge.errors[:access_code].any? %>">
-        <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="confirmation">
-          <%= t('.access_code') %>
-        </label>
-
-        <span id="confirmation-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-          <%= t('activemodel.errors.models.cognito/respond_to_challenge.attributes.access_code.blank') %>
-        </span>
-
-        <span id="confirmation-sixerror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
-          <%= t('activemodel.errors.models.cognito/respond_to_challenge.attributes.access_code.invalid_length') %>
-        </span>
-        <%= display_error(@challenge, :access_code) %>
-        <%= text_field_tag :access_code, nil, class: 'govuk-input govuk-!-width-one-third', id: 'confirmation', type: 'number' %>
-      </div>
-
-
-      <%= hidden_field_tag :session, cookies[:crown_marketplace_challenge_session] %>
-
-      <%= hidden_field_tag :username, cookies[:crown_marketplace_challenge_username] %>
+      <%= f.hidden_field :session, value: @challenge.session %>
+      <%= f.hidden_field :username, value: @challenge.username %>
 
       <%= hidden_field_tag :challenge_name, params[:challenge_name] %>
 
-      <%= submit_tag t('common.continue'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-label': "#{t('common.continue')}" %>
-
+      <%= govuk_button(t('common.continue'), form: f, classes: 'govuk-!-padding-left-7 govuk-!-padding-right-7', attributes: { aria: { label: t('common.continue') } }) %>
     <% end %>
 
     <p class="govuk-body govuk-!-margin-bottom-7">
       <%= t('.resend_the_confirmation_code_html', link: new_user_session_path) %>
     </p>
-
   </div>
 </div>

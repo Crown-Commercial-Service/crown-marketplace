@@ -26,7 +26,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -36,7 +36,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -55,7 +55,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -65,7 +65,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -75,7 +75,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
           it 'redirects to the not permitted path' do
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -110,7 +110,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -120,7 +120,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -139,7 +139,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -149,7 +149,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -159,7 +159,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
           it 'redirects to the not permitted path' do
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -194,7 +194,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -204,7 +204,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -223,7 +223,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -233,7 +233,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -243,7 +243,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
           it 'redirects to the not permitted path' do
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -278,7 +278,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -288,7 +288,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -307,7 +307,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -317,7 +317,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -327,7 +327,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
           it 'redirects to the not permitted path' do
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -374,7 +374,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -384,7 +384,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -394,7 +394,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
           it 'redirects to the not permitted path' do
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -413,7 +413,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -423,7 +423,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -472,7 +472,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -482,7 +482,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
 
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -492,7 +492,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
           it 'redirects to the not permitted path' do
             get :show
 
-            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+            expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
           end
         end
 
@@ -511,7 +511,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 
@@ -533,7 +533,7 @@ RSpec.describe ActiveStorage::Blobs::RedirectController do
         it 'redirects to the not permitted path' do
           get :show
 
-          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
         end
       end
 

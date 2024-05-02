@@ -10,28 +10,38 @@
       </h1>
 
       <div class="govuk-!-margin-top-5">
-        <%= govuk_form_group_with_optional_error(@framework, :live_at) do %>
-          <%= f.label :live_at, t('.live_at_date', framework: @framework.framework), class: "govuk-label"%>
-          <div id="live-at-hint" class="govuk-hint">
-            <%= t('.live_at_hint', current_date: Time.now.in_time_zone('London').strftime('%e/%-m/%Y'))%>
-          </div>
-          <%= display_errors(f.object, :live_at)%>
-          <%= f.gov_uk_date_field :live_at, legend_options: { page_heading: false, visually_hidden: true }, aria: { describedby: 'ive-at-hint' } %>
-        <% end %>
+        <%= govuk_date_input(
+          :live_at,
+          form: f,
+          fieldset: {
+            legend: {
+              text: t('.live_at_date', framework: @framework.framework)
+            }
+          },
+          hint: {
+            text: t('.live_at_hint', current_date: Time.now.in_time_zone('London').strftime('%e/%-m/%Y'))
+          },
+          date_items: govuk_date_items
+        ) %>
       </div>
 
       <div class="govuk-!-margin-top-5">
-        <%= govuk_form_group_with_optional_error(@framework, :expires_at) do %>
-          <%= f.label :expires_at, t('.expires_at_date', framework: @framework.framework), class: "govuk-label"%>
-          <div id="expires-at-hint" class="govuk-hint">
-            <%= t('.expires_at_hint', current_date: Time.now.in_time_zone('London').strftime('%e/%-m/%Y'))%>
-          </div>
-          <%= display_errors(f.object, :expires_at)%>
-          <%= f.gov_uk_date_field :expires_at, legend_options: { page_heading: false, visually_hidden: true }, aria: { describedby: 'expires-at-hint' } %>
-        <% end %>
+        <%= govuk_date_input(
+          :expires_at,
+          form: f,
+          fieldset: {
+            legend: {
+              text: t('.expires_at_date', framework: @framework.framework)
+            }
+          },
+          hint: {
+            text: t('.expires_at_hint', current_date: Time.now.in_time_zone('London').strftime('%e/%-m/%Y'))
+          },
+          date_items: govuk_date_items
+        ) %>
       </div>
 
-      <%= f.submit t('.save_and_return'), class: 'govuk-button', aria: { label: t('.save_and_return')} %>
+      <%= govuk_button(t('.save_and_return'), form: f, attributes: { aria: { label: t('.save_and_return') } }) %>
       <p class="govuk-body">
         <%= link_to t('.return_to_frameworks', service_name: service_name), local_index_path, class: 'govuk-link--no-visited-state' %>
       </p>

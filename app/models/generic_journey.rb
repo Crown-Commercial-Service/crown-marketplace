@@ -3,21 +3,24 @@ class GenericJourney
 
   def initialize(first_step_class, framework, slug, params, paths)
     @steps = []
-    @params = ActiveSupport::HashWithIndifferentAccess.new
+    @params = ActionController::Parameters.new
     @paths = paths
     @framework = framework
     @slug = slug
 
     klass = first_step_class
+    permitted_params = Set.new
+
     loop do
-      permitted = params.permit(klass.permit_list)
-      step = klass.new(permitted)
-      @params.merge! permitted
+      permitted_params.merge(klass.permit_list)
+      step = klass.new(params.permit(klass.permit_list))
       @steps << step
-      return if step.slug == slug || step.invalid? || step.final?
+      break if step.slug == slug || step.invalid? || step.final?
 
       klass = step.next_step_class
     end
+
+    @params = params.permit(permitted_params.to_a)
   end
 
   def first_step

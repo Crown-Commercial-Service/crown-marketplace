@@ -384,6 +384,7 @@ en:
             no_uploads: There are currently no uploads for this framework. Click on ‘Create a new data upload’ and follow the instructions to upload supplier data for facilities management.
             status: Status
             table_caption: Previous uploads
+            upload_name: 'Upload session #%{number}'
           new:
             caption: Facilities Management (RM6232)
             download_templates: Download file templates
@@ -413,8 +414,6 @@ en:
             return: Return to 'Manage supplier data'
             status: 'Status:'
             uploaded_by: 'Uploaded by:'
-          upload:
-            upload_name: 'Upload session #%{number}'
         you_cannot_update:
           details: The RM6232 has expired, you cannot update the supplier's details.
       buyer_account:
@@ -458,6 +457,7 @@ en:
           return_text: Return to your account
           subtitle: Enter your estimated annual cost of the call off contract (including any potential billable works that you may put through the contract).
         choose_locations:
+          checkbox_legend: "%{section} items"
           heading: Regions
           more_information:
             link_text: Office for National Statistics
@@ -470,6 +470,7 @@ en:
           the_regions: The regions below align to the ‘Nomenclature of Territorial Units for Statistics (NUTS)’ hierarchical system used to divide up territories in UK and Europe.
         choose_services:
           caption: Choose all facilities management services required within your estate, even if you want services in just one building.
+          checkbox_legend: "%{section} items"
           heading: Services
           learn_more: Further details (opens in a new tab)
           question: Select the facilities management services that you need
@@ -521,56 +522,6 @@ en:
             item_2: your eligible Lot
             item_3: your unique reference number, time & date stamped
           your_unique_reference_number: Your unique reference number
-        show_partials:
-          entering_requirements:
-            contract_details: 1. Contract details
-            description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'Save and continue' button to see your supplier shortlist and procurement options.
-            services_and_buildings: 2. Services and buildings
-          further_information:
-            deliverables_matrix: Prepopulated 'Deliverables matrix'
-            fm_framework_page: facilities management framework page
-            fm_framework_page_url: https://www.crowncommercial.gov.uk/agreements/rm6232
-            information_list:
-              item_1: Customer guidence documents
-              item_2: Framework benifits
-              item_3: How to buy
-              item_4: Bid pack documents
-            on_the_framework_page_html: 'On the %{framework_page_link}, you can view information including:'
-            step_1: Step 1 - Download your results
-            step_2: Step 2 - Review the Facilities Management framework page
-            supplier_brief: Prepopulated 'Supplier brief'
-            we_have_used: We have used the information entered on the previous pages to prepopulate a deliverables matrix and a supplier bief which you can use when running your further competition.
-          results:
-            based_on_information: 'Based on the further information you provided, this procurement is eligible for the following sub-lot:'
-            building: Building
-            buildings_and_services: Buildings and services summary
-            if_you_wish: If you wish to change your requirements, click the 'Change requirements' button below. Any changes may result in a different outcome.
-            service: Service
-            sub_lot: Sub-lot %{sub_lot}
-            suppliers_shortlisted: "%{number} supplier(s) shortlisted"
-            warning_text: You will not be able to change your requirements for this procurement once you click 'Continue'
-            who_can_provide: who can provide the services you require in your location(s)
-          show:
-            change_requirements: Change requirements
-            return_to_your_account: Return to your account
-            save_and_continue: Save and continue
-            title:
-              entering_requirements: Further service and contract requirements
-              further_information: What do I do next?
-              results: Results
-              what_happens_next: What happens next?
-          what_happens_next:
-            if_you_need_to_talk: If you need to talk to us or refer to your procurement at any point please use the below reference number
-            option_1:
-              details: Click save and continue below to continue entering your requirements. You will be able to edit and enter your Contract details and services and buildings. Once this has been completed you will be able to download a prepopulated deliverables matrix and a prepopulated order form, with all your contract and  service requirements inserted. Once you have downloaded these documents you will then be able to run a further competition either with your organisation’s own sourcing tool or use the Crown Commercial free eSourcing tool.
-              heading: Option 1. Use this portal to complete the facilities services requirements
-            option_2:
-              details: You can download your shortlisted suppliers list now and proceed with  further competition using your own templates and sourcing system.
-              heading: Option 2. Carry out the further competition with your own templates and system
-            or: Or
-            selected_suppliers: Selected suppliers
-            you_have_two_option: You now have two options to complete you procurement activity. You can either continue using this portal to complete the facilities services requirements or you can carry out the further competition with your own templates and system.
-            your_unique_reference_number: Your unique reference number
       service_specification:
         show:
           generic_requirements: "%{work_package_name} - Generic Requirements"

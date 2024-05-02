@@ -3,30 +3,35 @@
 
 <div class="procurement">
   <div class="govuk-grid-row">
-    <%= form_with url: @form_path, method: :get, html: { specialvalidation: true, novalidate: true } do %>
-        <div class="govuk-grid-column-two-thirds">
-          <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-          <%= govuk_form_group_with_optional_error(@journey, :annual_contract_value) do %>
-            <h1 class="govuk-heading-xl govuk-!-margin-top-0">
-              <%= t('.heading') %>
-            </h1>
-            <%= label_tag :annual_contract_value,  t('.question'), class: 'govuk-label' %>
-            <span class="govuk-caption-m">
-              <%= t('.subtitle') %>
-            </span>
-            <hr class="govuk-section-break govuk-section-break--s">
-            <%= display_error(@journey.steps[2], :annual_contract_value) %>
-            <div class="govuk-input__wrapper">
-            <div class="govuk-input__prefix" aria-hidden="true">£</div>
-              <%= text_field_tag :annual_contract_value, @journey.steps[2].annual_contract_value, class: "govuk-input ccs-number-field ccs-integer-field govuk-input--width-20 #{'govuk-input--error' if @journey.steps[2].errors[:annual_contract_value].any? }", maxlength: 15 %>
-            </div>
-          <% end %>
-          <hr class="govuk-section-break govuk-section-break--s">
-          <%= submit_tag t('common.submit'), class: "govuk-button", aria: { label: t('common.submit') } %>
-          <p>
-            <%= link_to t('.return_text'), facilities_management_rm6232_path, class: 'govuk-link' %>
-          </p>
-        </div>
+    <%= form_with url: @form_path, method: :get, html: { specialvalidation: true, novalidate: true } do |f| %>
+      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-top-0">
+          <%= t('.heading') %>
+        </h1>
+        <%= govuk_input(
+          :annual_contract_value,
+          model: @journey.current_step,
+          label: {
+            text: t('.question')
+          },
+          hint: {
+            text: t('.subtitle')
+          },
+          prefix: {
+            text: '£'
+          },
+          classes: 'ccs-number-field ccs-integer-field govuk-input--width-20',
+          attributes: {
+            maxlength: 15
+          }
+        ) %>
+
+        <%= govuk_button(t('common.submit'), form: f, attributes: { aria: { label: t('common.submit') } }) %>
+        <p>
+          <%= link_to t('.return_text'), facilities_management_rm6232_path, class: 'govuk-link' %>
+        </p>
+      </div>
     <% end %>
   </div>
 </div>

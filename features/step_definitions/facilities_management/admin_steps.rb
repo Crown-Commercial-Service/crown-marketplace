@@ -9,9 +9,7 @@ Given('I sign in as an admin and navigate to the {string} dashboard') do |framew
   visit "/facilities-management/#{framework}/admin/sign-in"
   update_banner_cookie(true) if @javascript
   create_admin_user_with_details
-  fill_in 'email', with: @user.email
-  fill_in 'password', with: 'ValidPassword'
-  click_on 'Sign in'
+  step 'I sign in'
   expect(page.find('h1')).to have_content("#{framework} administration dashboard")
 end
 
@@ -30,10 +28,6 @@ end
 
 Then('the {string} is {string} on the supplier details page') do |supplier_detail, text|
   expect(admin_page.supplier_details.send(supplier_detail.to_sym).detail).to have_content(text)
-end
-
-Then('the current user has the user email') do
-  expect(admin_page.supplier_details.send(:'Current user').detail).to have_content(@user.email)
 end
 
 Then('I enter {string} into the {string} field') do |supplier_detail, field|

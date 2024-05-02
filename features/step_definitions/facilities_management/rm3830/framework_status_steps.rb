@@ -6,18 +6,18 @@ Then('I should see the following warning text:') do |warning_text_table|
   expect(page.find('strong.govuk-warning-text__text')).to have_content("Warning#{warning_text_table.raw.flatten.first}")
 end
 
-Then('all the text inputs are disabled') do
-  expect(page.all('input[type="text"]')).to be_all(&:disabled?)
+Then('there are no text inputs') do
+  expect(page.all('input[type="text"]')).to be_empty
 end
 
-Given('all the checkbox inputs are disabled') do
-  expect(page.all('input[type="checkbox"]')).to be_all(&:disabled?)
+Given('there are no checkbox inputs') do
+  expect(page.all('input[type="checkbox"]')).to be_empty
 end
 
-Then('the submit button is disabled') do
-  expect(page.find('input[type="submit"]')).to be_disabled
+Then('there is no submit button') do
+  expect(page).to have_no_field(type: :submit)
 end
 
 Then('I cannot change the supplier details') do
-  expect(page).not_to have_css('dd.govuk-summary-list__actions')
+  expect(page).to have_no_css('dd.govuk-summary-list__actions')
 end

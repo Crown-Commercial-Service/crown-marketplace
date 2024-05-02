@@ -9,7 +9,7 @@ module Pages
       sections :rows, EmailDomainRowSection, 'tbody > tr'
     end
 
-    section :email_domain_search, '#allow-list-search-container > div > form' do
+    section :email_domain_search, 'form' do
       element :input, '#allowed_email_domain_email_domain'
       element :button, 'input.govuk-button.govuk-button--secondary'
     end
@@ -19,7 +19,7 @@ module Pages
     end
 
     section :notification_banner, '#main-content > div:nth-child(3) > div > div.govuk-notification-banner.govuk-notification-banner--success' do
-      element :heading, 'div.govuk-notification-banner__content > p.govuk-notification-banner__heading'
+      element :heading, 'div.govuk-notification-banner__content > h3.govuk-notification-banner__heading'
       element :message, 'div.govuk-notification-banner__content > p.govuk-body'
     end
   end

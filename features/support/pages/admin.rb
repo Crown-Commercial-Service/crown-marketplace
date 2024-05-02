@@ -6,17 +6,17 @@ module Pages
 
   class Admin < SitePrism::Page
     section :supplier_details, '#main-content' do
-      element :supplier_name_title, '#main_title > span'
+      element :supplier_name_title, 'h1 > span'
 
-      section :'Current user', SupplierDetailsSection, '#supplier-details--supplier_user'
-      section :'Supplier status', SupplierDetailsSection, '#supplier-details--supplier_status'
-      section :'Supplier name', SupplierDetailsSection, '#supplier-details--supplier_name'
-      section :'Contact name', SupplierDetailsSection, '#supplier-details--contact_name'
-      section :'Contact email', SupplierDetailsSection, '#supplier-details--contact_email'
-      section :'Contact telephone number', SupplierDetailsSection, '#supplier-details--contact_phone'
-      section :'DUNS number', SupplierDetailsSection, '#supplier-details--duns'
-      section :'Company registration number', SupplierDetailsSection, '#supplier-details--registration_number'
-      section :'Full address', SupplierDetailsSection, '#supplier-details--full_address'
+      section :'Current user', SupplierDetailsSection, :xpath, '//dl/div/dt[@class="govuk-summary-list__key"][text()="Current user"]/..'
+      section :'Supplier status', SupplierDetailsSection, :xpath, '//dl/div/dt[@class="govuk-summary-list__key"][text()="Current status"]/..'
+      section :'Supplier name', SupplierDetailsSection, :xpath, '//dl/div/dt[@class="govuk-summary-list__key"][text()="Supplier name"]/..'
+      section :'Contact name', SupplierDetailsSection, :xpath, '//dl/div/dt[@class="govuk-summary-list__key"][text()="Contact name"]/..'
+      section :'Contact email', SupplierDetailsSection, :xpath, '//dl/div/dt[@class="govuk-summary-list__key"][text()="Contact email"]/..'
+      section :'Contact telephone number', SupplierDetailsSection, :xpath, '//dl/div/dt[@class="govuk-summary-list__key"][text()="Contact telephone number"]/..'
+      section :'DUNS number', SupplierDetailsSection, :xpath, '//dl/div/dt[@class="govuk-summary-list__key"][text()="DUNS number"]/..'
+      section :'Company registration number', SupplierDetailsSection, :xpath, '//dl/div/dt[@class="govuk-summary-list__key"][text()="Company registration number"]/..'
+      section :'Full address', SupplierDetailsSection, :xpath, '//dl/div/dt[@class="govuk-summary-list__key"][text()="Full address"]/..'
     end
 
     element :management_report_date, '#main-content > div:nth-child(4) > div > p:nth-child(2)'

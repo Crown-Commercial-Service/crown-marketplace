@@ -107,45 +107,24 @@ RSpec.describe ApplicationHelper do
     end
 
     context 'when an attribute is also used' do
-      it 'will return an empty hash when the attribute cannot be found' do
+      it 'returns an empty hash when the attribute cannot be found' do
         validation_message = helper.validation_messages(:procurement, :blahblah)
         expect(validation_message.class.name).to eq 'Hash'
         expect(validation_message.empty?).to be true
       end
 
-      it 'will return an empty hash when the attribute has no translations' do
+      it 'returns an empty hash when the attribute has no translations' do
         validation_message = helper.validation_messages(:procurement, :blah)
         expect(validation_message.class.name).to eq 'Hash'
         expect(validation_message.empty?).to be true
       end
 
-      it 'will return a populated hash when the attribute has translations' do
+      it 'returns a populated hash when the attribute has translations' do
         proc = FacilitiesManagement::RM3830::Procurement.new
 
         validation_message = helper.validation_messages(proc.class.name.underscore.downcase.to_sym, :initial_call_off_period_years)
         expect(validation_message.class.name).to eq 'Hash'
         expect(validation_message.empty?).to be false
-      end
-    end
-
-    context 'when rendering HTML' do
-      it 'will list elements' do
-        validation_output = helper.display_potential_errors(FacilitiesManagement::RM3830::Procurement.new, :initial_call_off_period_years, 'facilities_management_rm3830_procurement_initial_call_off_period')
-        expect(validation_output).to include('div')
-      end
-    end
-  end
-
-  describe '#da_eligible?' do
-    context 'when the code belongs to a DA eligable service' do
-      it 'returns true' do
-        expect(helper.da_eligible?('C.1')).to be true
-      end
-    end
-
-    context 'when the code belongs to a non-DA service' do
-      it 'returns false' do
-        expect(helper.da_eligible?('C.14')).to be false
       end
     end
   end
@@ -209,7 +188,7 @@ RSpec.describe ApplicationHelper do
     end
 
     context 'when the cookie has been set' do
-      before { helper.request.cookies['cookie_preferences'] = cookie_settings }
+      before { helper.request.cookies['cookie_preferences_cmp'] = cookie_settings }
 
       context 'and it is a hash' do
         let(:expected_cookie_settings) do
@@ -235,4 +214,162 @@ RSpec.describe ApplicationHelper do
       end
     end
   end
+
+  # rubocop:disable RSpec/ExampleLength
+  describe '#pagination_params' do
+    let(:result) { pagination_params(paginator) }
+
+    let(:paginator) { Kaminari::Helpers::Paginator.new(template, **options) }
+    let(:template) { Object.new }
+    let(:options) do
+      {
+        current_page: current_page_number,
+        per_page: 25,
+        window: 2,
+        left: 1,
+        right: 1,
+        remote: false,
+        views_prefix: 'shared',
+        total_pages: total_pages_number
+      }
+    end
+    let(:total_pages_number) { 5 }
+
+    before do
+      allow(template).to receive(:render)
+      allow(template).to receive(:url_for) do |hash|
+        "/crown-marketplace?page=#{hash[:page]}"
+      end
+      allow(template).to receive_messages(params: {}, options: {}, link_to: "<a href='#'>link</a>", output_buffer: ActionView::OutputBuffer.new)
+    end
+
+    context 'when the current page is the first page' do
+      let(:current_page_number) { 1 }
+
+      context 'and there are multiple pages' do
+        it 'has the items and the next link, all with the right values' do
+          expect(result).to eq(
+            {
+              pagination_items: [
+                { type: :number, href: '/crown-marketplace?page=', number: 1, current: true },
+                { type: :number, href: '/crown-marketplace?page=2', number: 2, current: false },
+                { type: :number, href: '/crown-marketplace?page=3', number: 3, current: false },
+                { type: :number, href: '/crown-marketplace?page=4', number: 4, current: false },
+                { type: :number, href: '/crown-marketplace?page=5', number: 5, current: false }
+              ],
+              pagination_next: { href: '/crown-marketplace?page=2' }
+            }
+          )
+        end
+      end
+
+      context 'and there are multiple pages with ellipsis' do
+        let(:total_pages_number) { 12 }
+
+        it 'has the items with an ellipsis and the next link, all with the right values' do
+          expect(result).to eq(
+            {
+              pagination_items: [
+                { type: :number, href: '/crown-marketplace?page=', number: 1, current: true },
+                { type: :number, href: '/crown-marketplace?page=2', number: 2, current: false },
+                { type: :number, href: '/crown-marketplace?page=3', number: 3, current: false },
+                { ellipsis: true },
+                { type: :number, href: '/crown-marketplace?page=12', number: 12, current: false }
+              ],
+              pagination_next: { href: '/crown-marketplace?page=2' }
+            }
+          )
+        end
+      end
+    end
+
+    context 'when the current page is a middle page' do
+      context 'and there are multiple pages' do
+        let(:current_page_number) { 3 }
+
+        it 'has the previous link, items and the next link, all with the right values' do
+          expect(result).to eq(
+            {
+              pagination_previous: { href: '/crown-marketplace?page=2' },
+              pagination_items: [
+                { type: :number, href: '/crown-marketplace?page=', number: 1, current: false },
+                { type: :number, href: '/crown-marketplace?page=2', number: 2, current: false },
+                { type: :number, href: '/crown-marketplace?page=3', number: 3, current: true },
+                { type: :number, href: '/crown-marketplace?page=4', number: 4, current: false },
+                { type: :number, href: '/crown-marketplace?page=5', number: 5, current: false }
+              ],
+              pagination_next: { href: '/crown-marketplace?page=4' }
+            }
+          )
+        end
+      end
+
+      context 'and there are multiple pages with ellipsis' do
+        let(:current_page_number) { 6 }
+        let(:total_pages_number) { 12 }
+
+        it 'has the previous link, items with ellipsis and the next link, all with the right values' do
+          expect(result).to eq(
+            {
+              pagination_previous: { href: '/crown-marketplace?page=5' },
+              pagination_items: [
+                { type: :number, href: '/crown-marketplace?page=', number: 1, current: false },
+                { ellipsis: true },
+                { type: :number, href: '/crown-marketplace?page=4', number: 4, current: false },
+                { type: :number, href: '/crown-marketplace?page=5', number: 5, current: false },
+                { type: :number, href: '/crown-marketplace?page=6', number: 6, current: true },
+                { type: :number, href: '/crown-marketplace?page=7', number: 7, current: false },
+                { type: :number, href: '/crown-marketplace?page=8', number: 8, current: false },
+                { ellipsis: true },
+                { type: :number, href: '/crown-marketplace?page=12', number: 12, current: false }
+              ],
+              pagination_next: { href: '/crown-marketplace?page=7' }
+            }
+          )
+        end
+      end
+    end
+
+    context 'when the current page is the last page' do
+      context 'and there are multiple pages' do
+        let(:current_page_number) { 5 }
+
+        it 'has the previous link and the items, all with the right values' do
+          expect(result).to eq(
+            {
+              pagination_previous: { href: '/crown-marketplace?page=4' },
+              pagination_items: [
+                { type: :number, href: '/crown-marketplace?page=', number: 1, current: false },
+                { type: :number, href: '/crown-marketplace?page=2', number: 2, current: false },
+                { type: :number, href: '/crown-marketplace?page=3', number: 3, current: false },
+                { type: :number, href: '/crown-marketplace?page=4', number: 4, current: false },
+                { type: :number, href: '/crown-marketplace?page=5', number: 5, current: true }
+              ]
+            }
+          )
+        end
+      end
+
+      context 'and there are multiple pages with ellipsis' do
+        let(:current_page_number) { 12 }
+        let(:total_pages_number) { 12 }
+
+        it 'has the previous link and the items with an ellipsis, all with the right values' do
+          expect(result).to eq(
+            {
+              pagination_previous: { href: '/crown-marketplace?page=11' },
+              pagination_items: [
+                { type: :number, href: '/crown-marketplace?page=', number: 1, current: false },
+                { ellipsis: true },
+                { type: :number, href: '/crown-marketplace?page=10', number: 10, current: false },
+                { type: :number, href: '/crown-marketplace?page=11', number: 11, current: false },
+                { type: :number, href: '/crown-marketplace?page=12', number: 12, current: true }
+              ]
+            }
+          )
+        end
+      end
+    end
+  end
+  # rubocop:enable RSpec/ExampleLength
 end
