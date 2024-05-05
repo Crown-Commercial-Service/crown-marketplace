@@ -21,7 +21,7 @@ gem 'shakapacker', '~> 7.2.3'
 gem 'turbolinks', '~> 5'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.11', '>= 2.11.5'
+gem 'jbuilder', '~> 2.12'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
