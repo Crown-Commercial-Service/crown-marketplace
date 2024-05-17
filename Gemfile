@@ -125,7 +125,7 @@ group :development, :test do
   gem 'shoulda-matchers', '>= 5.1.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
-  gem 'rubocop-rails', '>= 2.18.0', require: false
+  gem 'rubocop-rails', '>= 2.25.0', require: false
   gem 'rubyXL', '>= 3.4.23'
   gem 'i18n-tasks', '>= 1.0.12'
   gem 'poltergeist', '>= 1.18.1'
@@ -146,7 +146,7 @@ end
 group :test do
   gem 'webmock', '>= 3.12.1'
   gem 'simplecov', '>= 0.16.1', require: false
-  gem 'selenium-webdriver', '>= 3.142.3'
+  gem 'selenium-webdriver', '>= 4.21.0'
   gem 'cucumber-rails', '>= 2.6.1', require: false
   gem 'capybara', '>= 3.38.0'
   gem 'database_cleaner', '>= 2.0.1'
