@@ -19,3 +19,6 @@ jobs:
 
   run-feature-tests:
     uses: ./.github/workflows/feature_tests.yml
+  
+  run-docker-tests:
+    uses: ./.github/workflows/docker_tests.yml
