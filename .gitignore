@@ -21,6 +21,14 @@ logfile
 /node_modules
 /yarn-error.log
 
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 /public/assets
 .byebug_history
 
