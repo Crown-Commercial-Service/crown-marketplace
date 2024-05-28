@@ -77,7 +77,7 @@ gem 'slim', '~> 5.2.1'
 gem 'sidekiq-cron'
 
 # for authorization
-gem 'cancancan', '~> 3.5.0'
+gem 'cancancan', '~> 3.6.0'
 
 gem 'role_model', '~> 0.8.2'
 
