@@ -93,7 +93,7 @@ en:
         new_password: New password
         password: 'Your password must have:'
         reset_password_for_html: Reset password for %{email_link}
-        text_html: If you don’t receive this, email <a href="mailto:support@crowncommercial.gov.uk" class="govuk-link govuk-link--no-visited-state">support@crowncommercial.gov.uk</a>
+        text_html: If you don’t receive this, email <a href="mailto:info@crowncommercial.gov.uk" class="govuk-link govuk-link--no-visited-state">info@crowncommercial.gov.uk</a>
         verify_code: Verification code
       new:
         email: Email address

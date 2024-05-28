@@ -17,9 +17,9 @@ module FacilitiesManagement::RM6232
       private
 
       def set_data
-        supplier_data = FacilitiesManagement::RM6232::Admin::SupplierData.where('created_at <= ?', @snapshot_date_time).order(created_at: :desc).first
+        supplier_data = FacilitiesManagement::RM6232::Admin::SupplierData.where(created_at: ..@snapshot_date_time).order(created_at: :desc).first
 
-        supplier_data.edits.where('created_at <= ?', @snapshot_date_time).order(:created_at).each do |edit|
+        supplier_data.edits.where(created_at: ..@snapshot_date_time).order(:created_at).each do |edit|
           supplier = supplier_data.data.find { |supplier_item| supplier_item['id'] == edit.supplier_id }
 
           if edit.change_type == 'lot_data'

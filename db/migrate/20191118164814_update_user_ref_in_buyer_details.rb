@@ -8,7 +8,9 @@ class UpdateUserRefInBuyerDetails < ActiveRecord::Migration[5.2]
       t.remove :user_id
       # rubocop:enable Rails/ReversibleMigration
 
+      # rubocop:disable Rails/NotNullColumn
       t.references :user, foreign_key: true, type: :uuid, null: false
+      # rubocop:enable Rails/NotNullColumn
     end
   end
 end
