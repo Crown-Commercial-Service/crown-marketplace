@@ -9,14 +9,15 @@ gem 'rails', '~> 7.1.3'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 6.4'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 6.0', '>= 6.0.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'mini_racer', platforms: :ruby
 
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
-gem 'shakapacker', '~> 7.2.3'
+# Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+gem 'cssbundling-rails', '~> 1.4'
+
+# Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+gem 'jsbundling-rails', '~> 1.3'
 
 gem 'turbolinks', '~> 5'
 
@@ -108,7 +109,7 @@ gem 'amoeba', '>= 3.2.0'
 gem 'email_validator', require: 'email_validator/strict'
 
 # for cloud storage of assets
-gem 'asset_sync'
+gem 'asset_sync', '>= 2.19.1'
 gem 'fog-aws', '>= 3.14.0'
 
 # Use CCS Frontend Helpers
