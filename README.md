@@ -2,7 +2,7 @@
 
 ![GitHub Release](https://img.shields.io/github/release/Crown-Commercial-Service/crown-marketplace.svg?style=flat)
 
-![Test Status](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/rubyonrails.yml/badge.svg)
+![Test Status](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/pull_request_ci.yml/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/37cd5c1a9986ca396884/maintainability)](https://codeclimate.com/github/Crown-Commercial-Service/crown-marketplace/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/37cd5c1a9986ca396884/test_coverage)](https://codeclimate.com/github/Crown-Commercial-Service/crown-marketplace/test_coverage)
 
@@ -53,12 +53,6 @@ Install Redis, for Sidekiq background jobs
 brew install redis
 ```
 
-Install PhantomJS, for Javascript tests
-
-```shell
-brew install phantomjs
-```
-
 Install geckodriver, which requires the Firefox browser, for the cucumber feature tests
 
 ```shell
@@ -99,20 +93,21 @@ See the gem's documentation for an explanation of the precedence of the various 
 If you are new to the project, speak to a developer who should be able to share their `.env.local` with you.
 
 There is more information about environment variables in the [Environment variables](#environment-variables) section of the README
+
 ## Run the project
 
-Execute the following commands in separate terminals:
+You can run the web application and its background services with:
 
 ```shell
-redis-server                # For sidekiq
-bundle exec sidekiq         # Runs backgound jobs
-bin/shakapacker-dev-server  # Watches and bundles the JavaScript assets
-bundle exec rails s         # Runs the web server
+bin/dev
 ```
 
-Visit [localhost:3000](http://localhost:3000).
+This will:
+- bring up the web application on [localhost:3000](http://localhost:3000)
+- watch CSS and JavaScript assets for changes
+- run redis and sidekiq for background jobs
 
-Note, if you are not running background jobs then you do not need to run redis or sidekiq
+If you do not want to run Sidekiq, pass the `--no-sidekiq` to the `bin/dev` command
 
 ## Development
 
