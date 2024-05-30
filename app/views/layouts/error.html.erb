@@ -19,7 +19,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'govuk', 'ccs', 'data-turbolinks-track': 'reload', defer: false %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload', type: 'module' %>
 
     <%= render partial: '/shared/google/tag_manager_head' if Marketplace.google_tag_manager_tracking_id.present? %>
   </head>
