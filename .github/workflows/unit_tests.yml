@@ -45,10 +45,7 @@ jobs:
         run: bin/rails db:test:prepare
 
       - name: Compile assets
-        run: NODE_OPTIONS=--openssl-legacy-provider bin/rails assets:precompile
-
-      - name: Check JavaScript code quality
-        run: yarn run eslint app/javascript/
+        run: bin/rails assets:precompile
 
       - name: Run unit tests
         run: bin/rake

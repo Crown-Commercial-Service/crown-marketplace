@@ -185,6 +185,8 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    cssbundling-rails (1.4.0)
+      railties (>= 6.0.0)
     csv (3.3.0)
     cucumber (9.0.2)
       builder (~> 3.2, >= 3.2.4)
@@ -311,6 +313,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jmespath (1.6.2)
+    jsbundling-rails (1.3.0)
+      railties (>= 6.0.0)
     json (2.7.2)
     jwt (2.8.1)
       base64
@@ -384,7 +388,6 @@ GEM
       oauth2 (>= 1.4, < 3)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
-    package_json (0.1.0)
     parallel (1.24.0)
     parser (3.3.1.0)
       ast (~> 2.4.1)
@@ -419,8 +422,6 @@ GEM
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
-    rack-proxy (0.7.7)
-      rack
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -547,30 +548,11 @@ GEM
       nokogiri (>= 1.10.8)
       rubyzip (>= 1.3.0)
     rubyzip (1.3.0)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc (2.4.0-x64-mingw32)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
     selenium-webdriver (4.21.1)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    semantic_range (3.0.0)
-    shakapacker (7.2.3)
-      activesupport (>= 5.2)
-      package_json
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     shoulda-matchers (6.2.0)
       activesupport (>= 5.2.0)
     show_me_the_cookies (6.0.0)
@@ -661,8 +643,10 @@ GEM
     zeitwerk (2.6.13)
 
 PLATFORMS
-  ruby
   x64-mingw32
+  x86_64-darwin-22
+  x86_64-linux
+  x86_64-linux-musl
 
 DEPENDENCIES
   aasm (~> 5.5)
@@ -671,7 +655,7 @@ DEPENDENCIES
   activerecord-postgis-adapter (>= 6.0.3)
   after_commit_everywhere (~> 1.4)
   amoeba (>= 3.2.0)
-  asset_sync
+  asset_sync (>= 2.19.1)
   auto-session-timeout (~> 1.1)
   aws-sdk-cognitoidentityprovider (~> 1.92.0)
   aws-sdk-s3 (~> 1)
@@ -686,6 +670,7 @@ DEPENDENCIES
   caxlsx (>= 3.2.0)
   caxlsx_rails (>= 0.6.3)
   ccs-frontend_helpers (~> 0.4.0)
+  cssbundling-rails (~> 1.4)
   cucumber-rails (>= 2.6.1)
   database_cleaner (>= 2.0.1)
   date_validator (>= 0.12.0)
@@ -699,6 +684,7 @@ DEPENDENCIES
   gov_uk_date_fields (>= 4.2.0)
   i18n-tasks (>= 1.0.12)
   jbuilder (~> 2.12)
+  jsbundling-rails (~> 1.3)
   kaminari (~> 1.2.2)
   listen (>= 3.0.5, < 3.10)
   notifications-ruby-client
@@ -724,9 +710,7 @@ DEPENDENCIES
   rubocop-rspec (>= 2.2.0)
   rubyXL (>= 3.4.23)
   rubyzip (>= 1.2.1)
-  sass-rails (~> 6.0, >= 6.0.0)
   selenium-webdriver (>= 3.142.3)
-  shakapacker (~> 7.2.3)
   shoulda-matchers (>= 5.1.0)
   show_me_the_cookies (>= 6.0.0)
   sidekiq (~> 7.2.4)
