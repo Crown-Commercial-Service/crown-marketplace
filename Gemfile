@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.3.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.1.3'
+gem 'rails', '~> 7.1.3', '>= 7.1.3.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -16,7 +16,7 @@ gem 'sass-rails', '~> 6.0', '>= 6.0.0'
 
 gem 'sprockets-rails'
 
-gem 'shakapacker', '~> 7.2.3'
+gem 'shakapacker', '~> 8.0.0'
 
 gem 'turbolinks', '~> 5'
 
