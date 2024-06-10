@@ -6,7 +6,6 @@ import initDetailsLinks from './facilitiesManagement/detailsLinks'
 import initFilterTable from './facilitiesManagement/filterTable'
 import initFindAddress from './facilitiesManagement/findAddress'
 import initGoogleAnalyticsDataLayer from './shared/googleAnalyticsDataLayer'
-import initHeader from './shared/header'
 import initLimitInputToInteger from './facilitiesManagement/integerInput'
 import initManagementReport from './facilitiesManagement/rm3830/admin/managementReport'
 import initNumberWithCommas from './facilitiesManagement/numberWithCommas'
@@ -40,7 +39,6 @@ const initAll = () => {
   initCheckboxAccordion()
   initCookieBanner()
   initGoogleAnalyticsDataLayer()
-  initHeader()
   initPasswordStrength()
   initStepByStepNav()
 }
