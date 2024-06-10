@@ -172,7 +172,7 @@ GEM
     caxlsx_rails (0.6.3)
       actionpack (>= 3.1)
       caxlsx (>= 3.0)
-    ccs-frontend_helpers (0.4.0)
+    ccs-frontend_helpers (1.0.0)
       rails (>= 6.0)
     clamby (1.6.8)
     cliver (0.3.2)
@@ -371,10 +371,6 @@ GEM
     nokogiri (1.16.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    nokogiri (1.16.5-x86_64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.16.5-x86_64-linux)
-      racc (~> 1.4)
     notifications-ruby-client (6.1.0)
       jwt (>= 1.5, < 3)
     oauth2 (2.0.9)
@@ -401,6 +397,11 @@ GEM
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
+    propshaft (0.9.0)
+      actionpack (>= 7.0.0)
+      activesupport (>= 7.0.0)
+      rack
+      railties (>= 7.0.0)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -594,13 +595,6 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    sprockets (4.2.1)
-      concurrent-ruby (~> 1.0)
-      rack (>= 2.2.4, < 4)
-    sprockets-rails (3.4.2)
-      actionpack (>= 5.2)
-      activesupport (>= 5.2)
-      sprockets (>= 3.0.0)
     stringio (3.1.0)
     strscan (3.1.0)
     sys-uname (1.2.3)
@@ -673,7 +667,7 @@ DEPENDENCIES
   caracal-rails (>= 1.0.2)
   caxlsx (>= 3.2.0)
   caxlsx_rails (>= 0.6.3)
-  ccs-frontend_helpers (~> 0.4.0)
+  ccs-frontend_helpers (~> 1.0.0)
   cssbundling-rails (~> 1.4)
   cucumber-rails (>= 2.6.1)
   database_cleaner (>= 2.0.1)
@@ -696,6 +690,7 @@ DEPENDENCIES
   omniauth-oauth2 (~> 1.8.0)
   pg (>= 0.18, < 2.0)
   poltergeist (>= 1.18.1)
+  propshaft
   pry-byebug
   pry-rails
   pry-rescue
@@ -724,8 +719,6 @@ DEPENDENCIES
   site_prism (>= 3.7.3)
   slim (~> 5.2.1)
   smarter_csv
-  sprockets (>= 3.7.2)
-  sprockets-rails
   turbolinks (~> 5)
   tzinfo-data
   uk_postcode
