@@ -114,7 +114,7 @@ If you do not want to run Sidekiq, pass the `--no-sidekiq` to the `bin/dev` comm
 ### Design & frontend
 
 The design of the app is closely based on the [GOV.UK Design System][] with some minor CCS-related variations.
-The project uses and extends the [GOV.UK Frontend][] npm package.
+The project uses and extends the [CCS Frontend][] and [GOV.UK Frontend][] npm packages.
 
 The npm package dependencies are listed in `package.json`, installed using [yarn][], and the exact versions of all dependencies direct/indirect are locked in `yarn.lock`.
 
@@ -359,6 +359,7 @@ environments:
 [feature-specs]: https://github.com/Crown-Commercial-Service/crown-marketplace/tree/master/spec/features
 [factory_bot_rails]: https://github.com/thoughtbot/factory_bot_rails
 [GOV.UK Frontend]: https://github.com/alphagov/govuk-frontend
+[CCS Frontend]: https://github.com/tim-s-ccs/ccs-frontend-project
 [yarn]: https://github.com/yarnpkg/yarn
 [GOV.UK Design System]: https://design-system.service.gov.uk/
 [Block Element Modifier]: http://getbem.com/

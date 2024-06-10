@@ -113,7 +113,7 @@ COPY --from=build /rails /rails
 RUN adduser rails -D --shell /bin/bash
 
 # Own the runtime files for the app
-RUN chown -R rails:rails db log storage tmp
+RUN chown -R rails:rails db log storage tmp data
 
 # Own the runtime files for ClamAV
 RUN chown -R rails:rails /etc/clamav/clamd.conf
