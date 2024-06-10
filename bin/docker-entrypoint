@@ -5,7 +5,11 @@
 if [ "$APP_RUN_SIDEKIQ" = 'FALSE' ]; then
   echo TCPAddr $CLAMAV_SERVER_IP > /etc/clamav/clamd.conf && echo TCPSocket 3310 >> /etc/clamav/clamd.conf
 
-  ./bin/rails db:migrate:ignore_concurrent
+  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 ./bin/rails db:reset
+
+  ./bin/rails db:static
+
+  ./bin/rails db:sample_address_import
 
   if [ "$APP_RUN_PRECOMPILE_ASSETS" = 'TRUE' ]; then
     ./bin/rails assets:sync
