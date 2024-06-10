@@ -10,8 +10,8 @@ gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 6.4'
 
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'sprockets-rails'
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem 'propshaft'
 
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem 'cssbundling-rails', '~> 1.4'
@@ -82,8 +82,6 @@ gem 'cancancan', '~> 3.6.1'
 
 gem 'role_model', '~> 0.8.2'
 
-gem 'sprockets', '>= 3.7.2'
-
 gem 'smarter_csv'
 
 # for date layout and validation
@@ -113,7 +111,7 @@ gem 'asset_sync', '>= 2.19.1'
 gem 'fog-aws', '>= 3.14.0'
 
 # Use CCS Frontend Helpers
-gem 'ccs-frontend_helpers', '~> 0.4.0'
+gem 'ccs-frontend_helpers', '~> 1.0.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
