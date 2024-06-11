@@ -125,6 +125,9 @@ group :development, :test do
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
   gem 'rubocop-rails', '>= 2.18.0', require: false
+  gem 'rubocop-capybara', '>= 2.20.0', require: false
+  gem 'rubocop-factory_bot', '>= 2.25.1', require: false
+  gem 'rubocop-rspec_rails', '>= 2.28.3', require: false
   gem 'rubyXL', '>= 3.4.23'
   gem 'i18n-tasks', '>= 1.0.12'
   gem 'poltergeist', '>= 1.18.1'
