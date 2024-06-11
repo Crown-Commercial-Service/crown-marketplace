@@ -127,8 +127,8 @@ GEM
     axe-core-capybara (4.9.1)
       axe-core-api (= 4.9.1)
       dumb_delegator
-    axe-core-cucumber (4.9.0)
-      axe-core-api
+    axe-core-cucumber (4.9.1)
+      axe-core-api (= 4.9.1)
       dumb_delegator
       virtus
     axiom-types (0.1.1)
@@ -370,6 +370,10 @@ GEM
     nio4r (2.7.0)
     nokogiri (1.16.5)
       mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.16.5-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.5-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (6.1.0)
       jwt (>= 1.5, < 3)
