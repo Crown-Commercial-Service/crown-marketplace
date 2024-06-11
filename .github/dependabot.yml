@@ -27,6 +27,10 @@ updates:
           - 'site_prism'
           - 'axe-core-*'
 
+      aws:
+        patterns:
+          - 'aws*'
+
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
