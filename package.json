@@ -20,7 +20,7 @@
     "sass": "^1.77.6",
     "tslib": "^2.6.3",
     "turbolinks": "^5.2.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   },
   "scripts": {
     "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --style=compressed --no-source-map --load-path=node_modules",
