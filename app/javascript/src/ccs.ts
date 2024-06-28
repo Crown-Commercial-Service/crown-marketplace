@@ -9,7 +9,6 @@ import initGoogleAnalyticsDataLayer from './shared/googleAnalyticsDataLayer'
 import initLimitInputToInteger from './facilitiesManagement/integerInput'
 import initManagementReport from './facilitiesManagement/rm3830/admin/managementReport'
 import initNumberWithCommas from './facilitiesManagement/numberWithCommas'
-import initPasswordStrength from './shared/passwordStrength'
 import initRM3830AdminAdminUpload from './facilitiesManagement/rm3830/admin/adminUploadProgress'
 import initSelectRegion from './facilitiesManagement/procurements/selectRegion'
 import initStepByStepNav from './shared/stepByStepNav'
@@ -39,7 +38,6 @@ const initAll = () => {
   initCheckboxAccordion()
   initCookieBanner()
   initGoogleAnalyticsDataLayer()
-  initPasswordStrength()
   initStepByStepNav()
 }
 
