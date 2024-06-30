@@ -172,7 +172,7 @@ GEM
     caxlsx_rails (0.6.4)
       actionpack (>= 3.1)
       caxlsx (>= 3.0)
-    ccs-frontend_helpers (1.0.0)
+    ccs-frontend_helpers (1.1.0)
       rails (>= 6.0)
     clamby (1.6.8)
     cliver (0.3.2)
@@ -351,7 +351,7 @@ GEM
     mime-types-data (3.2024.0604)
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
-    minitest (5.24.0)
+    minitest (5.24.1)
     msgpack (1.7.2)
     multi_json (1.15.0)
     multi_test (1.1.0)
@@ -359,16 +359,16 @@ GEM
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     mutex_m (0.2.0)
-    net-imap (0.4.10)
+    net-imap (0.4.14)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.4.0.1)
+    net-smtp (0.5.0)
       net-protocol
-    nio4r (2.7.0)
+    nio4r (2.7.3)
     nokogiri (1.16.6)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -671,7 +671,7 @@ DEPENDENCIES
   caracal-rails (>= 1.0.2)
   caxlsx (>= 3.2.0)
   caxlsx_rails (>= 0.6.3)
-  ccs-frontend_helpers (~> 1.0.0)
+  ccs-frontend_helpers (~> 1.1.0)
   cssbundling-rails (~> 1.4)
   cucumber-rails (>= 2.6.1)
   database_cleaner (>= 2.0.1)
