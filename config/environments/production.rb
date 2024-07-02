@@ -90,7 +90,13 @@ Rails.application.configure do
   config.fail_silently = true
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  config.hosts << ENV.fetch('ENVIRONMENT_HOST', nil)
+  ENV.fetch('ENVIRONMENT_HOST', '').split(',').each do |application_domain|
+    config.hosts << application_domain
+  end
+
+  config.host_authorization = {
+    exclude: ->(request) { request.path.include?('healthcheck') }
+  }
 
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
