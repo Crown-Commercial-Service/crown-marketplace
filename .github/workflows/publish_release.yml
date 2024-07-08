@@ -1,0 +1,60 @@
+name: Publish release to GitHub
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: publish
+
+jobs:
+  check_for_release:
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.release_version.outputs.version }}
+      exists: ${{ steps.version_tag.outputs.exists }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get release version
+        id: release_version
+        run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
+
+      - name: Check if version tag already exists
+        id: version_tag
+        uses: mukunku/tag-exists-action@bdad1eaa119ce71b150b952c97351c75025c06a9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: v${{ steps.release_version.outputs.version }}
+
+  release:
+    if: ${{ needs.check_for_release.outputs.exists == 'false' }}
+
+    needs: [check_for_release]
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
+        with:
+          validation_level: warn
+          version: ${{ needs.check_for_release.outputs.version }}
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.check_for_release.outputs.version }}
+          name: Release v${{ needs.check_for_release.outputs.version }}
+          body: ${{ steps.changelog_reader.outputs.changes }}
