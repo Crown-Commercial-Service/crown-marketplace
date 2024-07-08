@@ -286,18 +286,10 @@ We use Pull Requests to manage our deployments to the preview and production env
 To create a new release:
 - From the release commit (nearly always the HEAD of the master branch) checkout a new branch with the release version in the format:
 `release-<major>.<minor>.<patch>`
-- Push this to GitHub
-- In [GitHub Release][] draft a new release with:
-  - Tag: `v<major>.<minor>.<patch>`
-  - Target: `release-<major>.<minor>.<patch>`
-  - Release title: Release v\<major\>.\<minor\>.\<patch\>
-  - Description: Add the following:
-    - Text mentioning dependabot and Snyk changes
-    - List PRs which fixed BUGs
-    - List PRs that added features
-    - List any misc. PRs
-    - Add a list of Environment Variable changes
-  - Make sure 'Set as the latest release' is ticked
+- Update the version number in the VERSION file
+- Update the CHANGELOG with a list of the changes and their Pull Requests
+- Commit the changes (with the commit message 'Release v<major>.<minor>.<patch>'), push to GitHub and open a Pull Request
+- Once this Pull Request has been reviewed and merged a new GitHub release will be created
 - Once you have published the release, create a Pull Request of the changes on the `preview` and `production` branches.
 - Once the Pull Request has been aproved, merge the Pull Request which will update the `preview/production` branch.
 
