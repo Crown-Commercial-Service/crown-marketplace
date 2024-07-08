@@ -10,7 +10,7 @@
 | Environment | Deployment status                                                                                                                                                 |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Sandbox     | ![Latest Sandbox deployment](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml/badge.svg?branch=develop)       |
-| CMPDEV      | ![Latest CMPDEV deployment](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml/badge.svg?branch=master)         |
+| CMPDEV      | ![Latest CMPDEV deployment](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml/badge.svg?branch=main)         |
 | Preview     | ![Latest Preview deployment](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml/badge.svg?branch=preview)       |
 | Production  | ![Latest Production deployment](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml/badge.svg?branch=production) |
 
@@ -238,13 +238,13 @@ Snyk is used more for analysing security issues and it will raise PRs itself for
 
 ## Contributing
 
-To contribute to the project, you should checkout a new branch from `master` and make your changes.
+To contribute to the project, you should checkout a new branch from `main` and make your changes.
 
 Before pushing to the remote, you should squash your commits into a single commit.
-This can be done using `git rebase -i master` and changing `pick` to `s` for the commits you want to squash (usually all but the first).
+This can be done using `git rebase -i main` and changing `pick` to `s` for the commits you want to squash (usually all but the first).
 This is not required but it helps keep the commit history fairly neat and tidy
 
-Once you have pushed your changes, you should open a Pull Request on the master branch.
+Once you have pushed your changes, you should open a Pull Request on the main branch.
 This will run:
 - Rubocop
 - Unit tests
@@ -261,7 +261,7 @@ We have four environments which map to branches on github:
 | Environment | Branch      | Description                                                                       |
 | ----------- | ----------- | --------------------------------------------------------------------------------- |
 | Sandbox     | develop     | Used by developers to try out any changes that will affect the other environments |
-| CMPDEV      | master      | The testing environment                                                           |
+| CMPDEV      | main        | The testing environment                                                           |
 | Preview     | preview     | Environment that matches production and can be used for any final checks          |
 | Production  | production  | The live environment which uses use                                               |
 
@@ -284,7 +284,7 @@ When one of these branches are pushed to, the code will be released to the respe
 We use Pull Requests to manage our deployments to the preview and production environments.
 
 To create a new release:
-- From the release commit (nearly always the HEAD of the master branch) checkout a new branch with the release version in the format:
+- From the release commit (nearly always the HEAD of the main branch) checkout a new branch with the release version in the format:
 `release-<major>.<minor>.<patch>`
 - Update the version number in the VERSION file
 - Update the CHANGELOG with a list of the changes and their Pull Requests
@@ -345,9 +345,9 @@ environments:
 [aws-parameter-store]: https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-paramstore.html
 [rubocop]: https://github.com/rubocop-hq/rubocop
 [rubocop-rspec]: https://github.com/rubocop-hq/rubocop-rspec
-[lib-cop]: https://github.com/Crown-Commercial-Service/crown-marketplace/tree/master/lib/cop
-[rubocop-yml]: https://github.com/Crown-Commercial-Service/crown-marketplace/blob/master/.rubocop.yml
-[feature-specs]: https://github.com/Crown-Commercial-Service/crown-marketplace/tree/master/spec/features
+[lib-cop]: https://github.com/Crown-Commercial-Service/crown-marketplace/tree/main/lib/cop
+[rubocop-yml]: https://github.com/Crown-Commercial-Service/crown-marketplace/blob/main/.rubocop.yml
+[feature-specs]: https://github.com/Crown-Commercial-Service/crown-marketplace/tree/main/spec/features
 [factory_bot_rails]: https://github.com/thoughtbot/factory_bot_rails
 [GOV.UK Frontend]: https://github.com/alphagov/govuk-frontend
 [CCS Frontend]: https://github.com/tim-s-ccs/ccs-frontend-project
