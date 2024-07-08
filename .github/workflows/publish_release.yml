@@ -3,7 +3,7 @@ name: Publish release to GitHub
 on:
   push:
     branches:
-      - master
+      - main
 
 concurrency:
   group: publish
