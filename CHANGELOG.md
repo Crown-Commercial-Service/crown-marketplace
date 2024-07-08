@@ -11,8 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Various dependency updates
-
 - Upgrade ruby version to v3.3.3 ([PR 4423](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4423))
 
 - FMFR-1400 - Update the healthcheck route to check for the apps status ([PR 4421](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4421))
@@ -23,21 +21,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - FMFR-1398 - Use propshaft to build assets ([PR 4363](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4363))
 
-## [6.0.1] - 2024-05-30
-
-### Added
+### Security
 
 - Various dependency updates
+
+## [6.0.1] - 2024-05-30
 
 ### Fixed
 
 - FMFR-1397 - Update email from support@ to the correct info@ ([PR 4351](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4351))
 
+### Security
+
+- Various dependency updates
+
 ## [6.0.0] - 2024-05-02
 
 ### Added
-
-- Various dependency updates
 
 - FMFR-1396 - Make the telephone number a number input ([PR 4317](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4317))
 
@@ -84,3 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - FMFR-1372 - Remove buyer and supplier frontend for RM3830 ([PR 3703](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/3703))
 
 - Update rails sass to v6 ([PR 3906](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/3906))
+
+### Security
+
+- Various dependency updates
