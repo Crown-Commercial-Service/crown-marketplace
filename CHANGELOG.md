@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - FMFR-1399 - Use ccs frontend for the shared assets ([PR 4383](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4383))
 - FMFR-1398 - Use propshaft to build assets ([PR 4363](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4363))
 
+### Fixed
+
+- Fix issue where higher environments would try to run old migration but could not ([PR 4452](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4452))
+
 ### Security
 
 - Various dependency updates
