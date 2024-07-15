@@ -856,13 +856,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ccs-frontend@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "ccs-frontend@npm:1.1.0"
+"ccs-frontend@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "ccs-frontend@npm:1.1.1"
   peerDependencies:
-    govuk-frontend: ^5.4.0
+    govuk-frontend: ^5.4.1
     jquery: ^3.x
-  checksum: 10c0/3125d00e44648c6dbeedf41609a7b5c761466041ad31a298b97668e96fb4ab38423113b4415a837c7f081d4a5b5e7a41ea5e25054129f1a492dafcc26924c15d
+  checksum: 10c0/a8fe5208584c4e2dee1be5e0322736ec04de5d538005aecb11165c668f6ecad990be86e63a7ec8ffcff8000f6dda6ca5bf544b40e27b770545a75e568bc45043
   languageName: node
   linkType: hard
 
@@ -1383,10 +1383,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"govuk-frontend@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "govuk-frontend@npm:5.4.0"
-  checksum: 10c0/4ba7a0458e1501f63bf198c4982a2ee35beefb1f8707234a8643e58e4579c2a0ddf3985252185f48221d389401a380a28a81ed92865470021faea622d549fbd7
+"govuk-frontend@npm:^5.4.1":
+  version: 5.4.1
+  resolution: "govuk-frontend@npm:5.4.1"
+  checksum: 10c0/7d297aac09fbe316658030a5068c2fc309d69b3399b1d9c96361728acc19cce0cc9b4397265083bdcc6c4b53a89734586c1ff48ff40c5f9d6d291d65a8c25439
   languageName: node
   linkType: hard
 
@@ -1788,9 +1788,9 @@ __metadata:
     "@types/node": "npm:^20.14.10"
     "@types/rails__ujs": "npm:^6.0.4"
     "@types/turbolinks": "npm:^5.2.2"
-    ccs-frontend: "npm:^1.1.0"
+    ccs-frontend: "npm:^1.1.1"
     eslint: "npm:^9.7.0"
-    govuk-frontend: "npm:^5.4.0"
+    govuk-frontend: "npm:^5.4.1"
     jquery: "npm:^3.7.1"
     js-cookie: "npm:^3.0.5"
     rollup: "npm:^4.18.1"
