@@ -865,13 +865,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ccs-frontend@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "ccs-frontend@npm:1.1.1"
+"ccs-frontend@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "ccs-frontend@npm:1.1.2"
   peerDependencies:
-    govuk-frontend: ^5.4.1
+    govuk-frontend: ^5.5.0
     jquery: ^3.x
-  checksum: 10c0/a8fe5208584c4e2dee1be5e0322736ec04de5d538005aecb11165c668f6ecad990be86e63a7ec8ffcff8000f6dda6ca5bf544b40e27b770545a75e568bc45043
+  checksum: 10c0/edfbeb4a3d2251c57a96c1e314e30768811b3aec7b8bfcbaaf5065cf387e0a52a50ddaa88b154df1196cdcce8f67abf46e7e13aedefb9d5ea2bbd99c25964827
   languageName: node
   linkType: hard
 
@@ -1802,7 +1802,7 @@ __metadata:
     "@types/node": "npm:^20.14.15"
     "@types/rails__ujs": "npm:^6.0.4"
     "@types/turbolinks": "npm:^5.2.2"
-    ccs-frontend: "npm:^1.1.1"
+    ccs-frontend: "npm:^1.1.2"
     eslint: "npm:^9.9.0"
     govuk-frontend: "npm:^5.5.0"
     jquery: "npm:^3.7.1"
