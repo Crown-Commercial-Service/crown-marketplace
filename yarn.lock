@@ -1397,10 +1397,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"govuk-frontend@npm:^5.4.1":
-  version: 5.4.1
-  resolution: "govuk-frontend@npm:5.4.1"
-  checksum: 10c0/7d297aac09fbe316658030a5068c2fc309d69b3399b1d9c96361728acc19cce0cc9b4397265083bdcc6c4b53a89734586c1ff48ff40c5f9d6d291d65a8c25439
+"govuk-frontend@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "govuk-frontend@npm:5.5.0"
+  checksum: 10c0/884ae5058273d46592402a789be19abb25677b8af84fc49ff9d03a7439c6571f87f74a0d49a744b5c6c79ead1346d98cdba7806c0041daa1894cf51a42693196
   languageName: node
   linkType: hard
 
@@ -1804,7 +1804,7 @@ __metadata:
     "@types/turbolinks": "npm:^5.2.2"
     ccs-frontend: "npm:^1.1.1"
     eslint: "npm:^9.9.0"
-    govuk-frontend: "npm:^5.4.1"
+    govuk-frontend: "npm:^5.5.0"
     jquery: "npm:^3.7.1"
     js-cookie: "npm:^3.0.5"
     rollup: "npm:^4.20.0"
