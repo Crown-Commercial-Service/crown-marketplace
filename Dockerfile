@@ -5,7 +5,7 @@ ARG ALPINE_VERSION=3.19
 ARG NODE_VERSION=iron
 
 # Set the Ruby version
-ARG RUBY_VERSION=3.3.3
+ARG RUBY_VERSION=3.3.4
 
 # Pull in the NodeJS image
 FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node
