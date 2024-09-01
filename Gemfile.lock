@@ -94,7 +94,7 @@ GEM
       activesupport
     amoeba (3.3.0)
       activerecord (>= 5.2.0)
-    asset_sync (2.19.1)
+    asset_sync (2.19.2)
       activemodel (>= 4.1.0)
       fog-core
       mime-types (>= 2.99)
@@ -612,9 +612,7 @@ GEM
     tzinfo-data (1.2022.1)
       tzinfo (>= 1.0.0)
     uk_postcode (2.1.8)
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.8.2)
+    unf (0.2.0)
     unicode-display_width (2.5.0)
     uniform_notifier (1.16.0)
     version_gem (1.1.1)
