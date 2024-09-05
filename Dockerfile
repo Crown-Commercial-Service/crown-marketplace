@@ -1,5 +1,5 @@
 # Set the alpine version so they match for both images
-ARG ALPINE_VERSION=3.19
+ARG ALPINE_VERSION=3.20
 
 # Set the NodeJS version
 ARG NODE_VERSION=iron
