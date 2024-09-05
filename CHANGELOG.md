@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Changed
 
+- Update alpine to v3.20 ([PR 4533](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4533))
 - Upgrade ruby version to v3.3.5 ([PR 4532](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4532))
 - Upgrade ruby version to v3.3.4 ([PR 4510](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4510))
 
