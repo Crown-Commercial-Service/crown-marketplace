@@ -66,7 +66,7 @@ GEM
       activemodel (= 7.1.4)
       activesupport (= 7.1.4)
       timeout (>= 0.4.0)
-    activerecord-import (1.8.0)
+    activerecord-import (1.8.1)
       activerecord (>= 4.2)
     activerecord-postgis-adapter (9.0.2)
       activerecord (~> 7.1.0)
@@ -645,7 +645,7 @@ PLATFORMS
 DEPENDENCIES
   aasm (~> 5.5)
   active_storage_validations (>= 1.0.3)
-  activerecord-import (~> 1.8.0)
+  activerecord-import (~> 1.8.1)
   activerecord-postgis-adapter (>= 6.0.3)
   after_commit_everywhere (~> 1.4)
   amoeba (>= 3.2.0)
