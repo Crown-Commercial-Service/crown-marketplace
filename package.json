@@ -5,8 +5,8 @@
   "dependencies": {
     "@rails/ujs": "^7.1.400",
     "@rollup/plugin-commonjs": "^26.0.1",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-typescript": "^11.1.6",
+    "@rollup/plugin-node-resolve": "^15.2.4",
+    "@rollup/plugin-typescript": "^12.1.0",
     "@types/jquery": "^3.5.30",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.16.5",
@@ -15,7 +15,7 @@
     "govuk-frontend": "^5.6.0",
     "jquery": "^3.7.1",
     "js-cookie": "^3.0.5",
-    "rollup": "^4.21.2",
+    "rollup": "^4.22.4",
     "sass": "^1.79.3",
     "tslib": "^2.7.0",
     "typescript": "^5.6.2"
