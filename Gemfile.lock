@@ -121,15 +121,17 @@ GEM
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.10.0)
       aws-eventstream (~> 1, >= 1.0.2)
-    axe-core-api (4.10.0)
+    axe-core-api (4.10.1)
       dumb_delegator
+      ostruct
       virtus
-    axe-core-capybara (4.10.0)
-      axe-core-api (= 4.10.0)
+    axe-core-capybara (4.10.1)
+      axe-core-api (= 4.10.1)
       dumb_delegator
-    axe-core-cucumber (4.10.0)
-      axe-core-api (= 4.10.0)
+    axe-core-cucumber (4.10.1)
+      axe-core-api (= 4.10.1)
       dumb_delegator
+      ostruct
       virtus
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -390,6 +392,7 @@ GEM
       oauth2 (>= 1.4, < 3)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
+    ostruct (0.6.0)
     parallel (1.26.3)
     parser (3.3.5.0)
       ast (~> 2.4.1)
