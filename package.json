@@ -4,9 +4,9 @@
   "packageManager": "yarn@4.2.2",
   "dependencies": {
     "@rails/ujs": "^7.1.400",
-    "@rollup/plugin-commonjs": "^28.0.0",
+    "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-node-resolve": "^15.3.0",
-    "@rollup/plugin-typescript": "^12.1.0",
+    "@rollup/plugin-typescript": "^12.1.1",
     "@types/jquery": "^3.5.31",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.16.11",
