@@ -7,7 +7,7 @@
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-typescript": "^12.1.1",
-    "@types/jquery": "^3.5.31",
+    "@types/jquery": "^3.5.32",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.16.13",
     "@types/rails__ujs": "^6.0.4",
