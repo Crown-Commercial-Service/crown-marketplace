@@ -344,10 +344,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rails/ujs@npm:^7.1.401":
-  version: 7.1.401
-  resolution: "@rails/ujs@npm:7.1.401"
-  checksum: 10c0/08eae084c80e837e47cc01d0be25a431495f7dea381dcaaa4ce39a3217fac46bf87d169b3dfcf304ae16e0714de7435c2b8c5eb8d5052e3ba70ef3050a72fa3c
+"@rails/ujs@npm:^7.1.402":
+  version: 7.1.402
+  resolution: "@rails/ujs@npm:7.1.402"
+  checksum: 10c0/ccab74b8013ed8a8ab8d7497d0fa510a6ec079725b5fcf679936d80c342940e462b60243ad2cb98128f29db5708a094e319767e8f33a18eb63ceb745de63d1e0
   languageName: node
   linkType: hard
 
@@ -1862,7 +1862,7 @@ __metadata:
   resolution: "marketplace@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.13.0"
-    "@rails/ujs": "npm:^7.1.401"
+    "@rails/ujs": "npm:^7.1.402"
     "@rollup/plugin-commonjs": "npm:^28.0.1"
     "@rollup/plugin-node-resolve": "npm:^15.3.0"
     "@rollup/plugin-typescript": "npm:^12.1.1"
