@@ -565,8 +565,7 @@ GEM
       activesupport (>= 5.2.0)
     show_me_the_cookies (6.0.0)
       capybara (>= 2, < 4)
-    sidekiq (7.3.2)
-      concurrent-ruby (< 2)
+    sidekiq (7.3.4)
       connection_pool (>= 2.3.0)
       logger
       rack (>= 2.2.4)
@@ -713,7 +712,7 @@ DEPENDENCIES
   selenium-webdriver (>= 3.142.3)
   shoulda-matchers (>= 5.1.0)
   show_me_the_cookies (>= 6.0.0)
-  sidekiq (~> 7.3.2)
+  sidekiq (~> 7.3.4)
   sidekiq-cron
   simplecov (>= 0.16.1)
   sinatra (~> 4.0.0)
