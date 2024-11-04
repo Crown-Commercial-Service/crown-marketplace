@@ -3,7 +3,7 @@
   "private": true,
   "packageManager": "yarn@4.2.2",
   "dependencies": {
-    "@rails/ujs": "^7.1.402",
+    "@rails/ujs": "^7.1.500",
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-typescript": "^12.1.1",
