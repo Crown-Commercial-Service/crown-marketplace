@@ -2,7 +2,7 @@
 ARG ALPINE_VERSION=3.20
 
 # Set the NodeJS version
-ARG NODE_VERSION=iron
+ARG NODE_VERSION=jod
 
 # Set the Ruby version
 ARG RUBY_VERSION=3.3.5
