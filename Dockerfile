@@ -5,7 +5,7 @@ ARG ALPINE_VERSION=3.20
 ARG NODE_VERSION=jod
 
 # Set the Ruby version
-ARG RUBY_VERSION=3.3.5
+ARG RUBY_VERSION=3.3.6
 
 # Pull in the NodeJS image
 FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node
