@@ -27,11 +27,11 @@
     "lint:fix": "eslint --fix app/javascript/"
   },
   "devDependencies": {
-    "@eslint/js": "^9.14.0",
+    "@eslint/js": "^9.15.0",
     "@stylistic/eslint-plugin-js": "^2.10.1",
     "@stylistic/eslint-plugin-ts": "^2.10.1",
     "@types/eslint__js": "^8.42.3",
-    "eslint": "^9.14.0",
-    "typescript-eslint": "^8.13.0"
+    "eslint": "^9.15.0",
+    "typescript-eslint": "^8.14.0"
   }
 }
