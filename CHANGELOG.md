@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Changed
 
+- Upgrade ruby version to v3.4.1 ([PR 4690](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4690))
+- Upgrade alpine version to v3.21 ([PR 4690](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4690))
+- Upgrade CCS Frontend Helpers version to v2.1.0 ([PR 4688](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4688))
+- Upgrade CCS Frontend version to v1.3.2 ([PR 4684](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4684))
 - Upgrade ruby version to v3.3.6 ([PR 4635](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4635))
 - Update Node version to LTS version Jod (v22.11.0) ([PR 4623](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4623))
 - Upgrade CCS Frontend Helpers version to v2.0.0 ([PR 4623](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4623))
