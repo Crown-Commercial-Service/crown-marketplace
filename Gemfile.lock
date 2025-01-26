@@ -302,7 +302,7 @@ GEM
     hashie (5.0.0)
     highline (3.0.1)
     htmlentities (4.3.4)
-    i18n (1.14.6)
+    i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     i18n-tasks (1.0.14)
       activesupport (>= 4.0.2)
@@ -504,7 +504,7 @@ GEM
       ffi (~> 1.0)
     rdoc (6.10.0)
       psych (>= 4.0.0)
-    redis-client (0.23.0)
+    redis-client (0.23.2)
       connection_pool
     regexp_parser (2.10.0)
     reline (0.6.0)
@@ -587,7 +587,7 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
-    sidekiq-cron (2.0.1)
+    sidekiq-cron (2.1.0)
       cronex (>= 0.13.0)
       fugit (~> 1.8, >= 1.11.1)
       globalid (>= 1.0.1)
