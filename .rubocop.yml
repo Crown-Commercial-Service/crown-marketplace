@@ -1,9 +1,11 @@
 ---
+plugins:
+    - rubocop-rails
+    - rubocop-rspec
+
 require:
     - rubocop-capybara
     - rubocop-factory_bot
-    - rubocop-rails
-    - rubocop-rspec
     - rubocop-rspec_rails
     - './lib/cop/all'
 
@@ -130,6 +132,9 @@ Layout/TrailingEmptyLines:
     Enabled: true
 
 Lint/MissingSuper:
+    Enabled: false
+
+Lint/UselessConstantScoping:
     Enabled: false
 
 Metrics/AbcSize:

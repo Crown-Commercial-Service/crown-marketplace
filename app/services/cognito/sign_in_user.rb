@@ -40,13 +40,9 @@ module Cognito
       @auth_response.challenge_parameters['USER_ID_FOR_SRP']
     end
 
-    def session
-      @auth_response.session
-    end
+    delegate :session, to: :@auth_response
 
-    def challenge_name
-      @auth_response.challenge_name
-    end
+    delegate :challenge_name, to: :@auth_response
 
     private
 
