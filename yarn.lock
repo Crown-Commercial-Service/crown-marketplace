@@ -1524,10 +1524,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"govuk-frontend@npm:^5.8.0":
-  version: 5.8.0
-  resolution: "govuk-frontend@npm:5.8.0"
-  checksum: 10c0/b70ea33c47ce893fac0759c49c0350a960b51241add3a5a8e81c88aea299600cb18439711ee28f93474d1a99002ac2994b486f7b75ebd0f187ebc878f363b340
+"govuk-frontend@npm:^5.9.0":
+  version: 5.9.0
+  resolution: "govuk-frontend@npm:5.9.0"
+  checksum: 10c0/dc6275eae0e9f2858ae7c1ea062df6d2119c9857847f89ef5bbce55f65c64b7ea03c484c8132e40b7972a2f371135d6718f58fa907c94860a819e0fde7842883
   languageName: node
   linkType: hard
 
@@ -1892,7 +1892,7 @@ __metadata:
     "@types/rails__ujs": "npm:^6.0.4"
     ccs-frontend: "npm:^1.3.2"
     eslint: "npm:^9.22.0"
-    govuk-frontend: "npm:^5.8.0"
+    govuk-frontend: "npm:^5.9.0"
     jquery: "npm:^3.7.1"
     js-cookie: "npm:^3.0.5"
     rollup: "npm:^4.35.0"
