@@ -1011,13 +1011,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ccs-frontend@npm:^1.3.2":
-  version: 1.3.2
-  resolution: "ccs-frontend@npm:1.3.2"
+"ccs-frontend@npm:^1.3.3":
+  version: 1.3.3
+  resolution: "ccs-frontend@npm:1.3.3"
   peerDependencies:
-    govuk-frontend: ^5.6.0
+    govuk-frontend: ^5.9.0
     jquery: ^3.x
-  checksum: 10c0/ba002c162911ff3e6e838d8ef68b48159904d8bc899751d039b40e7a01648f5b4a74499b94e75646fac9ccb083525ddd27dab6ab023d6923f7fd1eed192d86e7
+  checksum: 10c0/fead50bcfbffa2e42f4b031192dba367623876fd7465f92d269139b32eef9fc80a2531783f84c039db47a321c5b7786e62bbafa167651f751327c4fb3514d682
   languageName: node
   linkType: hard
 
@@ -1890,7 +1890,7 @@ __metadata:
     "@types/js-cookie": "npm:^3.0.6"
     "@types/node": "npm:^22.9.0"
     "@types/rails__ujs": "npm:^6.0.4"
-    ccs-frontend: "npm:^1.3.2"
+    ccs-frontend: "npm:^1.3.3"
     eslint: "npm:^9.22.0"
     govuk-frontend: "npm:^5.9.0"
     jquery: "npm:^3.7.1"
