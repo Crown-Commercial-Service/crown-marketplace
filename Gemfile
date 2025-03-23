@@ -44,7 +44,7 @@ gem 'virtus'
 gem 'rollbar', '~> 3.6.1'
 
 # for dfe sign in
-gem 'omniauth', '~> 2.1.2'
+gem 'omniauth', '~> 2.1.3'
 gem 'omniauth-oauth2', '~> 1.8.0'
 
 # for authentication
