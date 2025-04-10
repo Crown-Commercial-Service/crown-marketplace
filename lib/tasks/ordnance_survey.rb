@@ -9,7 +9,7 @@ module OrdnanceSurvey
   require 'csv'
   require 'aws-sdk-s3'
   require 'json'
-  require Rails.root.join('lib', 'tasks', 'distributed_locks')
+  require Rails.root.join('app', 'services', 'distributed_locks')
   require Rails.root.join('lib', 'tasks', 'os_data_processing')
   require Rails.root.join('lib', 'tasks', 'os_file_handler')
   require Rails.root.join('lib', 'tasks', 'os_stream_handler')
