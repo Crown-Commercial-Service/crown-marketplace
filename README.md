@@ -40,10 +40,10 @@ brew install postgresql
 brew install postgis
 ```
 
-Install Yarn, for managing node modules
+Install Bun, for managing node modules
 
 ```shell
-brew install yarn
+brew install bun
 ```
 
 Install Redis, for Sidekiq background jobs
@@ -67,7 +67,7 @@ Make sure your ruby version is set to the [current version](.ruby-version)
 To install dependencies:
 
 ```shell
-yarn install    # (for the JavaScript and other frontend assets)
+bun install    # (for the JavaScript and other frontend assets)
 bundle install  # (make sure the bundler gem is installed first)
 ```
 
@@ -115,12 +115,12 @@ If you do not want to run Sidekiq, pass the `--no-sidekiq` to the `bin/dev` comm
 The design of the app is closely based on the [GOV.UK Design System][] with some minor CCS-related variations.
 The project uses and extends the [CCS Frontend][] and [GOV.UK Frontend][] npm packages.
 
-The npm package dependencies are listed in `package.json`, installed using [yarn][], and the exact versions of all dependencies direct/indirect are locked in `yarn.lock`.
+The npm package dependencies are listed in `package.json`, installed using [bun][], and the exact versions of all dependencies direct/indirect are locked in `bun.lock`.
 
 For custom SCSS, CSS follows [Block Element Modifier][] conventions.
 
 We use `TypeScript` to write any frontend code and can be found in [app/typescript](app/typescript).
-This is transpiled into JavaScript (in the [app/assets/javascripts/dist](app/assets/javascripts/dist) directory) with `yarn`.
+This is transpiled into JavaScript (in the [app/assets/javascripts/dist](app/assets/javascripts/dist) directory) with `bun`.
 
 ### Code
 
@@ -351,7 +351,7 @@ environments:
 [factory_bot_rails]: https://github.com/thoughtbot/factory_bot_rails
 [GOV.UK Frontend]: https://github.com/alphagov/govuk-frontend
 [CCS Frontend]: https://github.com/tim-s-ccs/ccs-frontend-project
-[yarn]: https://github.com/yarnpkg/yarn
+[bun]: https://github.com/oven-sh/bun
 [GOV.UK Design System]: https://design-system.service.gov.uk/
 [Block Element Modifier]: http://getbem.com/
 [virtus]: https://github.com/solnic/virtus

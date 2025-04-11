@@ -2,6 +2,7 @@
 
 # Ignore git directory.
 /.git/
+/.gitignore
 
 # Ignore bundler config.
 /.bundle
@@ -36,15 +37,15 @@
 !/app/assets/builds/.keep
 /public/assets
 
-# Do not ignore the yarn config
-/.yarn/*
-!/.yarn/patches
-!/.yarn/plugins
-!/.yarn/releases
-!/.yarn/sdks
-!/.yarn/versions
-!/.yarnrc.yml
-/yarn-error.log
+# Ignore CI service files.
+/.github
+
+# Ignore development files
+/.devcontainer
+
+# Ignore Docker-related files
+/.dockerignore
+/Dockerfile*
 
 # Ignore other local files
 .DS_Store

@@ -14,4 +14,4 @@ if [ "$1" != "--no-sidekiq" ]; then
   PROCFILE="$PROCFILE.sidekiq"
 fi;
 
-exec foreman start -f $PROCFILE
+exec foreman start -f $PROCFILE --env /dev/null "$@"

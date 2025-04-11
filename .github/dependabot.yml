@@ -63,12 +63,6 @@ updates:
           - 'postcss'
           - 'postcss-*'
 
-      rollup:
-        patterns:
-          - '@rollup/*'
-          - 'rollup'
-          - 'rollup-*'
-
       frontend:
         patterns:
           - 'ccs-frontend'
