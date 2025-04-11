@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.1.5'
+gem 'rails', '~> 7.2.2.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -18,6 +18,9 @@ gem 'cssbundling-rails', '~> 1.4'
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'jsbundling-rails', '~> 1.3'
+
+# For making fetch request calls
+gem 'requestjs-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.13'
@@ -34,7 +37,7 @@ gem 'jbuilder', '~> 2.13'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'geocoder', '>= 1.6.1'
-gem 'activerecord-postgis-adapter', '>= 6.0.3'
+gem 'activerecord-postgis-adapter', '~> 10.0.1'
 gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
@@ -109,12 +112,12 @@ gem 'asset_sync', '>= 2.19.1'
 gem 'fog-aws', '>= 3.14.0'
 
 # Use CCS Frontend Helpers
-gem 'ccs-frontend_helpers', '~> 2.2.0'
+gem 'ccs-frontend_helpers', '~> 2.3.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails', '>= 2.8.1'
+  gem 'dotenv-rails', '~> 3.1.8'
   gem 'factory_bot_rails', '>= 6.2.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
@@ -133,6 +136,7 @@ group :development, :test do
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
   gem 'faker', '~> 3.5.1'
+  gem 'brakeman', '~> 7.0.2'
 end
 
 group :development do
@@ -149,7 +153,7 @@ group :test do
   gem 'selenium-webdriver', '>= 3.142.3'
   gem 'cucumber-rails', '>= 2.6.1', require: false
   gem 'capybara', '>= 3.38.0'
-  gem 'database_cleaner', '>= 2.0.1'
+  gem 'database_cleaner-active_record', '>= 2.0.1', require: false
   gem 'site_prism', '>= 3.7.3'
   gem 'axe-core-capybara', '>= 4.2.1'
   gem 'axe-core-cucumber', '>= 4.2.1'

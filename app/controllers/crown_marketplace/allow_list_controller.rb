@@ -29,9 +29,13 @@ class CrownMarketplace::AllowListController < CrownMarketplace::FrameworkControl
   end
 
   def search_allow_list
-    respond_to do |format|
-      format.js
-    end
+    render json: {
+      html: render_to_string(
+        partial: 'allow_list_table',
+        locals: { paginated_allow_list: @paginated_allow_list, email_domain_added: params[:email_domain_added] },
+        formats: [:html]
+      )
+    }
   end
 
   private

@@ -1,7 +1,7 @@
 module FM
   require 'pg'
   require 'json'
-  require Rails.root.join('lib', 'tasks', 'distributed_locks')
+  require Rails.root.join('app', 'services', 'distributed_locks')
 
   def self.create_uom_table
     ActiveRecord::Base.connection_pool.with_connection do |db|
