@@ -197,6 +197,9 @@ en:
     messages:
       extension_safelist_error: The selected file must be a DOC, DOCX or PDF
       max_size_error: The selected file must be smaller than %{max_size}
+    not_acceptable:
+      browser_not_supported: Your browser is not supported
+      upgrade_your_browser: Please upgrade your browser to continue.
     not_found:
       check_pasted_address: If you pasted the web address, check you copied the entire address.
       check_web_address: If you typed the web address, check it is correct.

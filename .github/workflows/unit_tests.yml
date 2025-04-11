@@ -15,7 +15,7 @@ on:
 
 jobs:
   unit-test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     services:
       postgres:
@@ -40,6 +40,11 @@ jobs:
         uses: ruby/setup-ruby@v1.229.0
         with:
           bundler-cache: true
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.42
 
       - name: Set up database schema
         run: bin/rails db:test:prepare
