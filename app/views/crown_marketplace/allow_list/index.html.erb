@@ -48,7 +48,7 @@
   </div>
 </div>
 
-<%= form_with url: search_allow_list_crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :get, html: { specialvalidation: true, remote: true } do |f| %>
+<%= form_with url: search_allow_list_crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :post, html: { specialvalidation: true, remote: true } do |f| %>
   <%= hidden_field_tag :email_domain_added, params[:email_domain_added] %>
   <div class="govuk-grid-row" id="allow-list-search-container">
     <div class="govuk-grid-column-two-thirds">

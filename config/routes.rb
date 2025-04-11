@@ -159,11 +159,12 @@ Rails.application.routes.draw do
       collection do
         delete '/destroy', action: :destroy
         get '/delete', action: :delete
-        get '/search_allow_list', action: :search_allow_list
+        post '/search_allow_list', action: :search_allow_list, format: :json
       end
     end
     resources :manage_users, path: 'manage-users', param: :cognito_uuid, only: %i[index new create show] do
       collection do
+        post '/search-users', action: :search_users
         get '/:section/add-user', action: :add_user, as: :add_user
         post '/:section/add-user', action: :create_add_user, as: :create_add_user
       end
@@ -176,6 +177,7 @@ Rails.application.routes.draw do
   end
 
   get '/404', to: 'errors#not_found', as: :errors_404
+  get '/406', to: 'errors#not_acceptable', as: :errors_406
   get '/422', to: 'errors#unacceptable', as: :errors_422
   get '/500', to: 'errors#internal_error', as: :errors_500
   get '/503', to: 'errors#service_unavailable', as: :errors_503

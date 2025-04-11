@@ -1,3 +1,4 @@
+import initAllowListSearch from './crownMarketplace/allowListSearch'
 import initCheckboxAccordion from './shared/checkboxAccordion'
 import initChooseServicesForBuilding from './facilitiesManagement/procurements/chooseServicesForBuilding'
 import initContactDetailsInStorage from './facilitiesManagement/contactDetailsInStorage'
@@ -13,6 +14,7 @@ import initRM3830AdminAdminUpload from './facilitiesManagement/rm3830/admin/admi
 import initSelectRegion from './facilitiesManagement/procurements/selectRegion'
 import initStepByStepNav from './shared/stepByStepNav'
 import initSupplierDataSnapshot from './facilitiesManagement/rm6232/admin/supplierDataSnapshot'
+import initUserSearch from './crownMarketplace/userSearch'
 
 const initAll = () => {
   // Facilities Management - Procurements TS
@@ -33,6 +35,10 @@ const initAll = () => {
   initFindAddress()
   initLimitInputToInteger()
   initNumberWithCommas()
+
+  // Crown Marketplace
+  initAllowListSearch()
+  initUserSearch()
 
   // Shared TS
   initCheckboxAccordion()
