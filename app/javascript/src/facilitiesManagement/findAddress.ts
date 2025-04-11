@@ -1,3 +1,5 @@
+import { get } from '@rails/request.js'
+
 type PostcodeResult = {
   valid: false
   input: string
@@ -56,7 +58,7 @@ interface HiddenRegionInputs {
 }
 
 interface FindAddressSelectSectionInterface {
-  processResult: (results: AddressResult[] | RegionResult[]) => void
+  processResult: (results: AddressResult[] | RegionResult[]) => Promise<void>
   clearSelection: () => void
 }
 
@@ -83,7 +85,7 @@ interface SelectedAddressInterface {
 interface SelectARegionInterface {
   getRegionElements: () => RegionElements
   isOneResult: () => boolean
-  selectOnlyRegion: () => void
+  selectOnlyRegion: () => Promise<void>
   resetSelectedRegion: () => void
 }
 
@@ -93,35 +95,35 @@ interface SelectedRegionInterface {
 }
 
 interface FindAddressInterface {
-  findAddressFromPostcode: () => void
+  findAddressFromPostcode: () => Promise<void>
   changePostcode: () => void
-  addressesFound: () => void
-  addressSelected: () => void
+  addressesFound: () => Promise<void>
+  addressSelected: () => Promise<void>
   changeAddress: () => void
-  regionsFound: () => void
-  regionSelected: () => void
+  regionsFound: () => Promise<void>
+  regionSelected: () => Promise<void>
   changeRegion: () => void
 }
 
-const callAPI = (module: FindAddressSelectSection, url: string): void => {
-  let result: AddressResult[] | RegionResult[]
+const callAPI = async (module: FindAddressSelectSection, url: string): Promise<void> => {
+  let result: AddressResult[] | RegionResult[] = []
 
-  $.ajax({
-    type: 'GET',
-    url: encodeURI(url),
-    dataType: 'json',
-    success (data) {
+  try {
+    const response = await get(
+      encodeURI(url),
+      {
+        responseKind: 'json',
+      }
+    )
+  
+    if (response.ok) {
+      const data = await response.json
+ 
       result = data.result ?? []
-    },
-    error () {
-      result = []
-    },
-    complete () {
-      module.processResult(result)
     }
-  }).catch(() => {
-    module.processResult([])
-  })
+  } finally {
+    await module.processResult(result)
+  }
 }
 
 abstract class FindAddressSection {
@@ -199,10 +201,10 @@ abstract class FindAddressInputSection extends FindAddressSection {
 abstract class FindAddressSelectSection extends FindAddressInputSection implements FindAddressSelectSectionInterface {
   protected resultTextPromptOptions: ResultTextPromptOptions = this.$input.data() as ResultTextPromptOptions
   protected $selectedItem: JQuery<HTMLOptionElement> = $(this.$input.find('option:selected')) as JQuery<HTMLOptionElement>
-  private readonly findAddresCallback: () => void
-  private readonly resultProcessedCallback: () => void
+  private readonly findAddresCallback: () => Promise<void>
+  private readonly resultProcessedCallback: () => Promise<void>
 
-  constructor (findAddress: FindAddress, $section: JQuery<HTMLElement>, $input: JQuery<HTMLInputElement>, inputType: string, findAddresCallback: () => void, resultProcessedCallback: () => void) {
+  constructor (findAddress: FindAddress, $section: JQuery<HTMLElement>, $input: JQuery<HTMLInputElement>, inputType: string, findAddresCallback: () => Promise<void>, resultProcessedCallback: () => Promise<void>) {
     super(findAddress, $section, $input, inputType)
 
     this.findAddresCallback = findAddresCallback
@@ -226,28 +228,28 @@ abstract class FindAddressSelectSection extends FindAddressInputSection implemen
     ]
   }
 
-  protected selectItem = (): void => {
+  protected selectItem = async (): Promise<void> => {
     const $selectedItem: JQuery<HTMLOptionElement> = $(this.$input.find('option:selected')) as JQuery<HTMLOptionElement>
 
     if ($selectedItem.val() === '') return
 
-    this.itemSelected($selectedItem)
+    await this.itemSelected($selectedItem)
   }
 
-  protected itemSelected = ($selectedItem: JQuery<HTMLOptionElement>): void => {
+  protected itemSelected = async ($selectedItem: JQuery<HTMLOptionElement>): Promise<void> => {
     this.clearError()
 
     this.$selectedItem = $selectedItem
 
-    this.findAddresCallback()
+    await this.findAddresCallback()
   }
 
-  processResult = (results: AddressResult[] | RegionResult[]): void => {
+  processResult = async (results: AddressResult[] | RegionResult[]): Promise<void> => {
     this.clearSelection()
 
     this.getOptions(results).forEach((option: string) => this.$input.append(option))
 
-    this.resultProcessedCallback()
+    await this.resultProcessedCallback()
   }
 
   clearSelection = (): void => {
@@ -308,7 +310,7 @@ class PostcodeSearch extends FindAddressInputSection implements PostcodeSearchIn
   }
 
   private readonly setEventListener = (): void => {
-    this.$findAddressButton.on('click', (event: JQuery.ClickEvent) => {
+    this.$findAddressButton.on('click', async (event: JQuery.ClickEvent) => {
       event.preventDefault()
 
       this.clearError()
@@ -317,7 +319,7 @@ class PostcodeSearch extends FindAddressInputSection implements PostcodeSearchIn
 
       if (destructuredPostCode.valid) {
         this.postcodeValue = destructuredPostCode.fullPostcode
-        this.findAddress.findAddressFromPostcode()
+        await this.findAddress.findAddressFromPostcode()
       } else {
         this.showError()
       }
@@ -473,12 +475,12 @@ class SelectARegion extends FindAddressSelectSection implements SelectARegionInt
     return this.regionOptions().length === 1
   }
 
-  selectOnlyRegion = (): void => {
+  selectOnlyRegion = async (): Promise<void> => {
     const $selectedRegion: JQuery<HTMLOptionElement> = this.regionOptions()
 
     $selectedRegion.prop('selected', true)
 
-    this.itemSelected($selectedRegion)
+    await this.itemSelected($selectedRegion)
   }
 
   resetSelectedRegion = (): void => {
@@ -589,30 +591,30 @@ class FindAddress implements FindAddressInterface {
     }
   }
 
-  findAddressFromPostcode = (): void => {
+  findAddressFromPostcode = async (): Promise<void> => {
     const postcode = this.postcodeSearch.getPostcode()
 
     this.postcodeChange.setPostcode(this.postcodeSearch.getPostcode())
-    callAPI(
+    await callAPI(
       this.selectAnAddress,
       `/api/v2/postcodes/${postcode}`
     )
   }
 
-  addressesFound = (): void => { this.updateViewAndFocus(StateToView.selectAddress) }
+  addressesFound = async (): Promise<void> => { this.updateViewAndFocus(StateToView.selectAddress) }
 
   changePostcode = (): void => {
     this.updateViewAndFocus(StateToView.postcodeSearch)
     this.selectAnAddress.clearSelection()
   }
 
-  addressSelected = (): void => {
+  addressSelected = async (): Promise<void> => {
     this.selectedAddress.populateSelectedAddress(this.selectAnAddress.getAddressElements())
 
     if (this.selectARegion !== undefined) {
       const postcode = this.postcodeSearch.getPostcode()
 
-      callAPI(
+      await callAPI(
         this.selectARegion,
         `/api/v2/find-region-postcode/${postcode}`
       )
@@ -621,10 +623,10 @@ class FindAddress implements FindAddressInterface {
     }
   }
 
-  regionsFound = (): void => {
+  regionsFound = async (): Promise<void> => {
     if (this.selectARegion !== undefined) {
       if (this.selectARegion.isOneResult()) {
-        this.selectARegion.selectOnlyRegion()
+        await this.selectARegion.selectOnlyRegion()
         this.regionSelected()
       } else {
         this.updateViewAndFocus(StateToView.selectRegion)
@@ -643,7 +645,7 @@ class FindAddress implements FindAddressInterface {
     this.updateViewAndFocus(StateToView.postcodeSearch)
   }
 
-  regionSelected = (): void => {
+  regionSelected = async (): Promise<void> => {
     if (this.selectARegion !== undefined && this.selectedRegion !== undefined) {
       this.selectedRegion.populateSelectedRegion(this.selectARegion.getRegionElements())
 

@@ -1,36 +1,31 @@
 {
   "name": "marketplace",
   "private": true,
-  "packageManager": "yarn@4.5.1",
   "dependencies": {
-    "@rails/ujs": "^7.1.501",
-    "@rollup/plugin-commonjs": "^28.0.3",
-    "@rollup/plugin-node-resolve": "^16.0.1",
-    "@rollup/plugin-typescript": "^12.1.2",
+    "@rails/request.js": "^0.0.11",
     "@types/jquery": "^3.5.32",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^22.9.0",
-    "@types/rails__ujs": "^6.0.4",
+    "@types/rails__request.js": "^0.0.0",
     "ccs-frontend": "^1.3.3",
     "govuk-frontend": "^5.9.0",
     "jquery": "^3.7.1",
     "js-cookie": "^3.0.5",
-    "rollup": "^4.39.0",
     "sass": "^1.86.3",
     "tslib": "^2.8.1",
     "typescript": "^5.8.3"
   },
   "scripts": {
     "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --style=compressed --no-source-map --load-path=node_modules",
-    "build": "rollup -c --bundleConfigAsCjs rollup.config.js",
+    "build": "bun bun.config.js",
     "lint": "eslint app/javascript/",
-    "lint:fix": "eslint --fix app/javascript/"
+    "lint:fix": "eslint --fix app/javascript/",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "cp -a node_modules/ccs-frontend/dist/ccs/@types/. node_modules/@types/ccs-frontend && cp node_modules/@types/ccs-frontend/all.d.ts node_modules/@types/ccs-frontend/index.d.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@stylistic/eslint-plugin-js": "^4.2.0",
     "@stylistic/eslint-plugin-ts": "^4.2.0",
-    "@types/eslint__js": "^9.14.0",
     "eslint": "^9.24.0",
     "typescript-eslint": "^8.29.1"
   }

@@ -1,3 +1,5 @@
+import { get } from '@rails/request.js'
+
 interface StateToProgressDefaultOptions {
   wait: number
 }
@@ -35,26 +37,30 @@ interface FileUploadProgressInterface {
   url: string
   updateCurrentState: (newStatus: FileUploadState) => void
   stop: () => void
-  processImportStatus: () => void
+  processImportStatus: () => Promise<void>
 }
 
-const checkImportProgress = (fileUploadProgress: FileUploadProgressInterface): void => {
-  $.ajax({
-    type: 'GET',
-    url: fileUploadProgress.url,
-    dataType: 'json',
-    success (responseJSON: FileUploadResponseJSON) {
+const checkImportProgress = async (fileUploadProgress: FileUploadProgressInterface): Promise<void> => {
+  try {
+    const response = await get(
+      fileUploadProgress.url,
+      {
+        responseKind: 'json',
+      }
+    )
+
+    if (response.ok) {
+      const responseJSON: FileUploadResponseJSON = await response.json
+
       fileUploadProgress.updateCurrentState(responseJSON.import_status)
-    },
-    error () {
+    } else {
       fileUploadProgress.stop()
-    },
-    complete () {
-      fileUploadProgress.processImportStatus()
     }
-  }).catch(() => {
+  } catch {
     fileUploadProgress.stop()
-  })
+  } finally {
+    await fileUploadProgress.processImportStatus()
+  }
 }
 
 abstract class FileUploadProgress implements FileUploadProgressInterface {
@@ -70,7 +76,7 @@ abstract class FileUploadProgress implements FileUploadProgressInterface {
     setTimeout(checkImportProgress.bind(null, this), 0)
   }
 
-  protected processComplete = (): void => {
+  protected processComplete = async (): Promise<void> => {
     window.location.reload()
   }
 
@@ -82,7 +88,7 @@ abstract class FileUploadProgress implements FileUploadProgressInterface {
     this.continue = false
   }
 
-  abstract processImportStatus: () => void
+  abstract processImportStatus: () => Promise<void>
 }
 
 class FileUploadProgressWithBar extends FileUploadProgress {
@@ -107,7 +113,7 @@ class FileUploadProgressWithBar extends FileUploadProgress {
     }
   }
 
-  processImportStatus = (): void => {
+  processImportStatus = async (): Promise<void> => {
     if (this.continue) {
       this.$progressBar.attr('style', `width: ${(this.currentState as StateToProgressWithProgressBarNormalOptions | StateToProgressWithProgressBarFinishedOptions).progress}%`)
       this.updateProgressBar()
@@ -120,7 +126,7 @@ class FileUploadProgressWithBar extends FileUploadProgress {
 
       setTimeout(continueFunction, this.currentState.wait)
     } else {
-      this.processComplete()
+      await this.processComplete()
     }
   }
 }
@@ -130,7 +136,7 @@ class FileUploadProgressWithoutBar extends FileUploadProgress {
     super(stateToProgress, initialState)
   }
 
-  processImportStatus = (): void => {
+  processImportStatus = async (): Promise<void> => {
     if (this.continue) {
       let continueFunction = checkImportProgress.bind(null, this)
 
@@ -140,7 +146,7 @@ class FileUploadProgressWithoutBar extends FileUploadProgress {
 
       setTimeout(continueFunction, this.currentState.wait)
     } else {
-      this.processComplete()
+      await this.processComplete()
     }
   }
 }

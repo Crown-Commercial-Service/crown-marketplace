@@ -8,6 +8,10 @@ class ErrorsController < ApplicationController
     render status: :not_found
   end
 
+  def not_acceptable
+    render status: :not_acceptable
+  end
+
   def unacceptable
     render status: :unprocessable_entity
   end
