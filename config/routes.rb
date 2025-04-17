@@ -176,6 +176,7 @@ Rails.application.routes.draw do
   end
 
   get '/404', to: 'errors#not_found', as: :errors_404
+  get '/406', to: 'errors#not_acceptable', as: :errors_406
   get '/422', to: 'errors#unacceptable', as: :errors_422
   get '/500', to: 'errors#internal_error', as: :errors_500
   get '/503', to: 'errors#service_unavailable', as: :errors_503

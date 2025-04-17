@@ -1,18 +1,8 @@
 # Set the alpine version so they match for both images
 ARG ALPINE_VERSION=3.21
 
-# Set the NodeJS version
-ARG NODE_VERSION=jod
-
 # Set the Ruby version
 ARG RUBY_VERSION=3.4.1
-
-# Pull in the NodeJS image
-FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node
-
-# Remove yarn as we already have it downloaded in the app
-RUN rm /usr/local/bin/yarn && \
-    rm /usr/local/bin/yarnpkg
 
 # Pull in the Ruby image
 FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} AS base
@@ -53,23 +43,20 @@ ENV APP_RUN_PRECOMPILE_ASSETS=$APP_RUN_PRECOMPILE_ASSETS
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
-# As this is a multistage Docker image build
-# we will pull in the contents from the previous node image build stage
-# to our current ruby build image stage
-# so that the ruby image build stage has the correct nodejs version
-COPY --from=node /usr/local/bin /usr/local/bin
-COPY --from=node /usr/local/lib /usr/local/lib
-
 # Install application dependencies
 RUN apk add --update --no-cache \
     build-base \
     curl \
     git \
     libpq-dev \
-    tzdata
+    tzdata \
+    bash
 
-# Enable corepack for yarn
-RUN corepack enable
+# Install JavaScript dependencies
+ENV BUN_INSTALL=/usr/local/bun
+ENV PATH=/usr/local/bun/bin:$PATH
+ARG BUN_VERSION=1.1.42
+RUN curl -fsSL https://bun.sh/install | bash -s -- "bun-v${BUN_VERSION}"
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -78,9 +65,8 @@ RUN bundle install && \
     bundle exec bootsnap precompile --gemfile
 
 # Install node modules
-COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn ./.yarn
-RUN yarn workspaces focus --all --production
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
 # Copy application code
 COPY . .
