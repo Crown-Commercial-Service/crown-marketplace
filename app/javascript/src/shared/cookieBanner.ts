@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import { put } from '@rails/request.js'
 
 type CookieBannerFormData = Record<string, string>
 
@@ -49,30 +50,29 @@ const removeUnwantedCookies = (): void => {
   cookiesToRemove.forEach((cookieName) => { Cookies.remove(cookieName, { path: '/', domain: '.crowncommercial.gov.uk' }) })
 }
 
-const removeGACookies = (cookieBannerFormData: CookieBannerFormData, successFunction: () => void, failureFunction: () => void): void => {
+const removeGACookies = async (cookieBannerFormData: CookieBannerFormData, successFunction: () => void, failureFunction: () => void): Promise<void> => {
   let success = false
 
-  $.ajax({
-    type: 'PUT',
-    url: '/api/v2/update-cookie-settings',
-    data: cookieBannerFormData,
-    dataType: 'json',
-    success () {
-      success = true
-    },
-    error () {
-      success = false
-    },
-    complete () {
-      if(success) {
-        successFunction()
-      } else {
-        failureFunction()
+  try {
+    const response = await put(
+      '/api/v2/update-cookie-settings',
+      {
+        body: JSON.stringify(cookieBannerFormData),
+        contentType: 'application/json',
+        responseKind: 'json',
       }
+    )
+
+    if (response.ok) {
+      success = true
     }
-  }).catch(() => {
-    failureFunction()
-  })
+  } finally {
+    if(success) {
+      successFunction()
+    } else {
+      failureFunction()
+    }
+  }
 }
 
 const scrollNotificationBannerIntoView = ($notificationBanner: JQuery<HTMLElement>, $otherNotificationBanner: JQuery<HTMLElement>): void => {
@@ -109,8 +109,8 @@ const cookieSettingsError = (): void => {
   $('#cookie-settings-not-saved').show()
 }
 
-const updateBanner = (isAccepeted: string, $newBanner: JQuery<HTMLElement>): void => {
-  removeGACookies(
+const updateBanner = async (isAccepeted: string, $newBanner: JQuery<HTMLElement>): Promise<void> => {
+  await removeGACookies(
     {
       ga_cookie_usage: isAccepeted,
       glassbox_cookie_usage: isAccepeted
@@ -123,24 +123,24 @@ const updateBanner = (isAccepeted: string, $newBanner: JQuery<HTMLElement>): voi
 const initCookieBanner = (): void => {
   removeUnwantedCookies()
 
-  $('[name="cookies"]').on('click', (event: JQuery.ClickEvent) => {
+  $('[name="cookies"]').on('click', async (event: JQuery.ClickEvent) => {
     event.preventDefault()
 
     const buttonValue: string = event.currentTarget.value
 
-    updateBanner(String(buttonValue === 'accept'), $(`#cookies-${buttonValue}ed-container`))
+    await updateBanner(String(buttonValue === 'accept'), $(`#cookies-${buttonValue}ed-container`))
   })
 
   const $form: JQuery<HTMLFormElement> = $('#update-cookie-setings')
 
-  $form.on('submit', (event: JQuery.SubmitEvent) => {
+  $form.on('submit', async (event: JQuery.SubmitEvent) => {
     event.preventDefault()
 
     $('#cookie-settings-saved').show()
 
     const formData = Object.fromEntries($form.serializeArray().map((element) => [element.name, element.value]))
 
-    removeGACookies(
+    await removeGACookies(
       formData,
       cookiesSaved,
       cookiesNotSaved

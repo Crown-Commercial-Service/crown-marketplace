@@ -3,6 +3,11 @@
 # because the APP_RUN_SIDEKIQ parameter is defined in /Environment/ccs/cmp and not /Environment/ccs/cmpsidekiq,
 # we have to check for it being false, so we can run the rails server, otherwise run sidekiq
 if [ "$APP_RUN_SIDEKIQ" = 'FALSE' ]; then
+  # Enable jemalloc for reduced memory usage and latency.
+  if [ -z "${LD_PRELOAD+x}" ] && [ -f /usr/lib/*/libjemalloc.so.2 ]; then
+    export LD_PRELOAD="$(echo /usr/lib/*/libjemalloc.so.2)"
+  fi
+
   echo TCPAddr $CLAMAV_SERVER_IP > /etc/clamav/clamd.conf && echo TCPSocket 3310 >> /etc/clamav/clamd.conf
 
   ./bin/rails db:migrate:ignore_concurrent
