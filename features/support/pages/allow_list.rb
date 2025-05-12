@@ -9,7 +9,7 @@ module Pages
       sections :rows, EmailDomainRowSection, 'tbody > tr'
     end
 
-    section :email_domain_search, 'form' do
+    section :email_domain_search, 'main form' do
       element :input, '#allowed_email_domain_email_domain'
       element :button, 'input.govuk-button.govuk-button--secondary'
     end

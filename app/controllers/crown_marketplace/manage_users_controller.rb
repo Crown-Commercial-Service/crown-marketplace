@@ -1,5 +1,6 @@
 class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkController
   before_action :authorize_user, :set_current_user_access
+  before_action :set_search_results, only: %i[index search_users]
   before_action :redirect_if_unrecognised_add_user_section, :continue_if_user_support, only: %i[add_user create_add_user]
   before_action :continue_if_role_does_not_require_service_access, only: :add_user
   before_action :set_new_user, only: %i[add_user new]
@@ -9,16 +10,21 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
 
   helper_method :section, :available_roles, :role_requires_service_access?, :can_edit_user?, :permitted_sections
 
-  def index
-    @search = if find_user_params.empty?
-                { users: [] }
-              else
-                Cognito::Admin::User.search(find_user_params[:email])
-              end
+  def index; end
 
+  def search_users
     respond_to do |format|
-      format.js
       format.html { render :index }
+      format.json do
+        render json: {
+          html: render_to_string(
+            partial: 'users_table',
+            locals: { users: @search[:users] },
+            formats: [:html]
+          ),
+          error_message_html: @search[:error] ? helpers.govuk_error_message(@search[:error], :email) : nil
+        }
+      end
     end
   end
 
@@ -83,6 +89,14 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
   end
 
   private
+
+  def set_search_results
+    @search = if find_user_params.empty?
+                { users: [] }
+              else
+                Cognito::Admin::User.search(find_user_params[:email])
+              end
+  end
 
   def section
     @section ||= params[:section]&.underscore&.to_sym

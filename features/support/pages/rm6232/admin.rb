@@ -37,7 +37,7 @@ module Pages::RM6232
       element :title, 'h2'
     end
 
-    section :supplier_detail_form, 'form' do
+    section :supplier_detail_form, 'main form' do
       element :'Supplier name', '#facilities_management_rm6232_admin_suppliers_admin_supplier_name'
       element :'DUNS number', '#facilities_management_rm6232_admin_suppliers_admin_duns'
       element :'Company registration number', '#facilities_management_rm6232_admin_suppliers_admin_registration_number'
@@ -81,7 +81,7 @@ module Pages::RM6232
     elements :added_items, '#added-items > li'
     elements :removed_items, '#removed-items > li'
 
-    section :management_report, 'form' do
+    section :management_report, 'main form' do
       element :'From day', '#facilities_management_rm6232_admin_management_report_start_date_dd'
       element :'From month', '#facilities_management_rm6232_admin_management_report_start_date_mm'
       element :'From year', '#facilities_management_rm6232_admin_management_report_start_date_yyyy'

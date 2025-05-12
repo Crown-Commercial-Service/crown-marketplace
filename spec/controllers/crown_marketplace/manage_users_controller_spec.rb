@@ -140,10 +140,84 @@ RSpec.describe CrownMarketplace::ManageUsersController do
             ].map { |found_user| cognito_user_struct.new(username: found_user[:cognito_uuid], enabled: found_user[:account_status], attributes: [cognito_user_attribute_struct.new(name: 'email', value: found_user[:email])]) }
           )
         )
+        get :index, params: { email: 'test' }
+      end
+
+      it 'renders the index page' do
+        expect(response).to render_template(:index)
+      end
+
+      it 'has a search with the users response' do
+        expect(assigns(:search)).to eq(
+          {
+            users: [
+              found_user_1,
+              found_user_2
+            ]
+          }
+        )
+      end
+    end
+
+    context 'when the email is blank' do
+      before { get :index, params: { email: '' } }
+
+      it 'renders the index page' do
+        expect(response).to render_template(:index)
+      end
+
+      it 'has a search with the error in the response' do
+        expect(assigns(:search)).to eq(
+          {
+            users: [],
+            error: 'You must enter an email address'
+          }
+        )
+      end
+    end
+  end
+
+  describe 'POST search_users' do
+    login_super_admin
+
+    context 'when there is no email' do
+      before { post :search_users }
+
+      it 'renders the index page' do
+        expect(response).to render_template(:index)
+      end
+
+      it 'has an empty search' do
+        expect(assigns(:search)).to eq({ users: [] })
+      end
+    end
+
+    context 'when an email is provided' do
+      let(:found_user_1) { { cognito_uuid: SecureRandom.uuid, email: 'test1@test.com', account_status: true } }
+      let(:found_user_2) { { cognito_uuid: SecureRandom.uuid, email: 'test2@test.com', account_status: false } }
+
+      before do
+        aws_client = instance_double(Aws::CognitoIdentityProvider::Client)
+
+        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+        allow(aws_client).to receive(:list_users).with(
+          {
+            user_pool_id: ENV.fetch('COGNITO_USER_POOL_ID', nil),
+            attributes_to_get: ['email'],
+            filter: 'email ^= "test"'
+          }
+        ).and_return(
+          list_users_resp_struct.new(
+            users: [
+              found_user_1,
+              found_user_2
+            ].map { |found_user| cognito_user_struct.new(username: found_user[:cognito_uuid], enabled: found_user[:account_status], attributes: [cognito_user_attribute_struct.new(name: 'email', value: found_user[:email])]) }
+          )
+        )
       end
 
       context 'and it is a HTML request' do
-        before { get :index, params: { email: 'test' } }
+        before { post :search_users, params: { email: 'test' } }
 
         it 'renders the index page' do
           expect(response).to render_template(:index)
@@ -161,11 +235,18 @@ RSpec.describe CrownMarketplace::ManageUsersController do
         end
       end
 
-      context 'and we render with JavaScript' do
-        before { get :index, params: { email: 'test' }, xhr: true }
+      context 'and it is a JSON request' do
+        before { post :search_users, params: { email: 'test' }, as: :json }
 
-        it 'renders the index page' do
-          expect(response).to render_template(:index)
+        it 'renders the _users_table partial' do
+          expect(response).to render_template('crown_marketplace/manage_users/_users_table')
+        end
+
+        it 'renders the json with the expected keys' do
+          expect(response.content_type).to eq('application/json; charset=utf-8')
+
+          expect(response.parsed_body['html'].is_a?(String)).to be true
+          expect(response.parsed_body['error_message_html']).to be_nil
         end
 
         it 'has a search with the users response' do
@@ -199,11 +280,18 @@ RSpec.describe CrownMarketplace::ManageUsersController do
         end
       end
 
-      context 'and we render with JavaScript' do
-        before { get :index, params: { email: '' }, xhr: true }
+      context 'and it is a JSON request' do
+        before { post :search_users, params: { email: '' }, as: :json }
 
-        it 'renders the index page' do
-          expect(response).to render_template(:index)
+        it 'renders the _users_table partial' do
+          expect(response).to render_template('crown_marketplace/manage_users/_users_table')
+        end
+
+        it 'renders the json with the expected keys' do
+          expect(response.content_type).to eq('application/json; charset=utf-8')
+
+          expect(response.parsed_body['html'].is_a?(String)).to be true
+          expect(response.parsed_body['error_message_html'].is_a?(String)).to be true
         end
 
         it 'has a search with the error in the response' do

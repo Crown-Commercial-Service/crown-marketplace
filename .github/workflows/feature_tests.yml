@@ -5,7 +5,13 @@ on:
 
 jobs:
   feature-test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service:
+          - crown-marketplace
+          - facilities-management
 
     services:
       postgres:
@@ -34,6 +40,11 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.42
+
       - name: Set up database schema
         run: bin/rails db:test:prepare
 
@@ -43,5 +54,5 @@ jobs:
       - name: Seed DB with test data
         run: bin/rails db:static
 
-      - name: Run all feature tests
-        run: bin/rails cucumber:ok
+      - name: Run feature tests for ${{ matrix.service }}
+        run: bin/rails cucumber:${{ matrix.service }}
