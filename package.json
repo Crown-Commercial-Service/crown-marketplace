@@ -2,7 +2,7 @@
   "name": "marketplace",
   "private": true,
   "dependencies": {
-    "@rails/request.js": "^0.0.11",
+    "@rails/request.js": "^0.0.12",
     "@types/jquery": "^3.5.32",
     "@types/js-cookie": "^3.0.6",
     "@types/rails__request.js": "^0.0.0",
