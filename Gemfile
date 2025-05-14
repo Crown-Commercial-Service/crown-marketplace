@@ -44,7 +44,7 @@ gem 'caxlsx', '>= 3.2.0'
 gem 'caxlsx_rails', '>= 0.6.3'
 gem 'virtus'
 
-gem 'rollbar', '~> 3.6.1'
+gem 'rollbar', '~> 3.6.2'
 
 # for dfe sign in
 gem 'omniauth', '~> 2.1.3'
