@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Upgrade Bun to v1.2.13 ([PR 4820](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4820))
 - Upgrade CCS Frontend Helpers version to v2.4.0 ([PR 4821](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4821))
 - Upgrade CCS Frontend version to v1.4.1 ([PR 4821](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4821))
+- Upgrade ruby version to v3.4.3 ([PR 4835](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4835))
 
 ## [6.2.0] - 2025-01-23
 

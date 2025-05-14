@@ -2,7 +2,7 @@
 ARG ALPINE_VERSION=3.21
 
 # Set the Ruby version
-ARG RUBY_VERSION=3.4.1
+ARG RUBY_VERSION=3.4.3
 
 # Pull in the Ruby image
 FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} AS base
@@ -49,6 +49,7 @@ RUN apk add --update --no-cache \
     curl \
     git \
     libpq-dev \
+    yaml-dev \
     tzdata \
     bash
 
