@@ -87,7 +87,7 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
-    after_commit_everywhere (1.5.0)
+    after_commit_everywhere (1.6.0)
       activerecord (>= 4.2)
       activesupport
     amoeba (3.3.0)
@@ -686,7 +686,7 @@ DEPENDENCIES
   active_storage_validations (>= 1.0.3)
   activerecord-import (~> 2.1.0)
   activerecord-postgis-adapter (~> 10.0.1)
-  after_commit_everywhere (~> 1.5)
+  after_commit_everywhere (~> 1.6)
   amoeba (>= 3.2.0)
   asset_sync (>= 2.19.1)
   auto-session-timeout (~> 1.2)
