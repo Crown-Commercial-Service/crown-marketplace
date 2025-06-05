@@ -18,12 +18,14 @@ module FacilitiesManagement
         private
 
         def snapshot_params
-          params.require(:facilities_management_rm6232_admin_supplier_data_snapshot).permit(
-            :snapshot_date_yyyy,
-            :snapshot_date_mm,
-            :snapshot_date_dd,
-            :snapshot_time_hh,
-            :snapshot_time_mm,
+          params.expect(
+            facilities_management_rm6232_admin_supplier_data_snapshot: %i[
+              snapshot_date_yyyy
+              snapshot_date_mm
+              snapshot_date_dd
+              snapshot_time_hh
+              snapshot_time_mm
+            ],
           )
         end
       end

@@ -53,7 +53,7 @@ class CrownMarketplace::AllowListController < CrownMarketplace::FrameworkControl
   end
 
   def allowed_email_domain_params
-    params.require(:allowed_email_domain).permit(:email_domain) if params[:allowed_email_domain]
+    params.expect(allowed_email_domain: [:email_domain]) if params[:allowed_email_domain]
   end
 
   def authorize_user

@@ -71,15 +71,17 @@ module Base
     end
 
     def confirm_params
-      params.require(:cognito_confirm_sign_up).permit(
-        :confirmation_code,
-        :email
+      params.expect(
+        cognito_confirm_sign_up: %i[
+          confirmation_code
+          email
+        ]
       )
     end
 
     def challenge_params
-      params.require(:cognito_respond_to_challenge).permit(
-        %i[session username] + CHALLANGE_PARAMS[params[:challenge_name]]
+      params.expect(
+        cognito_respond_to_challenge: %i[session username] + CHALLANGE_PARAMS[params[:challenge_name]]
       )
     end
 

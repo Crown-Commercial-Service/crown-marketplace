@@ -27,14 +27,15 @@ module Admin::FrameworksConcern
   end
 
   def framework_params
-    params.require(:framework)
-          .permit(
-            :live_at_dd,
-            :live_at_mm,
-            :live_at_yyyy,
-            :expires_at_dd,
-            :expires_at_mm,
-            :expires_at_yyyy,
-          )
+    params.expect(
+      framework: %i[
+        live_at_dd
+        live_at_mm
+        live_at_yyyy
+        expires_at_dd
+        expires_at_mm
+        expires_at_yyyy
+      ],
+    )
   end
 end
