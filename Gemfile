@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.2.1'
+gem 'rails', '~> 8.0.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -37,7 +37,7 @@ gem 'jbuilder', '~> 2.13'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'geocoder', '>= 1.6.1'
-gem 'activerecord-postgis-adapter', '~> 10.0.1'
+gem 'activerecord-postgis-adapter', '~> 11.0.0'
 gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
@@ -52,9 +52,6 @@ gem 'omniauth-oauth2', '~> 1.8.0'
 
 # for authentication
 gem 'devise', '~> 4.9.4'
-
-# for timing out when session expires
-gem 'auto-session-timeout', '~> 1.2'
 
 # for cognito
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.122.0'
@@ -90,7 +87,8 @@ gem 'gov_uk_date_fields', '>= 4.2.0'
 gem 'date_validator', '>= 0.12.0'
 
 # for clamav
-gem 'ratonvirus', '>= 0.3.2'
+# Because ratonvirus is not Rails 8 compatible, we use this fork
+gem 'ratonvirus', '>= 0.3.2', git: 'https://github.com/MaksJS/ratonvirus.git', ref: '13e4cd2bc2ef066f40634344f756b45cda3ac105'
 gem 'ratonvirus-clamby', '>= 0.3.0'
 # for active storage validation
 gem 'active_storage_validations', '>= 1.0.3'

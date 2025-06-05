@@ -778,7 +778,9 @@ RSpec.describe CrownMarketplace::ManageUsersController do
         allow(Cognito::Admin::User).to receive(:find).and_return(user)
         allow(user).to receive(:update).with(section).and_return(is_valid)
 
-        put :update, params: { cognito_uuid: cognito_uuid, section: section, cognito_admin_user: { section => update_params } }
+        cognito_admin_user_params = update_params ? { cognito_admin_user: { section => update_params } } : {}
+
+        put :update, params: { cognito_uuid:, section:, **cognito_admin_user_params }
       end
 
       context 'and I update email_verified for the user' do

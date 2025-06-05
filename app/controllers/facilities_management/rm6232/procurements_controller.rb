@@ -92,7 +92,7 @@ module FacilitiesManagement
       end
 
       def procurement_params(page = @page)
-        @procurement_params ||= params.require(:facilities_management_rm6232_procurement).permit(PERMITED_PARAMS[page])
+        @procurement_params ||= params.expect(facilities_management_rm6232_procurement: PERMITED_PARAMS[page])
       end
 
       PERMITED_PARAMS = {

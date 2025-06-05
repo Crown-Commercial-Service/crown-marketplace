@@ -141,7 +141,7 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
 
   def add_user_params
     if params[:cognito_admin_user]
-      params.require(:cognito_admin_user).permit(ADD_USER_PERMITTED_PARAMS)
+      params.expect(cognito_admin_user: ADD_USER_PERMITTED_PARAMS)
     else
       {}
     end
@@ -153,7 +153,7 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
 
   def user_params
     if params[:cognito_admin_user]
-      params.require(:cognito_admin_user).permit(PERMITED_PARAMS[section])
+      params.expect(cognito_admin_user: PERMITED_PARAMS[section])
     else
       case section
       when :roles, :service_access

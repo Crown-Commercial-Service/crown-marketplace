@@ -41,7 +41,7 @@ module FacilitiesManagement
 
       def upload_params
         if params[param_key]
-          params.require(param_key).permit(service::Upload::ATTRIBUTES)
+          params.expect(param_key => service::Upload::ATTRIBUTES)
         else
           {}
         end
