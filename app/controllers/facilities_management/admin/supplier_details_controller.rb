@@ -52,7 +52,7 @@ module FacilitiesManagement
       end
 
       def supplier_params
-        params.require(@suppliers_admin_param_key).permit(PERMITED_PARAMS[@page])
+        params.expect(@suppliers_admin_param_key => PERMITED_PARAMS[@page])
       end
 
       def redirect_if_framework_has_expired
