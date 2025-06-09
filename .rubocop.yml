@@ -177,6 +177,12 @@ Migration/RequireUUIDPrimaryKeys:
 Naming/VariableNumber:
     Enabled: false
 
+Naming/PredicateMethod:
+    AllowedMethods:
+        - call
+        - save
+        - distributed_lock
+
 Style/Alias:
     Enabled: false
 
