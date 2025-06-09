@@ -27,7 +27,7 @@ module FacilitiesManagement::RM6232
         check_sheets(supplier_services_workbook, SHEET_NAMES, 'supplier_services') do |sheets_with_errors, empty_sheets, index|
           if supplier_services_workbook.sheet(index).last_column <= 5
             empty_sheets << SHEET_NAMES[index]
-          elsif !services_correct(supplier_services_workbook.sheet(index), index)
+          elsif !services_correct?(supplier_services_workbook.sheet(index), index)
             sheets_with_errors << SHEET_NAMES[index]
           end
         end
@@ -75,7 +75,7 @@ module FacilitiesManagement::RM6232
       end
       # rubocop:enable Metrics/CyclomaticComplexity
 
-      def services_correct(services_sheet, index)
+      def services_correct?(services_sheet, index)
         lot_number = ((index / 3) + 1).to_s
 
         services_sheet.column(1)[4..] == service_names_column(lot_number) && services_sheet.column(2)[4..] == service_codes_column(lot_number)

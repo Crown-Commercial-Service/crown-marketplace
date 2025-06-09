@@ -72,10 +72,14 @@ module FacilitiesManagement
 
         def lot_data_params
           if params[:facilities_management_rm6232_supplier_lot_data]
-            params.require(:facilities_management_rm6232_supplier_lot_data).permit(
-              :active,
-              service_codes: [],
-              region_codes: [],
+            params.expect(
+              facilities_management_rm6232_supplier_lot_data: [
+                :active,
+                {
+                  service_codes: [],
+                  region_codes: []
+                }
+              ],
             )
           else
             { @lot_data_type => [] }

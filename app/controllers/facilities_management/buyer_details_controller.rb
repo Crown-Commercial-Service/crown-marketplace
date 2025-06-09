@@ -44,20 +44,21 @@ module FacilitiesManagement
     end
 
     def buyer_detail_params
-      params.require(:facilities_management_buyer_detail)
-            .permit(
-              :full_name,
-              :job_title,
-              :telephone_number,
-              :organisation_name,
-              :organisation_address_line_1,
-              :organisation_address_line_2,
-              :organisation_address_town,
-              :organisation_address_county,
-              :organisation_address_postcode,
-              :sector,
-              :contact_opt_in
-            )
+      params.expect(
+        facilities_management_buyer_detail: %i[
+          full_name
+          job_title
+          telephone_number
+          organisation_name
+          organisation_address_line_1
+          organisation_address_line_2
+          organisation_address_town
+          organisation_address_county
+          organisation_address_postcode
+          sector
+          contact_opt_in
+        ]
+      )
     end
 
     def set_buyer_detail

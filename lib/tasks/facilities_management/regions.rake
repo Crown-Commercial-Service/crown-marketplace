@@ -2,7 +2,7 @@ module CCS
   require 'pg'
   require 'csv'
   require 'json'
-  require Rails.root.join('lib', 'tasks', 'distributed_locks')
+  require Rails.root.join('app', 'services', 'distributed_locks')
   require Rails.root.join('lib', 'tasks', 'ordnance_survey')
 
   def self.csv_to_nuts_regions(file_name)
