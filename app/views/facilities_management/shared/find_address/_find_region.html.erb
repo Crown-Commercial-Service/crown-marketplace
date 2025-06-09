@@ -27,7 +27,7 @@
         selected: f.object.address_region_code,
         attributes: {
           id: 'regions-results-container',
-          tabindex: input_visible?(select_a_region_visible?),
+          tabindex: input_tab_index(select_a_region_visible?),
           prompt: t('.option_text', number: valid_regions.length, location: 'region'.pluralize(valid_regions.length)),
           data: {
             text_single: t('.region_singular'),
@@ -49,7 +49,7 @@
         <%= f.hidden_field :address_region, id: 'address-region' %>
         <%= f.hidden_field :address_region_code, id: 'address-region-code' %>
       </div>
-      <%= link_to t('.change'), '#select-a-region', class: "govuk-link #{'govuk-visually-hidden' unless multiple_regions?}", id: 'change-input-3', tabindex: input_visible?(full_region_visible? && multiple_regions?) %>
+      <%= link_to t('.change'), '#select-a-region', class: "govuk-link #{'govuk-visually-hidden' unless multiple_regions?}", id: 'change-input-3', tabindex: input_tab_index(full_region_visible? && multiple_regions?) %>
     </div>
   </div>
 </div>
