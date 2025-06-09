@@ -224,7 +224,7 @@ module FacilitiesManagement::RM3830
 
         code = extract_code(SERVICE_CODES[i])
 
-        break if check_for_duplicate_code(procurement_building, procurement_building_hash, code)
+        break if duplicate_code?(procurement_building, procurement_building_hash, code)
 
         procurement_building.service_codes << code
         add_procurement_building_service(procurement_building_services, code, i)
@@ -233,7 +233,7 @@ module FacilitiesManagement::RM3830
       validate_procurement_building(procurement_building_hash, @procurement_array[index][:object])
     end
 
-    def check_for_duplicate_code(procurement_building, procurement_building_hash, code)
+    def duplicate_code?(procurement_building, procurement_building_hash, code)
       if procurement_building.service_codes.include? code
         procurement_building_hash[:valid] = false
         procurement_building_hash[:errors] = { service_codes: [{ error: :multiple_standards_for_one_service }] }

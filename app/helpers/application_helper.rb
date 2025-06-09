@@ -89,7 +89,7 @@ module ApplicationHelper
     'govuk-visually-hidden' unless visible
   end
 
-  def input_visible?(visible)
+  def input_tab_index(visible)
     visible ? 0 : -1
   end
 
