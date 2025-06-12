@@ -20,9 +20,7 @@ module HeaderNavigationLinksHelper
       navigation_links << {
         text: t('header_navigation_links_helper.sign_out'),
         href: "#{service_path_base}/sign-out",
-        attributes: {
-          method: :delete
-        }
+        method: :delete
       }
     else
       if params[:service] == 'facilities_management'

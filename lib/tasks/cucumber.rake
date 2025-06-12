@@ -12,11 +12,24 @@ unless ARGV.any? { |a| a =~ /^gems/ } # Don't load anything when running the gem
   begin
     require 'cucumber/rake/task'
 
+    # rubocop:disable Metrics/BlockLength
     namespace :cucumber do
       Cucumber::Rake::Task.new({ ok: 'test:prepare' }, 'Run the full suite of features that should pass') do |t|
         t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
         t.fork = true # You may get faster startup if you set this to false
         t.profile = 'default'
+      end
+
+      Cucumber::Rake::Task.new({ 'crown-marketplace': 'test:prepare' }, 'Run the full suite of features that should pass for Crown Marketplace') do |t|
+        t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
+        t.fork = true # You may get faster startup if you set this to false
+        t.profile = 'crown-marketplace'
+      end
+
+      Cucumber::Rake::Task.new({ 'facilities-management': 'test:prepare' }, 'Run the full suite of features that should pass for Facilities Management') do |t|
+        t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
+        t.fork = true # You may get faster startup if you set this to false
+        t.profile = 'facilities-management'
       end
 
       Cucumber::Rake::Task.new({ wip: 'test:prepare' }, 'Run features that are being worked on') do |t|
@@ -55,6 +68,8 @@ unless ARGV.any? { |a| a =~ /^gems/ } # Don't load anything when running the gem
         end
       end
     end
+    # rubocop:enable Metrics/BlockLength
+
     desc 'Alias for cucumber:ok'
     task cucumber: 'cucumber:ok'
 

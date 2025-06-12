@@ -7,9 +7,7 @@ module ApplicationHelper
     link_to(t('common.feedback'), Marketplace.fm_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link')
   end
 
-  def support_telephone_number
-    Marketplace.support_telephone_number
-  end
+  delegate :support_telephone_number, to: :Marketplace
 
   def error_id(attribute)
     "#{attribute}-error"
@@ -91,7 +89,7 @@ module ApplicationHelper
     'govuk-visually-hidden' unless visible
   end
 
-  def input_visible?(visible)
+  def input_tab_index(visible)
     visible ? 0 : -1
   end
 

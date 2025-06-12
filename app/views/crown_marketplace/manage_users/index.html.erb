@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<%= form_with url: crown_marketplace_manage_users_path, method: :get, html: { specialvalidation: true, remote: true } do |f| %>
+<%= form_with url: search_users_crown_marketplace_manage_users_path, method: :post, html: { specialvalidation: true, remote: true } do |f| %>
   <div class="govuk-grid-row" id="users-search-container">
     <div class="govuk-grid-column-two-thirds">
       <%= govuk_input(

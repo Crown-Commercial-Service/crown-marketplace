@@ -94,14 +94,19 @@ RSpec.describe CrownMarketplace::AllowListController do
     end
   end
 
-  describe 'GET search_allow_list' do
+  describe 'POST search_allow_list' do
     context 'when logged in with read only allow list access' do
       login_user_support_admin
 
-      before { get :search_allow_list, params: { allowed_email_domain: { email_domain: 'email' } }, xhr: true }
+      before { post :search_allow_list, params: { allowed_email_domain: { email_domain: 'email' } } }
 
-      it 'renders the search_allow_list page' do
-        expect(response).to render_template(:search_allow_list)
+      it 'renders the _allow_list_table partial' do
+        expect(response).to render_template('crown_marketplace/allow_list/_allow_list_table')
+      end
+
+      it 'renders the json with the expected keys' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+        expect(response.parsed_body['html'].is_a?(String)).to be true
       end
 
       it 'has a shortened allow list' do
@@ -112,10 +117,15 @@ RSpec.describe CrownMarketplace::AllowListController do
     context 'when logged in with full allow list access' do
       login_user_admin
 
-      before { get :search_allow_list, params: { allowed_email_domain: { email_domain: 'email' } }, xhr: true }
+      before { post :search_allow_list, params: { allowed_email_domain: { email_domain: 'email' } } }
 
-      it 'renders the search_allow_list page' do
-        expect(response).to render_template(:search_allow_list)
+      it 'renders the _allow_list_table partial' do
+        expect(response).to render_template('crown_marketplace/allow_list/_allow_list_table')
+      end
+
+      it 'renders the json with the expected keys' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+        expect(response.parsed_body['html'].is_a?(String)).to be true
       end
 
       it 'has a shortened allow list' do

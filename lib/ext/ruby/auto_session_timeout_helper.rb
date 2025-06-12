@@ -1,3 +1,5 @@
+# From auto-session-timeout gem
+
 module AutoSessionTimeoutHelper
   def auto_session_timeout_js(options = {})
     frequency = options[:frequency] || 60

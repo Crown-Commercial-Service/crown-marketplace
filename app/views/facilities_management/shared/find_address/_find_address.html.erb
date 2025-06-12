@@ -15,7 +15,7 @@
           pattern: '^(([A-Za-z][A-Za-z]{0,1})([0-9][A-Za-z0-9]{0,1})) {0,}(([0-9])([A-Za-z]{2}))$',
           required: true,
           maxlength: 8,
-          tabindex: input_visible?(find_address_helper.postcode_search_visible?),
+          tabindex: input_tab_index(find_address_helper.postcode_search_visible?),
           data: {
             error_messages: validation_messages(f.object.class.name.underscore, find_address_helper.address_keys[:address_postcode])
           }
@@ -29,7 +29,7 @@
           aria: {
             label: t('.find_address')
           },
-          tabindex: input_visible?(find_address_helper.postcode_search_visible?)
+          tabindex: input_tab_index(find_address_helper.postcode_search_visible?)
         }
       ) %>
     </div>
@@ -46,7 +46,7 @@
         '#postcode-search',
         class: 'govuk-link',
         id: 'change-input-1',
-        tabindex: input_visible?(find_address_helper.postcode_change_visible?)
+        tabindex: input_tab_index(find_address_helper.postcode_change_visible?)
       ) %>
     </div>
 
@@ -75,7 +75,7 @@
         selected: find_address_helper.address_line1,
         attributes: {
           id: 'address-results-container',
-          tabindex: input_visible?(find_address_helper.select_an_address_visible?),
+          tabindex: input_tab_index(find_address_helper.select_an_address_visible?),
           prompt: t('.option_text', number: find_address_helper.address_count, location: 'address'.pluralize(find_address_helper.address_count)),
           data: {
             text_single: t('.address_singular'),
@@ -93,7 +93,7 @@
           class: 'govuk-link -govuk-!-margin-right-4 button_as_link',
           id: 'cant-find-address-link',
           name: 'add_address',
-          tabindex: input_visible?(find_address_helper.select_an_address_visible?),
+          tabindex: input_tab_index(find_address_helper.select_an_address_visible?),
           aria: {
             label: cant_find_address_text
           }
@@ -104,7 +104,7 @@
           cant_find_address_link,
           class: 'govuk-link -govuk-!-margin-right-4',
           id: 'cant-find-address-link',
-          tabindex: input_visible?(find_address_helper.select_an_address_visible?)
+          tabindex: input_tab_index(find_address_helper.select_an_address_visible?)
         ) %>
       <% end %>
     </div>
@@ -127,7 +127,7 @@
         '#postcode-search',
         class: 'govuk-link',
         id: 'change-input-2',
-        tabindex: input_visible?(find_address_helper.full_address_visible?)
+        tabindex: input_tab_index(find_address_helper.full_address_visible?)
        ) %>
     </div>
 

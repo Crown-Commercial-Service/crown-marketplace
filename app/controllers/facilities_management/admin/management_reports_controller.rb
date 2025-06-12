@@ -54,15 +54,16 @@ module FacilitiesManagement
       end
 
       def management_report_params
-        params.require(@management_report.model_name.param_key)
-              .permit(
-                :start_date_dd,
-                :start_date_mm,
-                :start_date_yyyy,
-                :end_date_dd,
-                :end_date_mm,
-                :end_date_yyyy
-              )
+        params.expect(
+          @management_report.model_name.param_key => %i[
+            start_date_dd
+            start_date_mm
+            start_date_yyyy
+            end_date_dd
+            end_date_mm
+            end_date_yyyy
+          ]
+        )
       end
     end
   end
