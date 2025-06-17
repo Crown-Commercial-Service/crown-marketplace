@@ -96,7 +96,7 @@ module FacilitiesManagement
       end
 
       PERMITED_PARAMS = {
-        new: [:contract_name, :annual_contract_value, { service_codes: [], region_codes: [] }]
+        new: [:contract_name, :requirements_linked_to_pfi, :annual_contract_value, { service_codes: [], region_codes: [] }]
       }.freeze
 
       protected

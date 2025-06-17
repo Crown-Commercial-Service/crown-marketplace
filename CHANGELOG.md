@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Added
+
+- Add PFI question for Facilities Management ([PR 4874](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4874))
+
 ## [7.0.0] - 2025-06-09
 
 ### Changed
