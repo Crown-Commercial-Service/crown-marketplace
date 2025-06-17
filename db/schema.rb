@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_31_103327) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_17_081408) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
-  enable_extension "plpgsql"
   enable_extension "postgis"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -444,6 +444,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_31_103327) do
     t.boolean "mobilisation_period_required"
     t.integer "mobilisation_period"
     t.boolean "extensions_required"
+    t.boolean "requirements_linked_to_pfi"
     t.index ["user_id", "contract_name"], name: "index_rm6232_procurement_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_fm_rm6232_procurements_on_user_id"
   end
