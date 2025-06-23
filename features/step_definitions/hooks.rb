@@ -52,7 +52,7 @@ end
 
 After do
   DatabaseCleaner.clean
-  if Framework.count.zero?
+  if Framework.none?
     Rake::Task['db:fm_frameworks'].reenable
     Rake::Task['db:rm3830:fm_supplier_data'].reenable
     Rake::Task['db:rm3830:add_supplier_rate_cards'].reenable

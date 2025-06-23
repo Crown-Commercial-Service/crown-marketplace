@@ -815,7 +815,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
     end
   end
 
-  describe '#priced_at_framework' do
+  describe '#priced_at_framework?' do
     context 'when one of the services is not priced at framework' do
       before do
         procurement.procurement_building_services.first.update(code: 'C.1', service_standard: 'A')
@@ -823,7 +823,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       end
 
       it 'returns false' do
-        expect(procurement.send(:priced_at_framework)).to be false
+        expect(procurement.send(:priced_at_framework?)).to be false
       end
     end
 
@@ -834,7 +834,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement do
       end
 
       it 'returns true' do
-        expect(procurement.send(:priced_at_framework)).to be true
+        expect(procurement.send(:priced_at_framework?)).to be true
       end
     end
   end
