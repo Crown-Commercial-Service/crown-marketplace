@@ -39,7 +39,7 @@ module FacilitiesManagement::RM3830::Admin::SublotServicesHelper
     @invalid_services.keys.include?(code)
   end
 
-  def service_type_has_error(code, service_type)
+  def service_type_has_error?(code, service_type)
     service_has_error?(code) ? @invalid_services[code].keys.include?(service_type) : false
   end
 

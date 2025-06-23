@@ -19,7 +19,7 @@ module StaticRecord
       @all ||= []
     end
 
-    delegate :first, :count, to: :all
+    delegate :first, :count, :none?, to: :all
 
     def find_each(&)
       all.each(&)
