@@ -112,13 +112,38 @@
         :contract_name,
         form: f,
         label: {
-          text: t('.contract_name_label'),
+          text: t('.contract_name.label'),
           classes: 'govuk-label--m'
         },
         hint: {
-          text: t('.contract_name_hint')
+          text: t('.contract_name.hint')
         },
         classes: 'govuk-input--width-20',
+      ) %>
+      <%= govuk_radios(
+        :requirements_linked_to_pfi,
+        [
+          {
+            value: true,
+            label: {
+              text: t('.requirements_linked_to_pfi.options.true')
+            }
+          },
+          {
+            value: false,
+            label: {
+              text: t('.requirements_linked_to_pfi.options.false')
+            }
+          }
+        ],
+        form: f,
+        fieldset: {
+          legend: {
+            text: t('.requirements_linked_to_pfi.label'),
+            classes: 'govuk-fieldset__legend--m'
+          }
+        },
+        classes: 'govuk-radios--inline',
       ) %>
 
       <%= govuk_button(t('.save_and_continue'), form: f, attributes: { name: 'save_and_continue' }) %>

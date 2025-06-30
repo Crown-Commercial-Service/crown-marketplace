@@ -158,6 +158,8 @@ en:
               greater_than: Mobilisation start date must be in the future, please review your 'Initial call-off-period' and 'Mobilisation period length'
             procurement_buildings:
               invalid: Select at least one building
+            requirements_linked_to_pfi:
+              inclusion: Select one option for requirements linked to PFI
             service_codes:
               invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'
               too_short: Select at least one service you need to include in your procurement
@@ -488,10 +490,16 @@ en:
           annual_contract_value: Annual contract cost
           based_on_info: 'Based on the information provided, this procurement would be eligible for the following Lot, with your supplier shortlist as shown below:'
           change: Change
-          contract_name_hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
-          contract_name_label: Save your search
+          contract_name:
+            hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
+            label: Save your search
           heading: Results
           regions: Regions
+          requirements_linked_to_pfi:
+            label: Is your requirement linked to current or previous Private Finance Initiative (PFI)?
+            options:
+              'false': 'No'
+              'true': 'Yes'
           return_to_contract_cost: Return to annual contract cost
           return_to_dashboard: Return to your account
           save_and_continue: Save and continue

@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.1.0] - 2025-06-30
+
+### Added
+
+- Add PFI question for Facilities Management ([PR 4874](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4874))
+
+### Changed
+
+- Upgrade CCS Frontend Helpers version to v2.5.0 ([PR 4880](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4880))
+
 ## [7.0.0] - 2025-06-09
 
 ### Changed

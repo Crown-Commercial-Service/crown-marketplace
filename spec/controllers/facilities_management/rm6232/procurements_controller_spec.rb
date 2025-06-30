@@ -100,10 +100,12 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController do
 
   describe 'POST create' do
     let(:options) { {} }
+    let(:contract_name) { 'New procurement' }
+    let(:requirements_linked_to_pfi) { true }
 
-    before { post :create, params: { facilities_management_rm6232_procurement: { contract_name: contract_name, annual_contract_value: 123_456, region_codes: ['UKC1'], service_codes: ['E.1'] }, **options } }
+    before { post :create, params: { facilities_management_rm6232_procurement: { contract_name: contract_name, requirements_linked_to_pfi: requirements_linked_to_pfi, annual_contract_value: 123_456, region_codes: ['UKC1'], service_codes: ['E.1'] }, **options } }
 
-    context 'when the record is invalid' do
+    context 'when the record is invalid becuase of the contract name' do
       let(:contract_name) { '' }
 
       it 'renders the correct template' do
@@ -132,9 +134,36 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController do
       end
     end
 
-    context 'when the record is valid' do
-      let(:contract_name) { 'New procurement' }
+    context 'when the record is invalid becuase of requirements linked to pfi' do
+      let(:requirements_linked_to_pfi) { '' }
 
+      it 'renders the correct template' do
+        expect(response).to render_template('new')
+      end
+
+      it 'sets the back path and text correctly' do
+        expect(assigns(:back_path)).to eq '/facilities-management/RM6232/annual-contract-value?annual_contract_value=123456&region_codes%5B%5D=UKC1&service_codes%5B%5D=E.1'
+        expect(assigns(:back_text)).to eq 'Return to annual contract cost'
+      end
+
+      it 'sets the suppliers' do
+        expect(assigns(:suppliers).class.to_s).to eq 'FacilitiesManagement::RM6232::Supplier::ActiveRecord_Relation'
+      end
+
+      it 'sets the procurement with the correct details' do
+        expect(
+          assigns(:procurement).attributes.slice('user_id', 'service_codes', 'region_codes', 'annual_contract_value', 'lot_number')
+        ).to eq(
+          { 'user_id' => user.id,
+            'service_codes' => ['E.1'],
+            'region_codes' => ['UKC1'],
+            'annual_contract_value' => 123_456,
+            'lot_number' => '2a' }
+        )
+      end
+    end
+
+    context 'when the record is valid' do
       context 'and the user clicked "Save and continue"' do
         let(:options) { { save_and_continue: 'Save and continue' } }
 

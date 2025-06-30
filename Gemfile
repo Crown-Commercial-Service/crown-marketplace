@@ -110,7 +110,7 @@ gem 'asset_sync', '>= 2.19.1'
 gem 'fog-aws', '>= 3.14.0'
 
 # Use CCS Frontend Helpers
-gem 'ccs-frontend_helpers', '~> 2.4.0'
+gem 'ccs-frontend_helpers', '~> 2.5.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

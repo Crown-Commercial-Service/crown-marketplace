@@ -4,6 +4,7 @@ module FacilitiesManagement::RM6232
 
     included do
       validates :annual_contract_value, numericality: { only_integer: true, greater_than: 0, less_than: 1_000_000_000_000 }, on: :annual_contract_value
+      validates :requirements_linked_to_pfi, inclusion: { in: [true, false] }, on: :contract_name
 
       # Validations on entering requirements
       with_options on: :entering_requirements do

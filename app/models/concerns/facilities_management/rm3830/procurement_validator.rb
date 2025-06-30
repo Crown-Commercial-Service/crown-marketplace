@@ -139,8 +139,6 @@ module FacilitiesManagement::RM3830
       CONTRACT_DETAILS.each do |contract_detail|
         errors.add(contract_detail, :not_present_contract_details) if send(contract_detail).nil?
       end
-
-      errors.any?
     end
 
     CONTRACT_DETAILS = %i[payment_method using_buyer_detail_for_invoice_details using_buyer_detail_for_authorised_detail using_buyer_detail_for_notices_detail security_policy_document_required local_government_pension_scheme governing_law].freeze

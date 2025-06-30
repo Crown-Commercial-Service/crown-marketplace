@@ -65,12 +65,12 @@ module FacilitiesManagement::RM3830
       sheet.add_row new_row, style: row_styles
 
       cell_refs = []
-      (2..sheet.rows.last.cells.count - 1).each do |i|
+      (2..(sheet.rows.last.cells.count - 1)).each do |i|
         start = sheet.rows.last.cells[i].r_abs.index('$', 0)
         finish = sheet.rows.last.cells[i].r_abs.index('$', 1)
 
-        column_ref = sheet.rows.last.cells[i].r_abs[start + 1..finish - 1]
-        row_ref = sheet.rows.last.cells[i].r_abs[finish + 1..].to_i
+        column_ref = sheet.rows.last.cells[i].r_abs[(start + 1)..(finish - 1)]
+        row_ref = sheet.rows.last.cells[i].r_abs[(finish + 1)..].to_i
         sheet.rows.last.cells[i].value = "=sum(#{column_ref}#{row_ref - 1}:#{column_ref}#{row_ref - how_many_rows})"
 
         cell_refs << sheet.rows.last.cells[i].r_abs
@@ -118,7 +118,7 @@ module FacilitiesManagement::RM3830
 
       @data_no_cafmhelp_removed.keys.collect { |k| @data_no_cafmhelp_removed[k].keys }
                                .flatten.uniq
-                               .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..].to_i] }.each do |s|
+                               .sort_by { |code| [code[0..(code.index('.') - 1)], code[(code.index('.') + 1)..].to_i] }.each do |s|
         # for each building type, I need to see if the actual building name (which can contain several building id's if the same service
         # is contained in several building) has the service. for example two buildings may have the type warehouse and contain the same same C.1 service
 
@@ -232,7 +232,7 @@ module FacilitiesManagement::RM3830
 
         @data.keys.collect { |k| @data[k].keys }
              .flatten.uniq
-             .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..].to_i] }.each do |s|
+             .sort_by { |code| [code[0..(code.index('.') - 1)], code[(code.index('.') + 1)..].to_i] }.each do |s|
           new_row = [s, @rate_card_data[:Prices][@supplier_id][s.to_sym][:'Service Name']]
 
           sum = 0

@@ -12,6 +12,7 @@ module FacilitiesManagement::RM6232
       'Buyer contact email address',
       'Buyer contact telephone number',
       'Buyer opted in to be contacted',
+      'Requirements linked to PFI',
       'Services',
       'Regions',
       'Annual contract cost',
@@ -48,6 +49,11 @@ module FacilitiesManagement::RM6232
         procurement.user.buyer_detail.contact_opt_in ? procurement.user.email : '',
         procurement.user.buyer_detail.contact_opt_in ? string_as_formula(procurement.user.buyer_detail.telephone_number) : '',
         procurement.user.buyer_detail.contact_opt_in ? 'Yes' : 'No',
+        if procurement.requirements_linked_to_pfi.nil?
+          'Unknown'
+        else
+          (procurement.requirements_linked_to_pfi ? 'Yes' : 'No')
+        end,
         expand_services(procurement.service_codes),
         expand_regions(procurement.region_codes),
         delimited_contract_value(procurement.annual_contract_value),

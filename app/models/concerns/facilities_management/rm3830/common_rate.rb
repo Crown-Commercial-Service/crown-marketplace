@@ -24,7 +24,7 @@ module FacilitiesManagement::RM3830
         where('framework <> 0 and  benchmark <> 0')
       end
 
-      def priced_at_framework(code, standard)
+      def priced_at_framework?(code, standard)
         find_by(code:, standard:)&.framework.present?
       end
 
