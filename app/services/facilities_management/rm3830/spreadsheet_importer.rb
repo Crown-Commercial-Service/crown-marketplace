@@ -155,7 +155,7 @@ module FacilitiesManagement::RM3830
 
     def add_regions(building, building_column)
       region = Postcode::PostcodeCheckerV2.find_region building_column[POSTCODE_ROW].to_s.delete(' ')
-      (building.address_region_code = region[0][:code]) && (building.address_region = region[0][:region]) if region.count == 1
+      (building.address_region_code = region[0][:code]) && (building.address_region = region[0][:region]) if region.one?
     end
 
     def store_building(building)
@@ -412,7 +412,7 @@ module FacilitiesManagement::RM3830
 
     def spreadsheet_import_loop(sheet_variables, building_variables, starting_column, error)
       if sheet_complete?(*sheet_variables) && sheet_contains_all_buildings?(*building_variables)
-        (starting_column..@procurement_array.count + starting_column - 1).each_with_index do |col, building_index|
+        (starting_column..(@procurement_array.count + starting_column - 1)).each_with_index do |col, building_index|
           next if @procurement_array[building_index][:skip]
 
           yield(col, building_index)

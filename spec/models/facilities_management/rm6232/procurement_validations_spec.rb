@@ -65,6 +65,41 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       end
     end
 
+    describe 'requirements_linked_to_pfi' do
+      let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, user:) }
+      let(:user) { create(:user) }
+
+      before { procurement.requirements_linked_to_pfi = requirements_linked_to_pfi }
+
+      context 'when requirements_linked_to_pfi is nil' do
+        let(:requirements_linked_to_pfi) { nil }
+
+        it 'is expected to not be valid and has the correct error message' do
+          expect(procurement.valid?(:contract_name)).to be false
+          expect(procurement.errors[:requirements_linked_to_pfi].first).to eq 'Select one option for requirements linked to PFI'
+        end
+      end
+
+      context 'when the requirements_linked_to_pfi is empty' do
+        let(:requirements_linked_to_pfi) { '' }
+
+        it 'is expected to not be valid and has the correct error message' do
+          expect(procurement.valid?(:contract_name)).to be false
+          expect(procurement.errors[:requirements_linked_to_pfi].first).to eq 'Select one option for requirements linked to PFI'
+        end
+      end
+
+      [true, false].each do |option|
+        context "when the requirements_linked_to_pfi is #{option}" do
+          let(:requirements_linked_to_pfi) { option }
+
+          it 'expected to be valid' do
+            expect(procurement.valid?(:contract_name)).to be true
+          end
+        end
+      end
+    end
+
     describe 'annual_contract_value' do
       let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, annual_contract_value:) }
 

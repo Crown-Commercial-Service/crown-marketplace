@@ -151,6 +151,7 @@ module FacilitiesManagement
 
       STANDARD_TYPES = %i[ppm_standards building_standards cleaning_standards].freeze
 
+      # rubocop:disable Naming/PredicateMethod
       def validate_lift_data
         errors.add(:lifts, :required) if lifts.empty?
 
@@ -158,6 +159,7 @@ module FacilitiesManagement
 
         lifts.all?(&:valid?)
       end
+      # rubocop:enable Naming/PredicateMethod
 
       def more_than_max_lifts?
         lifts.reject(&:marked_for_destruction?).size >= MAX_NUMBER_OF_LIFTS
