@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade Bun to v1.2.18 ([PR 4894](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4894))
+
 ### Fixed
 
 - Fix issue with the resend password button ([PR 4890](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4890))
