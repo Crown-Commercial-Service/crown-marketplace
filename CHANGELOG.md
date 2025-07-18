@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgrade Bun to v1.2.18 ([PR 4894](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4894))
+- Use javascript for file uploads ([PR 4895](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4895))
 
 ### Fixed
 
