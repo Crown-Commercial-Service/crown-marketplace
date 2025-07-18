@@ -56,7 +56,7 @@ RUN apk add --update --no-cache \
 # Install JavaScript dependencies
 ENV BUN_INSTALL=/usr/local/bun
 ENV PATH=/usr/local/bun/bin:$PATH
-ARG BUN_VERSION=1.2.13
+ARG BUN_VERSION=1.2.18
 RUN curl -fsSL https://bun.sh/install | bash -s -- "bun-v${BUN_VERSION}"
 
 # Install application gems
