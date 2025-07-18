@@ -19,7 +19,7 @@ jobs:
       - name: Install Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.2.13
+          bun-version: 1.2.18
 
       - name: Run rubocop
         run: bin/rubocop
