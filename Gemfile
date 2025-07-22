@@ -134,7 +134,7 @@ group :development, :test do
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
   gem 'faker', '~> 3.5.2'
-  gem 'brakeman', '~> 7.0.2'
+  gem 'brakeman', '~> 7.1.0'
 end
 
 group :development do
