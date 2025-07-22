@@ -8,7 +8,7 @@
         "@types/js-cookie": "^3.0.6",
         "@types/rails__request.js": "^0.0.0",
         "ccs-frontend": "^1.4.1",
-        "govuk-frontend": "^5.11.0",
+        "govuk-frontend": "^5.11.1",
         "jquery": "^3.7.1",
         "js-cookie": "^3.0.5",
         "sass": "^1.89.2",
@@ -203,7 +203,7 @@
 
     "globals": ["globals@14.0.0", "", {}, "sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ=="],
 
-    "govuk-frontend": ["govuk-frontend@5.11.0", "", {}, "sha512-RYZDEF1J6nVw5XauQGH+91qplExgHUXfXII7dtIme6I4u3eSvU59yZ0/EFKEwRgTslSqlhJODOnAi5rnQFU5Gw=="],
+    "govuk-frontend": ["govuk-frontend@5.11.1", "", {}, "sha512-hJJFpaer4MZLvz/2F9RZ7xZ6FqlzpxL9aw6YWOGK3F1tn419xj2WcVXwOC8Bcj/dc/LanknbWJDGkb+IdkuhTQ=="],
 
     "graphemer": ["graphemer@1.4.0", "", {}, "sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag=="],
 
