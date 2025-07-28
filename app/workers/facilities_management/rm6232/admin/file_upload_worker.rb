@@ -3,6 +3,7 @@ module FacilitiesManagement
     module Admin
       class FileUploadWorker
         include Sidekiq::Worker
+
         sidekiq_options queue: 'fm', retry: false
 
         def perform(id)

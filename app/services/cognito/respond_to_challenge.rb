@@ -1,6 +1,7 @@
 module Cognito
   class RespondToChallenge < BaseService
     include ActiveModel::Validations
+
     attr_reader :challenge_name, :username, :session, :new_password, :new_password_confirmation, :access_code, :roles
 
     # new password validations

@@ -1,6 +1,7 @@
 module Cognito
   class SignInUser < BaseService
     include ActiveModel::Validations
+
     attr_reader :email, :password, :cookies_disabled
     attr_accessor :error, :needs_password_reset, :needs_confirmation
 
