@@ -3,6 +3,7 @@ module FacilitiesManagement
     module Admin
       class ManagementReportWorker
         include Sidekiq::Worker
+
         sidekiq_options queue: 'fm', retry: false
 
         def perform(id)
