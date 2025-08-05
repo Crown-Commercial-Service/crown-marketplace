@@ -18,6 +18,7 @@ RSpec.describe GenericJourney do
 
     first_step_with_attributes_class = Class.new(described_class) do
       include Steppable
+
       attribute :first_question
       def next_step_class
         SecondStepWithAttributes
@@ -28,6 +29,7 @@ RSpec.describe GenericJourney do
 
     second_step_with_attributes_class = Class.new(described_class) do
       include Steppable
+
       attribute :second_question
     end
 

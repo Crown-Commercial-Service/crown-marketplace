@@ -1,6 +1,7 @@
 module FacilitiesManagement
   class PostcodesToNutsWorker
     include Sidekiq::Worker
+
     sidekiq_options queue: 'fm', retry: false, backtrace: 20
 
     def perform(data_file)

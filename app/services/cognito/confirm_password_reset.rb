@@ -1,6 +1,7 @@
 module Cognito
   class ConfirmPasswordReset < BaseService
     include ActiveModel::Validations
+
     attr_reader :email, :password, :password_confirmation, :confirmation_code
 
     validates :password,

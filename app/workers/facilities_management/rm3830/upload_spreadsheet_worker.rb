@@ -2,6 +2,7 @@ module FacilitiesManagement
   module RM3830
     class UploadSpreadsheetWorker
       include Sidekiq::Worker
+
       sidekiq_options queue: 'fm', retry: true
 
       def perform(id)

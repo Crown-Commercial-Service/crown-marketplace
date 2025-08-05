@@ -2,6 +2,7 @@ module FacilitiesManagement
   module RM3830
     class GenerateContractZip
       include Sidekiq::Worker
+
       sidekiq_options queue: 'fm', retry: true
 
       def perform(contract_id)

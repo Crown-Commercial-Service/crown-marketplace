@@ -4,6 +4,7 @@ RSpec.describe StaticRecord do
   subject(:klass) do
     Class.new do
       include StaticRecord
+
       attr_accessor :id, :name
     end
   end

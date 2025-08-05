@@ -37,7 +37,9 @@
         <p>
           <%= t('.resend_temporary_password.description') %>
         </p>
-        <%= govuk_button(t('.resend_temporary_password.link'), href: resend_temporary_password_crown_marketplace_manage_user_path, classes: 'govuk-button--secondary', attributes: { id: 'resend-temporary-password-button', method: :put }) %>
+        <%= form_with url: resend_temporary_password_crown_marketplace_manage_user_path, method: :put, html: { novalidate: true } do |f| %>
+          <%= govuk_button(t('.resend_temporary_password.link'), form: f, classes: 'govuk-button--secondary', attributes: { id: 'resend-temporary-password-button' }) %>
+        <% end %>
       <% end %>
     <% else %>
       <%= govuk_warning_text(

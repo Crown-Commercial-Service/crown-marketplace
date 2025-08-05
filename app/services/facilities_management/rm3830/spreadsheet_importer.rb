@@ -143,7 +143,7 @@ module FacilitiesManagement::RM3830
         address_line_1: building_column[3],
         address_line_2: building_column[4],
         address_town: building_column[5],
-        address_postcode: building_column[POSTCODE_ROW].to_s&.upcase,
+        address_postcode: building_column[POSTCODE_ROW].to_s.upcase,
         gia: building_column[7],
         external_area: building_column[8],
         building_type: building_column[9],
