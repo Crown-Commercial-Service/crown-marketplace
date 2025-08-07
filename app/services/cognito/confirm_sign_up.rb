@@ -1,6 +1,7 @@
 module Cognito
   class ConfirmSignUp < BaseService
     include ActiveModel::Validations
+
     attr_reader :email, :confirmation_code
     attr_accessor :user
 

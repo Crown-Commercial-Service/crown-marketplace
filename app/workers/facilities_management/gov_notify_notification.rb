@@ -2,6 +2,7 @@ require 'notifications/client'
 module FacilitiesManagement
   class GovNotifyNotification
     include Sidekiq::Worker
+
     sidekiq_options queue: 'fm', retry: true
 
     # Template Ids

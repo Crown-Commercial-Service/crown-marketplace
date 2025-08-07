@@ -54,7 +54,7 @@ gem 'omniauth-oauth2', '~> 1.8.0'
 gem 'devise', '~> 4.9.4'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.123.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.125.0'
 
 # for pagination
 gem 'kaminari', '~> 1.2.2'
@@ -70,7 +70,7 @@ gem 'aasm', '~> 5.5'
 gem 'after_commit_everywhere', '~> 1.6'
 
 # for running background jobs
-gem 'sidekiq', '~> 8.0.4'
+gem 'sidekiq', '~> 8.0.6'
 gem 'sinatra', '~> 4.1.1', require: false
 gem 'slim', '~> 5.2.1'
 gem 'sidekiq-cron'
@@ -133,8 +133,8 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
-  gem 'faker', '~> 3.5.1'
-  gem 'brakeman', '~> 7.0.2'
+  gem 'faker', '~> 3.5.2'
+  gem 'brakeman', '~> 7.1.0'
 end
 
 group :development do
