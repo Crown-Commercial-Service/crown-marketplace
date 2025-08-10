@@ -23,7 +23,7 @@ gem 'jsbundling-rails', '~> 1.3'
 gem 'requestjs-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.13'
+gem 'jbuilder', '~> 2.14'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
