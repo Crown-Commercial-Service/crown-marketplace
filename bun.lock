@@ -6,7 +6,7 @@
         "@rails/request.js": "^0.0.12",
         "@types/jquery": "^3.5.32",
         "@types/js-cookie": "^3.0.6",
-        "@types/rails__request.js": "^0.0.0",
+        "@types/rails__request.js": "^0.0.1",
         "ccs-frontend": "^1.4.1",
         "govuk-frontend": "^5.11.1",
         "jquery": "^3.7.1",
@@ -99,7 +99,7 @@
 
     "@types/json-schema": ["@types/json-schema@7.0.15", "", {}, "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA=="],
 
-    "@types/rails__request.js": ["@types/rails__request.js@0.0.0", "", {}, "sha512-5QE45w3Isu6bGbK9+3duaMo66trVz6i2FAz4O//Lnk9n6w9Tnf6ofXydn2ANKoDFfTSdjdHl8h0jKuXHswubCg=="],
+    "@types/rails__request.js": ["@types/rails__request.js@0.0.1", "", {}, "sha512-s9KX0falKcyDO2SjER/3HSfcJ8MAm+V05hxW1jJd/Rt+X7QeSSf9g6d2EZ6/uLJiDnXAqc+WPlxT1oYswV2T9A=="],
 
     "@types/sizzle": ["@types/sizzle@2.3.9", "", {}, "sha512-xzLEyKB50yqCUPUJkIsrVvoWNfFUbIZI+RspLWt8u+tIW/BetMBZtgV2LY/2o+tYH8dRvQ+eoPf3NdhQCcLE2w=="],
 
