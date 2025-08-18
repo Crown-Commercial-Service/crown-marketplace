@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.2.1] - 2025-08-21
+
+### Fixed
+
+Update the sidekiq cron schedule to include legacy job ([PR 4930](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4930))
+
 ## [7.2.0] - 2025-08-07
 
 ### Changed
