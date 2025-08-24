@@ -54,7 +54,7 @@ gem 'omniauth-oauth2', '~> 1.8.0'
 gem 'devise', '~> 4.9.4'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.127.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.128.0'
 
 # for pagination
 gem 'kaminari', '~> 1.2.2'
