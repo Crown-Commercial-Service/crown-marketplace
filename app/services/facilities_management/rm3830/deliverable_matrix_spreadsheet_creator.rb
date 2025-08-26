@@ -239,13 +239,13 @@ class FacilitiesManagement::RM3830::DeliverableMatrixSpreadsheetCreator
   def services_require_service_periods?
     return false if services_data.empty?
 
-    (services_data.pluck('code').uniq & SERVICE_HOUR_SERVICES).size.positive?
+    services_data.pluck('code').uniq.intersect?(SERVICE_HOUR_SERVICES)
   end
 
   def volume_services_included?
     return false if services_data.empty?
 
-    (services_data.pluck('code').uniq & ALLOWED_VOLUME_SERVICES).size.positive?
+    services_data.pluck('code').uniq.intersect?(ALLOWED_VOLUME_SERVICES)
   end
 
   def sanitize_string_for_excel(string)
