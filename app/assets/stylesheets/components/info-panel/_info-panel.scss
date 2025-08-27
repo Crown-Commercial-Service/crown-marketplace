@@ -1,5 +1,6 @@
 .ccs-info-panel {
-  background-color: ccs-colour("light-grey");
+  border: 1px ccs-colour("light-green") solid;
+  border-top: govuk-spacing(1) ccs-colour("light-green") solid;
   padding: govuk-spacing(3);
   margin: 0 0 govuk-spacing(7) 0;
 
