@@ -24,15 +24,21 @@ module HeaderNavigationLinksHelper
       }
     else
       if params[:service] == 'facilities_management'
+        sign_up_path = "#{service_path_base}/sign-up"
+
         navigation_links << {
           text: t('header_navigation_links_helper.sign_up'),
-          href: "#{service_path_base}/sign-up"
+          href: sign_up_path,
+          active: current_page?(sign_up_path)
         }
       end
 
+      sign_in_path = "#{service_path_base}/sign-in"
+
       navigation_links << {
         text: t('header_navigation_links_helper.sign_in'),
-        href: "#{service_path_base}/sign-in"
+        href: sign_in_path,
+        active: current_page?(sign_in_path)
       }
     end
 
@@ -53,7 +59,7 @@ module HeaderNavigationLinksHelper
                           facilities_management_navigation_link
                         end
 
-    navigation_links.compact
+    navigation_links.compact + service_authentication_links
   end
 
   def crown_marketplace_navigation_link

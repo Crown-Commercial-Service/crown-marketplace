@@ -7,7 +7,7 @@
         "@types/jquery": "^3.5.33",
         "@types/js-cookie": "^3.0.6",
         "@types/rails__request.js": "^0.0.1",
-        "ccs-frontend": "^1.4.1",
+        "ccs-frontend": "^2.0.1",
         "govuk-frontend": "^5.11.2",
         "jquery": "^3.7.1",
         "js-cookie": "^3.0.5",
@@ -141,7 +141,7 @@
 
     "callsites": ["callsites@3.1.0", "", {}, "sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ=="],
 
-    "ccs-frontend": ["ccs-frontend@1.4.1", "", { "peerDependencies": { "govuk-frontend": "^5.10.0", "jquery": "^3.x" } }, "sha512-dLg0GgJicg+OsGzCofjckYhht8zhD+A/qS6hkJgGg5amIQ2m4WDU+sB4p7CkOX/mooqil8MDdIdcRwtXoydzRw=="],
+    "ccs-frontend": ["ccs-frontend@2.0.1", "", { "peerDependencies": { "govuk-frontend": "^5.11.2", "jquery": "^3.x" } }, "sha512-5NiHYL/b1qQl0AAIdzYureDBrIozlHrZ1DVZCweXYdIwDEYYWQW3jjHwzEFsfEzprUR0aZIT4stitLYpf9GXyQ=="],
 
     "chalk": ["chalk@4.1.2", "", { "dependencies": { "ansi-styles": "^4.1.0", "supports-color": "^7.1.0" } }, "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA=="],
 

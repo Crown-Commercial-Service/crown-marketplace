@@ -53,7 +53,7 @@ When('I navigate to the procurement {string}') do |contract_name|
 end
 
 Then('I am on a {string} page') do |option|
-  expect(page.find('.ccs-header__link--service-name')).to have_content(PAGE_HEADING[option])
+  expect(page.find('.govuk-service-navigation__service-name')).to have_content(PAGE_HEADING[option])
 end
 
 Then('I show all sections') do
