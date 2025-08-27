@@ -1,5 +1,5 @@
 <%= content_for :page_title, t(".heading.#{@lot_data_type}", lot_code: @lot_code) %>
-<%= admin_breadcrumbs(
+<% admin_breadcrumbs(
   { text: t('facilities_management.rm6232.admin.supplier_data.index.heading'), href: facilities_management_rm6232_admin_supplier_data_path },
   { text: t('facilities_management.rm6232.admin.supplier_lot_data.show.heading'), href:  facilities_management_rm6232_admin_supplier_lot_datum_path(id: @supplier.id) },
   { text: t(".heading.#{@lot_data_type}", lot_code: @lot_code) }

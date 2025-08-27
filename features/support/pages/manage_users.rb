@@ -40,7 +40,7 @@ module Pages
       sections :rows, UserAccountsRow, 'tbody > tr'
     end
 
-    element :view_user_warning, '#main-content > div:nth-child(3) > div > div > strong'
+    element :view_user_warning, '#main-content > div:nth-child(1) > div > div > strong'
     element :resend_temporary_password_button, '#resend-temporary-password-button'
 
     section :view_user_summary, 'dl.govuk-summary-list' do

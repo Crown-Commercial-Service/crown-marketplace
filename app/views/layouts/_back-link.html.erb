@@ -1,1 +1,1 @@
-<%= govuk_back_link(@back_text || t('layouts.application.back'), @back_path, attributes: { aria: { label: t('layouts.application.back_aria_label') } }) %>
+<%= govuk_back_link(@back_text || t('layouts.application.back'), @back_path, attributes: { aria: { label: t('layouts.application.back_aria_label') } }) if @back_path.present? %>
