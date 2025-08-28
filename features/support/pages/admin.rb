@@ -19,7 +19,7 @@ module Pages
       section :'Full address', SupplierDetailsSection, :xpath, '//dl/div/dt[@class="govuk-summary-list__key"][text()="Full address"]/..'
     end
 
-    element :management_report_date, '#main-content > div:nth-child(4) > div > p:nth-child(2)'
-    elements :management_reports, '#main-content > div:nth-child(5) > div > table > tbody > tr'
+    element :management_report_date, '#main-content > div:nth-child(2) > div > p:nth-child(2)'
+    elements :management_reports, '#main-content > div:nth-child(3) > div > table > tbody > tr'
   end
 end

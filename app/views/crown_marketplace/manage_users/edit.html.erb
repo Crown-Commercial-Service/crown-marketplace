@@ -1,5 +1,5 @@
 <%= content_for :page_title, t('.heading', section: t("crown_marketplace.manage_users.edit_partials.#{section}.section")) %>
-<%= crown_marketplace_breadcrumbs(
+<% crown_marketplace_breadcrumbs(
   { text: t('crown_marketplace.manage_users.index.heading'), href: crown_marketplace_manage_users_path },
   { text: t('crown_marketplace.manage_users.show.heading'), href: crown_marketplace_manage_user_path },
   { text: t('.heading', section: t("crown_marketplace.manage_users.edit_partials.#{section}.section")) }

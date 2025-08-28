@@ -11,7 +11,7 @@ module Pages::RM6232
 
     element :sub_lot, '#procurement-sub-lot'
 
-    section :selection_summary, '#main-content > div:nth-child(3) > div.govuk-grid-column-one-third' do
+    section :selection_summary, '#main-content > div:nth-child(2) > div.govuk-grid-column-one-third' do
       section :services, SummarySection, 'div.ccs-summary-box:nth-of-type(1)'
       section :regions, SummarySection, 'div.ccs-summary-box:nth-of-type(2)'
 
@@ -21,7 +21,7 @@ module Pages::RM6232
       end
     end
 
-    section :results_container, '#main-content > div:nth-child(3) > div.govuk-grid-column-two-thirds > ul' do
+    section :results_container, '#main-content > div:nth-child(2) > div.govuk-grid-column-two-thirds > ul' do
       elements :suppliers, 'li'
     end
 

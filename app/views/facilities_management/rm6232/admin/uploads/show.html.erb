@@ -1,5 +1,5 @@
 <%= content_for :page_title, t('.heading', number: @upload.short_uuid) %>
-<%= admin_breadcrumbs(
+<% admin_breadcrumbs(
   { text: t('facilities_management.rm6232.admin.supplier_data.index.heading'), href: facilities_management_rm6232_admin_supplier_data_path },
   { text: t('facilities_management.rm6232.admin.uploads.index.heading'), href: facilities_management_rm6232_admin_uploads_path },
   { text: t('.heading', number: @upload.short_uuid) }

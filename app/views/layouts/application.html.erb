@@ -33,21 +33,20 @@
     <% end %>
 
     <div id="wrapper">
-      <%= govuk_skip_link(t('.skip'), '#main-content')%>
+      <%= govuk_skip_link(t('.skip'), '#main-content') %>
       <%= render partial: '/layouts/cookie-banner' unless cookie_preferences_settings['settings_viewed'] || controller.action_name == 'cookie_settings' %>
       <%= render partial: '/layouts/header' %>
+      <%= render partial: '/layouts/service-navigation' %>
 
-      <main class="govuk-width-container govuk-!-margin-bottom-6" role="main">
+      <div class="govuk-width-container">
         <%= render partial: '/layouts/phase-banner' %>
+        <%= render partial: '/layouts/back-link' %>
+        <%= breadcrumbs %>
 
-        <div id="main-content" >
-          <div class="back-button-wrapper govuk-!-margin-top-3 govuk-!-margin-bottom-7">
-            <%= render(partial: '/layouts/back-link') if @back_path.present? %>
-          </div>
-
+        <main id="main-content" class="govuk-main-wrapper" role="main">
           <%= yield %>
-        </div>
-      </main>
+        </main>
+      </div>
 
       <%= render partial: '/layouts/footer' %>
     </div>

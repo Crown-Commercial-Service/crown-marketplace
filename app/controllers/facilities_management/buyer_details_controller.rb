@@ -2,6 +2,8 @@ module FacilitiesManagement
   class BuyerDetailsController < FacilitiesManagement::FrameworkController
     before_action :set_buyer_detail
     before_action :redirect_to_buyer_detail, except: %i[edit edit_address update]
+    before_action :set_back_path, only: :edit
+    before_action :set_back_path_edit_address, only: :edit_address
 
     def edit; end
 
@@ -37,8 +39,10 @@ module FacilitiesManagement
     def render_template(context)
       case context
       when :update
+        set_back_path
         :edit
       when :update_address
+        set_back_path_edit_address
         :edit_address
       end
     end
@@ -67,6 +71,18 @@ module FacilitiesManagement
 
     def context_from_params
       params[:context].try(:to_sym) || :update
+    end
+
+    def set_back_path
+      return if current_user.nil? || current_user.fm_buyer_details_incomplete?
+
+      @back_path = facilities_management_index_path
+      @back_text = t('facilities_management.buyer_details.edit.back')
+    end
+
+    def set_back_path_edit_address
+      @back_path = edit_facilities_management_buyer_detail_path(params[:framework], @buyer_detail)
+      @back_text = t('facilities_management.buyer_details.edit_address.back')
     end
   end
 end
