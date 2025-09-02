@@ -12,6 +12,6 @@ Feature: Supplier details
     Then I am on the '<page>' page
 
     Examples:
-      | text              | page                            |
-      | Home              | RM3830 administration dashboard |
-      | Supplier details  | Supplier details                |
+      | text             | page                            |
+      | Home             | RM3830 administration dashboard |
+      | Supplier details | Supplier details                |

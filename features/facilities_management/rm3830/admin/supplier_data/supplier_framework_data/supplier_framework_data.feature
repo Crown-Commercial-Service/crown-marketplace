@@ -17,13 +17,13 @@ Feature: Supplier framework data
     Then I am on the 'Supplier framework data' page
 
     Examples:
-      | lot | supplier            | page                                        | text                              |
-      | 1a  | Cartwright and Sons | Sub-lot 1a services, prices, and variances  | Supplier framework data           |
-      | 1a  | Cartwright and Sons | Sub-lot 1a services, prices, and variances  | Return to supplier framework data |
-      | 1b  | Graham-Farrell      | Sub-lot 1b services                         | Supplier framework data           |
-      | 1b  | Graham-Farrell      | Sub-lot 1b services                         | Return to supplier framework data |
-      | 1c  | Smitham-Brown       | Sub-lot 1c services                         | Supplier framework data           |
-      | 1c  | Smitham-Brown       | Sub-lot 1c services                         | Return to supplier framework data |
+      | lot | supplier            | page                                       | text                              |
+      | 1a  | Cartwright and Sons | Sub-lot 1a services, prices, and variances | Supplier framework data           |
+      | 1a  | Cartwright and Sons | Sub-lot 1a services, prices, and variances | Return to supplier framework data |
+      | 1b  | Graham-Farrell      | Sub-lot 1b services                        | Supplier framework data           |
+      | 1b  | Graham-Farrell      | Sub-lot 1b services                        | Return to supplier framework data |
+      | 1c  | Smitham-Brown       | Sub-lot 1c services                        | Supplier framework data           |
+      | 1c  | Smitham-Brown       | Sub-lot 1c services                        | Return to supplier framework data |
 
   Scenario Outline: Return links for the region pages
     And select 'Regions' for sublot '<lot>' for '<supplier>'
@@ -32,10 +32,10 @@ Feature: Supplier framework data
     Then I am on the 'Supplier framework data' page
 
     Examples:
-      | lot | supplier            | page                | text                              |
-      | 1a  | Cartwright and Sons | Sub-lot 1a regions  | Supplier framework data           |
-      | 1a  | Cartwright and Sons | Sub-lot 1a regions  | Return to supplier framework data |
-      | 1b  | Graham-Farrell      | Sub-lot 1b regions  | Supplier framework data           |
-      | 1b  | Graham-Farrell      | Sub-lot 1b regions  | Return to supplier framework data |
-      | 1c  | Smitham-Brown       | Sub-lot 1c regions  | Supplier framework data           |
-      | 1c  | Smitham-Brown       | Sub-lot 1c regions  | Return to supplier framework data |
+      | lot | supplier            | page               | text                              |
+      | 1a  | Cartwright and Sons | Sub-lot 1a regions | Supplier framework data           |
+      | 1a  | Cartwright and Sons | Sub-lot 1a regions | Return to supplier framework data |
+      | 1b  | Graham-Farrell      | Sub-lot 1b regions | Supplier framework data           |
+      | 1b  | Graham-Farrell      | Sub-lot 1b regions | Return to supplier framework data |
+      | 1c  | Smitham-Brown       | Sub-lot 1c regions | Supplier framework data           |
+      | 1c  | Smitham-Brown       | Sub-lot 1c regions | Return to supplier framework data |

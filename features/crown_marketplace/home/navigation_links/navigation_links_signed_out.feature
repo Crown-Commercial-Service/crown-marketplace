@@ -3,7 +3,7 @@ Feature: Navigation links when signed out
   Background: Crown Marketplace admin on sign in page
     Given I go to the crown marketplace start page
 
-  Scenario: Sign in page 
+  Scenario: Sign in page
     And I should see the following navigation links:
       | Sign in |
 

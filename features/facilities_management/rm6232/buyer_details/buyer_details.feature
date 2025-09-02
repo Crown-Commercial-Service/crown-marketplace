@@ -4,11 +4,11 @@ Feature: Buyer details
   Background: Navigate to Buyer Details page
     Given I sign in without details for 'RM6232'
     And I enter the following details into the form:
-      | Name              | Testy McTestface  |
-      | Job title         | Tester            |
-      | Telephone number  | 01610161016       |
-      | Organisation name | Feel Good inc.    |
-      | Postcode          | ST16 1AA          |
+      | Name              | Testy McTestface |
+      | Job title         | Tester           |
+      | Telephone number  | 01610161016      |
+      | Organisation name | Feel Good inc.   |
+      | Postcode          | ST16 1AA         |
     And I check 'Local Community and Housing' for the sector
     And I check 'No' for being contacted
 
@@ -20,13 +20,13 @@ Feature: Buyer details
     And I click on 'Manage my details'
     Then I am on the 'Manage your details' page
     And the following buyer details have been entered:
-      | Name                  | Testy McTestface                                |
-      | Job title             | Tester                                          |
-      | Telephone number      | 01610161016                                     |
-      | Organisation name     | Feel Good inc.                                  |
-      | Organisation address  | The Goods Shed, Newport Road, Stafford ST16 1AA |
-      | Sector                | Local Community and Housing                     |
-      | Contact opt in        | No                                              |
+      | Name                 | Testy McTestface                                |
+      | Job title            | Tester                                          |
+      | Telephone number     | 01610161016                                     |
+      | Organisation name    | Feel Good inc.                                  |
+      | Organisation address | The Goods Shed, Newport Road, Stafford ST16 1AA |
+      | Sector               | Local Community and Housing                     |
+      | Contact opt in       | No                                              |
 
   Scenario: Save details for the buyer - add address manually
     And I click on 'Find address'
@@ -43,10 +43,10 @@ Feature: Buyer details
     And I click on 'Manage my details'
     Then I am on the 'Manage your details' page
     And the following buyer details have been entered:
-      | Name                  | Testy McTestface                      |
-      | Job title             | Tester                                |
-      | Telephone number      | 01610161016                           |
-      | Organisation name     | Feel Good inc.                        |
-      | Organisation address  | 112 Test street, Westminister AA1 1AA |
-      | Sector                | Local Community and Housing           |
-      | Contact opt in        | No                                    |
+      | Name                 | Testy McTestface                      |
+      | Job title            | Tester                                |
+      | Telephone number     | 01610161016                           |
+      | Organisation name    | Feel Good inc.                        |
+      | Organisation address | 112 Test street, Westminister AA1 1AA |
+      | Sector               | Local Community and Housing           |
+      | Contact opt in       | No                                    |

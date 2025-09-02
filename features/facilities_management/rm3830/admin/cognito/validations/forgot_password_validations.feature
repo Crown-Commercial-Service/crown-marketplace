@@ -14,10 +14,10 @@ Feature: Forgot my password - RM3830 - Admin - Validations
       | Enter your email address in the correct format, like name@example.com |
 
     Examples:
-      | value           |
-      |                 |
-      | fake@email      |
-      | fake email      |
+      | value      |
+      |            |
+      | fake@email |
+      | fake email |
 
   Scenario: I forgot my password - user not found
     And I cannot reset my password becaue of the 'user not found' error
@@ -27,7 +27,7 @@ Feature: Forgot my password - RM3830 - Admin - Validations
     And I cannot reset my password becaue of the '<error>' error
     Then I should see the following error messages:
       | <error_message> |
-    
+
     Examples:
       | error             | error_message                                                         |
       | invalid parameter | Enter your email address in the correct format, like name@example.com |

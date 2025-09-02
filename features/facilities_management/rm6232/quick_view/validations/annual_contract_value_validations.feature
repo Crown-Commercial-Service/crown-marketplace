@@ -1,5 +1,5 @@
 Feature: Annual contract cost validations
-  
+
   Scenario Outline: validations for the annual contract cost
     Given I sign in and navigate to my account for 'RM6232'
     And I click on 'Search for suppliers'
@@ -9,7 +9,7 @@ Feature: Annual contract cost validations
     And I click on 'Continue'
     Then I am on the 'Regions' page
     Then I select the following items:
-      | Tees Valley and Durham  |
+      | Tees Valley and Durham |
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '<value>' for the annual contract cost

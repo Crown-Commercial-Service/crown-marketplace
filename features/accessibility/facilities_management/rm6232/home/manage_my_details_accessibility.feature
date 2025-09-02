@@ -12,7 +12,7 @@ Feature: Buildings
   Scenario: Manage your details add address
     And I change my contact detail address
     And I enter the following details into the form:
-      | Postcode  | ST16 1AA  |
+      | Postcode | ST16 1AA |
     And I click on 'Find address'
     And I click on 'Enter address manually, if you can’t find address'
     Then I am on the 'Add address' page

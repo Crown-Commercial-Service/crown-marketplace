@@ -11,8 +11,8 @@ Feature: Information appears correctly on results page
     And I click on 'Continue'
     Then I am on the 'Regions' page
     Then I select the following items:
-      | Tees Valley and Durham  |
-      | Essex                   |
+      | Tees Valley and Durham |
+      | Essex                  |
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '123456' for the annual contract cost
@@ -24,10 +24,10 @@ Feature: Information appears correctly on results page
       | Planned / Group re-lamping service                          |
       | Building Information Modelling and Government Soft Landings |
     And I should see the following 'regions' in the selection summary:
-      | Tees Valley and Durham  |
-      | Essex                   |
+      | Tees Valley and Durham |
+      | Essex                  |
     And I should see the following 'annual contract cost' in the selection summary:
-      | £123,456  |
+      | £123,456 |
 
   Scenario: I can change the services from the results page
     Given I change the 'services' from the selection summary
@@ -51,7 +51,7 @@ Feature: Information appears correctly on results page
     Given I change the 'regions' from the selection summary
     Then I am on the 'Regions' page
     And I deselect the following items:
-      | Tees Valley and Durham  |
+      | Tees Valley and Durham |
     And I select 'Gloucestershire, Wiltshire and Bristol/Bath area'
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
@@ -59,8 +59,8 @@ Feature: Information appears correctly on results page
     Then I am on the 'Results' page
     And I should be in sub-lot '2a'
     And I should see the following 'regions' in the selection summary:
-      | Essex                                             |
-      | Gloucestershire, Wiltshire and Bristol/Bath area  |
+      | Essex                                            |
+      | Gloucestershire, Wiltshire and Bristol/Bath area |
 
   Scenario: I can change the annual contract cost from the results page
     Given I change the 'annual contract cost' from the selection summary
@@ -70,8 +70,7 @@ Feature: Information appears correctly on results page
     Then I am on the 'Results' page
     And I should be in sub-lot '2c'
     And I should see the following 'annual contract cost' in the selection summary:
-      | £123,456,789  |
-
+      | £123,456,789 |
 
   Scenario: Save and continue to 'What do I do next?'
     Then I enter 'Agnis search' into the contract name field
