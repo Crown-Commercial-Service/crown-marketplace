@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::DirectAwardDeliverablesMatrix do
   include ActionView::Helpers::NumberHelper
-  extend APIRequestStubs
 
   subject(:wb) do
     spreadsheet_builder = described_class.new(contract.id)
@@ -84,8 +83,6 @@ RSpec.describe FacilitiesManagement::RM3830::DirectAwardDeliverablesMatrix do
 
   context 'when contract is sent' do
     let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
-
-    stub_bank_holiday_json
 
     before do
       allow(FacilitiesManagement::GovNotifyNotification).to receive(:perform_async).and_return(nil)

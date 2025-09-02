@@ -1,0 +1,61 @@
+id,position,position_type
+1,Partner,
+2,"Senior Solicitor, Senior Associate",
+3,"Solicitor, Associate",
+4,"NQ Solicitor/Associate, Junior Solicitor/Associate",
+5,Trainee,
+6,"Paralegal, Legal Assistant",
+7,"LMP (Legal project manager)",
+8,junior,
+9,standard,
+10,senior,
+11,principal,
+12,managing,
+13,director,
+14,junior,Advice
+15,standard,Advice
+16,senior,Advice
+17,principal,Advice
+18,managing,Advice
+19,director,Advice
+20,junior,Delivery
+21,standard,Delivery
+22,senior,Delivery
+23,principal,Delivery
+24,managing,Delivery
+25,director,Delivery
+26,junior,Complex
+27,standard,Complex
+28,senior,Complex
+29,principal,Complex
+30,managing,Complex
+31,director,Complex
+32,junior,Non-Complex
+33,standard,Non-Complex
+34,senior,Non-Complex
+35,principal,Non-Complex
+36,managing,Non-Complex
+37,director,Non-Complex
+38,over_12_week,
+39,nominated,
+40,fixed_term,
+41,teacher,daily
+42,support,daily
+43,senior,daily
+44,other,daily
+45,agency_management,daily
+46,teacher,six_weeks_plus
+47,support,six_weeks_plus
+48,senior,six_weeks_plus
+49,other,six_weeks_plus
+50,agency_management,six_weeks_plus
+51,Legal Director/Counsel or equivalent,
+52,"Senior Solicitor, Senior Associate/Senior Legal Executive",
+53,"Solicitor, Associate/Legal Executive",
+54,"NQ Solicitor/Associate, Junior Solicitor/Associate/Legal Executive",
+55,Trainee/Legal Apprentice,
+56,"Senior Counsel, Senior Partner (20 years +PQE)",
+57,Senior Analyst,
+58,"Analyst, Associate Analyst, Research Associate, Research Officer",
+59,"Senior Modeller, Senior Econometrician, Senior Analyst",
+60,"Modeller, Econometrician, Analyst, Associate Analyst",

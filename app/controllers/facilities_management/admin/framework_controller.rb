@@ -41,7 +41,7 @@ module FacilitiesManagement
       end
 
       def set_framework_has_expired
-        @framework_has_expired = Framework.find_by(framework: params[:framework]).status == :expired
+        @framework_has_expired = Framework.find(params[:framework]).status == :expired
       end
     end
   end
