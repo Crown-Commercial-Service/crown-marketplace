@@ -21,4 +21,3 @@ Feature: Crown Marketplace admin footer links - signed in
     Then I am on the 'Facilities Management (FM) Accessibility statement' page
     And I click on 'Crown Marketplace dashboard'
     Then I am on the 'Crown Marketplace dashboard' page
-

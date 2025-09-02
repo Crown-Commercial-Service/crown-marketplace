@@ -19,8 +19,8 @@ Feature: Supplier status
 
   Scenario Outline: Change supplier status removes it from the results
     Given I go to a quick view with the following services, regions and annual contract cost:
-      | F.2  | UKH3  | 654321 |
-      | L.1  | UKK1  |        |
+      | F.2 | UKH3 | 654321 |
+      | L.1 | UKK1 |        |
     And I 'should' see the supplier '<supplier_name>' in the results
     Given I go to the admin dashboard for 'RM6232'
     And I click on 'Supplier data'
@@ -33,13 +33,12 @@ Feature: Supplier status
     And I click on 'Save and return'
     Then I am on the 'Supplier details' page
     Given I go to a quick view with the following services, regions and annual contract cost:
-      | F.2  | UKH3  | 654321 |
-      | L.1  | UKK1  |        |
-    Then I 'should not' see the supplier '<supplier_name>' in the results 
+      | F.2 | UKH3 | 654321 |
+      | L.1 | UKK1 |        |
+    Then I 'should not' see the supplier '<supplier_name>' in the results
 
     Examples:
-      | supplier_name             |
-      | Conn, Hayes and Lakin     |
-      | Jenkins, Price and White  |
-      | Turner-Pouros             |
-  
+      | supplier_name            |
+      | Conn, Hayes and Lakin    |
+      | Jenkins, Price and White |
+      | Turner-Pouros            |

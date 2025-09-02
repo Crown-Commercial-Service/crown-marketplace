@@ -5,11 +5,11 @@ Feature: Results validations
     And I click on 'Search for suppliers'
     Then I am on the 'Services' page
     Then I select the following items:
-      | Mechanical and Electrical Engineering Maintenance           |
+      | Mechanical and Electrical Engineering Maintenance |
     And I click on 'Continue'
     Then I am on the 'Regions' page
     Then I select the following items:
-      | Essex                   |
+      | Essex |
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '123456' for the annual contract cost
@@ -19,8 +19,8 @@ Feature: Results validations
   Scenario: Contract name and linkt to PFI is blank
     Given I click on 'Save and continue'
     Then I should see the following error messages:
-      | Enter your contract name                          |
-      | Select one option for requirements linked to PFI  |
+      | Enter your contract name                         |
+      | Select one option for requirements linked to PFI |
 
   Scenario: Contract name is taken
     Given I have a procurement with the name 'Taken contract name'
@@ -28,4 +28,4 @@ Feature: Results validations
     And I choose the 'Yes' radio button
     And I click on 'Save and continue'
     Then I should see the following error messages:
-      | This contract name is already in use  |
+      | This contract name is already in use |

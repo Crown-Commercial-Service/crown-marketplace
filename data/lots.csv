@@ -1,0 +1,38 @@
+id,framework_id,number,name
+RM6240.1a,RM6240,1a,Full service provision
+RM6240.1b,RM6240,1b,Full service provision
+RM6240.1c,RM6240,1c,Full service provision
+RM6240.2a,RM6240,2a,General service provision
+RM6240.2b,RM6240,2b,General service provision
+RM6240.2c,RM6240,2c,General service provision
+RM6240.3,RM6240,3,Transport rail legal services
+RM6187.1,RM6187,1,Business
+RM6187.2,RM6187,2,Strategy and Policy
+RM6187.3,RM6187,3,Complex and Transformation
+RM6187.4,RM6187,4,Finance
+RM6187.5,RM6187,5,HR
+RM6187.6,RM6187,6,Procurement and Supply Chain
+RM6187.7,RM6187,7,"Health, Social Care and Community"
+RM6187.8,RM6187,8,Infrastructure including Transport
+RM6187.9,RM6187,9,Environmental Sustainability and Socio-economic Development
+RM6309.1,RM6309,1,Business
+RM6309.2,RM6309,2,Strategy and Policy
+RM6309.3,RM6309,3,Complex and Transformation
+RM6309.4,RM6309,4,Finance
+RM6309.5,RM6309,5,HR
+RM6309.6,RM6309,6,Procurement and Supply Chain
+RM6309.7,RM6309,7,"Health, Social Care and Community"
+RM6309.8,RM6309,8,Infrastructure
+RM6309.9,RM6309,9,Environment and Sustainability
+RM6309.10,RM6309,10,Restructuring and insolvency
+RM6238.1,RM6238,1,Direct provision
+RM6238.2.1,RM6238,2.1,Master vendor (less than 2.5 million)
+RM6238.2.2,RM6238,2.2,Master vendor (more than 2.5 million)
+RM6238.4,RM6238,4,Education technology platforms
+RM6360.1,RM6360,1,Core Legal Services
+RM6360.2,RM6360,2,Major Projects and Complex Advice
+RM6360.3,RM6360,3,Finance and High Risk/Innovation
+RM6360.4a,RM6360,4a,Trade and Investment Negotiations
+RM6360.4b,RM6360,4b,International Trade Disputes
+RM6360.4c,RM6360,4c,International Investment Disputes
+RM6360.5,RM6360,5,Rail Legal Services

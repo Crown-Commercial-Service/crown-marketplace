@@ -17,14 +17,14 @@ Feature: Allow list - User admin - Remove email domain
     Then I am on the 'Allow list' page
     And the email domian 'example.com' has been succesffuly removed
     And the following email domains are in the list:
-      | email.com     |
-      | test.com      |
+      | email.com |
+      | test.com  |
 
   Scenario: Return links work
     Given I click on '<text>'
     Then I am on the 'Allow list' page
 
     Examples:
-      | text                      |
-      | Return to the allow list  |
-      | Allow list                |
+      | text                     |
+      | Return to the allow list |
+      | Allow list               |

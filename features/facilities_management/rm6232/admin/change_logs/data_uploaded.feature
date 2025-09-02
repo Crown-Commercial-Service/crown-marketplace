@@ -13,8 +13,8 @@ Feature: Change log for data uploads
     And I click on log number 2
     Then I am on the 'Supplier data upload' page
     And the following content should be displayed on the page:
-      | This upload was created via a deployment to the application.    |
-      | You can get the data that was used by speaking to a developer.  |
+      | This upload was created via a deployment to the application.   |
+      | You can get the data that was used by speaking to a developer. |
     Then I click on 'Supplier data change log'
     And I am on the 'Supplier data change log' page
     And I click on log number 1

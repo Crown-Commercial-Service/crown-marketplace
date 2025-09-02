@@ -17,35 +17,35 @@ Feature: Buyer details - validations
   @javascript
   Scenario Outline: Add address - frontend
     And I enter the following details into the form:
-      | Postcode  | <postcode>  |
+      | Postcode | <postcode> |
     And I click on 'Find address'
     Then I should see the postcode error message for buyer details
 
     Examples:
-      | postcode  |
-      |           |
-      | test      |
+      | postcode |
+      |          |
+      | test     |
 
   Scenario: Add address - backend
     And I enter the following details into the form:
-      | Name              | Testy McTestface  |
-      | Job title         | Tester            |
-      | Telephone number  | 01610161016       |
-      | Organisation name | Feel Good inc.    |
-      | Postcode          | test              |
+      | Name              | Testy McTestface |
+      | Job title         | Tester           |
+      | Telephone number  | 01610161016      |
+      | Organisation name | Feel Good inc.   |
+      | Postcode          | test             |
     And I check 'Defence and Security' for the sector
     And I check 'Yes' for being contacted
     And I click on 'Save and continue'
     Then I should see the following error messages:
-      | Enter a valid postcode, for example SW1A 1AA  |
+      | Enter a valid postcode, for example SW1A 1AA |
 
   Scenario: Select address
     And I enter the following details into the form:
-      | Name              | Testy McTestface  |
-      | Job title         | Tester            |
-      | Telephone number  | 01610161016       |
-      | Organisation name | Feel Good inc.    |
-      | Postcode          | ST16 1AA          |
+      | Name              | Testy McTestface |
+      | Job title         | Tester           |
+      | Telephone number  | 01610161016      |
+      | Organisation name | Feel Good inc.   |
+      | Postcode          | ST16 1AA         |
     And I check 'Defence and Security' for the sector
     And I check 'Yes' for being contacted
     And I click on 'Save and continue'
@@ -54,19 +54,19 @@ Feature: Buyer details - validations
 
   Scenario: Add Address manually - nothing entered
     And I enter the following details into the form:
-      | Postcode  | ST16 1AA  |
+      | Postcode | ST16 1AA |
     And I click on 'Find address'
     And I click on 'Enter address manually, if you can’t find address'
     Then I am on the 'Add address' page
     And I click on 'Save and continue'
     Then I should see the following error messages:
-      | Enter your building or street name            |
-      | Enter your town or city                       |
-      | Enter a valid postcode, for example SW1A 1AA  |
+      | Enter your building or street name           |
+      | Enter your town or city                      |
+      | Enter a valid postcode, for example SW1A 1AA |
 
   Scenario Outline: Add Address manually - postcode validation
     And I enter the following details into the form:
-      | Postcode  | ST16 1AA  |
+      | Postcode | ST16 1AA |
     And I click on 'Find address'
     And I click on 'Enter address manually, if you can’t find address'
     Then I am on the 'Add address' page
@@ -76,9 +76,9 @@ Feature: Buyer details - validations
       | Postcode            | <postocde>      |
     And I click on 'Save and continue'
     Then I should see the following error messages:
-      | Enter a valid postcode, for example SW1A 1AA  |
+      | Enter a valid postcode, for example SW1A 1AA |
 
     Examples:
-      | postocde  |
-      |           |
-      | toast     |
+      | postocde |
+      |          |
+      | toast    |

@@ -8,29 +8,29 @@ Feature: Change log for supplier regions
     And I change the 'regions' for lot '2b'
     Then I am on the 'Lot 2b regions' page
     And I select the following items:
-      | Northumberland and Tyne and Wear  |
-      | West Midlands (county)            |
-      | Surrey, East and West Sussex      |
+      | Northumberland and Tyne and Wear |
+      | West Midlands (county)           |
+      | Surrey, East and West Sussex     |
     And I deselect the following items:
-      | Tees Valley and Durham  |
-      | Flintshire and Wrexham  |
-      | Shetland Islands        |
+      | Tees Valley and Durham |
+      | Flintshire and Wrexham |
+      | Shetland Islands       |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
     And I change the 'regions' for lot '3b'
     Then I am on the 'Lot 3b regions' page
     And I select the following items:
-      | Cumbria     |
-      | Cheshire    |
-      | Merseyside  |
+      | Cumbria    |
+      | Cheshire   |
+      | Merseyside |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
     And I change the 'regions' for lot '2c'
     Then I am on the 'Lot 2c regions' page
     And I deselect the following items:
-      | East Anglia                     |
-      | Bedfordshire and Hertfordshire  |
-      | Essex                           |
+      | East Anglia                    |
+      | Bedfordshire and Hertfordshire |
+      | Essex                          |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
     And I click on 'Home'
@@ -50,13 +50,13 @@ Feature: Change log for supplier regions
     And the change was made by 'me'
     And the change was made in lot '2b'
     And the following items were added:
-      | Northumberland and Tyne and Wear  |
-      | West Midlands (county)            |
-      | Surrey, East and West Sussex      |
+      | Northumberland and Tyne and Wear |
+      | West Midlands (county)           |
+      | Surrey, East and West Sussex     |
     And the following items were removed:
-      | Tees Valley and Durham  |
-      | Flintshire and Wrexham  |
-      | Shetland Islands        | 
+      | Tees Valley and Durham |
+      | Flintshire and Wrexham |
+      | Shetland Islands       |
     Then I click on 'Supplier data change log'
     And I am on the 'Supplier data change log' page
     And I click on log number 2
@@ -65,9 +65,9 @@ Feature: Change log for supplier regions
     And the change was made by 'me'
     And the change was made in lot '3b'
     And the following items were added:
-      | Cumbria     |
-      | Cheshire    |
-      | Merseyside  |
+      | Cumbria    |
+      | Cheshire   |
+      | Merseyside |
     Then I click on 'Supplier data change log'
     And I am on the 'Supplier data change log' page
     And I click on log number 1
@@ -76,6 +76,6 @@ Feature: Change log for supplier regions
     And the change was made by 'me'
     And the change was made in lot '2c'
     And the following items were removed:
-      | East Anglia                     |
-      | Bedfordshire and Hertfordshire  |
-      | Essex                           |
+      | East Anglia                    |
+      | Bedfordshire and Hertfordshire |
+      | Essex                          |

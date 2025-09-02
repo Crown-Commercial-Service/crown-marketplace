@@ -1,9 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe User do
-  subject(:user) { build(:user, :without_detail, confirmed_at:) }
+  describe 'associations' do
+    it { is_expected.to have_many(:searches) }
+    it { is_expected.to have_many(:reports) }
+  end
 
   describe '#confirmed?' do
+    subject(:user) { build(:user, :without_detail, confirmed_at:) }
+
     context 'when confirmed_at blank' do
       let(:confirmed_at) { nil }
 
@@ -22,6 +27,8 @@ RSpec.describe User do
   end
 
   describe '#fm_buyer_details_incomplete?' do
+    subject(:user) { build(:user, :without_detail, confirmed_at:) }
+
     let(:confirmed_at) { Time.zone.now }
 
     context 'when user is buyer without buyer details' do

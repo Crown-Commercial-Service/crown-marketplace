@@ -18,16 +18,16 @@ Feature: Allow list - User admin - Add email domain
     Then I am on the 'Allow list' page
     And the email domian 'new.emai.com' has been succesffuly added
     And the following email domains are in the list:
-      | email.com     |
-      | example.com   |
-      | new.emai.com  |
-      | test.com      |
+      | email.com    |
+      | example.com  |
+      | new.emai.com |
+      | test.com     |
 
   Scenario: Return links work
     Given I click on '<text>'
     Then I am on the 'Allow list' page
 
     Examples:
-      | text                      |
-      | Return to the allow list  |
-      | Allow list                |
+      | text                     |
+      | Return to the allow list |
+      | Allow list               |

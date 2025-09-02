@@ -26,10 +26,10 @@ Feature: Management report  - validations
       | <error_message> |
 
     Examples:
-      | date        | error_message                                 |
-      | tomorrow    | The ‘From’ date must be today or in the past  |
-      | 89/45/0161  | Enter a valid ‘From’ date                     |
-      | a/b/c       | Enter a valid ‘From’ date                     |
+      | date       | error_message                                |
+      | tomorrow   | The ‘From’ date must be today or in the past |
+      | 89/45/0161 | Enter a valid ‘From’ date                    |
+      | a/b/c      | Enter a valid ‘From’ date                    |
 
   Scenario Outline: From date validation
     Given I enter '<date>' as the 'To' date
