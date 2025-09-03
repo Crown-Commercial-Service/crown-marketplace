@@ -56,6 +56,9 @@ class User < ApplicationRecord
            class_name: 'FacilitiesManagement::RM6232::Admin::SupplierData::Edit',
            dependent: :nullify
 
+  has_many :searches, inverse_of: :user, dependent: :destroy
+  has_many :reports, inverse_of: :user, dependent: :destroy
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :trackable and :omniauthable
   devise :registerable, :recoverable, :timeoutable

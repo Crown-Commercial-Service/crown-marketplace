@@ -83,6 +83,21 @@ en:
             live_at:
               blank: Enter a valid 'live at' date
               not_a_date: Enter a valid 'live at' date
+        report:
+          attributes:
+            end_date:
+              date_after_or_equal_to: The ‘To’ date must be the same or after the ‘From’ date
+              date_before_or_equal_to: The ‘To’ date must be today or in the past
+              invalid: Enter a valid ‘To’ date
+              not_a_date: Enter a valid ‘To’ date
+            start_date:
+              date_before_or_equal_to: The ‘From’ date must be today or in the past
+              invalid: Enter a valid ‘From’ date
+              not_a_date: Enter a valid ‘From’ date
+        supplier/framework/lot/branch:
+          attributes:
+            postcode:
+              invalid_postcode: Enter a valid postcode
   base:
     passwords:
       edit:
