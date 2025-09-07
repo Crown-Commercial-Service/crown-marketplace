@@ -23,10 +23,10 @@
     "postinstall": "cp -a node_modules/ccs-frontend/dist/ccs/@types/. node_modules/@types/ccs-frontend && cp node_modules/@types/ccs-frontend/all.d.ts node_modules/@types/ccs-frontend/index.d.ts"
   },
   "devDependencies": {
-    "@eslint/js": "^9.34.0",
+    "@eslint/js": "^9.35.0",
     "@stylistic/eslint-plugin-js": "^4.4.1",
     "@stylistic/eslint-plugin-ts": "^4.4.1",
-    "eslint": "^9.34.0",
-    "typescript-eslint": "^8.41.0"
+    "eslint": "^9.35.0",
+    "typescript-eslint": "^8.42.0"
   }
 }
