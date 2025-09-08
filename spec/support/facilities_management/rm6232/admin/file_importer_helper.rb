@@ -152,7 +152,7 @@ module FacilitiesManagement
                                                             [[], [], []]
                                                           else
                                                             suppliers = suppliers(sheet_name).transpose
-                                                            suppliers + [(['Yes', 'Yes'] + (['No'] * (suppliers.first.length - 2)))]
+                                                            suppliers + [['Yes', 'Yes'] + (['No'] * (suppliers.first.length - 2))]
                                                           end
 
         @package.workbook.add_worksheet(name: sheet_name) do |sheet|
