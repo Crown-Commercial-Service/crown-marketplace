@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.3.0] - 2025-09-11
+
 ### Changed
 
 - Update CCS Frontend with the new CCS branding ([PR 4952](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4952))
