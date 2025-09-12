@@ -12,7 +12,7 @@ Feature: Framwork link
       | which services you want to have provided                                                         |
       | where your buildings are located                                                                 |
       | your current or estimated annual cost                                                            |
-      | View further information about the Facilities Management and Workplace Services framework RM6232 |
+      | View further information about the Facilities Management and Workplace Services framework RM6378 |
       | Start now                                                                                        |
 
     Examples:
