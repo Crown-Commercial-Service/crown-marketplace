@@ -3,6 +3,8 @@ RSpec.describe FacilitiesManagement::RM6232::BuyerAccountController do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM6232' }
 
+  include_context 'and RM6232 is live'
+
   describe 'GET #index' do
     it 'returns http success' do
       get :index

@@ -7,6 +7,8 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SessionsController do
 
   describe 'GET new' do
     context 'when the framework is live' do
+      include_context 'and RM6232 is live'
+
       it 'renders the new page' do
         get :new
 
@@ -15,8 +17,6 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SessionsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM6232 has expired'
-
       it 'renders the new page' do
         get :new
 
@@ -39,6 +39,8 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SessionsController do
     end
 
     context 'when the log in attempt is unsuccessful' do
+      include_context 'and RM6232 is live'
+
       before do
         allow(aws_client).to receive(:initiate_auth).and_raise(exception)
 
@@ -89,6 +91,8 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SessionsController do
 
       # rubocop:disable RSpec/NestedGroups
       context 'and the framework is live' do
+        include_context 'and RM6232 is live'
+
         before do
           post :create, params: { user: { email: email, password: 'Password12345!' } }
           cookies.update(response.cookies)
@@ -119,8 +123,6 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SessionsController do
 
       context 'when the framework is not live' do
         let(:challenge_name) { nil }
-
-        include_context 'and RM6232 has expired'
 
         before do
           post :create, params: { user: { email: email, password: 'Password12345!' } }

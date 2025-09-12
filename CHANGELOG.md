@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add the framework for the new Facilities Management framework (RM6378) ([PR 4970](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4970))
+- Add the generic framework data models ([PR 4958](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4958))
+
 ### Changed
 
 - Update CCS Frontend with the new CCS branding ([PR 4952](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4952))

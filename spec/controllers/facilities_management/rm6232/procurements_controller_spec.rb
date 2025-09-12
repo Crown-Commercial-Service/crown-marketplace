@@ -4,6 +4,8 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM6232' } }
   let(:user) { controller.current_user }
 
+  include_context 'and RM6232 is live'
+
   login_fm_buyer_with_details
 
   context 'without buyer details' do
