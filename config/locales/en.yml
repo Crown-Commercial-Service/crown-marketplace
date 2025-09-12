@@ -146,6 +146,7 @@ en:
           admin:
             RM3830: Sign in to the RM3830 administration dashboard
             RM6232: Sign in to the RM6232 administration dashboard
+            RM6378: Sign in to the RM6378 administration dashboard
           crown_marketplace: Sign in to manage Crown Marketplace
           sign_in: Sign in to your account
         password: Password
