@@ -5,6 +5,8 @@ module FacilitiesManagement
     let(:default_params) { { service: 'facilities_management', framework: framework } }
     let(:framework) { 'RM6232' }
 
+    include_context 'and RM6232 is live'
+
     render_views
 
     describe 'GET edit with buyer' do

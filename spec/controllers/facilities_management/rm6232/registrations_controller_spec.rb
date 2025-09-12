@@ -7,6 +7,8 @@ RSpec.describe FacilitiesManagement::RM6232::RegistrationsController do
 
   describe 'GET new' do
     context 'when the framework is live' do
+      include_context 'and RM6232 is live'
+
       before { get :new }
 
       it 'renders the new page' do
@@ -19,8 +21,6 @@ RSpec.describe FacilitiesManagement::RM6232::RegistrationsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM6232 has expired'
-
       it 'renders the unrecognised framework page with the right http status' do
         get :new
 
@@ -37,6 +37,8 @@ RSpec.describe FacilitiesManagement::RM6232::RegistrationsController do
     let(:password_confirmation) { password }
 
     context 'when the framework is live' do
+      include_context 'and RM6232 is live'
+
       context 'when no exception is raised' do
         before do
           # rubocop:disable RSpec/AnyInstance
@@ -109,8 +111,6 @@ RSpec.describe FacilitiesManagement::RM6232::RegistrationsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM6232 has expired'
-
       it 'renders the unrecognised framework page with the right http status' do
         post :create, params: { user: { email:, password:, password_confirmation: } }
 
@@ -123,6 +123,8 @@ RSpec.describe FacilitiesManagement::RM6232::RegistrationsController do
 
   describe 'GET domain_not_on_safelist' do
     context 'when the framework is live' do
+      include_context 'and RM6232 is live'
+
       it 'renders the new page' do
         get :domain_not_on_safelist
 
@@ -131,8 +133,6 @@ RSpec.describe FacilitiesManagement::RM6232::RegistrationsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM6232 has expired'
-
       it 'renders the unrecognised framework page with the right http status' do
         get :domain_not_on_safelist
 

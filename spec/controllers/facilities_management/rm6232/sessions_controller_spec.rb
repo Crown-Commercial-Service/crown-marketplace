@@ -7,6 +7,8 @@ RSpec.describe FacilitiesManagement::RM6232::SessionsController do
 
   describe 'GET new' do
     context 'when the framework is live' do
+      include_context 'and RM6232 is live'
+
       it 'renders the new page' do
         get :new
 
@@ -15,8 +17,6 @@ RSpec.describe FacilitiesManagement::RM6232::SessionsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM6232 has expired'
-
       it 'renders the unrecognised framework page with the right http status' do
         get :new
 
@@ -40,6 +40,8 @@ RSpec.describe FacilitiesManagement::RM6232::SessionsController do
     end
 
     context 'when the log in attempt is unsuccessful' do
+      include_context 'and RM6232 is live'
+
       before do
         allow(aws_client).to receive(:initiate_auth).and_raise(exception)
 
@@ -82,6 +84,7 @@ RSpec.describe FacilitiesManagement::RM6232::SessionsController do
     end
 
     context 'when the login attempt is successful' do
+      include_context 'and RM6232 is live'
       include_context 'with cognito structs'
 
       let(:username) { user.cognito_uuid }
@@ -126,8 +129,6 @@ RSpec.describe FacilitiesManagement::RM6232::SessionsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM6232 has expired'
-
       it 'renders the unrecognised framework page with the right http status' do
         post :create, params: { user: { email: email, password: 'Password12345!' } }
 
@@ -138,6 +139,8 @@ RSpec.describe FacilitiesManagement::RM6232::SessionsController do
   end
 
   describe 'DELETE destroy' do
+    include_context 'and RM6232 is live'
+
     login_fm_buyer
 
     it 'signs the user out' do

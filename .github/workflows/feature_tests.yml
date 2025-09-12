@@ -60,7 +60,7 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Seed DB with test data
-        run: bin/rails db:static
+        run: bin/rails db:static db:make_rm6232_live
 
       - name: Run feature tests for ${{ matrix.service }}
         run: bin/rails cucumber:${{ matrix.service }}

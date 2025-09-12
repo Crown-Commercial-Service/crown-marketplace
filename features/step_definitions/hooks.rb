@@ -54,13 +54,21 @@ After do
   DatabaseCleaner.clean
   if Framework.none?
     Rake::Task['db:frameworks'].reenable
-    Rake::Task['db:rm3830:fm_supplier_data'].reenable
-    Rake::Task['db:rm3830:add_supplier_rate_cards'].reenable
-    Rake::Task['db:rm6232:import_suppliers'].reenable
+    Rake::Task['db:make_rm6232_live'].reenable
 
     Rake::Task['db:frameworks'].invoke
-    Rake::Task['db:rm3830:fm_supplier_data'].invoke
-    Rake::Task['db:rm3830:add_supplier_rate_cards'].invoke
-    Rake::Task['db:rm6232:import_suppliers'].invoke
+    Rake::Task['db:make_rm6232_live'].invoke
+
+    if @framework == 'RM3830'
+      Rake::Task['db:rm3830:fm_supplier_data'].reenable
+      Rake::Task['db:rm3830:add_supplier_rate_cards'].reenable
+
+      Rake::Task['db:rm3830:fm_supplier_data'].invoke
+      Rake::Task['db:rm3830:add_supplier_rate_cards'].invoke
+    elsif @framework == 'RM6232'
+      Rake::Task['db:rm6232:import_suppliers'].reenable
+
+      Rake::Task['db:rm6232:import_suppliers'].invoke
+    end
   end
 end
