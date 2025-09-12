@@ -27,7 +27,7 @@ Feature: Change log for supplier services
     And I change the 'services' for lot '2c'
     Then I am on the 'Lot 2c services' page
     And I deselect the following items:
-      | E.19 Voice announcement system maintenance  |
+      | E.19 Voice announcement system maintenance |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
     And I click on 'Home'
@@ -53,7 +53,7 @@ Feature: Change log for supplier services
     And the following items were removed:
       | G.8 Cut flowers and Christmas trees                         |
       | I.10 Reactive cleaning (outside cleaning operational hours) |
-      | P.8 Accommodation Stores Service                            |    
+      | P.8 Accommodation Stores Service                            |
     Then I click on 'Supplier data change log'
     And I am on the 'Supplier data change log' page
     And I click on log number 2
@@ -72,4 +72,4 @@ Feature: Change log for supplier services
     And the change was made by 'me'
     And the change was made in lot '2c'
     And the following items were removed:
-      | E.19 Voice announcement system maintenance  |
+      | E.19 Voice announcement system maintenance |

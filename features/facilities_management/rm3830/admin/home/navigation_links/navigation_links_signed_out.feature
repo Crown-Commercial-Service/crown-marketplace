@@ -3,7 +3,7 @@ Feature: Navigation links when signed out
   Background: Admin on sign in page
     Given I go to the facilities management 'RM3830' admin start page
 
-  Scenario: Sign in page 
+  Scenario: Sign in page
     And I should see the following navigation links:
       | Sign in |
 

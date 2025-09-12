@@ -34,12 +34,12 @@ Feature: Start pages
     Then I should sign in as an fm buyer with details
     And I am on the 'Your account' page
     Then the following content should be displayed on the page:
-      | Your account                                                              |
-      | Search for suppliers                                                      |
-      | Find a shortlist of suppliers who can provide services to your locations  |
-      | View your saved searches                                                  |
-      | Open your dashboard to view your previously saved searches                |
-      | Manage my details                                                         |
-      | Update and edit your contact details                                      |
-      | View further information about the Facilities Management and              |
-      | Workplace Services framework RM6232 (opens in a new tab)                  |
+      | Your account                                                             |
+      | Search for suppliers                                                     |
+      | Find a shortlist of suppliers who can provide services to your locations |
+      | View your saved searches                                                 |
+      | Open your dashboard to view your previously saved searches               |
+      | Manage my details                                                        |
+      | Update and edit your contact details                                     |
+      | View further information about the Facilities Management and             |
+      | Workplace Services framework RM6232 (opens in a new tab)                 |

@@ -26,7 +26,7 @@ Feature: Navigation links when signed in
     Then I am on the 'Cookies on Crown Marketplace' page
     And I should see the following navigation links:
       | Admin dashboard |
-      | Sign out      |
+      | Sign out        |
     And I click on 'Admin dashboard'
     And I am on the 'RM6232 administration dashboard' page
 
@@ -58,8 +58,8 @@ Feature: Navigation links when signed in
     And I am on the 'Sign in to the RM6232 administration dashboard' page
 
   Scenario: Admin dashboard - Sign out
-      And I should see the following navigation links:
-      | Sign out      |
+    And I should see the following navigation links:
+      | Sign out |
     And I click on 'Sign out'
     And I am on the 'Sign in to the RM6232 administration dashboard' page
 

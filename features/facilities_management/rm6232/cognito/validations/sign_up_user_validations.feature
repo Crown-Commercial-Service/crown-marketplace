@@ -38,11 +38,11 @@ Feature: Sign up user - RM6232 - Validations
       | <error_message> |
 
     Examples:
-      | password    | error_message                             |
-      | Pass!1      | Password must be 8 characters or more     |
-      | password1!  | Password must include a capital letter    |
-      | Password1   | Password must include a special character |
-      | Password!   | Password must include a number            |
+      | password   | error_message                             |
+      | Pass!1     | Password must be 8 characters or more     |
+      | password1! | Password must include a capital letter    |
+      | Password1  | Password must include a special character |
+      | Password!  | Password must include a number            |
 
   Scenario: Password blank
     Given I enter 'test@test.com' for my email

@@ -13,9 +13,9 @@ Feature: Supplier details
     Then I am on the '<page>' page
 
     Examples:
-      | text              | page                            |
-      | Home              | RM6232 administration dashboard |
-      | Supplier data     | Supplier data                   |
+      | text          | page                            |
+      | Home          | RM6232 administration dashboard |
+      | Supplier data | Supplier data                   |
 
   Scenario: Return links on pages
     And I change the '<supplier_detail>' for the supplier details

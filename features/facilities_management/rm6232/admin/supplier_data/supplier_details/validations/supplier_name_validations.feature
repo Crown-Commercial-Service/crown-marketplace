@@ -17,6 +17,6 @@ Feature: Supplier name - validations
       | <error_message> |
 
     Examples:
-      | supplier_name   | error_message                             |
-      |                 | You must enter a supplier name            |
-      | Satterfield LLC | A supplier with this name already exists  |
+      | supplier_name   | error_message                            |
+      |                 | You must enter a supplier name           |
+      | Satterfield LLC | A supplier with this name already exists |
