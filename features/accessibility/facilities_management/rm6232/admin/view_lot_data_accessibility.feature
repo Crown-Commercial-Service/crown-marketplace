@@ -22,7 +22,7 @@ Feature: View lot data - accessibility
     Then the page should be axe clean
 
     Examples:
-      | lot_number  |
-      | 1           |
-      | 2           |
-      | 3           |
+      | lot_number |
+      | 1          |
+      | 2          |
+      | 3          |

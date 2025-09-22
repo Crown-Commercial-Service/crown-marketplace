@@ -31,8 +31,8 @@ Feature: Results accessibility
     Then I am on the 'Regions' page
     And I show all sections
     Then I select the following items:
-      | Tees Valley and Durham  |
-      | Essex                   |
+      | Tees Valley and Durham |
+      | Essex                  |
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     Then the page should be axe clean
@@ -47,8 +47,8 @@ Feature: Results accessibility
     Then I am on the 'Regions' page
     And I show all sections
     Then I select the following items:
-      | Tees Valley and Durham  |
-      | Essex                   |
+      | Tees Valley and Durham |
+      | Essex                  |
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '123456' for the annual contract cost

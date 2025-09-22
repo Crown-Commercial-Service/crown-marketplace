@@ -17,11 +17,11 @@ Feature: Supplier framework data - Framework expired
     And there is no submit button
 
     Examples:
-      | lot | supplier            | page                                        |
-      | 1a  | Cartwright and Sons | Sub-lot 1a services, prices, and variances  |
-      | 1b  | Graham-Farrell      | Sub-lot 1b services                         |
-      | 1c  | Smitham-Brown       | Sub-lot 1c services                         |
-  
+      | lot | supplier            | page                                       |
+      | 1a  | Cartwright and Sons | Sub-lot 1a services, prices, and variances |
+      | 1b  | Graham-Farrell      | Sub-lot 1b services                        |
+      | 1c  | Smitham-Brown       | Sub-lot 1c services                        |
+
   Scenario Outline: Supplier region data inputs are disabled
     And select 'Regions' for sublot '<lot>' for '<supplier>'
     Then I am on the 'Sub-lot <lot> regions' page

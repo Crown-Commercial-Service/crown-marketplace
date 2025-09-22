@@ -11,10 +11,10 @@ Feature: Allow list - User support - Search allow list
       | test.com    |
     And I enter 'te' into the email domain search
     And the following email domains are in the list:
-      | test.com    |
+      | test.com |
     And I enter 'test.co.uk' into the email domain search
     And the following email domains are in the list:
-      | No email domains found  |
+      | No email domains found |
     And I enter '' into the email domain search
     And the following email domains are in the list:
       | email.com   |

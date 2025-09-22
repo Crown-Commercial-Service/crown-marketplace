@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= content_for :page_title, @sublot_region_name %>
-    <%= admin_breadcrumbs(
+    <% admin_breadcrumbs(
       { text: t('facilities_management.rm3830.admin.supplier_framework_data.index.heading'), href: facilities_management_rm3830_admin_supplier_framework_data_path },
       { text: @sublot_region_name }
     )%>

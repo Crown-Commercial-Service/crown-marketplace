@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM6232::ServiceSpecificationController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM6232' } }
 
+  include_context 'and RM6232 is live'
+
   describe 'GET show' do
     context 'when the user is not signed in' do
       it 'redirects to the sign in page' do

@@ -3,14 +3,14 @@
   "private": true,
   "dependencies": {
     "@rails/request.js": "^0.0.12",
-    "@types/jquery": "^3.5.32",
+    "@types/jquery": "^3.5.33",
     "@types/js-cookie": "^3.0.6",
     "@types/rails__request.js": "^0.0.1",
-    "ccs-frontend": "^1.4.1",
-    "govuk-frontend": "^5.11.1",
+    "ccs-frontend": "^2.0.1",
+    "govuk-frontend": "^5.11.2",
     "jquery": "^3.7.1",
     "js-cookie": "^3.0.5",
-    "sass": "^1.90.0",
+    "sass": "^1.93.0",
     "tslib": "^2.8.1",
     "typescript": "^5.9.2"
   },
@@ -23,10 +23,10 @@
     "postinstall": "cp -a node_modules/ccs-frontend/dist/ccs/@types/. node_modules/@types/ccs-frontend && cp node_modules/@types/ccs-frontend/all.d.ts node_modules/@types/ccs-frontend/index.d.ts"
   },
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
+    "@eslint/js": "^9.36.0",
     "@stylistic/eslint-plugin-js": "^4.4.1",
     "@stylistic/eslint-plugin-ts": "^4.4.1",
-    "eslint": "^9.33.0",
-    "typescript-eslint": "^8.39.1"
+    "eslint": "^9.36.0",
+    "typescript-eslint": "^8.44.0"
   }
 }

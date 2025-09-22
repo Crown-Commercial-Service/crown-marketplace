@@ -12,8 +12,8 @@ Feature: Supplier address - validations
 
   Scenario: Full address - nothing entered
     And I enter the following details into the form:
-      | Building and street | |
-      | Town or city        | |
+      | Building and street |  |
+      | Town or city        |  |
     And I click on 'Save and return'
     Then I should see the following error messages:
       | Enter the building or street name |
@@ -26,10 +26,10 @@ Feature: Supplier address - validations
       | Postcode            | <postocde>      |
     And I click on 'Save and return'
     Then I should see the following error messages:
-      | Enter a valid postcode, for example SW1A 1AA  |
+      | Enter a valid postcode, for example SW1A 1AA |
 
     Examples:
-        | postocde  |
-        |           |
-        | toast     |
-        | A1111A    |
+      | postocde |
+      |          |
+      | toast    |
+      | A1111A   |

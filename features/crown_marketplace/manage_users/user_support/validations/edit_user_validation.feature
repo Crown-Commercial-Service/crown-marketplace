@@ -15,7 +15,7 @@ Feature: Manage users - User support - Edit user - Validations
     And I enter 'buyer@test.com' into the search
     And I click on 'Search'
     Then I should see the following users in the results:
-      | buyer@test.com  | Enabled   |
+      | buyer@test.com | Enabled |
     And I view the user with email 'buyer@test.com'
     Then I am on the 'View user' page
     And I can manage the user

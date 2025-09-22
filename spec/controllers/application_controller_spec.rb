@@ -13,8 +13,8 @@ RSpec.describe ApplicationController do
 
     context 'when the service is nil' do
       context 'when the framework is nil' do
-        it 'returns /facilities-management/RM6232' do
-          expect(result).to eq '/facilities-management/RM6232'
+        it 'returns /facilities-management/RM6378' do
+          expect(result).to eq '/facilities-management/RM6378'
         end
       end
 
@@ -31,8 +31,8 @@ RSpec.describe ApplicationController do
       let(:service) { 'facilities_management' }
 
       context 'when the framework is nil' do
-        it 'returns /facilities-management/RM6232' do
-          expect(result).to eq '/facilities-management/RM6232'
+        it 'returns /facilities-management/RM6378' do
+          expect(result).to eq '/facilities-management/RM6378'
         end
       end
 
@@ -49,8 +49,8 @@ RSpec.describe ApplicationController do
       let(:service) { 'facilities_management/admin' }
 
       context 'when the framework is nil' do
-        it 'returns /facilities-management/RM6232/admin' do
-          expect(result).to eq '/facilities-management/RM6232/admin'
+        it 'returns /facilities-management/RM6378/admin' do
+          expect(result).to eq '/facilities-management/RM6378/admin'
         end
       end
 
@@ -67,8 +67,8 @@ RSpec.describe ApplicationController do
       let(:service) { 'facilities_management/supplier' }
 
       context 'when the framework is nil' do
-        it 'returns /facilities-management/RM6232/supplier' do
-          expect(result).to eq '/facilities-management/RM6232/supplier'
+        it 'returns /facilities-management/RM6378/supplier' do
+          expect(result).to eq '/facilities-management/RM6378/supplier'
         end
       end
 

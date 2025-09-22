@@ -15,7 +15,7 @@ Feature: Manage users - Super admin - Edit user
     And I enter 'buyer@test.com' into the search
     And I click on 'Search'
     Then I should see the following users in the results:
-      | buyer@test.com  | Enabled   |
+      | buyer@test.com | Enabled |
     And I view the user with email 'buyer@test.com'
     Then I am on the 'View user' page
     And I can manage the user
@@ -32,13 +32,13 @@ Feature: Manage users - Super admin - Edit user
     And I change the 'Email status' for the user
     And I am on the 'Update user email status' page
     And the users details after the update will be:
-      | Email verified | false  |
+      | Email verified | false |
     And I am going to succesfully update the user on 'email_verified'
     And I choose 'UNVERIFIED' for the email status
     And I click on 'Save and return'
     Then I am on the 'View user' page
     And the user has the following details:
-      | Email status  | Unverified  |
+      | Email status | Unverified |
 
   Scenario: Edit user - Account status
     And I change the 'Account status' for the user
@@ -76,13 +76,13 @@ Feature: Manage users - Super admin - Edit user
     And I change the 'MFA status' for the user
     And I am on the 'Update user MFA status' page
     And the users details after the update will be:
-      | MFA enabled | true  |
+      | MFA enabled | true |
     And I am going to succesfully update the user on 'mfa_enabled'
     And I choose 'ENABLED' for the MFA status
     And I click on 'Save and return'
     Then I am on the 'View user' page
     And the user has the following details:
-      | MFA status  | Enabled  |
+      | MFA status | Enabled |
 
   Scenario: Edit user - Roles
     And I change the 'Roles' for the user
@@ -93,9 +93,9 @@ Feature: Manage users - Super admin - Edit user
       | User support  |
       | User admin    |
     And the users details after the update will be:
-      | Mobile telephone number | 07123456789   |
-      | MFA enabled             | true          |
-      | Roles                   | ccs_employee  |
+      | Mobile telephone number | 07123456789  |
+      | MFA enabled             | true         |
+      | Roles                   | ccs_employee |
     And I am going to succesfully update the user on 'roles'
     And I deselect the following items:
       | Buyer |
@@ -103,13 +103,13 @@ Feature: Manage users - Super admin - Edit user
     And I click on 'Save and return'
     Then I am on the 'View user' page
     And the user has the following details:
-      | Roles | Service admin  |
+      | Roles | Service admin |
 
   Scenario: Edit user - Service access
     And I change the 'Service access' for the user
     And I am on the 'Update user service access' page
     And the users details after the update will be:
-      | Service access  | fm_access,st_access |
+      | Service access | fm_access,st_access |
     And I am going to succesfully update the user on 'service_access'
     And I deselect the following items:
       | Legal Services |
@@ -117,7 +117,7 @@ Feature: Manage users - Super admin - Edit user
     And I click on 'Save and return'
     Then I am on the 'View user' page
     And the user has the following details:
-      | Service access  | Facilities Management, Supply Teachers  |
+      | Service access | Facilities Management, Supply Teachers |
 
   Scenario: Edit user - No Service access required
     And I change the 'Roles' for the user
@@ -128,9 +128,9 @@ Feature: Manage users - Super admin - Edit user
       | User support  |
       | User admin    |
     And the users details after the update will be:
-      | Mobile telephone number | 07123456789        |
-      | MFA enabled             | true               |
-      | Roles                   | allow_list_access  |
+      | Mobile telephone number | 07123456789       |
+      | MFA enabled             | true              |
+      | Roles                   | allow_list_access |
     And I am going to succesfully update the user on 'roles'
     And I deselect the following items:
       | Buyer |
@@ -140,7 +140,7 @@ Feature: Manage users - Super admin - Edit user
     And I change the 'Service access' for the user
     And I am on the 'Update user service access' page
     Then the users details after the update will be:
-      | Service access  ||
+      | Service access |  |
     And I am going to succesfully update the user on 'service_access'
     And I deselect the following items:
       | Facilities Management |
@@ -148,8 +148,8 @@ Feature: Manage users - Super admin - Edit user
     And I click on 'Save and return'
     Then I am on the 'View user' page
     And the user has the following details:
-      | Service access  | None |
-    
+      | Service access | None |
+
   Scenario: Edit user - Service error
     And I cannot edit the user account because of an error
     And I change the 'Service access' for the user

@@ -5,7 +5,7 @@ end
 When('the contract number is visible') do
   contract_number = @procurement.contract_number
 
-  expect(page.find('#main-content > div:nth-child(2) > div > span')).to have_content("#{@procurement.contract_name} - #{contract_number}")
+  expect(page.find('#main-content > div:nth-child(1) > div > span')).to have_content("#{@procurement.contract_name} - #{contract_number}")
   expect(page.find('.ccs-panel__body')).to have_content(contract_number)
 end
 

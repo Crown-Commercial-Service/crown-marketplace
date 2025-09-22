@@ -17,9 +17,9 @@ Feature: Management report
     Then I am on the '<page>' page
 
     Examples:
-      | text                | page                            |
-      | Home                | RM3830 administration dashboard |
-      | Management reports  | Management reports              |
+      | text               | page                            |
+      | Home               | RM3830 administration dashboard |
+      | Management reports | Management reports              |
 
   Scenario: Able to download the management report
     And I click on 'Generate a new management report'

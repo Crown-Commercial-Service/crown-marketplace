@@ -9,8 +9,8 @@ Feature: Service rates - Framework expired
       | The RM3830 has expired, you cannot update these rates. |
     And there are no text inputs
     And there is no submit button
-  
-  Examples:
-    | rates_page                |
-    | Average framework rates   |
-    | Call-off benchmark rates  |
+
+    Examples:
+      | rates_page               |
+      | Average framework rates  |
+      | Call-off benchmark rates |
