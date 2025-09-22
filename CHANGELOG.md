@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.3.0] - 2025-09-22
+
 ### Added
 
 - Add the framework for the new Facilities Management framework (RM6378) ([PR 4970](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4970))
