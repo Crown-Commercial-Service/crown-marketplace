@@ -49,14 +49,14 @@ RSpec.describe Base::SessionsController do
     context 'when the service_path_base would raise to a routing error' do
       before do
         allow(controller).to receive(:redirect_to).with('/facilities-management/RM7007/admin/sign-in?expired=true').and_raise(ActionController::RoutingError.new('Some error', 'Some Message'))
-        allow(controller).to receive(:redirect_to).with('/facilities-management/RM6232/sign-in?expired=true').and_call_original
+        allow(controller).to receive(:redirect_to).with('/facilities-management/RM6378/sign-in?expired=true').and_call_original
 
         get :timeout, params: { url: '/facilities-management/RM7007/admin', service_path_base: '/facilities-management/RM7007/admin' }
       end
 
       it 'redirects to the default sign in path' do
         expect(controller).to have_received(:redirect_to).with('/facilities-management/RM7007/admin/sign-in?expired=true')
-        expect(controller).to have_received(:redirect_to).with('/facilities-management/RM6232/sign-in?expired=true')
+        expect(controller).to have_received(:redirect_to).with('/facilities-management/RM6378/sign-in?expired=true')
       end
     end
   end

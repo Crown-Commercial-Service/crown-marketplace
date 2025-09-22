@@ -24,11 +24,11 @@ module Frameworks
 
     if Rails.env.test?
       case framework['id']
-      when 'RM6238', 'RM6240', 'RM6232'
+      when 'RM6238', 'RM6240', 'RM6309'
         framework['expires_at'] = 1.year.from_now
-      when 'RM6187'
+      when 'RM6232'
         framework['expires_at'] = 1.year.ago
-      when 'RM6309', 'RM6360'
+      when 'RM6360', 'RM6378'
         framework['live_at'] = 1.year.ago
         framework['expires_at'] = 1.year.from_now
       end
@@ -74,6 +74,11 @@ module Frameworks
       end
     end
   end
+
+  def self.make_rm6232_live
+    puts 'Making RM6232 live'
+    Framework.find('RM6232').update(expires_at: 1.day.from_now)
+  end
 end
 
 namespace :db do
@@ -92,6 +97,12 @@ namespace :db do
     puts 'Loading Framework updates'
     DistributedLocks.distributed_lock(152) do
       Frameworks.add_or_update_frameworks
+    end
+  end
+
+  task make_rm6232_live: :environment do
+    DistributedLocks.distributed_lock(151) do
+      Frameworks.make_rm6232_live if Rails.env.test?
     end
   end
 

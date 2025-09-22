@@ -47,6 +47,12 @@ Rails.application.routes.draw do
           concerns :authenticatable
         end
       end
+      namespace 'rm6378', path: 'RM6378', defaults: { framework: 'RM6378' } do
+        concerns %i[authenticatable registrable]
+        namespace :admin, defaults: { service: 'facilities_management/admin' } do
+          concerns :authenticatable
+        end
+      end
     end
 
     namespace :crown_marketplace, path: 'crown-marketplace', defaults: { service: 'crown_marketplace' } do
@@ -141,6 +147,21 @@ Rails.application.routes.draw do
           get '/:change_type', action: :show, as: :show
         end
         resources :supplier_data_snapshots, path: 'supplier-data-snapshots', only: %i[new create]
+      end
+    end
+
+    namespace 'rm6378', path: 'RM6378', defaults: { framework: 'RM6378' } do
+      concerns :shared_pages
+
+      get '/start', to: 'home#index'
+      get '/', to: 'buyer_account#index'
+
+      resources :procurements, only: %i[index]
+
+      namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
+        concerns :shared_pages
+
+        get '/', to: 'home#index'
       end
     end
 

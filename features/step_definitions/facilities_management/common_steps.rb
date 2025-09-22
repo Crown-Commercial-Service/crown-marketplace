@@ -96,7 +96,7 @@ Then('the spreadsheet {string} is downloaded') do |spreadsheet_name|
 end
 
 Then('I pause') do
-  # binding.pry
+  # byebug
   pending 'This step is used for debugging features'
 end
 

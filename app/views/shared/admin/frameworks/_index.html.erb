@@ -14,11 +14,11 @@
     <p>
       <%= t('.the_admin_section') %>
     </p>
-  
+
     <%= govuk_table(
       [
         {
-          text: t('.framework')
+          text: t('.framework'),
         },
         {
           text: t('.live_at')
@@ -36,7 +36,7 @@
       @frameworks.map do |framework|
         [
           {
-            text: framework.framework
+            text: framework.id
           },
           {
             text: format_date(framework.live_at)
@@ -55,7 +55,7 @@
                   end
           },
           {
-            text: link_to(t('.change'), "/#{service_param}/admin/frameworks/#{framework.id}/edit", class: 'govuk-link govuk-link--no-visited-state')
+            text: link_to(t('.change'), "/#{service_param}/admin/frameworks/#{framework.id}/edit")
           }
         ]
       end,

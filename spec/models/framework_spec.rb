@@ -12,8 +12,8 @@ RSpec.describe Framework do
 
   describe '.frameworks' do
     context 'when no scope is provided' do
-      it 'returns RM6238, RM6187, RM6240, RM6309, RM6360, RM3830 and RM6232' do
-        expect(described_class.frameworks).to eq %w[RM6238 RM6187 RM6240 RM6309 RM6360 RM3830 RM6232]
+      it 'returns RM6238, RM6187, RM6240, RM6309, RM6360, RM3830, RM6232 and RM6378' do
+        expect(described_class.frameworks).to eq %w[RM6238 RM6187 RM6240 RM6309 RM6360 RM3830 RM6232 RM6378]
       end
     end
 
@@ -42,8 +42,8 @@ RSpec.describe Framework do
     end
 
     context 'when the facilities_management scope is provided' do
-      it 'returns RM3830 and RM6232' do
-        expect(described_class.facilities_management.frameworks).to eq %w[RM3830 RM6232]
+      it 'returns RM3830, RM6232 and RM6378' do
+        expect(described_class.facilities_management.frameworks).to eq %w[RM3830 RM6232 RM6378]
       end
     end
   end
@@ -52,8 +52,8 @@ RSpec.describe Framework do
     context 'when RM6238 goes live tomorrow' do
       include_context 'and RM6238 is live in the future'
 
-      it 'returns RM6240, RM6309, RM6360 and RM6232' do
-        expect(described_class.live_frameworks).to eq %w[RM6240 RM6309 RM6360 RM6232]
+      it 'returns RM6240, RM6309, RM6360 and RM6378' do
+        expect(described_class.live_frameworks).to eq %w[RM6240 RM6309 RM6360 RM6378]
       end
 
       context 'and the supply_teachers scope is provided' do
@@ -66,8 +66,8 @@ RSpec.describe Framework do
     context 'when RM6240 goes live tomorrow' do
       include_context 'and RM6240 is live in the future'
 
-      it 'returns RM6238, RM6309, RM6360 and RM6232' do
-        expect(described_class.live_frameworks).to eq %w[RM6238 RM6309 RM6360 RM6232]
+      it 'returns RM6238, RM6309, RM6360 and RM6378' do
+        expect(described_class.live_frameworks).to eq %w[RM6238 RM6309 RM6360 RM6378]
       end
 
       context 'and the legal_services scope is provided' do
@@ -80,8 +80,8 @@ RSpec.describe Framework do
     context 'when RM6360 goes live tomorrow' do
       include_context 'and RM6360 is live in the future'
 
-      it 'returns RM6238, RM6240, RM6309 and RM6232' do
-        expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6232]
+      it 'returns RM6238, RM6240, RM6309 and RM6378' do
+        expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6378]
       end
 
       context 'and the legal_panel_for_government scope is provided' do
@@ -94,8 +94,8 @@ RSpec.describe Framework do
     context 'when RM6238 is live today' do
       include_context 'and RM6238 is live today'
 
-      it 'returns RM6238, RM6309, RM6240, RM6232 and RM6360' do
-        expect(described_class.live_frameworks).to eq %w[RM6240 RM6309 RM6360 RM6232 RM6238]
+      it 'returns RM6238, RM6309, RM6240, RM6378 and RM6360' do
+        expect(described_class.live_frameworks).to eq %w[RM6240 RM6309 RM6360 RM6378 RM6238]
       end
 
       context 'and the supply_teachers scope is provided' do
@@ -108,8 +108,8 @@ RSpec.describe Framework do
     context 'when RM6240 is live today' do
       include_context 'and RM6240 is live today'
 
-      it 'returns RM6238, RM6309, RM6240, RM6232 and RM6360' do
-        expect(described_class.live_frameworks).to eq %w[RM6238 RM6309 RM6360 RM6232 RM6240]
+      it 'returns RM6238, RM6309, RM6240, RM6378 and RM6360' do
+        expect(described_class.live_frameworks).to eq %w[RM6238 RM6309 RM6360 RM6378 RM6240]
       end
 
       context 'and the legal_services scope is provided' do
@@ -122,8 +122,8 @@ RSpec.describe Framework do
     context 'when RM6360 is live today' do
       include_context 'and RM6360 is live today'
 
-      it 'returns RM6238, RM6309, RM6232 and RM6240' do
-        expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6232 RM6360]
+      it 'returns RM6238, RM6309, RM6378 and RM6240' do
+        expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6378 RM6360]
       end
 
       context 'and the legal_panel_for_government scope is provided' do
@@ -134,8 +134,8 @@ RSpec.describe Framework do
     end
 
     context 'when RM6238 went live yesterday' do
-      it 'returns RM6238, RM6240, RM6309, RM6360 and RM6232' do
-        expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6360 RM6232]
+      it 'returns RM6238, RM6240, RM6309, RM6360 and RM6378' do
+        expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6360 RM6378]
       end
 
       context 'and the supply_teachers scope is provided' do
@@ -146,8 +146,8 @@ RSpec.describe Framework do
     end
 
     context 'when RM6240 went live yesterday' do
-      it 'returns RM6240, RM6240, RM6309, RM6360 and RM6232' do
-        expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6360 RM6232]
+      it 'returns RM6240, RM6240, RM6309, RM6360 and RM6378' do
+        expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6360 RM6378]
       end
 
       context 'and the legal_services scope is provided' do
@@ -158,8 +158,8 @@ RSpec.describe Framework do
     end
 
     context 'when RM6360 went live yesterday' do
-      it 'returns RM6240, RM6240, RM6309, RM6360 and RM6232' do
-        expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6360 RM6232]
+      it 'returns RM6240, RM6240, RM6309, RM6360 and RM6378' do
+        expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6360 RM6378]
       end
 
       context 'and the legal_panel_for_government scope is provided' do
@@ -169,24 +169,24 @@ RSpec.describe Framework do
       end
     end
 
-    context 'when RM6232 goes live tomorrow' do
-      include_context 'and RM6232 is live in the future'
+    context 'when RM6378 goes live tomorrow' do
+      include_context 'and RM6378 is live in the future'
 
-      context 'and RM3830 framework is still live' do
-        include_context 'and RM3830 is live'
+      context 'and RM6232 framework is still live' do
+        include_context 'and RM6232 is live'
 
-        it 'returns RM3830, RM6238, RM6240, RM6309 and RM6360' do
-          expect(described_class.live_frameworks).to match_array %w[RM3830 RM6238 RM6240 RM6309 RM6360]
+        it 'returns RM6232, RM6238, RM6240, RM6309 and RM6360' do
+          expect(described_class.live_frameworks).to match_array %w[RM6232 RM6238 RM6240 RM6309 RM6360]
         end
 
         context 'and the facilities_management scope is provided' do
-          it 'returns RM3830' do
-            expect(described_class.facilities_management.live_frameworks).to eq %w[RM3830]
+          it 'returns RM6232' do
+            expect(described_class.facilities_management.live_frameworks).to eq %w[RM6232]
           end
         end
       end
 
-      context 'and RM3830 framework has expired' do
+      context 'and RM6232 framework has expired' do
         it 'returns RM6238, RM6240, RM6309 and RM6360' do
           expect(described_class.live_frameworks).to match_array %w[RM6238 RM6240 RM6309 RM6360]
         end
@@ -199,59 +199,59 @@ RSpec.describe Framework do
       end
     end
 
-    context 'when RM6232 is live today' do
-      include_context 'and RM6232 is live today'
+    context 'when RM6378 is live today' do
+      include_context 'and RM6378 is live today'
 
-      context 'and RM3830 framework is still live' do
-        include_context 'and RM3830 is live'
+      context 'and RM6232 framework is still live' do
+        include_context 'and RM6232 is live'
 
-        it 'returns RM3830, RM6238, RM6240, RM6232, RM6309 and RM6360' do
-          expect(described_class.live_frameworks).to match_array %w[RM3830 RM6238 RM6240 RM6232 RM6309 RM6360]
+        it 'returns RM6238, RM6240, RM6232, RM6309, RM6360 and RM6378' do
+          expect(described_class.live_frameworks).to match_array %w[RM6238 RM6240 RM6232 RM6309 RM6360 RM6378]
         end
 
         context 'and the facilities_management scope is provided' do
-          it 'returns RM3830 and RM6232' do
-            expect(described_class.facilities_management.live_frameworks).to eq %w[RM3830 RM6232]
+          it 'returns RM6232 and RM6378' do
+            expect(described_class.facilities_management.live_frameworks).to eq %w[RM6232 RM6378]
           end
         end
       end
 
-      context 'and RM3830 framework has expired' do
-        it 'returns RM6238, RM6240, RM6309, RM6360 and RM6232' do
-          expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6360 RM6232]
+      context 'and RM6232 framework has expired' do
+        it 'returns RM6238, RM6240, RM6309, RM6360 and RM6378' do
+          expect(described_class.live_frameworks).to eq %w[RM6238 RM6240 RM6309 RM6360 RM6378]
         end
 
         context 'and the facilities_management scope is provided' do
-          it 'returns RM6232' do
-            expect(described_class.facilities_management.live_frameworks).to eq %w[RM6232]
+          it 'returns RM6378' do
+            expect(described_class.facilities_management.live_frameworks).to eq %w[RM6378]
           end
         end
       end
     end
 
-    context 'when RM6232 went live yesterday' do
-      context 'and RM3830 framework is still live' do
-        include_context 'and RM3830 is live'
+    context 'when RM6378 went live yesterday' do
+      context 'and RM6232 framework is still live' do
+        include_context 'and RM6232 is live'
 
-        it 'returns RM3830, RM6238, RM6240, RM6232, RM6309 and RM6360' do
-          expect(described_class.live_frameworks).to match_array %w[RM3830 RM6238 RM6240 RM6232 RM6309 RM6360]
+        it 'returns RM6238, RM6240, RM6232, RM6309, RM6360 and RM6378' do
+          expect(described_class.live_frameworks).to match_array %w[RM6238 RM6240 RM6232 RM6309 RM6360 RM6378]
         end
 
         context 'and the facilities_management scope is provided' do
-          it 'returns RM3830 and RM6232' do
-            expect(described_class.facilities_management.live_frameworks).to eq %w[RM3830 RM6232]
+          it 'returns RM6232 and RM6378' do
+            expect(described_class.facilities_management.live_frameworks).to eq %w[RM6232 RM6378]
           end
         end
       end
 
-      context 'and RM3830 framework has expired' do
-        it 'returns RM6238, RM6240, RM6232, RM6309 and RM6360' do
-          expect(described_class.live_frameworks).to match_array %w[RM6238 RM6240 RM6232 RM6309 RM6360]
+      context 'and RM6232 framework has expired' do
+        it 'returns RM6238, RM6240, RM6309, RM6360 and RM6378' do
+          expect(described_class.live_frameworks).to match_array %w[RM6238 RM6240 RM6309 RM6360 RM6378]
         end
 
         context 'and the facilities_management scope is provided' do
-          it 'returns RM6232' do
-            expect(described_class.facilities_management.live_frameworks).to eq %w[RM6232]
+          it 'returns RM6378' do
+            expect(described_class.facilities_management.live_frameworks).to eq %w[RM6378]
           end
         end
       end
@@ -356,54 +356,54 @@ RSpec.describe Framework do
     end
 
     context 'when the facilities_management scope is provided' do
-      context 'when RM6232 goes live tomorrow' do
-        include_context 'and RM6232 is live in the future'
+      context 'when RM6378 goes live tomorrow' do
+        include_context 'and RM6378 is live in the future'
 
-        context 'and RM3830 framework is still live' do
-          include_context 'and RM3830 is live'
+        context 'and RM6232 framework is still live' do
+          include_context 'and RM6232 is live'
 
-          it 'returns RM3830' do
-            expect(described_class.facilities_management.current_framework).to eq 'RM3830'
+          it 'returns RM6232' do
+            expect(described_class.facilities_management.current_framework).to eq 'RM6232'
           end
         end
 
-        context 'and RM3830 framework has expired' do
+        context 'and RM6232 framework has expired' do
           it 'returns nil' do
             expect(described_class.facilities_management.current_framework).to be_nil
           end
         end
       end
 
-      context 'when RM6232 is live today' do
-        include_context 'and RM6232 is live today'
+      context 'when RM6378 is live today' do
+        include_context 'and RM6378 is live today'
 
-        context 'and RM3830 framework is still live' do
-          include_context 'and RM3830 is live'
+        context 'and RM6232 framework is still live' do
+          include_context 'and RM6232 is live'
 
-          it 'returns RM6232' do
-            expect(described_class.facilities_management.current_framework).to eq 'RM6232'
+          it 'returns RM6378' do
+            expect(described_class.facilities_management.current_framework).to eq 'RM6378'
           end
         end
 
-        context 'and RM3830 framework has expired' do
-          it 'returns RM6232' do
-            expect(described_class.facilities_management.current_framework).to eq 'RM6232'
+        context 'and RM6232 framework has expired' do
+          it 'returns RM6378' do
+            expect(described_class.facilities_management.current_framework).to eq 'RM6378'
           end
         end
       end
 
-      context 'when RM6232 went live yesterday' do
-        context 'and RM3830 framework is still live' do
-          include_context 'and RM3830 is live'
+      context 'when RM6378 went live yesterday' do
+        context 'and RM6232 framework is still live' do
+          include_context 'and RM6232 is live'
 
-          it 'returns RM6232' do
-            expect(described_class.facilities_management.current_framework).to eq 'RM6232'
+          it 'returns RM6378' do
+            expect(described_class.facilities_management.current_framework).to eq 'RM6378'
           end
         end
 
-        context 'and RM3830 framework has expired' do
-          it 'returns RM6232' do
-            expect(described_class.facilities_management.current_framework).to eq 'RM6232'
+        context 'and RM6232 framework has expired' do
+          it 'returns RM6378' do
+            expect(described_class.facilities_management.current_framework).to eq 'RM6378'
           end
         end
       end
@@ -536,111 +536,111 @@ RSpec.describe Framework do
     context 'when the facilities_management scope is provided' do
       let(:result) { described_class.facilities_management.live_framework?(framework) }
 
-      context 'when the framework passed is RM3830' do
-        let(:framework) { 'RM3830' }
-
-        context 'and RM6232 goes live tomorrow' do
-          include_context 'and RM6232 is live in the future'
-
-          context 'and RM3830 framework is still live' do
-            include_context 'and RM3830 is live'
-
-            it 'returns true' do
-              expect(result).to be true
-            end
-          end
-
-          context 'and RM3830 framework has expired' do
-            it 'returns false' do
-              expect(result).to be false
-            end
-          end
-        end
-
-        context 'when RM6232 is live today' do
-          include_context 'and RM6232 is live today'
-
-          context 'and RM3830 framework is still live' do
-            include_context 'and RM3830 is live'
-
-            it 'returns true' do
-              expect(result).to be true
-            end
-          end
-
-          context 'and RM3830 framework has expired' do
-            it 'returns false' do
-              expect(result).to be false
-            end
-          end
-        end
-
-        context 'and RM6232 went live yesterday' do
-          context 'and RM3830 framework is still live' do
-            include_context 'and RM3830 is live'
-
-            it 'returns true' do
-              expect(result).to be true
-            end
-          end
-
-          context 'and RM3830 framework has expired' do
-            it 'returns false' do
-              expect(result).to be false
-            end
-          end
-        end
-      end
-
       context 'when the framework passed is RM6232' do
         let(:framework) { 'RM6232' }
 
-        context 'and RM6232 goes live tomorrow' do
-          include_context 'and RM6232 is live in the future'
+        context 'and RM6378 goes live tomorrow' do
+          include_context 'and RM6378 is live in the future'
 
-          context 'and RM3830 framework is still live' do
-            include_context 'and RM3830 is live'
+          context 'and RM6232 framework is still live' do
+            include_context 'and RM6232 is live'
 
-            it 'returns false' do
-              expect(result).to be false
+            it 'returns true' do
+              expect(result).to be true
             end
           end
 
-          context 'and RM3830 framework has expired' do
+          context 'and RM6232 framework has expired' do
             it 'returns false' do
               expect(result).to be false
             end
           end
         end
 
-        context 'when RM6232 is live today' do
-          include_context 'and RM6232 is live today'
+        context 'when RM6378 is live today' do
+          include_context 'and RM6378 is live today'
 
-          context 'and RM3830 framework is still live' do
-            include_context 'and RM3830 is live'
+          context 'and RM6232 framework is still live' do
+            include_context 'and RM6232 is live'
 
             it 'returns true' do
               expect(result).to be true
             end
           end
 
-          context 'and RM3830 framework has expired' do
+          context 'and RM6232 framework has expired' do
+            it 'returns false' do
+              expect(result).to be false
+            end
+          end
+        end
+
+        context 'and RM6378 went live yesterday' do
+          context 'and RM6232 framework is still live' do
+            include_context 'and RM6232 is live'
+
+            it 'returns true' do
+              expect(result).to be true
+            end
+          end
+
+          context 'and RM6232 framework has expired' do
+            it 'returns false' do
+              expect(result).to be false
+            end
+          end
+        end
+      end
+
+      context 'when the framework passed is RM6378' do
+        let(:framework) { 'RM6378' }
+
+        context 'and RM6378 goes live tomorrow' do
+          include_context 'and RM6378 is live in the future'
+
+          context 'and RM6232 framework is still live' do
+            include_context 'and RM6232 is live'
+
+            it 'returns false' do
+              expect(result).to be false
+            end
+          end
+
+          context 'and RM6232 framework has expired' do
+            it 'returns false' do
+              expect(result).to be false
+            end
+          end
+        end
+
+        context 'when RM6378 is live today' do
+          include_context 'and RM6378 is live today'
+
+          context 'and RM6232 framework is still live' do
+            include_context 'and RM6232 is live'
+
+            it 'returns true' do
+              expect(result).to be true
+            end
+          end
+
+          context 'and RM6232 framework has expired' do
             it 'returns true' do
               expect(result).to be true
             end
           end
         end
 
-        context 'and RM6232 went live yesterday' do
-          context 'and RM3830 framework is still live' do
-            include_context 'and RM3830 is live'
+        context 'and RM6378 went live yesterday' do
+          context 'and RM6232 framework is still live' do
+            include_context 'and RM6232 is live'
 
             it 'returns true' do
               expect(result).to be true
             end
           end
 
-          context 'and RM3830 framework has expired' do
+          context 'and RM6232 framework has expired' do
             it 'returns true' do
               expect(result).to be true
             end
@@ -648,7 +648,7 @@ RSpec.describe Framework do
         end
       end
 
-      context 'when the framework is neither RM3830 or RM6232' do
+      context 'when the framework is neither RM6232 or RM6378' do
         let(:framework) { 'RM6187' }
 
         it 'returns false' do
@@ -818,40 +818,40 @@ RSpec.describe Framework do
     end
 
     context 'when considering facilities_management frameworks' do
-      context 'when the framework passed is RM3830' do
-        context 'and RM6232 goes live tomorrow' do
-          include_context 'and RM6232 is live in the future'
+      context 'when the framework passed is RM6232' do
+        context 'and RM6378 goes live tomorrow' do
+          include_context 'and RM6378 is live in the future'
 
-          context 'and the frameworks is RM3830' do
-            let(:framework) { 'RM3830' }
+          context 'and the frameworks is RM6232' do
+            let(:framework) { 'RM6232' }
 
-            context 'and RM3830 framework is still live' do
-              include_context 'and RM3830 is live'
+            context 'and RM6232 framework is still live' do
+              include_context 'and RM6232 is live'
 
               it 'returns live' do
                 expect(result).to eq :live
               end
             end
 
-            context 'and RM3830 framework has expired' do
+            context 'and RM6232 framework has expired' do
               it 'returns expired' do
                 expect(result).to eq :expired
               end
             end
           end
 
-          context 'and the frameworks is RM6232' do
-            let(:framework) { 'RM6232' }
+          context 'and the frameworks is RM6378' do
+            let(:framework) { 'RM6378' }
 
-            context 'and RM3830 framework is still live' do
-              include_context 'and RM3830 is live'
+            context 'and RM6232 framework is still live' do
+              include_context 'and RM6232 is live'
 
               it 'returns coming' do
                 expect(result).to eq :coming
               end
             end
 
-            context 'and RM3830 framework has expired' do
+            context 'and RM6232 framework has expired' do
               it 'returns expired' do
                 expect(result).to eq :coming
               end
@@ -859,39 +859,39 @@ RSpec.describe Framework do
           end
         end
 
-        context 'when RM6232 is live today' do
-          include_context 'and RM6232 is live today'
+        context 'when RM6378 is live today' do
+          include_context 'and RM6378 is live today'
 
-          context 'and the frameworks is RM3830' do
-            let(:framework) { 'RM3830' }
+          context 'and the frameworks is RM6232' do
+            let(:framework) { 'RM6232' }
 
-            context 'and RM3830 framework is still live' do
-              include_context 'and RM3830 is live'
+            context 'and RM6232 framework is still live' do
+              include_context 'and RM6232 is live'
 
               it 'returns live' do
                 expect(result).to eq :live
               end
             end
 
-            context 'and RM3830 framework has expired' do
+            context 'and RM6232 framework has expired' do
               it 'returns expired' do
                 expect(result).to eq :expired
               end
             end
           end
 
-          context 'and the frameworks is RM6232' do
-            let(:framework) { 'RM6232' }
+          context 'and the frameworks is RM6378' do
+            let(:framework) { 'RM6378' }
 
-            context 'and RM3830 framework is still live' do
-              include_context 'and RM3830 is live'
+            context 'and RM6232 framework is still live' do
+              include_context 'and RM6232 is live'
 
               it 'returns live' do
                 expect(result).to eq :live
               end
             end
 
-            context 'and RM3830 framework has expired' do
+            context 'and RM6232 framework has expired' do
               it 'returns live' do
                 expect(result).to eq :live
               end
@@ -899,37 +899,37 @@ RSpec.describe Framework do
           end
         end
 
-        context 'and RM6232 went live yesterday' do
-          context 'and the frameworks is RM3830' do
-            let(:framework) { 'RM3830' }
+        context 'and RM6378 went live yesterday' do
+          context 'and the frameworks is RM6232' do
+            let(:framework) { 'RM6232' }
 
-            context 'and RM3830 framework is still live' do
-              include_context 'and RM3830 is live'
+            context 'and RM6232 framework is still live' do
+              include_context 'and RM6232 is live'
 
               it 'returns live' do
                 expect(result).to eq :live
               end
             end
 
-            context 'and RM3830 framework has expired' do
+            context 'and RM6232 framework has expired' do
               it 'returns expired' do
                 expect(result).to eq :expired
               end
             end
           end
 
-          context 'and the frameworks is RM6232' do
-            let(:framework) { 'RM6232' }
+          context 'and the frameworks is RM6378' do
+            let(:framework) { 'RM6378' }
 
-            context 'and RM3830 framework is still live' do
-              include_context 'and RM3830 is live'
+            context 'and RM6232 framework is still live' do
+              include_context 'and RM6232 is live'
 
               it 'returns live' do
                 expect(result).to eq :live
               end
             end
 
-            context 'and RM3830 framework has expired' do
+            context 'and RM6232 framework has expired' do
               it 'returns live' do
                 expect(result).to eq :live
               end

@@ -5,6 +5,8 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
 
   describe 'GET new' do
     context 'when the framework is live' do
+      include_context 'and RM6232 is live'
+
       it 'renders the new page' do
         get :new
 
@@ -13,8 +15,6 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM6232 has expired'
-
       it 'renders the unrecognised framework page with the right http status' do
         get :new
 
@@ -27,6 +27,8 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
   # rubocop:disable RSpec/NestedGroups
   describe 'POST create' do
     context 'when the framework is live' do
+      include_context 'and RM6232 is live'
+
       context 'when no exception is raised' do
         before do
           # rubocop:disable RSpec/AnyInstance
@@ -96,8 +98,6 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM6232 has expired'
-
       it 'renders the unrecognised framework page with the right http status' do
         post :create, params: { cognito_forgot_password: { email: 'test@test.com' } }
 
@@ -110,6 +110,8 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
 
   describe 'GET edit' do
     context 'when the framework is live' do
+      include_context 'and RM6232 is live'
+
       before do
         cookies[:crown_marketplace_reset_email] = 'test@email.com'
         get :edit
@@ -125,8 +127,6 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM6232 has expired'
-
       it 'renders the unrecognised framework page with the right http status' do
         get :edit
 
@@ -138,6 +138,8 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
 
   describe 'PUT update' do
     context 'when the framework is live' do
+      include_context 'and RM6232 is live'
+
       before do
         cookies[:crown_marketplace_reset_email] = 'test@email.com'
         # rubocop:disable RSpec/AnyInstance
@@ -174,8 +176,6 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
     end
 
     context 'when the framework is not live' do
-      include_context 'and RM6232 has expired'
-
       it 'renders the unrecognised framework page with the right http status' do
         put :update, params: { cognito_confirm_password_reset: { email: 'test@test.com', password: 'Password12345!', password_confirmation: 'Password12345', confirmation_code: '123456' } }
 
@@ -186,21 +186,23 @@ RSpec.describe FacilitiesManagement::RM6232::PasswordsController do
   end
 
   describe 'GET password_reset_success' do
-    it 'renders the password_reset_success page' do
-      get :password_reset_success
+    context 'when the framework is live' do
+      include_context 'and RM6232 is live'
 
-      expect(response).to render_template(:password_reset_success)
+      it 'renders the password_reset_success page' do
+        get :password_reset_success
+
+        expect(response).to render_template(:password_reset_success)
+      end
     end
-  end
 
-  context 'when the framework is not live' do
-    include_context 'and RM6232 has expired'
+    context 'when the framework is not live' do
+      it 'renders the unrecognised framework page with the right http status' do
+        get :password_reset_success
 
-    it 'renders the unrecognised framework page with the right http status' do
-      get :password_reset_success
-
-      expect(response).to render_template('home/unrecognised_framework')
-      expect(response).to have_http_status(:bad_request)
+        expect(response).to render_template('home/unrecognised_framework')
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 end
