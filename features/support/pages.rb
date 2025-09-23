@@ -44,13 +44,6 @@ module Pages
   end
 
   def quick_view_page
-    @quick_view_page ||= case @framework
-                         when 'RM6232'
-                           quick_view_rm6232_page
-                         end
-  end
-
-  def quick_view_rm6232_page
-    @quick_view_rm6232_page ||= RM6232::QuickView.new
+    @quick_view_page ||= QuickView.new
   end
 end
