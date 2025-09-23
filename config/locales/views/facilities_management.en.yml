@@ -279,3 +279,27 @@ en:
           region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
           region_plural: regions found
           region_singular: region found
+      journey:
+        annual_contract_value:
+          heading: Annual contract cost
+          question: What is your estimate for the annual contract cost?
+          return_text: Return to your account
+          subtitle: Enter your estimated annual cost of the call off contract (including any potential billable works that you may put through the contract).
+        choose_locations:
+          checkbox_legend: "%{section} items"
+          heading: Regions
+          more_information:
+            link_text: Office for National Statistics
+            link_url: https://www.ons.gov.uk/methodology/geography/ukgeographies/eurostat
+            sentence_html: You can find more information from the %{ons_link}.
+          need_help: Need help?
+          question: Where are your buildings located?
+          return_text: Return to your account
+          subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
+          the_regions: The regions below align to the ‘Nomenclature of Territorial Units for Statistics (NUTS)’ hierarchical system used to divide up territories in UK and Europe.
+        choose_services:
+          caption: Choose all facilities management services required within your estate, even if you want services in just one building.
+          checkbox_legend: "%{section} items"
+          heading: Services
+          question: Select the facilities management services that you need
+          return_text: Return to your account

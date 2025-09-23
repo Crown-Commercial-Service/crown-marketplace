@@ -124,6 +124,9 @@ ignore_unused:
   - facilities_management.rm3830.procurements.contracts.procurement_requirements.call_off_extensions_*
   - facilities_management.rm3830.procurements.contracts_helper.*
   - facilities_management.rm3830.supplier.contracts_helper.*
+  - facilities_management.rm6378.journey.choose_locations.regions.section.*.title
+  - facilities_management.rm6378.journey.choose_services.services.section.*.title
+  - facilities_management.rm6378.journey.choose_services.services.section.*.services.*.title
   - common.type_*
   - common.*_html
 # - 'activerecord.attributes.*'
