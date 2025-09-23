@@ -1,5 +1,24 @@
 ---
 en:
+  activemodel:
+    errors:
+      models:
+        facilities_management/rm6378/journey/annual_contract_value:
+          attributes:
+            annual_contract_value:
+              greater_than: The annual contract cost must be a whole number greater than 0
+              less_than: The annual contract cost must be less than 1,000,000,000,000 (1 trillion)
+              not_a_number: The annual contract cost must be a whole number greater than 0
+              not_an_integer: The annual contract cost must be a whole number greater than 0
+        facilities_management/rm6378/journey/choose_locations:
+          attributes:
+            region_codes:
+              too_short: Select at least one region you need to include in your procurement
+        facilities_management/rm6378/journey/choose_services:
+          attributes:
+            service_codes:
+              invalid_cafm_helpdesk: You must select another service to include 'CAFM system' and/or 'Helpdesk services'
+              too_short: Select at least one service you need to include in your procurement
   facilities_management:
     rm6378:
       admin:
@@ -20,6 +39,10 @@ en:
           search_for_suppliers_link: Search for suppliers
           view_your_searches_desc: Open your dashboard to view your previously saved searches
           view_your_searches_link: View your saved searches
+      documents:
+        service_specification_document:
+          name: facilities-management/rm6378/RM6378 Service requirements and standards.pdf
+          text: Read the service specification document
       home:
         index:
           beforeyoustart: Before you start
@@ -36,3 +59,79 @@ en:
             item_2: download a shortlist of potential suppliers
             item_3: receive a compliant Lot recommendation
           youneedtoknow: 'To receive a shortlist and compliant Lot, you need to know:'
+      journey:
+        choose_locations:
+          regions:
+            section:
+              OS0:
+                title: Overseas
+              UKC:
+                title: North East (England)
+              UKD:
+                title: North West (England)
+              UKE:
+                title: Yorkshire and The Humber
+              UKF:
+                title: East Midlands (England)
+              UKG:
+                title: West Midlands (England)
+              UKH:
+                title: East of England
+              UKI:
+                title: London
+              UKJ:
+                title: South East (England)
+              UKK:
+                title: South West (England)
+              UKL:
+                title: Wales
+              UKM:
+                title: Scotland
+              UKN:
+                title: Northern Ireland
+        choose_services:
+          services:
+            section:
+              E:
+                title: Maintenance Services
+              F:
+                title: Statutory Obligations
+              G:
+                title: Landscaping Services
+              H:
+                title: Catering Services
+              I:
+                title: Cleaning Services
+              J:
+                title: Additional FM Services
+              K:
+                title: Visitor Support Services
+              M:
+                title: Waste Services
+              O:
+                title: Specialist (Defence) FM Services
+              P:
+                title: End User Accommodation Services
+              Q:
+                services:
+                  Q2:
+                    title: CAFM system
+                title: Computer-aided facilities management (CAFM)
+              R:
+                title: Helpdesk Services
+              S:
+                title: Security Officer Services
+              T:
+                title: Design, Supply, Commission and Installation of Electronic security systems and services
+              U:
+                title: Maintenance of Security Systems
+              V:
+                title: Alarmed Response Centre
+              W:
+                title: Security Helpdesk Services
+              X:
+                title: Security Advisory Services
+              "Y":
+                title: Security and Risk Assessments
+              Z:
+                title: Security Awareness/Training

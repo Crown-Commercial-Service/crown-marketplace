@@ -1,0 +1,37 @@
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+<% content_for :page_title, t('.question') %>
+
+<div class="procurement">
+  <div class="govuk-grid-row">
+    <%= form_with url: @form_path, method: :get, html: { specialvalidation: true, novalidate: true } do |f| %>
+      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-top-0">
+          <%= t('.heading') %>
+        </h1>
+        <%= govuk_input(
+          :annual_contract_value,
+          model: @journey.current_step,
+          label: {
+            text: t('.question')
+          },
+          hint: {
+            text: t('.subtitle')
+          },
+          prefix: {
+            text: '£'
+          },
+          classes: 'ccs-number-field ccs-integer-field govuk-input--width-20',
+          attributes: {
+            maxlength: 15
+          }
+        ) %>
+
+        <%= govuk_button(t('common.submit'), form: f, attributes: { aria: { label: t('common.submit') } }) %>
+        <p>
+          <%= link_to t('.return_text'), "/facilities-management/#{params[:framework]}", class: 'govuk-link' %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>
