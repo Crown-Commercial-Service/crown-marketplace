@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Added the `category` attribute to the jurisdictions ([PR 4982](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4982))
+
 ## [7.3.0] - 2025-09-22
 
 ### Added
