@@ -1090,45 +1090,6 @@ RM6378.2b.J19,RM6378.2b,J19,Housing and residential accommodation management,J
 RM6378.2b.J20,RM6378.2b,J20,Energy and utilities management bureau Services,J
 RM6378.2b.Q2,RM6378.2b,Q2,CAFM - TFM & Hard FM CAFM Requirements,Q
 RM6378.2b.R1,RM6378.2b,R1,Helpdesk Services,R
-RM6378.2c.E1,RM6378.2c,E1,Mechanical and Electrical Engineering Maintenance,E
-RM6378.2c.E2,RM6378.2c,E2,Ventilation and air conditioning systems maintenance,E
-RM6378.2c.E3,RM6378.2c,E3,Environmental cleaning service,E
-RM6378.2c.E4,RM6378.2c,E4,Fire detection and firefighting systems maintenance,E
-RM6378.2c.E5,RM6378.2c,E5,Lifts maintenance,E
-RM6378.2c.E6,RM6378.2c,E6,Hoists and Conveyance Systems Maintenance,E
-RM6378.2c.E7,RM6378.2c,E7,"Security, access and intruder systems maintenance",E
-RM6378.2c.E8,RM6378.2c,E8,Internal and external building fabric maintenance,E
-RM6378.2c.E9,RM6378.2c,E9,Reactive maintenance services,E
-RM6378.2c.E10,RM6378.2c,E10,Planned / Group re-lamping service,E
-RM6378.2c.E11,RM6378.2c,E11,Automated barrier control systems maintenance,E
-RM6378.2c.E12,RM6378.2c,E12,Building Management System (BMS) maintenance,E
-RM6378.2c.E13,RM6378.2c,E13,Standby power system maintenance,E
-RM6378.2c.E14,RM6378.2c,E14,High Voltage (HV) and switchgear maintenance,E
-RM6378.2c.E15,RM6378.2c,E15,Catering equipment maintenance,E
-RM6378.2c.E16,RM6378.2c,E16,Audio Visual (AV) equipment maintenance,E
-RM6378.2c.E17,RM6378.2c,E17,Television cabling maintenance,E
-RM6378.2c.E18,RM6378.2c,E18,Mail room equipment maintenance,E
-RM6378.2c.E19,RM6378.2c,E19,Office Machinery Servicing and Maintenance,E
-RM6378.2c.E20,RM6378.2c,E20,Voice announcement system maintenance,E
-RM6378.2c.E21,RM6378.2c,E21,Locksmith Services,E
-RM6378.2c.E22,RM6378.2c,E22,Specialist maintenance Services,E
-RM6378.2c.F1,RM6378.2c,F1,Asbestos Management,F
-RM6378.2c.F2,RM6378.2c,F2,Water hygiene maintenance,F
-RM6378.2c.F3,RM6378.2c,F3,Statutory Inspections,F
-RM6378.2c.F4,RM6378.2c,F4,Portable Appliance Testing (PAT),F
-RM6378.2c.F5,RM6378.2c,F5,"Miscellaneous Surveys, Audits and Testing Services",F
-RM6378.2c.F6,RM6378.2c,F6,Condition surveys,F
-RM6378.2c.F7,RM6378.2c,F7,Electrical Testing,F
-RM6378.2c.F8,RM6378.2c,F8,Fire Risk Assessments,F
-RM6378.2c.F9,RM6378.2c,F9,Building Information Modelling (BIM) and Government Soft Landings (GSL),F
-RM6378.2c.F10,RM6378.2c,F10,Display Energy Certificates (DECs),F
-RM6378.2c.F11,RM6378.2c,F11,Energy Performance Certificates (EPCs),F
-RM6378.2c.F12,RM6378.2c,F12,Radon Testing Services,F
-RM6378.2c.F13,RM6378.2c,F13,Permit to Work (PtW),F
-RM6378.2c.J19,RM6378.2c,J19,Housing and residential accommodation management,J
-RM6378.2c.J20,RM6378.2c,J20,Energy and utilities management bureau Services,J
-RM6378.2c.Q2,RM6378.2c,Q2,CAFM - TFM & Hard FM CAFM Requirements,Q
-RM6378.2c.R1,RM6378.2c,R1,Helpdesk Services,R
 RM6378.3a.G1,RM6378.3a,G1,Hard Landscaping Services,G
 RM6378.3a.G2,RM6378.3a,G2,Soft Landscaping Services,G
 RM6378.3a.G3,RM6378.3a,G3,Tree Surgery (Arboriculture),G
@@ -1273,78 +1234,6 @@ RM6378.3b.S5,RM6378.3b,S5,Patrolling Services,S
 RM6378.3b.S6,RM6378.3b,S6,Management of Visitors and Passes,S
 RM6378.3b.S7,RM6378.3b,S7,Additional Security Officer Services,S
 RM6378.3b.S8,RM6378.3b,S8,Key Holding,S
-RM6378.3c.G1,RM6378.3c,G1,Hard Landscaping Services,G
-RM6378.3c.G2,RM6378.3c,G2,Soft Landscaping Services,G
-RM6378.3c.G3,RM6378.3c,G3,Tree Surgery (Arboriculture),G
-RM6378.3c.G4,RM6378.3c,G4,Planned snow and ice clearance,G
-RM6378.3c.G5,RM6378.3c,G5,Reactive snow and ice clearance,G
-RM6378.3c.G6,RM6378.3c,G6,"Reservoirs, ponds, river walls and water feature maintenance",G
-RM6378.3c.G7,RM6378.3c,G7,Internal planting,G
-RM6378.3c.G8,RM6378.3c,G8,Cut flowers and Christmas trees,G
-RM6378.3c.H1,RM6378.3c,H1,Chilled potable water,H
-RM6378.3c.H2,RM6378.3c,H2,Retail Services / Convenience Store,H
-RM6378.3c.H3,RM6378.3c,H3,Deli / coffee bar,H
-RM6378.3c.H4,RM6378.3c,H4,Events and functions,H
-RM6378.3c.H5,RM6378.3c,H5,Full service restaurant,H
-RM6378.3c.H6,RM6378.3c,H6,Hospitality and meetings,H
-RM6378.3c.H7,RM6378.3c,H7,Outside catering,H
-RM6378.3c.H8,RM6378.3c,H8,Trolley service,H
-RM6378.3c.H9,RM6378.3c,H9,Vending Services (food and beverages),H
-RM6378.3c.H10,RM6378.3c,H10,Residential catering Services,H
-RM6378.3c.I1,RM6378.3c,I1,Routine cleaning,I
-RM6378.3c.I2,RM6378.3c,I2,Infection prevention and control / Touchpoint cleaning,I
-RM6378.3c.I3,RM6378.3c,I3,Deep (periodic) cleaning services,I
-RM6378.3c.I4,RM6378.3c,I4,Window cleaning (internal),I
-RM6378.3c.I5,RM6378.3c,I5,Window cleaning (external),I
-RM6378.3c.I6,RM6378.3c,I6,Cleaning of external areas,I
-RM6378.3c.I7,RM6378.3c,I7,Pest control Services,I
-RM6378.3c.I8,RM6378.3c,I8,Cleaning of integral barrier mats,I
-RM6378.3c.I9,RM6378.3c,I9,Reactive cleaning (outside operational hours),I
-RM6378.3c.I10,RM6378.3c,I10,Additional cleaning services,I
-RM6378.3c.I11,RM6378.3c,I11,Housekeeping,I
-RM6378.3c.I12,RM6378.3c,I12,Standard Wash Linen and laundry Services,I
-RM6378.3c.J1,RM6378.3c,J1,Mail Services,J
-RM6378.3c.J2,RM6378.3c,J2,Internal messenger Service,J
-RM6378.3c.J3,RM6378.3c,J3,Courier booking and distribution services,J
-RM6378.3c.J4,RM6378.3c,J4,Repairperson Services,J
-RM6378.3c.J5,RM6378.3c,J5,Move and space management (internal moves),J
-RM6378.3c.J6,RM6378.3c,J6,Porterage,J
-RM6378.3c.J7,RM6378.3c,J7,Signage,J
-RM6378.3c.J8,RM6378.3c,J8,Archiving (on-site),J
-RM6378.3c.J9,RM6378.3c,J9,Furniture Management,J
-RM6378.3c.J10,RM6378.3c,J10,Space management,J
-RM6378.3c.J11,RM6378.3c,J11,Cable management,J
-RM6378.3c.J12,RM6378.3c,J12,Reprographics Service,J
-RM6378.3c.J13,RM6378.3c,J13,Stores and Goods Management Services,J
-RM6378.3c.J14,RM6378.3c,J14,Portable washroom solutions,J
-RM6378.3c.J15,RM6378.3c,J15,Childcare facility,J
-RM6378.3c.J16,RM6378.3c,J16,Sports and leisure service,J
-RM6378.3c.J17,RM6378.3c,J17,"Transport, Driver and Vehicle Service",J
-RM6378.3c.J18,RM6378.3c,J18,First aid and medical service,J
-RM6378.3c.J19,RM6378.3c,J19,Housing and residential accommodation management,J
-RM6378.3c.J21,RM6378.3c,J21,Additional support Services,J
-RM6378.3c.K1,RM6378.3c,K1,Reception Services,K
-RM6378.3c.K2,RM6378.3c,K2,Taxi-booking Services,K
-RM6378.3c.K3,RM6378.3c,K3,Car park management and booking services,K
-RM6378.3c.K4,RM6378.3c,K4,Voice announcement system operation,K
-RM6378.3c.K5,RM6378.3c,K5,Concierge Services,K
-RM6378.3c.M1,RM6378.3c,M1,On Site / Mobile Classified Waste Shredding Service,M
-RM6378.3c.M2,RM6378.3c,M2,Off Site Classified Waste Shredding Service,M
-RM6378.3c.M3,RM6378.3c,M3,General waste,M
-RM6378.3c.M4,RM6378.3c,M4,Recycled waste and waste for re-use,M
-RM6378.3c.M5,RM6378.3c,M5,Sanitary waste,M
-RM6378.3c.M6,RM6378.3c,M6,Hazardous waste,M
-RM6378.3c.M7,RM6378.3c,M7,Additional Waste Services,M
-RM6378.3c.Q1,RM6378.3c,Q1,CAFM - Soft FM Requirements,Q
-RM6378.3c.R1,RM6378.3c,R1,Helpdesk Services,R
-RM6378.3c.S1,RM6378.3c,S1,Security Officer Services,S
-RM6378.3c.S2,RM6378.3c,S2,Video Surveillance Systems (VSS) and Alarm Monitoring ,S
-RM6378.3c.S3,RM6378.3c,S3,Control of Access and Security Passes,S
-RM6378.3c.S4,RM6378.3c,S4,Control of Access - Vehicles,S
-RM6378.3c.S5,RM6378.3c,S5,Patrolling Services,S
-RM6378.3c.S6,RM6378.3c,S6,Management of Visitors and Passes,S
-RM6378.3c.S7,RM6378.3c,S7,Additional Security Officer Services,S
-RM6378.3c.S8,RM6378.3c,S8,Key Holding,S
 RM6378.4a.S1,RM6378.4a,S1,Security Officer Services,S
 RM6378.4a.S2,RM6378.4a,S2,Video Surveillance Systems (VSS) and Alarm Monitoring ,S
 RM6378.4a.S3,RM6378.4a,S3,Control of Access and Security Passes,S
