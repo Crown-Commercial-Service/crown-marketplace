@@ -12,4 +12,4 @@ Feature: Selecting region codes validations
     And I deselect all checkboxes
     And I click on 'Save and return'
     Then I should see the following error messages:
-      | You must select at least one region for this lot  |
+      | You must select at least one region for this lot |

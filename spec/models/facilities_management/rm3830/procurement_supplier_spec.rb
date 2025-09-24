@@ -34,8 +34,6 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
     let(:obj) { double }
     let(:contract) { procurement.procurement_suppliers[0] }
 
-    stub_bank_holiday_json
-
     before do
       [da_value_test1, da_value_test2, da_value_test3, da_value_test4].each_with_index do |da_value, index|
         procurement.procurement_suppliers.create(direct_award_value: da_value, supplier_id: supplier_ids[index])
@@ -180,8 +178,6 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
     let(:user) { create(:user) }
     let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: FacilitiesManagement::RM3830::SupplierDetail.first) }
 
-    stub_bank_holiday_json
-
     describe '.real_date?' do
       context 'when the date is not real' do
         it 'returns false' do
@@ -203,8 +199,6 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
     end
 
     describe 'time_delta_in_day' do
-      stub_bank_holiday_json
-
       context 'when sent on a Monday in a normal working week' do
         it 'is expected to return 1 day' do
           contract.offer_sent_date = DateTime.new(2020, 3, 9, 12, 0, 0).in_time_zone('London')
@@ -550,8 +544,6 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
     describe '#contract_expiry_date' do
       before { contract.update(aasm_state: 'sent') }
 
-      stub_bank_holiday_json
-
       # NO BANK HOLIDAYS
       context 'when it is a normal week without bank holidays' do
         context 'when a procurement is sent on Monday' do
@@ -608,15 +600,15 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
       context 'when it is a week with bank holidays' do
         context 'when a procurement is sent on Monday with a bank holiday on Tuesday' do
           it 'is expected to expire on the next Thursday' do
-            contract.offer_sent_date = DateTime.new(2018, 12, 31, 7, 8, 9).in_time_zone('London')
-            expect(contract.contract_expiry_date).to eq DateTime.new(2019, 1, 4, 7, 8, 9).in_time_zone('London')
+            contract.offer_sent_date = DateTime.new(2020, 3, 2, 23, 59, 59).in_time_zone('London')
+            expect(contract.contract_expiry_date).to eq DateTime.new(2020, 3, 4, 23, 59, 59).in_time_zone('London')
           end
         end
 
         context 'when a procurement is sent on Tuesday with a bank holiday on Wednesday and Thursday' do
           it 'is expected to expire on the next Monday' do
-            contract.offer_sent_date = DateTime.new(2019, 12, 31, 10, 11, 12).in_time_zone('London')
-            expect(contract.contract_expiry_date).to eq DateTime.new(2020, 1, 6, 10, 11, 12).in_time_zone('London')
+            contract.offer_sent_date = DateTime.new(2020, 3, 3, 13, 14, 1).in_time_zone('London').in_time_zone('London')
+            expect(contract.contract_expiry_date).to eq DateTime.new(2020, 3, 5, 13, 14, 1).in_time_zone('London')
           end
         end
 
@@ -636,8 +628,8 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
 
         context 'when a procurement is sent on Friday with a bank holiday on Monday' do
           it 'is expected to expire on the next Wednesday' do
-            contract.offer_sent_date = DateTime.new(2019, 8, 2, 18, 4, 7).in_time_zone('London')
-            expect(contract.contract_expiry_date).to eq DateTime.new(2019, 8, 7, 18, 4, 7).in_time_zone('London')
+            contract.offer_sent_date = DateTime.new(2020, 3, 6, 21, 45, 12).in_time_zone('London').in_time_zone('London')
+            expect(contract.contract_expiry_date).to eq DateTime.new(2020, 3, 10, 21, 45, 12).in_time_zone('London')
           end
         end
 
@@ -696,8 +688,6 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
     describe '#contract_reminder_date' do
       before { contract.update(aasm_state: 'sent') }
 
-      stub_bank_holiday_json
-
       context 'when contract is sent in a normal week without bank holidays' do
         it 'is expected to have reminder date in one working day' do
           contract.offer_sent_date = DateTime.new(2020, 3, 2, 3, 45, 12).in_time_zone('London')
@@ -711,8 +701,8 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
 
       context 'when contract is sent in a week with bank holidays' do
         it 'is expected to have reminder date in one working day' do
-          contract.offer_sent_date = DateTime.new(2018, 12, 31, 14, 11, 59).in_time_zone('London')
-          expect(contract.contract_reminder_date).to eq DateTime.new(2019, 1, 3, 14, 11, 59).in_time_zone('London')
+          contract.offer_sent_date = DateTime.new(2021, 3, 31, 17, 12, 1).in_time_zone('London')
+          expect(contract.contract_reminder_date).to eq DateTime.new(2021, 4, 1, 18, 12, 1, '+1').in_time_zone('London')
           contract.offer_sent_date = DateTime.new(2018, 5, 3, 4, 3, 7).in_time_zone('London')
           expect(contract.contract_reminder_date).to eq DateTime.new(2018, 5, 4, 4, 3, 7).in_time_zone('London')
           contract.offer_sent_date = DateTime.new(2020, 8, 29, 3, 4, 5).in_time_zone('London')
@@ -723,8 +713,8 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier do
           it 'is expected to have reminder date in one working day' do
             contract.offer_sent_date = DateTime.new(2019, 5, 6, 5, 12, 13).in_time_zone('London')
             expect(contract.contract_reminder_date).to eq DateTime.new(2019, 5, 7, 23, 0, 0).in_time_zone('London')
-            contract.offer_sent_date = DateTime.new(2018, 8, 6, 12, 3, 6).in_time_zone('London')
-            expect(contract.contract_reminder_date).to eq DateTime.new(2018, 8, 7, 23, 0, 0).in_time_zone('London')
+            contract.offer_sent_date = DateTime.new(2021, 8, 30, 6, 54, 2).in_time_zone('London')
+            expect(contract.contract_reminder_date).to eq DateTime.new(2021, 8, 31, 23, 0, 0).in_time_zone('London')
             contract.offer_sent_date = DateTime.new(2020, 12, 25, 4, 3, 0).in_time_zone('London')
             expect(contract.contract_reminder_date).to eq DateTime.new(2020, 12, 30, 0, 0, 0).in_time_zone('London')
           end

@@ -44,9 +44,9 @@ Feature: Sign in to my account - RM6232 - Accessibility
       | buyer     |
     Then I am on the 'Reset your password' page
     And I enter the following details into the form:
-      | New password          | ValidPassword1! |
-      | Confirm new password  | ValidPassword1! |
-      | Verification code     | 123456          |
+      | New password         | ValidPassword1! |
+      | Confirm new password | ValidPassword1! |
+      | Verification code    | 123456          |
     And I click on 'Reset password'
     Then I am on the 'You have successfully changed your password' page
     Then the page should be axe clean

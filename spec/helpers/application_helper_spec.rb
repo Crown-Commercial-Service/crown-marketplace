@@ -68,6 +68,22 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  describe '#breadcrumbs' do
+    context 'when there is nothing given' do
+      it 'returns nil' do
+        expect(helper.breadcrumbs).to be_nil
+      end
+    end
+
+    context 'when centent is provided' do
+      before { allow(helper).to receive(:content_for).with(:breadcrumbs).and_return('Something') }
+
+      it 'returns the content' do
+        expect(helper.breadcrumbs).to eq('Something')
+      end
+    end
+  end
+
   describe '#hidden_fields_for_previous_steps_and_responses' do
     context 'when there are multiple previous questions and answers' do
       let(:questions_and_answers) do

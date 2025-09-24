@@ -5,7 +5,7 @@ Feature: What do I do next
     And I have a procurement with the name 'My WDIDN procurement'
     When I navigate to the procurement 'My WDIDN procurement'
     And I am on the 'What do I do next?' page
-  
+
   Scenario: The content is correct
     And the procurement name is shown to be 'My WDIDN procurement'
     And the contract number is visible

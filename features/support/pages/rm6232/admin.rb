@@ -31,7 +31,7 @@ module Pages::RM6232
 
     element :supplier_search_input, '#fm-table-filter-input'
 
-    element :supplier_name_sub_title, '#main-content > div:nth-child(3) > div > span'
+    element :supplier_name_sub_title, '#main-content > div:nth-child(1) > div > span'
 
     sections :lot_data_tables, '.lot-data-table' do
       element :title, 'h2'
@@ -61,20 +61,20 @@ module Pages::RM6232
     element :lot_active_true, '#facilities_management_rm6232_supplier_lot_data_active_true'
     element :lot_active_false, '#facilities_management_rm6232_supplier_lot_data_active_false'
 
-    section :log_table, '#main-content > div:nth-child(5) > div > table' do
+    section :log_table, '#main-content > div:nth-child(3) > div > table' do
       elements :log_rows, 'tbody > tr'
     end
 
     element :updated_supplier, '#updated-supplier'
     element :updated_by_email, '#updated-by-email'
-    element :uploaded_by_email, '#main-content > div:nth-child(3) > div > dl > div:nth-child(3) > dd'
+    element :uploaded_by_email, '#main-content > div:nth-child(1) > div > dl > div:nth-child(3) > dd'
     element :updated_lot, '#updated-lot'
 
-    section :changes_table, '#main-content > div:nth-child(6) > div > table' do
+    section :changes_table, '#main-content > div:nth-child(4) > div > table' do
       sections :changes_rows, ChangesRow, 'tbody > tr'
     end
 
-    section :lot_status_changes_table, '#main-content > div:nth-child(5) > div > table' do
+    section :lot_status_changes_table, '#main-content > div:nth-child(3) > div > table' do
       sections :changes_rows, ChangesRow, 'tbody > tr'
     end
 

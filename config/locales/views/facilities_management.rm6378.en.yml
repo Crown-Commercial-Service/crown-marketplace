@@ -1,0 +1,38 @@
+---
+en:
+  facilities_management:
+    rm6378:
+      admin:
+        home:
+          index:
+            header: RM6378 administration dashboard
+      buyer_account:
+        index:
+          buyer_account_dashboard: Buyer account dashboard
+          buyer_account_title: Your account
+          further_information_help_html: "%{fm_link} (opens in a new tab)"
+          further_information_link: https://www.crowncommercial.gov.uk/agreements/rm6378
+          further_information_link_description: View further information about the Facilities Management and Workplace Services framework RM6378
+          manage_account_desc: Update and edit your contact details
+          manage_account_link: Manage my details
+          return_to_page: To return to this page at any time, just click on 'My account'.
+          search_for_suppliers_desc: Find a shortlist of suppliers who can provide services to your locations
+          search_for_suppliers_link: Search for suppliers
+          view_your_searches_desc: Open your dashboard to view your previously saved searches
+          view_your_searches_link: View your saved searches
+      home:
+        index:
+          beforeyoustart: Before you start
+          further_information: View further information about the Facilities Management and Workplace Services framework RM6378
+          heading: Find a facilities management supplier
+          startlist:
+            item_1: which services you want to have provided
+            item_2: where your buildings are located
+            item_3: your current or estimated annual cost
+          startnow: Start now
+          subheading: 'Use this service to:'
+          usagelist:
+            item_1: quickly view suppliers who can provide services to your locations
+            item_2: download a shortlist of potential suppliers
+            item_3: receive a compliant Lot recommendation
+          youneedtoknow: 'To receive a shortlist and compliant Lot, you need to know:'

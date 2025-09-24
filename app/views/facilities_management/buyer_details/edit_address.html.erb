@@ -3,8 +3,6 @@
 <div class="govuk-body govuk-grid-row buyer-details">
   <div class="govuk-grid-column-two-thirds" id="edit-contact-detail-address">
     <%= form_for @buyer_detail, url: facilities_management_buyer_detail_path(params[:framework], @buyer_detail, context: :update_address), method: :patch, html: { multipart: true, special_validation: true} do |f| %>
-      <%= govuk_back_link( t('.back'), edit_facilities_management_buyer_detail_path(params[:framework], @buyer_detail)) %>
-
       <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
 
       <div class="govuk-caption-m govuk-!-margin-top-2 govuk-!-margin-bottom-1">

@@ -7,11 +7,11 @@ Feature: Manage users - User admin - View user - Something went wron
     Then I should not see users table
     Given I am going to do a search to find users
     And I search for 'buyer@test.com' there are the following users:
-      | buyer@test.com  | enabled   |
+      | buyer@test.com | enabled |
     And I enter 'buyer@test.com' into the search
     And I click on 'Search'
     Then I should see the following users in the results:
-      | buyer@test.com  | Enabled   |
+      | buyer@test.com | Enabled |
     And I cannot view the user account because of the 'service' error
     And I view the user with email 'buyer@test.com'
     Then I am on the 'Crown Marketplace dashboard' page

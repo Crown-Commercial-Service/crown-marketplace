@@ -34,6 +34,10 @@ module ApplicationHelper
     title.compact_blank.map(&:strip).join(': ')
   end
 
+  def breadcrumbs
+    content_for(:breadcrumbs)
+  end
+
   def add_optional_error_prefix_to_page_title(errors)
     content_for(:page_title_prefix) { t('layouts.application.error_prefix') } unless errors.empty?
   end

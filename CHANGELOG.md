@@ -7,11 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.3.0] - 2025-09-22
+
+### Added
+
+- Add the framework for the new Facilities Management framework (RM6378) ([PR 4970](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4970))
+- Add the generic framework data models ([PR 4958](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4958))
+
+### Changed
+
+- Update CCS Frontend with the new CCS branding ([PR 4952](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4952))
+
 ## [7.2.1] - 2025-08-21
 
 ### Fixed
 
-Update the sidekiq cron schedule to include legacy job ([PR 4930](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4930))
+- Update the sidekiq cron schedule to include legacy job ([PR 4930](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4930))
 
 ## [7.2.0] - 2025-08-07
 

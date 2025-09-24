@@ -37,7 +37,7 @@ Feature: Change log for supplier lot status
     And the change was made by 'me'
     And the change was made in lot '1c'
     And I should see the following changes to the lot status:
-      | ACTIVE  | INACTIVE  |
+      | ACTIVE | INACTIVE |
     Then I click on 'Supplier data change log'
     And I am on the 'Supplier data change log' page
     And I click on log number 2
@@ -46,7 +46,7 @@ Feature: Change log for supplier lot status
     And the change was made by 'me'
     And the change was made in lot '3c'
     And I should see the following changes to the lot status:
-      | ACTIVE  | INACTIVE  |
+      | ACTIVE | INACTIVE |
     Then I click on 'Supplier data change log'
     And I am on the 'Supplier data change log' page
     And I click on log number 1
@@ -55,4 +55,4 @@ Feature: Change log for supplier lot status
     And the change was made by 'me'
     And the change was made in lot '1c'
     And I should see the following changes to the lot status:
-      | INACTIVE  | ACTIVE  |
+      | INACTIVE | ACTIVE |
