@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseServices do
   let(:choose_services) { described_class.new(service_codes:, region_codes:, annual_contract_value:) }
   let(:service_codes) { %w[E1 E2] }
-  let(:region_codes) {  %w[UKC1 UKC2] }
+  let(:region_codes) {  %w[TLC3 TLC4] }
   let(:annual_contract_value) { 123_456 }
 
   describe 'validations' do
