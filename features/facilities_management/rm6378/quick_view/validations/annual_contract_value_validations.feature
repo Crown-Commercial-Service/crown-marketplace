@@ -9,7 +9,7 @@ Feature: Annual contract cost validations
     And I click on 'Continue'
     Then I am on the 'Regions' page
     Then I select the following items:
-      | Tees Valley and Durham |
+      | Tees Valley |
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '<value>' for the annual contract cost

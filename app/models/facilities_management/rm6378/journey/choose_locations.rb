@@ -17,7 +17,7 @@ module FacilitiesManagement
 
         category_names = jurisdictions.pluck(:category).uniq
 
-        jurisdictions.order(Arel.sql('SUBSTRING(id FROM 4)::integer')).group_by(&:category).sort_by { |category_name, _jurisdictions| category_names.index(category_name) }
+        jurisdictions.order(Arel.sql('LENGTH(id)'), Arel.sql('SUBSTRING(id FROM 4)')).group_by(&:category).sort_by { |category_name, _jurisdictions| category_names.index(category_name) }
       end
     end
   end
