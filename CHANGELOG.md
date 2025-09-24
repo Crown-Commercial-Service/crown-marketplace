@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added the Service, Regions and Annual Contract Value pages for the new FM framework ([PR 4983](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4983))
+- Added the Service, Regions and Annual Contract Value pages for the new FM framework (RM6378) ([PR 4983](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4983))
+- Added code to determine the lot for the new FM framework (RM6378) ([PR 4984](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4984))
 
 ### Changed
 
