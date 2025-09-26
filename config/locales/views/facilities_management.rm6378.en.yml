@@ -63,31 +63,33 @@ en:
         choose_locations:
           regions:
             section:
+              NC0:
+                title: National coverage
               OS0:
                 title: Overseas
-              UKC:
+              TLC:
                 title: North East (England)
-              UKD:
+              TLD:
                 title: North West (England)
-              UKE:
+              TLE:
                 title: Yorkshire and The Humber
-              UKF:
+              TLF:
                 title: East Midlands (England)
-              UKG:
+              TLG:
                 title: West Midlands (England)
-              UKH:
+              TLH:
                 title: East of England
-              UKI:
+              TLI:
                 title: London
-              UKJ:
+              TLJ:
                 title: South East (England)
-              UKK:
+              TLK:
                 title: South West (England)
-              UKL:
+              TLL:
                 title: Wales
-              UKM:
+              TLM:
                 title: Scotland
-              UKN:
+              TLN:
                 title: Northern Ireland
         choose_services:
           services:

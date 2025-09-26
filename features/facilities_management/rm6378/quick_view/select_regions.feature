@@ -14,30 +14,30 @@ Feature: Select regions
   Scenario: Region selection appears in basket
     Then the basket should say 'No regions selected'
     And the remove all link should not be visible
-    When I select 'Tees Valley and Durham'
+    When I select 'Tees Valley'
     Then the basket should say '1 region selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | Tees Valley and Durham (UKC1) |
+      | Tees Valley (TLC3) |
     When I select the following items:
-      | Lancashire                                                                    |
-      | Essex                                                                         |
-      | Inner London - West                                                           |
-      | Inner London - East                                                           |
-      | Gwynedd                                                                       |
-      | East Lothian and Midlothian                                                   |
-      | Outer Belfast (Carrickfergus, Castlereagh, Lisburn, Newtownabbey, North Down) |
+      | Lancashire                  |
+      | Essex                       |
+      | Inner London - West         |
+      | Inner London - East         |
+      | Gwynedd                     |
+      | East Lothian and Midlothian |
+      | Belfast                     |
     Then the basket should say '8 regions selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | Tees Valley and Durham (UKC1)                                                         |
-      | Lancashire (UKD4)                                                                     |
-      | Essex (UKH3)                                                                          |
-      | Inner London - West (UKI3)                                                            |
-      | Inner London - East (UKI4)                                                            |
-      | Gwynedd (UKL12)                                                                       |
-      | East Lothian and Midlothian (UKM23)                                                   |
-      | Outer Belfast (Carrickfergus, Castlereagh, Lisburn, Newtownabbey, North Down) (UKN02) |
+      | Tees Valley (TLC3)                  |
+      | Lancashire (TLD4)                   |
+      | Essex (TLH3)                        |
+      | Inner London - West (TLI3)          |
+      | Inner London - East (TLI4)          |
+      | Gwynedd (TLL32)                     |
+      | East Lothian and Midlothian (TLM11) |
+      | Belfast (TLN06)                     |
 
   Scenario: Changing the selection will change the basket
     When I select the following items:
@@ -49,39 +49,41 @@ Feature: Select regions
     Then the basket should say '5 regions selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | Essex (UKH3)                        |
-      | Inner London - West (UKI3)          |
-      | Inner London - East (UKI4)          |
-      | Gwynedd (UKL12)                     |
-      | East Lothian and Midlothian (UKM23) |
+      | Essex (TLH3)                        |
+      | Inner London - West (TLI3)          |
+      | Inner London - East (TLI4)          |
+      | Gwynedd (TLL32)                     |
+      | East Lothian and Midlothian (TLM11) |
     When I deselect the following items:
       | Inner London - West |
     Then the basket should say '4 regions selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | Essex (UKH3)                        |
-      | Inner London - East (UKI4)          |
-      | Gwynedd (UKL12)                     |
-      | East Lothian and Midlothian (UKM23) |
+      | Essex (TLH3)                        |
+      | Inner London - East (TLI4)          |
+      | Gwynedd (TLL32)                     |
+      | East Lothian and Midlothian (TLM11) |
     When I remove the following items from the basket:
       | Essex   |
       | Gwynedd |
     Then the basket should say '2 regions selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | Inner London - East (UKI4)          |
-      | East Lothian and Midlothian (UKM23) |
+      | Inner London - East (TLI4)          |
+      | East Lothian and Midlothian (TLM11) |
     When I click on 'Remove all'
     Then the basket should say 'No regions selected'
 
   Scenario: Select all checkbox
     When I select all for 'East of England'
-    Then the basket should say '3 regions selected'
+    Then the basket should say '5 regions selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | East Anglia (UKH1)                    |
-      | Bedfordshire and Hertfordshire (UKH2) |
-      | Essex (UKH3)                          |
+      | Bedfordshire and Hertfordshire (TLH2)  |
+      | Essex (TLH3)                           |
+      | Cambridgeshire and Peterborough (TLH4) |
+      | Norfolk (TLH5)                         |
+      | Suffolk (TLH6)                         |
     When I remove the following items from the basket:
       | Bedfordshire and Hertfordshire |
     Then select all 'should not' be checked for 'East of England'
@@ -99,7 +101,7 @@ Feature: Select regions
     And I click on the 'Return to regions' back link
     Then I am on the 'Regions' page
     And the following items should appear in the basket:
-      | Essex (UKH3)                        |
-      | Inner London - East (UKI4)          |
-      | Gwynedd (UKL12)                     |
-      | East Lothian and Midlothian (UKM23) |
+      | Essex (TLH3)                        |
+      | Inner London - East (TLI4)          |
+      | Gwynedd (TLL32)                     |
+      | East Lothian and Midlothian (TLM11) |

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseLocations do
   let(:choose_locations) { described_class.new(region_codes:, annual_contract_value:) }
-  let(:region_codes) { ['UKC1', 'UKC2'] }
+  let(:region_codes) { ['TLC3', 'TLC4'] }
   let(:annual_contract_value) { 123_456 }
 
   describe 'validations' do
@@ -65,18 +65,19 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseLocations do
     it 'services are grouped together as expected' do
       expect(result).to eq(
         [
-          ['UKC', 2],
-          ['UKD', 5],
-          ['UKE', 4],
-          ['UKF', 3],
-          ['UKG', 3],
-          ['UKH', 3],
-          ['UKI', 5],
-          ['UKJ', 4],
-          ['UKK', 4],
-          ['UKL', 12],
-          ['UKM', 23],
-          ['UKN', 5],
+          ['TLC', 2],
+          ['TLD', 5],
+          ['TLE', 4],
+          ['TLF', 3],
+          ['TLG', 3],
+          ['TLH', 5],
+          ['TLI', 5],
+          ['TLJ', 4],
+          ['TLK', 5],
+          ['TLL', 12],
+          ['TLM', 18],
+          ['TLN', 11],
+          ['NC0', 1],
           ['OS0', 1]
         ]
       )

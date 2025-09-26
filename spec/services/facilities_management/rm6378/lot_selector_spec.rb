@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
     security_officer_and_systems_service_numbers = %w[W1]
     security_advisory_service_numbers = %w[X1 Y1 Z1]
 
-    context 'when only FM services are slected' do
+    context 'when only FM services are selected' do
       context 'when all services are hard' do
         let(:service_numbers) { hard_service_numbers }
 

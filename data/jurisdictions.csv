@@ -247,77 +247,82 @@ YT,Mayotte,Mayotte,non-core
 ZA,South Africa,South Africa,non-core
 ZM,Zambia,Zambia,non-core
 ZW,Zimbabwe,Zimbabwe,non-core
-UKC1,Tees Valley and Durham,Tees Valley and Durham,UKC
-UKC2,Northumberland and Tyne and Wear,Northumberland and Tyne and Wear,UKC
-UKD1,Cumbria,Cumbria,UKD
-UKD3,Greater Manchester,Greater Manchester,UKD
-UKD4,Lancashire,Lancashire,UKD
-UKD6,Cheshire,Cheshire,UKD
-UKD7,Merseyside,Merseyside,UKD
-UKE1,East Yorkshire and Northern Lincolnshire,East Yorkshire and Northern Lincolnshire,UKE
-UKE2,North Yorkshire,North Yorkshire,UKE
-UKE3,South Yorkshire,South Yorkshire,UKE
-UKE4,West Yorkshire,West Yorkshire,UKE
-UKF1,Derbyshire and Nottinghamshire,Derbyshire and Nottinghamshire,UKF
-UKF2,"Leicestershire, Rutland and Northamptonshire","Leicestershire, Rutland and Northamptonshire",UKF
-UKF3,Lincolnshire,Lincolnshire,UKF
-UKG1,"Herefordshire, Worcestershire and Warwickshire","Herefordshire, Worcestershire and Warwickshire",UKG
-UKG2,Shropshire and Staffordshire,Shropshire and Staffordshire,UKG
-UKG3,West Midlands (county),West Midlands (county),UKG
-UKH1,East Anglia,East Anglia,UKH
-UKH2,Bedfordshire and Hertfordshire,Bedfordshire and Hertfordshire,UKH
-UKH3,Essex,Essex,UKH
-UKI3,Inner London - West,Inner London - West,UKI
-UKI4,Inner London - East,Inner London - East,UKI
-UKI5,Outer London - East and North East,Outer London - East and North East,UKI
-UKI6,Outer London - South,Outer London - South,UKI
-UKI7,Outer London - West and North West,Outer London - West and North West,UKI
-UKJ1,"Berkshire, Buckinghamshire and Oxfordshire","Berkshire, Buckinghamshire and Oxfordshire",UKJ
-UKJ2,"Surrey, East and West Sussex","Surrey, East and West Sussex",UKJ
-UKJ3,Hampshire and Isle of Wight,Hampshire and Isle of Wight,UKJ
-UKJ4,Kent,Kent,UKJ
-UKK1,"Gloucestershire, Wiltshire and Bristol/Bath area","Gloucestershire, Wiltshire and Bristol/Bath area",UKK
-UKK2,Dorset and Somerset,Dorset and Somerset,UKK
-UKK3,Cornwall and Isles of Scilly,Cornwall and Isles of Scilly,UKK
-UKK4,Devon,Devon,UKK
-UKL11,Isle of Anglesey,Isle of Anglesey,UKL
-UKL12,Gwynedd,Gwynedd,UKL
-UKL13,Conwy and Denbighshire,Conwy and Denbighshire,UKL
-UKL14,"South West Wales (Ceredigion, Carmarthenshire, Pembrokeshire)","South West Wales (Ceredigion, Carmarthenshire, Pembrokeshire)",UKL
-UKL15,"Central Valleys (Merthyr Tydfil, Rhondda Cynon Taff)","Central Valleys (Merthyr Tydfil, Rhondda Cynon Taff)",UKL
-UKL16,"Gwent Valleys (Blaenau Gwent, Caerphilly, Torfaen)","Gwent Valleys (Blaenau Gwent, Caerphilly, Torfaen)",UKL
-UKL17,Bridgend and Neath Port Talbot,Bridgend and Neath Port Talbot,UKL
-UKL18,Swansea,Swansea,UKL
-UKL21,Monmouthshire and Newport,Monmouthshire and Newport,UKL
-UKL22,Cardiff and Vale of Glamorgan,Cardiff and Vale of Glamorgan,UKL
-UKL23,Flintshire and Wrexham,Flintshire and Wrexham,UKL
-UKL24,Powys,Powys,UKL
-UKM21,Angus and Dundee,Angus and Dundee,UKM
-UKM22,Clackmannanshire and Fife,Clackmannanshire and Fife,UKM
-UKM23,East Lothian and Midlothian,East Lothian and Midlothian,UKM
-UKM24,Scottish Borders,Scottish Borders,UKM
-UKM25,Edinburgh,Edinburgh,UKM
-UKM26,Falkirk,Falkirk,UKM
-UKM27,"Perth and Kinross, and Stirling","Perth and Kinross, and Stirling",UKM
-UKM28,West Lothian,West Lothian,UKM
-UKM31,"East Dunbartonshire, West Dunbartonshire, and Helensburgh and Lomond","East Dunbartonshire, West Dunbartonshire, and Helensburgh and Lomond",UKM
-UKM32,Dumfries and Galloway,Dumfries and Galloway,UKM
-UKM33,East and North Ayrshire mainland,East and North Ayrshire mainland,UKM
-UKM34,Glasgow,Glasgow,UKM
-UKM35,"Inverclyde, East Renfrewshire, and Renfrewshire","Inverclyde, East Renfrewshire, and Renfrewshire",UKM
-UKM36,North Lanarkshire,North Lanarkshire,UKM
-UKM37,South Ayrshire,South Ayrshire,UKM
-UKM38,South Lanarkshire,South Lanarkshire,UKM
-UKM50,Aberdeen and Aberdeenshire,Aberdeen and Aberdeenshire,UKM
-UKM61,"Caithness and Sutherland, and Ross and Cromarty","Caithness and Sutherland, and Ross and Cromarty",UKM
-UKM62,"Inverness, Nairn, Moray, and Badenoch and Strathspey","Inverness, Nairn, Moray, and Badenoch and Strathspey",UKM
-UKM63,"Lochaber, Skye and Lochalsh, Arran and Cumbrae, and Argyll and Bute (except Helensburgh and Lomond)","Lochaber, Skye and Lochalsh, Arran and Cumbrae, and Argyll and Bute (except Helensburgh and Lomond)",UKM
-UKM64,Eilean Siar (Western Isles),Eilean Siar (Western Isles),UKM
-UKM65,Orkney Islands,Orkney Islands,UKM
-UKM66,Shetland Islands,Shetland Islands,UKM
-UKN01,Belfast,Belfast,UKN
-UKN02,"Outer Belfast (Carrickfergus, Castlereagh, Lisburn, Newtownabbey, North Down)","Outer Belfast (Carrickfergus, Castlereagh, Lisburn, Newtownabbey, North Down)",UKN
-UKN03,"East of Northern Ireland (Antrim, Ards, Ballymena, Banbridge, Craigavon, Down, Larne)","East of Northern Ireland (Antrim, Ards, Ballymena, Banbridge, Craigavon, Down, Larne)",UKN
-UKN04,"North of Northern Ireland (Ballymoney, Coleraine, Derry, Limavady, Moyle, Strabane)","North of Northern Ireland (Ballymoney, Coleraine, Derry, Limavady, Moyle, Strabane)",UKN
-UKN05,"West and South of Northern Ireland (Armagh, Cookstown, Dungannon, Fermanagh, Magherafelt, Newry and Mourne, Omagh)","West and South of Northern Ireland (Armagh, Cookstown, Dungannon, Fermanagh, Magherafelt, Newry and Mourne, Omagh)",UKN
+TLC3,Tees Valley,Tees Valley,TLC
+TLC4,"Northumberland, Durham and Tyne & Wear","Northumberland, Durham and Tyne & Wear",TLC
+TLD1,Cumbria,Cumbria,TLD
+TLD3,Greater Manchester,Greater Manchester,TLD
+TLD4,Lancashire,Lancashire,TLD
+TLD6,Cheshire,Cheshire,TLD
+TLD7,Merseyside,Merseyside,TLD
+TLE1,East Yorkshire and Northern Lincolnshire,East Yorkshire and Northern Lincolnshire,TLE
+TLE2,North Yorkshire,North Yorkshire,TLE
+TLE3,South Yorkshire,South Yorkshire,TLE
+TLE4,West Yorkshire,West Yorkshire,TLE
+TLF1,Derbyshire and Nottinghamshire,Derbyshire and Nottinghamshire,TLF
+TLF2,"Leicestershire, Rutland and Northamptonshire","Leicestershire, Rutland and Northamptonshire",TLF
+TLF3,Lincolnshire,Lincolnshire,TLF
+TLG1,"Herefordshire, Worcestershire and Warwickshire","Herefordshire, Worcestershire and Warwickshire",TLG
+TLG2,Shropshire and Staffordshire,Shropshire and Staffordshire,TLG
+TLG3,West Midlands,West Midlands,TLG
+TLH2,Bedfordshire and Hertfordshire,Bedfordshire and Hertfordshire,TLH
+TLH3,Essex,Essex,TLH
+TLH4,Cambridgeshire and Peterborough,Cambridgeshire and Peterborough,TLH
+TLH5,Norfolk,Norfolk,TLH
+TLH6,Suffolk,Suffolk,TLH
+TLI3,Inner London - West,Inner London - West,TLI
+TLI4,Inner London - East,Inner London - East,TLI
+TLI5,Outer London - East and North East,Outer London - East and North East,TLI
+TLI6,Outer London - South,Outer London - South,TLI
+TLI7,Outer London - West and North West,Outer London - West and North West,TLI
+TLJ1,"Berkshire, Buckinghamshire and Oxfordshire","Berkshire, Buckinghamshire and Oxfordshire",TLJ
+TLJ2,"Surrey, East and West Sussex","Surrey, East and West Sussex",TLJ
+TLJ3,Hampshire and Isle of Wight,Hampshire and Isle of Wight,TLJ
+TLJ4,Kent,Kent,TLJ
+TLK3,Cornwall and Isles of Scilly,Cornwall and Isles of Scilly,TLK
+TLK4,Devon,Devon,TLK
+TLK5,West of England,West of England,TLK
+TLK6,"North Somerset, Somerset and Dorset","North Somerset, Somerset and Dorset",TLK
+TLK7,Gloucestershire and Wiltshire,Gloucestershire and Wiltshire,TLK
+TLL31,Isle of Anglesey,Isle of Anglesey,TLL
+TLL32,Gwynedd,Gwynedd,TLL
+TLL33,Conwy and Denbighshire,Conwy and Denbighshire,TLL
+TLL34,Flintshire and Wrexham,Flintshire and Wrexham,TLL
+TLL41,Mid Wales,Mid Wales,TLL
+TLL42,South West Wales,South West Wales,TLL
+TLL43,Swansea,Swansea,TLL
+TLL44,Neath Port Talbot,Neath Port Talbot,TLL
+TLL51,Central Valleys and Bridgend,Central Valleys and Bridgend,TLL
+TLL52,Cardiff and Vale of Glamorgan,Cardiff and Vale of Glamorgan,TLL
+TLL53,Gwent Valleys,Gwent Valleys,TLL
+TLL54,Monmouthshire and Newport,Monmouthshire and Newport,TLL
+TLM01,Clackmannanshire and Fife,Clackmannanshire and Fife,TLM
+TLM02,"Perth and Kinross, and Stirling","Perth and Kinross, and Stirling",TLM
+TLM03,Angus and Dundee City,Angus and Dundee City,TLM
+TLM11,East Lothian and Midlothian,East Lothian and Midlothian,TLM
+TLM12,Falkirk,Falkirk,TLM
+TLM13,City of Edinburgh,City of Edinburgh,TLM
+TLM14,West Lothian,West Lothian,TLM
+TLM20,Highlands and Islands,Highlands and Islands,TLM
+TLM31,East Dunbartonshire and West Dunbartonshire,East Dunbartonshire and West Dunbartonshire,TLM
+TLM32,Glasgow City,Glasgow City,TLM
+TLM33,"Inverclyde, East Renfrewshire, and Renfrewshire","Inverclyde, East Renfrewshire, and Renfrewshire",TLM
+TLM34,North Lanarkshire,North Lanarkshire,TLM
+TLM50,Aberdeen City and Aberdeenshire,Aberdeen City and Aberdeenshire,TLM
+TLM91,Scottish Borders,Scottish Borders,TLM
+TLM92,Dumfries and Galloway,Dumfries and Galloway,TLM
+TLM93,North Ayrshire and East Ayrshire,North Ayrshire and East Ayrshire,TLM
+TLM94,South Ayrshire,South Ayrshire,TLM
+TLM95,South Lanarkshire,South Lanarkshire,TLM
+TLN06,Belfast,Belfast,TLN
+TLN07,"Armagh City, Banbridge and Craigavon","Armagh City, Banbridge and Craigavon",TLN
+TLN08,"Newry, Mourne and Down","Newry, Mourne and Down",TLN
+TLN09,Ards and North Down,Ards and North Down,TLN
+TLN0A,Derry City and Strabane,Derry City and Strabane,TLN
+TLN0B,Mid Ulster,Mid Ulster,TLN
+TLN0C,Causeway Coast and Glens,Causeway Coast and Glens,TLN
+TLN0D,Antrim and Newtownabbey,Antrim and Newtownabbey,TLN
+TLN0E,Lisburn and Castlereagh,Lisburn and Castlereagh,TLN
+TLN0F,Mid and East Antrim,Mid and East Antrim,TLN
+TLN0G,Fermanagh and Omagh,Fermanagh and Omagh,TLN
+NC01,National coverage (all of the above),National coverage (all of the above),NC0
 OS01,International coverage,International coverage,OS0
