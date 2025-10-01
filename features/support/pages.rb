@@ -36,11 +36,17 @@ module Pages
     @procurement_page ||= case @framework
                           when 'RM6232'
                             procurement_rm6232_page
+                          when 'RM6378'
+                            procurement_rm6378_page
                           end
   end
 
   def procurement_rm6232_page
     @procurement_rm6232_page ||= RM6232::Procurement.new
+  end
+
+  def procurement_rm6378_page
+    @procurement_rm6378_page ||= RM6378::Procurement.new
   end
 
   def quick_view_page

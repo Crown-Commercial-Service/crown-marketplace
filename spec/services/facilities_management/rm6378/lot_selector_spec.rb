@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM6378::LotSelector do
   # rubocop:disable RSpec/NestedGroups
   describe '.select_lot_numbers lot numbers' do
-    let(:result) { described_class.select_lot_numbers(service_numbers, annual_contract_value).lot_results.map { |lot_result| [lot_result.lot_number, lot_result.service_numbers] } }
+    let(:result) { described_class.select_lot_numbers(service_numbers, annual_contract_value).lot_results.map { |lot_result| [lot_result.lot_id, lot_result.service_ids] } }
 
     let(:annual_contract_value) { rand(2_000_000) }
 
@@ -15,6 +15,15 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
     security_systems_service_numbers = %w[T1 V1]
     security_officer_and_systems_service_numbers = %w[W1]
     security_advisory_service_numbers = %w[X1 Y1 Z1]
+
+    def result_converter(lot_number, service_numbers)
+      lot_id = "RM6378.#{lot_number}"
+
+      [
+        lot_id,
+        service_numbers.map { |service_number| "#{lot_id}.#{service_number}" }
+      ]
+    end
 
     context 'when only FM services are selected' do
       context 'when all services are hard' do
@@ -46,12 +55,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:annual_contract_value) { example_annual_contract_value }
 
             it "returns #{expected_result} with '#{hard_service_numbers.join(', ')}'" do
-              expect(result).to eq [
-                [
-                  expected_result,
-                  hard_service_numbers
-                ]
-              ]
+              expect(result).to eq [result_converter(expected_result, hard_service_numbers)]
             end
           end
         end
@@ -86,12 +90,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:annual_contract_value) { example_annual_contract_value }
 
             it "returns #{expected_result} with '#{soft_service_numbers.join(', ')}'" do
-              expect(result).to eq [
-                [
-                  expected_result,
-                  soft_service_numbers
-                ]
-              ]
+              expect(result).to eq [result_converter(expected_result, soft_service_numbers)]
             end
           end
         end
@@ -141,12 +140,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:annual_contract_value) { example_annual_contract_value }
 
             it "returns #{expected_result} with '#{total_service_numbers.join(', ')}'" do
-              expect(result).to eq [
-                [
-                  expected_result,
-                  total_service_numbers
-                ]
-              ]
+              expect(result).to eq [result_converter(expected_result, total_service_numbers)]
             end
           end
         end
@@ -157,12 +151,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
           let(:service_numbers) { hard_service_numbers + ['Q2'] }
 
           it "returns 2a with '#{hard_service_numbers.join(', ')} and Q2'" do
-            expect(result).to eq [
-              [
-                '2a',
-                hard_service_numbers + ['Q2']
-              ]
-            ]
+            expect(result).to eq [result_converter('2a', hard_service_numbers + ['Q2'])]
           end
         end
 
@@ -170,12 +159,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
           let(:service_numbers) { soft_service_numbers + ['Q2'] }
 
           it "returns 3a with '#{soft_service_numbers.join(', ')} and Q1'" do
-            expect(result).to eq [
-              [
-                '3a',
-                soft_service_numbers + ['Q1']
-              ]
-            ]
+            expect(result).to eq [result_converter('3a', soft_service_numbers + ['Q1'])]
           end
         end
 
@@ -183,12 +167,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
           let(:service_numbers) { total_service_numbers + ['Q2'] }
 
           it "returns 1a with '#{total_service_numbers.join(', ')} and Q2'" do
-            expect(result).to eq [
-              [
-                '1a',
-                total_service_numbers + ['Q2']
-              ]
-            ]
+            expect(result).to eq [result_converter('1a', total_service_numbers + ['Q2'])]
           end
         end
       end
@@ -244,12 +223,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
           let(:service_numbers) { example_service_numbers }
 
           it "returns #{expected_result} with '#{example_service_numbers.join(', ')}'" do
-            expect(result).to eq [
-              [
-                expected_result,
-                example_service_numbers
-              ]
-            ]
+            expect(result).to eq [result_converter(expected_result, example_service_numbers)]
           end
         end
       end
@@ -338,12 +312,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
           let(:service_numbers) { example_service_numbers }
 
           it "returns #{expected_result} with '#{example_service_numbers.join(', ')}'" do
-            expect(result).to eq [
-              [
-                expected_result,
-                example_service_numbers
-              ]
-            ]
+            expect(result).to eq [result_converter(expected_result, example_service_numbers)]
           end
         end
       end
@@ -563,7 +532,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:service_numbers) { hard_service_numbers + example_service_numbers }
 
             it "returns #{expected_results.map { |expected_result| "#{expected_result[0]} with '#{expected_result[1].join(', ')}'" }.join(' and ')}" do
-              expect(result).to eq expected_results
+              expect(result).to eq(expected_results.map { |expected_result| result_converter(*expected_result) })
             end
           end
         end
@@ -782,7 +751,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:service_numbers) { soft_service_numbers + example_service_numbers }
 
             it "returns #{expected_results.map { |expected_result| "#{expected_result[0]} with '#{expected_result[1].join(', ')}'" }.join(' and ')}" do
-              expect(result).to eq expected_results
+              expect(result).to eq(expected_results.map { |expected_result| result_converter(*expected_result) })
             end
           end
         end
@@ -1001,7 +970,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:service_numbers) { total_service_numbers + example_service_numbers }
 
             it "returns #{expected_results.map { |expected_result| "#{expected_result[0]} with '#{expected_result[1].join(', ')}'" }.join(' and ')}" do
-              expect(result).to eq expected_results
+              expect(result).to eq(expected_results.map { |expected_result| result_converter(*expected_result) })
             end
           end
         end
@@ -1220,7 +1189,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:service_numbers) { hard_and_soft_service_numbers + example_service_numbers }
 
             it "returns #{expected_results.map { |expected_result| "#{expected_result[0]} with '#{expected_result[1].join(', ')}'" }.join(' and ')}" do
-              expect(result).to eq expected_results
+              expect(result).to eq(expected_results.map { |expected_result| result_converter(*expected_result) })
             end
           end
         end
@@ -1439,7 +1408,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:service_numbers) { hard_service_numbers + soft_service_numbers + example_service_numbers }
 
             it "returns #{expected_results.map { |expected_result| "#{expected_result[0]} with '#{expected_result[1].join(', ')}'" }.join(' and ')}" do
-              expect(result).to eq expected_results
+              expect(result).to eq(expected_results.map { |expected_result| result_converter(*expected_result) })
             end
           end
         end
@@ -1658,7 +1627,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:service_numbers) { hard_service_numbers + total_service_numbers + example_service_numbers }
 
             it "returns #{expected_results.map { |expected_result| "#{expected_result[0]} with '#{expected_result[1].join(', ')}'" }.join(' and ')}" do
-              expect(result).to eq expected_results
+              expect(result).to eq(expected_results.map { |expected_result| result_converter(*expected_result) })
             end
           end
         end
@@ -1877,7 +1846,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:service_numbers) { soft_service_numbers + total_service_numbers + example_service_numbers }
 
             it "returns #{expected_results.map { |expected_result| "#{expected_result[0]} with '#{expected_result[1].join(', ')}'" }.join(' and ')}" do
-              expect(result).to eq expected_results
+              expect(result).to eq(expected_results.map { |expected_result| result_converter(*expected_result) })
             end
           end
         end
@@ -2096,7 +2065,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             let(:service_numbers) { hard_service_numbers + soft_service_numbers + total_service_numbers + example_service_numbers }
 
             it "returns #{expected_results.map { |expected_result| "#{expected_result[0]} with '#{expected_result[1].join(', ')}'" }.join(' and ')}" do
-              expect(result).to eq expected_results
+              expect(result).to eq(expected_results.map { |expected_result| result_converter(*expected_result) })
             end
           end
         end

@@ -118,11 +118,11 @@ module FacilitiesManagement::RM6378
     end
 
     class LotResult
-      attr_reader :lot_number, :service_numbers
+      attr_reader :lot_id, :service_ids
 
       def initialize(lot_number, service_numbers)
-        @lot_number = lot_number
-        @service_numbers = service_numbers
+        @lot_id = "RM6378.#{lot_number}"
+        @service_ids = service_numbers.map { |service_number| "#{@lot_id}.#{service_number}" }
       end
     end
   end

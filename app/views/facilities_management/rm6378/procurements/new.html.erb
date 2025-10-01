@@ -1,0 +1,157 @@
+<% content_for :page_title, t('.heading') %>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @procurements.first.errors } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+    <p class="govuk-body-l">
+      <%= @procurements.length > 1 ? t('.based_on_info_plural') : t('.based_on_info') %>
+    </p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <h2 class="govuk-heading-m">
+      <%= t('.selection_summary') %>
+    </h2>
+    <div class="ccs-summary-box">
+      <div class="ccs-summary-box__headings">
+        <span class="ccs-summary-box__title">
+          <%= t('.services') %>
+        </span>
+        <span class="ccs-summary-box__change">
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-services', annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+        </span>
+      </div>
+      <div class="ccs-summary-box__content">
+        <%= govuk_details("#{@services.count} selected") do %>
+          <ul class="govuk-list govuk-list--bullet">
+            <% @services.each do |service| %>
+              <li>
+                <%= service.name %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+    <div class="ccs-summary-box">
+      <div class="ccs-summary-box__headings">
+        <span class="ccs-summary-box__title">
+          <%= t('.regions') %>
+        </span>
+        <span class="ccs-summary-box__change">
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-locations', annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+        </span>
+      </div>
+      <div class="ccs-summary-box__content">
+        <%= govuk_details("#{@regions.count} selected") do %>
+          <ul class="govuk-list govuk-list--bullet">
+            <% @regions.each do |region| %>
+              <li>
+                <%= region.name %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+    <div class="ccs-summary-box">
+      <div class="ccs-summary-box__headings">
+        <div class="ccs-summary-box__title">
+          <%= t('.annual_contract_value') %>
+        </div>
+        <div class="ccs-summary-box__change">
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'annual-contract-value', annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+        </div>
+      </div>
+      <div class="ccs-summary-box__content">
+        <%= format_money(@annual_contract_value, 0) %>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_tabs(
+      @procurements.map do |procurement|
+        {
+          label: tag.span(t('.sub_lot', sub_lot: procurement.lot.number), class: 'govuk-!-font-weight-bold govuk-!-font-size-27'),
+          panel: {
+            content: render(partial: 'supplier_list', locals: { suppliers: procurement.suppliers }),
+            attributes: {
+              id: "sub-lot-#{procurement.lot.number}"
+            }
+          }
+        }
+      end,
+      attributes: {
+        id: 'procurement-search-results'
+      }
+    ) %>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: facilities_management_rm6378_procurements_path, model: @procurements.first, method: :post, html: { specialvalidation: true, novalidate: true } do |f| %>
+      <% @services.pluck(:number).each do |service_code| %>
+        <%= hidden_field_tag :"service_codes[]", service_code, id: nil %>
+      <% end %>
+
+      <% @regions.pluck(:id).each do |region_code| %>
+        <%= hidden_field_tag :"region_codes[]", region_code, id: nil  %>
+      <% end %>
+
+      <%= hidden_field_tag :annual_contract_value, @annual_contract_value, id: nil %>
+
+      <%= govuk_input(
+        :contract_name,
+        form: f,
+        label: {
+          text: t('.contract_name.label'),
+          classes: 'govuk-label--m'
+        },
+        hint: {
+          text: t('.contract_name.hint')
+        },
+        classes: 'govuk-input--width-20',
+      ) %>
+
+      <%= govuk_radios(
+        :requirements_linked_to_pfi,
+        [
+          {
+            value: true,
+            label: {
+              text: t('.requirements_linked_to_pfi.options.true')
+            }
+          },
+          {
+            value: false,
+            label: {
+              text: t('.requirements_linked_to_pfi.options.false')
+            }
+          }
+        ],
+        form: f,
+        fieldset: {
+          legend: {
+            text: t('.requirements_linked_to_pfi.label'),
+            classes: 'govuk-fieldset__legend--m'
+          }
+        },
+        classes: 'govuk-radios--inline',
+      ) %>
+
+      <%= govuk_button(t('.save_and_continue'), form: f, attributes: { name: 'save_and_continue' }) %>
+      <p>
+        <%= link_to t('.return_to_dashboard'), facilities_management_rm6378_path, class: 'govuk-body govuk-link--no-visited-state' %>
+      </p>
+    <% end %>
+  </div>
+</div>

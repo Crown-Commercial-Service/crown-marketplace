@@ -456,14 +456,6 @@ en:
         choose_services:
           learn_more: Further details (opens in a new tab)
       procurements:
-        index:
-          date_saved: Date saved
-          description: Your saved searches are shown below. Click on the search name to view the details.
-          heading: Saved searches
-          name: Saved searches
-          ref_number: Ref number
-          return_to_your_account: Return to your account
-          you_do_not_have_any: You do not have any saved searches
         new:
           annual_contract_value: Annual contract cost
           based_on_info: 'Based on the information provided, this procurement would be eligible for the following Lot, with your supplier shortlist as shown below:'

@@ -14,7 +14,7 @@ Before do
 end
 
 Before do |scenario|
-  %w[rm3830 rm6232].each do |framework|
+  %w[rm3830 rm6232 rm6378].each do |framework|
     if scenario.location.file.include? framework
       @framework = framework.upcase
       break

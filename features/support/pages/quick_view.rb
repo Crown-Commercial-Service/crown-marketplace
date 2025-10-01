@@ -14,6 +14,7 @@ module Pages
     element :annual_contract_value, '#annual_contract_value'
 
     element :sub_lot, '#procurement-sub-lot'
+    elements :sub_lots, '#procurement-search-results > ul > li > a > span'
 
     section :selection_summary, '#main-content > div:nth-child(2) > div.govuk-grid-column-one-third' do
       section :services, SummarySection, 'div.ccs-summary-box:nth-of-type(1)'

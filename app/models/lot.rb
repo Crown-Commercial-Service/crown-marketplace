@@ -4,6 +4,7 @@ class Lot < ApplicationRecord
   has_many :services, inverse_of: :lot, dependent: :destroy
   has_many :positions, inverse_of: :lot, dependent: :destroy
   has_many :supplier_framework_lots, inverse_of: :lot, class_name: 'Supplier::Framework::Lot', dependent: :destroy
+  has_many :procurements, inverse_of: :lot, dependent: :destroy
 
   def services_grouped_by_category
     category_names = services.pluck(:category)
