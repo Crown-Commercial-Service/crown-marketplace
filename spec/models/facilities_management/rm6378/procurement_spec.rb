@@ -353,6 +353,26 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     end
   end
 
+  describe 'services' do
+    let(:procurement) { create(:facilities_management_rm6378_procurement, procurement_details:) }
+
+    it 'returns the servies sorted by category then number' do
+      procurement = create(:facilities_management_rm6378_procurement, procurement_details: { 'service_ids' => ['RM6378.1a.E1', 'RM6378.1a.E2', 'RM6378.1a.G5', 'RM6378.1a.G3', 'RM6378.1a.F1', 'RM6378.1a.I10', 'RM6378.1a.I1', 'RM6378.1a.I12'] })
+
+      expect(procurement.services.pluck(:id)).to eq(['RM6378.1a.E1', 'RM6378.1a.E2', 'RM6378.1a.F1', 'RM6378.1a.G3', 'RM6378.1a.G5', 'RM6378.1a.I1', 'RM6378.1a.I10', 'RM6378.1a.I12'])
+    end
+  end
+
+  describe 'jurisdictions' do
+    let(:procurement) { create(:facilities_management_rm6378_procurement, procurement_details:) }
+
+    it 'returns the jurisdictions sorted by category then number' do
+      procurement = create(:facilities_management_rm6378_procurement, procurement_details: { 'jurisdiction_ids' => ['TLD3', 'TLD1', 'TLN0D', 'TLN0A', 'TLN06', 'TLG2'] })
+
+      expect(procurement.jurisdictions.pluck(:id)).to eq(['TLD1', 'TLD3', 'TLG2', 'TLN06', 'TLN0A', 'TLN0D'])
+    end
+  end
+
   describe 'validations' do
     describe 'contract_name' do
       let(:procurement) { build(:facilities_management_rm6378_procurement, user:, framework:) }

@@ -34,5 +34,10 @@ module Pages
       element :sub_title, 'div.govuk-clearfix > div:nth-child(1) > div > span'
       element :service_name_and_code, 'h2'
     end
+
+    section :notification_banner, 'div.govuk-notification-banner' do
+      element :title, 'div.govuk-notification-banner__header > h2.govuk-notification-banner__title'
+      element :message, 'div.govuk-notification-banner__content > p.govuk-notification-banner__heading'
+    end
   end
 end

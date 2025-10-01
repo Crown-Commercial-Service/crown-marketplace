@@ -167,7 +167,30 @@ en:
           services: Services
           sub_lot: Sub-lot %{sub_lot}
         show:
+          fm_framework_page: Facilities Management and Workplace Services framework
+          fm_framework_page_url: https://www.crowncommercial.gov.uk/agreements/rm6378
+          if_you_need_to_talk: If you need to talk to us about this shortlist or procurement, please use the below reference number. Click on ‘contact us’ at the bottom of the page for our details.
+          information_list:
+            item_1: customer guidance
+            item_2: full contact details for your shortlisted suppliers
+            item_3: Terms and Conditions
+            item_4: Bid Pack templates and instructions to create your further competition
           return_to_saved_searches: Return to saved searches
+          return_to_your_account: Return to your account
+          second_procurement_banner:
+            dashboard_link_text: from the dashboard
+            text_html: Your result which included secuirty services was saved as %{second_procurement_name} and can be found %{dashboard_link}
+          selected_suppliers: Selected suppliers
+          step_1: Step 1 - download your results
+          step_2: Step 2 - read about how to buy
+          title: What do I do next?
+          visit_the_framework_page_html: 'Visit the %{framework_page_link} page for information on how to procure via this framework, including:'
+          you_can_download: 'You can download your shortlisted supplier list now, which also contains:'
+          you_can_download_list:
+            item_1: details of your requirements entered
+            item_2: your eligible Lot
+            item_3: your unique reference number, time & date stamped
+          your_unique_reference_number: Your unique reference number
         supplier_list:
           suppliers_shortlisted: "%{number_of_suppliers} supplier(s) shortlisted"
           who_can_provide: who can provide the services you require in your
