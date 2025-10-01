@@ -357,4 +357,14 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
       end
     end
   end
+
+  describe 'GET supplier_shortlist_spreadsheet' do
+    let(:procurement) { create(:facilities_management_rm6378_procurement, user: user, contract_name: 'New search') }
+
+    before { get :supplier_shortlist_spreadsheet, params: { procurement_id: procurement.id } }
+
+    it 'download a spreadsheet' do
+      expect(response.headers['Content-Disposition']).to include 'filename="Supplier shortlist %28New search%29.xlsx"'
+    end
+  end
 end

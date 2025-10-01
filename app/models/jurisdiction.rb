@@ -3,4 +3,6 @@ class Jurisdiction < ApplicationRecord
 
   scope :core, -> { where(category: 'core') }
   scope :non_core, -> { where(category: 'non-core') }
+
+  scope :ordered_by_category_and_number, -> { order(:category, Arel.sql('LENGTH(id)'), Arel.sql('SUBSTRING(id FROM 4)')) }
 end

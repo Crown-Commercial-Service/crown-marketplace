@@ -1,7 +1,7 @@
 module FacilitiesManagement
   module RM6378
     class ProcurementsController < FacilitiesManagement::FrameworkController
-      before_action :set_procurement, only: %i[show]
+      before_action :set_procurement, only: %i[show supplier_shortlist_spreadsheet]
       before_action :authorize_user
       before_action :set_back_path
       before_action :set_procurements, :set_journey_attributes, only: %i[new create]
@@ -43,6 +43,12 @@ module FacilitiesManagement
       end
       # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
+      def supplier_shortlist_spreadsheet
+        spreadsheet_builder = SupplierShortlistSpreadsheetCreator.new(@procurement.id)
+        spreadsheet_builder.build
+        send_data spreadsheet_builder.to_xlsx, filename: "Supplier shortlist (#{@procurement.contract_name}).xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      end
+
       private
 
       def set_back_path
@@ -76,8 +82,8 @@ module FacilitiesManagement
       end
 
       def set_journey_attributes
-        @services = Service.where(id: @procurements.map { |procurement| procurement.procurement_details['service_ids'] }.flatten).order(:category, Arel.sql('SUBSTRING(number FROM 2)::integer'))
-        @regions = Jurisdiction.where(id: journey_params[:region_codes]).order(Arel.sql('LENGTH(id)'), Arel.sql('SUBSTRING(id FROM 4)'))
+        @services = Service.where(id: @procurements.map { |procurement| procurement.procurement_details['service_ids'] }.flatten).ordered_by_category_and_number
+        @regions = Jurisdiction.where(id: journey_params[:region_codes]).ordered_by_category_and_number
         @annual_contract_value = journey_params[:annual_contract_value]
       end
 
