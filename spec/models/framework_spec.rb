@@ -7,6 +7,7 @@ RSpec.describe Framework do
     it { is_expected.to have_many(:supplier_frameworks) }
     it { is_expected.to have_many(:searches) }
     it { is_expected.to have_many(:reports) }
+    it { is_expected.to have_many(:procurements) }
     it { is_expected.to have_many(:uploads) }
   end
 

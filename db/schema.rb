@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_25_084554) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_29_151534) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -668,6 +668,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_25_084554) do
     t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 
+  create_table "procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.text "framework_id", null: false
+    t.text "lot_id", null: false
+    t.jsonb "procurement_details"
+    t.text "contract_name"
+    t.text "contract_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contract_name", "user_id", "framework_id"], name: "idx_on_contract_name_user_id_framework_id_08128b7855", unique: true
+    t.index ["framework_id"], name: "index_procurements_on_framework_id"
+    t.index ["lot_id"], name: "index_procurements_on_lot_id"
+    t.index ["user_id"], name: "index_procurements_on_user_id"
+  end
+
   create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.text "framework_id", null: false
@@ -865,6 +880,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_25_084554) do
   add_foreign_key "facilities_management_rm6232_supplier_lot_data", "facilities_management_rm6232_suppliers"
   add_foreign_key "lots", "frameworks"
   add_foreign_key "positions", "lots"
+  add_foreign_key "procurements", "frameworks"
+  add_foreign_key "procurements", "lots"
+  add_foreign_key "procurements", "users"
   add_foreign_key "reports", "frameworks"
   add_foreign_key "reports", "users"
   add_foreign_key "searches", "frameworks"

@@ -48,6 +48,7 @@ module Frameworks
       :uploads,
       :searches,
       :reports,
+      :procurements,
       :supplier_frameworks,
       :supplier_framework_lots,
       :supplier_framework_contact_details,

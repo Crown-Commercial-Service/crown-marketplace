@@ -4,6 +4,7 @@ RSpec.describe User do
   describe 'associations' do
     it { is_expected.to have_many(:searches) }
     it { is_expected.to have_many(:reports) }
+    it { is_expected.to have_many(:procurements) }
   end
 
   describe '#confirmed?' do
