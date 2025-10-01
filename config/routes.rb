@@ -156,7 +156,7 @@ Rails.application.routes.draw do
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
 
-      resources :procurements, only: %i[index]
+      resources :procurements, only: %i[index show new create]
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
         concerns :shared_pages

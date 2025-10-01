@@ -19,6 +19,13 @@ en:
             service_codes:
               invalid_cafm_helpdesk: You must select another service to include 'CAFM system' and/or 'Helpdesk services'
               too_short: Select at least one service you need to include in your procurement
+  activerecord:
+    errors:
+      models:
+        facilities_management/rm6378/procurement:
+          attributes:
+            requirements_linked_to_pfi:
+              inclusion: Select one option for requirements linked to PFI
   facilities_management:
     rm6378:
       admin:
@@ -137,3 +144,30 @@ en:
                 title: Security and Risk Assessments
               Z:
                 title: Security Awareness/Training
+      procurements:
+        new:
+          annual_contract_value: Annual contract cost
+          based_on_info: 'Based on the information provided, this procurement would be eligible for the following Lot, with your supplier shortlist as shown below:'
+          based_on_info_plural: 'Based on the information provided, this procurement would be eligible for the following Lots, with your supplier shortlists as shown below:'
+          change: Change
+          contract_name:
+            hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
+            label: Save your search
+          heading: Results
+          regions: Regions
+          requirements_linked_to_pfi:
+            label: Is your requirement linked to current or previous Private Finance Initiative (PFI)?
+            options:
+              'false': 'No'
+              'true': 'Yes'
+          return_to_contract_cost: Return to annual contract cost
+          return_to_dashboard: Return to your account
+          save_and_continue: Save and continue
+          selection_summary: Selection summary
+          services: Services
+          sub_lot: Sub-lot %{sub_lot}
+        show:
+          return_to_saved_searches: Return to saved searches
+        supplier_list:
+          suppliers_shortlisted: "%{number_of_suppliers} supplier(s) shortlisted"
+          who_can_provide: who can provide the services you require in your

@@ -9,7 +9,8 @@ end
 
 FRMAEOWRK_TO_FACTORY = {
   'RM3830' => :facilities_management_rm3830_procurement,
-  'RM6232' => :facilities_management_rm6232_procurement_what_happens_next
+  'RM6232' => :facilities_management_rm6232_procurement_what_happens_next,
+  'RM6378' => :facilities_management_rm6378_procurement,
 }.freeze
 
 Then('the procurement {string} is on the dashboard') do |contract_name|

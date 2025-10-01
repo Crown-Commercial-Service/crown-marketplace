@@ -303,3 +303,12 @@ en:
           heading: Services
           question: Select the facilities management services that you need
           return_text: Return to your account
+      procurements:
+        index:
+          date_saved: Date saved
+          description: Your saved searches are shown below. Click on the search name to view the details.
+          heading: Saved searches
+          name: Saved searches
+          ref_number: Ref number
+          return_to_your_account: Return to your account
+          you_do_not_have_any: You do not have any saved searches

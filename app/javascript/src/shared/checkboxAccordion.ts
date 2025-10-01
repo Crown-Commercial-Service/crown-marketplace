@@ -107,6 +107,7 @@ class AccordionSection implements AccordionSectionInterface {
 
     this.numberOfCheckboxes = this.checkBoxes.length
     this.selectAllcheckBox = new AccordionSelectAllItem(this, basket, $section.find('input.ccs-select-all') as JQuery<HTMLInputElement>)
+    this.checkAllSelected()
   }
 
   private readonly numberOfCheckedItems = (): number => this.checkBoxes.filter((accordionItem: AccordionNamedItem): boolean => accordionItem.isChecked()).length
