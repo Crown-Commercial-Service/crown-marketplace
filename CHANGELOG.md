@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added test data for new FM framework (RM6378) ([PR 4995](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4995))
 - Added the results page for the new FM framework (RM6378) ([PR 4996](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4996))
 - Added the show page and spreadsheet download for the new FM framework (RM6378) ([PR 4997](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4997))
+- Moved some rake tasks into `DataLoader` module to allow them to be run using SideKiq ([PR 4998](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4998))
+- Added ability to run tasks to load data from the Crown Marketplace area of the website ([PR 4998](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4998))
 
 ### Changed
 
