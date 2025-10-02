@@ -1,0 +1,85 @@
+<% content_for :page_title, t(".title") %>
+
+<% if flash[:second_procurement_name] %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_notification_banner(t('.second_procurement_banner.text_html', second_procurement_name: flash[:second_procurement_name], dashboard_link: link_to(t('.second_procurement_banner.dashboard_link_text'), facilities_management_rm6378_path, class: 'govuk-notification-banner__link') )) %>
+    </div>
+  </div>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span id="procurement-subtitle" class="govuk-caption-m govuk-!-font-size-24">
+      <%= @procurement.contract_name %> - <%= @procurement.contract_number %>
+    </span>
+    <h1 class="govuk-heading-xl">
+      <%= t(".title") %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <p class="govuk-body-l">
+      <%= t('.if_you_need_to_talk') %>
+    </p>
+    <div class="ccs-panel ccs-panel--confirmation">
+      <div class="ccs-panel__title">
+        <%= t('.your_unique_reference_number') %>
+      </div>
+      <div class="ccs-panel__body">
+        <%= @procurement.contract_number %>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="govuk-section-break govuk-section-break--m">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h2 class="govuk-heading-l">
+      <%= t('.step_1') %>
+    </h2>
+    <p>
+      <%= t('.you_can_download') %>
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t('.you_can_download_list.item_1') %></li>
+      <li><%= t('.you_can_download_list.item_2') %></li>
+      <li><%= t('.you_can_download_list.item_3') %></li>
+    </ul>
+    <div class="govuk-!-margin-top-5">
+      <%= link_to_generated_file_for_download(facilities_management_rm6378_procurement_supplier_shortlist_spreadsheet_path(@procurement.id), :xlsx, t('.selected_suppliers'), true) %>
+    </div>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h2 class="govuk-heading-l">
+      <%= t('.step_2') %>
+    </h2>
+    <p>
+      <%= t('.visit_the_framework_page_html', framework_page_link: link_to(t('.fm_framework_page'), t('.fm_framework_page_url'), class: 'govuk-link--no-visited-state')) %>
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t('.information_list.item_1') %></li>
+      <li><%= t('.information_list.item_2') %></li>
+      <li><%= t('.information_list.item_3') %></li>
+      <li><%= t('.information_list.item_4') %></li>
+    </ul>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <p>
+      <%= link_to t('.return_to_your_account'), facilities_management_rm6378_path, class: 'govuk-body govuk-link--no-visited-state' %>
+    </p>
+  </div>
+</div>

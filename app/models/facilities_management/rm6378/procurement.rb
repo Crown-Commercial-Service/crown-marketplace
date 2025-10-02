@@ -11,6 +11,14 @@ module FacilitiesManagement
         @suppliers ||= Supplier::Framework.with_services_and_jurisdiction(service_ids, jurisdiction_ids).order('supplier.name')
       end
 
+      def services
+        @services ||= Service.where(id: service_ids).ordered_by_category_and_number
+      end
+
+      def jurisdictions
+        @jurisdictions ||= Jurisdiction.where(id: jurisdiction_ids).ordered_by_category_and_number
+      end
+
       def update_contract_name_with_security
         remove_excess_whitespace_from_name
 

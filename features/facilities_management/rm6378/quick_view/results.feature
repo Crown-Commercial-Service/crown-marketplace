@@ -76,11 +76,11 @@ Feature: Information appears correctly on results page
     And I should see the following 'annual contract cost' in the selection summary:
       | £123,456,789 |
 
-# Scenario: Save and continue to 'What do I do next?'
-# Then I enter 'Agnis search' into the contract name field
-# And I choose the 'Yes' radio button
-# And I click on 'Save and continue'
-# Then I am on the 'What do I do next?' page
-# And the procurement name is shown to be 'Agnis search'
-# And I click on 'Return to saved searches'
-# And the procurement 'Agnis search' is on the dashboard
+  Scenario: Save and continue to 'What do I do next?'
+    Then I enter 'Agnis search' into the contract name field
+    And I choose the 'Yes' radio button
+    And I click on 'Save and continue'
+    Then I am on the 'What do I do next?' page
+    And the procurement name is shown to be 'Agnis search'
+    And I click on 'Return to saved searches'
+    And the procurement 'Agnis search' is on the dashboard
