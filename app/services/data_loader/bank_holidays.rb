@@ -1,4 +1,4 @@
-module BankHolidaysDataLoader
+module DataLoader::BankHolidays
   class << self
     BANK_HOLIDAYS_CSV_PATH = Rails.root.join('data', 'bank_holidays.csv')
     BANK_HOLIDAYS_API_URL = 'https://www.gov.uk/bank-holidays.json'.freeze

@@ -197,6 +197,7 @@ Rails.application.routes.draw do
         put '/:section/', action: :update, as: :update
       end
     end
+    resources :manage_data, path: 'manage-data', only: %i[index new create]
   end
 
   get '/404', to: 'errors#not_found', as: :errors_404
