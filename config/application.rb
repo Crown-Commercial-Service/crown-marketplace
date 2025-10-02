@@ -169,8 +169,19 @@ module Marketplace
     @can_edit_facilities_management_frameworks ||= rails_env_url != 'https://marketplace.service.crowncommercial.gov.uk'
   end
 
-  def self.rm6232_live?
-    @rm6232_live ||= Time.now.in_time_zone('London') >= Time.new(2022, 7, 18, 11).in_time_zone('London')
+  def self.environment_name
+    case rails_env_url
+    when 'http://localhost'
+      :local
+    when 'https://cmp.cmp-sandbox.crowncommercial.gov.uk'
+      :sandbox
+    when 'https://cmp.cmpdev.crowncommercial.gov.uk'
+      :cmpdev
+    when 'https://marketplace.preview.crowncommercial.gov.uk'
+      :preview
+    else
+      :production
+    end
   end
 
   def self.cookie_settings_name

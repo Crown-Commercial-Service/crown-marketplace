@@ -256,10 +256,6 @@ module ApplicationHelper
     end
   end
 
-  def can_show_new_framework_banner?
-    Marketplace.rm6232_live? || params[:show_new_framework_banner].present?
-  end
-
   # rubocop:disable Metrics/ParameterLists
   def link_to_add_row(name, number_of_items, form, association, partial_prefix, **options)
     new_object = form.object.send(association).klass.new

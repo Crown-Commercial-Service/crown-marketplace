@@ -3,14 +3,14 @@ namespace :db do
   task bank_holidays: :environment do
     puts 'Loading Bank Holidays'
     DistributedLocks.distributed_lock(155) do
-      BankHolidaysDataLoader.add_bank_holidays_from_csv
+      DataLoader::BankHolidays.add_bank_holidays_from_csv
     end
   end
 
   task update_bank_holidays: :environment do
     puts 'Updating Bank Holidays CSV'
     DistributedLocks.distributed_lock(156) do
-      BankHolidaysDataLoader.update_bank_holidays_csv
+      DataLoader::BankHolidays.update_bank_holidays_csv
     end
   end
 

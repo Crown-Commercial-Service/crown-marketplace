@@ -61,3 +61,14 @@
   ],
   t('.allow_list_heading')
 ) %>
+
+<%= ccs_dashboard_section(
+  [
+    {
+      title: t('.manage_data.heading'),
+      href: crown_marketplace_manage_data_path,
+      description: t('.manage_data.body')
+    }
+  ],
+  t('.manage_data.heading')
+) if current_user.has_role?(:ccs_developer) %>
