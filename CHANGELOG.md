@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the `category` attribute to the jurisdictions ([PR 4982](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4982))
 - Make sure incorrect lots get deleted ([PR 4985](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4985))
 - Make sure the jurisdictions are correct ([PR 4985](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4985))
+- Change the Buyer Details section to be more simple to maintain ([PR 4999](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4999))
 
 ## [7.3.0] - 2025-09-22
 

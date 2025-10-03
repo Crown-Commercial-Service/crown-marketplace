@@ -90,7 +90,7 @@ class User < ApplicationRecord
     # the buyer-account details page
 
     if has_role? :buyer
-      !(buyer_detail.present? && buyer_detail&.valid?(:update) && buyer_detail.valid?(:update_address))
+      !(buyer_detail.present? && buyer_detail.details_complete?)
     else
       false
     end

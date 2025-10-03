@@ -83,9 +83,7 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
     concerns :framework
 
-    resources :buyer_details, path: '/:framework/buyer-details', only: %i[edit update] do
-      get 'edit-address', as: :edit_address
-    end
+    resources :buyer_details, path: '/:framework/buyer-details', only: %i[show edit update]
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
       concerns :framework, :admin_frameworks
