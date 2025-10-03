@@ -71,7 +71,7 @@ Feature: Navigation links when signed in
 
   Scenario Outline: Buyer details
     Then I click on 'Manage my details'
-    Then I am on the 'Manage your details' page
+    Then I am on the 'Your details' page
     And I should see the following navigation links:
       | My account |
       | Sign out   |
@@ -83,11 +83,11 @@ Feature: Navigation links when signed in
       | My account | Your account            |
       | Sign out   | Sign in to your account |
 
-  Scenario Outline: Buyer details - Add address
+  Scenario Outline: Buyer details - Manage details
     Then I click on 'Manage my details'
-    Then I am on the 'Manage your details' page
-    And I click on 'Enter address manually, if you can’t find address'
-    Then I am on the 'Add address' page
+    Then I am on the 'Your details' page
+    And I click on 'Change (Personal details)'
+    Then I am on the 'Manage your personal details' page
     And I should see the following navigation links:
       | My account |
       | Sign out   |

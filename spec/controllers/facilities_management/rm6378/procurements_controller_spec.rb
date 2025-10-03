@@ -12,7 +12,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
     it 'redirects to buyer details' do
       get :new
 
-      expect(response).to redirect_to edit_facilities_management_buyer_detail_path(id: user.buyer_detail.id)
+      expect(response).to redirect_to facilities_management_buyer_detail_path(id: user.buyer_detail.id)
     end
   end
 

@@ -199,48 +199,71 @@ en:
           user_email_question: Changing the user email will change who can view the supplier dashboard.
     buyer_details:
       edit:
-        back: Return to your account
-        buyer_details: Manage your details
-        cant_find_address: Enter address manually, if you can’t find address
-        central_government:
-          options:
-            'false': Wider public sector
-            'true': Central government
-        contact_opt_in:
-          hint: You can change these settings at any time.
-          legend: Can CCS contact you about any searches you save?
-          options:
-            'false': 'No'
-            'true': 'Yes'
-        job_title: Job title
-        name: Name
-        organisation_address: Organisation address
-        organisation_details: Organisation details
-        organisation_name: Organisation name
-        sector:
-          legend: Which type of public sector organisation are you buying for?
-          options:
-            culture_media_and_sport: Culture, Media and Sport
-            defence_and_security: Defence and Security
-            education: Education
-            government_policy: Government Policy
-            health: Health
-            infrastructure: Infrastructure
-            local_community_and_housing: Local Community and Housing
-        submit: Save and continue
-        telephone_number: Telephone number
-        your_details: Personal details
-      edit_address:
-        add_address: Add address
-        back: Return to manage your details
-        building_and_street: Building and street
-        building_and_street_line_2: Building and street line 2
-        county: County (optional)
-        manage_details: Manage your details
-        postcode: Postcode
-        submit: Save and continue
-        town_or_city: Town or city
-        your_details: Organisation address
+        back: Your details
+        heading:
+          contact_preferences: Manage your contact preferences
+          organisation_details: Manage your organisation details
+          personal_details: Manage your personal details
+        save_and_return: Save and return
+      sections:
+        contact_preferences:
+          contact_opt_in:
+            hint: You can change these settings at any time.
+            legend: Can CCS contact you about any searches you save?
+            options:
+              'false': 'No'
+              'true': 'Yes'
+        organisation_details:
+          organisation_address:
+            address_finder:
+              change_address: Change address
+              enter_address_manually: Enter address manually
+              find_address: Find address
+              prompt:
+                address_plural: addresses found
+                address_singular: address found
+              select_an_address: Select an address
+            building_and_street: Address line 1
+            building_and_street_line_2: Address line 2 (optional)
+            county: County (optional)
+            legend: Organisation address
+            postcode: Postcode
+            town_or_city: Town or city
+          organisation_name: Organisation name
+          sector:
+            legend: Which type of public sector organisation are you buying for?
+            options:
+              culture_media_and_sport: Culture, Media and Sport
+              defence_and_security: Defence and Security
+              education: Education
+              'false': Wider public sector
+              government_policy: Government Policy
+              health: Health
+              infrastructure: Infrastructure
+              local_community_and_housing: Local Community and Housing
+              'true': Central government
+        personal_details:
+          full_name: Name
+          job_title: Job title
+          telephone_number: Telephone number
+      show:
+        answer_question: Answer question
+        answer_questions: Answer questions
+        change: Change
+        contact_preferences:
+          contact_opt_in: CCS can contact you about searches?
+          heading: Contact preferences
+        heading: Your details
+        organisation_details:
+          heading: Organisation details
+          organisation_address: Organisation address
+          organisation_name: Organisation name
+          organisation_sector: Type of public sector organisation
+        personal_details:
+          full_name: Name
+          heading: Personal details
+          job_title: Job title
+          telephone_number: Telephone number
     home:
       unrecognised_framework:
         heading: The web address contained an unrecognised framework

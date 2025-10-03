@@ -1,13 +1,13 @@
-<% content_for :page_title, t('.buyer_details') %>
+<% content_for :page_title, t(".heading.#{@section}") %>
 
-<div class="govuk-body govuk-grid-row buyer-details" id="buyer_details">
-  <div class="govuk-grid-column-two-thirds" id="edit-contact-detail">
-    <%= form_for @buyer_detail, url: facilities_management_buyer_detail_path(params[:framework]), method: :patch, html: { novalidate: true, specialvalidation: true, multipart: true } do |f| %>
-      <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors } %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: facilities_management_buyer_detail_path(params[:framework], section: @section), model: @buyer_detail, method: :put, html: { novalidate: true } do |f| %>
+      <%= render partial: 'shared/error_summary', locals: { errors: @buyer_detail.errors } %>
 
       <%= govuk_fieldset(
         legend: {
-          text: t('.buyer_details'),
+          text: t(".heading.#{@section}"),
           classes: 'govuk-fieldset__legend--l',
           is_page_heading: true,
           caption: {
@@ -16,128 +16,10 @@
           }
         }
       ) do %>
-        <h2 class="govuk-heading-m">
-          <%= t('.your_details') %>
-        </h2>
-
-        <%= govuk_input(
-          :full_name,
-          form: f,
-          label: {
-            text: t('.name')
-          },
-          attributes: {
-            required: true,
-            maxlength: 255,
-            autocomplete: 'off',
-          }
-        ) %>
-
-        <%= govuk_input(
-          :job_title,
-          form: f,
-          label: {
-            text: t('.job_title')
-          },
-          attributes: {
-            maxlength: 255,
-          }
-        ) %>
-
-        <%= govuk_input(
-          :telephone_number,
-          form: f,
-          label: {
-            text: t('.telephone_number')
-          },
-          classes: 'govuk-!-width-one-half ccs-integer-field',
-          attributes: {
-            required: true,
-            autocomplete: "off"
-          }
-        ) %>
-
-        <h2 class="govuk-heading-m govuk-!-margin-top-3">
-          <%= t('.organisation_details') %>
-        </h2>
-
-        <%= govuk_input(
-          :organisation_name,
-          form: f,
-          label: {
-            text: t('.organisation_name')
-          },
-          attributes: {
-            required: true,
-            maxlength: 255
-          }
-        ) %>
-
-        <%= render partial: 'facilities_management/shared/find_address/find_address', locals: {
-          f: f,
-          find_address_helper: find_address_helper(f.object, true),
-          cant_find_address_text: t('.cant_find_address'),
-          submit_cant_find_address: false,
-          address_title: t('.organisation_address')
-        } %>
-
-        <hr class="govuk-section-break govuk-section-break--m">
-
-        <%= govuk_radios(
-          :sector,
-          FacilitiesManagement::BuyerDetail::SECTORS.map do |sector|
-            {
-              value: sector,
-              label: {
-                text: t(".sector.options.#{sector}")
-              }
-            }
-          end,
-          form: f,
-          fieldset: {
-            legend: {
-              text: t('.sector.legend'),
-              classes: 'govuk-fieldset__legend--m'
-            }
-          },
-        ) %>
-
-        <hr class="govuk-section-break govuk-section-break--m">
-
-        <%= govuk_radios(
-          :contact_opt_in,
-          [
-            {
-              value: true,
-              label: {
-                text: t('.contact_opt_in.options.true')
-              }
-            },
-            {
-              value: false,
-              label: {
-                text: t('.contact_opt_in.options.false')
-              }
-            }
-          ],
-          form: f,
-          fieldset: {
-            legend: {
-              text: t('.contact_opt_in.legend'),
-              classes: 'govuk-fieldset__legend--m'
-            }
-          },
-          hint: {
-            text: t('.contact_opt_in.hint')
-          },
-          classes: 'govuk-radios--inline'
-        ) %>
-
-        <div>
-          <%= govuk_button(t('.submit'), form: f, attributes: { aria: { label: t('.submit') } }) %>
-        </div>
-
+        <%= render partial: "facilities_management/buyer_details/sections/#{@section}", locals: { form: f } %>
       <% end %>
+
+      <%= govuk_button(t('.save_and_return'), form: f, attributes: { aria: { label: t('.save_and_return') } }) %>
     <% end %>
   </div>
 </div>

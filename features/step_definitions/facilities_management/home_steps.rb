@@ -3,7 +3,7 @@ Given('I sign in without details for {string}') do |framework|
   update_banner_cookie(true) if @javascript
   create_user_without_details
   step 'I sign in'
-  expect(page.find('h1')).to have_content('Manage your details')
+  expect(page.find('h1')).to have_content('Your details')
 end
 
 Then('I should sign in as an fm buyer without details') do

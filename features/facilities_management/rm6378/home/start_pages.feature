@@ -16,7 +16,7 @@ Feature: Start pages
     When I click on 'Start now'
     And I am on the 'Sign in to your account' page
     Then I should sign in as an fm buyer without details
-    And I am on the 'Manage your details' page
+    And I am on the 'Your details' page
 
   Scenario: Logging on user with details
     When I go to the facilities management RM6378 start page

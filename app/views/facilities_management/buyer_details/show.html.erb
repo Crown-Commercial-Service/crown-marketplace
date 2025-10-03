@@ -1,0 +1,144 @@
+<% content_for :page_title, t('.heading') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">
+      <%= current_user.email %>
+    </span>
+    <h1 class="govuk-heading-l">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_summary_list([
+      {
+        key: {
+          text: t('.personal_details.full_name')
+        },
+        value: {
+          text: @buyer_detail.full_name
+        }
+      },
+      {
+        key: {
+          text: t('.personal_details.job_title')
+        },
+        value: {
+          text: @buyer_detail.job_title
+        }
+      },
+      {
+        key: {
+          text: t('.personal_details.telephone_number')
+        },
+        value: {
+          text: @buyer_detail.telephone_number
+        }
+      }
+    ],
+    card: {
+      title: {
+        text: t('.personal_details.heading')
+      },
+      actions: {
+        items: [
+          {
+            text: [@buyer_detail.full_name, @buyer_detail.job_title, @buyer_detail.telephone_number].any?(&:nil?) ? t('.answer_questions') : t('.change'),
+            href: edit_facilities_management_buyer_detail_path(params[:framework], @buyer_detail, section: :personal_details),
+          }
+        ]
+      }
+    },
+    attributes: {
+      id: 'buyer-details-summery--personal-details'
+    }
+  ) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_summary_list([
+      {
+        key: {
+          text: t('.organisation_details.organisation_name')
+        },
+        value: {
+          text: @buyer_detail.organisation_name
+        }
+      },
+      {
+        key: {
+          text: t('.organisation_details.organisation_address')
+        },
+        value: {
+          text: @buyer_detail.full_organisation_address
+        }
+      },
+      {
+        key: {
+          text: t('.organisation_details.organisation_sector')
+        },
+        value: {
+          text: @buyer_detail.sector.nil? ? nil : t("facilities_management.buyer_details.sections.organisation_details.sector.options.#{@buyer_detail.sector}")
+        }
+      },
+    ],
+    card: {
+      title: {
+        text: t('.organisation_details.heading')
+      },
+      actions: {
+        items: [
+          {
+            text: [@buyer_detail.organisation_name, @buyer_detail.organisation_address_line_1, @buyer_detail.sector].any?(&:nil?) ? t('.answer_questions') : t('.change'),
+            href: edit_facilities_management_buyer_detail_path(params[:framework], @buyer_detail, section: :organisation_details),
+          }
+        ]
+      },
+    },
+    attributes: {
+      id: 'buyer-details-summery--organisation-details'
+    }
+  ) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_summary_list([
+      {
+        key: {
+          text: t('.contact_preferences.contact_opt_in')
+        },
+        value: {
+          text: if @buyer_detail.contact_opt_in.nil?
+                  nil
+                else
+                  @buyer_detail.contact_opt_in ? t('facilities_management.buyer_details.sections.contact_preferences.contact_opt_in.options.true') : t('facilities_management.buyer_details.sections.contact_preferences.contact_opt_in.options.false')
+                end
+        }
+      },
+    ],
+    card: {
+      title: {
+        text: t('.contact_preferences.heading')
+      },
+      actions: {
+        items: [
+          {
+            text: [@buyer_detail.contact_opt_in].any?(&:nil?) ? t('.answer_question') : t('.change'),
+            href: edit_facilities_management_buyer_detail_path(params[:framework], @buyer_detail, section: :contact_preferences),
+          }
+        ]
+      }
+    },
+    attributes: {
+      id: 'buyer-details-summery--contact-preferences'
+    }
+  ) %>
+  </div>
+</div>

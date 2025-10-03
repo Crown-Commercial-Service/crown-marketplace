@@ -1,0 +1,174 @@
+<%= govuk_input(
+  :organisation_name,
+  form: form,
+  label: {
+    text: t('.organisation_name'),
+    classes: 'govuk-label--m'
+  },
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) %>
+
+<%= govuk_fieldset(
+  legend: {
+    text: t('.organisation_address.legend'),
+    classes: 'govuk-fieldset__legend--m'
+  },
+  attributes: {
+    data: {
+      module: 'organisation-address--find-address'
+    }
+  }
+) do %>
+  <div id="organisation-address--enter-address">
+    <%= govuk_input(
+      :organisation_address_line_1,
+      form: form,
+      label: {
+        text: t('.organisation_address.building_and_street')
+      },
+      classes: 'organisation-address--address-line-1 govuk-input--width-30',
+     attributes: {
+        maxlength: 255,
+        autocomplete: 'off'
+      }
+    ) %>
+
+    <%= govuk_input(
+      :organisation_address_line_2,
+      form: form,
+      label: {
+        text: t('.organisation_address.building_and_street_line_2'),
+      },
+      classes: 'organisation-address--address-line-2 govuk-input--width-30',
+      attributes: {
+        maxlength: 255,
+        autocomplete: 'off'
+      }
+    ) %>
+
+    <%= govuk_input(
+      :organisation_address_town,
+      form: form,
+      label: {
+        text: t('.organisation_address.town_or_city')
+      },
+      classes: 'organisation-address--town-or-city govuk-input--width-20',
+      attributes: {
+        maxlength: 255,
+        autocomplete: 'off'
+      }
+    ) %>
+
+    <%= govuk_input(
+      :organisation_address_county,
+      form: form,
+      label: {
+        text: t('.organisation_address.county')
+      },
+      classes: 'organisation-address--county govuk-input--width-20',
+      attributes: {
+        maxlength: 255,
+        autocomplete: 'off'
+      }
+    ) %>
+  </div>
+
+  <div id="organisation-address--enter-postcode">
+    <%= govuk_input(
+      :organisation_address_postcode,
+      form: form,
+      label: {
+        text: t('.organisation_address.postcode')
+      },
+      classes: 'organisation-address--postcode govuk-input--width-10',
+      attributes: {
+        maxlength: 10,
+        autocomplete: 'off',
+        data: {
+          'error-message': t('activerecord.errors.models.facilities_management/buyer_detail.attributes.organisation_address_postcode.invalid')
+        }
+      }
+    ) %>
+  </div>
+
+  <div id="organisation-address--find-address" class="govuk-visually-hidden">
+    <%= govuk_button(
+      t('.organisation_address.address_finder.find_address'),
+      attributes: {
+        id: 'organisation-address--find-address-button',
+        name: 'find-address',
+        aria: {
+          label: t('.organisation_address.address_finder.find_address')
+        },
+        tabindex: -1
+      }
+    ) %>
+  </div>
+
+  <div id="organisation-address--select-address" class="govuk-visually-hidden">
+    <%= govuk_select(
+      :organisation_address,
+      [],
+      label: {
+        text: t('.organisation_address.address_finder.select_an_address')
+      },
+      attributes: {
+        tabindex: -1,
+        data: {
+          'prompt-singular': t('.organisation_address.address_finder.prompt.address_singular'),
+          'prompt-plural': t('.organisation_address.address_finder.prompt.address_plural')
+        }
+      },
+      classes: 'organisation-address--select-address',
+    ) %>
+
+    <%= govuk_button(
+      t('.organisation_address.address_finder.enter_address_manually'),
+      classes: 'govuk-button--secondary',
+      attributes: {
+        id: 'organisation-address--enter-address-manually-button',
+        name: 'enter-address-manually',
+        tabindex: -1,
+        aria: {
+          label: t('.organisation_address.address_finder.enter_address_manually')
+        }
+      }
+    ) %>
+  </div>
+
+  <div id="organisation-address--change-address" class="govuk-visually-hidden">
+    <%= govuk_button(
+      t('.organisation_address.address_finder.change_address'),
+      classes: 'govuk-button--secondary',
+      attributes: {
+        id: 'organisation-address--change-address-button',
+        tabindex: -1,
+        aria: {
+          label: t('.organisation_address.address_finder.change_address')
+        },
+      }
+    ) %>
+  </div>
+<% end %>
+
+<%= govuk_radios(
+  :sector,
+  FacilitiesManagement::BuyerDetail::SECTORS.map do |sector|
+    {
+      value: sector,
+      label: {
+        text: t(".sector.options.#{sector}")
+      }
+    }
+  end,
+  form: form,
+  fieldset: {
+    legend: {
+      text: t('.sector.legend'),
+      classes: 'govuk-fieldset__legend--m'
+    }
+  },
+) %>

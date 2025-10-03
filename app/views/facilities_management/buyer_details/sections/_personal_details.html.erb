@@ -1,0 +1,39 @@
+<%= govuk_input(
+  :full_name,
+  form: form,
+  label: {
+    text: t('.full_name'),
+    classes: 'govuk-label--m'
+  },
+  attributes: {
+    required: true,
+    maxlength: 255,
+    autocomplete: 'off',
+  }
+) %>
+
+<%= govuk_input(
+  :job_title,
+  form: form,
+  label: {
+    text: t('.job_title'),
+    classes: 'govuk-label--m'
+  },
+  attributes: {
+    maxlength: 255,
+  }
+) %>
+
+<%= govuk_input(
+  :telephone_number,
+  form: form,
+  label: {
+    text: t('.telephone_number'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-!-width-one-half ccs-integer-field',
+  attributes: {
+    required: true,
+    autocomplete: "off"
+  }
+) %>
