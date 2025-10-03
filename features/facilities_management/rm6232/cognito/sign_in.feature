@@ -10,7 +10,7 @@ Feature: Sign in to my account - RM6232
     Then I should sign in with the roles:
       | fm_access |
       | buyer     |
-    And I am on the 'Manage your details' page
+    And I am on the 'Your details' page
 
   Scenario: I sign in with MFA
     Then I should sign in with MFA and with the roles:
@@ -20,7 +20,7 @@ Feature: Sign in to my account - RM6232
     And I enter the following details into the form:
       | Access code | 123456 |
     And I click on 'Continue'
-    Then I am on the 'Manage your details' page
+    Then I am on the 'Your details' page
 
   Scenario: I sign in for the first time
     Then I should sign in for the first time with the roles:
@@ -31,7 +31,7 @@ Feature: Sign in to my account - RM6232
       | Create a password you'll remember | ValidPassword1! |
       | Confirm your password             | ValidPassword1! |
     And I click on 'Change password and sign in'
-    Then I am on the 'Manage your details' page
+    Then I am on the 'Your details' page
 
   Scenario: I sign in for the first time with MFA
     Then I should sign in for the first time with MFA Enabled and with the roles:
@@ -46,7 +46,7 @@ Feature: Sign in to my account - RM6232
     And I enter the following details into the form:
       | Access code | 123456 |
     And I click on 'Continue'
-    Then I am on the 'Manage your details' page
+    Then I am on the 'Your details' page
 
   Scenario: I sign in for the first time after creating an account
     Then I should sign in as user who just created their account and with the roles:
@@ -56,7 +56,7 @@ Feature: Sign in to my account - RM6232
     And I enter the following details into the form:
       | Confirmation code | 123456 |
     And I click on 'Continue'
-    Then I am on the 'Manage your details' page
+    Then I am on the 'Your details' page
 
   Scenario: I sign in and need to reset my password
     Then I should sign in as a user who needs to reset their password and with the roles:

@@ -28,10 +28,10 @@ RSpec.describe FacilitiesManagement::RM6378::BuyerAccountController do
     context 'when logged in without buyer details' do
       login_fm_buyer
 
-      it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
+      it 'is expected to redirect to facilities_management_buyer_detail_path' do
         get :index
 
-        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, controller.current_user.buyer_detail)
+        expect(response).to redirect_to facilities_management_buyer_detail_path(framework, controller.current_user.buyer_detail)
       end
     end
 

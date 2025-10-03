@@ -206,8 +206,8 @@ en:
             attribute_name:
               active: Status
               address_county: County
-              address_line_1: Building and street
-              address_line_2: Building and street (line 2)
+              address_line_1: Address line 1
+              address_line_2: Address line 2
               address_postcode: Postcode
               address_town: Town or city
               duns: DUNS number
