@@ -39,4 +39,4 @@ Feature: Information appears correctly on results page in the complex scenario
     And I click on 'Save and continue'
     Then I am on the 'What do I do next?' page
     And the procurement name is shown to be 'Hollow Nest'
-    And there is a notification with the message 'Your result which included secuirty services was saved as Hollow Nest (Security)'
+    And there is a notification with the message 'Your result which included security services was saved as Hollow Nest (Security)'
