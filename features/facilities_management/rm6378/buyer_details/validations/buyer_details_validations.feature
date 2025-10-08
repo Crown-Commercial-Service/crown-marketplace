@@ -12,7 +12,7 @@ Feature: Buyer details - validations
       | Enter your job title                                   |
       | Enter a UK telephone number, for example 020 7946 0000 |
 
-  Scenario: Save and return - Personal details - empty field
+  Scenario: Save and return - Organisation details - empty field
     And I click on 'Answer questions (Organisation details)'
     Then I am on the 'Manage your organisation details' page
     When I click on 'Save and return'
