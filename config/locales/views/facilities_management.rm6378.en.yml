@@ -179,7 +179,7 @@ en:
           return_to_your_account: Return to your account
           second_procurement_banner:
             dashboard_link_text: from the dashboard
-            text_html: Your result which included secuirty services was saved as %{second_procurement_name} and can be found %{dashboard_link}
+            text_html: Your result which included security services was saved as %{second_procurement_name} and can be found %{dashboard_link}
           selected_suppliers: Selected suppliers
           step_1: Step 1 - download your results
           step_2: Step 2 - read about how to buy
