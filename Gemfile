@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.3'
+ruby '3.4.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.0.3'
@@ -115,9 +115,12 @@ gem 'fog-aws', '>= 3.14.0'
 # Use CCS Frontend Helpers
 gem 'ccs-frontend_helpers', '~> 3.0.0'
 
+# Need to add Open SSL to fix bug in v3.3.0
+gem 'openssl', '~> 3.3.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'byebug', platforms: %i[mri windows]
   gem 'dotenv-rails', '~> 3.1.8'
   gem 'factory_bot_rails', '>= 6.2.0'
   gem 'pry-rails'
@@ -133,8 +136,8 @@ group :development, :test do
   gem 'rubyXL', '>= 3.4.23'
   gem 'i18n-tasks', '>= 1.0.12'
   gem 'poltergeist', '>= 1.18.1'
-  gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
-  gem 'tzinfo-data', platforms: %i[x64_mingw]
+  gem 'wdm', '>= 0.1.0', platforms: %i[windows]
+  gem 'tzinfo-data', platforms: %i[windows]
   gem 'bullet', require: true
   gem 'faker', '~> 3.5.2'
   gem 'brakeman', '~> 7.1.0'
