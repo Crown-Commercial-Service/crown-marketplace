@@ -113,7 +113,7 @@ gem 'asset_sync', '>= 2.19.1'
 gem 'fog-aws', '>= 3.14.0'
 
 # Use CCS Frontend Helpers
-gem 'ccs-frontend_helpers', '~> 3.0.0'
+gem 'ccs-frontend_helpers', '~> 3.1.0'
 
 # Need to add Open SSL to fix bug in v3.3.0
 gem 'openssl', '~> 3.3.1'

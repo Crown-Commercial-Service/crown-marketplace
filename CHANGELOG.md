@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Make sure the jurisdictions are correct ([PR 4985](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4985))
 - Change the Buyer Details section to be more simple to maintain ([PR 4999](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4999))
 - Upgrade ruby version to v3.4.7 ([PR 5008](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5008))
+- Update GOV.UK Frontend and CCS Frontend ([PR 5016](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5016))
 
 ### Fixed
 
