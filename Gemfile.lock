@@ -461,7 +461,7 @@ GEM
       date
       stringio
     public_suffix (6.0.2)
-    puma (7.0.4)
+    puma (7.1.0)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
@@ -756,7 +756,7 @@ DEPENDENCIES
   pry-rails
   pry-rescue
   pry-stack_explorer
-  puma (~> 7.0)
+  puma (~> 7.1)
   rails (~> 8.0.3)
   rails-controller-testing (>= 1.0.5)
   ratonvirus (>= 0.3.2)!
