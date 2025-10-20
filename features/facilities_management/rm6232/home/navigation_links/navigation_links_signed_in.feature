@@ -63,11 +63,17 @@ Feature: Navigation links when signed in
       | My account | Your account            |
       | Sign out   | Sign in to your account |
 
-  Scenario: Home page - Sign out
+  Scenario Outline: Home page - Sign out
     And I should see the following navigation links:
-      | Sign out |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to your account' page
+      | My account |
+      | Sign out   |
+    And I click on '<link_text>'
+    And I am on the '<page_title>' page
+
+    Examples:
+      | link_text  | page_title              |
+      | My account | Your account            |
+      | Sign out   | Sign in to your account |
 
   Scenario Outline: Buyer details
     Then I click on 'Manage my details'
