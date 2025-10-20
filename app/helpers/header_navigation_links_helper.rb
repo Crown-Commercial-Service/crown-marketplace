@@ -63,33 +63,33 @@ module HeaderNavigationLinksHelper
   end
 
   def crown_marketplace_navigation_link
-    { text: crown_marketplace_back_to_start_text, href: crown_marketplace_path } unless sign_in_or_dashboard?('home')
+    { text: crown_marketplace_back_to_start_text, href: crown_marketplace_path, active: dashboard_page?('home') } unless sign_in_page?
   end
 
   def facilites_management_admin_navigation_link
-    { text: admin_back_to_start_text, href: service_path_base } unless sign_in_or_dashboard?('home')
+    { text: admin_back_to_start_text, href: service_path_base, active: dashboard_page?('home') } unless sign_in_page?
   end
 
   def facilites_management_supplier_navigation_link
-    { text: supplier_back_to_start_text, href: service_path_base } unless sign_in_or_dashboard?('dashboard')
+    { text: supplier_back_to_start_text, href: service_path_base, active: dashboard_page?('dashboard') } unless sign_in_page?
   end
 
   def facilities_management_navigation_link
     return back_to_start_link unless page_does_not_require_back_to_start?
 
-    { text: t('header_navigation_links_helper.my_account'), href: service_path_base } if not_permitted_page? && user_signed_in?
+    { text: t('header_navigation_links_helper.my_account'), href: service_path_base, active: false } if not_permitted_page? && user_signed_in?
   end
 
   def back_to_start_link
     if !current_user || page_with_back_to_start?
-      { text: t('header_navigation_links_helper.back_to_start'), href: "#{service_path_base}/start" }
+      { text: t('header_navigation_links_helper.back_to_start'), href: "#{service_path_base}/start", active: false }
     elsif !current_user.fm_buyer_details_incomplete?
-      { text: t('header_navigation_links_helper.my_account'), href: service_path_base }
+      { text: t('header_navigation_links_helper.my_account'), href: service_path_base, active: dashboard_page?('buyer_account') }
     end
   end
 
   def page_does_not_require_back_to_start?
-    fm_landing_page? || fm_buyer_account_page? || not_permitted_page?
+    fm_landing_page? || not_permitted_page?
   end
 
   def page_with_back_to_start?
@@ -121,7 +121,7 @@ module HeaderNavigationLinksHelper
   end
 
   def fm_back_to_start_page?
-    %w[buyer_account sessions registrations passwords].include? controller.controller_name
+    %w[sessions registrations passwords].include? controller.controller_name
   end
 
   def not_permitted_page?
@@ -136,8 +136,16 @@ module HeaderNavigationLinksHelper
     controller.controller_name == 'passwords'
   end
 
+  def sign_in_page?
+    controller.controller_name == 'sessions' && controller.action_name == 'new'
+  end
+
+  def dashboard_page?(dashboard_controller)
+    controller.controller_name == dashboard_controller && controller.action_name == 'index'
+  end
+
   def sign_in_or_dashboard?(dashboard_controller)
-    (controller.controller_name == 'sessions' && controller.action_name == 'new') || (controller.controller_name == dashboard_controller && controller.action_name == 'index')
+    sign_in_page? || dashboard_page?(dashboard_controller)
   end
 end
 # rubocop:enable Metrics/ModuleLength

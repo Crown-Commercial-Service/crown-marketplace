@@ -201,10 +201,13 @@ RSpec.describe HeaderNavigationLinksHelper do
         let(:controller_name) { 'home' }
         let(:action_name) { 'index' }
 
-        it 'returns the sign out link with the right options' do
+        before { allow(helper).to receive(:user_signed_in?).and_return(true) }
+
+        it 'returns the active dashboard and sign out link with the right options' do
           expect(result).to eq(
             [
-              { text: 'Sign in', href: '/crown-marketplace/sign-in', active: false }
+              { text: 'Crown Marketplace dashboard', href: '/crown-marketplace', active: true },
+              { text: 'Sign out', href: '/crown-marketplace/sign-out', method: :delete }
             ]
           )
         end
@@ -218,7 +221,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the back to start and sign out link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/crown-marketplace' },
+                { text: 'Back to start', href: '/crown-marketplace', active: false },
                 { text: 'Sign in', href: '/crown-marketplace/sign-in', active: false }
               ]
             )
@@ -232,7 +235,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the back to start link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/crown-marketplace' },
+                { text: 'Back to start', href: '/crown-marketplace', active: false },
                 { text: 'Sign in', href: '/crown-marketplace/sign-in', active: false }
               ]
             )
@@ -248,7 +251,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the Crown Marketplace dashboard link' do
             expect(result).to eq(
               [
-                { text: 'Crown Marketplace dashboard', href: '/crown-marketplace' },
+                { text: 'Crown Marketplace dashboard', href: '/crown-marketplace', active: false },
                 { text: 'Sign out', href: '/crown-marketplace/sign-out', method: :delete }
               ]
             )
@@ -278,10 +281,13 @@ RSpec.describe HeaderNavigationLinksHelper do
         let(:controller_name) { 'home' }
         let(:action_name) { 'index' }
 
+        before { allow(helper).to receive(:user_signed_in?).and_return(true) }
+
         it 'returns the sign in link' do
           expect(result).to eq(
             [
-              { text: 'Sign in', href: '/facilities-management/admin/sign-in', active: false }
+              { text: 'Admin dashboard', href: '/facilities-management/admin', active: true },
+              { text: 'Sign out', href: '/facilities-management/admin/sign-out', method: :delete }
             ]
           )
         end
@@ -295,7 +301,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the back to start link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/facilities-management/admin' },
+                { text: 'Back to start', href: '/facilities-management/admin', active: false },
                 { text: 'Sign in', href: '/facilities-management/admin/sign-in', active: false }
               ]
             )
@@ -309,7 +315,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the back to start link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/facilities-management/admin' },
+                { text: 'Back to start', href: '/facilities-management/admin', active: false },
                 { text: 'Sign in', href: '/facilities-management/admin/sign-in', active: false }
               ]
             )
@@ -325,7 +331,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the Admin dashboard link' do
             expect(result).to eq(
               [
-                { text: 'Admin dashboard', href: '/facilities-management/admin' },
+                { text: 'Admin dashboard', href: '/facilities-management/admin', active: false },
                 { text: 'Sign out', href: '/facilities-management/admin/sign-out', method: :delete }
               ]
             )
@@ -355,10 +361,13 @@ RSpec.describe HeaderNavigationLinksHelper do
         let(:controller_name) { 'dashboard' }
         let(:action_name) { 'index' }
 
+        before { allow(helper).to receive(:user_signed_in?).and_return(true) }
+
         it 'returns the sign in link' do
           expect(result).to eq(
             [
-              { text: 'Sign in', href: '/facilities-management/supplier/sign-in', active: false }
+              { text: 'My dashboard', href: '/facilities-management/supplier', active: true },
+              { text: 'Sign out', href: '/facilities-management/supplier/sign-out', method: :delete }
             ]
           )
         end
@@ -372,7 +381,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the back to start link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/facilities-management/supplier' },
+                { text: 'Back to start', href: '/facilities-management/supplier', active: false },
                 { text: 'Sign in', href: '/facilities-management/supplier/sign-in', active: false }
               ]
             )
@@ -386,7 +395,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the back to start link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/facilities-management/supplier' },
+                { text: 'Back to start', href: '/facilities-management/supplier', active: false },
                 { text: 'Sign in', href: '/facilities-management/supplier/sign-in', active: false }
               ]
             )
@@ -402,7 +411,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the My dashboard link' do
             expect(result).to eq(
               [
-                { text: 'My dashboard', href: '/facilities-management/supplier' },
+                { text: 'My dashboard', href: '/facilities-management/supplier', active: false },
                 { text: 'Sign out', href: '/facilities-management/supplier/sign-out', method: :delete }
               ]
             )
@@ -434,11 +443,16 @@ RSpec.describe HeaderNavigationLinksHelper do
         let(:controller_name) { 'buyer_account' }
         let(:action_name) { 'index' }
 
+        before do
+          allow(helper).to receive_messages(current_user: current_user_obj, user_signed_in?: true)
+          allow(current_user_obj).to receive(:fm_buyer_details_incomplete?).and_return(false)
+        end
+
         it 'returns the create account and sign in link' do
           expect(result).to eq(
             [
-              { text: 'Create an account', href: '/facilities-management/sign-up', active: false },
-              { text: 'Sign in', href: '/facilities-management/sign-in', active: false }
+              { text: 'My account', href: '/facilities-management', active: true },
+              { text: 'Sign out', href: '/facilities-management/sign-out', method: :delete }
             ]
           )
         end
@@ -465,7 +479,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the My account link' do
             expect(result).to eq(
               [
-                { text: 'My account', href: '/facilities-management' },
+                { text: 'My account', href: '/facilities-management', active: false },
                 { text: 'Sign out', href: '/facilities-management/sign-out', method: :delete }
               ]
             )
@@ -483,7 +497,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the Back to start link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/facilities-management/start' },
+                { text: 'Back to start', href: '/facilities-management/start', active: false },
                 { text: 'Create an account', href: '/facilities-management/sign-up', active: false },
                 { text: 'Sign in', href: '/facilities-management/sign-in', active: false }
               ]
@@ -498,7 +512,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the Back to start link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/facilities-management/start' },
+                { text: 'Back to start', href: '/facilities-management/start', active: false },
                 { text: 'Create an account', href: '/facilities-management/sign-up', active: false },
                 { text: 'Sign in', href: '/facilities-management/sign-in', active: false }
               ]
@@ -513,7 +527,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the Back to start link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/facilities-management/start' },
+                { text: 'Back to start', href: '/facilities-management/start', active: false },
                 { text: 'Create an account', href: '/facilities-management/sign-up', active: false },
                 { text: 'Sign in', href: '/facilities-management/sign-in', active: false }
               ]
@@ -528,7 +542,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the Back to start link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/facilities-management/start' },
+                { text: 'Back to start', href: '/facilities-management/start', active: false },
                 { text: 'Create an account', href: '/facilities-management/sign-up', active: false },
                 { text: 'Sign in', href: '/facilities-management/sign-in', active: false }
               ]
@@ -543,7 +557,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the Back to start link' do
             expect(result).to eq(
               [
-                { text: 'Back to start', href: '/facilities-management/start' },
+                { text: 'Back to start', href: '/facilities-management/start', active: false },
                 { text: 'Create an account', href: '/facilities-management/sign-up', active: false },
                 { text: 'Sign in', href: '/facilities-management/sign-in', active: false }
               ]
@@ -556,9 +570,7 @@ RSpec.describe HeaderNavigationLinksHelper do
         let(:controller_name) { 'buyer_details' }
         let(:action_name) { 'edit' }
 
-        before do
-          allow(helper).to receive_messages(current_user: current_user_obj, user_signed_in?: true)
-        end
+        before { allow(helper).to receive_messages(current_user: current_user_obj, user_signed_in?: true) }
 
         context 'when buyer details are incomplete' do
           before { allow(current_user_obj).to receive(:fm_buyer_details_incomplete?).and_return(true) }
@@ -578,7 +590,7 @@ RSpec.describe HeaderNavigationLinksHelper do
           it 'returns the My account link' do
             expect(result).to eq(
               [
-                { text: 'My account', href: '/facilities-management' },
+                { text: 'My account', href: '/facilities-management', active: false },
                 { text: 'Sign out', href: '/facilities-management/sign-out', method: :delete }
               ]
             )
