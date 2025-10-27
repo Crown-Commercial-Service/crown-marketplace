@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
       service_name = service.split('/').first
 
       service_path_base << service_name.gsub('_', '-')
-      service_path_base << (params[:framework] || Framework.send(service_name).current_framework) unless service_name == 'crown_marketplace'
+      service_path_base << (params[:framework] || Framework.find_scope_by_service_name(service_name).current_framework) unless service_name == 'crown_marketplace'
       service_path_base << 'admin' if service.include?('admin')
       service_path_base << 'supplier' if service.include?('supplier')
 
