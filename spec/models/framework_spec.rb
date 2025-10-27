@@ -11,6 +11,58 @@ RSpec.describe Framework do
     it { is_expected.to have_many(:uploads) }
   end
 
+  describe '.find_scope_by_service_name' do
+    let(:result) { described_class.find_scope_by_service_name(service_name).frameworks }
+
+    context 'when the supply_teachers is provided' do
+      let(:service_name) { 'supply_teachers' }
+
+      it 'returns RM6238' do
+        expect(result).to eq %w[RM6238]
+      end
+    end
+
+    context 'when the management_consultancy is provided' do
+      let(:service_name) { 'management_consultancy' }
+
+      it 'returns RM6187 and RM6309' do
+        expect(result).to eq %w[RM6187 RM6309]
+      end
+    end
+
+    context 'when the legal_services is provided' do
+      let(:service_name) { 'legal_services' }
+
+      it 'returns and RM6240' do
+        expect(result).to eq %w[RM6240]
+      end
+    end
+
+    context 'when the legal_panel_for_government is provided' do
+      let(:service_name) { 'legal_panel_for_government' }
+
+      it 'returns and RM6360' do
+        expect(result).to eq %w[RM6360]
+      end
+    end
+
+    context 'when the facilities_management is provided' do
+      let(:service_name) { 'facilities_management' }
+
+      it 'returns RM3830, RM6232 and RM6378' do
+        expect(result).to eq %w[RM3830 RM6232 RM6378]
+      end
+    end
+
+    context 'when the service name provided does not exist' do
+      let(:service_name) { 'g-cloud-15' }
+
+      it 'raises an exceptrion' do
+        expect { result }.to raise_error(Framework::FrameworkServiceNotFoundError, 'Could not find service g-cloud-15 in frameworks')
+      end
+    end
+  end
+
   describe '.frameworks' do
     context 'when no scope is provided' do
       it 'returns RM6238, RM6187, RM6240, RM6309, RM6360, RM3830, RM6232 and RM6378' do

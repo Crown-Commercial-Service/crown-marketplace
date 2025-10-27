@@ -1,4 +1,10 @@
 class Framework < ApplicationRecord
+  class FrameworkServiceNotFoundError < StandardError
+    def initialize(service_name)
+      super("Could not find service #{service_name} in frameworks")
+    end
+  end
+
   scope :supply_teachers, -> { where(service: 'supply_teachers').order(live_at: :asc) }
   scope :management_consultancy, -> { where(service: 'management_consultancy').order(live_at: :asc) }
   scope :legal_services, -> { where(service: 'legal_services').order(live_at: :asc) }
@@ -15,6 +21,23 @@ class Framework < ApplicationRecord
   acts_as_gov_uk_date :live_at, :expires_at, error_clash_behaviour: :omit_gov_uk_date_field_error
 
   validate :dates_are_valid, on: :update
+
+  def self.find_scope_by_service_name(service_name)
+    case service_name.to_sym
+    when :supply_teachers
+      supply_teachers
+    when :management_consultancy
+      management_consultancy
+    when :legal_services
+      legal_services
+    when :legal_panel_for_government
+      legal_panel_for_government
+    when :facilities_management
+      facilities_management
+    else
+      raise FrameworkServiceNotFoundError, service_name
+    end
+  end
 
   def self.frameworks
     pluck(:id)
