@@ -31,6 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix issue where organisation sector name was not being shown correctly ([PR 5009](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5009))
 
+### Security
+
+- Fix issue where send was taking an unsafe parameter as an argument to find framework ([PR 5028](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5028))
+
 ## [7.3.0] - 2025-09-22
 
 ### Added
