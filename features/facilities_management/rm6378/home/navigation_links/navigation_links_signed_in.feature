@@ -63,15 +63,21 @@ Feature: Navigation links when signed in
       | My account | Your account            |
       | Sign out   | Sign in to your account |
 
-  Scenario: Home page - Sign out
+  Scenario Outline: Home page - Sign out
     And I should see the following navigation links:
-      | Sign out |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to your account' page
+      | My account |
+      | Sign out   |
+    And I click on '<link_text>'
+    And I am on the '<page_title>' page
+
+    Examples:
+      | link_text  | page_title              |
+      | My account | Your account            |
+      | Sign out   | Sign in to your account |
 
   Scenario Outline: Buyer details
     Then I click on 'Manage my details'
-    Then I am on the 'Manage your details' page
+    Then I am on the 'Your details' page
     And I should see the following navigation links:
       | My account |
       | Sign out   |
@@ -85,9 +91,9 @@ Feature: Navigation links when signed in
 
   Scenario Outline: Buyer details - Add address
     Then I click on 'Manage my details'
-    Then I am on the 'Manage your details' page
-    And I click on 'Enter address manually, if you can’t find address'
-    Then I am on the 'Add address' page
+    Then I am on the 'Your details' page
+    And I click on 'Change (Personal details)'
+    Then I am on the 'Manage your personal details' page
     And I should see the following navigation links:
       | My account |
       | Sign out   |

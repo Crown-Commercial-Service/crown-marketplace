@@ -27,13 +27,19 @@ module OrdnanceSurvey
                        thoroughfare dependent_locality locality town_name administrative_area post_town postcode postcode_locator po_box_number ward_code].freeze
   INTEGER_COLUMNS = %i[uprn udprn parent_uprn sao_start_number sao_end_number pao_start_number pao_end_number].freeze
 
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def self.upsert_row(db, row)
     new_date = DateTime.parse(row[:last_update_date]).utc
     result   = db.exec_query(os_address_select(row))
-    db_date  = result.empty? ? new_date : DateTime.parse(result[0]['last_update_date']).utc
+    db_date  = if result.empty?
+                 new_date
+               else
+                 DateTime.parse(result[0]['last_update_date'].is_a?(Date) ? result[0]['last_update_date'].strftime('%Y--%m-%d') : result[0]['last_update_date']).utc
+               end
     db.execute(os_address_delete(row)) if db_date < new_date || result.length > 1
     db.execute(os_address_insert(row)) if result.empty? || new_date > db_date || result.length > 1
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def self.os_address_select(row)
     "select last_update_date from os_address where postcode_locator = '#{row[:postcode_locator]}' and uprn = #{row[:uprn]} order by last_update_date desc"

@@ -206,8 +206,8 @@ en:
             attribute_name:
               active: Status
               address_county: County
-              address_line_1: Building and street
-              address_line_2: Building and street (line 2)
+              address_line_1: Address line 1
+              address_line_2: Address line 2
               address_postcode: Postcode
               address_town: Town or city
               duns: DUNS number
@@ -453,39 +453,9 @@ en:
             item_3: receive a compliant Lot recommendation
           youneedtoknow: 'To receive a shortlist and compliant Lot, you need to know:'
       journey:
-        annual_contract_value:
-          heading: Annual contract cost
-          question: What is your estimate for the annual contract cost?
-          return_text: Return to your account
-          subtitle: Enter your estimated annual cost of the call off contract (including any potential billable works that you may put through the contract).
-        choose_locations:
-          checkbox_legend: "%{section} items"
-          heading: Regions
-          more_information:
-            link_text: Office for National Statistics
-            link_url: https://www.ons.gov.uk/methodology/geography/ukgeographies/eurostat
-            sentence_html: You can find more information from the %{ons_link}.
-          need_help: Need help?
-          question: Where are your buildings located?
-          return_text: Return to your account
-          subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
-          the_regions: The regions below align to the ‘Nomenclature of Territorial Units for Statistics (NUTS)’ hierarchical system used to divide up territories in UK and Europe.
         choose_services:
-          caption: Choose all facilities management services required within your estate, even if you want services in just one building.
-          checkbox_legend: "%{section} items"
-          heading: Services
           learn_more: Further details (opens in a new tab)
-          question: Select the facilities management services that you need
-          return_text: Return to your account
       procurements:
-        index:
-          date_saved: Date saved
-          description: Your saved searches are shown below. Click on the search name to view the details.
-          heading: Saved searches
-          name: Saved searches
-          ref_number: Ref number
-          return_to_your_account: Return to your account
-          you_do_not_have_any: You do not have any saved searches
         new:
           annual_contract_value: Annual contract cost
           based_on_info: 'Based on the information provided, this procurement would be eligible for the following Lot, with your supplier shortlist as shown below:'

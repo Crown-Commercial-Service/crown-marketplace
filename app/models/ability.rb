@@ -23,6 +23,7 @@ class Ability
     can :read, FacilitiesManagement
     can :manage, FacilitiesManagement::RM3830::Procurement, user_id: user.id
     can :manage, FacilitiesManagement::RM6232::Procurement, user_id: user.id
+    can :manage, Procurement, user_id: user.id
     can :manage, FacilitiesManagement::RM3830::ProcurementSupplier, procurement: { user_id: user.id }
     can :manage, FacilitiesManagement::Building, user_id: user.id
   end

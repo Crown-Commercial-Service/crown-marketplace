@@ -58,6 +58,7 @@ class User < ApplicationRecord
 
   has_many :searches, inverse_of: :user, dependent: :destroy
   has_many :reports, inverse_of: :user, dependent: :destroy
+  has_many :procurements, inverse_of: :user, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :trackable and :omniauthable
@@ -89,7 +90,7 @@ class User < ApplicationRecord
     # the buyer-account details page
 
     if has_role? :buyer
-      !(buyer_detail.present? && buyer_detail&.valid?(:update) && buyer_detail.valid?(:update_address))
+      !(buyer_detail.present? && buyer_detail.details_complete?)
     else
       false
     end

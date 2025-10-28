@@ -1,0 +1,43 @@
+<%= content_for :page_title, t('.heading') %>
+<% crown_marketplace_breadcrumbs({ text: t('.heading') })%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= govuk_notification_banner(t('.task_has_been_triggered', application: t(".task_list.#{flash['task_details']['application']}.title"), task_name: t(".task_list.#{flash['task_details']['application']}.tasks.#{flash['task_details']['task_name']}.title")), true) if flash[:task_details] %>
+
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <p class="govuk-body">
+      <%= t('.body') %>
+    </p>
+    <p class="govuk-body">
+      <%= t('.run_with_sidekiq_html', sidekiq_link: link_to(t('.sidekiq'), sidekiq_web_path, class: 'govuk-link govuk-link--no-visited-state')) %>
+    </p>
+    <ul class="govuk-list">
+      <% available_tasks.each do |application, application_tasks| %>
+        <li>
+          <%= t('.available_tasks_are', application: t(".task_list.#{application}.title")) %>
+          <ul class="govuk-list govuk-list--bullet">
+            <% application_tasks.each do |task_name| %>
+              <li>
+                <p class="govuk-!-margin-bottom-0">
+                  <%= t(".task_list.#{application}.tasks.#{task_name}.title") %>
+                </p>
+                <p>
+                  <%= t(".task_list.#{application}.tasks.#{task_name}.description") %>
+                </p>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+    <%= govuk_button(t('.select_task'), href: new_crown_marketplace_manage_datum_path, classes: 'govuk-button--secondary') %>
+  </div>
+</div>

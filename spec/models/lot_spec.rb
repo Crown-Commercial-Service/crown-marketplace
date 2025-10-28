@@ -7,6 +7,7 @@ RSpec.describe Lot do
     it { is_expected.to belong_to(:framework) }
     it { is_expected.to have_many(:services) }
     it { is_expected.to have_many(:supplier_framework_lots) }
+    it { is_expected.to have_many(:procurements) }
 
     it 'has the framework relationship' do
       expect(lot.framework).to be_present

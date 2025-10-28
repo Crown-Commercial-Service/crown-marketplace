@@ -134,7 +134,7 @@ module ApplicationHelper
     link_to(link_text, Marketplace.support_form_link, target: :blank, rel: 'noreferrer noopener')
   end
 
-  def accordion_region_items(region_codes, with_overseas: false)
+  def rm6232_accordion_region_items(region_codes, with_overseas: false)
     nuts1_regions = Nuts1Region.send(with_overseas ? :all_with_overseas : :all).to_h { |region| [region.code, { name: region.name, items: [] }] }
 
     FacilitiesManagement::Region.find_each do |region|
@@ -196,8 +196,64 @@ module ApplicationHelper
     end
   end
 
-  def can_show_new_framework_banner?
-    Marketplace.rm6232_live? || params[:show_new_framework_banner].present?
+  def rm6378_accordion_service_items(service_codes)
+    @journey.current_step.services_grouped_by_category.map do |section_id, services|
+      [
+        section_id,
+        {
+          name: t(".services.section.#{section_id}.title"),
+          items: services.map do |service|
+            service_name = service.number == 'Q2' ? t(".services.section.#{section_id}.services.#{service.number}.title") : service.name
+            {
+              value: service.number,
+              label: {
+                text: service_name,
+              },
+              # hint: {
+              #   text: capture do
+              #     concat(service.description)
+              #     concat(tag.hr(class: 'govuk-section-break govuk-!-margin-top-4'))
+              #     concat(link_to(t('facilities_management.rm6378.journey.choose_services.learn_more'), facilities_management_rm6378_service_specification_path(service.number), target: '_blank', rel: 'noopener'))
+              #   end
+              # },
+              checked: service_codes&.include?(service.number),
+              attributes: {
+                id: "service_#{service.number}",
+                title: service_name,
+                sectionid: section_id
+              }
+            }
+          end
+        }
+      ]
+    end
+  end
+
+  def rm6378_accordion_region_items(region_codes)
+    @journey.current_step.regions_grouped_by_category.map do |section_id, regions|
+      [
+        section_id,
+        {
+          name: t(".regions.section.#{section_id}.title"),
+          items: regions.map do |region|
+            region_name = "#{region.name} (#{region.id})"
+
+            {
+              value: region.id,
+              label: {
+                text: region_name,
+              },
+              checked: region_codes&.include?(region.id),
+              attributes: {
+                id: "region_#{region.id}",
+                title: region_name,
+                sectionid: section_id
+              }
+            }
+          end
+        }
+      ]
+    end
   end
 
   # rubocop:disable Metrics/ParameterLists

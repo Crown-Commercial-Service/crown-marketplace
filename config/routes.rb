@@ -83,9 +83,7 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
     concerns :framework
 
-    resources :buyer_details, path: '/:framework/buyer-details', only: %i[edit update] do
-      get 'edit-address', as: :edit_address
-    end
+    resources :buyer_details, path: '/:framework/buyer-details', only: %i[show edit update]
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
       concerns :framework, :admin_frameworks
@@ -156,7 +154,9 @@ Rails.application.routes.draw do
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
 
-      resources :procurements, only: %i[index]
+      resources :procurements, only: %i[index show new create] do
+        get 'supplier_shortlist_spreadsheet'
+      end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
         concerns :shared_pages
@@ -195,6 +195,7 @@ Rails.application.routes.draw do
         put '/:section/', action: :update, as: :update
       end
     end
+    resources :manage_data, path: 'manage-data', only: %i[index new create]
   end
 
   get '/404', to: 'errors#not_found', as: :errors_404

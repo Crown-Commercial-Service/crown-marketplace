@@ -1,0 +1,16 @@
+<h3 class="govuk-heading-m govuk-!-margin-bottom-0">
+  <%= t('.suppliers_shortlisted', number_of_suppliers: suppliers.length) %>
+</h3>
+<p class="govuk-body govuk-!-font-weight-bold">
+  <%= t('.who_can_provide') %>
+</p>
+<ul class="govuk-list">
+  <% suppliers.each do |supplier| %>
+    <li class="govuk-!-width-one-half">
+      <%= supplier.supplier_name %>
+      <% if supplier != suppliers.last  %>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <% end %>
+    </li>
+  <% end %>
+</ul>
