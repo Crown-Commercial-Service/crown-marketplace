@@ -3,98 +3,70 @@ Feature: Navigation links when signed in
   Background: Admin signs in
     Given I sign in as an admin and navigate to the 'RM3830' dashboard
 
-  Scenario: Cookies policy - Admin dashboard
+  Scenario Outline: Cookies policy - <header_link>
     When I click on 'Cookie policy'
     Then I am on the 'Details about cookies on Crown Marketplace' page
     And I should see the following navigation links:
       | Admin dashboard |
       | Sign out        |
-    And I click on 'Admin dashboard'
-    And I am on the 'RM3830 administration dashboard' page
+    And I click on '<header_link>'
+    Then I am on the '<heading_text>' page
 
-  Scenario: Cookies policy - Sign out
-    When I click on 'Cookie policy'
-    Then I am on the 'Details about cookies on Crown Marketplace' page
-    And I should see the following navigation links:
-      | Admin dashboard |
-      | Sign out        |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to the RM3830 administration dashboard' page
+    Examples:
+      | header_link     | heading_text                                   |
+      | Admin dashboard | RM3830 administration dashboard                |
+      | Sign out        | Sign in to the RM3830 administration dashboard |
 
-  Scenario: Cookies settings - Admin dashboard
+  Scenario Outline: Cookies settings - <header_link>
     When I click on 'Cookie settings'
     Then I am on the 'Cookies on Crown Marketplace' page
     And I should see the following navigation links:
       | Admin dashboard |
       | Sign out        |
-    And I click on 'Admin dashboard'
-    And I am on the 'RM3830 administration dashboard' page
+    And I click on '<header_link>'
+    Then I am on the '<heading_text>' page
 
-  Scenario: Cookies settings - Sign out
-    When I click on 'Cookie settings'
-    Then I am on the 'Cookies on Crown Marketplace' page
-    And I should see the following navigation links:
-      | Admin dashboard |
-      | Sign out        |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to the RM3830 administration dashboard' page
+    Examples:
+      | header_link     | heading_text                                   |
+      | Admin dashboard | RM3830 administration dashboard                |
+      | Sign out        | Sign in to the RM3830 administration dashboard |
 
-  Scenario: Accessibility statement - Admin dashboard
+  Scenario Outline: Accessibility statement - <header_link>
     When I click on 'Accessibility statement'
     Then I am on the 'Facilities Management (FM) Accessibility statement' page
     And I should see the following navigation links:
       | Admin dashboard |
       | Sign out        |
-    And I click on 'Admin dashboard'
-    And I am on the 'RM3830 administration dashboard' page
+    And I click on '<header_link>'
+    Then I am on the '<heading_text>' page
 
-  Scenario: Accessibility statement - Sign out
-    When I click on 'Accessibility statement'
-    Then I am on the 'Facilities Management (FM) Accessibility statement' page
+    Examples:
+      | header_link     | heading_text                                   |
+      | Admin dashboard | RM3830 administration dashboard                |
+      | Sign out        | Sign in to the RM3830 administration dashboard |
+
+  Scenario Outline: Admin dashboard - <header_link>
     And I should see the following navigation links:
       | Admin dashboard |
       | Sign out        |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to the RM3830 administration dashboard' page
+    And I click on '<header_link>'
+    And I am on the '<heading_text>' page
 
-  Scenario: Admin dashboard - Sign out
-    And I should see the following navigation links:
-      | Sign out |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to the RM3830 administration dashboard' page
+    Examples:
+      | header_link     | heading_text                                   |
+      | Admin dashboard | RM3830 administration dashboard                |
+      | Sign out        | Sign in to the RM3830 administration dashboard |
 
-  Scenario: Accessibility statement - Admin dashboard
-    When I click on 'Accessibility statement'
-    Then I am on the 'Facilities Management (FM) Accessibility statement' page
-    And I should see the following navigation links:
-      | Admin dashboard |
-      | Sign out        |
-    And I click on 'Admin dashboard'
-    And I am on the 'RM3830 administration dashboard' page
-
-  Scenario: Accessibility statement - Sign out
-    When I click on 'Accessibility statement'
-    Then I am on the 'Facilities Management (FM) Accessibility statement' page
-    And I should see the following navigation links:
-      | Admin dashboard |
-      | Sign out        |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to the RM3830 administration dashboard' page
-
-  Scenario: Admin page - Admin dashboard
+  Scenario Outline: Admin page - <header_link>
     When I click on 'Average framework rates'
     Then I am on the 'Average framework rates' page
     And I should see the following navigation links:
       | Admin dashboard |
       | Sign out        |
-    And I click on 'Admin dashboard'
-    And I am on the 'RM3830 administration dashboard' page
+    And I click on '<header_link>'
+    Then I am on the '<heading_text>' page
 
-  Scenario: Admin page - Accessibility statement - Sign out
-    When I click on 'Average framework rates'
-    Then I am on the 'Average framework rates' page
-    And I should see the following navigation links:
-      | Admin dashboard |
-      | Sign out        |
-    And I click on 'Sign out'
-    And I am on the 'Sign in to the RM3830 administration dashboard' page
+    Examples:
+      | header_link     | heading_text                                   |
+      | Admin dashboard | RM3830 administration dashboard                |
+      | Sign out        | Sign in to the RM3830 administration dashboard |

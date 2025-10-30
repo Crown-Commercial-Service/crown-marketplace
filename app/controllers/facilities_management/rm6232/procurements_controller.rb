@@ -67,7 +67,7 @@ module FacilitiesManagement
       def set_back_path(action)
         @back_path, @back_text = case action
                                  when :index
-                                   [facilities_management_rm6232_path, t('facilities_management.rm6232.procurements.index.return_to_your_account')]
+                                   [facilities_management_rm6232_path, t('facilities_management.shared.procurements.index.return_to_your_account')]
                                  when :show
                                    [facilities_management_rm6232_procurements_path, t('facilities_management.rm6232.procurements.show.return_to_saved_searches')]
                                  when :new

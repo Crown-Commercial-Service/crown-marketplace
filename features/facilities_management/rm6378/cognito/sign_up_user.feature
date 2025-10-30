@@ -13,4 +13,4 @@ Feature: Sign up to facilties management - RM6378
     And I enter the following details into the form:
       | Confirmation code | 123456 |
     And I click on 'Continue'
-    Then I am on the 'Manage your details' page
+    Then I am on the 'Your details' page

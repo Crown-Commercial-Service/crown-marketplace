@@ -1,0 +1,57 @@
+<% content_for :page_title, t('.heading') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+    <p class="govuk-body">
+      <%= t('.description') %>
+    </p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="ccs-info-panel">
+      <% if @searches.length > 0 %>
+        <%= govuk_table(
+          [
+            {
+              text: t('.name'),
+              classes: 'govuk-!-width-one-quarter'
+            },
+            {
+              text: t('.ref_number'),
+              classes: 'govuk-!-width-one-quarter'
+            },
+            {
+              text: t('.date_saved'),
+              classes: 'govuk-!-width-two-quarters'
+            }
+          ],
+          @searches.map do |search|
+            [
+              {
+                text: link_to(search.contract_name, "/facilities-management/#{params[:framework]}/procurements/#{search.id}", class: 'govuk-link govuk-link--no-visited-state')
+              },
+              {
+                text: search.contract_number
+              },
+              {
+                text: format_date_time(search.updated_at)
+              }
+            ]
+          end,
+          first_cell_is_header: true
+        ) %>
+      <% else %>
+        <hr class="govuk-section-break govuk-section-break--visible">
+        <p class="govuk-!-margin-top-4">
+          <%= t('.you_do_not_have_any') %>
+        </p>
+        <hr class="govuk-section-break govuk-section-break--visible">
+      <% end %>
+    </div>
+  </div>
+</div>

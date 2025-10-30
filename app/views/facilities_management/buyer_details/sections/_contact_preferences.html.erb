@@ -1,0 +1,28 @@
+<%= govuk_radios(
+  :contact_opt_in,
+  [
+    {
+      value: true,
+      label: {
+        text: t('.contact_opt_in.options.true')
+      }
+    },
+    {
+      value: false,
+      label: {
+        text: t('.contact_opt_in.options.false')
+      }
+    }
+  ],
+  form: form,
+  fieldset: {
+    legend: {
+      text: t('.contact_opt_in.legend'),
+      classes: 'govuk-fieldset__legend--m'
+    }
+  },
+  hint: {
+    text: t('.contact_opt_in.hint')
+  },
+  classes: 'govuk-radios--inline'
+) %>

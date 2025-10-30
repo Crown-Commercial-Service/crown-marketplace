@@ -34,6 +34,12 @@ en:
               too_short: You must select the service access for the user from this list
             telephone_number:
               invalid: Enter a UK mobile telephone number, for example 07700900982
+        data_loader:
+          attributes:
+            application:
+              inclusion: You must select the application the task needs to run in
+            task_name:
+              inclusion: You must select the task you want to run
   crown_marketplace:
     allow_list:
       allow_list_table:
@@ -80,6 +86,9 @@ en:
         facilities_management: Facilities Management
         lack_permissions: You do not have the required permissions to edit this user
         legal_service: Legal Service
+        manage_data:
+          body: Load platform data for the Facilities Management and the Legacy applications
+          heading: Manage data
         manage_users_body: Find a user by email to view and update their details
         manage_users_title: Manage users
         management_consultancy: Management Consultancy
@@ -95,6 +104,46 @@ en:
           message: An email has been sent to %{user_email} with the details for them to sign in.
           title: User account created
         user_support_heading: User support
+    manage_data:
+      index:
+        available_tasks_are: 'The available tasks for the %{application} application are:'
+        body: Tasks can be run to load platform data into the database
+        heading: Manage tasks
+        run_with_sidekiq_html: The tasks themselves are run with %{sidekiq_link}.
+        select_task: Select task
+        sidekiq: SideKiq
+        task_has_been_triggered: The '%{task_name}' Rake task has been triggered in the %{application} application
+        task_list:
+          fm:
+            tasks:
+              bank_holidays:
+                description: Load bank holiday data for England and Wales into the database
+                title: Bank holidays
+              import_test_data:
+                description: Import dummy supplier data into the database
+                title: Import test data
+              update_frameworks:
+                description: Update the current framework data in the database
+                title: Update frameworks
+            title: Facilities Management
+          legacy:
+            tasks:
+              bank_holidays:
+                description: Load bank holiday data for England and Wales into the database
+                title: Bank holidays
+              import_test_data:
+                description: Import dummy supplier data into the database
+                title: Import test data
+              update_frameworks:
+                description: Update the current framework data in the database
+                title: Update frameworks
+            title: Legacy
+      new:
+        heading: Select data import task
+        hint: The task will be triggered in SideKiq
+        run_selected_task: Run selected task
+        select_application: Select the application to run the data import task in
+        select_task: Select the task you want to run in this application
     manage_users:
       add_user:
         heading: Add a user

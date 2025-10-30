@@ -4,7 +4,7 @@ Feature: Buildings
   Background:
     Given I sign in and navigate to my account for 'RM6232'
     And I click on 'Manage my details'
-    Then I am on the 'Manage your details' page
+    Then I am on the 'Your details' page
 
   Scenario: Manage your details page
     Then the page should be axe clean

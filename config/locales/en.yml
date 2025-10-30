@@ -83,6 +83,13 @@ en:
             live_at:
               blank: Enter a valid 'live at' date
               not_a_date: Enter a valid 'live at' date
+        procurement:
+          attributes:
+            contract_name:
+              blank: Enter your contract name
+              taken: This contract name is already in use
+              too_long: Your contract name must be 100 characters or fewer
+              too_short: Enter your contract name
         report:
           attributes:
             end_date:

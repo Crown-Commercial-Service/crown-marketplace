@@ -2,7 +2,7 @@
 ARG ALPINE_VERSION=3.21
 
 # Set the Ruby version
-ARG RUBY_VERSION=3.4.3
+ARG RUBY_VERSION=3.4.7
 
 # Pull in the Ruby image
 FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} AS base

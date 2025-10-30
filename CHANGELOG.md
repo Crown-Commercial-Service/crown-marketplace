@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.4.0] - 2025-10-27
+
+### Added
+
+- Added the Service, Regions and Annual Contract Value pages for the new FM framework (RM6378) ([PR 4983](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4983))
+- Added code to determine the lot for the new FM framework (RM6378) ([PR 4984](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4984))
+- Added test data for new FM framework (RM6378) ([PR 4995](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4995))
+- Added the results page for the new FM framework (RM6378) ([PR 4996](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4996))
+- Added the show page and spreadsheet download for the new FM framework (RM6378) ([PR 4997](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4997))
+- Moved some rake tasks into `DataLoader` module to allow them to be run using SideKiq ([PR 4998](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4998))
+- Added ability to run tasks to load data from the Crown Marketplace area of the website ([PR 4998](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4998))
+
+### Changed
+
+- Added the `category` attribute to the jurisdictions ([PR 4982](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4982))
+- Make sure incorrect lots get deleted ([PR 4985](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4985))
+- Make sure the jurisdictions are correct ([PR 4985](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4985))
+- Change the Buyer Details section to be more simple to maintain ([PR 4999](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/4999))
+- Upgrade ruby version to v3.4.7 ([PR 5008](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5008))
+- Update GOV.UK Frontend and CCS Frontend ([PR 5016](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5016))
+- Update the navigation to include active pages ([PR 5021](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5021))
+
+### Fixed
+
+- Fix issue where organisation sector name was not being shown correctly ([PR 5009](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5009))
+
+### Security
+
+- Fix issue where send was taking an unsafe parameter as an argument to find framework ([PR 5028](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5028))
+
 ## [7.3.0] - 2025-09-22
 
 ### Added

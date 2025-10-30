@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.3'
+ruby '3.4.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0.2'
+gem 'rails', '~> 8.0.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 7.0'
+gem 'puma', '~> 7.1'
 
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem 'propshaft'
@@ -47,14 +47,14 @@ gem 'virtus'
 gem 'rollbar', '~> 3.6.2'
 
 # for dfe sign in
-gem 'omniauth', '~> 2.1.3'
+gem 'omniauth', '~> 2.1.4'
 gem 'omniauth-oauth2', '~> 1.8.0'
 
 # for authentication
 gem 'devise', '~> 4.9.4'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.129.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.130.0'
 
 # for pagination
 gem 'kaminari', '~> 1.2.2'
@@ -73,8 +73,8 @@ gem 'aasm', '~> 5.5'
 gem 'after_commit_everywhere', '~> 1.6'
 
 # for running background jobs
-gem 'sidekiq', '~> 8.0.7'
-gem 'sinatra', '~> 4.1.1', require: false
+gem 'sidekiq', '~> 8.0.8'
+gem 'sinatra', '~> 4.2.1', require: false
 gem 'slim', '~> 5.2.1'
 gem 'sidekiq-cron'
 
@@ -113,11 +113,14 @@ gem 'asset_sync', '>= 2.19.1'
 gem 'fog-aws', '>= 3.14.0'
 
 # Use CCS Frontend Helpers
-gem 'ccs-frontend_helpers', '~> 3.0.0'
+gem 'ccs-frontend_helpers', '~> 3.1.0'
+
+# Need to add Open SSL to fix bug in v3.3.0
+gem 'openssl', '~> 3.3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'byebug', platforms: %i[mri windows]
   gem 'dotenv-rails', '~> 3.1.8'
   gem 'factory_bot_rails', '>= 6.2.0'
   gem 'pry-rails'
@@ -133,8 +136,8 @@ group :development, :test do
   gem 'rubyXL', '>= 3.4.23'
   gem 'i18n-tasks', '>= 1.0.12'
   gem 'poltergeist', '>= 1.18.1'
-  gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
-  gem 'tzinfo-data', platforms: %i[x64_mingw]
+  gem 'wdm', '>= 0.1.0', platforms: %i[windows]
+  gem 'tzinfo-data', platforms: %i[windows]
   gem 'bullet', require: true
   gem 'faker', '~> 3.5.2'
   gem 'brakeman', '~> 7.1.0'

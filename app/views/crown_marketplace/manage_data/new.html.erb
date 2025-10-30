@@ -1,0 +1,67 @@
+<%= content_for :page_title, t('.heading') %>
+<% crown_marketplace_breadcrumbs(
+  { text: t('crown_marketplace.manage_data.index.heading'), href: crown_marketplace_manage_data_path },
+  { text: t('.heading') }
+)%>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @data_loader.errors } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= form_with model: @data_loader, url: crown_marketplace_manage_data_path, method: :post, html: { novalidate: true } do |f| %>
+      <%= govuk_radios(
+        :application,
+        available_tasks.map do |application, application_tasks|
+          {
+            value: application,
+            label: {
+              text: t("crown_marketplace.manage_data.index.task_list.#{application}.title")
+            },
+            conditional: {
+              content: govuk_radios(
+                :task_name,
+                application_tasks.map do |task_name|
+                  {
+                    value: task_name,
+                    label: {
+                      text: t("crown_marketplace.manage_data.index.task_list.#{application}.tasks.#{task_name}.title")
+                    },
+                    hint: {
+                      text: t("crown_marketplace.manage_data.index.task_list.#{application}.tasks.#{task_name}.description") 
+                    }
+                  }
+                end,
+                form: f,
+                fieldset: {
+                  legend: {
+                    text: t('.select_task'),
+                    classes: 'govuk-fieldset__legend--s'
+                  }
+                }
+              )
+            }
+          }
+        end,
+        form: f,
+        fieldset: {
+          legend: {
+            text: t('.select_application'),
+            classes: 'govuk-fieldset__legend--m'
+          }
+        },
+        hint: {
+          text: t('.hint')
+        }
+      ) %>
+      <%= govuk_button(t('.run_selected_task'), form: f, attributes: { aria: { label: t('.run_selected_task') } }) %>
+    <% end %>
+  </div>
+</div>
