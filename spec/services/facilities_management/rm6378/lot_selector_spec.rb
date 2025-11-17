@@ -7,6 +7,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
 
     let(:annual_contract_value) { rand(2_000_000) }
 
+    # rubocop:disable RSpec/LeakyLocalVariable
     total_service_numbers = %w[O1 P1 P9]
     hard_service_numbers = %w[E1 F1 J20]
     soft_service_numbers = %w[G1 H3 I6]
@@ -15,6 +16,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
     security_systems_service_numbers = %w[T1 V1]
     security_officer_and_systems_service_numbers = %w[W1]
     security_advisory_service_numbers = %w[X1 Y1 Z1]
+    # rubocop:enable RSpec/LeakyLocalVariable
 
     def result_converter(lot_number, service_numbers)
       lot_id = "RM6378.#{lot_number}"
