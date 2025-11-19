@@ -10,7 +10,7 @@
     "govuk-frontend": "^5.13.0",
     "jquery": "^3.7.1",
     "js-cookie": "^3.0.5",
-    "sass": "^1.93.2",
+    "sass": "^1.94.0",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3"
   },
@@ -23,10 +23,10 @@
     "postinstall": "cp -a node_modules/ccs-frontend/dist/ccs/@types/. node_modules/@types/ccs-frontend && cp node_modules/@types/ccs-frontend/all.d.ts node_modules/@types/ccs-frontend/index.d.ts"
   },
   "devDependencies": {
-    "@eslint/js": "^9.38.0",
+    "@eslint/js": "^9.39.1",
     "@stylistic/eslint-plugin-js": "^4.4.1",
     "@stylistic/eslint-plugin-ts": "^4.4.1",
-    "eslint": "^9.38.0",
-    "typescript-eslint": "^8.46.2"
+    "eslint": "^9.39.1",
+    "typescript-eslint": "^8.46.4"
   }
 }
