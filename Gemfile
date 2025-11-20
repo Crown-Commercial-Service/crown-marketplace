@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0.3'
+gem 'rails', '~> 8.0.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -54,7 +54,7 @@ gem 'omniauth-oauth2', '~> 1.8.0'
 gem 'devise', '~> 4.9.4'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.130.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.131.0'
 
 # for pagination
 gem 'kaminari', '~> 1.2.2'
@@ -73,7 +73,7 @@ gem 'aasm', '~> 5.5'
 gem 'after_commit_everywhere', '~> 1.6'
 
 # for running background jobs
-gem 'sidekiq', '~> 8.0.8'
+gem 'sidekiq', '~> 8.0.9'
 gem 'sinatra', '~> 4.2.1', require: false
 gem 'slim', '~> 5.2.1'
 gem 'sidekiq-cron'
@@ -116,7 +116,7 @@ gem 'fog-aws', '>= 3.14.0'
 gem 'ccs-frontend_helpers', '~> 3.1.0'
 
 # Need to add Open SSL to fix bug in v3.3.0
-gem 'openssl', '~> 3.3.1'
+gem 'openssl', '~> 3.3.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
