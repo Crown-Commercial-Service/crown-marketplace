@@ -140,7 +140,7 @@ group :development, :test do
   gem 'tzinfo-data', platforms: %i[windows]
   gem 'bullet', require: true
   gem 'faker', '~> 3.5.2'
-  gem 'brakeman', '~> 7.1.0'
+  gem 'brakeman', '~> 7.1.1'
 end
 
 group :development do
