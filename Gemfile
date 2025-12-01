@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0.4'
+gem 'rails', '~> 8.1.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -37,7 +37,7 @@ gem 'jbuilder', '~> 2.14'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'geocoder', '>= 1.6.1'
-gem 'activerecord-postgis-adapter', '~> 11.0.0'
+gem 'activerecord-postgis-adapter', '~> 11.1.1'
 gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
