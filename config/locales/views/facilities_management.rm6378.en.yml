@@ -38,7 +38,7 @@ en:
           buyer_account_title: Your account
           further_information_help_html: "%{fm_link} (opens in a new tab)"
           further_information_link: https://www.crowncommercial.gov.uk/agreements/rm6378
-          further_information_link_description: View further information about the Facilities Management and Workplace Services framework RM6378
+          further_information_link_description: View further information about the Facilities Management and Security Services framework RM6378 (opens in new tab)
           manage_account_desc: Update and edit your contact details
           manage_account_link: Manage my details
           return_to_page: To return to this page at any time, just click on 'My account'.
@@ -53,7 +53,7 @@ en:
       home:
         index:
           beforeyoustart: Before you start
-          further_information: View further information about the Facilities Management and Security Services framework RM6378 (opens in new tab)
+          further_information: View further information about the Facilities Management and Security Services framework RM6378
           heading: Find a facilities management supplier
           startlist:
             item_1: which services you want to have provided
