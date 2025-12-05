@@ -36,7 +36,6 @@ en:
         index:
           buyer_account_dashboard: Buyer account dashboard
           buyer_account_title: Your account
-          further_information_help_html: "%{fm_link}"
           further_information_link: https://www.crowncommercial.gov.uk/agreements/rm6378
           further_information_link_description: View further information about the Facilities Management and Security Services framework RM6378 (opens in new tab)
           manage_account_desc: Update and edit your contact details
