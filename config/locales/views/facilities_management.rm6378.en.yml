@@ -166,7 +166,7 @@ en:
           services: Services
           sub_lot: Sub-lot %{sub_lot}
         show:
-          fm_framework_page: Facilities Management and Workplace Services framework
+          fm_framework_page: Facilities Management and Security Services framework
           fm_framework_page_url: https://www.crowncommercial.gov.uk/agreements/rm6378
           if_you_need_to_talk: If you need to talk to us about this shortlist or procurement, please use the below reference number. Click on ‘contact us’ at the bottom of the page for our details.
           information_list:
