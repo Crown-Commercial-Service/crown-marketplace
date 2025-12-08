@@ -46,7 +46,7 @@ en:
           view_your_searches_desc: Open your dashboard to view your previously saved searches
           view_your_searches_link: View your saved searches
       documents:
-        4:
+        service_specification_document:
           name: facilities-management/rm6378/RM6378 Service requirements and standards.pdf
           text: Read the service specification document
       home:
