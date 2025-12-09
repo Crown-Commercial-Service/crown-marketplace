@@ -121,7 +121,7 @@ gem 'openssl', '~> 3.3.2'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri windows]
-  gem 'dotenv-rails', '~> 3.1.8'
+  gem 'dotenv-rails', '~> 3.2.0'
   gem 'factory_bot_rails', '>= 6.2.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
