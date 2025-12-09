@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0.4'
+gem 'rails', '~> 8.1.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -37,14 +37,14 @@ gem 'jbuilder', '~> 2.14'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'geocoder', '>= 1.6.1'
-gem 'activerecord-postgis-adapter', '~> 11.0.0'
+gem 'activerecord-postgis-adapter', '~> 11.1.1'
 gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
 gem 'caxlsx_rails', '>= 0.6.3'
 gem 'virtus'
 
-gem 'rollbar', '~> 3.6.2'
+gem 'rollbar', '~> 3.7.0'
 
 # for dfe sign in
 gem 'omniauth', '~> 2.1.4'
@@ -54,13 +54,13 @@ gem 'omniauth-oauth2', '~> 1.8.0'
 gem 'devise', '~> 4.9.4'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.131.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.132.0'
 
 # for pagination
 gem 'kaminari', '~> 1.2.2'
 
 # for pretty urls
-gem 'friendly_id', '~> 5.5.1'
+gem 'friendly_id', '~> 5.6.0'
 
 # aws s3 bucket access for postcode data
 gem 'aws-sdk-s3', '~> 1'
@@ -73,7 +73,7 @@ gem 'aasm', '~> 5.5'
 gem 'after_commit_everywhere', '~> 1.6'
 
 # for running background jobs
-gem 'sidekiq', '~> 8.0.9'
+gem 'sidekiq', '~> 8.0.10'
 gem 'sinatra', '~> 4.2.1', require: false
 gem 'slim', '~> 5.2.1'
 gem 'sidekiq-cron'
@@ -113,7 +113,7 @@ gem 'asset_sync', '>= 2.19.1'
 gem 'fog-aws', '>= 3.14.0'
 
 # Use CCS Frontend Helpers
-gem 'ccs-frontend_helpers', '~> 3.1.0'
+gem 'ccs-frontend_helpers', '~> 3.3.0'
 
 # Need to add Open SSL to fix bug in v3.3.0
 gem 'openssl', '~> 3.3.2'
@@ -121,7 +121,7 @@ gem 'openssl', '~> 3.3.2'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri windows]
-  gem 'dotenv-rails', '~> 3.1.8'
+  gem 'dotenv-rails', '~> 3.2.0'
   gem 'factory_bot_rails', '>= 6.2.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
@@ -139,8 +139,8 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[windows]
   gem 'tzinfo-data', platforms: %i[windows]
   gem 'bullet', require: true
-  gem 'faker', '~> 3.5.2'
-  gem 'brakeman', '~> 7.1.0'
+  gem 'faker', '~> 3.5.3'
+  gem 'brakeman', '~> 7.1.1'
 end
 
 group :development do

@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.5.0] - 2025-12-09
+
+### Changed
+
+- Update CCS Frontend with the new linear CCS logo ([PR 5061](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5061))
+- Update CCS Frontend with the crown on the footer ([PR 5062](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5062))
+- Upgrade Bun to v1.3.3 ([PR 5062](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5062))
+- Upgrade Rails to v8.1.1 ([PR 5083](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5083))
+- Update FM RM3678 further info link on landing page([PR 5068](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5068))
+- Update FM RM3678 further info link on dashboard ([PR 5070](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5070))
+- Update FM RM3678 further info link on What happens next page([PR 5071](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5071))
+- Update FM RM3678 regions details info ([PR 5072](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5072))
+- Update FM RM3678 service info document ([PR 5079](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5079))
+
 ## [7.4.1] - 2025-11-19
 
 ### Security

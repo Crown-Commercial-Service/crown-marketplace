@@ -312,14 +312,14 @@ en:
           checkbox_legend: "%{section} items"
           heading: Regions
           more_information:
-            link_text: Office for National Statistics
+            link_text: Office for National Statistics (opens in new tab)
             link_url: https://www.ons.gov.uk/methodology/geography/ukgeographies/eurostat
             sentence_html: You can find more information from the %{ons_link}.
           need_help: Need help?
           question: Where are your buildings located?
           return_text: Return to your account
           subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
-          the_regions: The regions below align to the ‘Nomenclature of Territorial Units for Statistics (NUTS)’ hierarchical system used to divide up territories in UK and Europe.
+          the_regions: The regions below align to the ‘International Territorial Level  (ITL)’, a geocode standard for referencing the subdivisions of the United Kingdom.
         choose_services:
           caption: Choose all facilities management services required within your estate, even if you want services in just one building.
           checkbox_legend: "%{section} items"
