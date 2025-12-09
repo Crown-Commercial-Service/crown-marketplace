@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update CCS Frontend with the new linear CCS logo ([PR 5061](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5061))
 - Update CCS Frontend with the crown on the footer ([PR 5062](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5062))
 - Upgrade Bun to v1.3.3 ([PR 5062](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5062))
+- Upgrade Rails to v8.1.1 ([PR 5083](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5083))
 
 ## [7.4.1] - 2025-11-19
 

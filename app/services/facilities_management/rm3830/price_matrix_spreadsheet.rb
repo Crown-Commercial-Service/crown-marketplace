@@ -126,7 +126,7 @@ module FacilitiesManagement::RM3830
           @rate_card_data[:Prices][@supplier_id][s.to_sym][building_type_with_service_codes[:building_type].to_sym] if building_type_with_service_codes[:service_codes].include? s
         end
 
-        unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: "%#{s}%").first
+        unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: "%#{s}%").order(:id).first
         unit_of_measurement_value = begin
           unit_of_measurement_row['unit_measure_label']
         rescue NameError
