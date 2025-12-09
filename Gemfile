@@ -60,7 +60,7 @@ gem 'aws-sdk-cognitoidentityprovider', '~> 1.132.0'
 gem 'kaminari', '~> 1.2.2'
 
 # for pretty urls
-gem 'friendly_id', '~> 5.5.1'
+gem 'friendly_id', '~> 5.6.0'
 
 # aws s3 bucket access for postcode data
 gem 'aws-sdk-s3', '~> 1'
