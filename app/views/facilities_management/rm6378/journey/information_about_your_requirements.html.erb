@@ -1,0 +1,47 @@
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+<% content_for :page_title, t('.heading') %>
+
+<div class="procurement">
+  <div class="govuk-grid-row">
+    <%= form_with url: @form_path, method: :get, html: { specialvalidation: true, novalidate: true } do |f| %>
+      <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+      <div class="govuk-grid-column-two-thirds">
+
+        <%= govuk_fieldset(
+          legend: {
+              text: t('.heading'),
+              classes: 'govuk-fieldset__legend--l',
+              is_page_heading: true
+          }
+        ) do %>
+          <p class="govuk-body">
+            <%= t('.information_text') %>
+          </p>
+
+          <%= govuk_input(
+            :estimated_contract_duration,
+            model: @journey.current_step,
+            label: {
+              text: t('.estimated_contract_duration.question'),
+              classes: 'govuk-label--m',
+            },
+            suffix: {
+              text: t('.estimated_contract_duration.years')
+            },
+            classes: 'ccs-number-field ccs-integer-field govuk-input--width-3',
+            attributes: {
+              maxlength: 2
+            }
+          ) %>
+
+        <% end %>
+
+
+        <%= govuk_button(t('common.submit'), form: f, attributes: { aria: { label: t('common.submit') } }) %>
+        <p>
+          <%= link_to t('.return_text'), "/facilities-management/#{params[:framework]}", class: 'govuk-link' %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>
