@@ -23,7 +23,7 @@
             model: @journey.current_step,
             label: {
               text: t('.estimated_contract_duration.question'),
-              classes: 'govuk-label--m',
+              classes: 'govuk-label--m'
             },
             suffix: {
               text: t('.estimated_contract_duration.years')
@@ -34,6 +34,26 @@
             }
           ) %>
 
+          <%= govuk_radios(
+            :private_finance_initiative,
+            @journey.current_step.class::PFI_OPTIONS.map do |option|
+            {
+              value: option,
+              label: {
+                text: t(option)
+              }
+            }
+            end,
+            model: @journey.current_step,
+            fieldset: {
+              legend: {
+                text: t('.private_finance_initiative.question'),
+                classes: 'govuk-fieldset__legend--m',
+                is_page_heading: true
+              }
+            },
+            classes: 'govuk-radios--inline'
+            ) %>
         <% end %>
 
 
