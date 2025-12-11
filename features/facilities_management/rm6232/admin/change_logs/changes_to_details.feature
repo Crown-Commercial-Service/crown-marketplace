@@ -74,5 +74,5 @@ Feature: Change log for supplier details
     And the change was made by 'me'
     And I should see the following changes to the supplier details:
       | Address line 1 | 161 Christian Crossing | 112 Test street |
-      | Town or city   | North Mosesside        | Westminister    |
       | Postcode       | W3 8BJ                 | AB2 3DF         |
+      | Town or city   | North Mosesside        | Westminister    |

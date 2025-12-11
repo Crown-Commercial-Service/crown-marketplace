@@ -41,10 +41,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@v1.267.0
+        uses: ruby/setup-ruby@v1.269.0
         with:
           bundler-cache: true
 

@@ -31,7 +31,7 @@
       <%= t('.manage_account_desc') %>
     </p>
     <p>
-      <%= t('.further_information_help_html', fm_link: link_to(t('.further_information_link_description'), t('.further_information_link'), class: 'govuk-!-font-size-19 govuk-link govuk-link--no-visited-state', target: '_blank')) %>
+      <%= link_to(t('.further_information_link_description'), t('.further_information_link'), class: 'govuk-!-font-size-19 govuk-link govuk-link--no-visited-state', target: '_blank') %>
     </p>
     <strong class="govuk-heading-s">
       <%= t('.return_to_page') %>
