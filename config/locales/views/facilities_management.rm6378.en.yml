@@ -5,11 +5,16 @@ en:
       models:
         facilities_management/rm6378/journey/information_about_your_requirements:
           attributes:
+            contract_start_date:
+              blank: Enter a real date, for example 25 12 2027
+              invalid: Enter a real date, for example 25 12 2027
+              date_in_future: The estimated start date must be in the future
             estimated_contract_duration:
               greater_than: The estimated contract duration must be a whole number greater than 0
               less_than: The estimated contract duration must be less than 100
               not_a_number: The estimated contract duration must be a whole number greater than 0
               not_an_integer: The estimated contract duration must be a whole number greater than 0
+              blank: The estimated contract duration must be a whole number greater than 0
             private_finance_initiative:
               inclusion: Select one option for requirements linked to PFI
         facilities_management/rm6378/journey/annual_contract_value:
@@ -79,6 +84,9 @@ en:
           heading: Information about your requirements
           return_text: Return to your account
           information_text: To help CCS understand your needs, please tell us the start date and duration of the contract. If you’re not sure at this stage, an estimate can be provided.
+          contract_start_date:
+            question: What is the estimated contract start date?
+            hint: For example, 25 12 2027
           estimated_contract_duration:
             question: What is the estimated contract duration?
             years: years
