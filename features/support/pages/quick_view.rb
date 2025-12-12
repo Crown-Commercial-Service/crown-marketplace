@@ -39,5 +39,15 @@ module Pages
       element :title, 'div.govuk-notification-banner__header > h2.govuk-notification-banner__title'
       element :message, 'div.govuk-notification-banner__content > p.govuk-notification-banner__heading'
     end
+    
+    section :contract_start_date, '#contract_start_date-form-group' do
+      element :day, '#contract_start_date_dd'
+      element :month, '#contract_start_date_mm'
+      element :year, '#contract_start_date_yyyy'
+    end
+
+    element :estimated_contract_duration, '#estimated_contract_duration'
+
   end
 end
+

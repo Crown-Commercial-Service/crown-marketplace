@@ -19,6 +19,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     Then I am on the 'Annual contract cost' page
     And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
       | <sublot> |
@@ -41,6 +46,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '<estimated_annual_cost>' for the annual contract cost
+    And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
@@ -65,6 +75,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     Then I am on the 'Annual contract cost' page
     And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
       | <sublot> |
@@ -87,6 +102,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '123456' for the annual contract cost
+    And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
@@ -115,6 +135,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     Then I am on the 'Annual contract cost' page
     And I enter '2500000' for the annual contract cost
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
       | 1b |
@@ -134,6 +159,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '2500000' for the annual contract cost
+    And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
