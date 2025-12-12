@@ -13,3 +13,17 @@ Then('there is a notification with the message {string}') do |notification_messa
   expect(quick_view_page.notification_banner.title).to have_content('Important')
   expect(quick_view_page.notification_banner.message).to have_content(notification_message)
 end
+
+Then('I enter {string} for the contract start date') do |date|
+  add_contract_start_date(*date_options(date))
+end
+
+Then('I enter {string} for the estimated contract duration') do |value|
+  quick_view_page.estimated_contract_duration.set(value)
+end
+
+def add_contract_start_date(day, month, year)
+  quick_view_page.contract_start_date.day.set(day)
+  quick_view_page.contract_start_date.month.set(month)
+  quick_view_page.contract_start_date.year.set(year)
+end
