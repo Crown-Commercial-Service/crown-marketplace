@@ -4,7 +4,7 @@
   "workspaces": {
     "": {
       "dependencies": {
-        "@rails/request.js": "^0.0.12",
+        "@rails/request.js": "^0.0.13",
         "@types/jquery": "^3.5.33",
         "@types/js-cookie": "^3.0.6",
         "@types/rails__request.js": "^0.0.1",
@@ -86,7 +86,7 @@
 
     "@parcel/watcher-win32-x64": ["@parcel/watcher-win32-x64@2.5.1", "", { "os": "win32", "cpu": "x64" }, "sha512-9lHBdJITeNR++EvSQVUcaZoWupyHfXe1jZvGZ06O/5MflPcuPLtEphScIBL+AiCWBO46tDSHzWyD0uDmmZqsgA=="],
 
-    "@rails/request.js": ["@rails/request.js@0.0.12", "", {}, "sha512-g3//JBja1s04Zflj7IoMLQuXza9i4ZvtLmm0r0dMwh1QQUs6rL2iKUOGGyERfLsd81SnXC5ucfVV//rtsDlEEA=="],
+    "@rails/request.js": ["@rails/request.js@0.0.13", "", {}, "sha512-7MXmjFOPuaxpjG8brqKJG0EfIe9ak6R0wRnjCBtRuADNFbdlRxETdKx1T5NVU4Ato3iZOkEpeSUEuLboL3tCGA=="],
 
     "@stylistic/eslint-plugin-js": ["@stylistic/eslint-plugin-js@4.4.1", "", { "dependencies": { "eslint-visitor-keys": "^4.2.0", "espree": "^10.3.0" }, "peerDependencies": { "eslint": ">=9.0.0" } }, "sha512-eLisyHvx7Sel8vcFZOEwDEBGmYsYM1SqDn81BWgmbqEXfXRf8oe6Rwp+ryM/8odNjlxtaaxp0Ihmt86CnLAxKg=="],
 
