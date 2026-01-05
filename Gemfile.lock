@@ -274,10 +274,12 @@ GEM
       railties (>= 6.1.0)
     faker (3.5.3)
       i18n (>= 1.8.11, < 2)
-    faraday (2.3.0)
-      faraday-net_http (~> 2.0)
-      ruby2_keywords (>= 0.0.4)
-    faraday-net_http (2.0.3)
+    faraday (2.14.0)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-net_http (3.4.2)
+      net-http (~> 0.5)
     ffi (1.17.2)
     fog-aws (3.33.1)
       base64 (>= 0.2, < 0.4)
@@ -385,9 +387,12 @@ GEM
     msgpack (1.8.0)
     multi_json (1.17.0)
     multi_test (1.1.0)
-    multi_xml (0.6.0)
+    multi_xml (0.7.2)
+      bigdecimal (~> 3.1)
     mustermann (3.0.4)
       ruby2_keywords (~> 0.0.1)
+    net-http (0.8.0)
+      uri (>= 0.11.1)
     net-imap (0.5.12)
       date
       net-protocol
@@ -410,7 +415,7 @@ GEM
       racc (~> 1.4)
     notifications-ruby-client (6.3.0)
       jwt (>= 1.5, < 4)
-    oauth2 (2.0.17)
+    oauth2 (2.0.18)
       faraday (>= 0.17.3, < 4.0)
       jwt (>= 1.0, < 4.0)
       logger (~> 1.2)
@@ -423,8 +428,8 @@ GEM
       logger
       rack (>= 2.2.3)
       rack-protection
-    omniauth-oauth2 (1.8.0)
-      oauth2 (>= 1.4, < 3)
+    omniauth-oauth2 (1.9.0)
+      oauth2 (>= 2.0.2, < 3)
       omniauth (~> 2.0)
     openssl (3.3.2)
     orm_adapter (0.5.0)
@@ -749,7 +754,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.10)
   notifications-ruby-client
   omniauth (~> 2.1.4)
-  omniauth-oauth2 (~> 1.8.0)
+  omniauth-oauth2 (~> 1.9.0)
   openssl (~> 3.3.2)
   pg (>= 0.18, < 2.0)
   poltergeist (>= 1.18.1)
