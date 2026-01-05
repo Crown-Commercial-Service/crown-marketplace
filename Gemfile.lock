@@ -435,7 +435,7 @@ GEM
     omniauth-oauth2 (1.9.0)
       oauth2 (>= 2.0.2, < 3)
       omniauth (~> 2.0)
-    openssl (3.3.2)
+    openssl (4.0.0)
     orm_adapter (0.5.0)
     ostruct (0.6.3)
     parallel (1.27.0)
@@ -763,7 +763,7 @@ DEPENDENCIES
   notifications-ruby-client
   omniauth (~> 2.1.4)
   omniauth-oauth2 (~> 1.9.0)
-  openssl (~> 3.3.2)
+  openssl (~> 4.0.0)
   pg (>= 0.18, < 2.0)
   poltergeist (>= 1.18.1)
   propshaft
