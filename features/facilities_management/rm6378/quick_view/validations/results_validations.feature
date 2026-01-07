@@ -14,6 +14,11 @@ Feature: Results validations
     Then I am on the 'Annual contract cost' page
     And I enter '123456' for the annual contract cost
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
 
   Scenario: Contract name and linkt to PFI is blank

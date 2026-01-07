@@ -58,8 +58,8 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::AnnualContractValue do
   end
 
   describe '.next_step_class' do
-    it 'returns Journey::Procurement' do
-      expect(annual_contract_value.next_step_class).to be FacilitiesManagement::RM6378::Journey::Procurement
+    it 'returns Journey::InformationAboutYourRequirements' do
+      expect(annual_contract_value.next_step_class).to be FacilitiesManagement::RM6378::Journey::InformationAboutYourRequirements
     end
   end
 
