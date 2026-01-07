@@ -17,6 +17,11 @@ Feature: Information appears correctly on results page
     Then I am on the 'Annual contract cost' page
     And I enter '123456' for the annual contract cost
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
       | 2a |
@@ -41,6 +46,11 @@ Feature: Information appears correctly on results page
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
       | 1a |
@@ -58,6 +68,11 @@ Feature: Information appears correctly on results page
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
       | 2a |
@@ -69,6 +84,11 @@ Feature: Information appears correctly on results page
     Given I change the 'annual contract cost' from the selection summary
     Then I am on the 'Annual contract cost' page
     And I enter '123456789' for the annual contract cost
+    And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:

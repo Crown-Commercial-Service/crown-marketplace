@@ -101,7 +101,8 @@ class GenericJourney
     'RM6378' => {
       'choose-services' => 'Return to your account',
       'choose-locations' => 'Return to services',
-      'annual-contract-value' => 'Return to regions'
+      'annual-contract-value' => 'Return to regions',
+      'information-about-your-requirements' => 'Return to annual contract value'
     }
   }.freeze
 end
