@@ -70,7 +70,7 @@ en:
           regions:
             section:
               NC0:
-                title: National coverage
+                title: National
               OS0:
                 title: Overseas
               TLC:
@@ -78,13 +78,13 @@ en:
               TLD:
                 title: North West (England)
               TLE:
-                title: Yorkshire and The Humber
+                title: Yorkshire & The Humber
               TLF:
                 title: East Midlands (England)
               TLG:
                 title: West Midlands (England)
               TLH:
-                title: East of England
+                title: East (England)
               TLI:
                 title: London
               TLJ:
