@@ -75,7 +75,7 @@ Feature: Select regions
     Then the basket should say 'No regions selected'
 
   Scenario: Select all checkbox
-    When I select all for 'East of England'
+    When I select all for 'East of Englands'
     Then the basket should say '3 regions selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
