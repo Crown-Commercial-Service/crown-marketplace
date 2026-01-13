@@ -6,7 +6,7 @@ Feature: Information appears correctly on results page
     Then I am on the 'Services' page
     Then I select the following items:
       | Mechanical and Electrical Engineering Maintenance                       |
-      | Planned / Group re-lamping service                                      |
+      | Planned / Group Re-Lamping Service                                      |
       | Building Information Modelling (BIM) and Government Soft Landings (GSL) |
     And I click on 'Continue'
     Then I am on the 'Regions' page
@@ -27,7 +27,7 @@ Feature: Information appears correctly on results page
       | 2a |
     And I should see the following 'services' in the selection summary:
       | Mechanical and Electrical Engineering Maintenance                       |
-      | Planned / Group re-lamping service                                      |
+      | Planned / Group Re-Lamping Service                                      |
       | Building Information Modelling (BIM) and Government Soft Landings (GSL) |
     And I should see the following 'regions' in the selection summary:
       | Tees Valley |
@@ -40,7 +40,7 @@ Feature: Information appears correctly on results page
     Then I am on the 'Services' page
     And I deselect the following items:
       | Building Information Modelling (BIM) and Government Soft Landings (GSL) |
-    And I select 'Outside catering'
+    And I select 'Outside Catering'
     And I click on 'Continue'
     Then I am on the 'Regions' page
     And I click on 'Continue'
@@ -56,8 +56,8 @@ Feature: Information appears correctly on results page
       | 1a |
     And I should see the following 'services' in the selection summary:
       | Mechanical and Electrical Engineering Maintenance |
-      | Planned / Group re-lamping service                |
-      | Outside catering                                  |
+      | Planned / Group Re-Lamping Service                |
+      | Outside Catering                                  |
 
   Scenario: I can change the regions from the results page
     Given I change the 'regions' from the selection summary

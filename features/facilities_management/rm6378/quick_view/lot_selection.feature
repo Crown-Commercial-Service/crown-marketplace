@@ -9,7 +9,7 @@ Feature: Service selection and annual contract cost result in correct sub lot
     When I select the following items:
       | Mechanical and Electrical Engineering Maintenance |
       | Asbestos Management                               |
-      | Energy and utilities management bureau Services   |
+      | Energy and Utilities Management Bureau Services   |
     And I click on 'Continue'
     Then I am on the 'Regions' page
     Then I select the following items:
@@ -36,8 +36,8 @@ Feature: Service selection and annual contract cost result in correct sub lot
   Scenario Outline: Select only soft services
     When I select the following items:
       | Hard Landscaping Services  |
-      | Deli / coffee bar          |
-      | Cleaning of external areas |
+      | Deli / Coffee bar          |
+      | Cleaning of External Areas |
     And I click on 'Continue'
     Then I am on the 'Regions' page
     Then I select the following items:
@@ -64,7 +64,7 @@ Feature: Service selection and annual contract cost result in correct sub lot
   Scenario Outline: Select only total services
     When I select the following items:
       | End-User Accommodation Services       |
-      | Applications And Allocations Services |
+      | Applications and Allocations Services |
       | Third Party Claims                    |
     And I click on 'Continue'
     Then I am on the 'Regions' page
@@ -123,7 +123,7 @@ Feature: Service selection and annual contract cost result in correct sub lot
     When I select the following items:
       | Mechanical and Electrical Engineering Maintenance     |
       | Asbestos Management                                   |
-      | Energy and utilities management bureau Services       |
+      | Energy and Utilities Management Bureau Services       |
       | Security Officer Services                             |
       | Video Surveillance Systems (VSS) and Alarm Monitoring |
     And I click on 'Continue'
@@ -148,7 +148,7 @@ Feature: Service selection and annual contract cost result in correct sub lot
     When I select the following items:
       | Mechanical and Electrical Engineering Maintenance |
       | Asbestos Management                               |
-      | Energy and utilities management bureau Services   |
+      | Energy and Utilities Management Bureau Services   |
       | <service_1_name>                                  |
       | <service_2_name>                                  |
     And I click on 'Continue'

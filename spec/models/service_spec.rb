@@ -14,7 +14,7 @@ RSpec.describe Service do
 
   describe 'ordered_by_category_and_number scope' do
     it 'returns the servies sorted by category then number' do
-      expect(described_class.where(id: ['RM6378.1a.E1', 'RM6378.1a.E2', 'RM6378.1a.G5', 'RM6378.1a.G3', 'RM6378.1a.F1', 'RM6378.1a.I10', 'RM6378.1a.I1', 'RM6378.1a.I12']).ordered_by_category_and_number.pluck(:id)).to eq(['RM6378.1a.E1', 'RM6378.1a.E2', 'RM6378.1a.F1', 'RM6378.1a.G3', 'RM6378.1a.G5', 'RM6378.1a.I1', 'RM6378.1a.I10', 'RM6378.1a.I12'])
+      expect(described_class.where(id: ['RM6378.1a.C1', 'RM6378.1a.C2', 'RM6378.1a.E5', 'RM6378.1a.E3', 'RM6378.1a.D1', 'RM6378.1a.G10', 'RM6378.1a.G1', 'RM6378.1a.G12']).ordered_by_category_and_number.pluck(:id)).to eq(['RM6378.1a.C1', 'RM6378.1a.C2', 'RM6378.1a.D1', 'RM6378.1a.E3', 'RM6378.1a.E5', 'RM6378.1a.G1', 'RM6378.1a.G10', 'RM6378.1a.G12'])
     end
   end
 end

@@ -22,10 +22,10 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
       end
 
       context 'when the procurement_details contains the service ids' do
-        let(:procurement_details) { { 'service_ids' => ['RM6378.1a.E1', 'RM6378.1a.E2'] } }
+        let(:procurement_details) { { 'service_ids' => ['RM6378.1a.C1', 'RM6378.1a.C2'] } }
 
         it 'gets ther service ids from the procurement_details' do
-          expect(procurement.service_ids).to eq(['RM6378.1a.E1', 'RM6378.1a.E2'])
+          expect(procurement.service_ids).to eq(['RM6378.1a.C1', 'RM6378.1a.C2'])
         end
       end
     end
@@ -35,9 +35,9 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         let(:procurement_details) { nil }
 
         it 'sets the procurement_details with service ids' do
-          procurement.service_ids = ['RM6378.1a.E3', 'RM6378.1a.E4']
+          procurement.service_ids = ['RM6378.1a.C3', 'RM6378.1a.C4']
 
-          expect(procurement.procurement_details).to eq({ 'service_ids' => ['RM6378.1a.E3', 'RM6378.1a.E4'] })
+          expect(procurement.procurement_details).to eq({ 'service_ids' => ['RM6378.1a.C3', 'RM6378.1a.C4'] })
         end
       end
 
@@ -45,19 +45,19 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         let(:procurement_details) { {} }
 
         it 'sets the procurement_details with service ids' do
-          procurement.service_ids = ['RM6378.1a.E3', 'RM6378.1a.E4']
+          procurement.service_ids = ['RM6378.1a.C3', 'RM6378.1a.C4']
 
-          expect(procurement.procurement_details).to eq({ 'service_ids' => ['RM6378.1a.E3', 'RM6378.1a.E4'] })
+          expect(procurement.procurement_details).to eq({ 'service_ids' => ['RM6378.1a.C3', 'RM6378.1a.C4'] })
         end
       end
 
       context 'when the procurement_details contains the service ids' do
-        let(:procurement_details) { { 'service_ids' => ['RM6378.1a.E1', 'RM6378.1a.E2'], 'something' => 'else' } }
+        let(:procurement_details) { { 'service_ids' => ['RM6378.1a.C1', 'RM6378.1a.C2'], 'something' => 'else' } }
 
         it 'updates the procurement_details with service ids' do
-          procurement.service_ids = ['RM6378.1a.E3', 'RM6378.1a.E4']
+          procurement.service_ids = ['RM6378.1a.C3', 'RM6378.1a.C4']
 
-          expect(procurement.procurement_details).to eq({ 'service_ids' => ['RM6378.1a.E3', 'RM6378.1a.E4'], 'something' => 'else' })
+          expect(procurement.procurement_details).to eq({ 'service_ids' => ['RM6378.1a.C3', 'RM6378.1a.C4'], 'something' => 'else' })
         end
       end
     end
@@ -275,19 +275,19 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
       supplier_framework_4_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[3], lot_id: 'RM6378.1a')
       supplier_framework_5_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[4], lot_id: 'RM6378.1a', enabled: false)
 
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_1_lot_a, service_id: 'RM6378.1a.E1')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6378.1a.E1')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6378.1a.E1')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_4_lot_a, service_id: 'RM6378.1a.E1')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_5_lot_a, service_id: 'RM6378.1a.E1')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_1_lot_a, service_id: 'RM6378.1a.C1')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6378.1a.C1')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6378.1a.C1')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_4_lot_a, service_id: 'RM6378.1a.C1')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_5_lot_a, service_id: 'RM6378.1a.C1')
 
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_1_lot_a, service_id: 'RM6378.1a.E2')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6378.1a.E2')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_1_lot_a, service_id: 'RM6378.1a.C2')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6378.1a.C2')
 
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6378.1a.E3')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6378.1a.E3')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6378.1a.C3')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6378.1a.C3')
 
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6378.1a.E4')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6378.1a.C4')
 
       create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_1_lot_a, jurisdiction_id: 'TLH3')
       create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_2_lot_a, jurisdiction_id: 'TLH3')
@@ -299,7 +299,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     end
 
     context 'when we pass a single service code and jurisdiction id' do
-      let(:service_ids) { ['RM6378.1a.E1'] }
+      let(:service_ids) { ['RM6378.1a.C1'] }
       let(:jurisdiction_ids) { ['TLH3'] }
 
       it 'returns three suppliers' do
@@ -308,7 +308,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     end
 
     context 'when we pass multiple service codes and a single jurisdiction id' do
-      let(:service_ids) { ['RM6378.1a.E1', 'RM6378.1a.E2'] }
+      let(:service_ids) { ['RM6378.1a.C1', 'RM6378.1a.C2'] }
       let(:jurisdiction_ids) { ['TLH3'] }
 
       it 'returns the first and second suppliers' do
@@ -317,7 +317,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     end
 
     context 'when we pass multiple jurisdiction ids and single service ids' do
-      let(:service_ids) { ['RM6378.1a.E1'] }
+      let(:service_ids) { ['RM6378.1a.C1'] }
       let(:jurisdiction_ids) { ['TLH3', 'TLK4'] }
 
       it 'returns the second and third suppliers' do
@@ -326,7 +326,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     end
 
     context 'when we pass multiple service codes and a multiple jurisdiction ids' do
-      let(:service_ids) { ['RM6378.1a.E3', 'RM6378.1a.E4'] }
+      let(:service_ids) { ['RM6378.1a.C3', 'RM6378.1a.C4'] }
       let(:jurisdiction_ids) { ['TLH3', 'TLK4'] }
 
       it 'returns the third supplier' do
@@ -344,7 +344,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     end
 
     context 'when we pass jurisdictions neither supplier does' do
-      let(:service_ids) { ['RM6378.1a.E1'] }
+      let(:service_ids) { ['RM6378.1a.C1'] }
       let(:jurisdiction_ids) { ['DE'] }
 
       it 'returns an emoty array' do
@@ -357,9 +357,9 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     let(:procurement) { create(:facilities_management_rm6378_procurement, procurement_details:) }
 
     it 'returns the servies sorted by category then number' do
-      procurement = create(:facilities_management_rm6378_procurement, procurement_details: { 'service_ids' => ['RM6378.1a.E1', 'RM6378.1a.E2', 'RM6378.1a.G5', 'RM6378.1a.G3', 'RM6378.1a.F1', 'RM6378.1a.I10', 'RM6378.1a.I1', 'RM6378.1a.I12'] })
+      procurement = create(:facilities_management_rm6378_procurement, procurement_details: { 'service_ids' => ['RM6378.1a.C1', 'RM6378.1a.C2', 'RM6378.1a.E5', 'RM6378.1a.E3', 'RM6378.1a.D1', 'RM6378.1a.G10', 'RM6378.1a.G1', 'RM6378.1a.G12'] })
 
-      expect(procurement.services.pluck(:id)).to eq(['RM6378.1a.E1', 'RM6378.1a.E2', 'RM6378.1a.F1', 'RM6378.1a.G3', 'RM6378.1a.G5', 'RM6378.1a.I1', 'RM6378.1a.I10', 'RM6378.1a.I12'])
+      expect(procurement.services.pluck(:id)).to eq(['RM6378.1a.C1', 'RM6378.1a.C2', 'RM6378.1a.D1', 'RM6378.1a.E3', 'RM6378.1a.E5', 'RM6378.1a.G1', 'RM6378.1a.G10', 'RM6378.1a.G12'])
     end
   end
 
