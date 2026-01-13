@@ -46,7 +46,7 @@ Feature: Information about your requirements validations
       | a     | The estimated contract duration must be a whole number greater than 0 |
       | 1.6   | The estimated contract duration must be a whole number greater than 0 |
 
- Scenario: Validations for the PFI
+  Scenario: Validations for the PFI
     And I enter 'tomorrow' for the contract start date
     And I enter '27' for the estimated contract duration
     And I click on 'Continue'

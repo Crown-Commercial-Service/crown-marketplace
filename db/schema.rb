@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_09_29_151534) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_12_152922) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -710,6 +710,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_09_29_151534) do
   create_table "services", id: :text, force: :cascade do |t|
     t.text "category"
     t.datetime "created_at", null: false
+    t.text "description"
     t.text "lot_id", null: false
     t.text "name", null: false
     t.text "number", null: false

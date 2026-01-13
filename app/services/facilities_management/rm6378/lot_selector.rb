@@ -8,9 +8,9 @@ module FacilitiesManagement::RM6378
 
     class << self
       def select_lot_numbers(service_numbers, annual_contract_value)
-        facilities_management_service_numbers = service_numbers.select { |service_code| service_code[0] < 'S' }
-        security_officer_service_numbers = service_numbers.select { |service_code| service_code[0] == 'S' }
-        security_service_numbers = service_numbers.select { |service_code| service_code[0] > 'S' }
+        facilities_management_service_numbers = service_numbers.select { |service_code| service_code[0] < 'O' }
+        security_officer_service_numbers = service_numbers.select { |service_code| service_code[0] == 'O' }
+        security_service_numbers = service_numbers.select { |service_code| service_code[0] > 'O' }
 
         if facilities_management_service_numbers.any? && security_service_numbers.empty?
           facilities_management_service_numbers += security_officer_service_numbers
@@ -29,13 +29,13 @@ module FacilitiesManagement::RM6378
       def get_facilities_management_lot_result(service_numbers, annual_contract_value)
         return unless service_numbers.any?
 
-        has_cafm = service_numbers.include?('Q2')
+        has_cafm = service_numbers.include?('M2')
 
-        service_numbers -= ['Q2']
+        service_numbers -= ['M2']
 
         lot_number = determine_facilities_management_lot_number(service_numbers)
 
-        service_numbers << (lot_number == '3' ? 'Q1' : 'Q2') if has_cafm
+        service_numbers << (lot_number == '3' ? 'M1' : 'M2') if has_cafm
 
         LotResult.new(
           "#{lot_number}#{determine_facilities_management_lot_code(lot_number, annual_contract_value)}",

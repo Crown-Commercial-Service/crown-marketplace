@@ -37,7 +37,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
   end
 
   describe 'GET new' do
-    let(:service_codes) { ['E1', 'E2'] }
+    let(:service_codes) { ['C1', 'C2'] }
 
     before { get :new, params: { annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes } }
 
@@ -46,13 +46,13 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
     end
 
     it 'sets the back path' do
-      expect(assigns(:back_path)).to eq '/facilities-management/RM6378/annual-contract-value?annual_contract_value=123456&region_codes%5B%5D=TLH3&region_codes%5B%5D=TLH5&service_codes%5B%5D=E1&service_codes%5B%5D=E2'
+      expect(assigns(:back_path)).to eq '/facilities-management/RM6378/annual-contract-value?annual_contract_value=123456&region_codes%5B%5D=TLH3&region_codes%5B%5D=TLH5&service_codes%5B%5D=C1&service_codes%5B%5D=C2'
       expect(assigns(:back_text)).to eq 'Return to annual contract cost'
     end
 
     context 'when there search results in one procurement' do
       it 'sets the journey attributes' do
-        expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.E1', 'RM6378.2a.E2'])
+        expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2'])
         expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
         expect(assigns(:annual_contract_value)).to eq(123_456)
       end
@@ -69,7 +69,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
             framework_id: 'RM6378',
             lot_id: 'RM6378.2a',
             procurement_details: {
-              service_ids: ['RM6378.2a.E1', 'RM6378.2a.E2'],
+              service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
               jurisdiction_ids: ['TLH3', 'TLH5'],
               annual_contract_value: 123_456
             }
@@ -80,10 +80,10 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
     end
 
     context 'when there search results in two procurements' do
-      let(:service_codes) { ['E1', 'E2', 'X1', 'Y1'] }
+      let(:service_codes) { ['C1', 'C2', 'S1', 'U1'] }
 
       it 'sets the journey attributes' do
-        expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.E1', 'RM6378.2a.E2', 'RM6378.4d.X1', 'RM6378.4d.Y1'])
+        expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2', 'RM6378.4d.S1', 'RM6378.4d.U1'])
         expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
         expect(assigns(:annual_contract_value)).to eq(123_456)
       end
@@ -100,7 +100,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
             framework_id: 'RM6378',
             lot_id: 'RM6378.2a',
             procurement_details: {
-              service_ids: ['RM6378.2a.E1', 'RM6378.2a.E2'],
+              service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
               jurisdiction_ids: ['TLH3', 'TLH5'],
               annual_contract_value: 123_456
             }
@@ -115,7 +115,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
             framework_id: 'RM6378',
             lot_id: 'RM6378.4d',
             procurement_details: {
-              service_ids: ['RM6378.4d.X1', 'RM6378.4d.Y1'],
+              service_ids: ['RM6378.4d.S1', 'RM6378.4d.U1'],
               jurisdiction_ids: ['TLH3', 'TLH5'],
               annual_contract_value: 123_456
             }
@@ -127,7 +127,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
   end
 
   describe 'POST create' do
-    let(:service_codes) { ['E1', 'E2'] }
+    let(:service_codes) { ['C1', 'C2'] }
     let(:contract_name) { 'Zote' }
     let(:requirements_linked_to_pfi) { true }
 
@@ -136,7 +136,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
 
       shared_examples 'and attributes are set' do
         it 'sets the journey attributes' do
-          expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.E1', 'RM6378.2a.E2'])
+          expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2'])
           expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
           expect(assigns(:annual_contract_value)).to eq(123_456)
         end
@@ -153,7 +153,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
               framework_id: 'RM6378',
               lot_id: 'RM6378.2a',
               procurement_details: {
-                service_ids: ['RM6378.2a.E1', 'RM6378.2a.E2'],
+                service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
                 jurisdiction_ids: ['TLH3', 'TLH5'],
                 annual_contract_value: 123_456,
                 requirements_linked_to_pfi: requirements_linked_to_pfi,
@@ -209,12 +209,12 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
     end
 
     context 'when there are two procurements' do
-      let(:service_codes) { ['E1', 'E2', 'X1', 'Y1'] }
+      let(:service_codes) { ['C1', 'C2', 'S1', 'U1'] }
       let(:expected_second_contract_name) { "#{contract_name} (Security)" }
 
       shared_examples 'and attributes are set' do
         it 'sets the journey attributes' do
-          expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.E1', 'RM6378.2a.E2', 'RM6378.4d.X1', 'RM6378.4d.Y1'])
+          expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2', 'RM6378.4d.S1', 'RM6378.4d.U1'])
           expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
           expect(assigns(:annual_contract_value)).to eq(123_456)
         end
@@ -231,7 +231,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
               framework_id: 'RM6378',
               lot_id: 'RM6378.2a',
               procurement_details: {
-                service_ids: ['RM6378.2a.E1', 'RM6378.2a.E2'],
+                service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
                 jurisdiction_ids: ['TLH3', 'TLH5'],
                 annual_contract_value: 123_456,
                 requirements_linked_to_pfi: requirements_linked_to_pfi,
@@ -248,7 +248,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
               framework_id: 'RM6378',
               lot_id: 'RM6378.4d',
               procurement_details: {
-                service_ids: ['RM6378.4d.X1', 'RM6378.4d.Y1'],
+                service_ids: ['RM6378.4d.S1', 'RM6378.4d.U1'],
                 jurisdiction_ids: ['TLH3', 'TLH5'],
                 annual_contract_value: 123_456,
                 requirements_linked_to_pfi: requirements_linked_to_pfi,

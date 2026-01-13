@@ -15,7 +15,7 @@ module FacilitiesManagement
       end
 
       def services_grouped_by_category
-        services = Service.where(lot_id: 'RM6378.1a').where.not(category: 'S').or(Service.where(lot_id: 'RM6378.4a'))
+        services = Service.where(lot_id: 'RM6378.1a').where.not(category: 'O').or(Service.where(lot_id: 'RM6378.4a'))
 
         category_names = services.pluck(:category).uniq
 
@@ -28,7 +28,7 @@ module FacilitiesManagement
         errors.add(:service_codes, :invalid_cafm_helpdesk) if (service_codes - MANDATORY_SERVICES).empty?
       end
 
-      MANDATORY_SERVICES = %w[Q2 R1].freeze
+      MANDATORY_SERVICES = %w[M2 N1].freeze
     end
   end
 end
