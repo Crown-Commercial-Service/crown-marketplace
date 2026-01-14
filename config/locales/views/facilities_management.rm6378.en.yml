@@ -114,48 +114,46 @@ en:
         choose_services:
           services:
             section:
-              E:
+              C:
                 title: Maintenance Services
-              F:
+              D:
                 title: Statutory Obligations
-              G:
+              E:
                 title: Landscaping Services
-              H:
+              F:
                 title: Catering Services
-              I:
+              G:
                 title: Cleaning Services
-              J:
+              H:
                 title: Additional FM Services
-              K:
+              I:
                 title: Visitor Support Services
-              M:
+              J:
                 title: Waste Services
-              O:
+              K:
                 title: Specialist (Defence) FM Services
-              P:
+              L:
                 title: End User Accommodation Services
-              Q:
+              M:
                 services:
-                  Q2:
+                  M2:
                     title: CAFM system
                 title: Computer-aided facilities management (CAFM)
-              R:
+              N:
                 title: Helpdesk Services
-              S:
+              O:
                 title: Security Officer Services
-              T:
+              P:
                 title: Design, Supply, Commission and Installation of Electronic security systems and services
-              U:
+              Q:
                 title: Maintenance of Security Systems
-              V:
+              R:
                 title: Alarmed Response Centre
-              W:
-                title: Security Helpdesk Services
-              X:
+              S:
                 title: Security Advisory Services
-              "Y":
+              T:
                 title: Security and Risk Assessments
-              Z:
+              U:
                 title: Security Awareness/Training
         information_about_your_requirements:
           contract_start_date:

@@ -5,15 +5,15 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
   describe '.quick_view_suppliers' do
     let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, service_codes:) }
-    let(:base_service_codes) { ['E.1', 'E.2'] }
+    let(:base_service_codes) { ['C.1', 'C.2'] }
     let(:service_codes) { base_service_codes }
 
     it 'returns a FacilitiesManagement::RM6232::SuppliersSelector' do
       expect(procurement.quick_view_suppliers).to be_a FacilitiesManagement::RM6232::SuppliersSelector
     end
 
-    context 'when the service codes contain Q.3' do
-      let(:service_codes) { base_service_codes + ['Q.3'] }
+    context 'when the service codes contain M.3' do
+      let(:service_codes) { base_service_codes + ['M.3'] }
 
       it 'does not use that service code in the call to SuppliersSelector' do
         allow(FacilitiesManagement::RM6232::SuppliersSelector).to receive(:new)
@@ -27,7 +27,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
   describe '.supplier_names' do
     let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes:) }
-    let(:base_service_codes) { ['E.1', 'E.2'] }
+    let(:base_service_codes) { ['C.1', 'C.2'] }
     let(:service_codes) { base_service_codes }
 
     it 'returns an array of the supplier names' do
@@ -38,8 +38,8 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       expect(procurement.supplier_names).to include('Still, Move Forward!')
     end
 
-    context 'when the service codes contain Q.3' do
-      let(:service_codes) { base_service_codes + ['Q.3'] }
+    context 'when the service codes contain M.3' do
+      let(:service_codes) { base_service_codes + ['M.3'] }
       let(:suppliers_selector) { instance_double(FacilitiesManagement::RM6232::SuppliersSelector) }
       let(:suppliers) { [] }
 
@@ -57,7 +57,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
   describe '.suppliers' do
     let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes: base_service_codes) }
-    let(:base_service_codes) { ['E.1', 'E.2', 'E.3', 'E.4'] }
+    let(:base_service_codes) { ['C.1', 'C.2', 'C.3', 'C.4'] }
     let(:service_codes) { base_service_codes }
 
     it 'returns a FacilitiesManagement::RM6232::SuppliersSelector' do
@@ -69,27 +69,27 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
       procurement.suppliers
 
-      expect(FacilitiesManagement::RM6232::SuppliersSelector).to have_received(:new).with(%w[E.1 E.2], %w[UKH1], procurement.annual_contract_value)
+      expect(FacilitiesManagement::RM6232::SuppliersSelector).to have_received(:new).with(%w[C.1 C.2], %w[UKH1], procurement.annual_contract_value)
     end
 
-    context 'when the service codes contain Q.3' do
-      let(:service_codes) { base_service_codes + ['Q.3'] }
+    context 'when the service codes contain M.3' do
+      let(:service_codes) { base_service_codes + ['M.3'] }
 
-      before { procurement.procurement_buildings.each { |procurement_building| procurement_building.update(service_codes: procurement_building.service_codes + ['Q.3']) } }
+      before { procurement.procurement_buildings.each { |procurement_building| procurement_building.update(service_codes: procurement_building.service_codes + ['M.3']) } }
 
       it 'does not use that service code in the call to SuppliersSelector' do
         allow(FacilitiesManagement::RM6232::SuppliersSelector).to receive(:new)
 
         procurement.suppliers
 
-        expect(FacilitiesManagement::RM6232::SuppliersSelector).to have_received(:new).with(%w[E.1 E.2], %w[UKH1], procurement.annual_contract_value)
+        expect(FacilitiesManagement::RM6232::SuppliersSelector).to have_received(:new).with(%w[C.1 C.2], %w[UKH1], procurement.annual_contract_value)
       end
     end
   end
 
   describe '.services' do
     let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes:, lot_number:) }
-    let(:base_service_codes) { ['E.1', 'E.2'] }
+    let(:base_service_codes) { ['C.1', 'C.2'] }
     let(:service_codes) { base_service_codes }
     let(:lot_number) { '1a' }
     let(:result) { procurement.services }
@@ -99,16 +99,16 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       expect(result.first).to be_a FacilitiesManagement::RM6232::Service
     end
 
-    context 'when the service codes contain Q.3' do
-      let(:service_codes) { base_service_codes + ['Q.3'] }
-      let(:service_Q1) { FacilitiesManagement::RM6232::Service.find('Q.1') }
-      let(:service_Q2) { FacilitiesManagement::RM6232::Service.find('Q.2') }
-      let(:service_Q3) { FacilitiesManagement::RM6232::Service.find('Q.3') }
+    context 'when the service codes contain M.3' do
+      let(:service_codes) { base_service_codes + ['M.3'] }
+      let(:service_Q1) { FacilitiesManagement::RM6232::Service.find('M.1') }
+      let(:service_Q2) { FacilitiesManagement::RM6232::Service.find('M.2') }
+      let(:service_Q3) { FacilitiesManagement::RM6232::Service.find('M.3') }
 
       context 'and it is a total sub lot' do
         let(:lot_number) { '1a' }
 
-        it 'returns services with Q.2 instead of Q.3' do
+        it 'returns services with M.2 instead of M.3' do
           expect(result).not_to include service_Q3
           expect(result).to include service_Q2
         end
@@ -117,7 +117,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       context 'and it is a hard sub lot' do
         let(:lot_number) { '2a' }
 
-        it 'returns services with Q.2 instead of Q.3' do
+        it 'returns services with M.2 instead of M.3' do
           expect(result).not_to include service_Q3
           expect(result).to include service_Q2
         end
@@ -126,7 +126,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       context 'and it is a soft sub lot' do
         let(:lot_number) { '3a' }
 
-        it 'returns services with Q.1 instead of Q.3' do
+        it 'returns services with M.1 instead of M.3' do
           expect(result).not_to include service_Q3
           expect(result).to include service_Q1
         end
@@ -136,7 +136,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
   describe '.procurement_services' do
     let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes:, lot_number:) }
-    let(:base_service_codes) { ['E.1', 'E.2', 'E.3', 'E.4', 'E.5'] }
+    let(:base_service_codes) { ['C.1', 'C.2', 'C.3', 'C.4', 'E.5'] }
     let(:service_codes) { base_service_codes }
     let(:lot_number) { '1a' }
     let(:result) { procurement.procurement_services }
@@ -146,18 +146,18 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       expect(result.first).to be_a FacilitiesManagement::RM6232::Service
     end
 
-    context 'when the service codes contain Q.3' do
-      let(:service_codes) { base_service_codes + ['Q.3'] }
-      let(:service_Q1) { FacilitiesManagement::RM6232::Service.find('Q.1') }
-      let(:service_Q2) { FacilitiesManagement::RM6232::Service.find('Q.2') }
-      let(:service_Q3) { FacilitiesManagement::RM6232::Service.find('Q.3') }
+    context 'when the service codes contain M.3' do
+      let(:service_codes) { base_service_codes + ['M.3'] }
+      let(:service_Q1) { FacilitiesManagement::RM6232::Service.find('M.1') }
+      let(:service_Q2) { FacilitiesManagement::RM6232::Service.find('M.2') }
+      let(:service_Q3) { FacilitiesManagement::RM6232::Service.find('M.3') }
 
-      before { procurement.procurement_buildings.each { |procurement_building| procurement_building.update(service_codes: procurement_building.service_codes + ['Q.3']) } }
+      before { procurement.procurement_buildings.each { |procurement_building| procurement_building.update(service_codes: procurement_building.service_codes + ['M.3']) } }
 
       context 'and it is a total sub lot' do
         let(:lot_number) { '1a' }
 
-        it 'returns services with Q.2 instead of Q.3' do
+        it 'returns services with M.2 instead of M.3' do
           expect(result).not_to include service_Q3
           expect(result).to include service_Q2
         end
@@ -166,7 +166,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       context 'and it is a hard sub lot' do
         let(:lot_number) { '2a' }
 
-        it 'returns services with Q.2 instead of Q.3' do
+        it 'returns services with M.2 instead of M.3' do
           expect(result).not_to include service_Q3
           expect(result).to include service_Q2
         end
@@ -175,7 +175,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       context 'and it is a soft sub lot' do
         let(:lot_number) { '3a' }
 
-        it 'returns services with Q.1 instead of Q.3' do
+        it 'returns services with M.1 instead of M.3' do
           expect(result).not_to include service_Q3
           expect(result).to include service_Q1
         end
@@ -185,7 +185,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
   describe '.services_without_lot_consideration' do
     let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes:, lot_number:) }
-    let(:base_service_codes) { ['E.1', 'E.2'] }
+    let(:base_service_codes) { ['C.1', 'C.2'] }
     let(:service_codes) { base_service_codes }
     let(:lot_number) { '1a' }
 
@@ -194,16 +194,16 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       expect(procurement.services_without_lot_consideration.first).to be_a FacilitiesManagement::RM6232::Service
     end
 
-    context 'when the service codes contain Q.3' do
-      let(:service_codes) { base_service_codes + ['Q.3'] }
-      let(:service_Q1) { FacilitiesManagement::RM6232::Service.find('Q.1') }
-      let(:service_Q2) { FacilitiesManagement::RM6232::Service.find('Q.2') }
-      let(:service_Q3) { FacilitiesManagement::RM6232::Service.find('Q.3') }
+    context 'when the service codes contain M.3' do
+      let(:service_codes) { base_service_codes + ['M.3'] }
+      let(:service_Q1) { FacilitiesManagement::RM6232::Service.find('M.1') }
+      let(:service_Q2) { FacilitiesManagement::RM6232::Service.find('M.2') }
+      let(:service_Q3) { FacilitiesManagement::RM6232::Service.find('M.3') }
 
       context 'and it is a total sub lot' do
         let(:lot_number) { '1a' }
 
-        it 'returns services with Q.3 instead of Q.2' do
+        it 'returns services with M.3 instead of M.2' do
           expect(procurement.services_without_lot_consideration).not_to include service_Q2
           expect(procurement.services_without_lot_consideration).to include service_Q3
         end
@@ -212,7 +212,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       context 'and it is a hard sub lot' do
         let(:lot_number) { '2a' }
 
-        it 'returns services with Q.3 instead of Q.2' do
+        it 'returns services with M.3 instead of M.2' do
           expect(procurement.services_without_lot_consideration).not_to include service_Q2
           expect(procurement.services_without_lot_consideration).to include service_Q3
         end
@@ -221,7 +221,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
       context 'and it is a soft sub lot' do
         let(:lot_number) { '3a' }
 
-        it 'returns services with Q.3 instead of Q.1' do
+        it 'returns services with M.3 instead of M.1' do
           expect(procurement.services_without_lot_consideration).not_to include service_Q1
           expect(procurement.services_without_lot_consideration).to include service_Q3
         end
@@ -240,18 +240,18 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
   describe '.service_codes_without_cafm' do
     let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes:) }
-    let(:base_service_codes) { ['E.1', 'E.2', 'F.1', 'F.2', 'H.1'] }
+    let(:base_service_codes) { ['C.1', 'C.2', 'D.1', 'D.2', 'F.1'] }
 
-    context 'when the service codes contain Q.3' do
-      let(:service_codes) { base_service_codes + ['Q.3'] }
+    context 'when the service codes contain M.3' do
+      let(:service_codes) { base_service_codes + ['M.3'] }
 
-      it 'returns the service codes without Q.3' do
+      it 'returns the service codes without M.3' do
         expect(procurement.service_codes).to eq service_codes
         expect(procurement.send(:service_codes_without_cafm)).to eq base_service_codes
       end
     end
 
-    context 'when the service codes do not contain Q.3' do
+    context 'when the service codes do not contain M.3' do
       let(:service_codes) { base_service_codes }
 
       it 'returns the service codes unchanged' do
@@ -263,86 +263,86 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
   describe '.true_service_codes' do
     let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes:, lot_number:) }
-    let(:base_service_codes) { ['E.1', 'E.2', 'F.1', 'F.2', 'H.1'] }
+    let(:base_service_codes) { ['C.1', 'C.2', 'D.1', 'D.2', 'F.1'] }
     let(:lot_number) { '1a' }
 
-    context 'when the service codes contain Q.3' do
-      let(:service_codes) { base_service_codes + ['Q.3'] }
+    context 'when the service codes contain M.3' do
+      let(:service_codes) { base_service_codes + ['M.3'] }
 
       context 'and the lot is 1a' do
         let(:lot_number) { '1a' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 2a' do
         let(:lot_number) { '2a' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 3a' do
         let(:lot_number) { '3a' }
 
-        it 'returns the services with Q.1 instead of Q.3' do
-          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['Q.1']
+        it 'returns the services with M.1 instead of M.3' do
+          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['M.1']
         end
       end
 
       context 'and the lot is 1b' do
         let(:lot_number) { '1b' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 2b' do
         let(:lot_number) { '2b' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 3b' do
         let(:lot_number) { '3b' }
 
-        it 'returns the services with Q.1 instead of Q.3' do
-          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['Q.1']
+        it 'returns the services with M.1 instead of M.3' do
+          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['M.1']
         end
       end
 
       context 'and the lot is 1c' do
         let(:lot_number) { '1c' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 2c' do
         let(:lot_number) { '2c' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 3c' do
         let(:lot_number) { '3c' }
 
-        it 'returns the services with Q.1 instead of Q.3' do
-          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['Q.1']
+        it 'returns the services with M.1 instead of M.3' do
+          expect(procurement.send(:true_service_codes)).to eq base_service_codes + ['M.1']
         end
       end
     end
 
-    context 'when the service codes do not contain Q.3' do
+    context 'when the service codes do not contain M.3' do
       let(:service_codes) { base_service_codes }
 
       it 'returns the service codes unchanged' do
@@ -699,7 +699,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     end
 
     context 'when user has already selected services' do
-      let(:service_codes) { %w[E.1 E.2] }
+      let(:service_codes) { %w[C.1 C.2] }
 
       it 'shown with the COMPLETED status label' do
         expect(status).to eq(:completed)
@@ -743,7 +743,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
     before do
       procurement_building1.update(service_codes:)
-      procurement_building2.update(service_codes: %w[E.1 E.2])
+      procurement_building2.update(service_codes: %w[C.1 C.2])
     end
 
     context 'when one building has no service codes' do
@@ -755,7 +755,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     end
 
     context 'when one building has an invalid selection' do
-      let(:service_codes) { %w[Q.3 R.1 S.1] }
+      let(:service_codes) { %w[M.3 N.1 O.1] }
 
       it 'returns false' do
         expect(procurement.buildings_and_services_completed?).to be false
@@ -763,7 +763,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     end
 
     context 'when both buildings have a valid selection' do
-      let(:service_codes) { %w[Q.3 R.1 S.1 E.1] }
+      let(:service_codes) { %w[M.3 N.1 O.1 C.1] }
 
       it 'returns true' do
         expect(procurement.buildings_and_services_completed?).to be true
@@ -804,8 +804,8 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
       context 'when at least one service is assigned to each and every building' do
         before do
-          procurement_building1.update(service_codes: ['E.1'])
-          procurement_building2.update(service_codes: ['F.1', 'G.4', 'R.1'])
+          procurement_building1.update(service_codes: ['C.1'])
+          procurement_building2.update(service_codes: ['D.1', 'E.4', 'N.1'])
         end
 
         it 'shown with the COMPLETED status label' do
@@ -1065,7 +1065,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements_with_buildings) }
     let(:building_1) { procurement.procurement_buildings.first }
     let(:building_2) { procurement.procurement_buildings.last }
-    let(:service_codes) { %w[E.1] }
+    let(:service_codes) { %w[C.1] }
     let(:saving_the_procurement) do
       procurement.service_codes = service_codes
       procurement.save(context: :services)
@@ -1080,8 +1080,8 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
         expect do
           saving_the_procurement
         end.to(
-          change(building_1, :service_codes).from(%w[E.1 E.2]).to(%w[E.1])
-          .and(change(building_2, :service_codes).from(%w[E.1 E.2]).to(%w[E.1]))
+          change(building_1, :service_codes).from(%w[C.1 C.2]).to(%w[C.1])
+          .and(change(building_2, :service_codes).from(%w[C.1 C.2]).to(%w[C.1]))
         )
       end
     end
@@ -1093,8 +1093,8 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
         expect do
           saving_the_procurement
         end.to(
-          change(building_1, :service_codes).from(%w[E.1 E.2]).to(%w[E.1])
-          .and(change(building_2, :service_codes).from(%w[E.1 E.2]).to(%w[E.1]))
+          change(building_1, :service_codes).from(%w[C.1 C.2]).to(%w[C.1])
+          .and(change(building_2, :service_codes).from(%w[C.1 C.2]).to(%w[C.1]))
         )
       end
     end
@@ -1104,14 +1104,14 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
         expect do
           saving_the_procurement
         end.to(
-          change(building_1, :service_codes).from(%w[E.1 E.2]).to(%w[E.1])
-          .and(change(building_2, :service_codes).from(%w[E.1 E.2]).to(%w[E.1]))
+          change(building_1, :service_codes).from(%w[C.1 C.2]).to(%w[C.1])
+          .and(change(building_2, :service_codes).from(%w[C.1 C.2]).to(%w[C.1]))
         )
       end
     end
 
     context 'when no service codes are changed' do
-      let(:service_codes) { %w[E.1 E.2] }
+      let(:service_codes) { %w[C.1 C.2] }
 
       before { allow(procurement).to receive(:update_procurement_building_service_codes) }
 
@@ -1163,105 +1163,105 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
   describe '.procurement_buildings_service_codes' do
     let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes:) }
-    let(:service_codes) { ['E.1', 'E.2', 'E.3', 'E.4'] }
+    let(:service_codes) { ['C.1', 'C.2', 'C.3', 'C.4'] }
 
     before do
       procurement.procurement_buildings.create(active: false, service_codes: service_codes, building: create(:facilities_management_building, user: procurement.user))
-      procurement.active_procurement_buildings.first.update(service_codes: ['E.2'])
-      procurement.active_procurement_buildings.last.update(service_codes: ['E.4'])
+      procurement.active_procurement_buildings.first.update(service_codes: ['C.2'])
+      procurement.active_procurement_buildings.last.update(service_codes: ['C.4'])
     end
 
     it 'only uses the service codes in the active procurement buildings' do
-      expect(procurement.send(:procurement_buildings_service_codes)).to match_array %w[E.2 E.4]
+      expect(procurement.send(:procurement_buildings_service_codes)).to match_array %w[C.2 C.4]
     end
   end
 
   describe '.true_procurement_buildings_service_codes' do
     let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes:, lot_number:) }
-    let(:base_service_codes) { ['E.1', 'E.2', 'F.1', 'F.2', 'H.1'] }
-    let(:base_procurement_buildings_service_codes) { ['E.1', 'F.1', 'H.1'] }
+    let(:base_service_codes) { ['C.1', 'C.2', 'D.1', 'D.2', 'F.1'] }
+    let(:base_procurement_buildings_service_codes) { ['C.1', 'D.1', 'F.1'] }
     let(:lot_number) { '1a' }
 
     before { procurement.procurement_buildings.each { |procurement_building| procurement_building.update(service_codes: procurement_buildings_service_codes) } }
 
-    context 'when the service codes contain Q.3' do
-      let(:service_codes) { base_service_codes + ['Q.3'] }
-      let(:procurement_buildings_service_codes) { base_procurement_buildings_service_codes + ['Q.3'] }
+    context 'when the service codes contain M.3' do
+      let(:service_codes) { base_service_codes + ['M.3'] }
+      let(:procurement_buildings_service_codes) { base_procurement_buildings_service_codes + ['M.3'] }
 
       context 'and the lot is 1a' do
         let(:lot_number) { '1a' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 2a' do
         let(:lot_number) { '2a' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 3a' do
         let(:lot_number) { '3a' }
 
-        it 'returns the services with Q.1 instead of Q.3' do
-          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['Q.1']
+        it 'returns the services with M.1 instead of M.3' do
+          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['M.1']
         end
       end
 
       context 'and the lot is 1b' do
         let(:lot_number) { '1b' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 2b' do
         let(:lot_number) { '2b' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 3b' do
         let(:lot_number) { '3b' }
 
-        it 'returns the services with Q.1 instead of Q.3' do
-          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['Q.1']
+        it 'returns the services with M.1 instead of M.3' do
+          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['M.1']
         end
       end
 
       context 'and the lot is 1c' do
         let(:lot_number) { '1c' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 2c' do
         let(:lot_number) { '2c' }
 
-        it 'returns the services with Q.2 instead of Q.3' do
-          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['Q.2']
+        it 'returns the services with M.2 instead of M.3' do
+          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['M.2']
         end
       end
 
       context 'and the lot is 3c' do
         let(:lot_number) { '3c' }
 
-        it 'returns the services with Q.1 instead of Q.3' do
-          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['Q.1']
+        it 'returns the services with M.1 instead of M.3' do
+          expect(procurement.send(:true_procurement_buildings_service_codes)).to eq base_procurement_buildings_service_codes + ['M.1']
         end
       end
     end
 
-    context 'when the service codes do not contain Q.3' do
+    context 'when the service codes do not contain M.3' do
       let(:service_codes) { base_service_codes }
       let(:procurement_buildings_service_codes) { base_service_codes }
 
@@ -1275,7 +1275,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
     let(:procurement) { create(:facilities_management_rm6232_procurement_results, region_codes: ['UKI4', 'UKI5']) }
 
     before do
-      procurement.procurement_buildings.create(active: false, service_codes: ['E.1'], building: create(:facilities_management_building, user: procurement.user, address_region_code: 'UKI4'))
+      procurement.procurement_buildings.create(active: false, service_codes: ['C.1'], building: create(:facilities_management_building, user: procurement.user, address_region_code: 'UKI4'))
       procurement.active_procurement_buildings.first.building.update(address_region_code: 'UKL1')
       procurement.active_procurement_buildings.last.building.update(address_region_code: 'UKM2')
       procurement.send(:freeze_data)

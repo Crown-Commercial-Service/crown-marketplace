@@ -203,7 +203,7 @@ module ApplicationHelper
         {
           name: t(".services.section.#{section_id}.title"),
           items: services.map do |service|
-            service_name = service.number == 'Q2' ? t(".services.section.#{section_id}.services.#{service.number}.title") : service.name
+            service_name = service.number == 'M2' ? t(".services.section.#{section_id}.services.#{service.number}.title") : service.name
             {
               value: service.number,
               label: {
