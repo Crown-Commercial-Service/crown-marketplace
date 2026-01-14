@@ -101,7 +101,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement do
 
     context 'when the service codes contain M.3' do
       let(:service_codes) { base_service_codes + ['M.3'] }
-      let(:service_Q1) { FacilitiesManagement::RM6232::Service.find('M.1') }
+      let(:service_M1) { FacilitiesManagement::RM6232::Service.find('M.1') }
       let(:service_Q2) { FacilitiesManagement::RM6232::Service.find('M.2') }
       let(:service_Q3) { FacilitiesManagement::RM6232::Service.find('M.3') }
 

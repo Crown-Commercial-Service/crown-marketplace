@@ -57,6 +57,10 @@ module FacilitiesManagement::RM6378
         hard_fm_service_count = Service.where(lot_id: 'RM6378.2a', number: service_numbers).count
         soft_fm_service_count = Service.where(lot_id: 'RM6378.3a', number: service_numbers).count
 
+        puts total_service_count
+        puts hard_fm_service_count
+        puts soft_fm_service_count
+
         find_lot_number(
           [
             # HARD FM

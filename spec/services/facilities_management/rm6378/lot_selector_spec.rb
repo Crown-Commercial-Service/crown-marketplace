@@ -8,14 +8,14 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
     let(:annual_contract_value) { rand(2_000_000) }
 
     # rubocop:disable RSpec/LeakyLocalVariable
-    total_service_numbers = %w[O1 P1 P9]
-    hard_service_numbers = %w[E1 F1 J20]
-    soft_service_numbers = %w[G1 H3 I6]
-    hard_and_soft_service_numbers = %w[J19 R1]
-    security_officer_service_numbers = %w[S1 S2]
-    security_systems_service_numbers = %w[T1 V1]
-    security_officer_and_systems_service_numbers = %w[W1]
-    security_advisory_service_numbers = %w[X1 Y1 Z1]
+    total_service_numbers = %w[K1 L1 P9]
+    hard_service_numbers = %w[C1 D1 H20]
+    soft_service_numbers = %w[E1 F3 G6]
+    hard_and_soft_service_numbers = %w[J19 N1]
+    security_officer_service_numbers = %w[O1 O2]
+    security_systems_service_numbers = %w[P1 R1]
+    security_officer_and_systems_service_numbers = %w[S1]
+    security_advisory_service_numbers = %w[V1 T1 U1]
     # rubocop:enable RSpec/LeakyLocalVariable
 
     def result_converter(lot_number, service_numbers)
@@ -150,26 +150,26 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
 
       context 'when considering CAFM' do
         context 'and the services are hard' do
-          let(:service_numbers) { hard_service_numbers + ['Q2'] }
+          let(:service_numbers) { hard_service_numbers + ['M2'] }
 
-          it "returns 2a with '#{hard_service_numbers.join(', ')} and Q2'" do
-            expect(result).to eq [result_converter('2a', hard_service_numbers + ['Q2'])]
+          it "returns 2a with '#{hard_service_numbers.join(', ')} and M2'" do
+            expect(result).to eq [result_converter('2a', hard_service_numbers + ['M2'])]
           end
         end
 
         context 'and the services are soft' do
-          let(:service_numbers) { soft_service_numbers + ['Q2'] }
+          let(:service_numbers) { soft_service_numbers + ['M2'] }
 
-          it "returns 3a with '#{soft_service_numbers.join(', ')} and Q1'" do
-            expect(result).to eq [result_converter('3a', soft_service_numbers + ['Q1'])]
+          it "returns 3a with '#{soft_service_numbers.join(', ')} and M1'" do
+            expect(result).to eq [result_converter('3a', soft_service_numbers + ['M1'])]
           end
         end
 
         context 'and the services are total' do
-          let(:service_numbers) { total_service_numbers + ['Q2'] }
+          let(:service_numbers) { total_service_numbers + ['M2'] }
 
-          it "returns 1a with '#{total_service_numbers.join(', ')} and Q2'" do
-            expect(result).to eq [result_converter('1a', total_service_numbers + ['Q2'])]
+          it "returns 1a with '#{total_service_numbers.join(', ')} and M2'" do
+            expect(result).to eq [result_converter('1a', total_service_numbers + ['M2'])]
           end
         end
       end
@@ -212,12 +212,12 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
         ],
         [
           'total services which are hard and soft with one hard service',
-          hard_and_soft_service_numbers + ['E1'],
+          hard_and_soft_service_numbers + ['C1'],
           '2a'
         ],
         [
           'total services which are hard and soft with one soft service',
-          hard_and_soft_service_numbers + ['G1'],
+          hard_and_soft_service_numbers + ['E1'],
           '3a'
         ],
       ].each do |example_name, example_service_numbers, expected_result|
