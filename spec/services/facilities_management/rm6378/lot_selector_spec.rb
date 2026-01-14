@@ -8,14 +8,13 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
     let(:annual_contract_value) { rand(2_000_000) }
 
     # rubocop:disable RSpec/LeakyLocalVariable
-    total_service_numbers = %w[K1 L1 P9]
+    total_service_numbers = %w[K1 L1 L9]
     hard_service_numbers = %w[C1 D1 H20]
     soft_service_numbers = %w[E1 F3 G6]
-    hard_and_soft_service_numbers = %w[J19 N1]
+    hard_and_soft_service_numbers = %w[H19 N1]
     security_officer_service_numbers = %w[O1 O2]
     security_systems_service_numbers = %w[P1 R1]
-    security_officer_and_systems_service_numbers = %w[S1]
-    security_advisory_service_numbers = %w[V1 T1 U1]
+    security_advisory_service_numbers = %w[S1 T1 U1]
     # rubocop:enable RSpec/LeakyLocalVariable
 
     def result_converter(lot_number, service_numbers)
@@ -249,29 +248,8 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
           '4a'
         ],
         [
-          'officer and mixed services',
-          security_officer_service_numbers +
-            security_officer_and_systems_service_numbers,
-          '4b'
-        ],
-        [
           'officer, system and advisory services',
           security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers,
-          '4a'
-        ],
-        [
-          'officer, system and mixed services',
-          security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers,
-          '4a'
-        ],
-        [
-          'officer, advisory and mixed services',
-          security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-          '4a'
-        ],
-        [
-          'officer, system, advisory and mixed services',
-          security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
           '4a'
         ],
         [
@@ -285,29 +263,9 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
           '4a'
         ],
         [
-          'systems and mixed services',
-          security_systems_service_numbers + security_officer_and_systems_service_numbers,
-          '4c'
-        ],
-        [
-          'systems, advisory and mixed services',
-          security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-          '4a'
-        ],
-        [
           'advisory services only',
           security_advisory_service_numbers,
           '4d'
-        ],
-        [
-          'advisory and mixed services',
-          security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-          '4a'
-        ],
-        [
-          'mixed services only',
-          security_officer_and_systems_service_numbers,
-          '4a'
         ],
       ].each do |example_name, example_service_numbers, expected_result|
         context "when there are #{example_name}" do
@@ -362,20 +320,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'officer and mixed',
-            security_officer_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '2a',
-                hard_service_numbers
-              ],
-              [
-                '4b',
-                security_officer_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'officer, system and advisory',
             security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers,
             [
@@ -386,48 +330,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4a',
                 security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '2a',
-                hard_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, advisory and mixed',
-            security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '2a',
-                hard_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system, advisory and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '2a',
-                hard_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -460,34 +362,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'systems and mixed',
-            security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '2a',
-                hard_service_numbers
-              ],
-              [
-                '4c',
-                security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'systems, advisory and mixed',
-            security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '2a',
-                hard_service_numbers
-              ],
-              [
-                '4a',
-                security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'advisory',
             security_advisory_service_numbers,
             [
@@ -498,34 +372,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4d',
                 security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'advisory and mixed',
-            security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '2a',
-                hard_service_numbers
-              ],
-              [
-                '4a',
-                security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'mixed',
-            security_officer_and_systems_service_numbers,
-            [
-              [
-                '2a',
-                hard_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -581,20 +427,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'officer and mixed',
-            security_officer_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '3a',
-                soft_service_numbers
-              ],
-              [
-                '4b',
-                security_officer_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'officer, system and advisory',
             security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers,
             [
@@ -605,48 +437,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4a',
                 security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '3a',
-                soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, advisory and mixed',
-            security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '3a',
-                soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system, advisory and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '3a',
-                soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -679,34 +469,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'systems and mixed',
-            security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '3a',
-                soft_service_numbers
-              ],
-              [
-                '4c',
-                security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'systems, advisory and mixed',
-            security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '3a',
-                soft_service_numbers
-              ],
-              [
-                '4a',
-                security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'advisory',
             security_advisory_service_numbers,
             [
@@ -717,34 +479,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4d',
                 security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'advisory and mixed',
-            security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '3a',
-                soft_service_numbers
-              ],
-              [
-                '4a',
-                security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'mixed',
-            security_officer_and_systems_service_numbers,
-            [
-              [
-                '3a',
-                soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -800,20 +534,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'officer and mixed',
-            security_officer_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                total_service_numbers
-              ],
-              [
-                '4b',
-                security_officer_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'officer, system and advisory',
             security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers,
             [
@@ -824,48 +544,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4a',
                 security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, advisory and mixed',
-            security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system, advisory and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -898,34 +576,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'systems and mixed',
-            security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                total_service_numbers
-              ],
-              [
-                '4c',
-                security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'systems, advisory and mixed',
-            security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                total_service_numbers
-              ],
-              [
-                '4a',
-                security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'advisory',
             security_advisory_service_numbers,
             [
@@ -936,34 +586,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4d',
                 security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'advisory and mixed',
-            security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                total_service_numbers
-              ],
-              [
-                '4a',
-                security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'mixed',
-            security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -1019,20 +641,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'officer and mixed',
-            security_officer_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_and_soft_service_numbers
-              ],
-              [
-                '4b',
-                security_officer_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'officer, system and advisory',
             security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers,
             [
@@ -1043,48 +651,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4a',
                 security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_and_soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, advisory and mixed',
-            security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_and_soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system, advisory and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_and_soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -1117,34 +683,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'systems and mixed',
-            security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_and_soft_service_numbers
-              ],
-              [
-                '4c',
-                security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'systems, advisory and mixed',
-            security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_and_soft_service_numbers
-              ],
-              [
-                '4a',
-                security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'advisory',
             security_advisory_service_numbers,
             [
@@ -1155,34 +693,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4d',
                 security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'advisory and mixed',
-            security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_and_soft_service_numbers
-              ],
-              [
-                '4a',
-                security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'mixed',
-            security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_and_soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -1238,20 +748,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'officer and mixed',
-            security_officer_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers
-              ],
-              [
-                '4b',
-                security_officer_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'officer, system and advisory',
             security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers,
             [
@@ -1262,48 +758,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4a',
                 security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, advisory and mixed',
-            security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system, advisory and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -1336,34 +790,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'systems and mixed',
-            security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers
-              ],
-              [
-                '4c',
-                security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'systems, advisory and mixed',
-            security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers
-              ],
-              [
-                '4a',
-                security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'advisory',
             security_advisory_service_numbers,
             [
@@ -1374,34 +800,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4d',
                 security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'advisory and mixed',
-            security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers
-              ],
-              [
-                '4a',
-                security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'mixed',
-            security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -1457,20 +855,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'officer and mixed',
-            security_officer_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + total_service_numbers
-              ],
-              [
-                '4b',
-                security_officer_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'officer, system and advisory',
             security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers,
             [
@@ -1481,48 +865,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4a',
                 security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, advisory and mixed',
-            security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system, advisory and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -1555,34 +897,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'systems and mixed',
-            security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + total_service_numbers
-              ],
-              [
-                '4c',
-                security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'systems, advisory and mixed',
-            security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'advisory',
             security_advisory_service_numbers,
             [
@@ -1593,34 +907,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4d',
                 security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'advisory and mixed',
-            security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'mixed',
-            security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -1676,20 +962,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'officer and mixed',
-            security_officer_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4b',
-                security_officer_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'officer, system and advisory',
             security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers,
             [
@@ -1700,48 +972,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4a',
                 security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, advisory and mixed',
-            security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system, advisory and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -1774,34 +1004,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'systems and mixed',
-            security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4c',
-                security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'systems, advisory and mixed',
-            security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'advisory',
             security_advisory_service_numbers,
             [
@@ -1812,34 +1014,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4d',
                 security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'advisory and mixed',
-            security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'mixed',
-            security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -1895,20 +1069,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'officer and mixed',
-            security_officer_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4b',
-                security_officer_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'officer, system and advisory',
             security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers,
             [
@@ -1919,48 +1079,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4a',
                 security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, advisory and mixed',
-            security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'officer, system, advisory and mixed',
-            security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_service_numbers + security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
               ]
             ]
           ],
@@ -1993,34 +1111,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
             ]
           ],
           [
-            'systems and mixed',
-            security_systems_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4c',
-                security_systems_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'systems, advisory and mixed',
-            security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_systems_service_numbers + security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
             'advisory',
             security_advisory_service_numbers,
             [
@@ -2031,34 +1121,6 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
               [
                 '4d',
                 security_advisory_service_numbers
-              ]
-            ]
-          ],
-          [
-            'advisory and mixed',
-            security_advisory_service_numbers + security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_advisory_service_numbers + security_officer_and_systems_service_numbers
-              ]
-            ]
-          ],
-          [
-            'mixed',
-            security_officer_and_systems_service_numbers,
-            [
-              [
-                '1a',
-                hard_service_numbers + soft_service_numbers + total_service_numbers
-              ],
-              [
-                '4a',
-                security_officer_and_systems_service_numbers
               ]
             ]
           ],

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6378::SupplierShortlistSpreadsheetCreator do
   let(:procurement) { create(:facilities_management_rm6378_procurement, user: user, contract_name: 'My search test', procurement_details: { 'service_ids' => service_ids, 'jurisdiction_ids' => jurisdiction_ids, 'annual_contract_value' => 500_000 }) }
-  let(:service_ids) { %w[RM6378.1a.E5 RM6378.1a.M1 RM6378.1a.P8] }
+  let(:service_ids) { %w[RM6378.1a.C5 RM6378.1a.J1 RM6378.1a.L8] }
   let(:jurisdiction_ids) { %w[TLC3 TLD1 TLF3 TLH3] }
   let(:user) { create(:user, :with_detail) }
   let(:buyer_detail) { user.buyer_detail }
@@ -53,9 +53,9 @@ RSpec.describe FacilitiesManagement::RM6378::SupplierShortlistSpreadsheetCreator
 
       expect((2..4).map { |row_number| sheet.row(row_number) }).to eq(
         [
-          ['E5', 'Lifts maintenance'],
-          ['M1', 'On Site / Mobile Classified Waste Shredding Service'],
-          ['P8', 'Special Need Or Disability Adaptions']
+          ['C5', 'Lifts Maintenance'],
+          ['J1', 'On-Site / Mobile Classified Waste Shredding Services'],
+          ['L8', 'Special Need or Disability Adaptions']
         ]
       )
     end

@@ -35,8 +35,8 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseServices do
         end
       end
 
-      context 'when the only code is R1' do
-        let(:service_codes) { %w[R1] }
+      context 'when the only code is N1' do
+        let(:service_codes) { %w[N1] }
 
         it 'is not valid and has the correct error message' do
           expect(choose_services.valid?).to be false
@@ -44,7 +44,7 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseServices do
         end
 
         context 'when another service is included as well' do
-          before { choose_services.service_codes << 'J1' }
+          before { choose_services.service_codes << 'H1' }
 
           it 'is valid' do
             expect(choose_services.valid?).to be true
@@ -138,9 +138,8 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseServices do
           ['Q', 2],
           ['R', 1],
           ['S', 1],
-          ['T', 1],
-          ['U', 2],
-          ['V', 1]
+          ['T', 2],
+          ['U', 1],
         ]
       )
     end
