@@ -6,7 +6,7 @@ Feature: Select regions
     And I click on 'Search for suppliers'
     Then I am on the 'Services' page
     And I show all sections
-    And I select 'Building Management System (BMS) maintenance'
+    And I select 'Building Management System (BMS) Maintenance'
     And I click on 'Continue'
     Then I am on the 'Regions' page
     And I show all sections
