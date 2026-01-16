@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseServices do
   let(:choose_services) { described_class.new(service_codes:, region_codes:, annual_contract_value:) }
-  let(:service_codes) { %w[E1 E2] }
+  let(:service_codes) { %w[C1 C2] }
   let(:region_codes) {  %w[TLC3 TLC4] }
   let(:annual_contract_value) { 123_456 }
 
@@ -18,8 +18,25 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseServices do
 
     # rubocop:disable RSpec/NestedGroups
     context 'when validating that not all services are mandatory' do
-      context 'when the only code is Q2' do
-        let(:service_codes) { %w[Q2] }
+      context 'when the only code is M2' do
+        let(:service_codes) { %w[M2] }
+
+        it 'is not valid and has the correct error message' do
+          expect(choose_services.valid?).to be false
+          expect(choose_services.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system' and/or 'Helpdesk services'"
+        end
+
+        context 'when another service is included as well' do
+          before { choose_services.service_codes << 'D1' }
+
+          it 'is valid' do
+            expect(choose_services.valid?).to be true
+          end
+        end
+      end
+
+      context 'when the only code is N1' do
+        let(:service_codes) { %w[N1] }
 
         it 'is not valid and has the correct error message' do
           expect(choose_services.valid?).to be false
@@ -35,8 +52,8 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseServices do
         end
       end
 
-      context 'when the only code is R1' do
-        let(:service_codes) { %w[R1] }
+      context 'when the only codes are M2 and N1' do
+        let(:service_codes) { %w[M2 N1] }
 
         it 'is not valid and has the correct error message' do
           expect(choose_services.valid?).to be false
@@ -45,23 +62,6 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseServices do
 
         context 'when another service is included as well' do
           before { choose_services.service_codes << 'J1' }
-
-          it 'is valid' do
-            expect(choose_services.valid?).to be true
-          end
-        end
-      end
-
-      context 'when the only codes are Q2 and R1' do
-        let(:service_codes) { %w[Q2 R1] }
-
-        it 'is not valid and has the correct error message' do
-          expect(choose_services.valid?).to be false
-          expect(choose_services.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system' and/or 'Helpdesk services'"
-        end
-
-        context 'when another service is included as well' do
-          before { choose_services.service_codes << 'L1' }
 
           it 'is valid' do
             expect(choose_services.valid?).to be true
@@ -121,26 +121,25 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseServices do
     it 'services are grouped together as expected' do
       expect(result).to eq(
         [
-          ['E', 22],
-          ['F', 13],
-          ['G', 8],
-          ['H', 10],
-          ['I', 12],
-          ['J', 21],
+          ['C', 22],
+          ['D', 13],
+          ['E', 8],
+          ['F', 10],
+          ['G', 12],
+          ['H', 21],
+          ['I', 5],
+          ['J', 7],
           ['K', 5],
-          ['M', 7],
-          ['O', 5],
-          ['P', 14],
-          ['Q', 1],
+          ['L', 14],
+          ['M', 1],
+          ['N', 1],
+          ['O', 8],
+          ['P', 1],
+          ['Q', 2],
           ['R', 1],
-          ['S', 8],
-          ['T', 1],
-          ['U', 2],
-          ['V', 1],
-          ['W', 1],
-          ['X', 1],
-          ['Y', 2],
-          ['Z', 1]
+          ['S', 1],
+          ['T', 2],
+          ['U', 1],
         ]
       )
     end

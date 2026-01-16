@@ -6,7 +6,7 @@ Feature: Information appears correctly on results page in the complex scenario
     Then I am on the 'Services' page
     Then I select the following items:
       | Mechanical and Electrical Engineering Maintenance                       |
-      | Planned / Group re-lamping service                                      |
+      | Planned / Group Re-Lamping Service                                      |
       | Building Information Modelling (BIM) and Government Soft Landings (GSL) |
       | Security Advisory Services                                              |
       | Risk Assessments                                                        |
@@ -30,7 +30,7 @@ Feature: Information appears correctly on results page in the complex scenario
       | 4d |
     And I should see the following 'services' in the selection summary:
       | Mechanical and Electrical Engineering Maintenance                       |
-      | Planned / Group re-lamping service                                      |
+      | Planned / Group Re-Lamping Service                                      |
       | Building Information Modelling (BIM) and Government Soft Landings (GSL) |
       | Security Advisory Services                                              |
       | Risk Assessments                                                        |

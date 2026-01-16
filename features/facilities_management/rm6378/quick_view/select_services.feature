@@ -10,64 +10,64 @@ Feature: Select services
   Scenario: Service selection appears in basked
     Then the basket should say 'No services selected'
     And the remove all link should not be visible
-    When I select 'Building Management System (BMS) maintenance'
+    When I select 'Building Management System (BMS) Maintenance'
     Then the basket should say '1 service selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | Building Management System (BMS) maintenance |
+      | Building Management System (BMS) Maintenance |
     When I select the following items:
-      | Water hygiene maintenance                    |
-      | Pest control Services                        |
-      | High Voltage (HV) and switchgear maintenance |
-      | Additional support Services                  |
-      | Courier booking and distribution services    |
+      | Water Hygiene Maintenance                    |
+      | Pest Control Services                        |
+      | High Voltage (HV) and Switchgear Maintenance |
+      | Additional Support Services                  |
+      | Courier Booking and Distribution Services    |
       | Patrolling Services                          |
     Then the basket should say '7 services selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | Building Management System (BMS) maintenance |
-      | Water hygiene maintenance                    |
-      | Pest control Services                        |
-      | High Voltage (HV) and switchgear maintenance |
-      | Additional support Services                  |
-      | Courier booking and distribution services    |
+      | Building Management System (BMS) Maintenance |
+      | Water Hygiene Maintenance                    |
+      | Pest Control Services                        |
+      | High Voltage (HV) and Switchgear Maintenance |
+      | Additional Support Services                  |
+      | Courier Booking and Distribution Services    |
       | Patrolling Services                          |
 
   Scenario: Changing the selection will change the basket
     When I select the following items:
-      | Water hygiene maintenance                    |
-      | Pest control Services                        |
-      | High Voltage (HV) and switchgear maintenance |
-      | Additional support Services                  |
-      | Courier booking and distribution services    |
+      | Water Hygiene Maintenance                    |
+      | Pest Control Services                        |
+      | High Voltage (HV) and Switchgear Maintenance |
+      | Additional Support Services                  |
+      | Courier Booking and Distribution Services    |
       | Patrolling Services                          |
     Then the basket should say '6 services selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | Water hygiene maintenance                    |
-      | Pest control Services                        |
-      | High Voltage (HV) and switchgear maintenance |
-      | Additional support Services                  |
-      | Courier booking and distribution services    |
+      | Water Hygiene Maintenance                    |
+      | Pest Control Services                        |
+      | High Voltage (HV) and Switchgear Maintenance |
+      | Additional Support Services                  |
+      | Courier Booking and Distribution Services    |
       | Patrolling Services                          |
     When I deselect the following items:
-      | Additional support Services |
+      | Additional Support Services |
     Then the basket should say '5 services selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | Water hygiene maintenance                    |
-      | Pest control Services                        |
-      | High Voltage (HV) and switchgear maintenance |
-      | Courier booking and distribution services    |
+      | Water Hygiene Maintenance                    |
+      | Pest Control Services                        |
+      | High Voltage (HV) and Switchgear Maintenance |
+      | Courier Booking and Distribution Services    |
       | Patrolling Services                          |
     When I remove the following items from the basket:
-      | Pest control Services                     |
-      | Courier booking and distribution services |
+      | Pest Control Services                     |
+      | Courier Booking and Distribution Services |
     Then the basket should say '3 services selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
-      | Water hygiene maintenance                    |
-      | High Voltage (HV) and switchgear maintenance |
+      | Water Hygiene Maintenance                    |
+      | High Voltage (HV) and Switchgear Maintenance |
       | Patrolling Services                          |
     When I click on 'Remove all'
     Then the basket should say 'No services selected'
@@ -93,18 +93,18 @@ Feature: Select services
 
   Scenario: Go back from regions and change selection
     When I select the following items:
-      | Water hygiene maintenance                    |
-      | Pest control Services                        |
-      | Building Management System (BMS) maintenance |
-      | Additional support Services                  |
-      | Courier booking and distribution services    |
+      | Water Hygiene Maintenance                    |
+      | Pest Control Services                        |
+      | Building Management System (BMS) Maintenance |
+      | Additional Support Services                  |
+      | Courier Booking and Distribution Services    |
     And I click on 'Continue'
     Then I am on the 'Regions' page
     And I click on the 'Return to services' back link
     Then I am on the 'Services' page
     And the following items should appear in the basket:
-      | Building Management System (BMS) maintenance |
-      | Water hygiene maintenance                    |
-      | Pest control Services                        |
-      | Courier booking and distribution services    |
-      | Additional support Services                  |
+      | Building Management System (BMS) Maintenance |
+      | Water Hygiene Maintenance                    |
+      | Pest Control Services                        |
+      | Courier Booking and Distribution Services    |
+      | Additional Support Services                  |
