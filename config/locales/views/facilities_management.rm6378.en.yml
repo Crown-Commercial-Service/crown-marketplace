@@ -114,49 +114,47 @@ en:
         choose_services:
           services:
             section:
-              E:
+              C:
                 title: Maintenance Services
+              D:
+                title: Statutory Compliance
+              E:
+                title: Landscaping / Horticultural Services
               F:
-                title: Statutory Obligations
-              G:
-                title: Landscaping Services
-              H:
                 title: Catering Services
-              I:
+              G:
                 title: Cleaning Services
-              J:
-                title: Additional FM Services
-              K:
+              H:
+                title: Miscellaneous FM Services
+              I:
                 title: Visitor Support Services
+              J:
+                title: Waste Management
+              K:
+                title: Specialist FM Services
+              L:
+                title: Occupancy and Property Management Services
               M:
-                title: Waste Services
-              O:
-                title: Specialist (Defence) FM Services
-              P:
-                title: End User Accommodation Services
-              Q:
                 services:
-                  Q2:
+                  M2:
                     title: CAFM system
-                title: Computer-aided facilities management (CAFM)
-              R:
+                title: Computer Aided Facilities Management (CAFM)
+              "N":
                 title: Helpdesk Services
-              S:
+              O:
                 title: Security Officer Services
-              T:
-                title: Design, Supply, Commission and Installation of Electronic security systems and services
-              U:
+              P:
+                title: Design, Supply, Install and Commission of Physical and Electronic Security Systems and Services
+              Q:
                 title: Maintenance of Security Systems
-              V:
-                title: Alarmed Response Centre
-              W:
-                title: Security Helpdesk Services
-              X:
+              R:
+                title: Security Operations Centre
+              S:
                 title: Security Advisory Services
-              "Y":
+              T:
                 title: Security and Risk Assessments
-              Z:
-                title: Security Awareness/Training
+              U:
+                title: Security Awareness / Training
         information_about_your_requirements:
           contract_start_date:
             hint: For example, 25 12 2027
