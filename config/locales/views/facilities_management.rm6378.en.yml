@@ -176,19 +176,18 @@ en:
           contract_name:
             hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
             label: Save your search
+          estimated_contract_duration: Estimated contract duration
+          estimated_contract_start_date: Estimated contract start date
           heading: Results
+          private_finance_initiative: Requirement linked to PFI?
           regions: Regions
-          requirements_linked_to_pfi:
-            label: Is your requirement linked to current or previous Private Finance Initiative (PFI)?
-            options:
-              'false': 'No'
-              'true': 'Yes'
-          return_to_contract_cost: Return to annual contract cost
           return_to_dashboard: Return to your account
+          return_to_info_about_requirements: Return to information about your requirements
           save_and_continue: Save and continue
           selection_summary: Selection summary
           services: Services
           sub_lot: Sub-lot %{sub_lot}
+          year: year
         show:
           fm_framework_page: Facilities Management and Security Services framework
           fm_framework_page_url: https://www.crowncommercial.gov.uk/agreements/rm6378

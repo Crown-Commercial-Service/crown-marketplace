@@ -9,6 +9,11 @@ module FacilitiesManagement
 
       attribute :region_codes, Array
       attribute :annual_contract_value, Numeric
+      attribute :contract_start_date_dd
+      attribute :contract_start_date_mm
+      attribute :contract_start_date_yyyy
+      attribute :estimated_contract_duration, Numeric
+      attribute :private_finance_initiative
 
       def next_step_class
         Journey::ChooseLocations

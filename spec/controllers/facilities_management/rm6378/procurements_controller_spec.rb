@@ -39,23 +39,28 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
   describe 'GET new' do
     let(:service_codes) { ['C1', 'C2'] }
 
-    before { get :new, params: { annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes } }
+    before { get :new, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes } }
 
     it 'renders the correct template' do
       expect(response).to render_template('new')
     end
 
     it 'sets the back path' do
-      expect(assigns(:back_path)).to eq '/facilities-management/RM6378/annual-contract-value?annual_contract_value=123456&region_codes%5B%5D=TLH3&region_codes%5B%5D=TLH5&service_codes%5B%5D=C1&service_codes%5B%5D=C2'
-      expect(assigns(:back_text)).to eq 'Return to annual contract cost'
+      expect(assigns(:back_path)).to eq '/facilities-management/RM6378/information-about-your-requirements?annual_contract_value=123456&contract_start_date_dd=12&contract_start_date_mm=5&contract_start_date_yyyy=2028&estimated_contract_duration=5&private_finance_initiative=yes&region_codes%5B%5D=TLH3&region_codes%5B%5D=TLH5&service_codes%5B%5D=C1&service_codes%5B%5D=C2'
+      expect(assigns(:back_text)).to eq 'Return to information about your requirements'
     end
 
     context 'when there search results in one procurement' do
+      # rubocop:disable RSpec/MultipleExpectations
       it 'sets the journey attributes' do
         expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2'])
         expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
         expect(assigns(:annual_contract_value)).to eq(123_456)
+        expect(assigns(:contract_start_date)).to eq(Date.strptime('2028-5-12', '%Y-%m-%d'))
+        expect(assigns(:estimated_contract_duration)).to eq(5)
+        expect(assigns(:private_finance_initiative)).to eq('yes')
       end
+      # rubocop:enable RSpec/MultipleExpectations
 
       it 'sets one procurement' do
         expect(assigns(:procurements).length).to eq(1)
@@ -71,7 +76,12 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
             procurement_details: {
               service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
               jurisdiction_ids: ['TLH3', 'TLH5'],
-              annual_contract_value: 123_456
+              annual_contract_value: 123_456,
+              contract_start_date_yyyy: '2028',
+              contract_start_date_mm: '5',
+              contract_start_date_dd: '12',
+              estimated_contract_duration: 5,
+              private_finance_initiative: 'yes',
             }
           }
         )
@@ -82,11 +92,16 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
     context 'when there search results in two procurements' do
       let(:service_codes) { ['C1', 'C2', 'S1', 'U1'] }
 
+      # rubocop:disable RSpec/MultipleExpectations
       it 'sets the journey attributes' do
         expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2', 'RM6378.4d.S1', 'RM6378.4d.U1'])
         expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
         expect(assigns(:annual_contract_value)).to eq(123_456)
+        expect(assigns(:contract_start_date)).to eq(Date.strptime('2028-5-12', '%Y-%m-%d'))
+        expect(assigns(:estimated_contract_duration)).to eq(5)
+        expect(assigns(:private_finance_initiative)).to eq('yes')
       end
+      # rubocop:enable RSpec/MultipleExpectations
 
       it 'sets two procurements' do
         expect(assigns(:procurements).length).to eq(2)
@@ -102,7 +117,12 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
             procurement_details: {
               service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
               jurisdiction_ids: ['TLH3', 'TLH5'],
-              annual_contract_value: 123_456
+              annual_contract_value: 123_456,
+              contract_start_date_yyyy: '2028',
+              contract_start_date_mm: '5',
+              contract_start_date_dd: '12',
+              estimated_contract_duration: 5,
+              private_finance_initiative: 'yes',
             }
           }
         )
@@ -117,7 +137,12 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
             procurement_details: {
               service_ids: ['RM6378.4d.S1', 'RM6378.4d.U1'],
               jurisdiction_ids: ['TLH3', 'TLH5'],
-              annual_contract_value: 123_456
+              annual_contract_value: 123_456,
+              contract_start_date_yyyy: '2028',
+              contract_start_date_mm: '5',
+              contract_start_date_dd: '12',
+              estimated_contract_duration: 5,
+              private_finance_initiative: 'yes',
             }
           }
         )
@@ -129,17 +154,21 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
   describe 'POST create' do
     let(:service_codes) { ['C1', 'C2'] }
     let(:contract_name) { 'Zote' }
-    let(:requirements_linked_to_pfi) { true }
 
     context 'when there is one procurement' do
-      before { post :create, params: { annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, requirements_linked_to_pfi: } } }
+      before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, } } }
 
       shared_examples 'and attributes are set' do
+        # rubocop:disable RSpec/MultipleExpectations
         it 'sets the journey attributes' do
           expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2'])
           expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
           expect(assigns(:annual_contract_value)).to eq(123_456)
+          expect(assigns(:contract_start_date)).to eq(Date.strptime('2028-5-12', '%Y-%m-%d'))
+          expect(assigns(:estimated_contract_duration)).to eq(5)
+          expect(assigns(:private_finance_initiative)).to eq('yes')
         end
+        # rubocop:enable RSpec/MultipleExpectations
 
         it 'sets one procurement' do
           expect(assigns(:procurements).length).to eq(1)
@@ -156,7 +185,11 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
                 service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
                 jurisdiction_ids: ['TLH3', 'TLH5'],
                 annual_contract_value: 123_456,
-                requirements_linked_to_pfi: requirements_linked_to_pfi,
+                contract_start_date_yyyy: '2028',
+                contract_start_date_mm: '5',
+                contract_start_date_dd: '12',
+                estimated_contract_duration: 5,
+                private_finance_initiative: 'yes',
               },
               contract_name: contract_name,
             }
@@ -172,20 +205,6 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
 
         it 'sets the erros on the procurement' do
           expect(assigns(:procurements)[0].errors.details.keys).to eq([:contract_name])
-        end
-
-        it 'renders the new template' do
-          expect(response).to render_template('new')
-        end
-      end
-
-      context 'and it is not valid due to the requirements linked to pfi being blank' do
-        let(:requirements_linked_to_pfi) { nil }
-
-        include_context 'and attributes are set'
-
-        it 'sets the erros on the procurement' do
-          expect(assigns(:procurements)[0].errors.details.keys).to eq([:requirements_linked_to_pfi])
         end
 
         it 'renders the new template' do
@@ -213,11 +232,16 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
       let(:expected_second_contract_name) { "#{contract_name} (Security)" }
 
       shared_examples 'and attributes are set' do
+        # rubocop:disable RSpec/MultipleExpectations
         it 'sets the journey attributes' do
           expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2', 'RM6378.4d.S1', 'RM6378.4d.U1'])
           expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
           expect(assigns(:annual_contract_value)).to eq(123_456)
+          expect(assigns(:contract_start_date)).to eq(Date.strptime('2028-5-12', '%Y-%m-%d'))
+          expect(assigns(:estimated_contract_duration)).to eq(5)
+          expect(assigns(:private_finance_initiative)).to eq('yes')
         end
+        # rubocop:enable RSpec/MultipleExpectations
 
         it 'sets two procurements' do
           expect(assigns(:procurements).length).to eq(2)
@@ -234,7 +258,11 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
                 service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
                 jurisdiction_ids: ['TLH3', 'TLH5'],
                 annual_contract_value: 123_456,
-                requirements_linked_to_pfi: requirements_linked_to_pfi,
+                contract_start_date_yyyy: '2028',
+                contract_start_date_mm: '5',
+                contract_start_date_dd: '12',
+                estimated_contract_duration: 5,
+                private_finance_initiative: 'yes',
               },
               contract_name: contract_name,
             }
@@ -251,7 +279,11 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
                 service_ids: ['RM6378.4d.S1', 'RM6378.4d.U1'],
                 jurisdiction_ids: ['TLH3', 'TLH5'],
                 annual_contract_value: 123_456,
-                requirements_linked_to_pfi: requirements_linked_to_pfi,
+                contract_start_date_yyyy: '2028',
+                contract_start_date_mm: '5',
+                contract_start_date_dd: '12',
+                estimated_contract_duration: 5,
+                private_finance_initiative: 'yes',
               },
               contract_name: expected_second_contract_name,
             }
@@ -264,30 +296,12 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
         let(:contract_name) { '' }
         let(:expected_second_contract_name) { '' }
 
-        before { post :create, params: { annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, requirements_linked_to_pfi: } } }
+        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } } }
 
         include_context 'and attributes are set'
 
         it 'sets the erros on the first procurement' do
           expect(assigns(:procurements)[0].errors.details.keys).to eq([:contract_name])
-          expect(assigns(:procurements)[1].errors).not_to be_any
-        end
-
-        it 'renders the new template' do
-          expect(response).to render_template('new')
-        end
-      end
-
-      context 'and it is not valid due to the requirements linked to pfi being blank' do
-        let(:requirements_linked_to_pfi) { nil }
-        let(:expected_second_contract_name) { contract_name }
-
-        before { post :create, params: { annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, requirements_linked_to_pfi: } } }
-
-        include_context 'and attributes are set'
-
-        it 'sets the erros on the procurement' do
-          expect(assigns(:procurements)[0].errors.details.keys).to eq([:requirements_linked_to_pfi])
           expect(assigns(:procurements)[1].errors).not_to be_any
         end
 
@@ -304,7 +318,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
           allow_any_instance_of(FacilitiesManagement::RM6378::Procurement).to receive(:update_contract_name_with_security).and_raise(FacilitiesManagement::RM6378::Procurement::CannotCreateNameError.new)
           # rubocop:enable RSpec/AnyInstance
 
-          post :create, params: { annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, requirements_linked_to_pfi: } }
+          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } }
         end
 
         include_context 'and attributes are set'
@@ -325,7 +339,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
           allow_any_instance_of(FacilitiesManagement::RM6378::Procurement).to receive(:save!).and_raise(ActiveRecord::Rollback.new('Something went wrong'))
           # rubocop:enable RSpec/AnyInstance
 
-          post :create, params: { annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, requirements_linked_to_pfi: } }
+          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } }
         end
 
         include_context 'and attributes are set'
@@ -341,7 +355,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
       end
 
       context 'and it is valid' do
-        before { post :create, params: { annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, requirements_linked_to_pfi: } } }
+        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } } }
 
         include_context 'and attributes are set'
 

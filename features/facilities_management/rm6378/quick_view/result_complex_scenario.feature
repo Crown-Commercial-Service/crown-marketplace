@@ -39,8 +39,13 @@ Feature: Information appears correctly on results page in the complex scenario
       | Essex       |
     And I should see the following 'annual contract cost' in the selection summary:
       | £123,456 |
+        And I should see the following 'estimated contract start date' in the selection summary:
+      | tomorrow |
+    And I should see the following 'estimated contract duration' in the selection summary:
+      | 27 years |
+    And I should see the following 'requirement linked to pfi' in the selection summary:
+      | Yes |
     Then I enter 'Hollow Nest' into the contract name field
-    And I choose the 'Yes' radio button
     And I click on 'Save and continue'
     Then I am on the 'What do I do next?' page
     And the procurement name is shown to be 'Hollow Nest'

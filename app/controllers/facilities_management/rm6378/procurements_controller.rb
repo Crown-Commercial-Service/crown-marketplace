@@ -54,7 +54,7 @@ module FacilitiesManagement
       def set_back_path
         @back_path, @back_text = case action_name.to_sym
                                  when :new, :create
-                                   [helpers.journey_step_url_former(journey_slug: 'annual-contract-value', annual_contract_value: journey_params[:annual_contract_value], region_codes: journey_params[:region_codes], service_codes: journey_params[:service_codes]), t('facilities_management.rm6378.procurements.new.return_to_contract_cost')]
+                                   [helpers.journey_step_url_former(journey_slug: 'information-about-your-requirements', private_finance_initiative: journey_params[:private_finance_initiative], estimated_contract_duration: journey_params[:estimated_contract_duration], contract_start_date: contract_start_date, annual_contract_value: journey_params[:annual_contract_value], region_codes: journey_params[:region_codes], service_codes: journey_params[:service_codes]), t('facilities_management.rm6378.procurements.new.return_to_info_about_requirements')]
                                  when :index
                                    [facilities_management_rm6378_path, t('facilities_management.shared.procurements.index.return_to_your_account')]
                                  when :show
@@ -66,6 +66,7 @@ module FacilitiesManagement
         @procurement = Procurement.find(params[:id] || params[:procurement_id])
       end
 
+      # rubocop:disable Metrics/AbcSize
       def set_procurements
         @procurements = LotSelector.select_lot_numbers(journey_params[:service_codes], journey_params[:annual_contract_value]).lot_results.map do |lot_result|
           Procurement.build(
@@ -75,28 +76,45 @@ module FacilitiesManagement
             procurement_details: {
               service_ids: lot_result.service_ids,
               jurisdiction_ids: journey_params[:region_codes],
-              annual_contract_value: journey_params[:annual_contract_value]
+              annual_contract_value: journey_params[:annual_contract_value],
+              contract_start_date_yyyy: journey_params[:contract_start_date_yyyy],
+              contract_start_date_mm: journey_params[:contract_start_date_mm],
+              contract_start_date_dd: journey_params[:contract_start_date_dd],
+              estimated_contract_duration: journey_params[:estimated_contract_duration],
+              private_finance_initiative: journey_params[:private_finance_initiative],
             }
           )
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       def set_journey_attributes
         @services = Service.where(id: @procurements.map { |procurement| procurement.procurement_details['service_ids'] }.flatten).ordered_by_category_and_number
         @regions = Jurisdiction.where(id: journey_params[:region_codes]).ordered_by_category_and_number
         @annual_contract_value = journey_params[:annual_contract_value]
+        @contract_start_date = contract_start_date
+        @estimated_contract_duration = journey_params[:estimated_contract_duration]
+        @private_finance_initiative = journey_params[:private_finance_initiative]
       end
 
       def journey_params
         @journey_params ||= begin
           params[:annual_contract_value] = params[:annual_contract_value].to_i
+          params[:estimated_contract_duration] = params[:estimated_contract_duration].to_i
 
-          params.permit(:annual_contract_value, service_codes: [], region_codes: [])
+          params.permit(:private_finance_initiative, :estimated_contract_duration, :contract_start_date_dd, :contract_start_date_mm, :contract_start_date_yyyy, :annual_contract_value, service_codes: [], region_codes: [])
         end
       end
 
       def procurement_params
-        @procurement_params ||= params.expect(facilities_management_rm6378_procurement: %i[contract_name requirements_linked_to_pfi])
+        @procurement_params ||= params.expect(facilities_management_rm6378_procurement: %i[contract_name])
+      end
+
+      def contract_start_date
+        @contract_start_date ||= Date.strptime(
+          "#{journey_params[:contract_start_date_yyyy]}-#{journey_params[:contract_start_date_mm]}-#{journey_params[:contract_start_date_dd]}",
+          DateValidations::PARSED_DATE_FORMAT
+        )
       end
 
       protected

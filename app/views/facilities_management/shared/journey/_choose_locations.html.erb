@@ -76,7 +76,9 @@
             </div>
           <% end %>
         <% end %>
-        <%= hidden_field_tag :annual_contract_value, params[:annual_contract_value] if params[:annual_contract_value] %>
+        <% %i[annual_contract_value contract_start_date_dd contract_start_date_mm contract_start_date_yyyy estimated_contract_duration private_finance_initiative].each do |attribute| %>
+          <%= hidden_field_tag attribute, params[attribute] if params[attribute] %>
+        <% end %>
         <%= govuk_button(t('common.submit'), form: f, attributes: { aria: { label: t('common.submit') } }) %>
         <p>
           <%= link_to t('.return_text'), "/facilities-management/#{params[:framework]}", class: 'govuk-link' %>

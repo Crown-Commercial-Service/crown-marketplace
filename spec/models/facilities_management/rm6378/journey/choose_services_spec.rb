@@ -86,13 +86,13 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseServices do
 
   describe '.permit_list' do
     it 'returns a list of the permitted attributes' do
-      expect(described_class.permit_list).to eq [:annual_contract_value, { service_codes: [], region_codes: [] }]
+      expect(described_class.permit_list).to eq [:annual_contract_value, :contract_start_date_dd, :contract_start_date_mm, :contract_start_date_yyyy, :estimated_contract_duration, :private_finance_initiative, { service_codes: [], region_codes: [] }]
     end
   end
 
   describe '.permitted_keys' do
     it 'returns a list of the permitted keys' do
-      expect(described_class.permitted_keys).to eq %i[service_codes region_codes annual_contract_value]
+      expect(described_class.permitted_keys).to eq %i[service_codes region_codes annual_contract_value contract_start_date_dd contract_start_date_mm contract_start_date_yyyy estimated_contract_duration private_finance_initiative]
     end
   end
 
