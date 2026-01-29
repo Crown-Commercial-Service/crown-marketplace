@@ -24,7 +24,7 @@
           <%= t('.services') %>
         </span>
         <span class="ccs-summary-box__change">
-          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-services', annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-services', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
         </span>
       </div>
       <div class="ccs-summary-box__content">
@@ -45,7 +45,7 @@
           <%= t('.regions') %>
         </span>
         <span class="ccs-summary-box__change">
-          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-locations', annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-locations', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
         </span>
       </div>
       <div class="ccs-summary-box__content">
@@ -66,11 +66,50 @@
           <%= t('.annual_contract_value') %>
         </div>
         <div class="ccs-summary-box__change">
-          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'annual-contract-value', annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'annual-contract-value', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
         </div>
       </div>
       <div class="ccs-summary-box__content">
         <%= format_money(@annual_contract_value, 0) %>
+      </div>
+    </div>
+    <div class="ccs-summary-box">
+      <div class="ccs-summary-box__headings">
+        <div class="ccs-summary-box__title">
+          <%= t('.estimated_contract_start_date') %>
+        </div>
+        <div class="ccs-summary-box__change">
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'information-about-your-requirements', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+        </div>
+      </div>
+      <div class="ccs-summary-box__content">
+        <%= format_date(@contract_start_date) %>
+      </div>
+    </div>
+    <div class="ccs-summary-box">
+      <div class="ccs-summary-box__headings">
+        <div class="ccs-summary-box__title">
+          <%= t('.estimated_contract_duration') %>
+        </div>
+        <div class="ccs-summary-box__change">
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'information-about-your-requirements', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+        </div>
+      </div>
+      <div class="ccs-summary-box__content">
+        <%= pluralize(@estimated_contract_duration, t('.year')) %>
+      </div>
+    </div>
+    <div class="ccs-summary-box">
+      <div class="ccs-summary-box__headings">
+        <div class="ccs-summary-box__title">
+          <%= t('.private_finance_initiative') %>
+        </div>
+        <div class="ccs-summary-box__change">
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'information-about-your-requirements', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+        </div>
+      </div>
+      <div class="ccs-summary-box__content">
+        <%= t(@private_finance_initiative) %>
       </div>
     </div>
   </div>
@@ -109,6 +148,12 @@
 
       <%= hidden_field_tag :annual_contract_value, @annual_contract_value, id: nil %>
 
+      <%= hidden_field_tag :contract_start_date_dd, @contract_start_date.day, id: nil %>
+      <%= hidden_field_tag :contract_start_date_mm, @contract_start_date.month, id: nil %>
+      <%= hidden_field_tag :contract_start_date_yyyy, @contract_start_date.year, id: nil %>
+      <%= hidden_field_tag :estimated_contract_duration, @estimated_contract_duration, id: nil %>
+      <%= hidden_field_tag :private_finance_initiative, @private_finance_initiative, id: nil %>
+ 
       <%= govuk_input(
         :contract_name,
         form: f,
@@ -120,32 +165,6 @@
           text: t('.contract_name.hint')
         },
         classes: 'govuk-input--width-20',
-      ) %>
-
-      <%= govuk_radios(
-        :requirements_linked_to_pfi,
-        [
-          {
-            value: true,
-            label: {
-              text: t('.requirements_linked_to_pfi.options.true')
-            }
-          },
-          {
-            value: false,
-            label: {
-              text: t('.requirements_linked_to_pfi.options.false')
-            }
-          }
-        ],
-        form: f,
-        fieldset: {
-          legend: {
-            text: t('.requirements_linked_to_pfi.label'),
-            classes: 'govuk-fieldset__legend--m'
-          }
-        },
-        classes: 'govuk-radios--inline',
       ) %>
 
       <%= govuk_button(t('.save_and_continue'), form: f, attributes: { name: 'save_and_continue' }) %>

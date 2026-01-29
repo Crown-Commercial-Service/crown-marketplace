@@ -3,8 +3,6 @@ module FacilitiesManagement
     class Procurement < Procurement
       class CannotCreateNameError < StandardError; end
 
-      validates :requirements_linked_to_pfi, inclusion: { in: [true, false] }, on: :contract_name
-
       before_create :generate_contract_number
 
       def suppliers
@@ -43,7 +41,11 @@ module FacilitiesManagement
         ['service_ids', []],
         ['jurisdiction_ids', []],
         ['annual_contract_value', nil],
-        ['requirements_linked_to_pfi', nil, ->(value) { ActiveModel::Type::Boolean.new.cast(value) }],
+        ['contract_start_date_dd', nil],
+        ['contract_start_date_mm', nil],
+        ['contract_start_date_yyyy', nil],
+        ['estimated_contract_duration', nil],
+        ['private_finance_initiative', nil],
       ].freeze
 
       ATTRIBUTES_AND_DEFAULT_VALUES.each do |attribute, default_value, cast_func|

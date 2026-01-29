@@ -24,6 +24,21 @@ module Pages
         element :selection, '.ccs-summary-box__content'
         element :change, 'a'
       end
+
+      section :'estimated contract start date', 'div.ccs-summary-box:nth-of-type(4)' do
+        element :selection, '.ccs-summary-box__content'
+        element :change, 'a'
+      end
+
+      section :'estimated contract duration', 'div.ccs-summary-box:nth-of-type(5)' do
+        element :selection, '.ccs-summary-box__content'
+        element :change, 'a'
+      end
+
+      section :'requirement linked to pfi', 'div.ccs-summary-box:nth-of-type(6)' do
+        element :selection, '.ccs-summary-box__content'
+        element :change, 'a'
+      end
     end
 
     section :results_container, '#main-content > div:nth-child(2) > div.govuk-grid-column-two-thirds > ul' do
