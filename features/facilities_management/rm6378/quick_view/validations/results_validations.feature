@@ -21,16 +21,14 @@ Feature: Results validations
     And I click on 'Continue'
     Then I am on the 'Results' page
 
-  Scenario: Contract name and linkt to PFI is blank
+  Scenario: Contract name is blank
     Given I click on 'Save and continue'
     Then I should see the following error messages:
       | Enter your contract name                         |
-      | Select one option for requirements linked to PFI |
 
   Scenario: Contract name is taken
     Given I have a procurement with the name 'Taken contract name'
     And I enter 'Taken contract name' into the contract name field
-    And I choose the 'Yes' radio button
     And I click on 'Save and continue'
     Then I should see the following error messages:
       | This contract name is already in use |

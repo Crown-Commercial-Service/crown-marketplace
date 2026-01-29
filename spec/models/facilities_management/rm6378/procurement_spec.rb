@@ -187,7 +187,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     end
   end
 
-  describe 'requirements_linked_to_pfi' do
+  describe 'contract_start_date_dd' do
     let(:procurement) { create(:facilities_management_rm6378_procurement, procurement_details:) }
 
     context 'when getting the data' do
@@ -195,7 +195,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         let(:procurement_details) { nil }
 
         it 'returns nil' do
-          expect(procurement.requirements_linked_to_pfi).to be_nil
+          expect(procurement.contract_start_date_dd).to be_nil
         end
       end
 
@@ -203,15 +203,263 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         let(:procurement_details) { {} }
 
         it 'returns nil' do
-          expect(procurement.requirements_linked_to_pfi).to be_nil
+          expect(procurement.contract_start_date_dd).to be_nil
+        end
+      end
+
+      context 'when the procurement_details contains the contract start date day' do
+        let(:procurement_details) { { 'contract_start_date_dd' => 12 } }
+
+        it 'gets ther contract start date day from the procurement_details' do
+          expect(procurement.contract_start_date_dd).to eq(12)
+        end
+      end
+    end
+
+    context 'when setting the data' do
+      context 'when the procurement_details is nil' do
+        let(:procurement_details) { nil }
+
+        it 'sets the procurement_details with contract start date day' do
+          procurement.contract_start_date_dd = 12
+
+          expect(procurement.procurement_details).to eq({ 'contract_start_date_dd' => 12 })
+        end
+      end
+
+      context 'when the procurement_details is empty' do
+        let(:procurement_details) { {} }
+
+        it 'sets the procurement_details with contract start date day' do
+          procurement.contract_start_date_dd = 12
+
+          expect(procurement.procurement_details).to eq({ 'contract_start_date_dd' => 12 })
+        end
+      end
+
+      context 'when the procurement_details contains the contract start date day' do
+        let(:procurement_details) { { 'contract_start_date_dd' => 21, 'something' => 'else' } }
+
+        it 'updates the procurement_details with contract start date day' do
+          procurement.contract_start_date_dd = 12
+
+          expect(procurement.procurement_details).to eq({ 'contract_start_date_dd' => 12, 'something' => 'else' })
+        end
+      end
+    end
+  end
+
+  describe 'contract_start_date_mm' do
+    let(:procurement) { create(:facilities_management_rm6378_procurement, procurement_details:) }
+
+    context 'when getting the data' do
+      context 'when the procurement_details is nil' do
+        let(:procurement_details) { nil }
+
+        it 'returns nil' do
+          expect(procurement.contract_start_date_mm).to be_nil
+        end
+      end
+
+      context 'when the procurement_details is empty' do
+        let(:procurement_details) { {} }
+
+        it 'returns nil' do
+          expect(procurement.contract_start_date_mm).to be_nil
+        end
+      end
+
+      context 'when the procurement_details contains the contract start date month' do
+        let(:procurement_details) { { 'contract_start_date_mm' => 12 } }
+
+        it 'gets ther contract start date month from the procurement_details' do
+          expect(procurement.contract_start_date_mm).to eq(12)
+        end
+      end
+    end
+
+    context 'when setting the data' do
+      context 'when the procurement_details is nil' do
+        let(:procurement_details) { nil }
+
+        it 'sets the procurement_details with contract start date month' do
+          procurement.contract_start_date_mm = 12
+
+          expect(procurement.procurement_details).to eq({ 'contract_start_date_mm' => 12 })
+        end
+      end
+
+      context 'when the procurement_details is empty' do
+        let(:procurement_details) { {} }
+
+        it 'sets the procurement_details with contract start date month' do
+          procurement.contract_start_date_mm = 12
+
+          expect(procurement.procurement_details).to eq({ 'contract_start_date_mm' => 12 })
+        end
+      end
+
+      context 'when the procurement_details contains the contract start date month' do
+        let(:procurement_details) { { 'contract_start_date_mm' => 2, 'something' => 'else' } }
+
+        it 'updates the procurement_details with contract start date month' do
+          procurement.contract_start_date_mm = 12
+
+          expect(procurement.procurement_details).to eq({ 'contract_start_date_mm' => 12, 'something' => 'else' })
+        end
+      end
+    end
+  end
+
+  describe 'contract_start_date_yyyy' do
+    let(:procurement) { create(:facilities_management_rm6378_procurement, procurement_details:) }
+
+    context 'when getting the data' do
+      context 'when the procurement_details is nil' do
+        let(:procurement_details) { nil }
+
+        it 'returns nil' do
+          expect(procurement.contract_start_date_yyyy).to be_nil
+        end
+      end
+
+      context 'when the procurement_details is empty' do
+        let(:procurement_details) { {} }
+
+        it 'returns nil' do
+          expect(procurement.contract_start_date_yyyy).to be_nil
+        end
+      end
+
+      context 'when the procurement_details contains the contract start date year' do
+        let(:procurement_details) { { 'contract_start_date_yyyy' => 2029 } }
+
+        it 'gets ther contract start date year from the procurement_details' do
+          expect(procurement.contract_start_date_yyyy).to eq(2029)
+        end
+      end
+    end
+
+    context 'when setting the data' do
+      context 'when the procurement_details is nil' do
+        let(:procurement_details) { nil }
+
+        it 'sets the procurement_details with contract start date year' do
+          procurement.contract_start_date_yyyy = 2029
+
+          expect(procurement.procurement_details).to eq({ 'contract_start_date_yyyy' => 2029 })
+        end
+      end
+
+      context 'when the procurement_details is empty' do
+        let(:procurement_details) { {} }
+
+        it 'sets the procurement_details with contract start date year' do
+          procurement.contract_start_date_yyyy = 2029
+
+          expect(procurement.procurement_details).to eq({ 'contract_start_date_yyyy' => 2029 })
+        end
+      end
+
+      context 'when the procurement_details contains the contract start date year' do
+        let(:procurement_details) { { 'contract_start_date_yyyy' => 2045, 'something' => 'else' } }
+
+        it 'updates the procurement_details with contract start date year' do
+          procurement.contract_start_date_yyyy = 2029
+
+          expect(procurement.procurement_details).to eq({ 'contract_start_date_yyyy' => 2029, 'something' => 'else' })
+        end
+      end
+    end
+  end
+
+  describe 'estimated_contract_duration' do
+    let(:procurement) { create(:facilities_management_rm6378_procurement, procurement_details:) }
+
+    context 'when getting the data' do
+      context 'when the procurement_details is nil' do
+        let(:procurement_details) { nil }
+
+        it 'returns nil' do
+          expect(procurement.estimated_contract_duration).to be_nil
+        end
+      end
+
+      context 'when the procurement_details is empty' do
+        let(:procurement_details) { {} }
+
+        it 'returns nil' do
+          expect(procurement.estimated_contract_duration).to be_nil
+        end
+      end
+
+      context 'when the procurement_details contains the estimated contract duration' do
+        let(:procurement_details) { { 'estimated_contract_duration' => 12 } }
+
+        it 'gets ther estimated contract duration from the procurement_details' do
+          expect(procurement.estimated_contract_duration).to eq(12)
+        end
+      end
+    end
+
+    context 'when setting the data' do
+      context 'when the procurement_details is nil' do
+        let(:procurement_details) { nil }
+
+        it 'sets the procurement_details with estimated contract duration' do
+          procurement.estimated_contract_duration = 12
+
+          expect(procurement.procurement_details).to eq({ 'estimated_contract_duration' => 12 })
+        end
+      end
+
+      context 'when the procurement_details is empty' do
+        let(:procurement_details) { {} }
+
+        it 'sets the procurement_details with estimated contract duration' do
+          procurement.estimated_contract_duration = 12
+
+          expect(procurement.procurement_details).to eq({ 'estimated_contract_duration' => 12 })
+        end
+      end
+
+      context 'when the procurement_details contains the estimated contract duration' do
+        let(:procurement_details) { { 'estimated_contract_duration' => 50, 'something' => 'else' } }
+
+        it 'updates the procurement_details with estimated contract duration' do
+          procurement.estimated_contract_duration = 12
+
+          expect(procurement.procurement_details).to eq({ 'estimated_contract_duration' => 12, 'something' => 'else' })
+        end
+      end
+    end
+  end
+
+  describe 'private_finance_initiative' do
+    let(:procurement) { create(:facilities_management_rm6378_procurement, procurement_details:) }
+
+    context 'when getting the data' do
+      context 'when the procurement_details is nil' do
+        let(:procurement_details) { nil }
+
+        it 'returns nil' do
+          expect(procurement.private_finance_initiative).to be_nil
+        end
+      end
+
+      context 'when the procurement_details is empty' do
+        let(:procurement_details) { {} }
+
+        it 'returns nil' do
+          expect(procurement.private_finance_initiative).to be_nil
         end
       end
 
       context 'when the procurement_details contains the requirements linked to pfi' do
-        let(:procurement_details) { { 'requirements_linked_to_pfi' => false } }
+        let(:procurement_details) { { 'private_finance_initiative' => 'no' } }
 
         it 'gets ther requirements linked to pfi from the procurement_details' do
-          expect(procurement.requirements_linked_to_pfi).to be(false)
+          expect(procurement.private_finance_initiative).to eq('no')
         end
       end
     end
@@ -221,9 +469,9 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         let(:procurement_details) { nil }
 
         it 'sets the procurement_details with requirements linked to pfi' do
-          procurement.requirements_linked_to_pfi = false
+          procurement.private_finance_initiative = 'no'
 
-          expect(procurement.procurement_details).to eq({ 'requirements_linked_to_pfi' => false })
+          expect(procurement.procurement_details).to eq({ 'private_finance_initiative' => 'no' })
         end
       end
 
@@ -231,19 +479,19 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         let(:procurement_details) { {} }
 
         it 'sets the procurement_details with requirements linked to pfi' do
-          procurement.requirements_linked_to_pfi = false
+          procurement.private_finance_initiative = 'no'
 
-          expect(procurement.procurement_details).to eq({ 'requirements_linked_to_pfi' => false })
+          expect(procurement.procurement_details).to eq({ 'private_finance_initiative' => 'no' })
         end
       end
 
       context 'when the procurement_details contains the requirements linked to pfi' do
-        let(:procurement_details) { { 'requirements_linked_to_pfi' => true, 'something' => 'else' } }
+        let(:procurement_details) { { 'private_finance_initiative' => 'yes', 'something' => 'else' } }
 
         it 'updates the procurement_details with requirements linked to pfi' do
-          procurement.requirements_linked_to_pfi = false
+          procurement.private_finance_initiative = 'no'
 
-          expect(procurement.procurement_details).to eq({ 'requirements_linked_to_pfi' => false, 'something' => 'else' })
+          expect(procurement.procurement_details).to eq({ 'private_finance_initiative' => 'no', 'something' => 'else' })
         end
       end
     end
@@ -444,41 +692,6 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
 
         it 'expected to be valid' do
           expect(procurement.valid?(:contract_name)).to be true
-        end
-      end
-    end
-
-    describe 'requirements_linked_to_pfi' do
-      let(:procurement) { build(:facilities_management_rm6378_procurement, user:) }
-      let(:user) { create(:user) }
-
-      before { procurement.requirements_linked_to_pfi = requirements_linked_to_pfi }
-
-      context 'when requirements_linked_to_pfi is nil' do
-        let(:requirements_linked_to_pfi) { nil }
-
-        it 'is expected to not be valid and has the correct error message' do
-          expect(procurement.valid?(:contract_name)).to be false
-          expect(procurement.errors[:requirements_linked_to_pfi].first).to eq 'Select one option for requirements linked to PFI'
-        end
-      end
-
-      context 'when the requirements_linked_to_pfi is empty' do
-        let(:requirements_linked_to_pfi) { '' }
-
-        it 'is expected to not be valid and has the correct error message' do
-          expect(procurement.valid?(:contract_name)).to be false
-          expect(procurement.errors[:requirements_linked_to_pfi].first).to eq 'Select one option for requirements linked to PFI'
-        end
-      end
-
-      [true, false].each do |option|
-        context "when the requirements_linked_to_pfi is #{option}" do
-          let(:requirements_linked_to_pfi) { option }
-
-          it 'expected to be valid' do
-            expect(procurement.valid?(:contract_name)).to be true
-          end
         end
       end
     end
