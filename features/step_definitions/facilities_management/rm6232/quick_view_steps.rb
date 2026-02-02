@@ -15,7 +15,7 @@ Then('I should see the following {string} in the selection summary:') do |option
   when 'annual contract cost', 'estimated contract duration', 'requirement linked to pfi'
     expect(quick_view_page.selection_summary.send(option.to_sym).selection).to have_content(selection_summary_table.raw.flatten.first)
   when 'estimated contract start date'
-    expect(quick_view_page.selection_summary.send(option.to_sym).selection).to have_content(date_options_to_date(selection_summary_table.raw.flatten.first).strftime('%e %B %Y'))
+    expect(quick_view_page.selection_summary.send(option.to_sym).selection).to have_content(date_options_to_date(selection_summary_table.raw.flatten.first).strftime('%-d %B %Y'))
   else
     raise "cannot check #{option} selection summary"
   end
