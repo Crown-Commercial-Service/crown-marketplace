@@ -185,11 +185,9 @@ module Marketplace
   end
 
   def self.use_gca_branding?
-    if ENV['GCA_BRANDING_LIVE_AT']
-      Time.zone.now.utc >= Time.zone.parse(ENV['GCA_BRANDING_LIVE_AT']).utc
-    else
-      false
-    end
+    Time.zone.now.utc >= Time.zone.parse(ENV.fetch('GCA_BRANDING_LIVE_AT', nil)).utc
+  rescue StandardError
+    false
   end
 
   def self.cookie_settings_name
