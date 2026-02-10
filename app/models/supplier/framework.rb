@@ -59,9 +59,9 @@ class Supplier < ApplicationRecord
         lots: {
           enabled: true,
           id: Supplier::Framework::Lot::Service.where(service_id: service_ids)
-                                               .group(:supplier_framework_lot_id)
-                                               .having('COUNT(*) = ?', service_ids.length)
-                                               .select(:supplier_framework_lot_id)
+              .group(:supplier_framework_lot_id)
+              .having('COUNT(*) = ?', service_ids.length)
+              .select(:supplier_framework_lot_id)
         }
       ).distinct
     end
@@ -80,18 +80,18 @@ class Supplier < ApplicationRecord
         where(
           lots: {
             id: Supplier::Framework::Lot::Service.where(service_id: service_ids)
-                                                .group(:supplier_framework_lot_id)
-                                                .having('COUNT(*) = ?', service_ids.length)
-                                                .select(:supplier_framework_lot_id)
+                .group(:supplier_framework_lot_id)
+                .having('COUNT(*) = ?', service_ids.length)
+                .select(:supplier_framework_lot_id)
           }
         )
       ).and(
         where(
           lots: {
             id: Supplier::Framework::Lot::Jurisdiction.where(jurisdiction_id: jurisdiction_ids)
-                                                      .group(:supplier_framework_lot_id)
-                                                      .having('COUNT(*) = ?', jurisdiction_ids.length)
-                                                      .select(:supplier_framework_lot_id)
+                .group(:supplier_framework_lot_id)
+                .having('COUNT(*) = ?', jurisdiction_ids.length)
+                .select(:supplier_framework_lot_id)
           }
         )
       ).distinct
