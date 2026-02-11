@@ -15,7 +15,7 @@ module FacilitiesManagement
 
       def add_regions
         @workbook.add_worksheet(name: 'Regions') do |sheet|
-          sheet.add_row ['ITL Code', 'Region Name'], style: @styles[:bordered_heading_style], height: LARGE_ROW_HEIGHT
+          sheet.add_row ['ITL Code', 'Region Name','Estimated contract start date', 'Estimated contract duration'], style: @styles[:bordered_heading_style], height: LARGE_ROW_HEIGHT
 
           @regions.each do |region|
             sheet.add_row [region.id, region.name], style: @styles[:standard_bordered_column_style], height: LARGE_ROW_HEIGHT

@@ -32,7 +32,7 @@ RSpec.describe FacilitiesManagement::RM6378::SupplierShortlistSpreadsheetCreator
     let(:sheet) { work_book.sheet('Regions') }
 
     it 'has the correct regions' do
-      expect(sheet.row(1)).to eq ['ITL Code', 'Region Name']
+      expect(sheet.row(1)).to eq ['ITL Code', 'Region Name','Estimated contract start date', 'Estimated contract duration']
 
       expect((2..5).map { |row_number| sheet.row(row_number) }).to eq(
         [
