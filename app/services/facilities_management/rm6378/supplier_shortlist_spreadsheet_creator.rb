@@ -15,7 +15,7 @@ module FacilitiesManagement
 
       def add_regions
         @workbook.add_worksheet(name: 'Regions') do |sheet|
-          sheet.add_row ['ITL Code', 'Region Name','Estimated contract start date', 'Estimated contract duration'], style: @styles[:bordered_heading_style], height: LARGE_ROW_HEIGHT
+          sheet.add_row ['ITL Code', 'Region Name'], style: @styles[:bordered_heading_style], height: LARGE_ROW_HEIGHT
 
           @regions.each do |region|
             sheet.add_row [region.id, region.name], style: @styles[:standard_bordered_column_style], height: LARGE_ROW_HEIGHT
@@ -30,6 +30,8 @@ module FacilitiesManagement
           sheet.add_row ['Supplier Shortlist and eligible Lot', nil], style: @styles[:heading_style], height: LARGE_ROW_HEIGHT
           sheet.add_row ['Reference number:', @procurement.contract_number], style: @styles[:heading_style], height: LARGE_ROW_HEIGHT
           sheet.add_row ['Estimated annual cost:', @procurement.annual_contract_value], style: @styles[:heading_style], height: LARGE_ROW_HEIGHT
+          sheet.add_row ['Estimated contract start date:', @procurement.contract_start_date], style: @styles[:heading_style], height: LARGE_ROW_HEIGHT
+          sheet.add_row ['Estimated contract duration:', @procurement.estimated_contract_duration], style: @styles[:heading_style], height: LARGE_ROW_HEIGHT
           sheet.add_row ['Based on your service and region requirements given, and your estimated annual cost, this procurement would be eligible for the Lot and shortlist of suppliers as listed below.', nil, nil], style: @styles[:standard_column_style], height: LARGE_ROW_HEIGHT
           sheet.add_row [], height: LARGE_ROW_HEIGHT
 
@@ -47,7 +49,7 @@ module FacilitiesManagement
       def style_add_supplier_shortlists_sheet(sheet)
         sheet['B2'].style = @styles[:standard_column_style]
         sheet['B3'].style = @styles[:currency_column_style]
-        sheet.merge_cells 'A4:B4'
+        sheet.merge_cells 'A6:C6'
 
         sheet.column_widths(50, 50, 50)
       end
