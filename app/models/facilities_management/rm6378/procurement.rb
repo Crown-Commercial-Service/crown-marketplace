@@ -43,6 +43,8 @@ module FacilitiesManagement
         ['service_ids', []],
         ['jurisdiction_ids', []],
         ['annual_contract_value', nil],
+        ['contract_start_date', nil],
+        ['estimated_contract_duration', nil],
         ['requirements_linked_to_pfi', nil, ->(value) { ActiveModel::Type::Boolean.new.cast(value) }],
       ].freeze
 
