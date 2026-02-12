@@ -3,8 +3,6 @@ module FacilitiesManagement
     class Procurement < Procurement
       class CannotCreateNameError < StandardError; end
 
-      validates :requirements_linked_to_pfi, inclusion: { in: [true, false] }, on: :contract_name
-
       before_create :generate_contract_number
 
       def suppliers
@@ -17,6 +15,13 @@ module FacilitiesManagement
 
       def jurisdictions
         @jurisdictions ||= Jurisdiction.where(id: jurisdiction_ids).ordered_by_category_and_number
+      end
+
+      def contract_start_date
+        @contract_start_date ||= Date.strptime(
+          "#{contract_start_date_yyyy}-#{contract_start_date_mm}-#{contract_start_date_dd}",
+          DateValidations::PARSED_DATE_FORMAT
+        )
       end
 
       def update_contract_name_with_security
@@ -43,9 +48,11 @@ module FacilitiesManagement
         ['service_ids', []],
         ['jurisdiction_ids', []],
         ['annual_contract_value', nil],
-        ['contract_start_date', nil],
+        ['contract_start_date_dd', nil],
+        ['contract_start_date_mm', nil],
+        ['contract_start_date_yyyy', nil],
         ['estimated_contract_duration', nil],
-        ['requirements_linked_to_pfi', nil, ->(value) { ActiveModel::Type::Boolean.new.cast(value) }],
+        ['private_finance_initiative', nil],
       ].freeze
 
       ATTRIBUTES_AND_DEFAULT_VALUES.each do |attribute, default_value, cast_func|

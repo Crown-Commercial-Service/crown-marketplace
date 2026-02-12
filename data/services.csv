@@ -640,7 +640,7 @@ RM6378.1a.C6,RM6378.1a,C6,Hoists and Conveyance Systems Maintenance,C,Maintenanc
 RM6378.1a.C7,RM6378.1a,C7,"Security, Access and Intruder Systems Maintenance",C,"Maintenance of security, access and intruder systems"
 RM6378.1a.C8,RM6378.1a,C8,Internal and External Building Fabric Maintenance,C,"Maintenance of the internal and external building fabric, taking account of the asset registers, and planned maintenance schedules"
 RM6378.1a.C9,RM6378.1a,C9,Reactive Maintenance Service,C,Provision of a professionally managed service for reactive repairs and maintenance
-RM6378.1a.C10,RM6378.1a,C10,Planned / Group Re-Lamping Service,C,"Re-lamping service within the buyers premise, achieving the greatest possible reduction in replacement frequency and cost"
+RM6378.1a.C10,RM6378.1a,C10,Planned / Group Re-Lamping Service,C,"Re-lamping service within the buyers premises, achieving the greatest possible reduction in replacement frequency and cost"
 RM6378.1a.C11,RM6378.1a,C11,Automated Barrier Control System Maintenance,C,"Maintenance service for automated barriers, shutters, turn-styles, doors and electrified fencing"
 RM6378.1a.C12,RM6378.1a,C12,Building Management System (BMS) Maintenance,C,Maintenance of the building management system to allow an efficient and effective building engineering service
 RM6378.1a.C13,RM6378.1a,C13,Standby Power System Maintenance,C,Maintenance and operation of backup generators and uninterrupted power supply equipment
@@ -751,7 +751,7 @@ RM6378.1a.L14,RM6378.1a,L14,Accommodation Maintenance Services,L,Provide vacant/
 RM6378.1a.M2,RM6378.1a,M2,Hard / Soft FM CAFM Requirements,M,"CAFM system and associated software required to deliver Hard/Soft FM services, aligned to asset requirements and SFG20"
 RM6378.1a.N1,RM6378.1a,N1,Helpdesk Services,N,"Fully staffed, supervised helpdesk service for all FM related service requests and fault reporting"
 RM6378.1a.O1,RM6378.1a,O1,Security Officer Services,O,"Provision of a security officer services at the internal, external and/or locations specified by the buyer"
-RM6378.1a.O2,RM6378.1a,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premise, monitoring activity, and providing evidence of footage where necessary"
+RM6378.1a.O2,RM6378.1a,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premises, monitoring activity, and providing evidence of footage where necessary"
 RM6378.1a.O3,RM6378.1a,O3,Control of Access and Security Passes,O,"Managing the control of access and security passes, pass production, and managing a log of staff and visitors"
 RM6378.1a.O4,RM6378.1a,O4,Control of Access - Vehicles,O,"Managing the control of access and security passes for vehicles, pass production, and vehicles logs"
 RM6378.1a.O5,RM6378.1a,O5,Patrolling Services,O,"Provision of Internal and external security guarding patrols, and alarm responses"
@@ -767,7 +767,7 @@ RM6378.1b.C6,RM6378.1b,C6,Hoists and Conveyance Systems Maintenance,C,Maintenanc
 RM6378.1b.C7,RM6378.1b,C7,"Security, Access and Intruder Systems Maintenance",C,"Maintenance of security, access and intruder systems"
 RM6378.1b.C8,RM6378.1b,C8,Internal and External Building Fabric Maintenance,C,"Maintenance of the internal and external building fabric, taking account of the asset registers, and planned maintenance schedules"
 RM6378.1b.C9,RM6378.1b,C9,Reactive Maintenance Service,C,Provision of a professionally managed service for reactive repairs and maintenance
-RM6378.1b.C10,RM6378.1b,C10,Planned / Group Re-Lamping Service,C,"Re-lamping service within the buyers premise, achieving the greatest possible reduction in replacement frequency and cost"
+RM6378.1b.C10,RM6378.1b,C10,Planned / Group Re-Lamping Service,C,"Re-lamping service within the buyers premises, achieving the greatest possible reduction in replacement frequency and cost"
 RM6378.1b.C11,RM6378.1b,C11,Automated Barrier Control System Maintenance,C,"Maintenance service for automated barriers, shutters, turn-styles, doors and electrified fencing"
 RM6378.1b.C12,RM6378.1b,C12,Building Management System (BMS) Maintenance,C,Maintenance of the building management system to allow an efficient and effective building engineering service
 RM6378.1b.C13,RM6378.1b,C13,Standby Power System Maintenance,C,Maintenance and operation of backup generators and uninterrupted power supply equipment
@@ -878,7 +878,7 @@ RM6378.1b.L14,RM6378.1b,L14,Accommodation Maintenance Services,L,Provide vacant/
 RM6378.1b.M2,RM6378.1b,M2,Hard / Soft FM CAFM Requirements,M,"CAFM system and associated software required to deliver Hard/Soft FM services, aligned to asset requirements and SFG20"
 RM6378.1b.N1,RM6378.1b,N1,Helpdesk Services,N,"Fully staffed, supervised helpdesk service for all FM related service requests and fault reporting"
 RM6378.1b.O1,RM6378.1b,O1,Security Officer Services,O,"Provision of a security officer services at the internal, external and/or locations specified by the buyer"
-RM6378.1b.O2,RM6378.1b,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premise, monitoring activity, and providing evidence of footage where necessary"
+RM6378.1b.O2,RM6378.1b,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premises, monitoring activity, and providing evidence of footage where necessary"
 RM6378.1b.O3,RM6378.1b,O3,Control of Access and Security Passes,O,"Managing the control of access and security passes, pass production, and managing a log of staff and visitors"
 RM6378.1b.O4,RM6378.1b,O4,Control of Access - Vehicles,O,"Managing the control of access and security passes for vehicles, pass production, and vehicles logs"
 RM6378.1b.O5,RM6378.1b,O5,Patrolling Services,O,"Provision of Internal and external security guarding patrols, and alarm responses"
@@ -894,7 +894,7 @@ RM6378.1c.C6,RM6378.1c,C6,Hoists and Conveyance Systems Maintenance,C,Maintenanc
 RM6378.1c.C7,RM6378.1c,C7,"Security, Access and Intruder Systems Maintenance",C,"Maintenance of security, access and intruder systems"
 RM6378.1c.C8,RM6378.1c,C8,Internal and External Building Fabric Maintenance,C,"Maintenance of the internal and external building fabric, taking account of the asset registers, and planned maintenance schedules"
 RM6378.1c.C9,RM6378.1c,C9,Reactive Maintenance Service,C,Provision of a professionally managed service for reactive repairs and maintenance
-RM6378.1c.C10,RM6378.1c,C10,Planned / Group Re-Lamping Service,C,"Re-lamping service within the buyers premise, achieving the greatest possible reduction in replacement frequency and cost"
+RM6378.1c.C10,RM6378.1c,C10,Planned / Group Re-Lamping Service,C,"Re-lamping service within the buyers premises, achieving the greatest possible reduction in replacement frequency and cost"
 RM6378.1c.C11,RM6378.1c,C11,Automated Barrier Control System Maintenance,C,"Maintenance service for automated barriers, shutters, turn-styles, doors and electrified fencing"
 RM6378.1c.C12,RM6378.1c,C12,Building Management System (BMS) Maintenance,C,Maintenance of the building management system to allow an efficient and effective building engineering service
 RM6378.1c.C13,RM6378.1c,C13,Standby Power System Maintenance,C,Maintenance and operation of backup generators and uninterrupted power supply equipment
@@ -1005,7 +1005,7 @@ RM6378.1c.L14,RM6378.1c,L14,Accommodation Maintenance Services,L,Provide vacant/
 RM6378.1c.M2,RM6378.1c,M2,Hard / Soft FM CAFM Requirements,M,"CAFM system and associated software required to deliver Hard/Soft FM services, aligned to asset requirements and SFG20"
 RM6378.1c.N1,RM6378.1c,N1,Helpdesk Services,N,"Fully staffed, supervised helpdesk service for all FM related service requests and fault reporting"
 RM6378.1c.O1,RM6378.1c,O1,Security Officer Services,O,"Provision of a security officer services at the internal, external and/or locations specified by the buyer"
-RM6378.1c.O2,RM6378.1c,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premise, monitoring activity, and providing evidence of footage where necessary"
+RM6378.1c.O2,RM6378.1c,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premises, monitoring activity, and providing evidence of footage where necessary"
 RM6378.1c.O3,RM6378.1c,O3,Control of Access and Security Passes,O,"Managing the control of access and security passes, pass production, and managing a log of staff and visitors"
 RM6378.1c.O4,RM6378.1c,O4,Control of Access - Vehicles,O,"Managing the control of access and security passes for vehicles, pass production, and vehicles logs"
 RM6378.1c.O5,RM6378.1c,O5,Patrolling Services,O,"Provision of Internal and external security guarding patrols, and alarm responses"
@@ -1021,7 +1021,7 @@ RM6378.2a.C6,RM6378.2a,C6,Hoists and Conveyance Systems Maintenance,C,Maintenanc
 RM6378.2a.C7,RM6378.2a,C7,"Security, Access and Intruder Systems Maintenance",C,"Maintenance of security, access and intruder systems"
 RM6378.2a.C8,RM6378.2a,C8,Internal and External Building Fabric Maintenance,C,"Maintenance of the internal and external building fabric, taking account of the asset registers, and planned maintenance schedules"
 RM6378.2a.C9,RM6378.2a,C9,Reactive Maintenance Service,C,Provision of a professionally managed service for reactive repairs and maintenance
-RM6378.2a.C10,RM6378.2a,C10,Planned / Group Re-Lamping Service,C,"Re-lamping service within the buyers premise, achieving the greatest possible reduction in replacement frequency and cost"
+RM6378.2a.C10,RM6378.2a,C10,Planned / Group Re-Lamping Service,C,"Re-lamping service within the buyers premises, achieving the greatest possible reduction in replacement frequency and cost"
 RM6378.2a.C11,RM6378.2a,C11,Automated Barrier Control System Maintenance,C,"Maintenance service for automated barriers, shutters, turn-styles, doors and electrified fencing"
 RM6378.2a.C12,RM6378.2a,C12,Building Management System (BMS) Maintenance,C,Maintenance of the building management system to allow an efficient and effective building engineering service
 RM6378.2a.C13,RM6378.2a,C13,Standby Power System Maintenance,C,Maintenance and operation of backup generators and uninterrupted power supply equipment
@@ -1060,7 +1060,7 @@ RM6378.2b.C6,RM6378.2b,C6,Hoists and Conveyance Systems Maintenance,C,Maintenanc
 RM6378.2b.C7,RM6378.2b,C7,"Security, Access and Intruder Systems Maintenance",C,"Maintenance of security, access and intruder systems"
 RM6378.2b.C8,RM6378.2b,C8,Internal and External Building Fabric Maintenance,C,"Maintenance of the internal and external building fabric, taking account of the asset registers, and planned maintenance schedules"
 RM6378.2b.C9,RM6378.2b,C9,Reactive Maintenance Service,C,Provision of a professionally managed service for reactive repairs and maintenance
-RM6378.2b.C10,RM6378.2b,C10,Planned / Group Re-Lamping Service,C,"Re-lamping service within the buyers premise, achieving the greatest possible reduction in replacement frequency and cost"
+RM6378.2b.C10,RM6378.2b,C10,Planned / Group Re-Lamping Service,C,"Re-lamping service within the buyers premises, achieving the greatest possible reduction in replacement frequency and cost"
 RM6378.2b.C11,RM6378.2b,C11,Automated Barrier Control System Maintenance,C,"Maintenance service for automated barriers, shutters, turn-styles, doors and electrified fencing"
 RM6378.2b.C12,RM6378.2b,C12,Building Management System (BMS) Maintenance,C,Maintenance of the building management system to allow an efficient and effective building engineering service
 RM6378.2b.C13,RM6378.2b,C13,Standby Power System Maintenance,C,Maintenance and operation of backup generators and uninterrupted power supply equipment
@@ -1155,7 +1155,7 @@ RM6378.3a.J7,RM6378.3a,J7,Additional Waste Services,J,"Provision of additional w
 RM6378.3a.M1,RM6378.3a,M1,Soft FM CAFM Requirements,M,"CAFM system and associated software required to deliver Soft FM services, aligned to asset requirements and SFG20"
 RM6378.3a.N1,RM6378.3a,N1,Helpdesk Services,N,"Fully staffed, supervised helpdesk service for all FM related service requests and fault reporting"
 RM6378.3a.O1,RM6378.3a,O1,Security Officer Services,O,"Provision of a security officer services at the internal, external and/or locations specified by the buyer"
-RM6378.3a.O2,RM6378.3a,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premise, monitoring activity, and providing evidence of footage where necessary"
+RM6378.3a.O2,RM6378.3a,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premises, monitoring activity, and providing evidence of footage where necessary"
 RM6378.3a.O3,RM6378.3a,O3,Control of Access and Security Passes,O,"Managing the control of access and security passes, pass production, and managing a log of staff and visitors"
 RM6378.3a.O4,RM6378.3a,O4,Control of Access - Vehicles,O,"Managing the control of access and security passes for vehicles, pass production, and vehicles logs"
 RM6378.3a.O5,RM6378.3a,O5,Patrolling Services,O,"Provision of Internal and external security guarding patrols, and alarm responses"
@@ -1227,7 +1227,7 @@ RM6378.3b.J7,RM6378.3b,J7,Additional Waste Services,J,"Provision of additional w
 RM6378.3b.M1,RM6378.3b,M1,Soft FM CAFM Requirements,M,"CAFM system and associated software required to deliver Soft FM services, aligned to asset requirements and SFG20"
 RM6378.3b.N1,RM6378.3b,N1,Helpdesk Services,N,"Fully staffed, supervised helpdesk service for all FM related service requests and fault reporting"
 RM6378.3b.O1,RM6378.3b,O1,Security Officer Services,O,"Provision of a security officer services at the internal, external and/or locations specified by the buyer"
-RM6378.3b.O2,RM6378.3b,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premise, monitoring activity, and providing evidence of footage where necessary"
+RM6378.3b.O2,RM6378.3b,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premises, monitoring activity, and providing evidence of footage where necessary"
 RM6378.3b.O3,RM6378.3b,O3,Control of Access and Security Passes,O,"Managing the control of access and security passes, pass production, and managing a log of staff and visitors"
 RM6378.3b.O4,RM6378.3b,O4,Control of Access - Vehicles,O,"Managing the control of access and security passes for vehicles, pass production, and vehicles logs"
 RM6378.3b.O5,RM6378.3b,O5,Patrolling Services,O,"Provision of Internal and external security guarding patrols, and alarm responses"
@@ -1235,7 +1235,7 @@ RM6378.3b.O6,RM6378.3b,O6,Management of Visitors and Passes,O,"Managing, produci
 RM6378.3b.O7,RM6378.3b,O7,Additional Security Officer Services,O,"Additional security services for specific sites with particular requirements, for example, court or prison security officers, transporting prisoners or detainees or Cash and valuables in transit"
 RM6378.3b.O8,RM6378.3b,O8,Key Holding,O,A professional key holding service - custodian of building access keys and alarm system codes. Compliance with security industry authority
 RM6378.4a.O1,RM6378.4a,O1,Security Officer Services,O,"Provision of a security officer services at the internal, external and/or locations specified by the buyer"
-RM6378.4a.O2,RM6378.4a,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premise, monitoring activity, and providing evidence of footage where necessary"
+RM6378.4a.O2,RM6378.4a,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premises, monitoring activity, and providing evidence of footage where necessary"
 RM6378.4a.O3,RM6378.4a,O3,Control of Access and Security Passes,O,"Managing the control of access and security passes, pass production, and managing a log of staff and visitors"
 RM6378.4a.O4,RM6378.4a,O4,Control of Access - Vehicles,O,"Managing the control of access and security passes for vehicles, pass production, and vehicles logs"
 RM6378.4a.O5,RM6378.4a,O5,Patrolling Services,O,"Provision of Internal and external security guarding patrols, and alarm responses"
@@ -1251,7 +1251,7 @@ RM6378.4a.T1,RM6378.4a,T1,Security Assessments,T,"Provision of security assessme
 RM6378.4a.T2,RM6378.4a,T2,Risk Assessments,T,"Provision of risk assessments including but not limited to Health and safety, Fire safety and Identifying hazards."
 RM6378.4a.U1,RM6378.4a,U1,Security Awareness / Training,U,"Provision to design, deliver and evaluate security awareness and training"
 RM6378.4b.O1,RM6378.4b,O1,Security Officer Services,O,"Provision of a security officer services at the internal, external and/or locations specified by the buyer"
-RM6378.4b.O2,RM6378.4b,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premise, monitoring activity, and providing evidence of footage where necessary"
+RM6378.4b.O2,RM6378.4b,O2,Video Surveillance Systems (VSS) and Alarm Monitoring,O,"Operating Video Surveillance Systems (VSS) on the buyers premises, monitoring activity, and providing evidence of footage where necessary"
 RM6378.4b.O3,RM6378.4b,O3,Control of Access and Security Passes,O,"Managing the control of access and security passes, pass production, and managing a log of staff and visitors"
 RM6378.4b.O4,RM6378.4b,O4,Control of Access - Vehicles,O,"Managing the control of access and security passes for vehicles, pass production, and vehicles logs"
 RM6378.4b.O5,RM6378.4b,O5,Patrolling Services,O,"Provision of Internal and external security guarding patrols, and alarm responses"

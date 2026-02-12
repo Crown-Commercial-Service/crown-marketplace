@@ -117,44 +117,44 @@ en:
               C:
                 title: Maintenance Services
               D:
-                title: Statutory Obligations
+                title: Statutory Compliance
               E:
-                title: Landscaping Services
+                title: Landscaping / Horticultural Services
               F:
                 title: Catering Services
               G:
                 title: Cleaning Services
               H:
-                title: Additional FM Services
+                title: Miscellaneous FM Services
               I:
                 title: Visitor Support Services
               J:
-                title: Waste Services
+                title: Waste Management
               K:
-                title: Specialist (Defence) FM Services
+                title: Specialist FM Services
               L:
-                title: End User Accommodation Services
+                title: Occupancy and Property Management Services
               M:
                 services:
                   M2:
                     title: CAFM system
-                title: Computer-aided facilities management (CAFM)
+                title: Computer Aided Facilities Management (CAFM)
               "N":
                 title: Helpdesk Services
               O:
                 title: Security Officer Services
               P:
-                title: Design, Supply, Commission and Installation of Electronic security systems and services
+                title: Design, Supply, Install and Commission of Physical and Electronic Security Systems and Services
               Q:
                 title: Maintenance of Security Systems
               R:
-                title: Alarmed Response Centre
+                title: Security Operations Centre
               S:
                 title: Security Advisory Services
               T:
                 title: Security and Risk Assessments
               U:
-                title: Security Awareness/Training
+                title: Security Awareness / Training
         information_about_your_requirements:
           contract_start_date:
             hint: For example, 25 12 2027
@@ -176,19 +176,18 @@ en:
           contract_name:
             hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
             label: Save your search
+          estimated_contract_duration: Estimated contract duration
+          estimated_contract_start_date: Estimated contract start date
           heading: Results
+          private_finance_initiative: Requirement linked to PFI?
           regions: Regions
-          requirements_linked_to_pfi:
-            label: Is your requirement linked to current or previous Private Finance Initiative (PFI)?
-            options:
-              'false': 'No'
-              'true': 'Yes'
-          return_to_contract_cost: Return to annual contract cost
           return_to_dashboard: Return to your account
+          return_to_info_about_requirements: Return to information about your requirements
           save_and_continue: Save and continue
           selection_summary: Selection summary
           services: Services
           sub_lot: Sub-lot %{sub_lot}
+          year: year
         show:
           fm_framework_page: Facilities Management and Security Services framework
           fm_framework_page_url: https://www.crowncommercial.gov.uk/agreements/rm6378

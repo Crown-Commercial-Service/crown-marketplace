@@ -9,7 +9,11 @@ FactoryBot.define do
         'service_ids' => ['RM6378.1a.E1', 'RM6378.1a.E2'],
         'jurisdiction_ids' => ['TLH3', 'TLH5'],
         'annual_contract_value' => 12_345,
-        'requirements_linked_to_pfi' => true
+        'contract_start_date_dd' => '1',
+        'contract_start_date_mm' => '1',
+        'contract_start_date_yyyy' => '2028',
+        'estimated_contract_duration' => 10,
+        'private_finance_initiative' => 'yes',
       }
     end
   end

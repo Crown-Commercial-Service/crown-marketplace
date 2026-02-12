@@ -184,6 +184,12 @@ module Marketplace
     end
   end
 
+  def self.use_gca_branding?
+    Time.zone.now.utc >= Time.zone.parse(ENV.fetch('GCA_BRANDING_LIVE_AT', nil)).utc
+  rescue StandardError
+    false
+  end
+
   def self.cookie_settings_name
     :cookie_preferences_cmp
   end

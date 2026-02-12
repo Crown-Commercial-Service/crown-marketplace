@@ -54,7 +54,7 @@ gem 'omniauth-oauth2', '~> 1.9.0'
 gem 'devise', '~> 5.0.0'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.135.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.136.0'
 
 # for pagination
 gem 'kaminari', '~> 1.2.2'
@@ -113,7 +113,7 @@ gem 'asset_sync', '>= 2.19.1'
 gem 'fog-aws', '>= 3.14.0'
 
 # Use CCS Frontend Helpers
-gem 'ccs-frontend_helpers', '~> 3.4.0'
+gem 'ccs-frontend_helpers', '~> 3.5.0'
 
 # Need to add Open SSL to fix bug in v3.3.0
 gem 'openssl', '~> 4.0.0'
@@ -140,7 +140,7 @@ group :development, :test do
   gem 'tzinfo-data', platforms: %i[windows]
   gem 'bullet', require: true
   gem 'faker', '~> 3.6.0'
-  gem 'brakeman', '~> 7.1.2'
+  gem 'brakeman', '~> 8.0.1'
 end
 
 group :development do
