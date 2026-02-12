@@ -17,6 +17,13 @@ module FacilitiesManagement
         @jurisdictions ||= Jurisdiction.where(id: jurisdiction_ids).ordered_by_category_and_number
       end
 
+      def contract_start_date
+        @contract_start_date ||= Date.strptime(
+          "#{contract_start_date_yyyy}-#{contract_start_date_mm}-#{contract_start_date_dd}",
+          DateValidations::PARSED_DATE_FORMAT
+        )
+      end
+
       def update_contract_name_with_security
         remove_excess_whitespace_from_name
 
