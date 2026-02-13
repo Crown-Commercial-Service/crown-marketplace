@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6378::SupplierShortlistSpreadsheetCreator do
-  let(:procurement) { create(:facilities_management_rm6378_procurement, user: user, contract_name: 'My search test', procurement_details: { 'service_ids' => service_ids, 'jurisdiction_ids' => jurisdiction_ids, 'annual_contract_value' => 500_000, 'contract_start_date_dd' => 01, 'contract_start_date_mm' => 01, 'contract_start_date_yyyy' => 2027, 'estimated_contract_duration' => 45 }) }
+  let(:procurement) { create(:facilities_management_rm6378_procurement, user: user, contract_name: 'My search test', procurement_details: { 'service_ids' => service_ids, 'jurisdiction_ids' => jurisdiction_ids, 'annual_contract_value' => 500_000, 'contract_start_date_dd' => 0o1, 'contract_start_date_mm' => 0o1, 'contract_start_date_yyyy' => 2027, 'estimated_contract_duration' => 45 }) }
   let(:service_ids) { %w[RM6378.1a.C5 RM6378.1a.J1 RM6378.1a.L8] }
   let(:jurisdiction_ids) { %w[TLC3 TLD1 TLF3 TLH3] }
   let(:user) { create(:user, :with_detail) }
