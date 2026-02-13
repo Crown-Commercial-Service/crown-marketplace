@@ -25,6 +25,7 @@ module FacilitiesManagement
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def add_supplier_shortlists
         @workbook.add_worksheet(name: 'Supplier shortlists') do |sheet|
           sheet.add_row ['Supplier Shortlist and eligible Lot', nil], style: @styles[:heading_style], height: LARGE_ROW_HEIGHT
@@ -45,6 +46,7 @@ module FacilitiesManagement
           style_add_supplier_shortlists_sheet(sheet)
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       def style_add_supplier_shortlists_sheet(sheet)
         sheet['B2'].style = @styles[:standard_column_style]
