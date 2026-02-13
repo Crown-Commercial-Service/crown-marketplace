@@ -73,7 +73,7 @@ RSpec.describe FacilitiesManagement::RM6378::SupplierShortlistSpreadsheetCreator
     end
 
     it 'has the correct estimated contract start date' do
-      expect(sheet.row(4)).to eq ['Estimated contract start date:', 22112027]
+      expect(sheet.row(4)).to eq ['Estimated contract start date:', '22 November 2027']
     end
 
     it 'has the correct estimated contract duration' do
@@ -85,7 +85,7 @@ RSpec.describe FacilitiesManagement::RM6378::SupplierShortlistSpreadsheetCreator
     end
 
     it 'has the correct suppliers' do
-      expect(sheet.column(1)[7..]).to eq ['Hornet', 'The Knight', 'Zote the Mighty']
+      expect(sheet.column(1)[9..]).to eq ['Hornet', 'The Knight', 'Zote the Mighty']
     end
   end
 
