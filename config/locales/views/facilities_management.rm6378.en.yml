@@ -50,7 +50,7 @@ en:
         index:
           buyer_account_dashboard: Buyer account dashboard
           buyer_account_title: Your account
-          further_information_link: https://www.crowncommercial.gov.uk/agreements/rm6378
+          further_information_link: https://www.%{org_domain}.gov.uk/agreements/rm6378
           further_information_link_description: View further information about the Facilities Management and Security Services framework RM6378 (opens in new tab)
           manage_account_desc: Update and edit your contact details
           manage_account_link: Manage my details
@@ -163,7 +163,7 @@ en:
             question: What is the estimated contract duration?
             years: years
           heading: Information about your requirements
-          information_text: To help CCS understand your needs, please tell us the start date and duration of the contract. If you’re not sure at this stage, an estimate can be provided.
+          information_text: To help %{org_name_abbr} understand your needs, please tell us the start date and duration of the contract. If you’re not sure at this stage, an estimate can be provided.
           private_finance_initiative:
             question: Is your requirement linked to a current or previous Private Finance Initiative (PFI)?
           return_text: Return to your account
@@ -190,7 +190,7 @@ en:
           year: year
         show:
           fm_framework_page: Facilities Management and Security Services framework
-          fm_framework_page_url: https://www.crowncommercial.gov.uk/agreements/rm6378
+          fm_framework_page_url: https://www.%{org_domain}.gov.uk/agreements/rm6378
           if_you_need_to_talk: If you need to talk to us about this shortlist or procurement, please use the below reference number. Click on ‘contact us’ at the bottom of the page for our details.
           information_list:
             item_1: customer guidance

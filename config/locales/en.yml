@@ -111,11 +111,11 @@ en:
         confirm_new_password: Confirm new password
         email_has_been_sent: A reset email has been sent.
         heading: Reset your password
-        if_the_email_address_entered: If the email address you’ve entered belongs to a Crown Commercial Service account, we’ll send instructions to reset the password.
+        if_the_email_address_entered: If the email address you’ve entered belongs to a %{org_name} account, we’ll send instructions to reset the password.
         new_password: New password
         password: 'Your password must have:'
         reset_password_for_html: Reset password for %{email_link}
-        text_html: If you don’t receive this, email <a href="mailto:info@crowncommercial.gov.uk" class="govuk-link govuk-link--no-visited-state">info@crowncommercial.gov.uk</a>
+        text_html: If you don’t receive this, email <a href="mailto:info@%{org_domain}.gov.uk" class="govuk-link govuk-link--no-visited-state">info@%{org_domain}.gov.uk</a>
         verify_code: Verification code
       new:
         email: Email address
@@ -124,14 +124,14 @@ en:
         lead: Enter your email address and we’ll send you a verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
       password_reset_success:
         heading: You have successfully changed your password
-        lead: You can now sign in to your Crown Commercial Service account
+        lead: You can now sign in to your %{org_name} account
     registrations:
       domain_not_on_safelist:
-        back_to_create: Back to create a CCS account
+        back_to_create: Back to create a %{org_name_abbr} account
         heading: You must use a public sector email address
-        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="%{org_name}">%{org_name_abbr}</abbr> account.
         line_01: The email you used doesn’t belong to a recognised public sector domain.
-        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@%{org_domain}.gov.uk">info@%{org_domain}.gov.uk</a> if
         list_01: you think your domain should be recognised
         list_02: you still can’t create an account
       new:
@@ -139,13 +139,13 @@ en:
         create_password: Create a password you'll remember
         email: Email address
         email_hint: We will send a confirmation code to this address.
-        heading: Create a CCS account
-        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        heading: Create a %{org_name_abbr} account
+        heading_html: Create a <abbr title="%{org_name}">%{org_name_abbr}</abbr> account
         lead: You must be employed by, or represent, a public sector organisation.
         your_password_must_have: 'Your password must have:'
     sessions:
       new:
-        create_ccs_account: Create a CCS account
+        create_ccs_account: Create a %{org_name_abbr} account
         email_address: Email address
         email_hint: Enter the email address you used to set up your account.
         forgotten_password: I’ve forgotten my password
@@ -213,7 +213,7 @@ en:
   errors:
     contact_ccs:
       contact_ccs_html: "%{link} if you believe you are seeing this message in error."
-      link_text: Contact CCS (opens in new tab)
+      link_text: Contact %{org_name_abbr} (opens in new tab)
     internal_error:
       there_is_a_problem: Sorry, there is a problem with the service
       try_again_later: Try again later.
@@ -244,7 +244,7 @@ en:
     sign_up: Create an account
   home:
     accessibility_statement:
-      CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+      CCS_is_committed: "%{org_name} is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018."
       ability_net: AbilityNet (opens in a new tab)
       ability_net_link: https://mcmw.abilitynet.org.uk/
       accessibility_guidelines_link: https://www.w3.org/TR/WCAG21/
@@ -256,7 +256,7 @@ en:
       any_new_PDFs: Any new PDFs or Word documents we publish will meet accessibility standards.
       call: call 0345 410 2222
       email: email
-      email_link: info@crowncommercial.gov.uk
+      email_link: info@%{org_domain}.gov.uk
       equality: The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint,
       equality_link: https://www.equalityadvisoryservice.com/
       equality_link_text: contact the Equality Advisory and Support Service (EASS) (opens in a new tab)
@@ -280,7 +280,7 @@ en:
       list_2_page_view: page view is not optimised for viewing on mobile devices
       list_2_text_reflow: the text will not reflow in a single column when you change the size of the browser window. This means you may need to scroll horizontally (across instead of up and down) on certain pages
       many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards – for example, they may not be structured so they’re accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
-      market_place_link: https://marketplace.service.crowncommercial.gov.uk/facilities-management
+      market_place_link: https://marketplace.service.%{org_domain}.gov.uk/facilities-management
       non_text_contrast_heading: Non-Text Contrast
       non_text_contrast_issue: When reviewing pages there is not enough contrast between the visual boundaries of user interface components in a selected or focus state and the background. This mainly affects buttons and some text input fields on certain pages.
       non_text_contrast_this_falls: This fails WCAG 2.1 AA success criterion 1.4.11(b) (non-text contrast). We plan to fix this by December 2020.
@@ -290,11 +290,11 @@ en:
       pdfs_and_docs: PDFs and other documents
       plan_to_fix: By September 2020, we plan to either fix these or replace them with accessible HTML pages.
       some_of_our: Some of our PDFs and Word documents are essential to providing our services. For example, we have PDFs with contract information, and forms published as Word documents.
-      the_complete_journey: The complete Facilities Management journey was tested, this included every page a buyer or supplier would progress through in-order to complete the procurement activity.  The administration screens used for the maintenance of the digital service were also tested for accessibility, this area of functionality is only used by a small selection of CCS staff.
+      the_complete_journey: The complete Facilities Management journey was tested, this included every page a buyer or supplier would progress through in-order to complete the procurement activity.  The administration screens used for the maintenance of the digital service were also tested for accessibility, this area of functionality is only used by a small selection of %{org_name_abbr} staff.
       the_content: The content listed below is non-accessible for the following reasons.
       this_statement: This accessibility statement applies to the Facilities Management digital service which can be found at the following URL
       this_statement_date: This statement was prepared on 8th October 2020. It will be reviewed and updated as required.
-      this_website: 'This website is run by Crown Commercial Service (CCS). We want as many people as possible to be able to use this website. For example, that means you should be able to:'
+      this_website: 'This website is run by %{org_name} (%{org_name_abbr}). We want as many people as possible to be able to use this website. For example, that means you should be able to:'
       this_website_partially_1: This website is partially compliant with the
       this_website_partially_2: due to the non-compliances listed below.
       two_D_heading: Two-dimensional scrolling is present
@@ -426,7 +426,7 @@ en:
       facilities_management_link: Find a facilities management supplier
       facilities_management_supplier_link: Facilities management supplier account
     not_permitted:
-      ccs_support: CCS Support (opens in a new tab)
+      ccs_support: "%{org_name_abbr} Support (opens in a new tab)"
       details_html: Contact %{link} if you need to speak to someone about this.
       title: Sorry, you are not authorised to view this page
   layouts:
@@ -449,7 +449,7 @@ en:
         aria_label: View our privacy policy
         text: Privacy policy
       skip: Skip to main content
-      title: Crown Commercial Service
+      title: "%{org_name}"
     cookie-banner:
       accept_cookies: Accept analytics cookies
       change_cookie_settings_html: You can %{cookie_settings_link} at any time.

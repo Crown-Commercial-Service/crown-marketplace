@@ -377,5 +377,17 @@ module ApplicationHelper
     not_started: :grey,
     not_required: :grey
   }.freeze
+
+  # Methods used for the CCS transition to GCA
+
+  def t(key, **options)
+    options[:org_name] ||= current_organisation_name
+    options[:org_name_abbr] ||= current_organisation_name_abbr
+    options[:org_domain] ||= current_organisation_domain
+
+    super
+  end
+
+  delegate :current_organisation_name, :current_organisation_name_abbr, :current_organisation_domain, to: :Marketplace
 end
 # rubocop:enable Metrics/ModuleLength

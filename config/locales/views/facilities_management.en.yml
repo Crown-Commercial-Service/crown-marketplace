@@ -209,7 +209,7 @@ en:
         contact_preferences:
           contact_opt_in:
             hint: You can change these settings at any time.
-            legend: Can CCS contact you about any searches you save?
+            legend: Can %{org_name_abbr} contact you about any searches you save?
             options:
               'false': 'No'
               'true': 'Yes'
@@ -251,7 +251,7 @@ en:
         answer_questions: Answer questions
         change: Change
         contact_preferences:
-          contact_opt_in: CCS can contact you about searches?
+          contact_opt_in: "%{org_name_abbr} can contact you about searches?"
           heading: Contact preferences
         heading: Your details
         organisation_details:
