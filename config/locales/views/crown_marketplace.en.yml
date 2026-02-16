@@ -69,7 +69,7 @@ en:
         was_removed: "'%{email_domain}' was removed from the allow list"
         you_can_add: You can add a new email domain by clicking the 'Add a new email domain' button.
       new:
-        email_domain_hint: For example, the email domain for 'example@crowncommercial.gov.uk' would be 'crowncommercial.gov.uk'
+        email_domain_hint: For example, the email domain for 'example@%{org_domain}.gov.uk' would be '%{org_domain}.gov.uk'
         email_domain_label: Enter a new email domain for the Allow list
         email_domain_must: 'The new email domain cannot already be in the allow list and it can only contain the following:'
         email_domain_must_1: letters

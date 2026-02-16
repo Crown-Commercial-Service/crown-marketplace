@@ -7,15 +7,17 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <% asset_prefix = Marketplace.use_gca_branding? ? 'gca' : 'ccs' %>
+
     <%= tag :meta, name: 'viewport', content: 'width=device-width, initial-scale=1' %>
-    <%= tag :meta, property: 'og:image', content: asset_path('images/ccs-opengraph-image.png') %>
+    <%= tag :meta, property: 'og:image', content: asset_path("images/#{asset_prefix}-opengraph-image.png") %>
     <%= tag :meta, name: 'theme-color', content: '#0b0c0c' %>
 
     <%= favicon_link_tag asset_path('images/favicon.ico') %>
     <%= favicon_link_tag asset_path('images/favicon.svg'), type: "image/svg+xml" %>
-    <%= favicon_link_tag asset_path('images/ccs-icon-mask.svg'), rel: 'mask-icon', type: 'image/svg', color: "#0b0c0c" %>
+    <%= favicon_link_tag asset_path("images/#{asset_prefix}-icon-mask.svg"), rel: 'mask-icon', type: 'image/svg', color: "#0b0c0c" %>
     <% %w[ 180 192 512 ].each do |size| %>
-    <%= favicon_link_tag asset_path("images/ccs-icon-#{size}.png"), rel: 'apple-touch-icon', type: 'image/png', size:"#{size}x#{size}" %>
+    <%= favicon_link_tag asset_path("images/#{asset_prefix}-icon-#{size}.png"), rel: 'apple-touch-icon', type: 'image/png', size:"#{size}x#{size}" %>
     <% end %>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>

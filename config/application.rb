@@ -18,6 +18,7 @@ require 'action_view/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# rubocop:disable Metrics/ModuleLength
 module Marketplace
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -78,11 +79,11 @@ module Marketplace
   end
 
   def self.feedback_email_address
-    'info@crowncommercial.gov.uk'
+    "info@#{current_organisation_domain}.gov.uk"
   end
 
   def self.support_form_link
-    'https://www.crowncommercial.gov.uk/contact'
+    "https://www.#{current_organisation_domain}.gov.uk/contact"
   end
 
   def self.fm_survey_link
@@ -94,7 +95,7 @@ module Marketplace
   end
 
   def self.ccs_homepage_url
-    'https://www.crowncommercial.gov.uk/'
+    "https://www.#{current_organisation_domain}.gov.uk/"
   end
 
   # :nocov:
@@ -166,18 +167,18 @@ module Marketplace
   end
 
   def self.can_edit_facilities_management_frameworks?
-    @can_edit_facilities_management_frameworks ||= rails_env_url != 'https://marketplace.service.crowncommercial.gov.uk'
+    @can_edit_facilities_management_frameworks ||= rails_env_url != "https://marketplace.service.#{current_organisation_domain}.gov.uk"
   end
 
   def self.environment_name
     case rails_env_url
     when 'http://localhost'
       :local
-    when 'https://cmp.cmp-sandbox.crowncommercial.gov.uk'
+    when 'https://cmp.cmp-sandbox.crowncommercial.gov.uk', 'https://cmp.cmp-sandbox.gca.gov.uk'
       :sandbox
-    when 'https://cmp.cmpdev.crowncommercial.gov.uk'
+    when 'https://cmp.cmpdev.crowncommercial.gov.uk', 'https://cmp.cmpdev.gca.gov.uk'
       :cmpdev
-    when 'https://marketplace.preview.crowncommercial.gov.uk'
+    when 'https://marketplace.preview.crowncommercial.gov.uk', 'https://marketplace.preview.gca.gov.uk'
       :preview
     else
       :production
@@ -188,6 +189,18 @@ module Marketplace
     Time.zone.now.utc >= Time.zone.parse(ENV.fetch('GCA_BRANDING_LIVE_AT', nil)).utc
   rescue StandardError
     false
+  end
+
+  def self.current_organisation_name
+    use_gca_branding? ? 'Government Commercial Agency' : 'Crown Commercial Service'
+  end
+
+  def self.current_organisation_name_abbr
+    use_gca_branding? ? 'GCA' : 'CCS'
+  end
+
+  def self.current_organisation_domain
+    use_gca_branding? ? 'gca' : 'crowncommercial'
   end
 
   def self.cookie_settings_name
@@ -202,3 +215,4 @@ module Marketplace
     }.stringify_keys
   end
 end
+# rubocop:enable Metrics/ModuleLength
