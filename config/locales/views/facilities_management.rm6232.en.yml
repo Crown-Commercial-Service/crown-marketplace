@@ -423,7 +423,7 @@ en:
           buyer_account_dashboard: Buyer account dashboard
           buyer_account_title: Your account
           further_information_help_html: "%{fm_link} (opens in a new tab)"
-          further_information_link: https://www.crowncommercial.gov.uk/agreements/rm6232
+          further_information_link: https://www.%{org_domain}.gov.uk/agreements/rm6232
           further_information_link_description: View further information about the Facilities Management and Workplace Services framework RM6232
           manage_account_desc: Update and edit your contact details
           manage_account_link: Manage my details
@@ -480,7 +480,7 @@ en:
           who_can_provide: who can provide the services you require in your
         show:
           fm_framework_page: Facilities Management and Workplace Services framework
-          fm_framework_page_url: https://www.crowncommercial.gov.uk/agreements/rm6232
+          fm_framework_page_url: https://www.%{org_domain}.gov.uk/agreements/rm6232
           if_you_need_to_talk: If you need to talk to us about this shortlist or procurement, please use the below reference number. Click on ‘contact us’ at the bottom of the page for our details.
           information_list:
             item_1: customer guidance

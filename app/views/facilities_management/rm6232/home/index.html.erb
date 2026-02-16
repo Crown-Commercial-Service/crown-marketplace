@@ -29,7 +29,7 @@
         <li><%= t('.startlist.item_2') %></li>
         <li><%= t('.startlist.item_3') %></li>      </ul>
 
-      <%= link_to t('.further_information'), 'https://www.crowncommercial.gov.uk/agreements/rm6232', target: "_blank", class: 'govuk-link--no-visited-state' %>
+      <%= link_to t('.further_information'), "https://www.#{current_organisation_domain}.gov.uk/agreements/rm6232", target: "_blank", class: 'govuk-link--no-visited-state' %>
       <br/>
       <%= govuk_button(t('.startnow'), href: facilities_management_rm6232_new_user_session_path, is_start_button: true, classes: 'govuk-!-margin-top-6 govuk-!-margin-bottom-8', attributes: { aria: { label: t('.startnow') } }) %>
     </div>
