@@ -487,7 +487,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.2.4)
+    rack (3.2.5)
     rack-protection (4.2.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
@@ -548,7 +548,7 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
-    redis-client (0.26.2)
+    redis-client (0.26.4)
       connection_pool
     regexp_parser (2.11.3)
     reline (0.6.3)
@@ -635,7 +635,7 @@ GEM
       activesupport (>= 7.1)
     show_me_the_cookies (6.0.0)
       capybara (>= 2, < 4)
-    sidekiq (8.1.0)
+    sidekiq (8.1.1)
       connection_pool (>= 3.0.0)
       json (>= 2.16.0)
       logger (>= 1.7.0)
@@ -798,7 +798,7 @@ DEPENDENCIES
   selenium-webdriver (>= 3.142.3)
   shoulda-matchers (>= 5.1.0)
   show_me_the_cookies (>= 6.0.0)
-  sidekiq (~> 8.1.0)
+  sidekiq (~> 8.1.1)
   sidekiq-cron
   simplecov (>= 0.16.1)
   sinatra (~> 4.2.1)
