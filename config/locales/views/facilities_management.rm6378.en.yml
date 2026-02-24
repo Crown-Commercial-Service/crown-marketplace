@@ -112,6 +112,7 @@ en:
               TLN:
                 title: Northern Ireland
         choose_services:
+          learn_more: Further details (opens in a new tab)
           services:
             section:
               C:
