@@ -807,7 +807,6 @@ DEPENDENCIES
   smarter_csv
   tzinfo-data
   uk_postcode
-  virtus
   wdm (>= 0.1.0)
   webmock (>= 3.12.1)
 

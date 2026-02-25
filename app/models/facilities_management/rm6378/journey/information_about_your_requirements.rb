@@ -11,7 +11,7 @@ module FacilitiesManagement
       attribute :contract_start_date_dd
       attribute :contract_start_date_mm
       attribute :contract_start_date_yyyy
-      attribute :estimated_contract_duration, Numeric
+      attribute :estimated_contract_duration, :numeric
       attribute :private_finance_initiative
 
       validates :contract_start_date, presence: true

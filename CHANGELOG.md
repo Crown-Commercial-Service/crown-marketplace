@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add new FM RM6378 question answers to summary ([PR 5146](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5146))
 - Update the selected suppliers document to add new questions for FM RM6378 ([PR 5163](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5163))
 - Updated content that references CCS to now reference GCA ([PR 5170](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5170))
+- Replace virtus with native Rails models ([PR 5178](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5178))
 
 ## [7.5.0] - 2025-12-09
 

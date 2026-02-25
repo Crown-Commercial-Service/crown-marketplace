@@ -42,7 +42,6 @@ gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
 gem 'caxlsx_rails', '>= 0.6.3'
-gem 'virtus'
 
 gem 'rollbar', '~> 3.7.0'
 

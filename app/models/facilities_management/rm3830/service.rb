@@ -1,13 +1,14 @@
 module FacilitiesManagement
   module RM3830
     class Service
-      include Virtus.model
+      include ActiveModel::Model
+      include ActiveModel::Attributes
       include StaticRecord
 
-      attribute :code, String
-      attribute :name, String
-      attribute :work_package_code, String
-      attribute :mandatory, Axiom::Types::Boolean
+      attribute :code, :string
+      attribute :name, :string
+      attribute :work_package_code, :string
+      attribute :mandatory, :boolean
 
       def work_package
         WorkPackage.find_by(code: work_package_code)
