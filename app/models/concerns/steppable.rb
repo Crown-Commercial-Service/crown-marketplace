@@ -4,18 +4,18 @@ module Steppable
   extend ActiveModel::Translation
 
   included do
-    include Virtus.model
+    include ActiveModel::Model
+    include ActiveModel::Attributes
   end
 
   class_methods do
     def permit_list
-      array_params, single_params =
-        attribute_set.partition { |a| a.type.primitive == Array }
-      single_params.map(&:name) + [array_params.to_h { |a| [a.name, []] }]
+      array_params, single_params = attribute_names.partition { |name| attribute_types[name].type == :array }
+      single_params.map(&:to_sym) + [array_params.to_h { |name| [name.to_sym, []] }]
     end
 
     def permitted_keys
-      attribute_set.map(&:name)
+      attribute_names.map(&:to_sym)
     end
   end
 
