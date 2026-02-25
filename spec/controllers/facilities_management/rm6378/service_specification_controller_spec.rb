@@ -10,14 +10,14 @@ RSpec.describe FacilitiesManagement::RM6378::ServiceSpecificationController do
       it 'redirects to the sign in page' do
         get :show, params: { service_code: 'C.1' }
 
-        expect(response).to redirect_to facilities_management_rm6232_new_user_session_path
+        expect(response).to redirect_to facilities_management_rm6378_new_user_session_path
       end
     end
 
     context 'when checking the page renders for all service codes' do
       login_fm_buyer_with_details
 
-      service_codes = FacilitiesManagement::RM6232::WorkPackage.selectable.map { |wp| wp.services.order(:sort_order).pluck(:code) }.flatten
+      service_codes = FacilitiesManagement::RM6378::WorkPackage.selectable.map { |wp| wp.services.order(:sort_order).pluck(:code) }.flatten
 
       service_codes.each do |service_code|
         context "and the service code is #{service_code}" do
