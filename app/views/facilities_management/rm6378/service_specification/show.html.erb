@@ -1,0 +1,38 @@
+<% content_for :page_title, t('.service_specification') %>
+
+<div class="govuk-clearfix">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <span class="govuk-caption-m govuk-!-font-size-24">
+        <%= t('.service_specification') %>
+      </span>
+      <h1 class="govuk-heading-xl">
+        <%= t('.heading', code: @service.work_package_code, work_package_name: @service.work_package.name) %>
+      </h1>
+    </div>
+  </div>
+
+  <% if @specification.work_package_service_lines %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <%= govuk_details(t('.generic_requirements', work_package_name: @service.work_package.name)) do %>
+          <% @specification.work_package_service_lines.each do |clause| %>
+            <%= render 'clause', clause: clause %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-m govuk-!-margin-top-3 govuk-!-margin-bottom-3">
+        <%= @specification.service_lines.first[:body] %>
+      </h2>
+
+      <% @specification.service_lines[1..].each do |clause| %>
+        <%= render 'clause', clause: clause %>
+      <% end %>
+    </div>
+  </div>
+</div>
