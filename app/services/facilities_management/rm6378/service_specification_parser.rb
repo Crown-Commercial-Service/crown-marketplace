@@ -1,5 +1,5 @@
 class FacilitiesManagement::RM6378::ServiceSpecificationParser
-  DATA_FILE_PATH = Rails.root.join('data', 'facilities_management', 'rm6378', 'rm6378_service_specifications.csv')
+  DATA_FILE_PATH = Rails.root.join('data', 'facilities_management', 'rm6378', 'service_specifications.csv')
   SERVICE_LINE_REGEX = /\A[A-Z0-9.]+/
 
   attr_reader :work_package_service_lines, :service_lines

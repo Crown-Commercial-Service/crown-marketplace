@@ -335,3 +335,8 @@ en:
           ref_number: Ref number
           return_to_your_account: Return to your account
           you_do_not_have_any: You do not have any saved searches
+      service_specification:
+        show:
+          generic_requirements: "%{work_package_name} - Generic Requirements"
+          heading: Work Package %{code} - %{work_package_name}
+          service_specification: Service specification
