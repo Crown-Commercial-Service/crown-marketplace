@@ -1,20 +1,20 @@
 code,name,selectable
-C, Maintenance Services, TRUE
+C,Maintenance Services, TRUE
 D,Statutory Compliance, TRUE
 E,Landscaping / Horticultural Services, TRUE
-F, Catering Services, TRUE
-G, Cleaning Services, TRUE
+F,Catering Services, TRUE
+G,Cleaning Services, TRUE
 H,Miscellaneous FM Services, TRUE
-I, Visitor Support Services, TRUE
-J, Waste Management, TRUE
+I,Visitor Support Services, TRUE
+J,Waste Management, TRUE
 K,Specialist FM Services, TRUE
 L,Occupancy and Property Management Services, TRUE
 M,Computer Aided Facilities Management (CAFM), TRUE
-N, Helpdesk Services, TRUE
+N,Helpdesk Services, TRUE
 O,Security Officer Services, TRUE
-P, Design, Supply, Install and Commission of Physical and Electronic Security Systems and Services, TRUE
-Q, Maintenance of Security Systems, TRUE
+P,Design, Supply, Install and Commission of Physical and Electronic Security Systems and Services, TRUE
+Q,Maintenance of Security Systems, TRUE
 R,Security Operations Centre, TRUE
-S, Security Advisory Services, TRUE
+S,Security Advisory Services, TRUE
 T,Security and Risk Assessments, TRUE
 U,Security Awareness / Training, TRUE
