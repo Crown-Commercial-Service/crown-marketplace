@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_25_161439) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_22_140254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -514,25 +514,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_161439) do
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_facilities_management_rm6232_work_packages_on_code"
     t.index ["selectable"], name: "index_facilities_management_rm6232_work_packages_on_selectable"
-  end
-
-  create_table "facilities_management_rm6378_services", force: :cascade do |t|
-    t.string "category"
-    t.string "code"
-    t.string "description"
-    t.boolean "hard", default: false
-    t.string "lot_id"
-    t.boolean "mandatory"
-    t.string "name"
-    t.string "number"
-    t.boolean "soft", default: false
-    t.string "work_package_code"
-  end
-
-  create_table "facilities_management_rm6378_work_packages", force: :cascade do |t|
-    t.string "code"
-    t.string "name"
-    t.boolean "selectable"
   end
 
   create_table "facilities_management_security_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
