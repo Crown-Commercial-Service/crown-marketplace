@@ -3,14 +3,14 @@ module FacilitiesManagement
     class Journey::ChooseLocations
       include Steppable
 
-      attribute :region_codes, Array
+      attribute :region_codes, :array, default: -> { [] }
       validates :region_codes, length: { minimum: 1 }
 
-      attribute :annual_contract_value, Numeric
+      attribute :annual_contract_value, :numeric
       attribute :contract_start_date_dd
       attribute :contract_start_date_mm
       attribute :contract_start_date_yyyy
-      attribute :estimated_contract_duration, Numeric
+      attribute :estimated_contract_duration, :numeric
       attribute :private_finance_initiative
 
       def next_step_class

@@ -3,8 +3,8 @@ module FacilitiesManagement
     class Journey::ChooseServices
       include Steppable
 
-      attribute :service_codes, Array
-      attribute :region_codes, Array
+      attribute :service_codes, :array, default: -> { [] }
+      attribute :region_codes, :array, default: -> { [] }
       validates :service_codes, length: { minimum: 1 }
 
       def services

@@ -3,12 +3,12 @@ module FacilitiesManagement
     class Journey::ChooseServices
       include Steppable
 
-      attribute :service_codes, Array
+      attribute :service_codes, :array, default: -> { [] }
       validates :service_codes, length: { minimum: 1 }
       validate :validate_not_all_mandatory
 
-      attribute :region_codes, Array
-      attribute :annual_contract_value, Numeric
+      attribute :region_codes, :array, default: -> { [] }
+      attribute :annual_contract_value, :numeric
 
       def next_step_class
         Journey::ChooseLocations
