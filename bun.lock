@@ -9,7 +9,7 @@
         "@types/js-cookie": "^3.0.6",
         "@types/rails__request.js": "^0.0.1",
         "ccs-frontend": "^2.5.0",
-        "govuk-frontend": "^5.14.0",
+        "govuk-frontend": "^6.0.0",
         "jquery": "^4.0.0",
         "js-cookie": "^3.0.5",
         "sass": "^1.97.3",
@@ -177,7 +177,7 @@
 
     "glob-parent": ["glob-parent@6.0.2", "", { "dependencies": { "is-glob": "^4.0.3" } }, "sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A=="],
 
-    "govuk-frontend": ["govuk-frontend@5.14.0", "", {}, "sha512-MgfaXswIM6KpXS2T5gltEnzgVLgfM3UoE9+rYkhBiR0suaJ8Let31VZXQZqz9QhiPDbv28fW1nRjIyLujfZIBA=="],
+    "govuk-frontend": ["govuk-frontend@6.0.0", "", {}, "sha512-n1DUbQD6coHL3UkQS0yTbd4ziIxLBzkWBODVCjXMclSY7FvOGeHcTg3c72z6u7DQECQb0tfZofhPjGxPUOIizA=="],
 
     "ignore": ["ignore@5.3.2", "", {}, "sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g=="],
 
