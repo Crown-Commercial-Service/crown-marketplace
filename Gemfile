@@ -50,7 +50,7 @@ gem 'omniauth', '~> 2.1.4'
 gem 'omniauth-oauth2', '~> 1.9.0'
 
 # for authentication
-gem 'devise', '~> 5.0.1'
+gem 'devise', '~> 5.0.2'
 
 # for cognito
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.136.0'
