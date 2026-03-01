@@ -24,7 +24,7 @@ Feature: Results validations
   Scenario: Contract name is blank
     Given I click on 'Save and continue'
     Then I should see the following error messages:
-      | Enter your contract name                         |
+      | Enter your contract name |
 
   Scenario: Contract name is taken
     Given I have a procurement with the name 'Taken contract name'

@@ -112,6 +112,7 @@ en:
               TLN:
                 title: Northern Ireland
         choose_services:
+          learn_more: Further details (opens in a new tab)
           services:
             section:
               C:
@@ -216,3 +217,8 @@ en:
         supplier_list:
           suppliers_shortlisted: "%{number_of_suppliers} supplier(s) shortlisted"
           who_can_provide: who can provide the services you require in your
+      service_specification:
+        show:
+          generic_requirements: "%{work_package_name} - Generic Requirements"
+          heading: Work Package %{code} - %{work_package_name}
+          service_specification: Service specification

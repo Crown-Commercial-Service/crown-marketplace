@@ -39,7 +39,7 @@ Feature: Information appears correctly on results page in the complex scenario
       | Essex       |
     And I should see the following 'annual contract cost' in the selection summary:
       | £123,456 |
-        And I should see the following 'estimated contract start date' in the selection summary:
+    And I should see the following 'estimated contract start date' in the selection summary:
       | tomorrow |
     And I should see the following 'estimated contract duration' in the selection summary:
       | 27 years |

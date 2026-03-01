@@ -212,8 +212,8 @@ module ApplicationHelper
               hint: {
                 text: capture do
                   concat(service.description)
-                  # concat(tag.hr(class: 'govuk-section-break govuk-!-margin-top-4'))
-                  # concat(link_to(t('facilities_management.rm6378.journey.choose_services.learn_more'), facilities_management_rm6378_service_specification_path(service.number), target: '_blank', rel: 'noopener'))
+                  concat(tag.hr(class: 'govuk-section-break govuk-!-margin-top-4'))
+                  concat(link_to(t('facilities_management.rm6378.journey.choose_services.learn_more'), facilities_management_rm6378_service_specification_path(service.number), target: '_blank', rel: 'noopener'))
                 end
               },
               checked: service_codes&.include?(service.number),
