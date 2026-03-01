@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM6378::ServiceSpecificationController do
   let(:default_params) { { service: 'facilities_management', framework: 'RM6378' } }
 
-  include_context 'and RM6378 is live'
-
   describe 'GET show' do
     context 'when the user is not signed in' do
       it 'redirects to the sign in page' do
@@ -14,13 +12,13 @@ RSpec.describe FacilitiesManagement::RM6378::ServiceSpecificationController do
       end
     end
 
-    context 'when checking the page renders for all service codes' do
+    context 'when checking the page renders for all service numbers' do
       login_fm_buyer_with_details
 
-      service_codes = FacilitiesManagement::RM6378::WorkPackage.selectable.map { |wp| wp.services.order(:sort_order).pluck(:code) }.flatten
+      service_codes = Service.where("id LIKE 'RM6378%'").distinct(:number).pluck(:number)
 
       service_codes.each do |service_code|
-        context "and the service code is #{service_code}" do
+        context "and the service number is #{service_code}" do
           before { get :show, params: { service_code: } }
 
           it 'renders the show page successfully' do
