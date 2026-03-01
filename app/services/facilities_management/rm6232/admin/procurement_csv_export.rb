@@ -32,7 +32,7 @@ module FacilitiesManagement::RM6232
     end
 
     def self.find_procurements(start_date, end_date)
-      Procurement.where(created_at: (start_date..(end_date + 1))).where.not(user_id: test_user_ids).order(created_at: :desc)
+      Procurement.where(created_at: start_date.beginning_of_day..end_date.end_of_day).where.not(user_id: test_user_ids).order(created_at: :desc)
     end
 
     # rubocop:disable Metrics/AbcSize
