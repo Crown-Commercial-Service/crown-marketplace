@@ -42,10 +42,6 @@ en:
               inclusion: Select one option for requirements linked to PFI
   facilities_management:
     rm6378:
-      admin:
-        home:
-          index:
-            header: RM6378 administration dashboard
       buyer_account:
         index:
           buyer_account_dashboard: Buyer account dashboard

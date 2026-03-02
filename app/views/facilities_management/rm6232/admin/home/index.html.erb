@@ -33,4 +33,15 @@
     ],
     t('.management_report')
   ) %>
+
+  <%= ccs_dashboard_section(
+    [
+      {
+        title: t('shared.admin.dashboard.index.manage_framework_status.title'),
+        href: "/#{params[:service].split('/').first.gsub('_', '-')}/admin/frameworks",
+        description: t('shared.admin.dashboard.index.manage_framework_status.description', service_name: t('.facilities_management'))
+      },
+    ],
+    t('shared.admin.dashboard.index.manage_framework')
+  ) if current_user.has_role? :ccs_developer %>
 </div>

@@ -233,6 +233,8 @@ en:
     unacceptable:
       changes_rejected: Sorry, the change you wanted was rejected
       explanation: Maybe you tried to change something you didn’t have access to.
+  facilities_management:
+    service_name: Facilities Management and Security Services
   header_navigation_links_helper:
     admin_dashboard: Admin dashboard
     back_to_start: Back to start
@@ -521,6 +523,29 @@ en:
       other: results
   shared:
     admin:
+      dashboard:
+        index:
+          caption: "%{service_name} - %{framework}"
+          heading: Admin dashboard
+          manage_framework: Manage frameworks
+          manage_framework_status:
+            description: Update the framework status for %{service_name}
+            title: Manage frameworks status
+          manage_supplier_data:
+            description: View and update the supplier's details and their lot data
+            title: Manage supplier data
+          page_title: "%{service_name} admin dashboard"
+          supplier_data: Supplier data
+          upload_supplier_data:
+            description: Use spreadsheets to upload the supplier data
+            title: Upload supplier data
+          user_reports: User reports
+          view_change_logs:
+            description: View logs of all changes made to the supplier data by the admin team
+            title: Supplier data change log
+          view_user_reports:
+            description: View and generate reports of user searches
+            title: User reports
       frameworks:
         edit:
           expires_at_date: Framework 'expires at' date for %{framework}
