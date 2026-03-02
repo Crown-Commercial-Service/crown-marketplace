@@ -153,6 +153,7 @@ Rails.application.routes.draw do
 
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
+      get '/service-specification/:service_code', to: 'service_specification#show', as: 'service_specification'
 
       resources :procurements, only: %i[index show new create] do
         get 'supplier_shortlist_spreadsheet'
