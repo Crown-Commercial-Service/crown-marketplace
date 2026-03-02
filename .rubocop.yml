@@ -209,6 +209,9 @@ Style/NumericLiterals:
 Style/OptionalBooleanParameter:
     Enabled: false
 
+Style/RedundantStructKeywordInit:
+    Enabled: false
+
 Style/TrailingCommaInArguments:
     Enabled: false
 

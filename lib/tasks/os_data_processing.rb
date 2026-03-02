@@ -50,7 +50,7 @@ module OrdnanceSurvey
   end
 
   def self.os_address_insert(row)
-    "insert into os_address (#{INSERT_COLUMNS.map(&:to_s).join(',')}) values (#{INSERT_COLUMNS.map { |c| db_value(row, c) }.join(',')})"
+    "insert into os_address (#{INSERT_COLUMNS.join(',')}) values (#{INSERT_COLUMNS.map { |c| db_value(row, c) }.join(',')})"
   end
 
   def self.db_value(row, col)
