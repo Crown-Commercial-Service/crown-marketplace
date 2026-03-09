@@ -18,7 +18,6 @@ require 'action_view/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# rubocop:disable Metrics/ModuleLength
 module Marketplace
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -79,11 +78,11 @@ module Marketplace
   end
 
   def self.feedback_email_address
-    "info@#{current_organisation_domain}.gov.uk"
+    "info@#{CurrentOrganisation.current_organisation_domain}.gov.uk"
   end
 
   def self.support_form_link
-    "https://www.#{current_organisation_domain}.gov.uk/contact"
+    "https://www.#{CurrentOrganisation.current_organisation_domain}.gov.uk/contact"
   end
 
   def self.fm_survey_link
@@ -95,7 +94,7 @@ module Marketplace
   end
 
   def self.ccs_homepage_url
-    "https://www.#{current_organisation_domain}.gov.uk/"
+    "https://www.#{CurrentOrganisation.current_organisation_domain}.gov.uk/"
   end
 
   # :nocov:
@@ -167,7 +166,7 @@ module Marketplace
   end
 
   def self.can_edit_facilities_management_frameworks?
-    @can_edit_facilities_management_frameworks ||= rails_env_url != "https://marketplace.service.#{current_organisation_domain}.gov.uk"
+    @can_edit_facilities_management_frameworks ||= rails_env_url != "https://marketplace.service.#{CurrentOrganisation.current_organisation_domain}.gov.uk"
   end
 
   def self.environment_name
@@ -185,24 +184,6 @@ module Marketplace
     end
   end
 
-  def self.use_gca_branding?
-    Time.zone.now.utc >= Time.zone.parse(ENV.fetch('GCA_BRANDING_LIVE_AT', nil)).utc
-  rescue StandardError
-    false
-  end
-
-  def self.current_organisation_name
-    use_gca_branding? ? 'Government Commercial Agency' : 'Crown Commercial Service'
-  end
-
-  def self.current_organisation_name_abbr
-    use_gca_branding? ? 'GCA' : 'CCS'
-  end
-
-  def self.current_organisation_domain
-    use_gca_branding? ? 'gca' : 'crowncommercial'
-  end
-
   def self.cookie_settings_name
     :cookie_preferences_cmp
   end
@@ -215,4 +196,3 @@ module Marketplace
     }.stringify_keys
   end
 end
-# rubocop:enable Metrics/ModuleLength
