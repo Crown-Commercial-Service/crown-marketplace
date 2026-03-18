@@ -3,9 +3,15 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM6232::Admin::FilesImporter do
   let(:upload) do
     create(:facilities_management_rm6232_admin_upload, aasm_state: 'in_progress') do |admin_upload|
-      admin_upload.supplier_details_file.attach(io: File.open(supplier_details_file_path), filename: 'test_supplier_details_file.xlsx')
-      admin_upload.supplier_services_file.attach(io: File.open(supplier_services_file_path), filename: 'test_supplier_services_file.xlsx')
-      admin_upload.supplier_regions_file.attach(io: File.open(supplier_regions_file_path), filename: 'test_supplier_regions_file.xlsx')
+      File.open(supplier_details_file_path, 'rb') do |file_stream|
+        admin_upload.supplier_details_file.attach(io: file_stream, filename: 'test_supplier_details_file.xlsx')
+      end
+      File.open(supplier_services_file_path, 'rb') do |file_stream|
+        admin_upload.supplier_services_file.attach(io: file_stream, filename: 'test_supplier_services_file.xlsx')
+      end
+      File.open(supplier_regions_file_path, 'rb') do |file_stream|
+        admin_upload.supplier_regions_file.attach(io: file_stream, filename: 'test_supplier_regions_file.xlsx')
+      end
     end
   end
 

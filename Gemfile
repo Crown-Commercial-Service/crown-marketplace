@@ -4,11 +4,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.1.1'
+gem 'rails', '~> 8.1.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 7.1'
+gem 'puma', '~> 7.2'
 
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem 'propshaft'
@@ -42,19 +42,18 @@ gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
 gem 'caxlsx_rails', '>= 0.6.3'
-gem 'virtus'
 
 gem 'rollbar', '~> 3.7.0'
 
 # for dfe sign in
 gem 'omniauth', '~> 2.1.4'
-gem 'omniauth-oauth2', '~> 1.8.0'
+gem 'omniauth-oauth2', '~> 1.9.0'
 
 # for authentication
-gem 'devise', '~> 4.9.4'
+gem 'devise', '~> 5.0.3'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.132.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.137.0'
 
 # for pagination
 gem 'kaminari', '~> 1.2.2'
@@ -73,7 +72,7 @@ gem 'aasm', '~> 5.5'
 gem 'after_commit_everywhere', '~> 1.6'
 
 # for running background jobs
-gem 'sidekiq', '~> 8.0.10'
+gem 'sidekiq', '~> 8.1.1'
 gem 'sinatra', '~> 4.2.1', require: false
 gem 'slim', '~> 5.2.1'
 gem 'sidekiq-cron'
@@ -113,10 +112,10 @@ gem 'asset_sync', '>= 2.19.1'
 gem 'fog-aws', '>= 3.14.0'
 
 # Use CCS Frontend Helpers
-gem 'ccs-frontend_helpers', '~> 3.3.0'
+gem 'ccs-frontend_helpers', '~> 4.0.0'
 
 # Need to add Open SSL to fix bug in v3.3.0
-gem 'openssl', '~> 3.3.2'
+gem 'openssl', '~> 4.0.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -139,13 +138,13 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[windows]
   gem 'tzinfo-data', platforms: %i[windows]
   gem 'bullet', require: true
-  gem 'faker', '~> 3.5.3'
-  gem 'brakeman', '~> 7.1.1'
+  gem 'faker', '~> 3.6.1'
+  gem 'brakeman', '~> 8.0.4'
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'listen', '>= 3.0.5', '< 3.10'
+  gem 'listen', '>= 3.0.5', '< 3.11'
   gem 'pry-byebug'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'

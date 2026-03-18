@@ -78,11 +78,11 @@ module Marketplace
   end
 
   def self.feedback_email_address
-    'info@crowncommercial.gov.uk'
+    "info@#{CurrentOrganisation.current_organisation_domain}.gov.uk"
   end
 
   def self.support_form_link
-    'https://www.crowncommercial.gov.uk/contact'
+    "https://www.#{CurrentOrganisation.current_organisation_domain}.gov.uk/contact"
   end
 
   def self.fm_survey_link
@@ -94,7 +94,7 @@ module Marketplace
   end
 
   def self.ccs_homepage_url
-    'https://www.crowncommercial.gov.uk/'
+    "https://www.#{CurrentOrganisation.current_organisation_domain}.gov.uk/"
   end
 
   # :nocov:
@@ -166,18 +166,18 @@ module Marketplace
   end
 
   def self.can_edit_facilities_management_frameworks?
-    @can_edit_facilities_management_frameworks ||= rails_env_url != 'https://marketplace.service.crowncommercial.gov.uk'
+    @can_edit_facilities_management_frameworks ||= rails_env_url != "https://marketplace.service.#{CurrentOrganisation.current_organisation_domain}.gov.uk"
   end
 
   def self.environment_name
     case rails_env_url
     when 'http://localhost'
       :local
-    when 'https://cmp.cmp-sandbox.crowncommercial.gov.uk'
+    when 'https://cmp.cmp-sandbox.crowncommercial.gov.uk', 'https://cmp.cmp-sandbox.gca.gov.uk'
       :sandbox
-    when 'https://cmp.cmpdev.crowncommercial.gov.uk'
+    when 'https://cmp.cmpdev.crowncommercial.gov.uk', 'https://cmp.cmpdev.gca.gov.uk'
       :cmpdev
-    when 'https://marketplace.preview.crowncommercial.gov.uk'
+    when 'https://marketplace.preview.crowncommercial.gov.uk', 'https://marketplace.preview.gca.gov.uk'
       :preview
     else
       :production

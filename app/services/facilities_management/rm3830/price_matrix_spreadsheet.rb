@@ -117,7 +117,7 @@ module FacilitiesManagement::RM3830
       rate_card_prices = @rate_card_data[:Prices][@supplier_id]
 
       @data_no_cafmhelp_removed.keys.collect { |k| @data_no_cafmhelp_removed[k].keys }
-                               .flatten.uniq
+                                    .flatten.uniq
                                .sort_by { |code| [code[0..(code.index('.') - 1)], code[(code.index('.') + 1)..].to_i] }.each do |s|
         # for each building type, I need to see if the actual building name (which can contain several building id's if the same service
         # is contained in several building) has the service. for example two buildings may have the type warehouse and contain the same same C.1 service
@@ -231,7 +231,7 @@ module FacilitiesManagement::RM3830
         end
 
         @data.keys.collect { |k| @data[k].keys }
-             .flatten.uniq
+                  .flatten.uniq
              .sort_by { |code| [code[0..(code.index('.') - 1)], code[(code.index('.') + 1)..].to_i] }.each do |s|
           new_row = [s, @rate_card_data[:Prices][@supplier_id][s.to_sym][:'Service Name']]
 

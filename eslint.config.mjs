@@ -1,32 +1,31 @@
 // @ts-check
 
 import eslint from '@eslint/js'
+import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint'
-import stylisticJs from '@stylistic/eslint-plugin-js'
-import stylisticTs from '@stylistic/eslint-plugin-ts'
+import stylistic from '@stylistic/eslint-plugin'
 
-export default tseslint.config(
+export default defineConfig(
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
+  tseslint.configs.recommended,
   {
     plugins: {
-      '@stylistic/js': stylisticJs,
-      '@stylistic/ts': stylisticTs
+      '@stylistic': stylistic,
     },
     rules: {
-      '@stylistic/ts/indent': [
+      '@stylistic/indent': [
         'error',
         2
       ],
-      '@stylistic/js/linebreak-style': [
+      '@stylistic/linebreak-style': [
         'error',
         'unix'
       ],
-      '@stylistic/ts/quotes': [
+      '@stylistic/quotes': [
         'error',
         'single'
       ],
-      '@stylistic/ts/semi': [
+      '@stylistic/semi': [
         'error',
         'never'
       ]

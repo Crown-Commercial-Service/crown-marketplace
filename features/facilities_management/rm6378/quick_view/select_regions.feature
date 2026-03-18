@@ -6,7 +6,7 @@ Feature: Select regions
     And I click on 'Search for suppliers'
     Then I am on the 'Services' page
     And I show all sections
-    And I select 'Building Management System (BMS) maintenance'
+    And I select 'Building Management System (BMS) Maintenance'
     And I click on 'Continue'
     Then I am on the 'Regions' page
     And I show all sections
@@ -75,7 +75,7 @@ Feature: Select regions
     Then the basket should say 'No regions selected'
 
   Scenario: Select all checkbox
-    When I select all for 'East of England'
+    When I select all for 'East (England)'
     Then the basket should say '5 regions selected'
     And the remove all link should be visible
     And the following items should appear in the basket:
@@ -86,9 +86,9 @@ Feature: Select regions
       | Suffolk (TLH6)                         |
     When I remove the following items from the basket:
       | Bedfordshire and Hertfordshire |
-    Then select all 'should not' be checked for 'East of England'
+    Then select all 'should not' be checked for 'East (England)'
     When I select 'Bedfordshire and Hertfordshire'
-    Then select all 'should' be checked for 'East of England'
+    Then select all 'should' be checked for 'East (England)'
 
   Scenario: Go back from regions and change selection
     When I select the following items:
