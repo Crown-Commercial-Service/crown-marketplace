@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.6.0] - 2026-03-18
+
 ### Added
 
 - Add flag to show GCA branding ([PR 5153](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5153))
