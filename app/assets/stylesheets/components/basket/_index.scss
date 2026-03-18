@@ -16,8 +16,8 @@
   }
 
   & > div {
-    border: 1px ccs-colour("light-green") solid;
-    border-top: govuk-spacing(1) ccs-colour("light-green") solid;
+    border: 1px ccs-colour("green", $variant: "tint-25") solid;
+    border-top: govuk-spacing(1) ccs-colour("green", $variant: "tint-25") solid;
     padding: govuk-spacing(3);
   }
 
@@ -30,7 +30,7 @@
       background-color: govuk-colour("white");
       margin-bottom: 0;
       padding: govuk-spacing(2) govuk-spacing(2);
-      border-top: 1px solid ccs-colour("light-green");
+      border-top: 1px solid ccs-colour("green", $variant: "tint-25");
 
       &:first-child {
         border-top: none;

@@ -12,22 +12,22 @@
   font-size: 1em;
   border: 0;
   text-decoration: underline;
-  color: $govuk-link-colour;
+  color: govuk-functional-colour(link);
   background-color: inherit;
   padding: 0;
   margin: 0;
 
   &:link {
-    color: $govuk-link-colour;
+    color: govuk-functional-colour(link);
   }
 
   &:visited {
-    color: $govuk-link-visited-colour;
+    color: govuk-functional-colour(link-visited);
   }
 
   &:hover:not(:focus),
   &:active:not(:focus) {
-    color: $govuk-link-hover-colour;
+    color: govuk-functional-colour(link-hover);
   }
 
   &:hover {
