@@ -1,7 +1,7 @@
 $stroke-width: 1px;
 $number-circle-size: 30px;
 $number-circle-size-large: 35px;
-$top-border: solid 1px govuk-colour("mid-grey");
+$top-border: solid 1px govuk-colour("black", $variant: 'tint-80');
 
 @mixin step-nav-vertical-line($line-style: solid) {
   content: "";
@@ -9,7 +9,7 @@ $top-border: solid 1px govuk-colour("mid-grey");
   z-index: 2;
   width: 0;
   height: 100%;
-  border-left: $line-style $stroke-width govuk-colour("mid-grey");
+  border-left: $line-style $stroke-width govuk-colour("black", $variant: 'tint-80');
   background: govuk-colour("white");
 }
 
@@ -112,14 +112,14 @@ $top-border: solid 1px govuk-colour("mid-grey");
 }
 
 .gem-c-step-nav__button {
-  color: $govuk-link-colour;
+  color: govuk-functional-colour(link);
   cursor: pointer;
   background: none;
   border: 0;
   margin: 0;
 
   &:hover {
-    background: govuk-colour("light-grey");
+    background: govuk-colour("black", $variant: 'tint-95');
     // Chevron icon interaction states
     .gem-c-step-nav__chevron {
       color: govuk-colour("black");
@@ -127,11 +127,11 @@ $top-border: solid 1px govuk-colour("mid-grey");
     }
 
     .gem-c-step-nav__chevron:after {
-      color: govuk-colour("light-grey");
+      color: govuk-colour("black", $variant: 'tint-95');
     }
 
     .gem-c-step-nav__button-text {
-      color: $govuk-text-colour;
+      color: govuk-functional-colour(text);
     }
   }
 
@@ -144,7 +144,7 @@ $top-border: solid 1px govuk-colour("mid-grey");
     }
 
     .gem-c-step-nav__chevron:after {
-      color: $govuk-focus-colour;
+      color: govuk-functional-colour(focus);
     }
 
     .gem-c-step-nav____title-text-focus,
@@ -261,7 +261,7 @@ $top-border: solid 1px govuk-colour("mid-grey");
     margin-left: $number-circle-size / 4;
     width: $number-circle-size / 2;
     height: 0;
-    border-bottom: solid $stroke-width govuk-colour("mid-grey");
+    border-bottom: solid $stroke-width govuk-colour("black", $variant: 'tint-80');
   }
 
   &:after {
@@ -320,7 +320,7 @@ $top-border: solid 1px govuk-colour("mid-grey");
 
 .gem-c-step-nav__circle--number {
   @include step-nav-font(16, $weight: bold, $line-height: 29px);
-  border: solid $stroke-width govuk-colour("mid-grey");
+  border: solid $stroke-width govuk-colour("black", $variant: 'tint-80');
 
   .gem-c-step-nav--large & {
     @include step-nav-font(16, $tablet-size: 19, $weight: bold, $line-height: 29px, $tablet-line-height: 34px);
@@ -389,8 +389,8 @@ $top-border: solid 1px govuk-colour("mid-grey");
 }
 
 .gem-c-step-nav__title {
-  @include govuk-text-colour;
   @include step-nav-font(19, $weight: bold, $line-height: 1.4);
+  color: govuk-functional-colour(text);
   margin: 0;
 
   .gem-c-step-nav--large & {
@@ -401,7 +401,7 @@ $top-border: solid 1px govuk-colour("mid-grey");
 .gem-c-step-nav__toggle-link {
   @include step-nav-font(15, $line-height: 1.2);
   display: block;
-  color: $govuk-link-colour;
+  color: govuk-functional-colour(link);
   text-transform: capitalize;
   padding-bottom: govuk-spacing(6);
 
@@ -411,8 +411,8 @@ $top-border: solid 1px govuk-colour("mid-grey");
 }
 
 .gem-c-step-nav__panel {
-  @include govuk-text-colour;
   @include step-nav-font(16);
+  color: govuk-functional-colour(text);
   padding-bottom: govuk-spacing(5);
 
   .gem-c-step-nav--large & {
@@ -526,7 +526,7 @@ $top-border: solid 1px govuk-colour("mid-grey");
 .gem-c-step-nav__context {
   display: inline-block;
   font-weight: normal;
-  color: govuk-colour("dark-grey");
+  color: govuk-colour("black", $variant: 'tint-25');
 
   &:before {
     content: " \2013\00a0"; // dash followed by &nbsp;

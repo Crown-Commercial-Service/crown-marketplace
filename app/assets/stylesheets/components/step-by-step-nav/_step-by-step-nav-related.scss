@@ -1,5 +1,5 @@
 .gem-c-step-nav-related {
-  @include govuk-text-colour;
+  color: govuk-functional-colour(text);
   border-top: 2px solid govuk-colour("blue");
   margin-bottom: govuk-spacing(6);
 }

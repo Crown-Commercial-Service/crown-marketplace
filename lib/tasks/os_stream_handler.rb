@@ -53,14 +53,18 @@ module OrdnanceSurvey
   end
 
   def self.untar_stream(url, summary, &)
-    Gem::Package::TarReader.new(Zlib::GzipReader.new(File.open(url))) do |tar|
-      handle_tar_contents(tar, summary, &)
+    File.open(url, 'rb') do |file_stream|
+      Gem::Package::TarReader.new(Zlib::GzipReader.new(file_stream)) do |tar|
+        handle_tar_contents(tar, summary, &)
+      end
     end
   end
 
   def self.gunzip_url(url, summary, &)
-    Zlib::GzipReader.open(File.open(url)) do |gz|
-      handle_gzip_contents(gz, summary, &)
+    File.open(url, 'rb') do |file_stream|
+      Zlib::GzipReader.open(file_stream) do |gz|
+        handle_gzip_contents(gz, summary, &)
+      end
     end
   end
 

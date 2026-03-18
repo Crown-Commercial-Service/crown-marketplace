@@ -10,13 +10,13 @@ RSpec.describe GenericJourney do
   let(:paths) { instance_double(JourneyPaths) }
 
   before do
-    single_step_class = Class.new(described_class) do
+    single_step_class = Class.new do
       include Steppable
     end
 
     stub_const('SingleStep', single_step_class)
 
-    first_step_with_attributes_class = Class.new(described_class) do
+    first_step_with_attributes_class = Class.new do
       include Steppable
 
       attribute :first_question
@@ -27,7 +27,7 @@ RSpec.describe GenericJourney do
 
     stub_const('FirstStepWithAttributes', first_step_with_attributes_class)
 
-    second_step_with_attributes_class = Class.new(described_class) do
+    second_step_with_attributes_class = Class.new do
       include Steppable
 
       attribute :second_question
@@ -35,13 +35,13 @@ RSpec.describe GenericJourney do
 
     stub_const('SecondStepWithAttributes', second_step_with_attributes_class)
 
-    third_valid_step_class = Class.new(described_class) do
+    third_valid_step_class = Class.new do
       include Steppable
     end
 
     stub_const('ThirdValidStep', third_valid_step_class)
 
-    second_invalid_step_class = Class.new(described_class) do
+    second_invalid_step_class = Class.new do
       include Steppable
 
       def next_step_class
@@ -55,7 +55,7 @@ RSpec.describe GenericJourney do
 
     stub_const('SecondInvalidStep', second_invalid_step_class)
 
-    first_valid_step_class = Class.new(described_class) do
+    first_valid_step_class = Class.new do
       include Steppable
 
       def next_step_class
@@ -65,13 +65,13 @@ RSpec.describe GenericJourney do
 
     stub_const('FirstValidStep', first_valid_step_class)
 
-    second_step_class = Class.new(described_class) do
+    second_step_class = Class.new do
       include Steppable
     end
 
     stub_const('SecondStep', second_step_class)
 
-    first_step_class = Class.new(described_class) do
+    first_step_class = Class.new do
       include Steppable
 
       def next_step_class

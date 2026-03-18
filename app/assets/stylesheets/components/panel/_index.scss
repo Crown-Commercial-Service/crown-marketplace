@@ -15,8 +15,8 @@
 
 .ccs-panel--confirmation {
   color: govuk-colour("black");
-  border: 1px ccs-colour("light-green") solid;
-  border-left: govuk-spacing(1) ccs-colour("light-green") solid;
+  border: 1px ccs-colour("green", $variant: "tint-25") solid;
+  border-left: govuk-spacing(1) ccs-colour("green", $variant: "tint-25") solid;
 }
 
 .ccs-panel__title {
