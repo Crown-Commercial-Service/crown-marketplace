@@ -1,7 +1,27 @@
 def stub_login
-  aws_client = instance_double(Aws::CognitoIdentityProvider::Client)
-  allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
-  allow(aws_client).to receive(:initiate_auth).and_return(COGNITO_RESPONSE_STRUCTS[:initiate_auth].new)
+  Aws.config[:cognitoidentityprovider] = {
+    stub_responses: {
+      admin_get_user: {
+        username: @user.email,
+        user_attributes: [
+          { name: 'sub', value: SecureRandom.uuid },
+          { name: 'email', value: @user.email },
+        ],
+        user_status: 'CONFIRMED'
+      },
+      admin_list_groups_for_user: {
+        groups: @user.roles.map { |role| { group_name: role.to_s } }
+      },
+      initiate_auth: {
+        authentication_result: {
+          access_token: 'mock_access_token',
+          id_token: 'mock_id_token',
+          refresh_token: 'mock_refresh_token'
+        }
+      }
+    }
+  }
+
   allow_any_instance_of(Cognito::SignInUser).to receive(:sleep)
 end
 

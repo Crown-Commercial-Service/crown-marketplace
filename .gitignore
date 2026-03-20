@@ -98,3 +98,6 @@ rollup-config*
 rollup.config-*
 
 .python-version
+
+# For selenium testing
+/.chrome-for-testing
