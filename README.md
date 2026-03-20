@@ -52,11 +52,11 @@ Install Redis, for Sidekiq background jobs
 brew install redis
 ```
 
-Install geckodriver, which requires the Firefox browser, for the cucumber feature tests
+Install a project-local Chrome for Testing (does not affect your system browser):
 
 ```shell
-brew install --cask firefox
-brew install geckodriver
+bunx @puppeteer/browsers install chrome@stable --path .chrome-for-testing
+bunx @puppeteer/browsers install chromedriver@stable --path .chrome-for-testing
 ```
 
 ## Developer setup
