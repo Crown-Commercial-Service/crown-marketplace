@@ -18,7 +18,6 @@ require 'capybara/poltergeist'
 require 'axe-capybara'
 require 'axe-cucumber-steps'
 require 'rake'
-require 'database_cleaner-active_record'
 
 # Require files we've created to help with the setup
 require_relative '../support/pages'
@@ -55,9 +54,31 @@ ActionController::Base.allow_rescue = false
 Rails.application.load_tasks
 
 # Because we need to restore some data for JavaScript tests we need to invoke the Database strategy ourselves
-Cucumber::Rails::Database.autorun_database_cleaner = false
+Cucumber::Rails::Database.autorun_database_cleaner = true
+Cucumber::Rails::Database.javascript_strategy = :transaction
 
 # Capybara settings can go here
 Capybara.ignore_hidden_elements = false
 
-Capybara.javascript_driver = :selenium_headless
+# Create the chrome browser
+CHROME_FOR_TESTING_DIR = Rails.root.join('.chrome-for-testing')
+
+Capybara.register_driver :chrome_headless do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+
+  options.add_argument('--headless=new')
+
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--disable-gpu')
+
+  chrome_bin = Dir.glob(CHROME_FOR_TESTING_DIR.join('chrome/**/Google Chrome for Testing')).first
+  chromedriver_bin = Dir.glob(CHROME_FOR_TESTING_DIR.join('chromedriver/**/chromedriver')).first
+
+  options.binary = chrome_bin
+  service = Selenium::WebDriver::Service.chrome(path: chromedriver_bin)
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options, service: service)
+end
+
+Capybara.javascript_driver = :chrome_headless

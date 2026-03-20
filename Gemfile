@@ -156,7 +156,6 @@ group :test do
   gem 'selenium-webdriver', '>= 3.142.3'
   gem 'cucumber-rails', '>= 2.6.1', require: false
   gem 'capybara', '>= 3.38.0'
-  gem 'database_cleaner-active_record', '>= 2.0.1', require: false
   gem 'site_prism', '>= 3.7.3'
   gem 'axe-core-capybara', '>= 4.2.1'
   gem 'axe-core-cucumber', '>= 4.2.1'

@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@puppeteer/browsers": "^2.13.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "eslint": "^10.0.3",
     "typescript-eslint": "^8.57.0"
