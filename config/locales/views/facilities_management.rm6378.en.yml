@@ -19,6 +19,20 @@ en:
             service_codes:
               invalid_cafm_helpdesk: You must select another service to include 'CAFM system' and/or 'Helpdesk services'
               too_short: Select at least one service you need to include in your procurement
+        facilities_management/rm6378/journey/information_about_your_requirements:
+          attributes:
+            contract_start_date:
+              blank: Enter a real date, for example 25 12 2027
+              date_in_future: The estimated start date must be in the future
+              invalid: Enter a real date, for example 25 12 2027
+            estimated_contract_duration:
+              blank: The estimated contract duration must be a whole number greater than 0
+              greater_than: The estimated contract duration must be a whole number greater than 0
+              less_than: The estimated contract duration must be less than 100
+              not_a_number: The estimated contract duration must be a whole number greater than 0
+              not_an_integer: The estimated contract duration must be a whole number greater than 0
+            private_finance_initiative:
+              inclusion: Select one option for requirements linked to PFI
   activerecord:
     errors:
       models:
@@ -36,7 +50,7 @@ en:
         index:
           buyer_account_dashboard: Buyer account dashboard
           buyer_account_title: Your account
-          further_information_link: https://www.crowncommercial.gov.uk/agreements/rm6378
+          further_information_link: https://www.%{org_domain}.gov.uk/agreements/rm6378
           further_information_link_description: View further information about the Facilities Management and Security Services framework RM6378 (opens in new tab)
           manage_account_desc: Update and edit your contact details
           manage_account_link: Manage my details
@@ -70,7 +84,7 @@ en:
           regions:
             section:
               NC0:
-                title: National coverage
+                title: National
               OS0:
                 title: Overseas
               TLC:
@@ -78,13 +92,13 @@ en:
               TLD:
                 title: North West (England)
               TLE:
-                title: Yorkshire and The Humber
+                title: Yorkshire & The Humber
               TLF:
                 title: East Midlands (England)
               TLG:
                 title: West Midlands (England)
               TLH:
-                title: East of England
+                title: East (England)
               TLI:
                 title: London
               TLJ:
@@ -98,51 +112,62 @@ en:
               TLN:
                 title: Northern Ireland
         choose_services:
+          learn_more: Further details (opens in a new tab)
           services:
             section:
-              E:
+              C:
                 title: Maintenance Services
+              D:
+                title: Statutory Compliance
+              E:
+                title: Landscaping / Horticultural Services
               F:
-                title: Statutory Obligations
-              G:
-                title: Landscaping Services
-              H:
                 title: Catering Services
-              I:
+              G:
                 title: Cleaning Services
-              J:
-                title: Additional FM Services
-              K:
+              H:
+                title: Miscellaneous FM Services
+              I:
                 title: Visitor Support Services
+              J:
+                title: Waste Management
+              K:
+                title: Specialist FM Services
+              L:
+                title: Occupancy and Property Management Services
               M:
-                title: Waste Services
-              O:
-                title: Specialist (Defence) FM Services
-              P:
-                title: End User Accommodation Services
-              Q:
                 services:
-                  Q2:
+                  M2:
                     title: CAFM system
-                title: Computer-aided facilities management (CAFM)
-              R:
+                title: Computer Aided Facilities Management (CAFM)
+              "N":
                 title: Helpdesk Services
-              S:
+              O:
                 title: Security Officer Services
-              T:
-                title: Design, Supply, Commission and Installation of Electronic security systems and services
-              U:
+              P:
+                title: Design, Supply, Install and Commission of Physical and Electronic Security Systems and Services
+              Q:
                 title: Maintenance of Security Systems
-              V:
-                title: Alarmed Response Centre
-              W:
-                title: Security Helpdesk Services
-              X:
+              R:
+                title: Security Operations Centre
+              S:
                 title: Security Advisory Services
-              "Y":
+              T:
                 title: Security and Risk Assessments
-              Z:
-                title: Security Awareness/Training
+              U:
+                title: Security Awareness / Training
+        information_about_your_requirements:
+          contract_start_date:
+            hint: For example, 25 12 2027
+            question: What is the estimated contract start date?
+          estimated_contract_duration:
+            question: What is the estimated contract duration?
+            years: years
+          heading: Information about your requirements
+          information_text: To help %{org_name_abbr} understand your needs, please tell us the start date and duration of the contract. If you’re not sure at this stage, an estimate can be provided.
+          private_finance_initiative:
+            question: Is your requirement linked to a current or previous Private Finance Initiative (PFI)?
+          return_text: Return to your account
       procurements:
         new:
           annual_contract_value: Annual contract cost
@@ -152,22 +177,21 @@ en:
           contract_name:
             hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
             label: Save your search
+          estimated_contract_duration: Estimated contract duration
+          estimated_contract_start_date: Estimated contract start date
           heading: Results
+          private_finance_initiative: Requirement linked to PFI?
           regions: Regions
-          requirements_linked_to_pfi:
-            label: Is your requirement linked to current or previous Private Finance Initiative (PFI)?
-            options:
-              'false': 'No'
-              'true': 'Yes'
-          return_to_contract_cost: Return to annual contract cost
           return_to_dashboard: Return to your account
+          return_to_info_about_requirements: Return to information about your requirements
           save_and_continue: Save and continue
           selection_summary: Selection summary
           services: Services
           sub_lot: Sub-lot %{sub_lot}
+          year: year
         show:
           fm_framework_page: Facilities Management and Security Services framework
-          fm_framework_page_url: https://www.crowncommercial.gov.uk/agreements/rm6378
+          fm_framework_page_url: https://www.%{org_domain}.gov.uk/agreements/rm6378
           if_you_need_to_talk: If you need to talk to us about this shortlist or procurement, please use the below reference number. Click on ‘contact us’ at the bottom of the page for our details.
           information_list:
             item_1: customer guidance
@@ -193,3 +217,8 @@ en:
         supplier_list:
           suppliers_shortlisted: "%{number_of_suppliers} supplier(s) shortlisted"
           who_can_provide: who can provide the services you require in your
+      service_specification:
+        show:
+          generic_requirements: "%{work_package_name} - Generic Requirements"
+          heading: Work Package %{code} - %{work_package_name}
+          service_specification: Service specification

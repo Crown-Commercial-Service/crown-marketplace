@@ -9,7 +9,7 @@ Feature: Service selection and annual contract cost result in correct sub lot
     When I select the following items:
       | Mechanical and Electrical Engineering Maintenance |
       | Asbestos Management                               |
-      | Energy and utilities management bureau Services   |
+      | Energy and Utilities Management Bureau Services   |
     And I click on 'Continue'
     Then I am on the 'Regions' page
     Then I select the following items:
@@ -18,6 +18,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '<estimated_annual_cost>' for the annual contract cost
+    And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
@@ -31,8 +36,8 @@ Feature: Service selection and annual contract cost result in correct sub lot
   Scenario Outline: Select only soft services
     When I select the following items:
       | Hard Landscaping Services  |
-      | Deli / coffee bar          |
-      | Cleaning of external areas |
+      | Deli / Coffee bar          |
+      | Cleaning of External Areas |
     And I click on 'Continue'
     Then I am on the 'Regions' page
     Then I select the following items:
@@ -41,6 +46,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '<estimated_annual_cost>' for the annual contract cost
+    And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
@@ -54,7 +64,7 @@ Feature: Service selection and annual contract cost result in correct sub lot
   Scenario Outline: Select only total services
     When I select the following items:
       | End-User Accommodation Services       |
-      | Applications And Allocations Services |
+      | Applications and Allocations Services |
       | Third Party Claims                    |
     And I click on 'Continue'
     Then I am on the 'Regions' page
@@ -64,6 +74,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '<estimated_annual_cost>' for the annual contract cost
+    And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
@@ -88,6 +103,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     Then I am on the 'Annual contract cost' page
     And I enter '123456' for the annual contract cost
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
       | <sublot> |
@@ -103,7 +123,7 @@ Feature: Service selection and annual contract cost result in correct sub lot
     When I select the following items:
       | Mechanical and Electrical Engineering Maintenance     |
       | Asbestos Management                                   |
-      | Energy and utilities management bureau Services       |
+      | Energy and Utilities Management Bureau Services       |
       | Security Officer Services                             |
       | Video Surveillance Systems (VSS) and Alarm Monitoring |
     And I click on 'Continue'
@@ -115,6 +135,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     Then I am on the 'Annual contract cost' page
     And I enter '2500000' for the annual contract cost
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
       | 1b |
@@ -123,7 +148,7 @@ Feature: Service selection and annual contract cost result in correct sub lot
     When I select the following items:
       | Mechanical and Electrical Engineering Maintenance |
       | Asbestos Management                               |
-      | Energy and utilities management bureau Services   |
+      | Energy and Utilities Management Bureau Services   |
       | <service_1_name>                                  |
       | <service_2_name>                                  |
     And I click on 'Continue'
@@ -134,6 +159,11 @@ Feature: Service selection and annual contract cost result in correct sub lot
     And I click on 'Continue'
     Then I am on the 'Annual contract cost' page
     And I enter '2500000' for the annual contract cost
+    And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:

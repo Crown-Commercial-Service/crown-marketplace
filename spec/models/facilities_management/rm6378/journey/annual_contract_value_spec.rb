@@ -58,20 +58,20 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::AnnualContractValue do
   end
 
   describe '.next_step_class' do
-    it 'returns Journey::Procurement' do
-      expect(annual_contract_value.next_step_class).to be FacilitiesManagement::RM6378::Journey::Procurement
+    it 'returns Journey::InformationAboutYourRequirements' do
+      expect(annual_contract_value.next_step_class).to be FacilitiesManagement::RM6378::Journey::InformationAboutYourRequirements
     end
   end
 
   describe '.permit_list' do
     it 'returns a list of the permitted attributes' do
-      expect(described_class.permit_list).to eq [:annual_contract_value, {}]
+      expect(described_class.permit_list).to eq [:annual_contract_value, :contract_start_date_dd, :contract_start_date_mm, :contract_start_date_yyyy, :estimated_contract_duration, :private_finance_initiative, {}]
     end
   end
 
   describe '.permitted_keys' do
     it 'returns a list of the permitted keys' do
-      expect(described_class.permitted_keys).to eq %i[annual_contract_value]
+      expect(described_class.permitted_keys).to eq %i[annual_contract_value contract_start_date_dd contract_start_date_mm contract_start_date_yyyy estimated_contract_duration private_finance_initiative]
     end
   end
 

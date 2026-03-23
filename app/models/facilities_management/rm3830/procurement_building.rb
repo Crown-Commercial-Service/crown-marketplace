@@ -29,7 +29,7 @@ module FacilitiesManagement
         @service_names ||= begin
           service_code_order = FacilitiesManagement::RM3830::StaticData.work_packages.pluck('code')
 
-          Service.where(code: service_codes).sort_by { |service| service_code_order.index(service.code) }.pluck(:name)
+          Service.where(code: service_codes).sort_by { |service| service_code_order.index(service.code) }.map(&:name)
         end
       end
 

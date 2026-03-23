@@ -14,18 +14,21 @@ Feature: Results validations
     Then I am on the 'Annual contract cost' page
     And I enter '123456' for the annual contract cost
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
 
-  Scenario: Contract name and linkt to PFI is blank
+  Scenario: Contract name is blank
     Given I click on 'Save and continue'
     Then I should see the following error messages:
-      | Enter your contract name                         |
-      | Select one option for requirements linked to PFI |
+      | Enter your contract name |
 
   Scenario: Contract name is taken
     Given I have a procurement with the name 'Taken contract name'
     And I enter 'Taken contract name' into the contract name field
-    And I choose the 'Yes' radio button
     And I click on 'Save and continue'
     Then I should see the following error messages:
       | This contract name is already in use |

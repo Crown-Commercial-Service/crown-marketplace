@@ -3,7 +3,7 @@ module FacilitiesManagement
     class Journey::ChooseLocations
       include Steppable
 
-      attribute :region_codes, Array
+      attribute :region_codes, :array, default: -> { [] }
       validates :region_codes, length: { minimum: 1 }
 
       def regions

@@ -1,0 +1,12 @@
+<div class="service-specification">
+  <% if clause[:numbers].empty? %>
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= clause[:body] %></h3>
+  <% else %>
+    <p class="service-specification-number service-specification-indent-<%= clause[:numbers].size - 2 %>">
+      <%= clause[:numbers].join('.') %>
+    </p>
+    <p class="service-specification-body"><%= clause[:body] %></p>
+  <% end %>
+
+  <div class="govuk-clearfix"></div>
+</div>

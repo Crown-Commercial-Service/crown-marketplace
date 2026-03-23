@@ -6,7 +6,7 @@ Feature: Information appears correctly on results page in the complex scenario
     Then I am on the 'Services' page
     Then I select the following items:
       | Mechanical and Electrical Engineering Maintenance                       |
-      | Planned / Group re-lamping service                                      |
+      | Planned / Group Re-Lamping Service                                      |
       | Building Information Modelling (BIM) and Government Soft Landings (GSL) |
       | Security Advisory Services                                              |
       | Risk Assessments                                                        |
@@ -19,13 +19,18 @@ Feature: Information appears correctly on results page in the complex scenario
     Then I am on the 'Annual contract cost' page
     And I enter '123456' for the annual contract cost
     And I click on 'Continue'
+    Then I am on the 'Information about your requirements' page
+    And I enter 'tomorrow' for the contract start date
+    And I enter '27' for the estimated contract duration
+    And I choose the 'Yes' radio button
+    And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
       | 2a |
       | 4d |
     And I should see the following 'services' in the selection summary:
       | Mechanical and Electrical Engineering Maintenance                       |
-      | Planned / Group re-lamping service                                      |
+      | Planned / Group Re-Lamping Service                                      |
       | Building Information Modelling (BIM) and Government Soft Landings (GSL) |
       | Security Advisory Services                                              |
       | Risk Assessments                                                        |
@@ -34,8 +39,13 @@ Feature: Information appears correctly on results page in the complex scenario
       | Essex       |
     And I should see the following 'annual contract cost' in the selection summary:
       | £123,456 |
+    And I should see the following 'estimated contract start date' in the selection summary:
+      | tomorrow |
+    And I should see the following 'estimated contract duration' in the selection summary:
+      | 27 years |
+    And I should see the following 'requirement linked to pfi' in the selection summary:
+      | Yes |
     Then I enter 'Hollow Nest' into the contract name field
-    And I choose the 'Yes' radio button
     And I click on 'Save and continue'
     Then I am on the 'What do I do next?' page
     And the procurement name is shown to be 'Hollow Nest'

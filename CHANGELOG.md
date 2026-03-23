@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.6.0] - 2026-03-18
+
+### Added
+
+- Add flag to show GCA branding ([PR 5153](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5153))
+- Added service specifications for RM3678 ([PR 5177](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5177))
+
+### Changed
+
+- Update the service descriptions for FM RM6378 ([PR 5123](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5123))
+- Update GOV.UK Frontend and CCS Frontend ([PR 5126](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5126))
+- Add new FM RM6378 question answers to summary ([PR 5146](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5146))
+- Update the selected suppliers document to add new questions for FM RM6378 ([PR 5163](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5163))
+- Updated content that references CCS to now reference GCA ([PR 5170](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5170))
+- Replace virtus with native Rails models ([PR 5178](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5178))
+- Update GOV.UK Frontend to v6 and CCS Frontend v3 ([PR 5205](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5205))
+
 ## [7.5.0] - 2025-12-09
 
 ### Changed
@@ -15,11 +32,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update CCS Frontend with the crown on the footer ([PR 5062](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5062))
 - Upgrade Bun to v1.3.3 ([PR 5062](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5062))
 - Upgrade Rails to v8.1.1 ([PR 5083](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5083))
-- Update FM RM3678 further info link on landing page([PR 5068](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5068))
-- Update FM RM3678 further info link on dashboard ([PR 5070](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5070))
-- Update FM RM3678 further info link on What happens next page([PR 5071](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5071))
-- Update FM RM3678 regions details info ([PR 5072](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5072))
-- Update FM RM3678 service info document ([PR 5079](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5079))
+- Update FM RM6378 further info link on landing page([PR 5068](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5068))
+- Update FM RM6378 further info link on dashboard ([PR 5070](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5070))
+- Update FM RM6378 further info link on What happens next page([PR 5071](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5071))
+- Update FM RM6378 regions details info ([PR 5072](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5072))
+- Update FM RM6378 service info document ([PR 5079](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5079))
 
 ## [7.4.1] - 2025-11-19
 
