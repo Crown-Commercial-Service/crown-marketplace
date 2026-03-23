@@ -35,11 +35,6 @@ jobs:
       CUCUMBER_FORMAT: progress
 
     steps:
-      - name: Setup Gecko driver
-        uses: browser-actions/setup-geckodriver@latest
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Checkout code
         uses: actions/checkout@v6
 
@@ -52,6 +47,12 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.2.18
+
+      - name: Install Chrome and Chromedriver for testing
+        run: |
+          bun install
+          bunx @puppeteer/browsers install chrome@145 --path .chrome-for-testing
+          bunx @puppeteer/browsers install chromedriver@145 --path .chrome-for-testing
 
       - name: Set up database schema
         run: bin/rails db:test:prepare
