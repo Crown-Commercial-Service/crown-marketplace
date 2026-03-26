@@ -83,6 +83,12 @@ module DataLoader::Frameworks
 
     public
 
+    def make_framework_live(framework_id)
+      Framework.find_by(id: framework_id)&.tap do |framework|
+        framework.update(expires_at: 1.day.from_now) unless framework.status == :live
+      end
+    end
+
     def load_frameworks
       DistributedLocks.distributed_lock(151) do
         truncate_frameworks

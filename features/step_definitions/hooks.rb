@@ -51,16 +51,24 @@ After('@mobile') do
 end
 
 Before do
-  if @framework == 'RM3830' && FacilitiesManagement::RM3830::SupplierDetail.none?
-    Rake::Task['db:rm3830:fm_supplier_data'].reenable
-    Rake::Task['db:rm3830:add_supplier_rate_cards'].reenable
+  case @framework
+  when 'RM3830'
+    if FacilitiesManagement::RM3830::SupplierDetail.none?
+      Rake::Task['db:rm3830:fm_supplier_data'].reenable
+      Rake::Task['db:rm3830:add_supplier_rate_cards'].reenable
 
-    Rake::Task['db:rm3830:fm_supplier_data'].invoke
-    Rake::Task['db:rm3830:add_supplier_rate_cards'].invoke
-  elsif @framework == 'RM6232' && FacilitiesManagement::RM6232::Supplier.none?
-    Rake::Task['db:rm6232:import_suppliers'].reenable
+      Rake::Task['db:rm3830:fm_supplier_data'].invoke
+      Rake::Task['db:rm3830:add_supplier_rate_cards'].invoke
+    end
+  when 'RM6232'
+    if FacilitiesManagement::RM6232::Supplier.none?
+      Rake::Task['db:rm6232:import_suppliers'].reenable
 
-    Rake::Task['db:rm6232:import_suppliers'].invoke
+      Rake::Task['db:rm6232:import_suppliers'].invoke
+    end
+
+    Rake::Task['db:make_framework_live'].reenable
+    Rake::Task['db:make_framework_live'].invoke(@framework)
   end
 end
 
@@ -68,10 +76,7 @@ After do
   DatabaseCleaner.clean
   if Framework.none?
     Rake::Task['db:frameworks'].reenable
-    Rake::Task['db:make_rm6232_live'].reenable
-
     Rake::Task['db:frameworks'].invoke
-    Rake::Task['db:make_rm6232_live'].invoke
 
     case @framework
     when 'RM3830'

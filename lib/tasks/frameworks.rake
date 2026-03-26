@@ -10,12 +10,11 @@ namespace :db do
     DataLoader::Frameworks.update_frameworks
   end
 
-  task make_rm6232_live: :environment do
-    DistributedLocks.distributed_lock(151) do
-      if Rails.env.test?
-        puts 'Making RM6232 live'
-        Framework.find('RM6232').update(expires_at: 1.day.from_now)
-      end
+  desc 'Makes framework live for cucumber tests'
+  task :make_framework_live, [:framework] => :environment do |_t, args|
+    if Rails.env.test?
+      puts "Making framework #{args[:framework]} live"
+      DataLoader::Frameworks.make_framework_live(args[:framework])
     end
   end
 
