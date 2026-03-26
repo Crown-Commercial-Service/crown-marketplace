@@ -11,7 +11,7 @@ require:
 
 AllCops:
     NewCops: enable
-    TargetRubyVersion: 3.4
+    TargetRubyVersion: 4.0
     Exclude:
         - 'db/schema.rb'
         - 'db/seeds.rb'
