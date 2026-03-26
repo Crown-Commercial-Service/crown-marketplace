@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade Rails to v8.1.2.1 ([PR 5226](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5226))
+
 ## [7.6.0] - 2026-03-18
 
 ### Added
