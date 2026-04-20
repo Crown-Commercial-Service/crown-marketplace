@@ -138,7 +138,7 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[windows]
   gem 'tzinfo-data', platforms: %i[windows]
   gem 'bullet', require: true
-  gem 'faker', '~> 3.6.1'
+  gem 'faker', '~> 3.8.0'
   gem 'brakeman', '~> 8.0.4'
 end
 
