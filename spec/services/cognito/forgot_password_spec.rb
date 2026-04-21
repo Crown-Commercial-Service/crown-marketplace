@@ -84,6 +84,26 @@ RSpec.describe Cognito::ForgotPassword do
       end
     end
 
+    context 'when success with email with funny characters' do
+      let(:email) { 'some-person.email@fake.email-place.com' }
+
+      include_context 'with cognito structs'
+
+      before { allow(aws_client).to receive(:forgot_password).and_return(forgot_password_resp_struct.new('USER_ID_FOR_SRP' => email)) }
+
+      it 'converts the email to lowercase' do
+        expect(response.email).to eq('some-person.email@fake.email-place.com')
+      end
+
+      it 'returns success' do
+        expect(response.success?).to be true
+      end
+
+      it 'returns no error' do
+        expect(response.errors).to be_empty
+      end
+    end
+
     context 'when cognito error' do
       before { allow(aws_client).to receive(:forgot_password).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops')) }
 
