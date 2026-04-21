@@ -45,7 +45,7 @@ RSpec.describe Cognito::SignUpUser do
   end
 
   describe '#call' do
-    let(:email_list) { ['crowncommercial.gov.uk', 'email.com', 'tmail.com', 'kmail.com', 'cmail.com', 'jmail.com', 'cheemail.com'] }
+    let(:email_list) { ['crowncommercial.gov.uk', 'email.com', 'tmail.com', 'kmail.com', 'cmail.com', 'jmail.com', 'cheemail.com', 'fake.email-place.com'] }
     let(:allow_list_file) { Tempfile.new('allow_list.txt') }
 
     let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
@@ -222,6 +222,14 @@ RSpec.describe Cognito::SignUpUser do
 
       context 'and it is a valid email' do
         let(:email) { 'user@crowncommercial.gov.uk' }
+
+        it 'is valid' do
+          expect(response.valid?).to be true
+        end
+      end
+
+      context 'and it is a valid with a strange format' do
+        let(:email) { 'some-person.email@fake.email-place.com' }
 
         it 'is valid' do
           expect(response.valid?).to be true
