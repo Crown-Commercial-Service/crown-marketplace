@@ -23,20 +23,18 @@ class RemoteFormHandler {
   postProcessResultFunction?: PostProcessResultFunction
   $form: JQuery<HTMLFormElement>
   $submitButton: JQuery<HTMLInputElement>
-  $input: JQuery<HTMLInputElement>
+  $inputs: JQuery<HTMLInputElement>[]
   $hiddenInputs: JQuery<HTMLInputElement>
   url: string
-  inputName: string
 
   constructor (updateId: string, postProcessResultFunction?: PostProcessResultFunction) {
     this.updateId = updateId
     this.postProcessResultFunction = postProcessResultFunction
     this.$form = $('form[data-remote="true"]')
-    this.$input = this.$form.find('input[type="search"]')
+    this.$inputs = this.$form.find<HTMLInputElement>('input[type="search"]').get().map(input => $(input))
     this.$hiddenInputs = this.$form.find('input[type="hidden"]')
     this.$submitButton = this.$form.find('input[type="submit"]')
     this.url = this.$form.attr('action') as string
-    this.inputName = this.$input.attr('name') as string
   }
 
   init() {
@@ -84,9 +82,12 @@ class RemoteFormHandler {
 
   private getNestedInputData = () => {
     const data: {[key: string]: object | string | undefined} = {}
-    const inputNames = this.inputName.replace(']', '').split('[')
 
-    createNestedObject(data, inputNames, this.$input.val() as string)
+    this.$inputs.forEach(($input) => {
+      const inputNames = ($input.attr('name') as string).replace(']', '').split('[')
+
+      createNestedObject(data, inputNames, $input.val() as string)
+    })
 
     return data
   }
