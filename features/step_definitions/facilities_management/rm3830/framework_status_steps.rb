@@ -3,7 +3,7 @@ Given('the {string} framework has expired') do |framework|
 end
 
 Then('I should see the following warning text:') do |warning_text_table|
-  expect(page.find('strong.govuk-warning-text__text')).to have_content("Warning#{warning_text_table.raw.flatten.first}")
+  expect(page.find('strong.govuk-warning-text__text')).to have_text("Warning#{warning_text_table.raw.flatten.first}")
 end
 
 Then('there are no text inputs') do

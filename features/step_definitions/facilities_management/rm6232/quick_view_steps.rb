@@ -3,19 +3,19 @@ Then('I enter {string} for the annual contract cost') do |value|
 end
 
 Then('I should be in sub-lot {string}') do |sub_lot|
-  expect(quick_view_page.sub_lot).to have_content("Sub-lot #{sub_lot}")
+  expect(quick_view_page.sub_lot).to have_text("Sub-lot #{sub_lot}")
 end
 
 Then('I should see the following {string} in the selection summary:') do |option, selection_summary_table|
   case option
   when 'services', 'regions'
     quick_view_page.selection_summary.send(option.to_sym).selection.zip(selection_summary_table.raw.flatten).each do |element, expected_value|
-      expect(element).to have_content(expected_value)
+      expect(element).to have_text(expected_value)
     end
   when 'annual contract cost', 'estimated contract duration', 'requirement linked to pfi'
-    expect(quick_view_page.selection_summary.send(option.to_sym).selection).to have_content(selection_summary_table.raw.flatten.first)
+    expect(quick_view_page.selection_summary.send(option.to_sym).selection).to have_text(selection_summary_table.raw.flatten.first)
   when 'estimated contract start date'
-    expect(quick_view_page.selection_summary.send(option.to_sym).selection).to have_content(date_options_to_date(selection_summary_table.raw.flatten.first).strftime('%-d %B %Y'))
+    expect(quick_view_page.selection_summary.send(option.to_sym).selection).to have_text(date_options_to_date(selection_summary_table.raw.flatten.first).strftime('%-d %B %Y'))
   else
     raise "cannot check #{option} selection summary"
   end
@@ -30,11 +30,11 @@ Given('I click on the service specification for {string}') do |service_name|
 end
 
 Then('the page sub title is {string}') do |sub_title|
-  expect(quick_view_page.service_specification.sub_title).to have_content(sub_title)
+  expect(quick_view_page.service_specification.sub_title).to have_text(sub_title)
 end
 
 Then('The service name and code is {string}') do |service_name_and_code|
-  expect(quick_view_page.service_specification.service_name_and_code).to have_content(service_name_and_code)
+  expect(quick_view_page.service_specification.service_name_and_code).to have_text(service_name_and_code)
 end
 
 Then('there {string} generic requirements') do |option|

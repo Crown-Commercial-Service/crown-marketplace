@@ -15,7 +15,7 @@ Then('I should see the following suppliers on the page:') do |supplier_names|
   expect(admin_page.suppliers.length).to eq(supplier_names.raw.flatten.length)
 
   admin_page.suppliers.map(&:supplier_name).zip(supplier_names.raw.flatten).each do |element, value|
-    expect(element).to have_content(value)
+    expect(element).to have_text(value)
   end
 end
 
@@ -24,7 +24,7 @@ Then('I click on {string} for {string}') do |text, supplier_name|
 end
 
 Then('the supplier name shown is {string}') do |supplier_name|
-  expect(admin_page.supplier_name_sub_title).to have_content(supplier_name)
+  expect(admin_page.supplier_name_sub_title).to have_text(supplier_name)
 end
 
 Then('they have services and regions for the following lots {string}') do |lots|
@@ -34,7 +34,7 @@ Then('they have services and regions for the following lots {string}') do |lots|
   expect(actual_lots.length).to eq expected_lots.length
 
   actual_lots.zip(expected_lots).each do |element, value|
-    expect(element).to have_content(value)
+    expect(element).to have_text(value)
   end
 end
 
@@ -58,7 +58,7 @@ Then('I select {string} for the lot status') do |option|
 end
 
 Then('the status is {string} for lot {string}') do |status, lot_code|
-  expect(admin_page.lot_data.send("lot_#{lot_code}").send(:'lot status').status).to have_content status
+  expect(admin_page.lot_data.send("lot_#{lot_code}").send(:'lot status').status).to have_text status
 end
 
 Then('I should see the following regions selected for lot {string}:') do |lot_code, regions|
@@ -105,7 +105,7 @@ Given('I go to a quick view with the following services, regions and annual cont
   ]
 
   visit "/facilities-management/RM6232/procurements/new?journey=facilities-management&#{parameters.join('&')}"
-  expect(page.find('h1')).to have_content('Results')
+  expect(page.find('h1')).to have_text('Results')
 end
 
 Then('I {string} see the supplier {string} in the results') do |option, supplier|
@@ -126,11 +126,11 @@ end
 Then('log number {int} has the user {string}') do |log_number, email|
   email = @user.email if email == 'me'
 
-  expect(admin_page.log_table.log_rows[log_number - 1].find('td:nth-of-type(3)')).to have_content(email)
+  expect(admin_page.log_table.log_rows[log_number - 1].find('td:nth-of-type(3)')).to have_text(email)
 end
 
 Then('log number {int} has the change type {string}') do |log_number, change_type|
-  expect(admin_page.log_table.log_rows[log_number - 1].find('td:nth-of-type(4)')).to have_content(change_type)
+  expect(admin_page.log_table.log_rows[log_number - 1].find('td:nth-of-type(4)')).to have_text(change_type)
 end
 
 Then('I click on log number {int}') do |log_number|
@@ -138,26 +138,26 @@ Then('I click on log number {int}') do |log_number|
 end
 
 Then('the supplier who was changed is {string}') do |supplier_name|
-  expect(admin_page.updated_supplier).to have_content(supplier_name)
+  expect(admin_page.updated_supplier).to have_text(supplier_name)
 end
 
 Then('the change was made by {string}') do |email|
   email = @user.email if email == 'me'
 
-  expect(admin_page.updated_by_email).to have_content(email)
+  expect(admin_page.updated_by_email).to have_text(email)
 end
 
 Then('the change was made in lot {string}') do |lot_code|
-  expect(admin_page.updated_lot).to have_content("Lot #{lot_code}")
+  expect(admin_page.updated_lot).to have_text("Lot #{lot_code}")
 end
 
 Then('I should see the following changes to the supplier details:') do |changes_table|
   expect(admin_page.changes_table.changes_rows.length).to eq changes_table.raw.length
 
   admin_page.changes_table.changes_rows.zip(changes_table.raw).each do |actual_row, expected_row|
-    expect(actual_row.attribute).to have_content(expected_row[0])
-    expect(actual_row.prev_value).to have_content(expected_row[1])
-    expect(actual_row.new_value).to have_content(expected_row[2])
+    expect(actual_row.attribute).to have_text(expected_row[0])
+    expect(actual_row.prev_value).to have_text(expected_row[1])
+    expect(actual_row.new_value).to have_text(expected_row[2])
   end
 end
 
@@ -165,7 +165,7 @@ Then('the following items were added:') do |added_items|
   expect(admin_page.added_items.length).to eq(added_items.raw.flatten.length)
 
   admin_page.added_items.zip(added_items.raw.flatten).each do |element, value|
-    expect(element).to have_content(value)
+    expect(element).to have_text(value)
   end
 end
 
@@ -173,7 +173,7 @@ Then('the following items were removed:') do |removed_items|
   expect(admin_page.removed_items.length).to eq(removed_items.raw.flatten.length)
 
   admin_page.removed_items.zip(removed_items.raw.flatten).each do |element, value|
-    expect(element).to have_content(value)
+    expect(element).to have_text(value)
   end
 end
 
@@ -181,9 +181,9 @@ Then('I should see the following changes to the lot status:') do |changes_table|
   expect(admin_page.lot_status_changes_table.changes_rows.length).to eq 1
 
   admin_page.lot_status_changes_table.changes_rows.zip(changes_table.raw).each do |actual_row, expected_row|
-    expect(actual_row.attribute).to have_content('Lot status')
-    expect(actual_row.prev_value).to have_content(expected_row[0])
-    expect(actual_row.new_value).to have_content(expected_row[1])
+    expect(actual_row.attribute).to have_text('Lot status')
+    expect(actual_row.prev_value).to have_text(expected_row[0])
+    expect(actual_row.new_value).to have_text(expected_row[1])
   end
 end
 
@@ -196,7 +196,7 @@ end
 Then('the upload was done by {string}') do |email|
   email = @user.email if email == 'me'
 
-  expect(admin_page.uploaded_by_email).to have_content(email)
+  expect(admin_page.uploaded_by_email).to have_text(email)
 end
 
 def core_services(lot_number)
