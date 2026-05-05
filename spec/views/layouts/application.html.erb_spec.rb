@@ -29,7 +29,7 @@ RSpec.describe 'layouts/application.html.erb' do
 
     context 'when feedback email address is present' do
       let(:feedback_email_address) { 'feedback@something.com' }
-      let(:support_form_link) { 'https://www.crowncommercial.gov.uk/contact' }
+      let(:support_form_link) { 'https://www.gca.gov.uk/contact' }
 
       it 'displays link to feedback email address in beta banner' do
         render

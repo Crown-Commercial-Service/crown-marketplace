@@ -78,11 +78,11 @@ module Marketplace
   end
 
   def self.feedback_email_address
-    "info@#{CurrentOrganisation.current_organisation_domain}.gov.uk"
+    'info@gca.gov.uk'
   end
 
   def self.support_form_link
-    "https://www.#{CurrentOrganisation.current_organisation_domain}.gov.uk/contact"
+    'https://www.gca.gov.uk/contact'
   end
 
   def self.fm_survey_link
@@ -94,7 +94,7 @@ module Marketplace
   end
 
   def self.ccs_homepage_url
-    "https://www.#{CurrentOrganisation.current_organisation_domain}.gov.uk/"
+    'https://www.gca.gov.uk/'
   end
 
   # :nocov:
@@ -166,7 +166,7 @@ module Marketplace
   end
 
   def self.can_edit_facilities_management_frameworks?
-    @can_edit_facilities_management_frameworks ||= rails_env_url != "https://marketplace.service.#{CurrentOrganisation.current_organisation_domain}.gov.uk"
+    @can_edit_facilities_management_frameworks ||= rails_env_url != 'https://marketplace.service.gca.gov.uk'
   end
 
   def self.environment_name

@@ -377,7 +377,5 @@ module ApplicationHelper
     not_started: :grey,
     not_required: :grey
   }.freeze
-
-  delegate :current_organisation_name, :current_organisation_name_abbr, :current_organisation_domain, to: :CurrentOrganisation
 end
 # rubocop:enable Metrics/ModuleLength
