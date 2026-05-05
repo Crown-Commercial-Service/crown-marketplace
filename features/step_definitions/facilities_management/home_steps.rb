@@ -3,7 +3,7 @@ Given('I sign in without details for {string}') do |framework|
   update_banner_cookie(true) if @javascript
   create_user_without_details
   step 'I sign in'
-  expect(page.find('h1')).to have_content('Your details')
+  expect(page.find('h1')).to have_text('Your details')
 end
 
 Then('I should sign in as an fm buyer without details') do
@@ -93,7 +93,7 @@ Then('I should see the following navigation links:') do |navigation_links|
   expect(navigation_elements.length).to eq(navigation_links.raw.flatten.length)
 
   navigation_elements.zip(navigation_links.raw.flatten).each do |actual, expected|
-    expect(actual).to have_content expected
+    expect(actual).to have_text expected
   end
 end
 

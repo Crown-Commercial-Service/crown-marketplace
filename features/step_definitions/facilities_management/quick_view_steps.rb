@@ -19,7 +19,7 @@ Then('the following items should appear in the basket:') do |items|
 end
 
 Then('the basket should say {string}') do |basket_text|
-  expect(quick_view_page.basket.selection_count).to have_content(basket_text)
+  expect(quick_view_page.basket.selection_count).to have_text(basket_text)
 end
 
 Then('the remove all link should not be visible') do

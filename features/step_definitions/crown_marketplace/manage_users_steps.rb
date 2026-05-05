@@ -1,21 +1,21 @@
 Then('the legend is {string}') do |legend_text|
-  expect(page.find('fieldset > legend')).to have_content(legend_text)
+  expect(page.find('fieldset > legend')).to have_text(legend_text)
 end
 
 Then('the {string} in the summary is:') do |option, details|
   details.raw.flatten.each do |detail|
-    expect(manage_users_page.user_details_summary.send(option).value).to have_content(detail)
+    expect(manage_users_page.user_details_summary.send(option).value).to have_text(detail)
   end
 end
 
 Then('the account {string} has been added') do |email|
-  expect(manage_users_page.notification_banner.heading).to have_content('User account created')
-  expect(manage_users_page.notification_banner.message).to have_content("An email has been sent to #{email} with the details for them to sign in")
+  expect(manage_users_page.notification_banner.heading).to have_text('User account created')
+  expect(manage_users_page.notification_banner.message).to have_text("An email has been sent to #{email} with the details for them to sign in")
 end
 
 Then('there is an error notification with the message {string}') do |error_message|
-  expect(manage_users_page.notification_banner.heading).to have_content('Something went wrong')
-  expect(manage_users_page.notification_banner.message).to have_content("The following error occured: \"#{error_message}\"")
+  expect(manage_users_page.notification_banner.heading).to have_text('Something went wrong')
+  expect(manage_users_page.notification_banner.message).to have_text("The following error occured: \"#{error_message}\"")
 end
 
 Then('I change the {string} from the user summary') do |option|
@@ -23,7 +23,7 @@ Then('I change the {string} from the user summary') do |option|
 end
 
 Then('I should see the following error for finding a user:') do |error_message|
-  expect(manage_users_page.find_a_user.error).to have_content(error_message.raw.flatten.first)
+  expect(manage_users_page.find_a_user.error).to have_text(error_message.raw.flatten.first)
 end
 
 Then('I enter {string} into the search') do |search|
@@ -31,11 +31,11 @@ Then('I enter {string} into the search') do |search|
 end
 
 Given('I should see that there are no users with that email address') do
-  expect(manage_users_page.find_a_user_table.no_users).to have_content('No users were found with that email address')
+  expect(manage_users_page.find_a_user_table.no_users).to have_text('No users were found with that email address')
 end
 
 Given('I should not see users table') do
-  expect(manage_users_page.find('div#users-table')).to have_content('')
+  expect(manage_users_page.find('div#users-table')).to have_text('')
 end
 
 Then('I should see the following users in the results:') do |found_users_table|
@@ -45,8 +45,8 @@ Then('I should see the following users in the results:') do |found_users_table|
   expect(found_users.length).to eq(found_users_rows.length)
 
   found_users_rows.zip(found_users).each do |user_row, user_detail|
-    expect(user_row.email).to have_content(user_detail[0])
-    expect(user_row.status).to have_content(user_detail[1])
+    expect(user_row.email).to have_text(user_detail[0])
+    expect(user_row.status).to have_text(user_detail[1])
   end
 end
 
@@ -59,7 +59,7 @@ Then('I can manage the user') do
 end
 
 Then('I cannot manage the user and there is the following warning:') do |warning_text|
-  expect(manage_users_page.view_user_warning).to have_content("Warning#{warning_text.raw.flatten.first}")
+  expect(manage_users_page.view_user_warning).to have_text("Warning#{warning_text.raw.flatten.first}")
 end
 
 Then('the user has the following details:') do |user_details_table|
@@ -68,8 +68,8 @@ Then('the user has the following details:') do |user_details_table|
   user_details.each do |key, value|
     user_details_row = manage_users_page.view_user_summary.send(key)
 
-    expect(user_details_row.key).to have_content(key)
-    expect(user_details_row.value).to have_content(['Roles', 'Service access'].include?(key) ? value.split(', ').join : value)
+    expect(user_details_row.key).to have_text(key)
+    expect(user_details_row.value).to have_text(['Roles', 'Service access'].include?(key) ? value.split(', ').join : value)
   end
 end
 
@@ -123,6 +123,6 @@ Then('the resend temporary password is {string}') do |option|
 end
 
 Then('an email has been sent to {string}') do |email|
-  expect(manage_users_page.notification_banner.heading).to have_content('Password resent')
-  expect(manage_users_page.notification_banner.message).to have_content("A new email has been sent to #{email} with the temporary password for their account.")
+  expect(manage_users_page.notification_banner.heading).to have_text('Password resent')
+  expect(manage_users_page.notification_banner.message).to have_text("A new email has been sent to #{email} with the temporary password for their account.")
 end

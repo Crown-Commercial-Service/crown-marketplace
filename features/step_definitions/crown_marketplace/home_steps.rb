@@ -3,7 +3,7 @@ Given('I sign in as an {string} user go to the crown marketplace dashboard') do 
   update_banner_cookie(true) if @javascript
   create_admin_user(user)
   step 'I sign in'
-  expect(page.find('h1')).to have_content('Crown Marketplace dashboard')
+  expect(page.find('h1')).to have_text('Crown Marketplace dashboard')
 end
 
 Given('I go to the crown marketplace start page') do

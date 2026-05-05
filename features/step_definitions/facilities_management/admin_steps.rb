@@ -1,7 +1,7 @@
 Given('I go to the admin dashboard for {string}') do |framework|
   visit "/facilities-management/#{framework}/admin/"
 
-  expect(page.find('h1')).to have_content("#{framework} administration dashboard")
+  expect(page.find('h1')).to have_text("#{framework} administration dashboard")
 end
 
 Given('I sign in as an admin and navigate to the {string} dashboard') do |framework|
@@ -10,7 +10,7 @@ Given('I sign in as an admin and navigate to the {string} dashboard') do |framew
   update_banner_cookie(true) if @javascript
   create_admin_user_with_details
   step 'I sign in'
-  expect(page.find('h1')).to have_content("#{framework} administration dashboard")
+  expect(page.find('h1')).to have_text("#{framework} administration dashboard")
 end
 
 Given('I go to the facilities management {string} admin start page') do |framework|
@@ -19,7 +19,7 @@ Given('I go to the facilities management {string} admin start page') do |framewo
 end
 
 Then('the supplier name on the details page is {string}') do |supplier_name|
-  expect(admin_page.supplier_details.supplier_name_title).to have_content(supplier_name)
+  expect(admin_page.supplier_details.supplier_name_title).to have_text(supplier_name)
 end
 
 Then('I change the {string} for the supplier details') do |supplier_detail|
@@ -27,7 +27,7 @@ Then('I change the {string} for the supplier details') do |supplier_detail|
 end
 
 Then('the {string} is {string} on the supplier details page') do |supplier_detail, text|
-  expect(admin_page.supplier_details.send(supplier_detail.to_sym).detail).to have_content(text)
+  expect(admin_page.supplier_details.send(supplier_detail.to_sym).detail).to have_text(text)
 end
 
 Then('I enter {string} into the {string} field') do |supplier_detail, field|
@@ -41,7 +41,7 @@ end
 Then('the management report has the correct date range') do
   date_range = "The date range for this report is: #{Time.zone.yesterday.strftime('%d/%m/%Y')} - #{Time.zone.today.strftime('%d/%m/%Y')}"
 
-  expect(admin_page.management_report_date).to have_content(date_range)
+  expect(admin_page.management_report_date).to have_text(date_range)
 end
 
 Then('there should be {int} management reports') do |number_of_management_reports|
