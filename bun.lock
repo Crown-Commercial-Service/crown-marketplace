@@ -8,7 +8,7 @@
         "@types/jquery": "^4.0.0",
         "@types/js-cookie": "^3.0.6",
         "@types/rails__request.js": "^0.0.1",
-        "ccs-frontend": "^3.1.1",
+        "ccs-frontend": "^3.2.0",
         "govuk-frontend": "^6.1.0",
         "jquery": "^4.0.0",
         "js-cookie": "^3.0.5",
@@ -125,7 +125,7 @@
 
     "braces": ["braces@3.0.3", "", { "dependencies": { "fill-range": "^7.1.1" } }, "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA=="],
 
-    "ccs-frontend": ["ccs-frontend@3.1.1", "", { "peerDependencies": { "govuk-frontend": "^6.1.0", "jquery": "^4.x" } }, "sha512-6p9nj7ETAUP6KpsaUecfVW1/PNybVkGfrawgppOLxE2AlcvYmr+TjXOmMbYO2hjgBO7mlcmMQqPm2R7rb470QQ=="],
+    "ccs-frontend": ["ccs-frontend@3.2.0", "", { "peerDependencies": { "govuk-frontend": "^6.1.0", "jquery": "^4.x" } }, "sha512-RH3lmFJWlSDNvquCqD/G42jsTCjHZeaTy0YqzX4W5bzGxFdshoeoa0RtHe0yIcJMGgHQASvzRLmtF6SYudhtVQ=="],
 
     "chokidar": ["chokidar@4.0.3", "", { "dependencies": { "readdirp": "^4.0.1" } }, "sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA=="],
 
