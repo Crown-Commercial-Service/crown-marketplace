@@ -8,7 +8,7 @@ module Api
       before_action :validate_service, :raise_if_not_live_framework, :redirect_to_buyer_detail, except: %i[show_post_code show_nuts_code find_region_query find_region_query_by_postcode]
 
       def show_post_code
-        result = PostcodesNutsRegion.select(:id, :code, :postcode).find_by(postcode: params[:postcode].delete(' '))
+        result = PostcodesNutsRegion.select(:id, :code, :postcode).find_by(postcode: params.expect(:postcode).delete(' '))
         render json: { status: 200, result: result }
       rescue StandardError => e
         render json: { status: 404, error: e.to_s }
@@ -22,7 +22,7 @@ module Api
       end
 
       def find_region_query
-        postcode_to_str = params['postcode'].to_s
+        postcode_to_str = params.expect('postcode').to_s
         postcode_to_region = postcode_to_str[0, 3]
 
         result = Postcode::PostcodeCheckerV2.find_region postcode_to_region.delete(' ')
@@ -32,7 +32,7 @@ module Api
       end
 
       def find_region_query_by_postcode
-        postcode = params['postcode'].sub(' ', '')
+        postcode = params.expect('postcode').sub(' ', '')
         result = get_region_postcode postcode
 
         render json: { status: 200, result: result }

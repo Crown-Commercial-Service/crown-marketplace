@@ -99,8 +99,8 @@ module FacilitiesManagement
 
       def journey_params
         @journey_params ||= begin
-          params[:annual_contract_value] = params[:annual_contract_value].to_i
-          params[:estimated_contract_duration] = params[:estimated_contract_duration].to_i
+          params[:annual_contract_value] = params.expect(:annual_contract_value).to_i
+          params[:estimated_contract_duration] = params.expect(:estimated_contract_duration).to_i
 
           params.permit(:private_finance_initiative, :estimated_contract_duration, :contract_start_date_dd, :contract_start_date_mm, :contract_start_date_yyyy, :annual_contract_value, service_codes: [], region_codes: [])
         end

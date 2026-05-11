@@ -40,11 +40,11 @@ module FacilitiesManagement
       end
 
       def set_supplier
-        @supplier = @suppliers_admin_module.find(params[:id])
+        @supplier = @suppliers_admin_module.find(params.expect(:id))
       end
 
       def set_page
-        @page = params[:page].to_sym
+        @page = params.expect(:page).to_sym
       end
 
       def set_user_email

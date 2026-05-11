@@ -38,7 +38,7 @@ module FacilitiesManagement
       end
 
       def set_management_report
-        @management_report = service::ManagementReport.find(params[:id])
+        @management_report = service::ManagementReport.find(params.expect(:id))
       end
 
       def index_path
