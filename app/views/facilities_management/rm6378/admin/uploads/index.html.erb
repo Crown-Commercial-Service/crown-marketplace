@@ -1,0 +1,92 @@
+<%= content_for :page_title, t('.heading') %>
+
+<% admin_breadcrumbs(
+  { text: t('.heading') }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('.caption', framework: params[:framework]) %></span>
+      <%= t('.heading') %>
+    </h1>
+
+    <%= govuk_button(t('.create_new'), href: new_path) %>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m">
+
+<% if @latest_upload.present? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <%= govuk_table(
+        [
+          {
+            text: t('.name'),
+          },
+          {
+            text: t('.date'),
+          },
+          {
+            text: t('.download')
+          }
+        ],
+        service::Admin::Upload::ATTRIBUTES.select do |file|
+          @latest_upload.send(file).attached?
+        end.map do |file|
+          [
+            {
+              text: t(".file_name.#{file}"),
+            },
+            {
+              text: format_date_time(@latest_upload.created_at),
+            },
+            {
+              text: link_to(t('.download'), admin_upload_file(@latest_upload, @latest_upload.send(file), :lpg, params[:framework].downcase), download: '')
+            }
+          ]
+        end,
+        caption: {
+          text: t('.current_data')
+        }
+      ) %>
+    </div>
+  </div>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= govuk_table(
+      [
+        {
+          text: t('.name'),
+        },
+        {
+          text: t('.date'),
+        },
+        {
+          text: t('.status')
+        }
+      ],
+      @uploads.map do |upload|
+        [
+          {
+            text: link_to(t('.upload_name', number: upload.short_uuid), upload),
+          },
+          {
+            text: format_date_time(upload.created_at),
+          },
+          {
+            text: govuk_tag(*upload_status_tag(upload.aasm_state))
+          }
+        ]
+      end,
+      caption: {
+        text: t('.table_caption')
+      }
+    ) %>
+
+    <%= paginate @uploads, views_prefix: 'shared', window: 0, outer_window: 2 %>
+  </div>
+</div>

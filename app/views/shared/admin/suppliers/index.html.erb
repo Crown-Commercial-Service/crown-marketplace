@@ -1,0 +1,73 @@
+<%= content_for :page_title, t('.heading') %>
+
+<% admin_breadcrumbs(
+  { text: t('.heading') }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('.caption', service_name: t("#{service.module_parent.to_s.underscore}.service_name"), framework: params[:framework]) %></span>
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">
+      <%= t('.view_supplier_data') %>
+    </p>
+  </div>
+</div>
+
+<div class="govuk-grid-row" data-module="filter-table">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_input(
+      :table_filter,
+      label: {
+        text: t('.search_for_a_supplier.label'),
+        classes: 'govuk-label--s'
+      },
+      hint: {
+        text: t('.search_for_a_supplier.hint')
+      },
+      attributes: {
+        placeholder: t('.search_for_a_supplier.placeholder'),
+      }
+    ) %>
+    <%= govuk_table(
+      [
+        {
+          text: t('.supplier_name'),
+          classes: 'govuk-!-width-one-half'
+        },
+        {
+          text: t('.view_details'),
+          classes: 'govuk-!-width-one-quarter'
+        },
+        {
+          text: t('.view_lot_data'),
+          classes: 'govuk-!-width-one-quarter'
+        }
+      ],
+      @supplier_frameworks.map do |supplier_framework|
+        [
+          {
+            text: supplier_framework.supplier_name
+          },
+          {
+            text: link_to(t('.view_details'), supplier_show_path(supplier_framework), class: 'govuk-link govuk-link--no-visited-state')
+          },
+          {
+            text: link_to(t('.view_lot_data'), supplier_lot_data_index_path(supplier_framework), class: 'govuk-link govuk-link--no-visited-state')
+          }
+        ]
+      end,
+      first_cell_is_header: true,
+      attributes: {
+        id: 'suppliers-table'
+      }
+    ) %>
+  </div>
+</div>

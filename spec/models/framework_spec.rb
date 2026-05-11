@@ -9,6 +9,7 @@ RSpec.describe Framework do
     it { is_expected.to have_many(:reports) }
     it { is_expected.to have_many(:procurements) }
     it { is_expected.to have_many(:uploads) }
+    it { is_expected.to have_many(:admin_uploads) }
   end
 
   describe '.find_scope_by_service_name' do

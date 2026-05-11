@@ -101,10 +101,91 @@ en:
               date_before_or_equal_to: The ‘From’ date must be today or in the past
               invalid: Enter a valid ‘From’ date
               not_a_date: Enter a valid ‘From’ date
+        supplier:
+          attributes:
+            additional_identifier:
+              blank: The additional identifier cannot be blank
+              taken: The additional identifier you entered is already in use by another supplier
+              too_long: The additional identifier must be no more than 255 characters
+            duns_number:
+              blank: The DUNS number cannot be blank
+              invalid: The DUNS number must be 9 digits
+              taken: The DUNS number you entered is already in use by another supplier
+            name:
+              blank: The supplier name cannot be blank
+              taken: The supplier name you entered is already in use by another supplier
+              too_long: The supplier name must be no more than 255 characters
+            sme:
+              blank: Select if the supplier is an SME
+              inclusion: Select if the supplier is an SME
+            trading_name:
+              blank: The supplier trading name cannot be blank
+              taken: The supplier trading name you entered is already in use by another supplier
+              too_long: The supplier trading name must be no more than 255 characters
+        supplier/framework/contact_detail:
+          attributes:
+            address:
+              blank: Enter the address
+              too_long: The address should be no more than 255 characters
+            email:
+              blank: Enter the contact email in the correct format, like name@example.com
+              too_long: The contact email should be no more than 255 characters
+            lot_1_prospectus_link:
+              blank: Enter the lot 1 prospectus link in the correct format, like https://example.com
+              too_long: The lot 1 prospectus link must be no more than 255 characters
+            lot_2_prospectus_link:
+              blank: Enter the lot 2 prospectus link in the correct format, like https://example.com
+              too_long: The lot 2 prospectus link must be no more than 255 characters
+            lot_3_prospectus_link:
+              blank: Enter the lot 3 prospectus link in the correct format, like https://example.com
+              too_long: The lot 3 prospectus link must be no more than 255 characters
+            lot_4a_prospectus_link:
+              blank: Enter the lot 4a prospectus link in the correct format, like https://example.com
+              too_long: The lot 4a prospectus link must be no more than 255 characters
+            lot_4b_prospectus_link:
+              blank: Enter the lot 4b prospectus link in the correct format, like https://example.com
+              too_long: The lot 4b prospectus link must be no more than 255 characters
+            lot_4c_prospectus_link:
+              blank: Enter the lot 4c prospectus link in the correct format, like https://example.com
+              too_long: The lot 4c prospectus link must be no more than 255 characters
+            lot_5_prospectus_link:
+              blank: Enter the lot 5 prospectus link in the correct format, like https://example.com
+              too_long: The lot 5 prospectus link must be no more than 255 characters
+            managed_service_provider_email:
+              blank: Enter the managed service provider contact email in the correct format, like name@example.com
+              too_long: The managed service provider contact email should be no more than 255 characters
+            managed_service_provider_name:
+              blank: Enter the managed service provider contact name
+              too_long: The managed service provider contact name should be no more than 255 characters
+            managed_service_provider_telephone:
+              blank: Enter the managed service provider contact telephone number in the correct format, like 07700 900000
+            name:
+              blank: Enter the contact name
+              too_long: The contact name should be no more than 255 characters
+            telephone_number:
+              blank: Enter the contact telephone number in the correct format, like 07700 900000
+            website:
+              blank: Enter the website in the correct format, like https://example.com
+              too_long: The contact website be no more than 255 characters
+        supplier/framework/lot:
+          attributes:
+            base:
+              service_update_invalid: Something went wrong when updating the service selection. If this problem persist contact a developer
+            enabled:
+              inclusion: Select if the supplier is on this lot
         supplier/framework/lot/branch:
           attributes:
             postcode:
               invalid_postcode: Enter a valid postcode
+        supplier/framework/lot/rate:
+          attributes:
+            rate:
+              invalid_format_money: The rate must be formatted as money, for example £350.50
+              invalid_format_percentage: The rate must be formatted as a percentage, for example 50.5%
+              less_than_100: The rate must be less than 100%
+              less_than_1000000: The rate must be less than £1,000,000
+              not_a_number: You must enter a value for this rate
+              update_invalid: Something went wrong when updating the rate. If this problem persist contact a developer
   base:
     passwords:
       edit:
@@ -201,6 +282,7 @@ en:
     type_odt: application/vnd.oasis.opendocument.text
     type_pdf: application/pdf
     type_xlsx: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    type_zip: application/zip
     xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
   companies:
     unit:
@@ -484,6 +566,7 @@ en:
     unit:
       one: mile
       other: miles
+  'no': 'No'
   number:
     currency:
       format:
@@ -534,29 +617,232 @@ en:
       other: results
   shared:
     admin:
+      dashboard:
+        index:
+          caption: "%{service_name} - %{framework}"
+          heading: Admin dashboard
+          manage_framework: Manage frameworks
+          manage_framework_status:
+            description: Update the framework status for %{service_name}
+            title: Manage frameworks status
+          manage_supplier_data:
+            description: View and update the supplier's details and their lot data
+            title: Manage supplier data
+          page_title: "%{service_name} admin dashboard"
+          supplier_data: Supplier data
+          upload_supplier_data:
+            description: Use spreadsheets to upload the supplier data
+            title: Upload supplier data
+          user_reports: User reports
+          view_supplier_data:
+            description: View the supplier's details and their lot data
+            title: View supplier data
+          view_user_reports:
+            description: View and generate reports of user searches
+            title: User reports
       frameworks:
         edit:
           expires_at_date: Framework 'expires at' date for %{framework}
           expires_at_hint: The buyer section for this framework will not be visible if the date today (%{current_date}) is on or after the 'expires at' date.
+          heading: Update the framework dates
           live_at_date: Framework 'live at' date for %{framework}
           live_at_hint: The buyer section for this framework will be visible if the 'live at' date is today (%{current_date}) or earlier.
-          page_title: Framework 'live at' date
-          return_to_frameworks: Return to %{service_name} frameworks
           save_and_return: Save and return
-          update_the_framework_dates: Update the framework dates
-        index:
+        show:
+          caption: "%{service_name} - %{framework}"
           change: Change
           coming: Coming
           expired: Expired
           expires_at: Expires at
           framework: Framework
+          heading: Framework status
           if_the_framework: If the framework 'live at' date is before the current date (%{current_date}), the buyer section for this framework will be accessible to our customers.
           live: Live
           live_at: Live at
-          page_title: "%{service_title} frameworks"
           status: Status
           the_admin_section: The admin section for a framework will always be visible for any framework that is on the system no matter when it goes live.
-          this_section_allows: This section allows you to view and change the 'live at' date for a %{service_name} framework.
+          this_section_allows: This section allows you to view and change the 'live at' date for the %{service_name} %{framework} framework.
+      in_progress:
+        checking_files: Checking files
+        complete: Complete
+        files_uploaded: Files uploaded
+        processing_data: Processing data
+        publishing_data: Publishing data
+        upload_progress: Upload progress
+      lot_data:
+        edit:
+          heading:
+            branches: branch
+            caption: Lot %{lot_number} - %{lot_name}
+            heading: Edit %{section}
+            heading_with_country: Edit %{section} for %{country}
+            jurisdictions: jurisdiction selection
+            lot_status: lot status
+            rates: rates
+            services: service selection
+          jurisdictions:
+            question: Select the jurisdictions the supplier can offer
+            question_group: Select the jurisdictions the supplier can offer (%{group})
+          lot_status:
+            question: Set supplier status on Lot %{lot_number} - %{lot_name}
+          rates:
+            hint: If the supplier does not supply the position, make the field blank
+            optional: "%{label} (optional)"
+          save_and_return: Save and return
+          services:
+            question: Select the services the supplier can offer
+            question_group: Select the services the supplier can offer (%{group})
+        index:
+          heading: Supplier lot data
+          supplier_lot_data_summary_list:
+            link:
+              sections:
+                branches: branches
+                jurisdictions: jurisdictions
+                rates: rates
+                services: services
+              view_data_html: View %{section}<span class="govuk-visually-hidden"> for lot %{number} - %{name}</span>
+            lot_name: Lot %{number} - %{name}
+            sections:
+              branches: Branches
+              jurisdictions: Jurisdictions
+              lot_status: Lot status
+              rates: Rates
+              services: Services
+        show:
+          add_html: Add<span class="govuk-visually-hidden"> (%{section})</span>
+          change_html: Change<span class="govuk-visually-hidden"> (%{section})</span>
+          heading:
+            branches: branches
+            caption: Lot %{lot_number} - %{lot_name}
+            heading: View %{section}
+            jurisdictions: jurisdictions
+            rates: rates
+            services: services
+          jurisdictions:
+            jurisdiction_supplier_offers: Jurisdictions the supplier can offer
+            no_jurisdictions_offered: The supplier does not offer any jurisdictions in this lot
+          rates:
+            supplier_rates: Rates for the supplier
+          services:
+            no_services_offered: The supplier does not offer any services in this lot
+            services_supplier_offers: Services the supplier can offer
+        summary:
+          lot_status:
+            enabled:
+              disabled: Disabled
+              enabled: Enabled
+              not_on_lot: Not on lot
+      reports:
+        index:
+          caption: "%{service_name} - %{framework}"
+          created_at: Created at
+          generate_a_new_report: Generate a new report
+          generate_report_guidance: You can generate a new report of user's searches by clicking on 'Generate a new report'.
+          heading: User reports
+          not_reports_generated: No reports generated
+          report: Report
+          report_info: The table below shows the reports that have been generated by admin users. You can view a specific report by clicking on it.
+          status: Status
+        new:
+          caption: "%{service_name} - %{framework}"
+          from: From
+          from_example: For example, 6 8 2024
+          generate_file: Input a date range to generate a report
+          generate_report: Generate report
+          heading: Generate report
+          to: To
+          to_example: For example, 6 8 2025
+        show:
+          caption: "%{service_name} - %{framework}"
+          complete: Complete
+          genertating_report: Generating report
+          heading: Report %{report_id}
+          report_generation_progress: Report generation progress
+          report_status:
+            complete: Report generated
+            failed: Generating failed
+            in_progress: Generating report
+          report_summary:
+            created_at: Created at
+            created_by: Created by
+            date_range: Date range
+            status: Status
+          report_triggered: Triggered report creation
+      suppliers:
+        edit:
+          heading:
+            additional_supplier_information: Manage additional information
+            basic_supplier_information: Manage supplier information
+            supplier_contact_information: Manage supplier contact information
+          save_and_return: Save and return
+        index:
+          caption: "%{service_name} - %{framework}"
+          heading: Supplier data
+          search_for_a_supplier:
+            hint: You can find a specific supplier by entering their name in the search bar
+            label: Search for a supplier
+            placeholder: Search for a supplier..
+          supplier_name: Supplier name
+          view_details: View details
+          view_lot_data: View lot data
+          view_supplier_data: You can view the full supplier details by clicking 'View details' or view the full supplier lot data by clicking 'View lot data'.
+        sections:
+          additional_supplier_information:
+            address: Address
+            lot_1_prospectus_link: Lot 1 prospectus link
+            lot_2_prospectus_link: Lot 2 prospectus link
+            lot_3_prospectus_link: Lot 3 prospectus link
+            lot_4a_prospectus_link: Lot 4a prospectus link
+            lot_4b_prospectus_link: Lot 4b prospectus link
+            lot_4c_prospectus_link: Lot 4c prospectus link
+            lot_5_prospectus_link: Lot 5 prospectus link
+            managed_service_provider_email: Managed service provider contact email
+            managed_service_provider_name: Managed service provider contact name
+            managed_service_provider_telephone: Managed service provider contact telephone number
+          basic_supplier_information:
+            additional_identifier: Additional identifier
+            additional_identifier_hint: This is a unique ID used to identify the supplier as part of the upload
+            duns: DUNS Number
+            is_sme: Is an SME?
+            supplier_name: Supplier name
+            trading_name: Trading name
+            trading_name_hint: This is the name that is shown to buyers
+          supplier_contact_information:
+            contact_email: Contact email
+            contact_name: Contact name
+            telephone_number: Contact telephone number
+            website: Website
+        show:
+          additional_supplier_information:
+            address: Address
+            lot_1_prospectus_link: Lot 1 prospectus link
+            lot_2_prospectus_link: Lot 2 prospectus link
+            lot_3_prospectus_link: Lot 3 prospectus link
+            lot_4a_prospectus_link: Lot 4a prospectus link
+            lot_4b_prospectus_link: Lot 4b prospectus link
+            lot_4c_prospectus_link: Lot 4c prospectus link
+            lot_5_prospectus_link: Lot 5 prospectus link
+            managed_service_provider_email: Managed service provider contact email
+            managed_service_provider_name: Managed service provider contact name
+            managed_service_provider_telephone: Managed service provider contact telephone number
+            title: Additional information
+          basic_supplier_information:
+            additional_identifier: Additional identifier
+            duns: DUNS Number
+            is_sme: Is an SME?
+            name: Name
+            title: Supplier information
+            trading_name: Trading name
+          change: Change
+          heading: Supplier details
+          no_data: N/A
+          supplier_contact_information:
+            contact_email: Contact email
+            contact_name: Contact name
+            telephone_number: Contact telephone number
+            title: Contact information
+            website: Website
     error_summary:
       there_is_a_problem: There is a problem
     tags:
@@ -570,3 +856,4 @@ en:
     unit:
       one: agency
       other: agencies
+  'yes': 'Yes'

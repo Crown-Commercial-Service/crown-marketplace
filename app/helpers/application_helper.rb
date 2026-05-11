@@ -109,12 +109,21 @@ module ApplicationHelper
     link_to_file_for_download("#{filename}?format=#{file_type}", file_type, text, show_doc_image, **)
   end
 
-  def link_to_file_for_download(file_link, file_type, text, show_doc_image, **)
-    link_to(file_link, class: ('supplier-record__file-download' if show_doc_image).to_s, type: t("common.type_#{file_type}"), download: '', **) do
-      capture do
-        concat(text)
-        concat(tag.span(t("common.#{file_type}_html"), class: 'govuk-visually-hidden')) if show_doc_image
+  def link_to_file_for_download(file_link, file_type, text, show_doc_image, **html_options)
+    html_options[:type] = t("common.type_#{file_type}")
+    html_options[:download] = ''
+
+    if show_doc_image
+      html_options[:class] = "supplier-record__file-download #{html_options.delete(:classes)}".rstrip
+
+      link_to(file_link, **html_options) do
+        capture do
+          concat(text)
+          concat(tag.span(t("common.title_#{file_type}_html"), class: 'govuk-visually-hidden'))
+        end
       end
+    else
+      govuk_button(text, href: file_link, classes: html_options.delete(:classes), attributes: html_options)
     end
   end
 
@@ -230,7 +239,7 @@ module ApplicationHelper
   end
 
   def rm6378_accordion_region_items(region_codes)
-    @journey.current_step.regions_grouped_by_category.map do |section_id, regions|
+    Jurisdiction.regions_grouped_by_category.map do |section_id, regions|
       [
         section_id,
         {

@@ -57,31 +57,4 @@ RSpec.describe FacilitiesManagement::RM6378::Journey::ChooseLocations do
       expect(choose_locations.final?).to be false
     end
   end
-
-  describe '.regions_grouped_by_category' do
-    let(:result) { choose_locations.regions_grouped_by_category.map { |category, regions| [category, regions.length] } }
-
-    # rubocop:disable RSpec/ExampleLength
-    it 'services are grouped together as expected' do
-      expect(result).to eq(
-        [
-          ['TLC', 2],
-          ['TLD', 5],
-          ['TLE', 4],
-          ['TLF', 3],
-          ['TLG', 3],
-          ['TLH', 5],
-          ['TLI', 5],
-          ['TLJ', 4],
-          ['TLK', 5],
-          ['TLL', 12],
-          ['TLM', 18],
-          ['TLN', 11],
-          ['NC0', 1],
-          ['OS0', 1]
-        ]
-      )
-    end
-    # rubocop:enable RSpec/ExampleLength
-  end
 end

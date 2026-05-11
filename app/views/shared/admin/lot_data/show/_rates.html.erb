@@ -1,0 +1,27 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          <%= t('.supplier_rates') %>
+        </h2>
+        <% if Marketplace.environment_name != :production %>
+          <ul class="govuk-summary-card__actions">
+            <li class="govuk-summary-card__action">
+              <%= link_to(t("shared.admin.lot_data.show.#{@supplier_framework_lot_rates.any? ? 'change_html' : 'add_html'}", section: t('.supplier_rates')), supplier_lot_data_edit_path(@supplier_framework, @lot.number_as_slug, @section), class: 'govuk-link govuk-link--no-visited-state') %>
+            </li>
+          </ul>
+        <% end %>
+      </div>
+      <div class="govuk-summary-card__content">
+        <div class="section-list-group">
+          <%= govuk_table(
+            *rates_table_headers_and_rows(@supplier_framework_lot_rates),
+            first_cell_is_header: true,
+            classes: 'ccs-rates-table'
+          ) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -162,11 +162,7 @@ module Marketplace
   end
 
   def self.rails_env_url
-    @rails_env_url ||= ENV.fetch('RAILS_ENV_URL')
-  end
-
-  def self.can_edit_facilities_management_frameworks?
-    @can_edit_facilities_management_frameworks ||= rails_env_url != 'https://marketplace.service.gca.gov.uk'
+    @rails_env_url ||= ENV.fetch('RAILS_ENV_URL', 'https://marketplace.service.gca.gov.uk')
   end
 
   def self.environment_name

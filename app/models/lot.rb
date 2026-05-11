@@ -6,6 +6,14 @@ class Lot < ApplicationRecord
   has_many :supplier_framework_lots, inverse_of: :lot, class_name: 'Supplier::Framework::Lot', dependent: :destroy
   has_many :procurements, inverse_of: :lot, dependent: :destroy
 
+  def number_as_slug
+    number.gsub('.', '-')
+  end
+
+  def self.find_by_number_as_slug(number_as_slug)
+    find_by(number: number_as_slug.gsub('-', '.'))
+  end
+
   def services_grouped_by_category
     category_names = services.pluck(:category)
 

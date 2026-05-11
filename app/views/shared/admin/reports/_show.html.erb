@@ -1,0 +1,68 @@
+<%= content_for :page_title, t('.heading', report_id: @report.short_uuid) %>
+
+<% admin_breadcrumbs(
+  { text: t('shared.admin.reports.index.heading'), href: reports_index_path },
+  { text: t('.heading', report_id: @report.short_uuid) }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('.caption', service_name:, framework: params[:framework]) %></span>
+      <%= t('.heading', report_id: @report.short_uuid) %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_summary_list(
+      [
+        {
+          key: {
+            text: t('.report_summary.status')
+          },
+          value: {
+            text: govuk_tag(*upload_status_tag(@report.aasm_state))
+          }
+        },
+        {
+          key: {
+            text: t('.report_summary.created_at')
+          },
+          value: {
+            text: format_date_time(@report.created_at)
+          }
+        },
+        {
+          key: {
+            text: t('.report_summary.created_by')
+          },
+          value: {
+            text: @report.user.email
+          }
+        },
+        {
+          key: {
+            text: t('.report_summary.date_range')
+          },
+          value: {
+            text: "#{format_date(@report.start_date)} - #{format_date(@report.end_date)}"
+          }
+        }
+      ],
+    ) %>
+  </div>
+</div>
+
+<% if @report.generating_csv? %>
+  <%= render partial: "shared/in_progress", locals: { heading: t('.report_generation_progress'), progress_bar_id: 'report-generation-progress', items: [t('.report_triggered'), t('.genertating_report'), t('.complete')] } %>
+<% elsif @report.completed? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p>
+        <%= link_to_file_for_download("#{rails_blob_path(@report.report_csv, disposition: 'attachment', key: :report_id, value: @report.id)}&format=csv", :csv, @report.report_csv.filename, true) %>
+      </p>
+    </div>
+  </div>
+<% end %>

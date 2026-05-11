@@ -9,6 +9,8 @@ module Pages
                       admin_rm3830_page
                     when 'RM6232'
                       admin_rm6232_page
+                    when 'RM6378'
+                      admin_rm6378_page
                     end
   end
 
@@ -18,6 +20,10 @@ module Pages
 
   def admin_rm6232_page
     @admin_rm6232_page ||= RM6232::Admin.new
+  end
+
+  def admin_rm6378_page
+    @admin_rm6378_page ||= RM6378::Admin.new
   end
 
   def buyer_detail_page

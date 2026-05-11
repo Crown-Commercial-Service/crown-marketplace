@@ -82,6 +82,10 @@ Then('I click on the {string} link') do |link_text|
   page.click_link(link_text)
 end
 
+Then('the caption is {string}') do |caption|
+  expect(page.first('span[class*=govuk-caption]')).to have_text(caption)
+end
+
 Then('I refresh the page') do
   refresh
 end

@@ -1,0 +1,73 @@
+<%= content_for :page_title, t('.heading') %>
+
+<% admin_breadcrumbs(
+  { text: t('.heading') }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('.caption', service_name: t("#{service.module_parent.to_s.underscore}.service_name"), framework: params[:framework]) %></span>
+      <%= t('.heading') %>
+    </h1>
+
+    <p>
+      <%= t('.this_section_allows', service_name: t("#{service.module_parent.to_s.underscore}.service_name"), framework: params[:framework]) %>
+    </p>
+
+    <p>
+      <%= t('.if_the_framework', current_date: format_date(Time.now.in_time_zone('London'))) %>
+    </p>
+
+    <p>
+      <%= t('.the_admin_section') %>
+    </p>
+
+    <%= govuk_table(
+      [
+        {
+          text: t('.framework'),
+        },
+        {
+          text: t('.live_at')
+        },
+        {
+          text: t('.expires_at')
+        },
+        {
+          text: t('.status')
+        },
+        {
+          text: t('.change')
+        }
+      ],
+      [
+        [
+          {
+            text: @framework.id
+          },
+          {
+            text: format_date(@framework.live_at)
+          },
+          {
+            text: format_date(@framework.expires_at)
+          },
+          {
+            text: case @framework.status
+                  when :live
+                    govuk_tag(t('.live'))
+                  when :coming
+                    govuk_tag(t('.coming'), :grey)
+                  else
+                    govuk_tag(t('.expired'), :red)
+                  end
+          },
+          {
+            text: link_to(t('.change'), framework_edit_path)
+          }
+        ]
+      ],
+      first_cell_is_header: true
+    ) %>
+  </div>
+</div>

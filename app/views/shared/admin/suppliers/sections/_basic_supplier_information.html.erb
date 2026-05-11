@@ -1,0 +1,84 @@
+<%= govuk_input(
+  :name,
+  form: form,
+  label: {
+    text: t('.supplier_name'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) if @section_attributes.include?(:name) %>
+
+<%= govuk_input(
+  :duns_number,
+  form: form,
+  label: {
+    text: t('.duns'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-10',
+  attributes: {
+    maxlength: 9
+  }
+) if @section_attributes.include?(:duns_number) %>
+
+<%= govuk_radios(
+  :sme,
+  [
+    {
+      value: true,
+      label: {
+        text: t('yes')
+      }
+    },
+    {
+      value: false,
+      label: {
+        text: t('no')
+      }
+    }
+  ],
+  form: form,
+  fieldset: {
+    legend: {
+      text: t('.is_sme'),
+      classes: 'govuk-fieldset__legend--m'
+    }
+  },
+  classes: 'govuk-radios--inline'
+) if @section_attributes.include?(:sme) %>
+
+<%= govuk_input(
+  :trading_name,
+  form: form,
+  label: {
+    text: t('.trading_name'),
+    classes: 'govuk-label--m'
+  },
+  hint: {
+    text: t('.trading_name_hint'),
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    maxlength: 255
+  }
+) if @section_attributes.include?(:trading_name) %>
+
+<%= govuk_input(
+  :additional_identifier,
+  form: form,
+  label: {
+    text: t('.additional_identifier'),
+    classes: 'govuk-label--m'
+  },
+  hint: {
+    text: t('.additional_identifier_hint'),
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    maxlength: 255
+  }
+) if @section_attributes.include?(:additional_identifier) %>

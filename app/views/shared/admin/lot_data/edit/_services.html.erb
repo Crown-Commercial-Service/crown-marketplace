@@ -1,0 +1,24 @@
+<% @services.each do |group, services| %>
+  <%= govuk_checkboxes(
+    :'supplier_framework_lot[service_ids]',
+    services.sort_by(&:name).map do |service|
+      {
+        value: service.id,
+        checked: @supplier_framework_lot_service_ids.include?(service.id),
+        label: {
+          text: service.name
+        },
+        attributes: {
+          id: "service_#{service.id.gsub('.', '-')}"
+        }
+      }
+    end,
+    fieldset: {
+      legend: {
+        text: group.nil? ? t('.question') : t('.question_group', group: group),
+        classes: 'govuk-fieldset__legend--m',
+      }
+    },
+    error_message: @model.errors[:base].first
+  ) %>
+<% end %>

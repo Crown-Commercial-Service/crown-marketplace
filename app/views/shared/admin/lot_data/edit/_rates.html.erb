@@ -1,0 +1,20 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          <%= t('shared.admin.lot_data.show.rates.supplier_rates') %>
+        </h2>
+      </div>
+      <div class="govuk-summary-card__content">
+        <div class="section-list-group">
+          <%= govuk_table(
+            *rates_form_table_headers_and_rows(@supplier_framework_lot_rates),
+            first_cell_is_header: true,
+            classes: 'ccs-rates-table'
+          ) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

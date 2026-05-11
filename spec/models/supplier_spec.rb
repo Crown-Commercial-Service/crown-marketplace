@@ -50,7 +50,7 @@ RSpec.describe Supplier do
 
         it 'is not valid' do
           expect(supplier).not_to be_valid
-          expect(supplier.errors[:name].first).to eq('has already been taken')
+          expect(supplier.errors[:name].first).to eq('The supplier name you entered is already in use by another supplier')
         end
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe Supplier do
 
         it 'is not valid' do
           expect(supplier).not_to be_valid
-          expect(supplier.errors[:duns_number].first).to eq('has already been taken')
+          expect(supplier.errors[:duns_number].first).to eq('The DUNS number you entered is already in use by another supplier')
         end
       end
     end

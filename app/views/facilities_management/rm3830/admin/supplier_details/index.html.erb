@@ -4,39 +4,41 @@
   <%= t('.heading') %>
 </h1>
 
-<div class="govuk-grid-row govuk-!-margin-bottom-4">
-  <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
-      <%= t('.view_supplier_details') %>
-    </p>
-    <%= search_box(t('.search_for_a_supplier'))%>
+<div data-module="filter-table">
+  <div class="govuk-grid-row govuk-!-margin-bottom-4">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+        <%= t('.view_supplier_details') %>
+      </p>
+      <%= search_box(t('.search_for_a_supplier'))%>
+    </div>
   </div>
-</div>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= govuk_table(
-      [
-        {
-          text: t('.supplier_name')
-        },
-        {
-          text: t('.supplier_contact_email')
-        }
-      ],
-      @suppliers.map do |supplier|
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_table(
         [
           {
-            text: link_to(supplier.supplier_name, facilities_management_admin_supplier_detail_path(id: supplier.supplier_id), class: 'govuk-link govuk-link--no-visited-state')
+            text: t('.supplier_name')
           },
           {
-            text: contact_detail(:contact_email, supplier)
+            text: t('.supplier_contact_email')
           }
-        ]
-      end,
-      first_cell_is_header: true,
-      attributes: {
-        id: 'fm-table-filter'
-      }
-    ) %>
+        ],
+        @suppliers.map do |supplier|
+          [
+            {
+              text: link_to(supplier.supplier_name, facilities_management_admin_supplier_detail_path(id: supplier.supplier_id), class: 'govuk-link govuk-link--no-visited-state')
+            },
+            {
+              text: contact_detail(:contact_email, supplier)
+            }
+          ]
+        end,
+        first_cell_is_header: true,
+        attributes: {
+          id: 'fm-table-filter'
+        }
+      ) %>
+    </div>
   </div>
 </div>

@@ -1,0 +1,18 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-4"><%= heading %></h2>
+    <div class="govuk-body-s ccs-upload-progress-container ccs-upload-progress-container__grid-width-<%= items.length %>">
+      <% items.each.with_index do |item, index| %>
+        <% if index.zero? %>
+          <div aria-current="true" id="progress-0" class="govuk-!-font-weight-bold"><%= item %></div>
+        <% else %>
+          <div id="progress-<%= index %>" ><%= item %></div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="ccs-progress">
+      <div id="<%= progress_bar_id %>" class="ccs-progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:<%= 50 / items.length %>%"></div>
+    </div>
+  </div>
+</div>
