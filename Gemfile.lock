@@ -266,7 +266,7 @@ GEM
       activemodel
     erb (6.0.4)
     erubi (1.13.1)
-    et-orbi (1.3.0)
+    et-orbi (1.4.0)
       tzinfo
     excon (1.4.2)
       logger
@@ -308,8 +308,8 @@ GEM
       reline
     friendly_id (5.6.0)
       activerecord (>= 4.0.0)
-    fugit (1.11.1)
-      et-orbi (~> 1, >= 1.2.11)
+    fugit (1.12.1)
+      et-orbi (~> 1.4)
       raabro (~> 1.4)
     geocoder (1.8.6)
       base64 (>= 0.1.0)
@@ -351,7 +351,7 @@ GEM
     jmespath (1.6.2)
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
-    json (2.19.4)
+    json (2.19.5)
     jwt (3.1.2)
       base64
     kaminari (1.2.2)
@@ -549,7 +549,7 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
-    redis-client (0.28.0)
+    redis-client (0.29.0)
       connection_pool
     regexp_parser (2.12.0)
     reline (0.6.3)
@@ -636,13 +636,13 @@ GEM
       activesupport (>= 7.1)
     show_me_the_cookies (6.0.0)
       capybara (>= 2, < 4)
-    sidekiq (8.1.3)
+    sidekiq (8.1.4)
       connection_pool (>= 3.0.0)
       json (>= 2.16.0)
       logger (>= 1.7.0)
       rack (>= 3.2.0)
       redis-client (>= 0.26.0)
-    sidekiq-cron (2.3.1)
+    sidekiq-cron (2.4.0)
       cronex (>= 0.13.0)
       fugit (~> 1.8, >= 1.11.1)
       globalid (>= 1.0.1)
@@ -802,7 +802,7 @@ DEPENDENCIES
   selenium-webdriver (>= 3.142.3)
   shoulda-matchers (>= 5.1.0)
   show_me_the_cookies (>= 6.0.0)
-  sidekiq (~> 8.1.3)
+  sidekiq (~> 8.1.4)
   sidekiq-cron
   simplecov (>= 0.16.1)
   sinatra (~> 4.2.1)
