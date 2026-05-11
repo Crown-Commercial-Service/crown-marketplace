@@ -27,11 +27,11 @@ module DataLoader::Frameworks
 
       if Rails.env.test?
         case framework['id']
-        when 'RM6238', 'RM6240', 'RM6309'
+        when 'RM6238', 'RM6240', 'RM6309', 'RM6360', 'RM6376'
           framework['expires_at'] = 1.year.from_now
         when 'RM6232'
           framework['expires_at'] = 1.year.ago
-        when 'RM6360', 'RM6378'
+        when 'RM6378'
           framework['live_at'] = 1.year.ago
           framework['expires_at'] = 1.year.from_now
         end

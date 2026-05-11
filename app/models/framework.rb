@@ -43,8 +43,12 @@ class Framework < ApplicationRecord
     pluck(:id)
   end
 
+  def self.live_framework_records
+    where('live_at <= ? AND expires_at > ?', Time.now.in_time_zone('London'), Time.now.in_time_zone('London'))
+  end
+
   def self.live_frameworks
-    where('live_at <= ? AND expires_at > ?', Time.now.in_time_zone('London'), Time.now.in_time_zone('London')).pluck(:id)
+    live_framework_records.pluck(:id)
   end
 
   def self.current_framework

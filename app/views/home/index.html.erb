@@ -1,0 +1,15 @@
+<%= content_for :page_title, t('.heading') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <ul class="govuk-list govuk-list--bullet">
+      <% @frameworks.each do |framework| %>
+        <li><%= link_to(t(".agreements.#{framework.id}"), "/#{framework.service.gsub('_', '-')}/#{framework.id}", class: 'govuk-link') %></li>
+      <% end %>
+    </ul>
+    <p>
+      <%= t('.cant_find_html', search_agreements_link: link_to(t('.search_agreements'), "#{ccs_homepage_url}/agreements", class: 'govuk-link')) %>
+    <p>
+  </div>
+</div>

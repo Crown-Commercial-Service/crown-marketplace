@@ -421,10 +421,23 @@ en:
       we_dont_collect: We don’t collect or store your personal information (e.g. your name or address) so this information can’t be used to identify who you are.
       we_use_glassbox: We use Glassbox software to collect information about how you use Crown Marketplace. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.
     index:
+      agreements:
+        RM3830: Facilities Management Marketplace (RM3830)
+        RM6187: Management Consultancy Framework Three (MCF3) (RM6187)
+        RM6232: Facilities Management and Workplace Services (RM6232)
+        RM6238: Supply Teachers and Temporary Staffing (STaTS) (RM6238)
+        RM6240: Public Sector Legal Services (RM6240)
+        RM6309: Management Consultancy Framework Four (MCF4) (RM6309)
+        RM6360: Legal Panel for Government (RM6360)
+        RM6376: Supply Teachers and Education Recruitment (RM6376)
+        RM6378: Facilities Management and Security Services (RM6378)
+      cant_find_html: Can't find the agreement you're looking for? %{search_agreements_link} on the Government Commercial Agency website.
       crown_marketplace_link: Crown Marketplace
       facilities_management_admin_link: Managing framework and supplier data
       facilities_management_link: Find a facilities management supplier
       facilities_management_supplier_link: Facilities management supplier account
+      heading: Select the agreement you need
+      search_agreements: Search agreements
     not_permitted:
       ccs_support: GCA Support (opens in a new tab)
       details_html: Contact %{link} if you need to speak to someone about this.
