@@ -2,10 +2,14 @@ require 'rails_helper'
 
 RSpec.describe HomeController do
   describe 'GET index' do
-    it 'redirects to the CCS home page' do
-      get :index
+    before { get :index }
 
-      expect(response).to redirect_to('https://www.gca.gov.uk/')
+    it 'renders the index page' do
+      expect(response).to render_template(:index)
+    end
+
+    it 'sets the frameworks' do
+      expect(assigns(:frameworks).pluck(:id)).to eq(%w[RM6238 RM6240 RM6378 RM6309 RM6360 RM6376])
     end
   end
 

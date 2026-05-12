@@ -94,7 +94,7 @@ module Marketplace
   end
 
   def self.ccs_homepage_url
-    'https://www.gca.gov.uk/'
+    'https://www.gca.gov.uk'
   end
 
   # :nocov:
