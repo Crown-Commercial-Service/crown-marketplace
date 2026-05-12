@@ -2,10 +2,10 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
     <ul class="govuk-list govuk-list--bullet">
       <% @frameworks.each do |framework| %>
-        <li><%= link_to(t(".agreements.#{framework.id}"), "/#{framework.service.gsub('_', '-')}/#{framework.id}", class: 'govuk-link') %></li>
+        <li><%= link_to(t(".agreements.#{framework.id}"), "/#{framework.service.dasherize}/#{framework.id}", class: 'govuk-link') %></li>
       <% end %>
     </ul>
     <p>
