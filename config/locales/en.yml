@@ -436,7 +436,7 @@ en:
       facilities_management_admin_link: Managing framework and supplier data
       facilities_management_link: Find a facilities management supplier
       facilities_management_supplier_link: Facilities management supplier account
-      heading: Select the agreement you need
+      heading: 'Select the agreement you need:'
       search_agreements: Search agreements
     not_permitted:
       ccs_support: GCA Support (opens in a new tab)
