@@ -18,9 +18,9 @@ class ActiveStorage::Blobs::RedirectController < ActiveStorage::BaseController
   protected
 
   def authorize_user
-    raise CanCan::AccessDenied unless params[:key] && params[:value] && KEY_TO_MODEL.key?(params[:key].to_sym)
+    raise CanCan::AccessDenied unless params[:key] && params[:value] && KEY_TO_MODEL.key?(params.expect(:key).to_sym)
 
-    object = KEY_TO_MODEL[params[:key].to_sym].find_by(id: params[:value])
+    object = KEY_TO_MODEL[params.expect(:key).to_sym].find_by(id: params[:value])
 
     raise ActionController::RoutingError, 'not found' if object.blank?
 

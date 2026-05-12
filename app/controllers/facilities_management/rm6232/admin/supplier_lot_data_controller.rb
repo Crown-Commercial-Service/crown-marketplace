@@ -29,7 +29,7 @@ module FacilitiesManagement
         private
 
         def set_supplier_data
-          @supplier = Supplier.find(params[:id])
+          @supplier = Supplier.find(params.expect(:id))
           @lot_data = @supplier.lot_data.order('REVERSE(lot_code)').map do |lot_data|
             {
               id: lot_data.id,
@@ -42,7 +42,7 @@ module FacilitiesManagement
         end
 
         def set_lot_data
-          @lot_data = Supplier::LotData.find(params[:supplier_lot_datum_id])
+          @lot_data = Supplier::LotData.find(params.expect(:supplier_lot_datum_id))
           @lot_code = @lot_data.lot_code
           @supplier = @lot_data.supplier
         end

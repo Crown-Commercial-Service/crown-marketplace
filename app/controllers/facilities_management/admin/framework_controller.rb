@@ -28,7 +28,7 @@ module FacilitiesManagement
       end
 
       def set_supplier
-        @supplier = FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find(params[:supplier_framework_datum_id])
+        @supplier = FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find(params.expect(:supplier_framework_datum_id))
         @supplier_id = @supplier.supplier_id.to_sym
       end
 
@@ -41,7 +41,7 @@ module FacilitiesManagement
       end
 
       def set_framework_has_expired
-        @framework_has_expired = Framework.find(params[:framework]).status == :expired
+        @framework_has_expired = Framework.find(params.expect(:framework)).status == :expired
       end
     end
   end

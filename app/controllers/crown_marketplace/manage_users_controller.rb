@@ -99,7 +99,7 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
   end
 
   def section
-    @section ||= params[:section]&.underscore&.to_sym
+    @section ||= params.fetch(:section, nil)&.underscore&.to_sym
   end
 
   def available_roles
@@ -185,7 +185,7 @@ class CrownMarketplace::ManageUsersController < CrownMarketplace::FrameworkContr
   end
 
   def set_user
-    @user = Cognito::Admin::User.find(@current_user_access, params[:cognito_uuid])
+    @user = Cognito::Admin::User.find(@current_user_access, params.expect(:cognito_uuid))
 
     return unless @user.error
 

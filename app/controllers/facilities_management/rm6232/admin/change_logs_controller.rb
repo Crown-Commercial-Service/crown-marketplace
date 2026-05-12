@@ -20,14 +20,14 @@ module FacilitiesManagement
         private
 
         def change_type
-          @change_type ||= params[:change_type].to_sym
+          @change_type ||= params.expect(:change_type).to_sym
         end
 
         def set_change_log
           @change_log = if change_type == :upload
-                          SupplierData.find(params[:change_log_id])
+                          SupplierData.find(params.expect(:change_log_id))
                         else
-                          SupplierData::Edit.find(params[:change_log_id])
+                          SupplierData::Edit.find(params.expect(:change_log_id))
                         end
         end
 

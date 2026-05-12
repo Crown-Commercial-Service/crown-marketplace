@@ -4,7 +4,7 @@ module FacilitiesManagement
       before_action :authorize_user
 
       def show
-        @service = Service.find(params[:service_code].gsub('-', '.'))
+        @service = Service.find(params.expect(:service_code).gsub('-', '.'))
         @specification = @service.service_specification
       end
     end

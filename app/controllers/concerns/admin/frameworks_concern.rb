@@ -23,7 +23,7 @@ module Admin::FrameworksConcern
   private
 
   def set_framework
-    @framework = Framework.find(params[:id])
+    @framework = Framework.find(params.expect(:id))
   end
 
   def framework_params
