@@ -20,16 +20,23 @@ unless ARGV.any? { |a| a =~ /^gems/ } # Don't load anything when running the gem
         t.profile = 'default'
       end
 
-      Cucumber::Rake::Task.new({ 'crown-marketplace': 'test:prepare' }, 'Run the full suite of features that should pass for Crown Marketplace') do |t|
-        t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
-        t.fork = true # You may get faster startup if you set this to false
-        t.profile = 'crown-marketplace'
-      end
+      [
+        ['Crown Marketplace', 'crown-marketplace', %w[]],
+        ['Facilities Management', 'facilities-management', %w[RM3830 RM6232 RM6378]],
+      ].each do |service, service_slug, frameworks|
+        Cucumber::Rake::Task.new({ "#{service_slug}": 'test:prepare' }, "Run the full suite of features that should pass for #{service}") do |t|
+          t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
+          t.fork = true # You may get faster startup if you set this to false
+          t.profile = service_slug.to_s
+        end
 
-      Cucumber::Rake::Task.new({ 'facilities-management': 'test:prepare' }, 'Run the full suite of features that should pass for Facilities Management') do |t|
-        t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
-        t.fork = true # You may get faster startup if you set this to false
-        t.profile = 'facilities-management'
+        frameworks.each do |framework|
+          Cucumber::Rake::Task.new({ "#{service_slug}:#{framework}": 'test:prepare' }, "Run the full suite of features that should pass for #{service} (#{framework})") do |t|
+            t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
+            t.fork = true # You may get faster startup if you set this to false
+            t.profile = "#{service_slug}:#{framework}"
+          end
+        end
       end
 
       Cucumber::Rake::Task.new({ wip: 'test:prepare' }, 'Run features that are being worked on') do |t|

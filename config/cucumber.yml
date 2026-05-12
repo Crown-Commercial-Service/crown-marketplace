@@ -9,5 +9,12 @@ default: <%= std_opts %> features
 wip: --tags @wip:3 --wip features --publish-quiet
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags 'not @wip'
 accessibility: <%= accessibility_opts %> features/accessibility
-crown-marketplace: <%= std_opts %> features/crown_marketplace
-facilities-management: <%= std_opts %> features/facilities_management
+<% [
+  ['crown-marketplace', 'crown_marketplace', %w[]],
+  ['facilities-management', 'facilities_management', %w[RM3830 RM6232 RM6378]],
+].each do |service_slug, service_folder, frameworks| %>
+<%= service_slug %>: <%= std_opts %> features/<%= service_folder %>
+<% frameworks.each do |framework| %>
+<%= service_slug %>:<%= framework %>: <%= std_opts %> features/<%= service_folder %>/<%= framework.downcase %>
+<% end %>
+<% end %>
