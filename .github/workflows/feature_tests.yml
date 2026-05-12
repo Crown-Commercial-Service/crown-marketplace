@@ -11,7 +11,9 @@ jobs:
       matrix:
         service:
           - crown-marketplace
-          - facilities-management
+          - facilities-management:RM3830
+          - facilities-management:RM6232
+          - facilities-management:RM6378
 
     services:
       postgres:
