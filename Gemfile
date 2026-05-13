@@ -43,7 +43,7 @@ gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
 gem 'caxlsx_rails', '>= 0.6.3'
 
-gem 'rollbar', '~> 3.7.0'
+gem 'rollbar', '~> 3.8.0'
 
 # for dfe sign in
 gem 'omniauth', '~> 2.1.4'
