@@ -23,6 +23,6 @@ class Procurement < ApplicationRecord
   def attribute_setter(attribute, value, cast_func = nil)
     self.procurement_details ||= {}
 
-    self.procurement_details[attribute] = cast_func.nil? ? value : cast_func.call(value)
+    procurement_details[attribute] = cast_func.nil? ? value : cast_func.call(value)
   end
 end
