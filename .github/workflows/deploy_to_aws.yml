@@ -7,6 +7,11 @@ on:
         description: 'The name of the environment we are deploying to'
         required: true
         type: string
+      target_branch:
+        description: 'The Git branch or tag to deploy'
+        required: true
+        type: string
+        default: main
     secrets:
       AWS_PIPELINE_REGION:
         description: 'The AWS pipeline region'
@@ -24,6 +29,18 @@ on:
         description: 'The AWS sidekiq pipeline name'
         required: true
 
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'The name of the environment we are deploying to (e.g., "CMPDEV", preview, production)'
+        required: true
+        type: environment
+      target_branch:
+        description: 'The Git branch or tag to deploy'
+        required: true
+        type: string
+        default: 'main'
+
 concurrency:
   group: deploy-${{ inputs.environment }}
 
@@ -34,12 +51,13 @@ jobs:
       name: ${{ inputs.environment }}
     steps:
       - name: Trigger AWS CodePipeline - main container
-        uses: Crown-Commercial-Service/ccs-aws-codepipeline-action@v2.0.1
+        uses: Crown-Commercial-Service/ccs-aws-codepipeline-action@v3.0.0
         with:
           aws-region: ${{ secrets.AWS_PIPELINE_REGION }}
           aws-access-key: ${{ secrets.AWS_PIPELINE_ACCESS_KEY }}
           aws-secret-key: ${{ secrets.AWS_PIPELINE_SECRET_KEY }}
           pipeline-name: ${{ secrets.AWS_PIPELINE_MAIN_NAME }}
+          target-branch: ${{ inputs.target_branch }}
 
   deploy-to-sidekiq:
     runs-on: ubuntu-latest
@@ -47,9 +65,10 @@ jobs:
       name: ${{ inputs.environment }}
     steps:
       - name: Trigger AWS CodePipeline - sidekiq container
-        uses: Crown-Commercial-Service/ccs-aws-codepipeline-action@v2.0.1
+        uses: Crown-Commercial-Service/ccs-aws-codepipeline-action@v3.0.0
         with:
           aws-region: ${{ secrets.AWS_PIPELINE_REGION }}
           aws-access-key: ${{ secrets.AWS_PIPELINE_ACCESS_KEY }}
           aws-secret-key: ${{ secrets.AWS_PIPELINE_SECRET_KEY }}
           pipeline-name: ${{ secrets.AWS_PIPELINE_SIDEKIQ_NAME }}
+          target-branch: ${{ inputs.target_branch }}

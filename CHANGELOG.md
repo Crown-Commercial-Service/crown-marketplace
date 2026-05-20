@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update CCS Frontend to v3.2.0 ([PR 5276](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5276))
 - Remove the "use gca" flags ([PR 5276](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5276))
+- Update how we do releases to preview and production to target a specific tag  ([PR 5308](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5308))
 
 ## [7.7.0] - 2026-04-30
 

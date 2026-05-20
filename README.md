@@ -290,8 +290,13 @@ To create a new release:
 - Update the CHANGELOG with a list of the changes and their Pull Requests
 - Commit the changes (with the commit message 'Release v<major>.<minor>.<patch>'), push to GitHub and open a Pull Request
 - Once this Pull Request has been reviewed and merged a new GitHub release will be created
-- Once you have published the release, create a Pull Request of the changes on the `preview` and `production` branches.
-- Once the Pull Request has been aproved, merge the Pull Request which will update the `preview/production` branch.
+- This will trigger an automatic deployment to Preview (which will need to be approved)
+- To deply the tag to Production (or any environment):
+  - Go to the [Deploy latest code to AWS][] workflow
+  - Click on "Run workflow"
+  - Select the "Production" environment
+  - Enter the name of the Git Tag to deploy
+  - Click on the green "Run workflow" button
 
 Once all the steps has been followed, the branches will be deployed to preview and preduction as described in [Continuous integration & deployment](#continuous-integration--deployment)
 
@@ -369,4 +374,4 @@ environments:
 [CCS AWS Pipeline action]: https://github.com/Crown-Commercial-Service/ccs-aws-codepipeline-action
 [investigate the action]: https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml
 [GitHub Release]: https://github.com/Crown-Commercial-Service/crown-marketplace/releases
-[release action]: https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/release.yml
+[Deploy latest code to AWS]: https://github.com/Crown-Commercial-Service/crown-marketplace-legacy/actions/workflows/deploy_to_aws.yml
