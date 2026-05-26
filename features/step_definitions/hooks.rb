@@ -50,48 +50,13 @@ After('@mobile') do
   resize_window_to_pc
 end
 
-Before do
-  case @framework
-  when 'RM3830'
-    if FacilitiesManagement::RM3830::SupplierDetail.none?
-      Rake::Task['db:rm3830:fm_supplier_data'].reenable
-      Rake::Task['db:rm3830:add_supplier_rate_cards'].reenable
-
-      Rake::Task['db:rm3830:fm_supplier_data'].invoke
-      Rake::Task['db:rm3830:add_supplier_rate_cards'].invoke
-    end
-  when 'RM6232'
-    if FacilitiesManagement::RM6232::Supplier.none?
-      Rake::Task['db:rm6232:import_suppliers'].reenable
-
-      Rake::Task['db:rm6232:import_suppliers'].invoke
-    end
-
-    Rake::Task['db:make_framework_live'].reenable
-    Rake::Task['db:make_framework_live'].invoke(@framework)
-  end
-end
-
 After do
   DatabaseCleaner.clean
   if Framework.none?
+    Rake::Task['db:static'].reenable
     Rake::Task['db:frameworks'].reenable
-    Rake::Task['db:frameworks'].invoke
 
-    case @framework
-    when 'RM3830'
-      Rake::Task['db:rm3830:fm_supplier_data'].reenable
-      Rake::Task['db:rm3830:add_supplier_rate_cards'].reenable
-
-      Rake::Task['db:rm3830:fm_supplier_data'].invoke
-      Rake::Task['db:rm3830:add_supplier_rate_cards'].invoke
-    when 'RM6232'
-      Rake::Task['db:rm6232:import_suppliers'].reenable
-
-      Rake::Task['db:rm6232:import_suppliers'].invoke
-    when 'RM6378'
-      Rake::Task['db:import_test_data_for_framework_service'].reenable
-      Rake::Task['db:import_test_data_for_framework_service'].invoke(@framework)
-    end
+    Rake::Task['db:import_test_data_for_framework_service'].reenable
+    Rake::Task['db:import_test_data_for_framework_service'].invoke(@framework)
   end
 end

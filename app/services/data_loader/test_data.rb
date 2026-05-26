@@ -1,5 +1,40 @@
 class DataLoader::TestData
   module FM
+    module RM3830
+      def self.import_data
+        Rails.logger.info 'Importing FM RM3830 data'
+
+        DistributedLocks.distributed_lock(3830) do
+          ActiveRecord::Base.transaction do
+            FacilitiesManagement::RM3830::SupplierDetail.destroy_all
+            FacilitiesManagement::RakeModules::SupplierData.fm_suppliers
+            FacilitiesManagement::RakeModules::SupplierData.fm_supplier_contact_details
+            FacilitiesManagement::RM3830::Admin::FilesImporter.new.import_test_data
+          rescue ActiveRecord::Rollback => e
+            logger.error e.message
+          end
+        end
+      end
+    end
+
+    module RM6232
+      def self.import_data
+        Rails.logger.info 'Importing FM RM6232 data'
+
+        DistributedLocks.distributed_lock(6232) do
+          ActiveRecord::Base.transaction do
+            FacilitiesManagement::RM6232::Admin::SupplierData.destroy_all
+            FacilitiesManagement::RM6232::Admin::FilesImporter.new.import_test_data
+          rescue ActiveRecord::Rollback => e
+            logger.error e.message
+          end
+        end
+
+        Rails.logger.info 'Making RM6232 live'
+        Framework.find('RM6232').update(expires_at: 1.day.from_now)
+      end
+    end
+
     module RM6378
       def self.import_data
         Rails.logger.info 'Importing FM RM6378 data'
@@ -33,6 +68,8 @@ class DataLoader::TestData
     def import_test_data
       empty_tables
 
+      FM::RM3830.import_data
+      FM::RM6232.import_data
       FM::RM6378.import_data
     end
 
@@ -40,6 +77,10 @@ class DataLoader::TestData
       empty_tables
 
       case framework
+      when 'RM3830'
+        FM::RM3830.import_data
+      when 'RM6232'
+        FM::RM6232.import_data
       when 'RM6378'
         FM::RM6378.import_data
       end

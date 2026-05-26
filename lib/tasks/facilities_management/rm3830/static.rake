@@ -22,7 +22,4 @@ namespace :db do
       CCS.csv_to_fm_rates 'data/facilities_management/rm3830/rates.csv'
     end
   end
-
-  desc 'add FM rates to the database'
-  task static: :'rm3830:fm_rates'
 end
