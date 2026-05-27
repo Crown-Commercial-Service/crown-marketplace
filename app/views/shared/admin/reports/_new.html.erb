@@ -1,0 +1,61 @@
+<%= content_for :page_title, t('.heading') %>
+
+<% admin_breadcrumbs(
+  { text: t('shared.admin.reports.index.heading'), href: reports_index_path },
+  { text: t('.heading') }
+)%>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @report.errors } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('.caption', service_name:, framework: params[:framework]) %></span>
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<%= form_with model: @report, url: reports_create_path, method: :post, html: { specialvalidation: true, novalidate: true } do |f| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_fieldset(
+        legend: {
+          text: t('.generate_file'),
+          classes: 'govuk-fieldset__legend--m',
+        }
+      ) do %>
+      <% end %>
+
+      <%= govuk_date_input(
+        :start_date,
+        form: f,
+        fieldset: {
+          legend: {
+            text: t('.from'),
+          }
+        },
+        hint: {
+          text: t('.from_example')
+        },
+        date_items: govuk_date_items
+      ) %>
+
+      <%= govuk_date_input(
+        :end_date,
+        form: f,
+        fieldset: {
+          legend: {
+            text: t('.to'),
+          }
+        },
+        hint: {
+          text: t('.to_example')
+        },
+        date_items: govuk_date_items
+      ) %>
+
+      <%= govuk_button(t('.generate_report'), form: f, attributes: { aria: { label: t('.generate_report') } }) %>
+    </div>
+  </div>
+<% end %>

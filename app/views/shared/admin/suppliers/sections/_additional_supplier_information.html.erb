@@ -1,0 +1,70 @@
+<%= govuk_input(
+  :address,
+  form: form,
+  label: {
+    text: t('.address'),
+    classes: 'govuk-label--m'
+  },
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) if @section_attributes.include?(:address) %>
+
+<% %i[lot_1_prospectus_link lot_2_prospectus_link lot_3_prospectus_link lot_4a_prospectus_link lot_4b_prospectus_link lot_4c_prospectus_link lot_5_prospectus_link].map do |lot_prospectus_link_attribute| %>
+  <%= govuk_input(
+    lot_prospectus_link_attribute,
+    form: form,
+    label: {
+      text: t(".#{lot_prospectus_link_attribute}"),
+      classes: 'govuk-label--m'
+    },
+    classes: 'govuk-input--width-20',
+    attributes: {
+      required: true,
+      maxlength: 255
+    }
+  ) if @section_attributes.include?(lot_prospectus_link_attribute) %>
+<% end %>
+
+<%= govuk_input(
+  :managed_service_provider_name,
+  form: form,
+  label: {
+    text: t('.managed_service_provider_name'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) if @section_attributes.include?(:managed_service_provider_name) %>
+
+<%= govuk_input(
+  :managed_service_provider_email,
+  form: form,
+  label: {
+    text: t('.managed_service_provider_email'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) if @section_attributes.include?(:managed_service_provider_email) %>
+
+<%= govuk_input(
+  :managed_service_provider_telephone,
+  form: form,
+  label: {
+    text: t('.managed_service_provider_telephone'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 15
+  }
+) if @section_attributes.include?(:managed_service_provider_telephone) %>

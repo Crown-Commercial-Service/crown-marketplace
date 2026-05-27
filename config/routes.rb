@@ -71,13 +71,47 @@ Rails.application.routes.draw do
     put '/cookie-settings', to: 'home#update_cookie_settings'
   end
 
+  concern :admin_shared_pages do
+    get '/not-permitted', to: 'dashboard#not_permitted'
+    get '/accessibility-statement', to: 'dashboard#accessibility_statement'
+    get '/cookie-policy', to: 'dashboard#cookie_policy'
+    get '/cookie-settings', to: 'dashboard#cookie_settings'
+    put '/cookie-settings', to: 'dashboard#update_cookie_settings'
+  end
+
   concern :framework do
     get '/', to: 'home#framework'
     get '/start', to: 'home#framework'
   end
 
   concern :admin_frameworks do
-    resources :frameworks, only: %i[index edit update]
+    scope path: '/frameworks', as: :frameworks do
+      get '/', to: 'frameworks#show', action: :show
+      get '/edit', to: 'frameworks#edit', action: :edit
+      put '/', to: 'frameworks#update', action: :update
+    end
+  end
+
+  concern :admin_dashboard do
+    get '/', to: 'dashboard#index', action: :index
+  end
+
+  concern :admin_suppliers do
+    resources :suppliers, only: Marketplace.environment_name == :production ? %i[index show] : %i[index show edit update] do
+      resources :lot_data, path: 'lot-data', param: :lot_number, only: Marketplace.environment_name == :production ? %i[index show] : %i[index show edit update]
+    end
+  end
+
+  concern :admin_uploads do
+    resources :uploads, only: %i[index new create show] do
+      get '/progress', action: :progress
+    end
+  end
+
+  concern :admin_reports do
+    resources :reports, only: %i[index new create show] do
+      get '/progress', action: :progress
+    end
   end
 
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
@@ -86,7 +120,7 @@ Rails.application.routes.draw do
     resources :buyer_details, path: '/:framework/buyer-details', only: %i[show edit update]
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-      concerns :framework, :admin_frameworks
+      concerns :framework
     end
 
     resources :admin_supplier_details, path: '/:framework/admin/supplier-details', only: %i[show edit update], defaults: { service: 'facilities_management/admin' }, controller: 'admin/supplier_details'
@@ -109,7 +143,7 @@ Rails.application.routes.draw do
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
         get '/uploads/spreadsheet_template', controller: 'facilities_management/rm3830/admin/uploads'
 
-        concerns :shared_pages, :admin_uploads, :management_reports
+        concerns :shared_pages, :admin_uploads, :management_reports, :admin_frameworks
 
         get '/', to: 'home#index'
         resources :service_rates, path: 'service-rates', param: :slug, only: :show
@@ -133,7 +167,7 @@ Rails.application.routes.draw do
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-        concerns :shared_pages, :admin_uploads, :management_reports
+        concerns :shared_pages, :admin_uploads, :management_reports, :admin_frameworks
 
         get '/', to: 'home#index'
         resources :supplier_data, path: 'supplier-data', only: :index
@@ -160,9 +194,7 @@ Rails.application.routes.draw do
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-        concerns :shared_pages
-
-        get '/', to: 'home#index'
+        concerns %i[admin_dashboard admin_frameworks admin_suppliers admin_uploads admin_reports admin_shared_pages]
       end
     end
 
@@ -219,5 +251,14 @@ Rails.application.routes.draw do
   get '/:journey/:framework/start', to: 'journey#start', as: 'journey_start'
   get '/:journey/:framework/:slug', to: 'journey#question', as: 'journey_question'
   get '/:journey/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+
+  resources :suppliers, path: '/:service/:framework/admin/suppliers', only: Marketplace.environment_name == :production ? %i[index show] : %i[index show edit update] do
+    resources :lot_data, path: 'lot-data', param: :lot_number, only: Marketplace.environment_name == :production ? %i[index show] : %i[index show edit update]
+  end
+  scope path: '/:service/:framework/admin/frameworks', as: :frameworks do
+    get '/', to: 'frameworks#show', action: :show
+    get '/edit', to: 'frameworks#edit', action: :edit
+    put '/', to: 'frameworks#update', action: :update
+  end
 end
 # rubocop:enable Metrics/BlockLength

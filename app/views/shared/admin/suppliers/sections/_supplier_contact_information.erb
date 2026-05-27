@@ -1,0 +1,55 @@
+<%= govuk_input(
+  :name,
+  form: form,
+  label: {
+    text: t('.contact_name'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) if @section_attributes.include?(:name) %>
+
+<%= govuk_input(
+  :email,
+  form: form,
+  label: {
+    text: t('.contact_email'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) if @section_attributes.include?(:email) %>
+
+<%= govuk_input(
+  :telephone_number,
+  form: form,
+  label: {
+    text: t('.telephone_number'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 15
+  }
+) if @section_attributes.include?(:telephone_number) %>
+
+<%= govuk_input(
+  :website,
+  form: form,
+  label: {
+    text: t('.website'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) if @section_attributes.include?(:website) %>

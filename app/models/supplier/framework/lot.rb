@@ -10,6 +10,10 @@ class Supplier < ApplicationRecord
       has_many :branches, inverse_of: :supplier_framework_lot, class_name: 'Supplier::Framework::Lot::Branch', dependent: :destroy
 
       delegate :supplier_name, to: :supplier_framework
+
+      with_options on: :lot_status do
+        validates :enabled, inclusion: { in: [true, false] }
+      end
     end
   end
 end

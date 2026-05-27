@@ -25,4 +25,7 @@ namespace :db do
       puts 'Finished supplier test data import'
     end
   end
+
+  task import_test_data: :static
+  task import_test_data_for_framework_service: :static
 end

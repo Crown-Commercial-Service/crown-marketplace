@@ -1,0 +1,72 @@
+<%= content_for :page_title, t('.heading') %>
+
+<% admin_breadcrumbs(
+  { text: t('shared.admin.suppliers.index.heading'), href: suppliers_index_path },
+  { text: t('.heading') }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @supplier_framework.supplier_name %></span>
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<% @supplier_lot_data.each do |supplier_lot_data_item| %>
+  <div class="govuk-grid-row supplier-lot-data--lots">
+    <div class="govuk-grid-column-three-quarters">
+      <%= govuk_summary_list(
+        [
+          {
+            key: {
+              text: t(".supplier_lot_data_summary_list.sections.lot_status")
+            },
+            value: {
+              text: govuk_tag(*enabled_status_tag(supplier_lot_data_item[:enabled]))
+            },
+            actions: {
+              items: if !supplier_lot_data_item[:enabled].nil? && Marketplace.environment_name != :production
+                      [
+                        {
+                          href: supplier_lot_data_edit_path(@supplier_framework, supplier_lot_data_item[:lot][:number_as_slug], :lot_status),
+                          text: "Change",
+                          visually_hidden_text: t(".supplier_lot_data_summary_list.sections.lot_status")
+                        }
+                      ]
+                    else
+                      []
+                    end
+            }
+          }
+        ] + if supplier_lot_data_item[:enabled].nil?
+          []
+        else
+          supplier_lot_data_item[:sections].map do |section|
+            {
+              key: {
+                text: t(".supplier_lot_data_summary_list.sections.#{section}")
+              },
+              value: {
+                text: link_to(
+                        t('.supplier_lot_data_summary_list.link.view_data_html', section: t(".supplier_lot_data_summary_list.link.sections.#{section}"), **supplier_lot_data_item[:lot]),
+                        supplier_lot_data_show_path(@supplier_framework, supplier_lot_data_item[:lot][:number_as_slug], section),
+                        class: 'govuk-link govuk-link--no-visited-state'
+                      )
+              }
+            }
+          end
+        end,
+        card: {
+          title: {
+            text: services_lot_title(supplier_lot_data_item)
+          }
+        },
+        attributes: {
+          id: "supplier-lot-data--lot-#{supplier_lot_data_item[:lot][:number]}"
+        }
+      ) %>
+    </div>
+  </div>
+<% end %>

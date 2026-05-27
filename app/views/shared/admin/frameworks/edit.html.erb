@@ -1,0 +1,58 @@
+<%= content_for :page_title, t('.heading') %>
+
+<%= form_with model: @framework, url: framework_show_path, method: :put, html: { specialvalidation: true, novalidate: true } do |f| %>
+  <% admin_breadcrumbs(
+    { text: t('shared.admin.frameworks.show.heading'), href: framework_show_path },
+    { text: t('.heading') }
+  )%>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
+
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-xl"><%= t('shared.admin.frameworks.show.caption', service_name: t("#{service.module_parent.to_s.underscore}.service_name"), framework: params[:framework]) %></span>
+        <%= t('.heading') %>
+      </h1>
+    </div>
+  </div>
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-!-margin-top-5">
+        <%= govuk_date_input(
+          :live_at,
+          form: f,
+          fieldset: {
+            legend: {
+              text: t('.live_at_date', framework: @framework.id)
+            }
+          },
+          hint: {
+            text: t('.live_at_hint', current_date: Time.now.in_time_zone('London').strftime('%e/%-m/%Y'))
+          },
+          date_items: govuk_date_items
+        ) %>
+      </div>
+
+      <div class="govuk-!-margin-top-5">
+        <%= govuk_date_input(
+          :expires_at,
+          form: f,
+          fieldset: {
+            legend: {
+              text: t('.expires_at_date', framework: @framework.id)
+            }
+          },
+          hint: {
+            text: t('.expires_at_hint', current_date: Time.now.in_time_zone('London').strftime('%e/%-m/%Y'))
+          },
+          date_items: govuk_date_items
+        ) %>
+      </div>
+
+      <%= govuk_button(t('.save_and_return'), form: f, attributes: { name: t('.save_and_return') }) %>
+    </div>
+  </div>
+<% end %>

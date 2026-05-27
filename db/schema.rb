@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_22_140254) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_06_123904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -41,6 +41,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_22_140254) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "aasm_state", limit: 30
+    t.datetime "created_at", null: false
+    t.text "framework_id", null: false
+    t.text "import_errors"
+    t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
+    t.index ["framework_id"], name: "index_admin_uploads_on_framework_id"
+    t.index ["user_id"], name: "index_admin_uploads_on_user_id"
   end
 
   create_table "bank_holidays", force: :cascade do |t|
@@ -654,8 +665,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_22_140254) do
     t.text "category"
     t.datetime "created_at", null: false
     t.text "lot_id", null: false
+    t.boolean "mandatory"
     t.text "name", null: false
     t.integer "number", null: false
+    t.text "rate_type"
     t.datetime "updated_at", null: false
     t.index ["lot_id"], name: "index_positions_on_lot_id"
   end
@@ -818,11 +831,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_22_140254) do
   end
 
   create_table "suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.jsonb "additional_details"
     t.datetime "created_at", null: false
     t.text "duns_number"
     t.text "name", null: false
     t.boolean "sme"
     t.datetime "updated_at", null: false
+    t.index "((additional_details -> 'additional_identifier'::text))", name: "index_suppliers_on_additional_details_additional_identifier", unique: true
+    t.index "((additional_details -> 'trading_name'::text))", name: "index_suppliers_on_additional_details_trading_name", unique: true
     t.index ["duns_number"], name: "index_suppliers_on_duns_number", unique: true
     t.index ["name"], name: "index_suppliers_on_name", unique: true
   end
@@ -852,6 +868,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_22_140254) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "admin_uploads", "frameworks"
+  add_foreign_key "admin_uploads", "users"
   add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_procurement_building_service_lifts", "facilities_management_rm3830_procurement_building_services"
   add_foreign_key "facilities_management_rm3830_admin_management_reports", "users"

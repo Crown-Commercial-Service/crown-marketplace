@@ -1,0 +1,19 @@
+<%= content_for :page_title, t('.heading.heading', section: t(".heading.#{@section}")) %>
+
+<% admin_breadcrumbs(
+  { text: t('shared.admin.suppliers.index.heading'), href: suppliers_index_path },
+  { text: t('shared.admin.lot_data.index.heading'), href: supplier_lot_data_index_path(@supplier_framework) },
+  { text: t('.heading.heading', section: t(".heading.#{@section}")) }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-m"><%= @supplier_framework.supplier_name %></span>
+      <span class="govuk-caption-l"><%= t(".heading.caption", lot_number: @lot.number, lot_name: @lot.name) %></span>
+      <%= t('.heading.heading', section: t(".heading.#{@section}")) %>
+    </h1>
+  </div>
+</div>
+
+<%= render(partial: "#{service.to_s.underscore}/admin/lot_data/show/#{@section}") %>

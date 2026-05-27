@@ -36,6 +36,26 @@ en:
   activerecord:
     errors:
       models:
+        facilities_management/rm6378/admin/upload:
+          attributes:
+            supplier_details_file:
+              malicious: The 'Supplier details' file contains a virus
+              not_attached: Select the 'Supplier details' file
+              too_large: The 'Supplier details' file must be smaller than 10mb
+              wrong_content_type: The 'Supplier details' file does not contain the expected content type
+              wrong_extension: The 'Supplier details' file must be an XLSX
+            supplier_regions_file:
+              malicious: The 'Supplier regions' file contains a virus
+              not_attached: Select the 'Supplier regions' file
+              too_large: The 'Supplier regions' file must be smaller than 10mb
+              wrong_content_type: The 'Supplier regions' file does not contain the expected content type
+              wrong_extension: The 'Supplier regions' file must be an XLSX
+            supplier_services_file:
+              malicious: The 'Supplier services' file contains a virus
+              not_attached: Select the 'Supplier services' file
+              too_large: The 'Supplier services' file must be smaller than 10mb
+              wrong_content_type: The 'Supplier services' file does not contain the expected content type
+              wrong_extension: The 'Supplier services' file must be an XLSX
         facilities_management/rm6378/procurement:
           attributes:
             requirements_linked_to_pfi:
@@ -46,6 +66,69 @@ en:
         home:
           index:
             header: RM6378 administration dashboard
+        uploads:
+          failed:
+            below_is_a_list: Below is a list of the issues that have occurred with the file upload and details on how they might be fixed.
+            details: Details
+            error_details:
+              file_check_failed: Something went wrong when checking the files, please try uploading the files again
+              file_check_failed_html: 'Something went wrong when checking the files, the following error was returned: <br> <strong>%{list}</strong>'
+              file_process_failed: Something went wrong when processing the files, please try uploading the files again
+              file_process_failed_html: 'Something went wrong when processing the files, the following error was returned: <br> <strong>%{list}</strong>'
+              file_publish_failed: Something went wrong when publishing the files, please try uploading the files again
+              file_publish_failed_html: 'Something went wrong when publishing the files, the following error was returned: <br> <strong>%{list}</strong>'
+              upload_failed: Something went wrong with the file upload, please try uploading the files again
+              upload_failed_html: 'Something went wrong with the file upload, the following error was returned: <br> <strong>%{list}</strong>'
+            error_name:
+              file_check_failed: File check failed
+              file_process_failed: File processing failed
+              file_publish_failed: File publishing failed
+              upload_failed: Upload failed
+            errors_with_upload: Errors with the upload
+            issue: Issue
+          index:
+            caption: Facilities Management - %{framework}
+            create_new: Create a new data upload
+            current_data: Current published data
+            date: Date
+            download: Download
+            file_name:
+              supplier_details_file: Supplier details
+              supplier_regions_file: Supplier regions
+              supplier_services_file: Supplier services
+            heading: Upload supplier data
+            name: Name
+            status: Status
+            table_caption: Previous uploads
+            upload_name: 'Upload session #%{number}'
+          new:
+            caption: Facilities Management - %{framework}
+            download_templates: Download file templates
+            file_label:
+              supplier_details_file: Supplier details
+              supplier_regions_file: Supplier regions
+              supplier_services_file: Supplier services
+            heading: New data upload
+            return: Return to 'Upload supplier data'
+            template_file_name: Download spreadsheet templates
+            template_file_path: facilities-management/%{framework}/Supplier spreadsheet templates.zip
+            upload_caption: Supported file format is .xlsx and maximum file size is 10mb
+            upload_data: Upload data
+            upload_title: Upload the supplier data
+            you_can_download: You can download a zip file containing an empty template for each of the spreadsheets
+          show:
+            caption: Facilities Management - %{framework}
+            datetime: 'Date of file upload:'
+            download: Download
+            file_name:
+              supplier_details_file: Supplier details
+              supplier_regions_file: Supplier regions
+              supplier_services_file: Supplier services
+            files: Uploaded files
+            heading: 'Upload session #%{number}'
+            name: File name
+            return: Return to 'Upload supplier data'
+            status: 'Status:'
       buyer_account:
         index:
           buyer_account_dashboard: Buyer account dashboard

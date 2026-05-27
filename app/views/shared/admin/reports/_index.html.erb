@@ -1,0 +1,66 @@
+<%= content_for :page_title, t('.heading') %>
+
+<% admin_breadcrumbs(
+  { text: t('.heading') }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('.caption', service_name:, framework: params[:framework]) %></span>
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <p>
+      <%= t('.report_info') %>
+    </p>
+
+    <p>
+      <%= t('.generate_report_guidance') %>
+    </p>
+
+    <%= govuk_button(t('.generate_a_new_report'),  href: reports_new_path) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <% if @reports.any? %>
+      <%= govuk_table(
+        [
+          {
+            text: t('.report')
+          },
+          {
+            text: t('.created_at')
+          },
+          {
+            text: t('.status')
+          }
+        ],
+        @reports.map do |report|
+          [
+            {
+              text: link_to(report.short_uuid, reports_show_path(report.id))
+            },
+            {
+              text: format_date_time(report.created_at)
+            },
+
+            {
+              text: govuk_tag(*upload_status_tag(report.aasm_state))
+            },
+          ]
+        end
+      ) %>
+      <%= paginate @reports, views_prefix: 'shared', window: 0, outer_window: 2 %>
+    <% else %>
+      <hr class="govuk-section-break govuk-section-break--visible">
+      <%= govuk_table([[{text: t('.not_reports_generated')}]]) %>
+    <% end %>
+  </div>
+</div>

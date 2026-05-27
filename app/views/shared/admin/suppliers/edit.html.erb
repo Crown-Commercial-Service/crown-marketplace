@@ -1,0 +1,31 @@
+<%= content_for :page_title, t(".heading.#{@section}") %>
+
+<% admin_breadcrumbs(
+  { text: t('shared.admin.suppliers.index.heading'), href: suppliers_index_path },
+  { text: t('shared.admin.suppliers.show.heading'), href: supplier_show_path(@supplier_framework) },
+  { text: t(".heading.#{@section}") }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: supplier_update_path(@supplier_framework, @section), model: @model, method: :put, html: { novalidate: true } do |f| %>
+      <%= render partial: 'shared/error_summary', locals: { errors: @model.errors } %>
+
+      <%= govuk_fieldset(
+        legend: {
+          text: t(".heading.#{@section}"),
+          classes: 'govuk-fieldset__legend--l',
+          is_page_heading: true,
+          caption: {
+            text: current_supplier_name,
+            classes: 'govuk-caption-l'
+          }
+        }
+      ) do %>
+        <%= render partial: "shared/admin/suppliers/sections/#{@section}", locals: { form: f } %>
+      <% end %>
+
+      <%= govuk_button(t('.save_and_return'), form: f, attributes: { aria: { label: t('.save_and_return') } }) %>
+    <% end %>
+  </div>
+</div>

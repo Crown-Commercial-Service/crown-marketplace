@@ -1,0 +1,25 @@
+<%= govuk_radios(
+  :enabled,
+  [
+    {
+      value: true,
+      label: {
+        text: govuk_tag(*enabled_status_tag(true))
+      }
+    },
+    {
+      value: false,
+      label: {
+        text: govuk_tag(*enabled_status_tag(false))
+      }
+    }
+  ],
+  form: form,
+  fieldset: {
+    legend: {
+      text: t('.question', lot_number: @lot.number, lot_name: @lot.name),
+      classes: 'govuk-fieldset__legend--m'
+    }
+  },
+  classes: 'govuk-radios--inline'
+)  %>

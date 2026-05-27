@@ -5,54 +5,56 @@
   <%= t('.heading') %>
 </h1>
 
-<div class="govuk-grid-row govuk-!-margin-bottom-4">
-  <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-body govuk-hint">
-      <%= t('.view_supplier_data') %>
-    </p>
-    <p class="govuk-body govuk-hint">
-      <%= t('.by_going_to_html', manage_data_link: link_to(t('.link_name'), facilities_management_rm6232_admin_uploads_path, class: 'govuk-link govuk-link--no-visited-state' )) %>
-    </p>
-    <p class="govuk-body govuk-hint">
-      <%= t('.find_supplier') %>
-    </p>
-    <%= search_box(t('.search_for_a_supplier'))%>
+<div data-module="filter-table">
+  <div class="govuk-grid-row govuk-!-margin-bottom-4">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body govuk-hint">
+        <%= t('.view_supplier_data') %>
+      </p>
+      <p class="govuk-body govuk-hint">
+        <%= t('.by_going_to_html', manage_data_link: link_to(t('.link_name'), facilities_management_rm6232_admin_uploads_path, class: 'govuk-link govuk-link--no-visited-state' )) %>
+      </p>
+      <p class="govuk-body govuk-hint">
+        <%= t('.find_supplier') %>
+      </p>
+      <%= search_box(t('.search_for_a_supplier'))%>
+    </div>
   </div>
-</div>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= govuk_table(
-      [
-        {
-          text: t('.supplier_name'),
-          classes: 'govuk-!-font-weight-bold govuk-!-width-one-half'
-        },
-        {
-          text: t('.view_details'),
-          classes: 'govuk-!-width-one-quarter'
-        },
-        {
-          text: t('.view_lot_data'),
-          classes: 'govuk-!-width-one-quarter'
-        }
-      ],
-      @suppliers.map do |supplier|
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_table(
         [
           {
-            text: supplier.supplier_name
+            text: t('.supplier_name'),
+            classes: 'govuk-!-font-weight-bold govuk-!-width-one-half'
           },
           {
-            text: link_to(t('.view_details'), facilities_management_admin_supplier_detail_path(id: supplier.id), class: 'govuk-link govuk-link--no-visited-state')
+            text: t('.view_details'),
+            classes: 'govuk-!-width-one-quarter'
           },
           {
-            text: link_to(t('.view_lot_data'), facilities_management_rm6232_admin_supplier_lot_datum_path(supplier.id), class: 'govuk-link govuk-link--no-visited-state')
+            text: t('.view_lot_data'),
+            classes: 'govuk-!-width-one-quarter'
           }
-        ]
-      end,
-      first_cell_is_header: true,
-      attributes: {
-        id: 'fm-table-filter'
-      }
-    ) %>
+        ],
+        @suppliers.map do |supplier|
+          [
+            {
+              text: supplier.supplier_name
+            },
+            {
+              text: link_to(t('.view_details'), facilities_management_admin_supplier_detail_path(id: supplier.id), class: 'govuk-link govuk-link--no-visited-state')
+            },
+            {
+              text: link_to(t('.view_lot_data'), facilities_management_rm6232_admin_supplier_lot_datum_path(supplier.id), class: 'govuk-link govuk-link--no-visited-state')
+            }
+          ]
+        end,
+        first_cell_is_header: true,
+        attributes: {
+          id: 'fm-table-filter'
+        }
+      ) %>
+    </div>
   </div>
 </div>
