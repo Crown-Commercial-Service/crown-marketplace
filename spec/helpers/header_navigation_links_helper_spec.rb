@@ -45,6 +45,19 @@ RSpec.describe HeaderNavigationLinksHelper do
         expect(result).to eq('Find a facilities management supplier')
       end
     end
+
+    context 'when on the route page' do
+      let(:service) { nil }
+
+      before do
+        allow(controller).to receive(:instance_of?).with(HomeController).and_return(true)
+        allow(controller).to receive(:action_name).and_return('index')
+      end
+
+      it 'returns Find your agreement' do
+        expect(result).to eq('Find your agreement')
+      end
+    end
   end
 
   describe '#service_authentication_links' do
@@ -172,11 +185,13 @@ RSpec.describe HeaderNavigationLinksHelper do
   # rubocop:disable RSpec/NestedGroups
   describe '#service_navigation_links' do
     let(:result) { helper.service_navigation_links }
+    let(:instance_of_home_controller) { false }
 
     before do
       helper.params[:service] = service
 
       allow(helper).to receive_messages(user_signed_in?: false, service_path_base: service_path_base, current_page?: false)
+      allow(controller).to receive(:instance_of?).with(HomeController).and_return(instance_of_home_controller)
       allow(controller).to receive_messages(controller_name:, action_name:)
     end
 
@@ -596,6 +611,20 @@ RSpec.describe HeaderNavigationLinksHelper do
             )
           end
         end
+      end
+    end
+
+    context 'when the service is nil and on the route page' do
+      let(:service_path_base) { '/facilities-management' }
+      let(:service) { nil }
+      let(:current_user_obj) { instance_double(User) }
+      let(:controller_name) { 'home' }
+      let(:action_name) { 'index' }
+
+      before { allow(controller).to receive(:instance_of?).with(HomeController).and_return(true) }
+
+      it 'returns no links' do
+        expect(result).to eq([])
       end
     end
   end

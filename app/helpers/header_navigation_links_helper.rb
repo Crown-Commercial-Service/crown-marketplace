@@ -9,7 +9,11 @@ module HeaderNavigationLinksHelper
     when 'facilities_management/supplier'
       t('home.index.facilities_management_supplier_link')
     else
-      t('home.index.facilities_management_link')
+      if route_page?
+        t('home.index.find_your_agreement_link')
+      else
+        t('home.index.facilities_management_link')
+      end
     end
   end
 
@@ -46,6 +50,8 @@ module HeaderNavigationLinksHelper
   end
 
   def service_navigation_links
+    return [] if route_page?
+
     navigation_links = []
 
     navigation_links << case params[:service]
@@ -86,6 +92,10 @@ module HeaderNavigationLinksHelper
     elsif !current_user.fm_buyer_details_incomplete?
       { text: t('header_navigation_links_helper.my_account'), href: service_path_base, active: dashboard_page?('buyer_account') }
     end
+  end
+
+  def route_page?
+    controller.instance_of?(HomeController) && controller.action_name == 'index'
   end
 
   def page_does_not_require_back_to_start?
