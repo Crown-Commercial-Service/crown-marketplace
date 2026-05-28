@@ -64,7 +64,4 @@ namespace :db do
     puts 'Loading NUTS regions'
     CCS.load_nuts_regions
   end
-
-  desc 'add NUTS regions to the database'
-  task static: :regions
 end

@@ -17,7 +17,4 @@ namespace :db do
       DataLoader::Frameworks.make_framework_live(args[:framework])
     end
   end
-
-  desc 'add static data to the database'
-  task static: :frameworks
 end

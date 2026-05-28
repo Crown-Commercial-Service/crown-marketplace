@@ -13,7 +13,4 @@ namespace :db do
       DataLoader::BankHolidays.update_bank_holidays_csv
     end
   end
-
-  desc 'add static data to the database'
-  task static: :bank_holidays
 end

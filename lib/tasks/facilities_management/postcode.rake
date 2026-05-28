@@ -101,19 +101,16 @@ namespace :db do
 
   desc 'add addresses for local environment'
   task sample_address_import: :environment do
-    puts 'Creating postcode database and import'
-    OrdnanceSurvey.create_postcode_table
-    puts 'Creating address lookup view'
-    OrdnanceSurvey.create_address_lookup_view
-    OrdnanceSurvey.create_postcode_locator_index
-    OrdnanceSurvey.create_new_postcode_views
-    puts 'Import address from local FM directory'
-    OrdnanceSurvey.import_sample_addresses
-  end
-
-  if Rails.env.test?
-    desc 'add static data to the database'
-    task static: :sample_address_import
+    if Rails.env.test?
+      puts 'Creating postcode database and import'
+      OrdnanceSurvey.create_postcode_table
+      puts 'Creating address lookup view'
+      OrdnanceSurvey.create_address_lookup_view
+      OrdnanceSurvey.create_postcode_locator_index
+      OrdnanceSurvey.create_new_postcode_views
+      puts 'Import address from local FM directory'
+      OrdnanceSurvey.import_sample_addresses
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength
