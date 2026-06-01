@@ -640,7 +640,7 @@ GEM
       activesupport (>= 7.1)
     show_me_the_cookies (6.0.0)
       capybara (>= 2, < 4)
-    sidekiq (8.1.5)
+    sidekiq (8.1.6)
       connection_pool (>= 3.0.0)
       json (>= 2.16.0)
       logger (>= 1.7.0)
@@ -807,7 +807,7 @@ DEPENDENCIES
   selenium-webdriver (>= 3.142.3)
   shoulda-matchers (>= 5.1.0)
   show_me_the_cookies (>= 6.0.0)
-  sidekiq (~> 8.1.5)
+  sidekiq (~> 8.1.6)
   sidekiq-cron
   simplecov (>= 0.16.1)
   sinatra (~> 4.2.1)
