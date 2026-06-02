@@ -156,8 +156,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
     let(:contract_name) { 'Zote' }
 
     context 'when there is one procurement' do
-      before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, } } }
-
+before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: contract_name, contact_opt_in: true } } }
       shared_examples 'and attributes are set' do
         # rubocop:disable RSpec/MultipleExpectations
         it 'sets the journey attributes' do
@@ -204,7 +203,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
         include_context 'and attributes are set'
 
         it 'sets the erros on the procurement' do
-          expect(assigns(:procurements)[0].errors.details.keys).to eq([:contract_name])
+          expect(assigns(:procurements)[0].errors.details.keys).to eq([:contract_name, :contact_opt_in ])
         end
 
         it 'renders the new template' do
@@ -296,12 +295,11 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
         let(:contract_name) { '' }
         let(:expected_second_contract_name) { '' }
 
-        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } } }
-
+before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: contract_name, contact_opt_in: true } } }
         include_context 'and attributes are set'
 
         it 'sets the erros on the first procurement' do
-          expect(assigns(:procurements)[0].errors.details.keys).to eq([:contract_name])
+          expect(assigns(:procurements)[0].errors.details.keys).to eq([:contract_name, :contact_opt_in])
           expect(assigns(:procurements)[1].errors).not_to be_any
         end
 
@@ -318,7 +316,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
           allow_any_instance_of(FacilitiesManagement::RM6378::Procurement).to receive(:update_contract_name_with_security).and_raise(FacilitiesManagement::RM6378::Procurement::CannotCreateNameError.new)
           # rubocop:enable RSpec/AnyInstance
 
-          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } }
+          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: contract_name, contact_opt_in: true } }
         end
 
         include_context 'and attributes are set'
@@ -339,7 +337,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
           allow_any_instance_of(FacilitiesManagement::RM6378::Procurement).to receive(:save!).and_raise(ActiveRecord::Rollback.new('Something went wrong'))
           # rubocop:enable RSpec/AnyInstance
 
-          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } }
+          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: contract_name, contact_opt_in: true } } 
         end
 
         include_context 'and attributes are set'
@@ -355,9 +353,8 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
       end
 
       context 'and it is valid' do
-        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } } }
-
-        include_context 'and attributes are set'
+before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: contract_name, contact_opt_in: true } } }       
+ include_context 'and attributes are set'
 
         it 'redirects to the show page' do
           new_procurement = FacilitiesManagement::RM6378::Procurement.find_by(contract_name: 'Zote')

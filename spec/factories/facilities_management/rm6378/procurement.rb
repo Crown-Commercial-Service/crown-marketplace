@@ -14,6 +14,7 @@ FactoryBot.define do
         'contract_start_date_yyyy' => '2028',
         'estimated_contract_duration' => 10,
         'private_finance_initiative' => 'yes',
+        'contact_opt_in' => true
       }
     end
   end

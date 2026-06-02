@@ -167,6 +167,35 @@
         classes: 'govuk-input--width-20',
       ) %>
 
+       <%= govuk_radios(
+          :gca_contact_preference,
+          [ 
+            {
+              value: 'yes',
+              label: {
+                text: 'Yes'
+              }
+            },
+            {
+              value: 'no',
+              label: {
+                text: 'No'
+              }
+            }
+          ],
+          model: @procurement,
+          fieldset: {
+            legend: {
+              text: t('.gca_contact_preference.label'),
+              classes: 'govuk-fieldset__legend--m',
+            }
+          },
+        hint: {
+          text: t('.gca_contact_preference.hint')
+        },
+          classes: 'govuk-radios--inline'
+        ) %>
+
       <%= govuk_button(t('.save_and_continue'), form: f, attributes: { name: 'save_and_continue' }) %>
       <p>
         <%= link_to t('.return_to_dashboard'), facilities_management_rm6378_path, class: 'govuk-body govuk-link--no-visited-state' %>

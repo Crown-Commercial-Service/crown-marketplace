@@ -107,7 +107,7 @@ module FacilitiesManagement
       end
 
       def procurement_params
-        @procurement_params ||= params.expect(facilities_management_rm6378_procurement: %i[contract_name])
+        @procurement_params ||= params.expect(facilities_management_rm6378_procurement: %i[contract_name contact_opt_in])
       end
 
       def contract_start_date

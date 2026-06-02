@@ -60,6 +60,8 @@ en:
           attributes:
             requirements_linked_to_pfi:
               inclusion: Select one option for requirements linked to PFI
+            contact_opt_in:
+              inclusion: You must select an option
   facilities_management:
     rm6378:
       admin:
@@ -260,6 +262,9 @@ en:
           contract_name:
             hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
             label: Save your search
+          gca_contact_preference:
+            label: Can GCA contact you about this search?
+            hint: If you would like to discuss this requirement or any support that GCA may be able to offer, please confirm that you are happy for your contact details to be shared with the team
           estimated_contract_duration: Estimated contract duration
           estimated_contract_start_date: Estimated contract start date
           heading: Results
@@ -281,6 +286,7 @@ en:
             item_2: full contact details for your shortlisted suppliers
             item_3: Terms and Conditions
             item_4: Bid Pack templates and instructions to create your further competition
+            item_5: A customer user agreement
           return_to_saved_searches: Return to saved searches
           return_to_your_account: Return to your account
           second_procurement_banner:

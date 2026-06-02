@@ -483,10 +483,11 @@ en:
           fm_framework_page_url: https://www.gca.gov.uk/agreements/rm6232
           if_you_need_to_talk: If you need to talk to us about this shortlist or procurement, please use the below reference number. Click on ‘contact us’ at the bottom of the page for our details.
           information_list:
-            item_1: customer guidance
-            item_2: full contact details for your shortlisted suppliers
+            item_1: Customer guidance
+            item_2: Full contact details for your shortlisted suppliers
             item_3: Terms and Conditions
             item_4: Bid Pack templates and instructions to create your further competition
+            item_5: A customer user agreement
           return_to_saved_searches: Return to saved searches
           return_to_your_account: Return to your account
           selected_suppliers: Selected suppliers

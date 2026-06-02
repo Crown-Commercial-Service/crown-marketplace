@@ -194,7 +194,7 @@ Rails.application.routes.draw do
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-        concerns %i[admin_dashboard admin_frameworks admin_suppliers admin_uploads admin_reports admin_shared_pages]
+        concerns %i[admin_dashboard admin_frameworks admin_suppliers admin_uploads management_reports admin_reports admin_shared_pages]
       end
     end
 
