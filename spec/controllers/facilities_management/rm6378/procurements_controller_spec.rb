@@ -154,9 +154,10 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
   describe 'POST create' do
     let(:service_codes) { ['C1', 'C2'] }
     let(:contract_name) { 'Zote' }
+    let(:contact_opt_in) { true }
 
     context 'when there is one procurement' do
-before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: contract_name, contact_opt_in: true } } }
+before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: 'contract_name', contact_opt_in: true } } }
       shared_examples 'and attributes are set' do
         # rubocop:disable RSpec/MultipleExpectations
         it 'sets the journey attributes' do
@@ -175,7 +176,7 @@ before { post :create, params: { private_finance_initiative: 'yes', estimated_co
 
         # rubocop:disable RSpec/ExampleLength
         it 'sets the single procurement with the correct details' do
-          expect(assigns(:procurements)[0].attributes.deep_symbolize_keys.slice(:user_id, :framework_id, :lot_id, :procurement_details, :contract_name)).to eq(
+          expect(assigns(:procurements)[0].attributes.deep_symbolize_keys.slice(:user_id, :framework_id, :lot_id, :procurement_details, :contract_name, :contact_opt_in)).to eq(
             {
               user_id: controller.current_user.id,
               framework_id: 'RM6378',
@@ -191,6 +192,7 @@ before { post :create, params: { private_finance_initiative: 'yes', estimated_co
                 private_finance_initiative: 'yes',
               },
               contract_name: contract_name,
+              contact_opt_in: true
             }
           )
         end
@@ -203,7 +205,19 @@ before { post :create, params: { private_finance_initiative: 'yes', estimated_co
         include_context 'and attributes are set'
 
         it 'sets the erros on the procurement' do
-          expect(assigns(:procurements)[0].errors.details.keys).to eq([:contract_name, :contact_opt_in ])
+          expect(assigns(:procurements)[0].errors.details.keys).to eq([:contract_name ])
+        end
+
+        it 'renders the new template' do
+          expect(response).to render_template('new')
+        end
+      end
+
+      context 'and it is not valid due to the answer being blank' do
+        let(:contact_opt_in) { ' ' }
+
+        it 'sets the erros on the procurement' do
+          expect(assigns(:procurements)[0].errors.details.keys).to eq([:contact_opt_in ])
         end
 
         it 'renders the new template' do
@@ -295,11 +309,11 @@ before { post :create, params: { private_finance_initiative: 'yes', estimated_co
         let(:contract_name) { '' }
         let(:expected_second_contract_name) { '' }
 
-before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: contract_name, contact_opt_in: true } } }
+      before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:} } }
         include_context 'and attributes are set'
 
         it 'sets the erros on the first procurement' do
-          expect(assigns(:procurements)[0].errors.details.keys).to eq([:contract_name, :contact_opt_in])
+          expect(assigns(:procurements)[0].errors.details.keys).to eq([:contract_name])
           expect(assigns(:procurements)[1].errors).not_to be_any
         end
 
@@ -316,7 +330,7 @@ before { post :create, params: { private_finance_initiative: 'yes', estimated_co
           allow_any_instance_of(FacilitiesManagement::RM6378::Procurement).to receive(:update_contract_name_with_security).and_raise(FacilitiesManagement::RM6378::Procurement::CannotCreateNameError.new)
           # rubocop:enable RSpec/AnyInstance
 
-          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: contract_name, contact_opt_in: true } }
+          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } }
         end
 
         include_context 'and attributes are set'
@@ -337,7 +351,7 @@ before { post :create, params: { private_finance_initiative: 'yes', estimated_co
           allow_any_instance_of(FacilitiesManagement::RM6378::Procurement).to receive(:save!).and_raise(ActiveRecord::Rollback.new('Something went wrong'))
           # rubocop:enable RSpec/AnyInstance
 
-          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: contract_name, contact_opt_in: true } } 
+          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } } 
         end
 
         include_context 'and attributes are set'
@@ -353,7 +367,7 @@ before { post :create, params: { private_finance_initiative: 'yes', estimated_co
       end
 
       context 'and it is valid' do
-before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: contract_name, contact_opt_in: true } } }       
+before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: } } }       
  include_context 'and attributes are set'
 
         it 'redirects to the show page' do
