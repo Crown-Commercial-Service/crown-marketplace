@@ -167,7 +167,7 @@ Rails.application.routes.draw do
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-        concerns :shared_pages, :admin_uploads, :management_reports, :admin_frameworks
+        concerns :shared_pages, :admin_uploads, :admin_frameworks
 
         get '/', to: 'home#index'
         resources :supplier_data, path: 'supplier-data', only: :index
