@@ -3,6 +3,11 @@ Then('I enter {string} into the contract name field') do |contract_name|
   procurement_page.contract_name_field.set(contract_name)
 end
 
+Then ('I select {string} for can GCA contact you about this search?') do |gca_contact_preference|
+  @gca_contact_preference = gca_contact_preference
+  choose(gca_contact_preference.capitalize, allow_label_click: true)
+end
+
 Then('I have a procurement with the name {string}') do |contract_name|
   @procurement = create(FRMAEOWRK_TO_FACTORY[@framework], user: @user, contract_name: contract_name)
 end

@@ -46,6 +46,7 @@ Feature: Information appears correctly on results page in the complex scenario
     And I should see the following 'requirement linked to pfi' in the selection summary:
       | Yes |
     Then I enter 'Hollow Nest' into the contract name field
+    Then I select 'yes' for can GCA contact you about this search?
     And I click on 'Save and continue'
     Then I am on the 'What do I do next?' page
     And the procurement name is shown to be 'Hollow Nest'

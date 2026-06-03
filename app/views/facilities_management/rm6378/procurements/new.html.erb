@@ -167,8 +167,8 @@
         classes: 'govuk-input--width-20',
       ) %>
 
-       <%= govuk_radios(
-          :gca_contact_preference,
+      <%= govuk_radios(
+          :contact_opt_in,
           [ 
             {
               value: 'yes',
@@ -183,16 +183,16 @@
               }
             }
           ],
-          model: @procurement,
+          form: f,
           fieldset: {
             legend: {
               text: t('.gca_contact_preference.label'),
-              classes: 'govuk-fieldset__legend--m',
+              classes: 'govuk-fieldset__legend--m'
             }
           },
-        hint: {
-          text: t('.gca_contact_preference.hint')
-        },
+          hint: {
+            text: t('.gca_contact_preference.hint')
+          },
           classes: 'govuk-radios--inline'
         ) %>
 

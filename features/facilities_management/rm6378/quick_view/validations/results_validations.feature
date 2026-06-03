@@ -29,6 +29,7 @@ Feature: Results validations
   Scenario: Contract name is taken
     Given I have a procurement with the name 'Taken contract name'
     And I enter 'Taken contract name' into the contract name field
+    Then I select 'yes' for can GCA contact you about this search?
     And I click on 'Save and continue'
     Then I should see the following error messages:
       | This contract name is already in use |
