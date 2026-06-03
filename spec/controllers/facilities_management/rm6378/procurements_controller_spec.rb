@@ -314,7 +314,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
         let(:contract_name) { '' }
         let(:expected_second_contract_name) { '' }
 
-        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: , contact_opt_in: } } }
+        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } } }
 
         include_context 'and attributes are set'
 
@@ -336,7 +336,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
           allow_any_instance_of(FacilitiesManagement::RM6378::Procurement).to receive(:update_contract_name_with_security).and_raise(FacilitiesManagement::RM6378::Procurement::CannotCreateNameError.new)
           # rubocop:enable RSpec/AnyInstance
 
-          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: , contact_opt_in: } }
+          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } }
         end
 
         include_context 'and attributes are set'
@@ -357,7 +357,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
           allow_any_instance_of(FacilitiesManagement::RM6378::Procurement).to receive(:save!).and_raise(ActiveRecord::Rollback.new('Something went wrong'))
           # rubocop:enable RSpec/AnyInstance
 
-          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: , contact_opt_in: } }
+          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } }
         end
 
         include_context 'and attributes are set'
@@ -373,7 +373,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
       end
 
       context 'and it is valid' do
-        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name: , contact_opt_in:} } }
+        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } } }
 
         include_context 'and attributes are set'
 

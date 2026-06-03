@@ -53,7 +53,7 @@ module FacilitiesManagement
         ['contract_start_date_yyyy', nil],
         ['estimated_contract_duration', nil],
         ['private_finance_initiative', nil],
-        ['contact_opt_in', nil , ->(value) { ActiveModel::Type::Boolean.new.cast(value) }] 
+        ['contact_opt_in', nil, ->(value) { ActiveModel::Type::Boolean.new.cast(value) }]
       ].freeze
 
       ATTRIBUTES_AND_DEFAULT_VALUES.each do |attribute, default_value, cast_func|
@@ -61,9 +61,9 @@ module FacilitiesManagement
         define_method(:"#{attribute}=") { |value| attribute_setter(attribute, value, cast_func) }
       end
 
-     with_options on: :contract_name do
-       validates :contact_opt_in, inclusion: { in: [true, false] }
-     end
+      with_options on: :contract_name do
+        validates :contact_opt_in, inclusion: { in: [true, false] }
+      end
 
       private
 

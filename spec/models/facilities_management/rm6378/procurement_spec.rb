@@ -625,8 +625,8 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     let(:procurement) { build(:facilities_management_rm6378_procurement, user:, framework:) }
     let(:user) { create(:user) }
     let(:framework) { create(:framework) }
-    describe 'contract_name' do
 
+    describe 'contract_name' do
       before { procurement.contract_name = contract_name }
 
       context 'when the name is more than 100 characters' do
@@ -673,7 +673,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         it 'is valid' do
           create(:facilities_management_rm6378_procurement, user: user, framework: create(:framework), contract_name: contract_name)
           procurement.valid?(:contract_name)
-          puts procurement.errors.details
+
           expect(procurement.valid?(:contract_name)).to be true
         end
       end
@@ -698,7 +698,6 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     end
 
     describe 'contact_opt_in' do
-
       before { procurement.contact_opt_in = contact_opt_in }
 
       context 'when the answer is nil' do
@@ -719,7 +718,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         end
       end
 
-      context 'when the answer is neither true or false' do 
+      context 'when the answer is neither true or false' do
         let(:contact_opt_in) { 'Maybe' }
 
         it 'is expected to not be valid and has the correct error message' do
@@ -728,7 +727,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         end
       end
 
-      context 'when the answer is true' do 
+      context 'when the answer is true' do
         let(:contact_opt_in) { true }
 
         it 'is expected to be valid' do
@@ -736,7 +735,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         end
       end
 
-      context 'when the answer is false' do 
+      context 'when the answer is false' do
         let(:contact_opt_in) { false }
 
         it 'is expected to be valid' do

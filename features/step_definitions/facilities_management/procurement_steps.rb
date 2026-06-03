@@ -3,7 +3,7 @@ Then('I enter {string} into the contract name field') do |contract_name|
   procurement_page.contract_name_field.set(contract_name)
 end
 
-Then ('I select {string} for can GCA contact you about this search?') do |gca_contact_preference|
+Then('I select {string} for can GCA contact you about this search?') do |gca_contact_preference|
   @gca_contact_preference = gca_contact_preference
   choose(gca_contact_preference.capitalize, allow_label_click: true)
 end
