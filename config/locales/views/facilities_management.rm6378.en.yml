@@ -58,10 +58,10 @@ en:
               wrong_extension: The 'Supplier services' file must be an XLSX
         facilities_management/rm6378/procurement:
           attributes:
-            requirements_linked_to_pfi:
-              inclusion: Select one option for requirements linked to PFI
             contact_opt_in:
               inclusion: You must select an option
+            requirements_linked_to_pfi:
+              inclusion: Select one option for requirements linked to PFI
   facilities_management:
     rm6378:
       admin:
@@ -262,11 +262,11 @@ en:
           contract_name:
             hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
             label: Save your search
-          gca_contact_preference:
-            label: Can GCA contact you about this search?
-            hint: If you would like to discuss this requirement or any support that GCA may be able to offer, please confirm that you are happy for your contact details to be shared with the team
           estimated_contract_duration: Estimated contract duration
           estimated_contract_start_date: Estimated contract start date
+          gca_contact_preference:
+            hint: If you would like to discuss this requirement or any support that GCA may be able to offer, please confirm that you are happy for your contact details to be shared with the team
+            label: Can GCA contact you about this search?
           heading: Results
           private_finance_initiative: Requirement linked to PFI?
           regions: Regions
