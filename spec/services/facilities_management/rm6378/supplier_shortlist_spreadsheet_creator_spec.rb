@@ -93,7 +93,7 @@ RSpec.describe FacilitiesManagement::RM6378::SupplierShortlistSpreadsheetCreator
     let(:sheet) { work_book.sheet('Customer Details') }
 
     it 'has the correct buyer details' do
-      buyer_details = ['My search test', nil, nil, buyer_detail.organisation_name, buyer_detail.full_organisation_address, buyer_detail.full_name, buyer_detail.job_title, buyer_detail.email, buyer_detail.telephone_number.to_i]
+      buyer_details = ['My search test', 'No', nil, nil, buyer_detail.organisation_name, buyer_detail.full_organisation_address, buyer_detail.full_name, buyer_detail.job_title, buyer_detail.email, buyer_detail.telephone_number.to_i]
 
       expect(sheet.column(2)[1..]).to eq buyer_details
     end
