@@ -21,10 +21,11 @@ Feature: Results validations
     And I click on 'Continue'
     Then I am on the 'Results' page
 
-  Scenario: Contract name is blank
+  Scenario: Contract name and Gca can contact you is blank 
     Given I click on 'Save and continue'
     Then I should see the following error messages:
       | Enter your contract name |
+      | You must select an option |
 
   Scenario: Contract name is taken
     Given I have a procurement with the name 'Taken contract name'
