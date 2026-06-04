@@ -75,7 +75,7 @@ module FacilitiesManagement
         if @procurement.framework_id == 'RM6378'
           opt_in_text = @procurement.contact_opt_in ? 'Yes' : 'No'
           sheet.add_row ['Contact opt in', opt_in_text], style: @styles[:standard_column_style], height: STANDARD_ROW_HEIGHT
-        end   
+        end
         sheet.add_row [], height: STANDARD_ROW_HEIGHT
 
         sheet.add_row ['Customer details', nil], style: @styles[:heading_style], height: STANDARD_ROW_HEIGHT
