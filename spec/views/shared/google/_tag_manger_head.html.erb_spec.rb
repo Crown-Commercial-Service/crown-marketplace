@@ -22,8 +22,8 @@ RSpec.describe 'shared/google/_tag_manager_head.html.erb' do
     it 'renders the Google Tag Manager tracking code' do
       render partial: 'shared/google/tag_manager_head'
 
-      expect(rendered).to match(/script/)
-      expect(rendered).to match(/UA-999-9/)
+      expect(rendered).to include('script')
+      expect(rendered).to include('UA-999-9')
     end
   end
 end
