@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix the service navigation content for the landing page ([PR 5319](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5319))
+- Fix the expired date for RM6232 ([PR 5334](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5334))
 
 ## [7.7.0] - 2026-04-30
 
