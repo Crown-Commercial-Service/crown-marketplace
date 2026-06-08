@@ -49,8 +49,8 @@ RSpec.describe 'layouts/application.html.erb' do
     stub_template 'shared/google/_tag_manager_body.html.erb' => 'GTM BODY'
     stub_template 'shared/google/_tag_manager_head.html.erb' => 'GTM HEAD'
     render
-    expect(rendered).to match(/GTM BODY/)
-    expect(rendered).to match(/GTM HEAD/)
+    expect(rendered).to include('GTM BODY')
+    expect(rendered).to include('GTM HEAD')
   end
 
   it 'renders the page title stored in the locale file' do
