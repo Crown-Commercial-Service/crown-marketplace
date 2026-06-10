@@ -24,7 +24,7 @@
             text: t('.basic_supplier_information.title')
           },
           actions: {
-            items: Marketplace.environment_name == :production ? [] : [
+            items: [
               {
                 text: t('.change'),
                 href: supplier_edit_path(@supplier_framework.id, :basic_supplier_information),
@@ -50,7 +50,7 @@
             text: t('.supplier_contact_information.title')
           },
           actions: {
-            items: Marketplace.environment_name == :production ? [] : [
+            items: [
               {
                 text: t('.change'),
                 href: supplier_edit_path(@supplier_framework.id, :supplier_contact_information),
@@ -76,7 +76,7 @@
             text: t('.additional_supplier_information.title')
           },
           actions: {
-            items: Marketplace.environment_name == :production ? [] : [
+            items: [
               {
                 text: t('.change'),
                 href: supplier_edit_path(@supplier_framework.id, :additional_supplier_information),

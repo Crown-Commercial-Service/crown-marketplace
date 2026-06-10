@@ -127,7 +127,8 @@ ignore_unused:
   - facilities_management.rm6378.journey.choose_locations.regions.section.*.title
   - facilities_management.rm6378.journey.choose_services.services.section.*.title
   - facilities_management.rm6378.journey.choose_services.services.section.*.services.*.title
-  - facilities_management.rm6378.admin.uploads.failed.error_details.*
+  - '*.*.admin.uploads.failed.error_details.*'
+  - '*.*.admin.uploads.failed.error_name.*'
   - common.type_*
   - common.*_html
 # - 'activerecord.attributes.*'

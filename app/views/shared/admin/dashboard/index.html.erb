@@ -1,0 +1,53 @@
+<%= content_for :page_title, t('.page_title', service_name: t("#{service.module_parent.to_s.underscore}.service_name")) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('.caption', service_name: t("#{service.module_parent.to_s.underscore}.service_name"), framework: params[:framework]) %></span>
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<%= ccs_dashboard_section(
+  [
+    {
+      title: t('.upload_supplier_data.title'),
+      href: supplier_uploads_index_path,
+      description: t('.upload_supplier_data.description')
+    },
+    {
+      title: t('.manage_supplier_data.title'),
+      href: suppliers_index_path,
+      description: t('.manage_supplier_data.description')
+    },
+    {
+      title: t('.change_logs.title'),
+      href: supplier_change_logs_index_path,
+      description: t('.change_logs.description')
+    }
+  ],
+  t('.supplier_data')
+) %>
+
+<%= ccs_dashboard_section(
+  [
+    {
+      title: t('.view_user_reports.title'),
+      href: user_reports_index_path,
+      description: t('.view_user_reports.description')
+    },
+  ],
+  t('.user_reports')
+) if framework_has_analytics? %>
+
+<%= ccs_dashboard_section(
+  [
+    {
+      title: t('.manage_framework_status.title'),
+      href: framework_show_path,
+      description: t('.manage_framework_status.description', service_name: t("#{service.module_parent.to_s.underscore}.service_name"))
+    },
+  ],
+  t('.manage_framework')
+) if current_user.has_role? :ccs_developer %>

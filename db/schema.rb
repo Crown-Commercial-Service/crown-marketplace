@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_06_123904) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_10_094212) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -62,6 +62,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_06_123904) do
     t.text "title"
     t.datetime "updated_at", null: false
     t.index ["date"], name: "index_bank_holidays_on_date"
+  end
+
+  create_table "change_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.jsonb "change_data"
+    t.text "change_type"
+    t.datetime "created_at", null: false
+    t.text "framework_id", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
+    t.index ["framework_id"], name: "index_change_logs_on_framework_id"
+    t.index ["user_id"], name: "index_change_logs_on_user_id"
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -870,6 +881,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_06_123904) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "admin_uploads", "frameworks"
   add_foreign_key "admin_uploads", "users"
+  add_foreign_key "change_logs", "frameworks"
+  add_foreign_key "change_logs", "users"
   add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_procurement_building_service_lifts", "facilities_management_rm3830_procurement_building_services"
   add_foreign_key "facilities_management_rm3830_admin_management_reports", "users"

@@ -1,0 +1,64 @@
+<%= content_for :page_title, t('.heading') %>
+
+<% admin_breadcrumbs(
+  { text: t('.heading') }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('.caption', service_name: t("#{service.module_parent.to_s.underscore}.service_name"), framework: params[:framework]) %></span>
+      <%= t('.heading') %>
+    </h1>
+    <p class="govuk-body">
+      <%= t('.below_is_a_table') %>
+    </p>
+    <p>
+      <%= t('.you_can_download') %>
+    </p>
+    <%= govuk_button(t('.download_logs'), href: "#{supplier_change_logs_index_path}?format=csv", classes: 'govuk-button--secondary', attributes: { download: '', aria: { label: t('.download_logs') } }) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <% if @change_logs.any? %>
+      <%= govuk_table(
+        [
+          {
+            text: t('.change_logs_table.log_item')
+          },
+          {
+            text: t('.change_logs_table.change_type')
+          },
+          {
+            text: t('.change_logs_table.changed_by')
+          },
+          {
+            text: t('.change_logs_table.changed_at')
+          },
+        ],
+        @change_logs.map do |change_log|
+          [
+            {
+              text: link_to(change_log.short_id, supplier_change_logs_show_path(change_log), class: 'govuk-link govuk-link--no-visited-state')
+            },
+            {
+              text: t("shared.admin.change_logs.change_types.#{change_log.change_type}")
+            },
+            {
+              text: change_log.changed_by
+            },
+            {
+              text: format_date_time(change_log.created_at)
+            },
+          ]
+        end
+      ) %>
+      <%= paginate @change_logs, views_prefix: 'shared', window: 0, outer_window: 2 %>
+    <% else %>
+      <hr class="govuk-section-break govuk-section-break--visible">
+      <%= govuk_table([[{text: t('.no_change_logs')}]]) %>
+    <% end %>
+  </div>
+</div>

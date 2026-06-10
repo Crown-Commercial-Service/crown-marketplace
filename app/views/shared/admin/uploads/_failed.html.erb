@@ -1,0 +1,42 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m"><%= t('.errors_with_upload') %></h2>
+    <p>
+      <%= t('.below_is_a_list') %>
+    </p>
+    <p>
+      <%= t('.common_causes') %>
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t('.common_causes_1') %></li>
+        <li><%= t('.common_causes_2') %></li>
+      </ul>
+    </p>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= govuk_table(
+      [
+        {
+          text: t('.issue'),
+          attributes: {
+            width: '25%'
+          }
+        },
+        {
+          text: t('.details')
+        }
+      ],
+      @upload.import_errors.map do |error|
+        [
+          {
+            text: t(".error_name.#{error[:error]}"),
+          },
+          {
+            text: error[:details] ? get_error_details(error[:error], error[:details]) : t(".error_details.#{error[:error]}"),
+          },
+        ]
+      end
+    ) %>
+  </div>
+</div>

@@ -2,7 +2,7 @@ module FacilitiesManagement
   module RM6378
     module Admin
       class LotDataController < FacilitiesManagement::Admin::FrameworkController
-        include ::Admin::LotDataController
+        include ::Admin::LotDataActions
 
         LOT_SORT_CRITERIA = 'lots.number'.freeze
 

@@ -70,8 +70,6 @@ en:
             header: RM6378 administration dashboard
         uploads:
           failed:
-            below_is_a_list: Below is a list of the issues that have occurred with the file upload and details on how they might be fixed.
-            details: Details
             error_details:
               file_check_failed: Something went wrong when checking the files, please try uploading the files again
               file_check_failed_html: 'Something went wrong when checking the files, the following error was returned: <br> <strong>%{list}</strong>'
@@ -86,51 +84,10 @@ en:
               file_process_failed: File processing failed
               file_publish_failed: File publishing failed
               upload_failed: Upload failed
-            errors_with_upload: Errors with the upload
-            issue: Issue
-          index:
-            caption: Facilities Management - %{framework}
-            create_new: Create a new data upload
-            current_data: Current published data
-            date: Date
-            download: Download
-            file_name:
-              supplier_details_file: Supplier details
-              supplier_regions_file: Supplier regions
-              supplier_services_file: Supplier services
-            heading: Upload supplier data
-            name: Name
-            status: Status
-            table_caption: Previous uploads
-            upload_name: 'Upload session #%{number}'
-          new:
-            caption: Facilities Management - %{framework}
-            download_templates: Download file templates
-            file_label:
-              supplier_details_file: Supplier details
-              supplier_regions_file: Supplier regions
-              supplier_services_file: Supplier services
-            heading: New data upload
-            return: Return to 'Upload supplier data'
-            template_file_name: Download spreadsheet templates
-            template_file_path: facilities-management/%{framework}/Supplier spreadsheet templates.zip
-            upload_caption: Supported file format is .xlsx and maximum file size is 10mb
-            upload_data: Upload data
-            upload_title: Upload the supplier data
-            you_can_download: You can download a zip file containing an empty template for each of the spreadsheets
-          show:
-            caption: Facilities Management - %{framework}
-            datetime: 'Date of file upload:'
-            download: Download
-            file_name:
-              supplier_details_file: Supplier details
-              supplier_regions_file: Supplier regions
-              supplier_services_file: Supplier services
-            files: Uploaded files
-            heading: 'Upload session #%{number}'
-            name: File name
-            return: Return to 'Upload supplier data'
-            status: 'Status:'
+          file_names:
+            supplier_details_file: Supplier details
+            supplier_regions_file: Supplier regions
+            supplier_services_file: Supplier services
       buyer_account:
         index:
           buyer_account_dashboard: Buyer account dashboard

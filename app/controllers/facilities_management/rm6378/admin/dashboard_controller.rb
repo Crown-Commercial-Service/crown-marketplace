@@ -3,7 +3,7 @@ module FacilitiesManagement
     module Admin
       class DashboardController < FacilitiesManagement::Admin::FrameworkController
         include SharedPagesConcern
-        include ::Admin::DashboardController
+        include ::Admin::DashboardActions
       end
     end
   end

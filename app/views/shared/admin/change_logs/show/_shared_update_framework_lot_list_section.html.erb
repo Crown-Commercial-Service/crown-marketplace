@@ -1,0 +1,17 @@
+<% if item_ids.any? %>
+  <div id="supplier-details-change-log--<%= change_type_id %>-<%= change_type %>">
+    <h2 class="govuk-heading-m"><%= section_text %></h2>
+    <% update_supplier_framework_lot_item_list(item_ids, model) do |group, items| %>
+      <div class="section-list-group">
+        <% unless group.nil?%>
+          <p class="govuk-body"><%= group %></p>
+        <% end %>
+        <ul class="govuk-list govuk-list--bullet">
+          <% items.each do |item| %>
+            <li><%= item.name %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+<% end %>

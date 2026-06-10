@@ -2,7 +2,7 @@ module FacilitiesManagement
   module RM6378
     module Admin
       class UploadsController < FacilitiesManagement::Admin::FrameworkController
-        include ::Admin::UploadsController
+        include ::Admin::UploadActions
 
         private
 

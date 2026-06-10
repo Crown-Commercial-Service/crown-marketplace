@@ -1,0 +1,63 @@
+<%= content_for :page_title, t('.heading') %>
+
+<% admin_breadcrumbs(
+  { text: t('shared.admin.uploads.index.heading'), href: supplier_uploads_index_path },
+  { text: t('.heading') }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= render partial: 'shared/error_summary', locals: { errors: @upload.errors } %>
+
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('.caption', service_name: t("#{service.module_parent.to_s.underscore}.service_name"), framework: params[:framework]) %></span>
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m"><%= t('.download_templates') %></h2>
+    <p><%= t('.you_can_download') %></p>
+    <div>
+      <%= link_to_public_file_for_download(t('.template_file_path', service: service.to_s.underscore.dasherize), :zip, t('.template_file_name'), false, classes: 'govuk-button--secondary') %>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: supplier_uploads_index_path, model: @upload, method: :post, html: { novalidate: true } do |f| %>
+      <%= govuk_fieldset(
+        legend: {
+          text: t('.upload_title'),
+          classes: 'govuk-fieldset__legend--m',
+        }
+      ) do %>
+        <%= govuk_hint(t('.upload_caption'), attributes: { id: 'admin-upload-details' }) %>
+
+        <% service::Admin::Upload.attributes.each do |file| %>
+          <%= govuk_file_upload(
+            file,
+            form: f,
+            label: {
+              text: t("#{service.module_parent.to_s.underscore}.#{params[:framework].downcase}.admin.uploads.file_names.#{file}")
+            },
+            javascript: true,
+            attributes: {
+              aria: {
+                describedby: 'admin-upload-details'
+              }
+            }
+          ) %>
+        <% end %>
+      <% end %>
+
+      <div class="govuk-button-group">
+        <%= govuk_button(t('.upload_data'), form: f, attributes: { aria: { label: t('.upload_data') } }) %>
+        <%= link_to t('.return'), supplier_uploads_index_path, class: 'govuk-link govuk-link--no-visited-state' %>
+      </div>
+    <% end %>
+  </div>
+</div>

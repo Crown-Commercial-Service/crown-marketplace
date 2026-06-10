@@ -5,6 +5,8 @@ RSpec.describe User do
     it { is_expected.to have_many(:searches) }
     it { is_expected.to have_many(:reports) }
     it { is_expected.to have_many(:procurements) }
+    it { is_expected.to have_many(:admin_uploads) }
+    it { is_expected.to have_many(:change_logs) }
   end
 
   describe '#confirmed?' do
