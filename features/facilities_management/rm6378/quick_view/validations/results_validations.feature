@@ -21,7 +21,7 @@ Feature: Results validations
     And I click on 'Continue'
     Then I am on the 'Results' page
 
-  Scenario: Contract name and Gca can contact you is blank 
+  Scenario: Contract name and GCA can contact you is blank 
     Given I click on 'Save and continue'
     Then I should see the following error messages:
       | Enter your contract name |
@@ -30,7 +30,7 @@ Feature: Results validations
   Scenario: Contract name is taken
     Given I have a procurement with the name 'Taken contract name'
     And I enter 'Taken contract name' into the contract name field
-    Then I select 'yes' for can GCA contact you about this search?
+    And I choose the 'Yes' radio button
     And I click on 'Save and continue'
     Then I should see the following error messages:
       | This contract name is already in use |

@@ -71,11 +71,6 @@ module FacilitiesManagement
     def add_customer_details
       @workbook.add_worksheet(name: 'Customer Details') do |sheet|
         sheet.add_row ['Date/time production of this document:', Time.now.in_time_zone('London').strftime('%d/%m/%Y - %l:%M%P')], style: @styles[:standard_column_style], height: STANDARD_ROW_HEIGHT
-        sheet.add_row [@customer_details_title, sanitize_string_for_excel(@procurement.contract_name)], style: @styles[:standard_column_style], height: STANDARD_ROW_HEIGHT
-        if @procurement.class.name.include?('RM6378')
-          opt_in_text = @procurement.contact_opt_in ? 'Yes' : 'No'
-          sheet.add_row ['Contact opt in', opt_in_text], style: @styles[:standard_column_style], height: STANDARD_ROW_HEIGHT
-        end
         sheet.add_row [], height: STANDARD_ROW_HEIGHT
 
         sheet.add_row ['Customer details', nil], style: @styles[:heading_style], height: STANDARD_ROW_HEIGHT
