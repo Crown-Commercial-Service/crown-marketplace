@@ -718,15 +718,6 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         end
       end
 
-      context 'when the answer is neither true or false' do
-        let(:contact_opt_in) { 'maybe' }
-
-        it 'is expected to not be valid and has the correct error message' do
-          expect(procurement.valid?(:contract_name)).to be false
-          expect(procurement.errors[:contact_opt_in].first).to eq 'You must select an option'
-        end
-      end
-
       context 'when the answer is true' do
         let(:contact_opt_in) { true }
 

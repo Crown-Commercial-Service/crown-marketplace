@@ -71,6 +71,7 @@ module FacilitiesManagement
     def add_customer_details
       @workbook.add_worksheet(name: 'Customer Details') do |sheet|
         sheet.add_row ['Date/time production of this document:', Time.now.in_time_zone('London').strftime('%d/%m/%Y - %l:%M%P')], style: @styles[:standard_column_style], height: STANDARD_ROW_HEIGHT
+        sheet.add_row [@customer_details_title, sanitize_string_for_excel(@procurement.contract_name)], style: @styles[:standard_column_style], height: STANDARD_ROW_HEIGHT
         sheet.add_row [], height: STANDARD_ROW_HEIGHT
 
         sheet.add_row ['Customer details', nil], style: @styles[:heading_style], height: STANDARD_ROW_HEIGHT
