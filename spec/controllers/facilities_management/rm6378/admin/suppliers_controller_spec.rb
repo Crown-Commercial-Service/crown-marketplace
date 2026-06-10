@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM6378::Admin::SuppliersController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM6378' } }
 
-  let(:supplier) { create(:facilities_management_rm6378_admin_supplier) }
+  let(:supplier) { create(:facilities_management_rm6378_admin_supplier, sme: true) }
   let(:supplier_framework) { create(:supplier_framework, framework_id: 'RM6378', supplier_id: supplier.id) }
   let(:supplier_frameworks) { Supplier::Framework.where(id: supplier_framework.id) }
 
@@ -127,6 +127,7 @@ RSpec.describe FacilitiesManagement::RM6378::Admin::SuppliersController do
 
     let(:model_param_keys) { model_params.keys }
     let(:expected_updates) { model_params }
+    let(:change_log) { ChangeLog.find_by(user_id: controller.current_user.id, framework_id: 'RM6378') }
 
     before do
       supplier
@@ -160,6 +161,12 @@ RSpec.describe FacilitiesManagement::RM6378::Admin::SuppliersController do
         it 'updates the details' do
           expect(model.reload.attributes.deep_symbolize_keys.slice(*model_param_keys)).to eq(expected_updates)
         end
+
+        it 'creates a change log' do
+          expect(change_log.change_type).to eq(change_type)
+          expect(change_log.change_data['id']).to eq(model.id)
+          expect(change_log.change_data['after']).to eq(change_data_after)
+        end
       end
 
       context 'when it is invalid' do
@@ -175,6 +182,10 @@ RSpec.describe FacilitiesManagement::RM6378::Admin::SuppliersController do
           expect(response).to have_http_status(:ok)
           expect(response).to render_template(partial: "shared/admin/suppliers/sections/_#{section}")
         end
+
+        it 'does not create a change log' do
+          expect(change_log).to be_nil
+        end
       end
     end
 
@@ -184,6 +195,8 @@ RSpec.describe FacilitiesManagement::RM6378::Admin::SuppliersController do
       let(:model) { supplier }
       let(:model_params) { { name: 'Zote the Mighty', duns_number: '123456789', sme: true } }
       let(:model_params_invalid) { { name: '', duns_number: '', sme: '' } }
+      let(:change_type) { 'update_supplier_information' }
+      let(:change_data_after) { { 'name' => 'Zote the Mighty', 'duns_number' => '123456789', } }
 
       include_context 'when testing a section'
     end

@@ -1,0 +1,21 @@
+<%= render(
+  partial: "shared/admin/change_logs/show/shared_update_framework_lot_list_section",
+  locals: {
+    item_ids: @change_log.change_data['added'],
+    change_type_id: change_type_id,
+    change_type: 'added',
+    section_text: added_text,
+    model: model
+  }
+) %>
+
+<%= render(
+  partial: "shared/admin/change_logs/show/shared_update_framework_lot_list_section",
+  locals: {
+    item_ids: @change_log.change_data['removed'],
+    change_type_id: change_type_id,
+    change_type: 'removed',
+    section_text: removed_text,
+    model: model
+  }
+) %>

@@ -1,0 +1,143 @@
+<%= govuk_input(
+  :name,
+  form: form,
+  label: {
+    text: t('.branch_name'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) %>
+
+<%= govuk_input(
+  :region,
+  form: form,
+  label: {
+    text: t('.branch_region'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-10',
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) %>
+
+<%= govuk_input(
+  :contact_name,
+  form: form,
+  label: {
+    text: t('.contact_name'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) %>
+
+<%= govuk_input(
+  :contact_email,
+  form: form,
+  label: {
+    text: t('.contact_email'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-20',
+  attributes: {
+    required: true,
+    maxlength: 255
+  }
+) %>
+
+<%= govuk_input(
+  :telephone_number,
+  form: form,
+  label: {
+    text: t('.telephone_number'),
+    classes: 'govuk-label--m'
+  },
+  classes: 'govuk-input--width-10',
+  attributes: {
+    required: true,
+    maxlength: 15
+  }
+) %>
+
+<%= govuk_fieldset(
+  legend: {
+    text: t('.address'),
+    classes: 'govuk-fieldset__legend--m'
+  }
+) do %>
+  <%= govuk_input(
+    :address_line_1,
+    form: form,
+    label: {
+      text: t('.address_line_1'),
+      classes: 'govuk-label--m'
+    },
+    classes: 'govuk-input--width-20',
+    attributes: {
+      required: true,
+      maxlength: 255
+    }
+  ) %>
+
+  <%= govuk_input(
+    :address_line_2,
+    form: form,
+    label: {
+      text: t('.address_line_2'),
+      classes: 'govuk-label--m'
+    },
+    classes: 'govuk-input--width-20',
+    attributes: {
+      maxlength: 255
+    }
+  ) %>
+
+  <%= govuk_input(
+    :town,
+    form: form,
+    label: {
+      text: t('.town'),
+      classes: 'govuk-label--m'
+    },
+    classes: 'govuk-input--width-20',
+    attributes: {
+      required: true,
+      maxlength: 255
+    }
+  ) %>
+
+  <%= govuk_input(
+    :county,
+    form: form,
+    label: {
+      text: t('.county'),
+      classes: 'govuk-label--m'
+    },
+    classes: 'govuk-input--width-10',
+    attributes: {
+      maxlength: 255
+    }
+  ) %>
+
+  <%= govuk_input(
+    :postcode,
+    form: form,
+    label: {
+      text: t('.postcode'),
+      classes: 'govuk-label--m'
+    },
+    classes: 'govuk-input--width-10',
+    attributes: {
+      maxlength: 10
+    }
+  ) %>
+<% end %>

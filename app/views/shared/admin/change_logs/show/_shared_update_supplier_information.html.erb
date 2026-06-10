@@ -1,0 +1,21 @@
+<%= govuk_table(
+  [
+    {
+      text: t('shared.admin.change_logs.show.change_table.attribute'),
+      classes: 'govuk-!-width-one-third',
+    },
+    {
+      text: t('shared.admin.change_logs.show.change_table.before'),
+      classes: 'govuk-!-width-one-third',
+    },
+    {
+      text: t('shared.admin.change_logs.show.change_table.after'),
+      classes: 'govuk-!-width-one-third',
+    }
+  ],
+  table_rows,
+  attributes: {
+    id: "supplier-details-change-log--#{table_id}"
+  },
+  first_cell_is_header: true,
+) %>

@@ -1,0 +1,25 @@
+<%= govuk_table(
+  [
+    {
+      text: t('shared.admin.change_logs.show.change_table.position'),
+      classes: 'govuk-!-width-one-quarter',
+    },
+    {
+      text: t('shared.admin.change_logs.show.change_table.rate_type'),
+      classes: 'govuk-!-width-one-quarter',
+    },
+    {
+      text: t('shared.admin.change_logs.show.change_table.before'),
+      classes: 'govuk-!-width-one-quarter',
+    },
+    {
+      text: t('shared.admin.change_logs.show.change_table.after'),
+      classes: 'govuk-!-width-one-quarter',
+    }
+  ],
+  update_supplier_framework_lot_rates_table_rows,
+  attributes: {
+    id: "supplier-details-change-log--#{table_id}"
+  },
+  first_cell_is_header: true,
+) %>

@@ -1,0 +1,47 @@
+<%= content_for :page_title, t('.page_title') %>
+
+<% admin_breadcrumbs(
+  { text: t('shared.admin.change_logs.index.heading'), href: supplier_change_logs_index_path },
+  { text: t('.heading', short_id: @change_log.short_id) }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('shared.admin.change_logs.index.heading') %></span>
+      <%= t('.heading', short_id: @change_log.short_id) %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= govuk_summary_list([
+      {
+        key: {
+          text: t('.summary_list.change_type')
+        },
+        value: {
+          text: t("shared.admin.change_logs.change_types.#{@change_log.change_type}")
+        }
+      },
+      {
+        key: {
+          text: t('.summary_list.changed_by')
+        },
+        value: {
+          text: @change_log.changed_by
+        }
+      },
+      {
+        key: {
+          text: t('.summary_list.changed_at')
+        },
+        value: {
+          text: format_date_time(@change_log.created_at)
+        }
+      }
+    ] + additional_change_log_summary) %>
+    <%= render(partial: "shared/admin/change_logs/show/#{@change_log.change_type}") %>
+  </div>
+</div>

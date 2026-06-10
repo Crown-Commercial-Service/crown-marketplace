@@ -97,8 +97,8 @@ Rails.application.routes.draw do
   end
 
   concern :admin_suppliers do
-    resources :suppliers, only: Marketplace.environment_name == :production ? %i[index show] : %i[index show edit update] do
-      resources :lot_data, path: 'lot-data', param: :lot_number, only: Marketplace.environment_name == :production ? %i[index show] : %i[index show edit update]
+    resources :suppliers, only: %i[index show edit update] do
+      resources :lot_data, path: 'lot-data', param: :lot_number, only: %i[index show edit update]
     end
   end
 
@@ -106,6 +106,10 @@ Rails.application.routes.draw do
     resources :uploads, only: %i[index new create show] do
       get '/progress', action: :progress
     end
+  end
+
+  concern :admin_change_logs do
+    resources :change_logs, path: 'change-logs', only: %i[index show]
   end
 
   concern :admin_reports do
@@ -194,7 +198,7 @@ Rails.application.routes.draw do
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-        concerns %i[admin_dashboard admin_frameworks admin_suppliers admin_uploads admin_reports admin_shared_pages]
+        concerns %i[admin_dashboard admin_frameworks admin_suppliers admin_uploads admin_reports admin_change_logs admin_shared_pages]
       end
     end
 
@@ -252,9 +256,13 @@ Rails.application.routes.draw do
   get '/:journey/:framework/:slug', to: 'journey#question', as: 'journey_question'
   get '/:journey/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'
 
-  resources :suppliers, path: '/:service/:framework/admin/suppliers', only: Marketplace.environment_name == :production ? %i[index show] : %i[index show edit update] do
-    resources :lot_data, path: 'lot-data', param: :lot_number, only: Marketplace.environment_name == :production ? %i[index show] : %i[index show edit update]
+  resources :buyer_details, path: '/:service/:framework/buyer-details', only: %i[index show edit update]
+  resources :suppliers, path: '/:service/:framework/admin/suppliers', only: %i[index show edit update] do
+    resources :lot_data, path: 'lot-data', param: :lot_number, only: %i[index show edit update]
   end
+  resources :uploads, path: '/:service/:framework/admin/uploads', only: %i[index new create show]
+  resources :reports, path: '/:service/:framework/admin/reports', only: %i[index new create show]
+  resources :change_logs, path: '/:service/:framework/admin/change-logs', only: %i[index show]
   scope path: '/:service/:framework/admin/frameworks', as: :frameworks do
     get '/', to: 'frameworks#show', action: :show
     get '/edit', to: 'frameworks#edit', action: :edit

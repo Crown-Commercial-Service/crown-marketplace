@@ -1,0 +1,79 @@
+<%= content_for :page_title, t('.heading', number: @upload.short_uuid) %>
+
+<% admin_breadcrumbs(
+  { text: t('shared.admin.uploads.index.heading'), href: supplier_uploads_index_path },
+  { text: t('.heading', number: @upload.short_uuid) }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('.caption', service_name: t("#{service.module_parent.to_s.underscore}.service_name"), framework: params[:framework]) %></span>
+      <%= t('.heading', number: @upload.short_uuid) %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_summary_list(
+      [
+        {
+          key: {
+            text: t('.status')
+          },
+          value: {
+            text: govuk_tag(*upload_status_tag(@upload.aasm_state))
+          }
+        },
+        {
+          key: {
+            text: t('.datetime')
+          },
+          value: {
+            text: format_date_time(@upload.created_at)
+          }
+        }
+      ],
+      classes: 'govuk-summary-list--no-border'
+    ) %>
+  </div>
+</div>
+
+<%= render(partial: 'shared/admin/uploads/in_progress') unless @upload.failed? || @upload.published? %>
+<%= render(partial: 'shared/admin/uploads/failed') if @upload.failed? %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_table(
+      [
+        {
+          text: t('.name'),
+        },
+        {
+          text: t('.download')
+        }
+      ],
+      service::Admin::Upload.attributes.select do |file|
+        @upload.send(file).attached?
+      end.map do |file|
+        [
+          {
+            text: t("#{service.module_parent.to_s.underscore}.#{params[:framework].downcase}.admin.uploads.file_names.#{file}"),
+          },
+          {
+            text: link_to(t('.download'), admin_upload_file(@upload, @upload.send(file), service_key, params[:framework].downcase), download: '')
+          }
+        ]
+      end,
+      caption: {
+        text: t('.files')
+      }
+    ) %>
+
+    <p class="govuk-body">
+      <%= link_to t('.return'), supplier_uploads_index_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
+    </p>
+  </div>
+</div>
+

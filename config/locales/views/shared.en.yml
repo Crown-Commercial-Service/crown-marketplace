@@ -1,0 +1,350 @@
+---
+en:
+  shared:
+    admin:
+      change_logs:
+        change_log_csv:
+          change_log_attributes:
+            jurisdictions: Jurisdictions
+            rate: Rate
+            services: Services
+          headings:
+            added: Added
+            removed: Removed
+        change_types:
+          add_rates_for_supplier_framework_lot_jurisdiction: Add rates for jurisdiction
+          remove_rates_for_supplier_framework_lot_jurisdiction: Remove rates for jurisdiction
+          update_supplier_additional_information: Additional supplier information update
+          update_supplier_contact_information: Supplier contact information update
+          update_supplier_framework_lot_branch: Branch update
+          update_supplier_framework_lot_jurisdictions: Jurisdictions update
+          update_supplier_framework_lot_rates: Rates update
+          update_supplier_framework_lot_services: Services update
+          update_supplier_framework_lot_status: Lot status update
+          update_supplier_information: Supplier information update
+          upload_supplier_data: Upload
+        index:
+          below_is_a_table: The table shows a list of all the changes made to the supplier data. You can view a specific change that was made by clicking on a log item.
+          caption: "%{service_name} - %{framework}"
+          change_logs_table:
+            change_type: Change type
+            changed_at: Changed at
+            changed_by: Changed by
+            log_item: Log item
+          change_lot_filename: Change log - %{service_name} - %{framework} - %{generation_time}.csv
+          download_logs: Download full change logs
+          heading: Supplier data change log
+          no_change_logs: There are no change logs to view
+          you_can_download: You can download a CSV file of the full logs by clicking on 'Download full change logs'
+        show:
+          change_table:
+            after: New value
+            attribute: Attribute
+            before: Old value
+            position: Poisiton
+            rate_type: Type
+          heading: Log item %{short_id}
+          lot_name: Lot %{number} - %{name}
+          page_title: Log item
+          summary_list:
+            change_type: Change type
+            changed_at: Changed at
+            changed_by: Changed by
+            jurisdiction: Jurisdiction
+            lot: Lot
+            supplier_name: Supplier name
+          update_supplier_framework_lot_jurisdictions:
+            added: 'The following jurisdictions were added:'
+            removed: 'The following jurisdictions were removed:'
+          update_supplier_framework_lot_services:
+            added: 'The following services were added:'
+            removed: 'The following services were removed:'
+          upload_supplier_data:
+            you_can_view_html: You can view the upload in the '%{link}' section of the portal.
+      dashboard:
+        index:
+          caption: "%{service_name} - %{framework}"
+          change_logs:
+            description: View logs of all changes made to the supplier data
+            title: Supplier data change log
+          heading: Admin dashboard
+          manage_framework: Manage frameworks
+          manage_framework_status:
+            description: Update the framework status for %{service_name}
+            title: Manage frameworks status
+          manage_supplier_data:
+            description: View and update the supplier's details and their lot data
+            title: Manage supplier data
+          page_title: "%{service_name} admin dashboard"
+          supplier_data: Supplier data
+          upload_supplier_data:
+            description: Use spreadsheets to upload the supplier data
+            title: Upload supplier data
+          user_reports: User reports
+          view_user_reports:
+            description: View and generate reports of user searches
+            title: User reports
+      frameworks:
+        edit:
+          expires_at_date: Framework 'expires at' date for %{framework}
+          expires_at_hint: The buyer section for this framework will not be visible if the date today (%{current_date}) is on or after the 'expires at' date.
+          heading: Update the framework dates
+          live_at_date: Framework 'live at' date for %{framework}
+          live_at_hint: The buyer section for this framework will be visible if the 'live at' date is today (%{current_date}) or earlier.
+          save_and_return: Save and return
+        show:
+          caption: "%{service_name} - %{framework}"
+          change: Change
+          coming: Coming
+          expired: Expired
+          expires_at: Expires at
+          framework: Framework
+          heading: Framework status
+          if_the_framework: If the framework 'live at' date is before the current date (%{current_date}), the buyer section for this framework will be accessible to our customers.
+          live: Live
+          live_at: Live at
+          status: Status
+          the_admin_section: The admin section for a framework will always be visible for any framework that is on the system no matter when it goes live.
+          this_section_allows: This section allows you to view and change the 'live at' date for the %{service_name} %{framework} framework.
+      lot_data:
+        edit:
+          branches:
+            address: Address
+            address_line_1: Address line 1
+            address_line_2: Address line 2
+            branch_name: Name
+            branch_region: Region
+            contact_email: Contact email
+            contact_name: Contact name
+            county: County
+            postcode: Postcode
+            telephone_number: Phone number
+            town: Town
+          heading:
+            branches: branch
+            caption: Lot %{lot_number} - %{lot_name}
+            heading: Edit %{section}
+            heading_with_country: Edit %{section} for %{country}
+            jurisdictions: jurisdiction selection
+            lot_status: lot status
+            rates: rates
+            services: service selection
+          jurisdictions:
+            question: Select the jurisdictions the supplier can offer
+            question_group: Select the jurisdictions the supplier can offer (%{group})
+          lot_status:
+            question: Set supplier status on Lot %{lot_number} - %{lot_name}
+          rates:
+            hint: If the supplier does not supply the position, make the field blank
+            optional: "%{label} (optional)"
+          save_and_return: Save and return
+          services:
+            question: Select the services the supplier can offer
+            question_group: Select the services the supplier can offer (%{group})
+        index:
+          heading: Supplier lot data
+          supplier_lot_data_summary_list:
+            link:
+              sections:
+                branches: branches
+                jurisdictions: jurisdictions
+                rates: rates
+                services: services
+              view_data_html: View %{section}<span class="govuk-visually-hidden"> for lot %{number} - %{name}</span>
+            lot_name: Lot %{number} - %{name}
+            sections:
+              branches: Branches
+              jurisdictions: Jurisdictions
+              lot_status: Lot status
+              rates: Rates
+              services: Services
+        show:
+          add_html: Add<span class="govuk-visually-hidden"> (%{section})</span>
+          change_html: Change<span class="govuk-visually-hidden"> (%{section})</span>
+          heading:
+            branches: branches
+            caption: Lot %{lot_number} - %{lot_name}
+            heading: View %{section}
+            jurisdictions: jurisdictions
+            rates: rates
+            services: services
+          jurisdictions:
+            jurisdiction_supplier_offers: Jurisdictions the supplier can offer
+            no_jurisdictions_offered: The supplier does not offer any jurisdictions in this lot
+          rates:
+            supplier_rates: Rates for the supplier
+          services:
+            no_services_offered: The supplier does not offer any services in this lot
+            services_supplier_offers: Services the supplier can offer
+        summary:
+          lot_status:
+            enabled:
+              disabled: Disabled
+              enabled: Enabled
+              not_on_lot: Not on lot
+      reports:
+        index:
+          caption: "%{service_name} - %{framework}"
+          created_at: Created at
+          generate_a_new_report: Generate a new report
+          generate_report_guidance: You can generate a new report of user's searches by clicking on 'Generate a new report'.
+          heading: User reports
+          not_reports_generated: No reports generated
+          report: Report
+          report_info: The table below shows the reports that have been generated by admin users. You can view a specific report by clicking on it.
+          status: Status
+        new:
+          caption: "%{service_name} - %{framework}"
+          from: From
+          from_example: For example, 6 8 2024
+          generate_file: Input a date range to generate a report
+          generate_report: Generate report
+          heading: Generate report
+          to: To
+          to_example: For example, 6 8 2025
+        show:
+          caption: "%{service_name} - %{framework}"
+          complete: Complete
+          genertating_report: Generating report
+          heading: Report %{report_id}
+          report_generation_progress: Report generation progress
+          report_status:
+            complete: Report generated
+            failed: Generating failed
+            in_progress: Generating report
+          report_summary:
+            created_at: Created at
+            created_by: Created by
+            date_range: Date range
+            status: Status
+          report_triggered: Triggered report creation
+      suppliers:
+        edit:
+          heading:
+            additional_supplier_information: Manage additional information
+            basic_supplier_information: Manage supplier information
+            supplier_contact_information: Manage supplier contact information
+          save_and_return: Save and return
+        index:
+          caption: "%{service_name} - %{framework}"
+          heading: Supplier data
+          search_for_a_supplier:
+            hint: You can find a specific supplier by entering their name in the search bar
+            label: Search for a supplier
+            placeholder: Search for a supplier..
+          supplier_name: Supplier name
+          view_details: View details
+          view_lot_data: View lot data
+          view_supplier_data: You can view the full supplier details by clicking 'View details' or view the full supplier lot data by clicking 'View lot data'.
+        sections:
+          additional_supplier_information:
+            address: Address
+            lot_1_prospectus_link: Lot 1 prospectus link
+            lot_2_prospectus_link: Lot 2 prospectus link
+            lot_3_prospectus_link: Lot 3 prospectus link
+            lot_4a_prospectus_link: Lot 4a prospectus link
+            lot_4b_prospectus_link: Lot 4b prospectus link
+            lot_4c_prospectus_link: Lot 4c prospectus link
+            lot_5_prospectus_link: Lot 5 prospectus link
+            managed_service_provider_email: Managed service provider contact email
+            managed_service_provider_name: Managed service provider contact name
+            managed_service_provider_telephone: Managed service provider contact telephone number
+          basic_supplier_information:
+            additional_identifier: Additional identifier
+            additional_identifier_hint: This is a unique ID used to identify the supplier as part of the upload
+            duns: DUNS Number
+            is_sme: Is an SME?
+            supplier_name: Supplier name
+            trading_name: Trading name
+            trading_name_hint: This is the name that is shown to buyers
+          supplier_contact_information:
+            contact_email: Contact email
+            contact_name: Contact name
+            telephone_number: Contact telephone number
+            website: Website
+        show:
+          additional_supplier_information:
+            address: Address
+            lot_1_prospectus_link: Lot 1 prospectus link
+            lot_2_prospectus_link: Lot 2 prospectus link
+            lot_3_prospectus_link: Lot 3 prospectus link
+            lot_4a_prospectus_link: Lot 4a prospectus link
+            lot_4b_prospectus_link: Lot 4b prospectus link
+            lot_4c_prospectus_link: Lot 4c prospectus link
+            lot_5_prospectus_link: Lot 5 prospectus link
+            managed_service_provider_email: Managed service provider contact email
+            managed_service_provider_name: Managed service provider contact name
+            managed_service_provider_telephone: Managed service provider contact telephone number
+            title: Additional information
+          basic_supplier_information:
+            additional_identifier: Additional identifier
+            duns: DUNS Number
+            is_sme: Is an SME?
+            name: Name
+            title: Supplier information
+            trading_name: Trading name
+          change: Change
+          heading: Supplier details
+          no_data: N/A
+          supplier_contact_information:
+            contact_email: Contact email
+            contact_name: Contact name
+            telephone_number: Contact telephone number
+            title: Contact information
+            website: Website
+      uploads:
+        failed:
+          below_is_a_list: Below is a list of the issues that have occurred with the file upload and details on how they might be fixed.
+          common_causes: 'Common causes of these issues may include:'
+          common_causes_1: Suppliers having the incorrect DUNS number
+          common_causes_2: Sheets have a blank row
+          details: Details
+          errors_with_upload: Errors with the upload
+          issue: Issue
+        in_progress:
+          checking_files: Checking files
+          complete: Complete
+          files_uploaded: Files uploaded
+          processing_data: Processing data
+          publishing_data: Publishing data
+          upload_progress: Upload progress
+        index:
+          caption: "%{service_name} - %{framework}"
+          create_new: Create a new data upload
+          current_data: Current published data
+          date: Date
+          download: Download
+          heading: Upload supplier data
+          name: Name
+          status: Status
+          table_caption: Previous uploads
+          upload_name: 'Upload session #%{number}'
+        new:
+          caption: "%{service_name} - %{framework}"
+          download_templates: Download file templates
+          heading: New data upload
+          return: Return to 'Upload supplier data'
+          template_file_name: Download spreadsheet templates
+          template_file_path: "%{service}/Supplier spreadsheet templates.zip"
+          upload_caption: Supported file format is .xlsx and maximum file size is 10mb
+          upload_data: Upload data
+          upload_title: Upload the supplier data
+          you_can_download: You can download a zip file containing an empty template for each of the spreadsheets
+        show:
+          caption: "%{service_name} - %{framework}"
+          datetime: 'Date of file upload:'
+          download: Download
+          files: Uploaded files
+          heading: 'Upload session #%{number}'
+          name: File name
+          return: Return to 'Upload supplier data'
+          status: 'Status:'
+    error_summary:
+      there_is_a_problem: There is a problem
+    tags:
+      cannot_start: Cannot start yet
+      completed: Completed
+      in_progress: In progress
+      incomplete: Incomplete
+      not_required: Not required
+      not_started: Not started
