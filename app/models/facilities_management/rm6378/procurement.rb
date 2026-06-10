@@ -6,7 +6,7 @@ module FacilitiesManagement
       before_create :generate_contract_number
 
       def suppliers
-        @suppliers ||= Supplier::Framework.with_services_and_jurisdiction(service_ids, jurisdiction_ids).order('supplier.name')
+        @suppliers ||= ::Supplier::Framework.with_services_and_jurisdiction(service_ids, jurisdiction_ids).order('supplier.name')
       end
 
       def services
@@ -53,11 +53,16 @@ module FacilitiesManagement
         ['contract_start_date_yyyy', nil],
         ['estimated_contract_duration', nil],
         ['private_finance_initiative', nil],
+        ['contact_opt_in', nil, ->(value) { ActiveModel::Type::Boolean.new.cast(value) }]
       ].freeze
 
       ATTRIBUTES_AND_DEFAULT_VALUES.each do |attribute, default_value, cast_func|
         define_method(attribute.to_sym) { attribute_getter(attribute, default_value) }
         define_method(:"#{attribute}=") { |value| attribute_setter(attribute, value, cast_func) }
+      end
+
+      with_options on: :contract_name do
+        validates :contact_opt_in, inclusion: { in: [true, false] }
       end
 
       private

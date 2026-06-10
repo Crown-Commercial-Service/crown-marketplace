@@ -622,11 +622,11 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
   end
 
   describe 'validations' do
-    describe 'contract_name' do
-      let(:procurement) { build(:facilities_management_rm6378_procurement, user:, framework:) }
-      let(:user) { create(:user) }
-      let(:framework) { create(:framework) }
+    let(:procurement) { build(:facilities_management_rm6378_procurement, user:, framework:) }
+    let(:user) { create(:user) }
+    let(:framework) { create(:framework) }
 
+    describe 'contract_name' do
       before { procurement.contract_name = contract_name }
 
       context 'when the name is more than 100 characters' do
@@ -672,6 +672,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
 
         it 'is valid' do
           create(:facilities_management_rm6378_procurement, user: user, framework: create(:framework), contract_name: contract_name)
+          procurement.valid?(:contract_name)
 
           expect(procurement.valid?(:contract_name)).to be true
         end
@@ -691,6 +692,44 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
         let(:contract_name) { 'Valid Name' }
 
         it 'expected to be valid' do
+          expect(procurement.valid?(:contract_name)).to be true
+        end
+      end
+    end
+
+    describe 'contact_opt_in' do
+      before { procurement.contact_opt_in = contact_opt_in }
+
+      context 'when the answer is nil' do
+        let(:contact_opt_in) { nil }
+
+        it 'is expected to not be valid and has the correct error message' do
+          expect(procurement.valid?(:contract_name)).to be false
+          expect(procurement.errors[:contact_opt_in].first).to eq 'You must select an option'
+        end
+      end
+
+      context 'when the answer is empty' do
+        let(:contact_opt_in) { '' }
+
+        it 'is expected to not be valid and has the correct error message' do
+          expect(procurement.valid?(:contract_name)).to be false
+          expect(procurement.errors[:contact_opt_in].first).to eq 'You must select an option'
+        end
+      end
+
+      context 'when the answer is true' do
+        let(:contact_opt_in) { true }
+
+        it 'is expected to be valid' do
+          expect(procurement.valid?(:contract_name)).to be true
+        end
+      end
+
+      context 'when the answer is false' do
+        let(:contact_opt_in) { false }
+
+        it 'is expected to be valid' do
           expect(procurement.valid?(:contract_name)).to be true
         end
       end
