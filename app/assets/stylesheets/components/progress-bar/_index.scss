@@ -2,7 +2,7 @@
   height: 40px;
   margin-bottom: 20px;
   overflow: hidden;
-  background: govuk-colour("black", $variant: 'tint-95');
+  background: govuk-colour("black", $variant: "tint-95");
   border-radius: 4px;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -17,9 +17,7 @@
   text-align: center;
   background: govuk-colour("blue");
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-  transition:
-    width 0.6s ease,
-    background 0.6s ease;
+  transition: width 0.6s ease, background 0.6s ease;
 
   &--succeed {
     background: govuk-colour("green");
@@ -33,7 +31,14 @@
 .ccs-upload-progress-container {
   display: grid;
   text-align: center;
-  grid-template-columns: 20% 20% 20% 20% 20%;
+
+  &.ccs-upload-progress-container__grid-width-3 {
+    grid-template-columns: 33% 33% 33%;
+  }
+
+  &.ccs-upload-progress-container__grid-width-5 {
+    grid-template-columns: 20% 20% 20% 20% 20%;
+  }
 
   div:not([aria-current="true"]) {
     @media (max-width: 30em) {

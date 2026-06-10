@@ -500,6 +500,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
   describe '.suppliers' do
     let(:procurement) { create(:facilities_management_rm6378_procurement, procurement_details: { 'service_ids' => service_ids, 'jurisdiction_ids' => jurisdiction_ids }) }
     let(:result) { procurement.suppliers.pluck('supplier.name') }
+    let(:search_result) { procurement.search_result.map(&:first) }
     let(:suppliers) do
       [
         create(:supplier, name: 'Supplier 3'),
@@ -553,6 +554,10 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
       it 'returns three suppliers' do
         expect(result).to eq(['Supplier 2', 'Supplier 3', 'Supplier 5'])
       end
+
+      it 'returns three suppliers for search_result' do
+        expect(search_result).to eq(['Supplier 2', 'Supplier 3', 'Supplier 5'])
+      end
     end
 
     context 'when we pass multiple service codes and a single jurisdiction id' do
@@ -562,14 +567,22 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
       it 'returns the first and second suppliers' do
         expect(result).to eq(['Supplier 2', 'Supplier 3'])
       end
+
+      it 'returns the first and second suppliers for search result' do
+        expect(search_result).to eq(['Supplier 2', 'Supplier 3'])
+      end
     end
 
     context 'when we pass multiple jurisdiction ids and single service ids' do
       let(:service_ids) { ['RM6378.1a.C1'] }
       let(:jurisdiction_ids) { ['TLH3', 'TLK4'] }
 
-      it 'returns the second and third suppliers' do
+      it 'returns the second and fifth suppliers' do
         expect(result).to eq(['Supplier 2', 'Supplier 5'])
+      end
+
+      it 'returns the second and fifth suppliers for search result' do
+        expect(search_result).to eq(['Supplier 2', 'Supplier 5'])
       end
     end
 
@@ -577,8 +590,12 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
       let(:service_ids) { ['RM6378.1a.C3', 'RM6378.1a.C4'] }
       let(:jurisdiction_ids) { ['TLH3', 'TLK4'] }
 
-      it 'returns the third supplier' do
+      it 'returns the fifth supplier' do
         expect(result).to eq(['Supplier 5'])
+      end
+
+      it 'returns the fifth supplier for search result' do
+        expect(search_result).to eq(['Supplier 5'])
       end
     end
 
@@ -586,8 +603,12 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
       let(:service_ids) { ['RM6378.2a.1'] }
       let(:jurisdiction_ids) { ['TLH3'] }
 
-      it 'returns an emoty array' do
+      it 'returns an empty array' do
         expect(result).to be_empty
+      end
+
+      it 'returns an empty array for search result' do
+        expect(search_result).to be_empty
       end
     end
 
@@ -595,8 +616,12 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
       let(:service_ids) { ['RM6378.1a.C1'] }
       let(:jurisdiction_ids) { ['DE'] }
 
-      it 'returns an emoty array' do
+      it 'returns an empty array' do
         expect(result).to be_empty
+      end
+
+      it 'returns an empty array for search result' do
+        expect(search_result).to be_empty
       end
     end
   end

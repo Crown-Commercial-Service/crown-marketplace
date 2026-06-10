@@ -284,6 +284,14 @@ module ApplicationHelper
     end
   end
 
+  def admin_upload_file(upload, attachment, service, framework)
+    "#{rails_blob_path(attachment, disposition: 'attachment', key: :"#{service}_#{framework}_upload_id", value: upload.id)}&format=#{get_file_extension(attachment)}"
+  end
+
+  def get_file_extension(file)
+    file.filename.extension_without_delimiter.to_sym
+  end
+
   # rubocop:disable Metrics/AbcSize
   def pagination_params(paginator)
     template = paginator.instance_variable_get(:@template)

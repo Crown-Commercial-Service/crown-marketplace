@@ -92,7 +92,7 @@ abstract class FileUploadProgress implements FileUploadProgressInterface {
 }
 
 class FileUploadProgressWithBar extends FileUploadProgress {
-  private readonly $progressBar: JQuery<HTMLElement> = $('#upload-import-progress')
+  private readonly $progressBar: JQuery<HTMLElement> = $('.ccs-progress-bar')
   private readonly $prgressStates: JQuery<HTMLElement> = $('.ccs-upload-progress-container > div')
 
   constructor (stateToProgress: StateToProgressWithProgressBar, initialState: string) {
