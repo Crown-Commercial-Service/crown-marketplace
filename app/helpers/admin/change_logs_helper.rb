@@ -49,12 +49,12 @@ module Admin::ChangeLogsHelper
     ],
     trading_name: [
       I18n.t('shared.admin.suppliers.show.basic_supplier_information.trading_name'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('trading_name') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('trading_name') },
       ->(change_data) { change_data.dig('additional_details', 'trading_name') }
     ],
     additional_identifier: [
       I18n.t('shared.admin.suppliers.show.basic_supplier_information.additional_identifier'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('additional_identifier') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('additional_identifier') },
       ->(change_data) { change_data.dig('additional_details', 'additional_identifier') }
     ],
   }.freeze
@@ -85,57 +85,57 @@ module Admin::ChangeLogsHelper
   UPDATE_SUPPLIER_ADDITIONAL_INFORMATION_TABLE_ROWS = {
     address: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.address'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('address') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('address') },
       ->(change_data) { change_data.dig('additional_details', 'address') }
     ],
     lot_1_prospectus_link: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.lot_1_prospectus_link'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('lot_1_prospectus_link') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('lot_1_prospectus_link') },
       ->(change_data) { change_data.dig('additional_details', 'lot_1_prospectus_link') }
     ],
     lot_2_prospectus_link: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.lot_2_prospectus_link'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('lot_2_prospectus_link') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('lot_2_prospectus_link') },
       ->(change_data) { change_data.dig('additional_details', 'lot_2_prospectus_link') }
     ],
     lot_3_prospectus_link: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.lot_3_prospectus_link'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('lot_3_prospectus_link') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('lot_3_prospectus_link') },
       ->(change_data) { change_data.dig('additional_details', 'lot_3_prospectus_link') }
     ],
     lot_4a_prospectus_link: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.lot_4a_prospectus_link'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('lot_4a_prospectus_link') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('lot_4a_prospectus_link') },
       ->(change_data) { change_data.dig('additional_details', 'lot_4a_prospectus_link') }
     ],
     lot_4b_prospectus_link: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.lot_4b_prospectus_link'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('lot_4b_prospectus_link') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('lot_4b_prospectus_link') },
       ->(change_data) { change_data.dig('additional_details', 'lot_4b_prospectus_link') }
     ],
     lot_4c_prospectus_link: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.lot_4c_prospectus_link'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('lot_4c_prospectus_link') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('lot_4c_prospectus_link') },
       ->(change_data) { change_data.dig('additional_details', 'lot_4c_prospectus_link') }
     ],
     lot_5_prospectus_link: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.lot_5_prospectus_link'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('lot_5_prospectus_link') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('lot_5_prospectus_link') },
       ->(change_data) { change_data.dig('additional_details', 'lot_5_prospectus_link') }
     ],
     managed_service_provider_name: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.managed_service_provider_name'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('managed_service_provider_name') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('managed_service_provider_name') },
       ->(change_data) { change_data.dig('additional_details', 'managed_service_provider_name') }
     ],
     managed_service_provider_email: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.managed_service_provider_email'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('managed_service_provider_email') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('managed_service_provider_email') },
       ->(change_data) { change_data.dig('additional_details', 'managed_service_provider_email') }
     ],
     managed_service_provider_telephone: [
       I18n.t('shared.admin.suppliers.show.additional_supplier_information.managed_service_provider_telephone'),
-      ->(change_data) { change_data.fetch('additional_details', {}).key?('managed_service_provider_telephone') },
+      ->(change_data) { (change_data['additional_details'] || {}).key?('managed_service_provider_telephone') },
       ->(change_data) { change_data.dig('additional_details', 'managed_service_provider_telephone') }
     ],
   }.freeze
