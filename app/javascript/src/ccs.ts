@@ -10,11 +10,12 @@ import initGoogleAnalyticsDataLayer from './shared/googleAnalyticsDataLayer'
 import initLimitInputToInteger from './facilitiesManagement/integerInput'
 import initManagementReport from './facilitiesManagement/rm3830/admin/managementReport'
 import initNumberWithCommas from './facilitiesManagement/numberWithCommas'
-import initRM3830AdminAdminUpload from './facilitiesManagement/rm3830/admin/adminUploadProgress'
 import initSelectRegion from './facilitiesManagement/procurements/selectRegion'
 import initStepByStepNav from './shared/stepByStepNav'
 import initSupplierDataSnapshot from './facilitiesManagement/rm6232/admin/supplierDataSnapshot'
 import initUserSearch from './crownMarketplace/userSearch'
+import initAdminUpload from './shared/adminUpload'
+import initReportProgress from './shared/reportProgress'
 
 const initAll = () => {
   // Facilities Management - Procurements TS
@@ -22,7 +23,6 @@ const initAll = () => {
   initSelectRegion()
 
   // Facilities Management - RM3830 - Admin TS
-  initRM3830AdminAdminUpload()
   initManagementReport()
 
   // Facilities Management - RM6232 - Admin TS
@@ -41,6 +41,8 @@ const initAll = () => {
   initUserSearch()
 
   // Shared TS
+  initAdminUpload()
+  initReportProgress()
   initCheckboxAccordion()
   initCookieBanner()
   initGoogleAnalyticsDataLayer()

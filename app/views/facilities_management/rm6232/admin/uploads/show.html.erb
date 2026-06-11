@@ -64,7 +64,7 @@
             text: t(".file_name.#{file}")
           },
           {
-            text: link_to_file_for_download("#{rails_blob_path(@upload.send(file), disposition: 'attachment', key: :rm6232_admin_upload_id, value: @upload.id)}&format=xlsx", :xlsx, t('.download'), false)
+            text: link_to(t('.download'), admin_upload_file(@upload, @upload.send(file), :fm, params[:framework].downcase), download: '')
           }
         ]
       end,

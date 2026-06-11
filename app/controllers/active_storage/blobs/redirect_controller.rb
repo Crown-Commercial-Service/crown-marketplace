@@ -30,9 +30,11 @@ class ActiveStorage::Blobs::RedirectController < ActiveStorage::BaseController
   KEY_TO_MODEL = {
     rm3830_management_report_id: FacilitiesManagement::RM3830::Admin::ManagementReport,
     rm6232_management_report_id: FacilitiesManagement::RM6232::Admin::ManagementReport,
-    rm3830_admin_upload_id: FacilitiesManagement::RM3830::Admin::Upload,
-    rm6232_admin_upload_id: FacilitiesManagement::RM6232::Admin::Upload,
+    fm_rm3830_upload_id: FacilitiesManagement::RM3830::Admin::Upload,
+    fm_rm6232_upload_id: FacilitiesManagement::RM6232::Admin::Upload,
+    fm_rm6378_upload_id: FacilitiesManagement::RM6378::Admin::Upload,
     contract_id: FacilitiesManagement::RM3830::ProcurementSupplier,
-    procurement_id: FacilitiesManagement::RM3830::Procurement
+    procurement_id: FacilitiesManagement::RM3830::Procurement,
+    report_id: Report,
   }.freeze
 end

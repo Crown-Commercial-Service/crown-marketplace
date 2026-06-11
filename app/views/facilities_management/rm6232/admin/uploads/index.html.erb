@@ -37,7 +37,7 @@
               text: format_date_time(@latest_upload.created_at)
             },
             {
-              text: link_to_file_for_download("#{rails_blob_path(@latest_upload.send(file), disposition: 'attachment', key: :rm6232_admin_upload_id, value: @latest_upload.id)}&format=xlsx", :xlsx, t('.download'), false)
+              text: link_to(t('.download'), admin_upload_file(@latest_upload, @latest_upload.send(file), :fm, params[:framework].downcase), download: '')
             }
           ]
         end,

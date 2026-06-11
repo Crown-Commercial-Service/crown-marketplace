@@ -9,6 +9,11 @@ module FacilitiesManagement
         @suppliers ||= ::Supplier::Framework.with_services_and_jurisdiction(service_ids, jurisdiction_ids).order('supplier.name')
       end
 
+      # For generating the user reports
+      def search_result
+        @search_result ||= suppliers.pluck(:name, :id)
+      end
+
       def services
         @services ||= Service.where(id: service_ids).ordered_by_category_and_number
       end

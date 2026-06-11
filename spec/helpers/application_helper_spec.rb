@@ -189,6 +189,49 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  describe 'admin upload methods' do
+    let(:upload) do
+      admin_upload = build(:facilities_management_rm6378_admin_upload)
+      admin_upload.update(supplier_details_file: create_file(*FILE_PARAMS[:valid_xlsx]))
+      admin_upload.update(supplier_services_file: create_file(*FILE_PARAMS[:valid_csv]))
+      admin_upload
+    end
+
+    let(:created_files) { [] }
+
+    def create_file(extension, content)
+      temp_file = Tempfile.new(['supplier_data', ".#{extension}"])
+      created_files << temp_file
+
+      fixture_file_upload(temp_file.path, content)
+    end
+
+    after { created_files.each(&:unlink) }
+
+    context 'when considering admin_upload_file' do
+      it 'the path has the expected params' do
+        uri_params = CGI.parse(URI.parse(helper.admin_upload_file(upload, upload.supplier_details_file, :fm, 'RM6378')).query)
+
+        expect(uri_params).to eq({
+                                   'disposition' => ['attachment'],
+                                   'key' => ['fm_RM6378_upload_id'],
+                                   'value' => [upload.id],
+                                   'format' => ['xlsx']
+                                 })
+      end
+    end
+
+    context 'when considering get_file_extension' do
+      it 'returns xlsx for supplier_details_file' do
+        expect(helper.get_file_extension(upload.supplier_details_file)).to eq :xlsx
+      end
+
+      it 'returns csv for supplier_services_file' do
+        expect(helper.get_file_extension(upload.supplier_services_file)).to eq :csv
+      end
+    end
+  end
+
   # rubocop:disable RSpec/ExampleLength
   describe '#pagination_params' do
     let(:result) { pagination_params(paginator) }
