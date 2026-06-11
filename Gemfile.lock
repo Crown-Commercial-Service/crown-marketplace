@@ -307,7 +307,7 @@ GEM
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (1.2.3)
       reline
-    friendly_id (5.6.0)
+    friendly_id (5.7.0)
       activerecord (>= 4.0.0)
     fugit (1.12.1)
       et-orbi (~> 1.4)
@@ -768,7 +768,7 @@ DEPENDENCIES
   factory_bot_rails (>= 6.2.0)
   faker (~> 3.8.0)
   fog-aws (>= 3.14.0)
-  friendly_id (~> 5.6.0)
+  friendly_id (~> 5.7.0)
   geocoder (>= 1.6.1)
   gov_uk_date_fields (>= 4.2.0)
   i18n-tasks (>= 1.0.12)
