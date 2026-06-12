@@ -405,17 +405,33 @@ RSpec.describe FacilitiesManagement::BuyerDetail do
   end
 
   describe '#details_complete?' do
-    context 'when all attributes are there' do
-      it 'returns true' do
-        expect(buyer_detail.details_complete?).to be(true)
-      end
-    end
+    [
+      ['RM3830', false],
+      ['RM6232', false],
+      ['RM6378', true],
+    ].each do |framework, expected_result|
+      context "when the framework is #{framework}" do
+        context 'when all attributes are there' do
+          it 'returns true' do
+            expect(buyer_detail.details_complete?(framework)).to be(true)
+          end
+        end
 
-    context 'when some attributes are missing' do
-      before { buyer_detail.full_name = nil }
+        context 'when some attributes are missing' do
+          before { buyer_detail.full_name = nil }
 
-      it 'returns true' do
-        expect(buyer_detail.details_complete?).to be(false)
+          it 'returns true' do
+            expect(buyer_detail.details_complete?(framework)).to be(false)
+          end
+        end
+
+        context 'when some attribute missing is contact preferences' do
+          before { buyer_detail.contact_opt_in = nil }
+
+          it "returns #{expected_result}" do
+            expect(buyer_detail.details_complete?(framework)).to be(expected_result)
+          end
+        end
       end
     end
   end

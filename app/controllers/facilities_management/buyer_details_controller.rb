@@ -4,6 +4,8 @@ module FacilitiesManagement
     before_action :redirect_to_buyer_detail, except: %i[show edit update]
     before_action :set_section, :set_back_path, only: %i[edit update]
 
+    helper_method :sections
+
     def show; end
 
     def edit; end
@@ -31,12 +33,20 @@ module FacilitiesManagement
     def set_section
       @section = params.expect(:section).to_sym
 
-      redirect_to action: :show unless SECTION_TO_PARAMS.include?(@section)
+      redirect_to action: :show unless sections.include?(@section)
     end
 
     def set_back_path
       @back_path = facilities_management_buyer_detail_path(params[:framework], @buyer_detail)
       @back_text = t('facilities_management.buyer_details.edit.back')
+    end
+
+    def sections
+      @sections ||= if params[:framework] == 'RM6378'
+                      SECTION_TO_PARAMS.except(:contact_preferences)
+                    else
+                      SECTION_TO_PARAMS
+                    end
     end
 
     SECTION_TO_PARAMS = {

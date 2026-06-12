@@ -23,13 +23,6 @@ Feature: Buyer details - validations
       | Enter a valid postcode, for example SW1A 1AA                    |
       | Select the type of public sector organisation you’re buying for |
 
-  Scenario: Save and return - Contact preferences - empty field
-    And I click on 'Answer question (Contact preferences)'
-    Then I am on the 'Manage your contact preferences' page
-    When I click on 'Save and return'
-    Then I should see the following error messages:
-      | You must select an option |
-
   @javascript
   Scenario Outline: Add address - frontend
     And I click on 'Answer questions (Organisation details)'

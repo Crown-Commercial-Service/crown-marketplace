@@ -89,7 +89,7 @@ module HeaderNavigationLinksHelper
   def back_to_start_link
     if !current_user || page_with_back_to_start?
       { text: t('header_navigation_links_helper.back_to_start'), href: "#{service_path_base}/start", active: false }
-    elsif !current_user.fm_buyer_details_incomplete?
+    elsif !current_user.fm_buyer_details_incomplete?(params[:framework])
       { text: t('header_navigation_links_helper.my_account'), href: service_path_base, active: dashboard_page?('buyer_account') }
     end
   end
