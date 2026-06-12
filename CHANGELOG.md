@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add change log records for admin updates to supplier data ([PR 5336](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5336))
 - Add change logs download in the admin section ([PR 5336](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5336))
 - Add the user reports for RM6378 ([PR 5337](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5337))
+- Add the ability for admins to upload data for RM6378 ([PR 5341](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5341))
 
 ### Changed
 

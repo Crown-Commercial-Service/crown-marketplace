@@ -28,14 +28,7 @@
         }
       ],
       @upload.import_errors.map do |error|
-        [
-          {
-            text: t(".error_name.#{error[:error]}"),
-          },
-          {
-            text: error[:details] ? get_error_details(error[:error], error[:details]) : t(".error_details.#{error[:error]}"),
-          },
-        ]
+        get_upload_error_row(error)
       end
     ) %>
   </div>
