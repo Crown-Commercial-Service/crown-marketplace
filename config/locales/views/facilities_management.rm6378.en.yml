@@ -77,12 +77,34 @@ en:
               file_process_failed_html: 'Something went wrong when processing the files, the following error was returned: <br> <strong>%{list}</strong>'
               file_publish_failed: Something went wrong when publishing the files, please try uploading the files again
               file_publish_failed_html: 'Something went wrong when publishing the files, the following error was returned: <br> <strong>%{list}</strong>'
+              supplier_details_has_empty_sheets: Make sure the sheet for 'Supplier details' have been filled in
+              supplier_details_has_incorrect_headers: 'Make sure the sheet for ''Supplier details'' has the following headers: ''Supplier name'', ''SME'', ''DUNS number'''
+              supplier_details_missing_sheets: The 'Supplier details' file should have 1 sheet named 'RM6378 Suppliers Details'
+              supplier_missing_jurisdictions_html: 'The following suppliers do not offer services in any regions: %{list} Make sure all the suppliers have the correct name and DUNS number'
+              supplier_missing_services_html: 'The following suppliers do not offer any services: %{list} Make sure all the suppliers have the correct name and DUNS number'
+              supplier_regions_has_empty_sheets_html: 'The following sheets have no data: %{list} Make sure all sheets for ''Supplier regions'' have been filled in'
+              supplier_regions_has_incorrect_headers_html: 'The following sheets have incorrect headers: %{list} Make sure all sheets for ''Supplier regions'' have the expected region codes. You can find these in the spreadsheet template.'
+              supplier_regions_missing_sheets: 'The ''Supplier regions'' file should have 11 sheets with the following names: ''Lot 1a'', ''Lot 1b'', ''Lot 1c'', ''Lot 2a'', ''Lot 2b'', ''Lot 3a'', ''Lot 3b'', ''Lot 4a'', ''Lot 4b'', ''Lot 4c'', ''Lot 4d'''
+              supplier_services_has_empty_sheets_html: 'The following sheets have no data: %{list} Make sure all sheets for ''Supplier services'' have been filled in'
+              supplier_services_has_incorrect_headers_html: 'The following sheets have incorrect headers: %{list} Make sure all sheets for ''Supplier services'' have the expected service codes. You can find these in the spreadsheet template.'
+              supplier_services_missing_sheets: 'The ''Supplier services'' file should have 11 sheets with the following names: ''Lot 1a'', ''Lot 1b'', ''Lot 1c'', ''Lot 2a'', ''Lot 2b'', ''Lot 3a'', ''Lot 3b'', ''Lot 4a'', ''Lot 4b'', ''Lot 4c'', ''Lot 4d'''
               upload_failed: Something went wrong with the file upload, please try uploading the files again
               upload_failed_html: 'Something went wrong with the file upload, the following error was returned: <br> <strong>%{list}</strong>'
             error_name:
               file_check_failed: File check failed
               file_process_failed: File processing failed
               file_publish_failed: File publishing failed
+              supplier_details_has_empty_sheets: There are sheets in 'Supplier details' without any data
+              supplier_details_has_incorrect_headers: There are sheets in 'Supplier details' with incorrect headers
+              supplier_details_missing_sheets: The 'Supplier details' file is missing sheets
+              supplier_missing_jurisdictions: There are suppliers without any regions
+              supplier_missing_services: There are suppliers without any services
+              supplier_regions_has_empty_sheets: There are sheets in 'Supplier regions' without any data
+              supplier_regions_has_incorrect_headers: There are sheets in 'Supplier regions' with incorrect headers
+              supplier_regions_missing_sheets: The 'Supplier regions' file is missing sheets
+              supplier_services_has_empty_sheets: There are sheets in 'Supplier services' without any data
+              supplier_services_has_incorrect_headers: There are sheets in 'Supplier services' with incorrect headers
+              supplier_services_missing_sheets: The 'Supplier services' file is missing sheets
               upload_failed: Upload failed
           file_names:
             supplier_details_file: Supplier details

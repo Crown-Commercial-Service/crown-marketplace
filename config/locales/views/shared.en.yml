@@ -316,6 +316,7 @@ en:
           download: Download
           heading: Upload supplier data
           name: Name
+          no_uploads: No supplier data uploads
           status: Status
           table_caption: Previous uploads
           upload_name: 'Upload session #%{number}'

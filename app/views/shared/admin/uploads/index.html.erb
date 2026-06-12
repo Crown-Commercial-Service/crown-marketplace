@@ -57,36 +57,41 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
-    <%= govuk_table(
-      [
-        {
-          text: t('.name'),
-        },
-        {
-          text: t('.date'),
-        },
-        {
-          text: t('.status')
-        }
-      ],
-      @uploads.map do |upload|
+    <% if @uploads.any? %>
+      <%= govuk_table(
         [
           {
-            text: link_to(t('.upload_name', number: upload.short_uuid), upload),
+            text: t('.name'),
           },
           {
-            text: format_date_time(upload.created_at),
+            text: t('.date'),
           },
           {
-            text: govuk_tag(*upload_status_tag(upload.aasm_state))
+            text: t('.status')
           }
-        ]
-      end,
-      caption: {
-        text: t('.table_caption')
-      }
-    ) %>
+        ],
+        @uploads.map do |upload|
+          [
+            {
+              text: link_to(t('.upload_name', number: upload.short_uuid), upload),
+            },
+            {
+              text: format_date_time(upload.created_at),
+            },
+            {
+              text: govuk_tag(*upload_status_tag(upload.aasm_state))
+            }
+          ]
+        end,
+        caption: {
+          text: t('.table_caption')
+        }
+      ) %>
 
-    <%= paginate @uploads, views_prefix: 'shared', window: 0, outer_window: 2 %>
+      <%= paginate @uploads, views_prefix: 'shared', window: 0, outer_window: 2 %>
+    <% else %>
+      <hr class="govuk-section-break govuk-section-break--visible">
+      <%= govuk_table([[{text: t('.no_uploads')}]]) %>
+    <% end %>
   </div>
 </div>
