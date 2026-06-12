@@ -107,6 +107,7 @@
   </div>
 </div>
 
+<% if params[:framework].to_s.upcase == 'RM6232' %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_summary_list([
@@ -142,3 +143,4 @@
   ) %>
   </div>
 </div>
+<% end %>

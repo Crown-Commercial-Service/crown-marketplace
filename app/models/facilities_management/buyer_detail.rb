@@ -1,5 +1,7 @@
 module FacilitiesManagement
   class BuyerDetail < ApplicationRecord
+    attr_accessor :framework
+
     belongs_to :user, inverse_of: :buyer_detail
 
     MAX_FIELD_LENGTH = 255
@@ -32,7 +34,7 @@ module FacilitiesManagement
       validates :sector, inclusion: { in: SECTORS }
     end
 
-    with_options on: %i[update contact_preferences] do
+    with_options on: %i[update contact_preferences], if: -> { framework.to_s.upcase == 'RM6236' } do
       validates :contact_opt_in, inclusion: { in: [true, false] }
     end
 

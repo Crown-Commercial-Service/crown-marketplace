@@ -11,11 +11,6 @@ Feature: Buyer details
       | Telephone number | 01610161016      |
     And I click on 'Save and return'
     Then I am on the 'Your details' page
-    And I click on 'Answer question (Contact preferences)'
-    Then I am on the 'Manage your contact preferences' page
-    And I check 'No' for being contacted
-    And I click on 'Save and return'
-    Then I am on the 'Your details' page
     And I click on 'Answer questions (Organisation details)'
     And I enter the following details into the form:
       | Organisation name | Feel Good inc. |
@@ -35,8 +30,6 @@ Feature: Buyer details
       | Organisation name                  | Feel Good inc.                                  |
       | Organisation address               | The Goods Shed, Newport Road, Stafford ST16 1AA |
       | Type of public sector organisation | Local Community and Housing                     |
-    And the following buyer details have been entered for 'Contact preferences':
-      | CCS can contact you about searches? | No |
 
   Scenario: Save details for the buyer - add address manually
     And I click on 'Find address'
@@ -55,5 +48,5 @@ Feature: Buyer details
       | Organisation name                  | Feel Good inc.                        |
       | Organisation address               | 112 Test street, Westminister AA1 1AA |
       | Type of public sector organisation | Local Community and Housing           |
-    And the following buyer details have been entered for 'Contact preferences':
-      | CCS can contact you about searches? | No |
+    When I click on 'My account'
+    Then I am on the 'My account' page

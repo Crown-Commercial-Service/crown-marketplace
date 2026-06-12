@@ -26,6 +26,7 @@ module FacilitiesManagement
 
     def set_buyer_detail
       @buyer_detail = FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user)
+      @buyer_detail.framework = params[:framework]
     end
 
     def set_section
