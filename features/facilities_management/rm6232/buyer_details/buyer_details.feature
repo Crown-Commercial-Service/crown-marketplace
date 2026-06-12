@@ -37,6 +37,8 @@ Feature: Buyer details
       | Type of public sector organisation | Local Community and Housing                     |
     And the following buyer details have been entered for 'Contact preferences':
       | CCS can contact you about searches? | No |
+    And I click on 'My account'
+    And I am on the 'Your account' page
 
   Scenario: Save details for the buyer - add address manually
     And I click on 'Find address'
@@ -57,3 +59,5 @@ Feature: Buyer details
       | Type of public sector organisation | Local Community and Housing           |
     And the following buyer details have been entered for 'Contact preferences':
       | CCS can contact you about searches? | No |
+    And I click on 'My account'
+    And I am on the 'Your account' page

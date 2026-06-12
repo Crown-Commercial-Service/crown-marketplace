@@ -5,7 +5,7 @@ module FacilitiesManagement
     MAX_FIELD_LENGTH = 255
     SECTORS = %w[culture_media_and_sport defence_and_security education government_policy health infrastructure local_community_and_housing].freeze
 
-    with_options on: %i[update personal_details] do
+    with_options on: %i[update personal_details RM3830 RM6232 RM6378] do
       validates :full_name, presence: true, length: { maximum: MAX_FIELD_LENGTH }
 
       validates :job_title, presence: true, length: { maximum: MAX_FIELD_LENGTH }
@@ -14,7 +14,7 @@ module FacilitiesManagement
       validates :telephone_number, numericality: { greater_than: 0, message: :blank }
     end
 
-    with_options on: %i[update organisation_details] do
+    with_options on: %i[update organisation_details RM3830 RM6232 RM6378] do
       validates :organisation_name, length: { maximum: MAX_FIELD_LENGTH }, presence: true
 
       validates :organisation_address_line_1, length: { maximum: MAX_FIELD_LENGTH }, presence: true
@@ -32,7 +32,7 @@ module FacilitiesManagement
       validates :sector, inclusion: { in: SECTORS }
     end
 
-    with_options on: %i[update contact_preferences] do
+    with_options on: %i[update contact_preferences RM3830 RM6232] do
       validates :contact_opt_in, inclusion: { in: [true, false] }
     end
 
@@ -46,8 +46,8 @@ module FacilitiesManagement
       sector.nil? ? I18n.t("facilities_management.buyer_details.sections.organisation_details.sector.options.#{central_government}") : I18n.t("facilities_management.buyer_details.sections.organisation_details.sector.options.#{sector}")
     end
 
-    def details_complete?
-      valid?(:update)
+    def details_complete?(framework)
+      valid?(framework.to_sym)
     end
 
     private

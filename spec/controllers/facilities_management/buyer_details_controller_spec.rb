@@ -6,6 +6,8 @@ module FacilitiesManagement
     let(:framework) { 'RM6378' }
     let(:user) { controller.current_user }
 
+    include_context 'and RM6232 is live'
+
     describe 'GET show' do
       context 'when logged in with buyer details' do
         login_fm_buyer_with_details
@@ -67,7 +69,7 @@ module FacilitiesManagement
         end
 
         it 'sets the back_path' do
-          expect(assigns(:back_path)).to eq("/facilities-management/RM6378/buyer-details/#{user.buyer_detail.id}")
+          expect(assigns(:back_path)).to eq("/facilities-management/#{framework}/buyer-details/#{user.buyer_detail.id}")
           expect(assigns(:back_text)).to eq('Your details')
         end
 
@@ -96,7 +98,15 @@ module FacilitiesManagement
       context 'when the section is contact_preferences' do
         let(:section) { :contact_preferences }
 
-        include_context 'when testing a section'
+        it 'redirects to the show page' do
+          expect(response).to redirect_to("/facilities-management/RM6378/buyer-details/#{user.buyer_detail.id}")
+        end
+
+        context 'and the framework is RM6232' do
+          let(:framework) { 'RM6232' }
+
+          include_context 'when testing a section'
+        end
       end
 
       context 'when the section is unexpected' do
@@ -119,13 +129,13 @@ module FacilitiesManagement
         end
 
         it 'sets the back_path' do
-          expect(assigns(:back_path)).to eq("/facilities-management/RM6378/buyer-details/#{user.buyer_detail.id}")
+          expect(assigns(:back_path)).to eq("/facilities-management/#{framework}/buyer-details/#{user.buyer_detail.id}")
           expect(assigns(:back_text)).to eq('Your details')
         end
 
         context 'when it is valid' do
           it 'redirects to the show page' do
-            expect(response).to redirect_to("/facilities-management/RM6378/buyer-details/#{user.buyer_detail.id}")
+            expect(response).to redirect_to("/facilities-management/#{framework}/buyer-details/#{user.buyer_detail.id}")
           end
 
           it 'updates the buyer details' do
@@ -173,7 +183,15 @@ module FacilitiesManagement
         let(:facilities_management_buyer_detail) { { contact_opt_in: true } }
         let(:facilities_management_buyer_detail_invalid) { { contact_opt_in: '' } }
 
-        include_context 'when testing a section'
+        it 'redirects to the show page' do
+          expect(response).to redirect_to("/facilities-management/RM6378/buyer-details/#{user.buyer_detail.id}")
+        end
+
+        context 'and the framework is RM6232' do
+          let(:framework) { 'RM6232' }
+
+          include_context 'when testing a section'
+        end
       end
 
       context 'when the section is unexpected' do
