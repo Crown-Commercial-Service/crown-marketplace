@@ -200,6 +200,13 @@ en:
           personal_details: Manage your personal details
         save_and_return: Save and return
       sections:
+        contact_preferences:
+          contact_opt_in:
+            hint: You can change these settings at any time.
+            legend: Can GCA contact you about any searches you save?
+            options:
+              'false': 'No'
+              'true': 'Yes'
         organisation_details:
           organisation_address:
             address_finder:
@@ -237,6 +244,9 @@ en:
         answer_question: Answer question
         answer_questions: Answer questions
         change: Change
+        contact_preferences:
+          contact_opt_in: GCA can contact you about searches?
+          heading: Contact preferences
         heading: Your details
         organisation_details:
           heading: Organisation details

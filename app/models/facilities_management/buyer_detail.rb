@@ -32,6 +32,9 @@ module FacilitiesManagement
       validates :sector, inclusion: { in: SECTORS }
     end
 
+    with_options on: %i[update contact_preferences] do
+      validates :contact_opt_in, inclusion: { in: [true, false] }
+    end
 
     delegate :email, to: :user
 

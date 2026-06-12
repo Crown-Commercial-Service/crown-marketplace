@@ -42,6 +42,7 @@ module FacilitiesManagement
     SECTION_TO_PARAMS = {
       personal_details: %i[full_name job_title telephone_number],
       organisation_details: %i[organisation_name organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode sector],
+      contact_preferences: %i[contact_opt_in]
     }.freeze
   end
 end

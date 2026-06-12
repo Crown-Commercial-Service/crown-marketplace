@@ -167,6 +167,15 @@ module FacilitiesManagement
         include_context 'when testing a section'
       end
 
+      context 'when the section is contact_preferences' do
+        let(:section) { :contact_preferences }
+
+        let(:facilities_management_buyer_detail) { { contact_opt_in: true } }
+        let(:facilities_management_buyer_detail_invalid) { { contact_opt_in: '' } }
+
+        include_context 'when testing a section'
+      end
+
       context 'when the section is unexpected' do
         let(:section) { :something_else }
 

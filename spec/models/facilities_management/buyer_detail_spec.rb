@@ -268,6 +268,44 @@ RSpec.describe FacilitiesManagement::BuyerDetail do
         end
       end
     end
+
+     context 'when considering contact_opt_in' do
+      before { buyer_detail.contact_opt_in = contact_opt_in }
+
+      context 'and it is blank' do
+        let(:contact_opt_in) { '' }
+
+        it 'is invalid and has the correct error message' do
+          expect(buyer_detail).not_to be_valid(:update)
+          expect(buyer_detail.errors[:contact_opt_in].first).to eq 'You must select an option'
+        end
+      end
+
+      context 'and it is nil' do
+        let(:contact_opt_in) { nil }
+
+        it 'is invalid and has the correct error message' do
+          expect(buyer_detail).not_to be_valid(:update)
+          expect(buyer_detail.errors[:contact_opt_in].first).to eq 'You must select an option'
+        end
+      end
+
+      context 'and it is true' do
+        let(:contact_opt_in) { true }
+
+        it 'is valid' do
+          expect(buyer_detail).to be_valid(:update)
+        end
+      end
+
+      context 'and it is false' do
+        let(:contact_opt_in) { false }
+
+        it 'is valid' do
+          expect(buyer_detail).to be_valid(:update)
+        end
+      end
+    end
   end
 
   describe '#full_organisation_address' do
