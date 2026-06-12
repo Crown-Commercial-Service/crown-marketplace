@@ -108,6 +108,7 @@ en:
       home:
         index:
           beforeyoustart: Before you start
+          cua_instructions_html: Complete a Customer user agreement (CUA) and return a copy to info@gca.gov.uk. You can download a CUA from <a href='https://www.gca.gov.uk/agreements/RM6378' class='govuk-link'>the GCA website</a>.
           further_information: View further information about the Facilities Management and Security Services framework RM6378
           heading: Find a facilities management supplier
           startlist:
