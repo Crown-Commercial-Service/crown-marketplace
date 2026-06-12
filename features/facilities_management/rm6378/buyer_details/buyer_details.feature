@@ -48,3 +48,5 @@ Feature: Buyer details
       | Organisation name                  | Feel Good inc.                        |
       | Organisation address               | 112 Test street, Westminister AA1 1AA |
       | Type of public sector organisation | Local Community and Housing           |
+    When I click on 'My account'
+    Then I am on the 'My account' page

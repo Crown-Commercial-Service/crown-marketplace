@@ -1,6 +1,7 @@
 module FacilitiesManagement
   class BuyerDetail < ApplicationRecord
     attr_accessor :framework
+
     belongs_to :user, inverse_of: :buyer_detail
 
     MAX_FIELD_LENGTH = 255
@@ -58,6 +59,5 @@ module FacilitiesManagement
 
       postcode.full_valid? ? errors.delete(:organisation_address_postcode) : errors.add(:organisation_address_postcode, :invalid)
     end
-
   end
 end
