@@ -27,11 +27,6 @@ module Pages
       element :'Culture, Media and Sport', '#facilities_management_buyer_detail_sector_culture_media_and_sport'
     end
 
-    section :contact_opt_in, '#contact_opt_in-form-group' do
-      element :Yes, '#facilities_management_buyer_detail_contact_opt_in_true'
-      element :No, '#facilities_management_buyer_detail_contact_opt_in_false'
-    end
-
     element :address_line_1_error_message, '#organisation_address_line_1-error'
     element :town_or_city_error_message, '#organisation_address_town-error'
     element :postcode_error_message, '#organisation_address_postcode-error'

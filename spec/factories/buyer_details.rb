@@ -11,6 +11,5 @@ FactoryBot.define do
     organisation_address_postcode { 'SW1W 9SZ' }
     central_government { true }
     sector { 'defence_and_security' }
-    contact_opt_in { true }
   end
 end

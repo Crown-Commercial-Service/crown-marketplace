@@ -2,10 +2,6 @@ Then('I check {string} for the sector') do |option|
   buyer_detail_page.sector.send(option.to_sym).choose
 end
 
-Then('I check {string} for being contacted') do |option|
-  buyer_detail_page.contact_opt_in.send(option.to_sym).choose
-end
-
 Then('I should see the postcode error message for buyer details') do
   expect(buyer_detail_page.postcode_error_message).to have_text('Enter a valid postcode, for example SW1A 1AA')
 end

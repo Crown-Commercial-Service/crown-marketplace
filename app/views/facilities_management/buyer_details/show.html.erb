@@ -106,39 +106,3 @@
   ) %>
   </div>
 </div>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= govuk_summary_list([
-      {
-        key: {
-          text: t('.contact_preferences.contact_opt_in')
-        },
-        value: {
-          text: if @buyer_detail.contact_opt_in.nil?
-                  nil
-                else
-                  @buyer_detail.contact_opt_in ? t('facilities_management.buyer_details.sections.contact_preferences.contact_opt_in.options.true') : t('facilities_management.buyer_details.sections.contact_preferences.contact_opt_in.options.false')
-                end
-        }
-      },
-    ],
-    card: {
-      title: {
-        text: t('.contact_preferences.heading')
-      },
-      actions: {
-        items: [
-          {
-            text: [@buyer_detail.contact_opt_in].any?(&:nil?) ? t('.answer_question') : t('.change'),
-            href: edit_facilities_management_buyer_detail_path(params[:framework], @buyer_detail, section: :contact_preferences),
-          }
-        ]
-      }
-    },
-    attributes: {
-      id: 'buyer-details-summery--contact-preferences'
-    }
-  ) %>
-  </div>
-</div>
