@@ -269,7 +269,7 @@ RSpec.describe FacilitiesManagement::BuyerDetail do
       end
     end
 
-     context 'when considering contact_opt_in' do
+    context 'when considering contact_opt_in' do
       before { buyer_detail.contact_opt_in = contact_opt_in }
 
       context 'and it is blank' do
