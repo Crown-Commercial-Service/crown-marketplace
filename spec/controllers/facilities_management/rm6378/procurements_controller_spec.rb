@@ -39,14 +39,14 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
   describe 'GET new' do
     let(:service_codes) { ['C1', 'C2'] }
 
-    before { get :new, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes } }
+    before { get :new, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['RM6378.TLH3', 'RM6378.TLH5'], service_codes: service_codes } }
 
     it 'renders the correct template' do
       expect(response).to render_template('new')
     end
 
     it 'sets the back path' do
-      expect(assigns(:back_path)).to eq '/facilities-management/RM6378/information-about-your-requirements?annual_contract_value=123456&contract_start_date_dd=12&contract_start_date_mm=5&contract_start_date_yyyy=2028&estimated_contract_duration=5&private_finance_initiative=yes&region_codes%5B%5D=TLH3&region_codes%5B%5D=TLH5&service_codes%5B%5D=C1&service_codes%5B%5D=C2'
+      expect(assigns(:back_path)).to eq '/facilities-management/RM6378/information-about-your-requirements?annual_contract_value=123456&contract_start_date_dd=12&contract_start_date_mm=5&contract_start_date_yyyy=2028&estimated_contract_duration=5&private_finance_initiative=yes&region_codes%5B%5D=RM6378.TLH3&region_codes%5B%5D=RM6378.TLH5&service_codes%5B%5D=C1&service_codes%5B%5D=C2'
       expect(assigns(:back_text)).to eq 'Return to information about your requirements'
     end
 
@@ -54,7 +54,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
       # rubocop:disable RSpec/MultipleExpectations
       it 'sets the journey attributes' do
         expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2'])
-        expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
+        expect(assigns(:regions).pluck(:id)).to eq(['RM6378.TLH3', 'RM6378.TLH5'])
         expect(assigns(:annual_contract_value)).to eq(123_456)
         expect(assigns(:contract_start_date)).to eq(Date.strptime('2028-5-12', '%Y-%m-%d'))
         expect(assigns(:estimated_contract_duration)).to eq(5)
@@ -75,7 +75,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
             lot_id: 'RM6378.2a',
             procurement_details: {
               service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
-              jurisdiction_ids: ['TLH3', 'TLH5'],
+              jurisdiction_ids: ['RM6378.TLH3', 'RM6378.TLH5'],
               annual_contract_value: 123_456,
               contract_start_date_yyyy: '2028',
               contract_start_date_mm: '5',
@@ -95,7 +95,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
       # rubocop:disable RSpec/MultipleExpectations
       it 'sets the journey attributes' do
         expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2', 'RM6378.4d.S1', 'RM6378.4d.U1'])
-        expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
+        expect(assigns(:regions).pluck(:id)).to eq(['RM6378.TLH3', 'RM6378.TLH5'])
         expect(assigns(:annual_contract_value)).to eq(123_456)
         expect(assigns(:contract_start_date)).to eq(Date.strptime('2028-5-12', '%Y-%m-%d'))
         expect(assigns(:estimated_contract_duration)).to eq(5)
@@ -116,7 +116,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
             lot_id: 'RM6378.2a',
             procurement_details: {
               service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
-              jurisdiction_ids: ['TLH3', 'TLH5'],
+              jurisdiction_ids: ['RM6378.TLH3', 'RM6378.TLH5'],
               annual_contract_value: 123_456,
               contract_start_date_yyyy: '2028',
               contract_start_date_mm: '5',
@@ -136,7 +136,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
             lot_id: 'RM6378.4d',
             procurement_details: {
               service_ids: ['RM6378.4d.S1', 'RM6378.4d.U1'],
-              jurisdiction_ids: ['TLH3', 'TLH5'],
+              jurisdiction_ids: ['RM6378.TLH3', 'RM6378.TLH5'],
               annual_contract_value: 123_456,
               contract_start_date_yyyy: '2028',
               contract_start_date_mm: '5',
@@ -157,13 +157,13 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
     let(:contact_opt_in) { true }
 
     context 'when there is one procurement' do
-      before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } } }
+      before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['RM6378.TLH3', 'RM6378.TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } } }
 
       shared_examples 'and attributes are set' do
         # rubocop:disable RSpec/MultipleExpectations
         it 'sets the journey attributes' do
           expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2'])
-          expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
+          expect(assigns(:regions).pluck(:id)).to eq(['RM6378.TLH3', 'RM6378.TLH5'])
           expect(assigns(:annual_contract_value)).to eq(123_456)
           expect(assigns(:contract_start_date)).to eq(Date.strptime('2028-5-12', '%Y-%m-%d'))
           expect(assigns(:estimated_contract_duration)).to eq(5)
@@ -184,7 +184,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
               lot_id: 'RM6378.2a',
               procurement_details: {
                 service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
-                jurisdiction_ids: ['TLH3', 'TLH5'],
+                jurisdiction_ids: ['RM6378.TLH3', 'RM6378.TLH5'],
                 annual_contract_value: 123_456,
                 contract_start_date_yyyy: '2028',
                 contract_start_date_mm: '5',
@@ -251,7 +251,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
         # rubocop:disable RSpec/MultipleExpectations
         it 'sets the journey attributes' do
           expect(assigns(:services).pluck(:id)).to eq(['RM6378.2a.C1', 'RM6378.2a.C2', 'RM6378.4d.S1', 'RM6378.4d.U1'])
-          expect(assigns(:regions).pluck(:id)).to eq(['TLH3', 'TLH5'])
+          expect(assigns(:regions).pluck(:id)).to eq(['RM6378.TLH3', 'RM6378.TLH5'])
           expect(assigns(:annual_contract_value)).to eq(123_456)
           expect(assigns(:contract_start_date)).to eq(Date.strptime('2028-5-12', '%Y-%m-%d'))
           expect(assigns(:estimated_contract_duration)).to eq(5)
@@ -272,7 +272,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
               lot_id: 'RM6378.2a',
               procurement_details: {
                 service_ids: ['RM6378.2a.C1', 'RM6378.2a.C2'],
-                jurisdiction_ids: ['TLH3', 'TLH5'],
+                jurisdiction_ids: ['RM6378.TLH3', 'RM6378.TLH5'],
                 annual_contract_value: 123_456,
                 contract_start_date_yyyy: '2028',
                 contract_start_date_mm: '5',
@@ -294,7 +294,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
               lot_id: 'RM6378.4d',
               procurement_details: {
                 service_ids: ['RM6378.4d.S1', 'RM6378.4d.U1'],
-                jurisdiction_ids: ['TLH3', 'TLH5'],
+                jurisdiction_ids: ['RM6378.TLH3', 'RM6378.TLH5'],
                 annual_contract_value: 123_456,
                 contract_start_date_yyyy: '2028',
                 contract_start_date_mm: '5',
@@ -314,7 +314,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
         let(:contract_name) { '' }
         let(:expected_second_contract_name) { '' }
 
-        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } } }
+        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['RM6378.TLH3', 'RM6378.TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } } }
 
         include_context 'and attributes are set'
 
@@ -336,7 +336,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
           allow_any_instance_of(FacilitiesManagement::RM6378::Procurement).to receive(:update_contract_name_with_security).and_raise(FacilitiesManagement::RM6378::Procurement::CannotCreateNameError.new)
           # rubocop:enable RSpec/AnyInstance
 
-          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } }
+          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['RM6378.TLH3', 'RM6378.TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } }
         end
 
         include_context 'and attributes are set'
@@ -357,7 +357,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
           allow_any_instance_of(FacilitiesManagement::RM6378::Procurement).to receive(:save!).and_raise(ActiveRecord::Rollback.new('Something went wrong'))
           # rubocop:enable RSpec/AnyInstance
 
-          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } }
+          post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['RM6378.TLH3', 'RM6378.TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } }
         end
 
         include_context 'and attributes are set'
@@ -373,7 +373,7 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
       end
 
       context 'and it is valid' do
-        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['TLH3', 'TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } } }
+        before { post :create, params: { private_finance_initiative: 'yes', estimated_contract_duration: 5, contract_start_date_yyyy: '2028', contract_start_date_mm: '5', contract_start_date_dd: '12', annual_contract_value: 123_456, region_codes: ['RM6378.TLH3', 'RM6378.TLH5'], service_codes: service_codes, facilities_management_rm6378_procurement: { contract_name:, contact_opt_in: } } }
 
         include_context 'and attributes are set'
 

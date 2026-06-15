@@ -6,7 +6,7 @@ RSpec.describe FacilitiesManagement::RM6378::Admin::LotDataController do
   let(:supplier_framework) { create(:supplier_framework, framework_id: 'RM6378') }
   let(:supplier_framework_lot) { create(:supplier_framework_lot, supplier_framework: supplier_framework, lot_id: "RM6378.#{lot_number}") }
   let(:supplier_framework_lot_services) { (1..5).map { |service_number| "RM6378.#{lot_number}.C#{service_number}" }.map { |service_id| create(:supplier_framework_lot_service, supplier_framework_lot:, service_id:) } }
-  let(:supplier_framework_lot_jurisdictions) { %w[TLD3 TLD7 TLE2 TLH3 TLI4].map { |jurisdiction_id| create(:supplier_framework_lot_jurisdiction, supplier_framework_lot:, jurisdiction_id:) } }
+  let(:supplier_framework_lot_jurisdictions) { %w[RM6378.TLD3 RM6378.TLD7 RM6378.TLE2 RM6378.TLH3 RM6378.TLI4].map { |jurisdiction_id| create(:supplier_framework_lot_jurisdiction, supplier_framework_lot:, jurisdiction_id:) } }
   let(:lot_number) { '1a' }
 
   describe 'GET index' do
@@ -459,7 +459,7 @@ RSpec.describe FacilitiesManagement::RM6378::Admin::LotDataController do
 
     context 'and the section is jurisdictions' do
       let(:section) { 'jurisdictions' }
-      let(:jurisdiction_ids) { %w[TLD1 TLD7 TLE1 TLH3 TLI4] }
+      let(:jurisdiction_ids) { %w[RM6378.TLD1 RM6378.TLD7 RM6378.TLE1 RM6378.TLH3 RM6378.TLI4] }
       let(:model_params) { { jurisdiction_ids: } }
 
       include_context 'when testing a section'
@@ -481,8 +481,8 @@ RSpec.describe FacilitiesManagement::RM6378::Admin::LotDataController do
         it 'creates a change log' do
           expect(change_log.change_type).to eq('update_supplier_framework_lot_jurisdictions')
           expect(change_log.change_data['id']).to eq(supplier_framework_lot.id)
-          expect(change_log.change_data['added']).to eq(['TLD1', 'TLE1'])
-          expect(change_log.change_data['removed']).to eq(['TLD3', 'TLE2'])
+          expect(change_log.change_data['added']).to eq(['RM6378.TLD1', 'RM6378.TLE1'])
+          expect(change_log.change_data['removed']).to eq(['RM6378.TLD3', 'RM6378.TLE2'])
         end
         # rubocop:enable RSpec/MultipleExpectations
       end

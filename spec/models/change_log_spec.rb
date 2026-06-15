@@ -412,30 +412,30 @@ RSpec.describe ChangeLog do
     let(:framework_id) { 'RM6360' }
     let(:supplier) { create(:supplier, name: 'Wario') }
     let(:supplier_framework) { create(:supplier_framework, framework_id:, supplier:) }
-    let(:supplier_framework_lot) { create(:supplier_framework_lot, supplier_framework: supplier_framework, lot_id: 'RM6376.1') }
+    let(:supplier_framework_lot) { create(:supplier_framework_lot, supplier_framework: supplier_framework, lot_id: 'RM6360.1') }
     let(:change_type) { 'update_supplier_framework_lot_jurisdictions' }
     let(:change_log) { described_class.log_update_supplier_framework_lot_jurisdictions!(user: user, framework: framework_id, model: supplier_framework_lot, added: supplier_framework_lot_jurisdictions_added, removed: supplier_framework_lot_jurisdictions_removed) }
 
     context 'when jurisdictions are added and removed' do
-      let(:supplier_framework_lot_jurisdictions_added) { ['GB', 'AO', 'UY'] }
-      let(:supplier_framework_lot_jurisdictions_removed) { ['PH', 'RO', 'KZ'] }
-      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'added' => ['GB', 'AO', 'UY'], 'removed' => ['PH', 'RO', 'KZ'] } }
+      let(:supplier_framework_lot_jurisdictions_added) { ['RM6360.GB', 'RM6360.AO', 'RM6360.UY'] }
+      let(:supplier_framework_lot_jurisdictions_removed) { ['RM6360.PH', 'RM6360.RO', 'RM6360.KZ'] }
+      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6360.1', 'added' => ['RM6360.GB', 'RM6360.AO', 'RM6360.UY'], 'removed' => ['RM6360.PH', 'RM6360.RO', 'RM6360.KZ'] } }
 
       include_context 'when testing a change type'
     end
 
     context 'when jurisdictions are added and not removed' do
-      let(:supplier_framework_lot_jurisdictions_added) { ['GB', 'AO', 'UY'] }
+      let(:supplier_framework_lot_jurisdictions_added) { ['RM6360.GB', 'RM6360.AO', 'RM6360.UY'] }
       let(:supplier_framework_lot_jurisdictions_removed) { [] }
-      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'added' => ['GB', 'AO', 'UY'], 'removed' => [] } }
+      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6360.1', 'added' => ['RM6360.GB', 'RM6360.AO', 'RM6360.UY'], 'removed' => [] } }
 
       include_context 'when testing a change type'
     end
 
     context 'when jurisdictions are removed and not added' do
       let(:supplier_framework_lot_jurisdictions_added) { [] }
-      let(:supplier_framework_lot_jurisdictions_removed) { ['PH', 'RO', 'KZ'] }
-      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'added' => [], 'removed' => ['PH', 'RO', 'KZ'] } }
+      let(:supplier_framework_lot_jurisdictions_removed) { ['RM6360.PH', 'RM6360.RO', 'RM6360.KZ'] }
+      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6360.1', 'added' => [], 'removed' => ['RM6360.PH', 'RM6360.RO', 'RM6360.KZ'] } }
 
       include_context 'when testing a change type'
     end
@@ -456,7 +456,7 @@ RSpec.describe ChangeLog do
     let(:supplier) { create(:supplier, name: 'Wario') }
     let(:supplier_framework) { create(:supplier_framework, framework_id:, supplier:) }
     let(:supplier_framework_lot) { create(:supplier_framework_lot, supplier_framework: supplier_framework, lot_id: 'RM6376.1') }
-    let(:supplier_framework_lot_jurisdiction) { create(:supplier_framework_lot_jurisdiction, jurisdiction_id: 'GB') }
+    let(:supplier_framework_lot_jurisdiction) { create(:supplier_framework_lot_jurisdiction, jurisdiction_id: 'RM6376.GB') }
     let(:supplier_framework_lot_rate_1) { create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 15000, position_id: 'RM6376.1.1') }
     let(:supplier_framework_lot_rate_2) { create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 18000, position_id: 'RM6376.1.2') }
     let(:change_type) { 'update_supplier_framework_lot_rates' }
@@ -470,7 +470,7 @@ RSpec.describe ChangeLog do
     context 'when rates were added' do
       let(:supplier_framework_lot_rate_3) { create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 20000, position_id: 'RM6376.1.3') }
       let(:rates) { { 'RM6376.1.1' => supplier_framework_lot_rate_1, 'RM6376.1.2' => supplier_framework_lot_rate_2, 'RM6376.1.3' => supplier_framework_lot_rate_3 } }
-      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'GB', 'rates' => [{ 'after' => 20000, 'id' => supplier_framework_lot_rate_3.id, 'position_id' => 'RM6376.1.3' }] } }
+      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'RM6376.GB', 'rates' => [{ 'after' => 20000, 'id' => supplier_framework_lot_rate_3.id, 'position_id' => 'RM6376.1.3' }] } }
 
       include_context 'when testing a change type'
     end
@@ -478,7 +478,7 @@ RSpec.describe ChangeLog do
     context 'when rates were added but instantly destroyed' do
       let(:supplier_framework_lot_rate_4) { build(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 20000, position_id: 'RM6376.1.4') }
       let(:rates) { { 'RM6376.1.1' => supplier_framework_lot_rate_1, 'RM6376.1.2' => supplier_framework_lot_rate_2, 'RM6376.1.4' => supplier_framework_lot_rate_4 } }
-      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'GB', 'rates' => [{ 'after' => 20000, 'id' => supplier_framework_lot_rate_3.id, 'position_id' => 'RM6376.1.3' }] } }
+      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'RM6376.GB', 'rates' => [{ 'after' => 20000, 'id' => supplier_framework_lot_rate_3.id, 'position_id' => 'RM6376.1.3' }] } }
 
       it 'does not create a change log' do
         expect { change_log }.not_to change(described_class, :count)
@@ -487,7 +487,7 @@ RSpec.describe ChangeLog do
 
     context 'when rates were removed' do
       let(:rates) { { 'RM6376.1.1' => supplier_framework_lot_rate_1, 'RM6376.1.2' => supplier_framework_lot_rate_2 } }
-      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'GB', 'rates' => [{ 'before' => 15000, 'id' => supplier_framework_lot_rate_1.id, 'position_id' => 'RM6376.1.1' }] } }
+      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'RM6376.GB', 'rates' => [{ 'before' => 15000, 'id' => supplier_framework_lot_rate_1.id, 'position_id' => 'RM6376.1.1' }] } }
 
       before { supplier_framework_lot_rate_1.destroy }
 
@@ -496,7 +496,7 @@ RSpec.describe ChangeLog do
 
     context 'when rates were updated' do
       let(:rates) { { 'RM6376.1.1' => supplier_framework_lot_rate_1, 'RM6376.1.2' => supplier_framework_lot_rate_2 } }
-      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'GB', 'rates' => [{ 'before' => 18000, 'after' => 17999, 'id' => supplier_framework_lot_rate_2.id, 'position_id' => 'RM6376.1.2' }] } }
+      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'RM6376.GB', 'rates' => [{ 'before' => 18000, 'after' => 17999, 'id' => supplier_framework_lot_rate_2.id, 'position_id' => 'RM6376.1.2' }] } }
 
       before do
         supplier_framework_lot_rate_2.assign_attributes(rate: 17999)
@@ -510,7 +510,7 @@ RSpec.describe ChangeLog do
       let(:supplier_framework_lot_rate_3) { create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 20000, position_id: 'RM6376.1.3') }
       let(:supplier_framework_lot_rate_4) { build(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 20000, position_id: 'RM6376.1.4') }
       let(:rates) { { 'RM6376.1.1' => supplier_framework_lot_rate_1, 'RM6376.1.2' => supplier_framework_lot_rate_2, 'RM6376.1.3' => supplier_framework_lot_rate_3, 'RM6376.1.4' => supplier_framework_lot_rate_4 } }
-      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'GB', 'rates' => [{ 'before' => 15000, 'id' => supplier_framework_lot_rate_1.id, 'position_id' => 'RM6376.1.1' }, { 'before' => 18000, 'after' => 17999, 'id' => supplier_framework_lot_rate_2.id, 'position_id' => 'RM6376.1.2' }, { 'after' => 20000, 'id' => supplier_framework_lot_rate_3.id, 'position_id' => 'RM6376.1.3' }] } }
+      let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'RM6376.GB', 'rates' => [{ 'before' => 15000, 'id' => supplier_framework_lot_rate_1.id, 'position_id' => 'RM6376.1.1' }, { 'before' => 18000, 'after' => 17999, 'id' => supplier_framework_lot_rate_2.id, 'position_id' => 'RM6376.1.2' }, { 'after' => 20000, 'id' => supplier_framework_lot_rate_3.id, 'position_id' => 'RM6376.1.3' }] } }
 
       before do
         supplier_framework_lot_rate_1.destroy
@@ -596,7 +596,7 @@ RSpec.describe ChangeLog do
     let(:supplier) { create(:supplier, name: 'Wario') }
     let(:supplier_framework) { create(:supplier_framework, framework_id:, supplier:) }
     let(:supplier_framework_lot) { create(:supplier_framework_lot, supplier_framework: supplier_framework, lot_id: 'RM6376.1') }
-    let(:supplier_framework_lot_jurisdiction) { create(:supplier_framework_lot_jurisdiction, jurisdiction_id: 'GB') }
+    let(:supplier_framework_lot_jurisdiction) { create(:supplier_framework_lot_jurisdiction, jurisdiction_id: 'RM6376.GB') }
     let(:supplier_framework_lot_rate_1) { build(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 15000, position_id: 'RM6376.1.1') }
     let(:supplier_framework_lot_rate_2) { build(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: nil, position_id: 'RM6376.1.2') }
     let(:supplier_framework_lot_rate_3) { build(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 18000, position_id: 'RM6376.1.3') }
@@ -604,7 +604,7 @@ RSpec.describe ChangeLog do
     let(:change_log) { described_class.log_add_rates_for_supplier_framework_lot_jurisdiction!(user: user, framework: framework_id, model: supplier_framework_lot, rates: rates) }
 
     let(:rates) { { 'RM6376.1.1' => supplier_framework_lot_rate_1, 'RM6376.1.2' => supplier_framework_lot_rate_2, 'RM6376.1.3' => supplier_framework_lot_rate_3 } }
-    let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'GB', 'rates' => [{ 'after' => 15000, 'id' => supplier_framework_lot_rate_1.id, 'position_id' => 'RM6376.1.1' }, { 'after' => 18000, 'id' => supplier_framework_lot_rate_3.id, 'position_id' => 'RM6376.1.3' }] } }
+    let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'RM6376.GB', 'rates' => [{ 'after' => 15000, 'id' => supplier_framework_lot_rate_1.id, 'position_id' => 'RM6376.1.1' }, { 'after' => 18000, 'id' => supplier_framework_lot_rate_3.id, 'position_id' => 'RM6376.1.3' }] } }
 
     before do
       rates.each_value do |supplier_framework_lot_rate|
@@ -623,14 +623,14 @@ RSpec.describe ChangeLog do
     let(:supplier) { create(:supplier, name: 'Wario') }
     let(:supplier_framework) { create(:supplier_framework, framework_id:, supplier:) }
     let(:supplier_framework_lot) { create(:supplier_framework_lot, supplier_framework: supplier_framework, lot_id: 'RM6376.1') }
-    let(:supplier_framework_lot_jurisdiction) { create(:supplier_framework_lot_jurisdiction, jurisdiction_id: 'GB') }
+    let(:supplier_framework_lot_jurisdiction) { create(:supplier_framework_lot_jurisdiction, jurisdiction_id: 'RM6376.GB') }
     let(:supplier_framework_lot_rate_1) { create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 15000, position_id: 'RM6376.1.1') }
     let(:supplier_framework_lot_rate_2) { create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 16000, position_id: 'RM6376.1.2') }
     let(:supplier_framework_lot_rate_3) { create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, jurisdiction: supplier_framework_lot_jurisdiction, rate: 18000, position_id: 'RM6376.1.3') }
     let(:change_type) { 'remove_rates_for_supplier_framework_lot_jurisdiction' }
     let(:change_log) { described_class.log_remove_rates_for_supplier_framework_lot_jurisdiction!(user: user, framework: framework_id, model: supplier_framework_lot, rates: rates) }
     let!(:rates) { { 'RM6376.1.1' => supplier_framework_lot_rate_1, 'RM6376.1.2' => supplier_framework_lot_rate_2, 'RM6376.1.3' => supplier_framework_lot_rate_3 } }
-    let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'GB', 'rates' => [{ 'before' => 15000, 'id' => supplier_framework_lot_rate_1.id, 'position_id' => 'RM6376.1.1' }, { 'before' => 16000, 'id' => supplier_framework_lot_rate_2.id, 'position_id' => 'RM6376.1.2' }, { 'before' => 18000, 'id' => supplier_framework_lot_rate_3.id, 'position_id' => 'RM6376.1.3' }] } }
+    let(:expected_change_data) { { 'id' => supplier_framework_lot.id, 'supplier_name' => 'Wario', 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'RM6376.GB', 'rates' => [{ 'before' => 15000, 'id' => supplier_framework_lot_rate_1.id, 'position_id' => 'RM6376.1.1' }, { 'before' => 16000, 'id' => supplier_framework_lot_rate_2.id, 'position_id' => 'RM6376.1.2' }, { 'before' => 18000, 'id' => supplier_framework_lot_rate_3.id, 'position_id' => 'RM6376.1.3' }] } }
 
     before { supplier_framework_lot_jurisdiction.destroy! }
 

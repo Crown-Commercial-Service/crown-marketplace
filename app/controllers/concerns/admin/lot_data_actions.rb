@@ -124,7 +124,7 @@ module Admin::LotDataActions
     @supplier_framework_lot_rates = if action_name.to_sym == :show
                                       @supplier_framework.grouped_rates_for_lot(@lot.id)
                                     else
-                                      @supplier_framework_lot_jurisdiction = @supplier_framework_lot.jurisdictions.find_by(jurisdiction_id: params.fetch(:jurisdiction_id, 'GB'))
+                                      @supplier_framework_lot_jurisdiction = @supplier_framework_lot.jurisdictions.find_by(jurisdiction_id: params.fetch(:jurisdiction_id, "#{@framework.id}.GB"))
                                       supplier_framework_lot_rates = @supplier_framework.grouped_rates_for_lot_and_jurisdictions(@lot.id, [@supplier_framework_lot_jurisdiction.jurisdiction_id])
                                       @lot.positions.pluck(:id).index_with { |position_id| (supplier_framework_lot_rates[position_id] && supplier_framework_lot_rates[position_id][@supplier_framework_lot_jurisdiction.jurisdiction_id]) || @supplier_framework_lot.rates.build(position_id: position_id, supplier_framework_lot_jurisdiction_id: @supplier_framework_lot_jurisdiction.id) }
                                     end

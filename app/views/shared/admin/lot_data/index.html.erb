@@ -27,7 +27,7 @@
               text: govuk_tag(*enabled_status_tag(supplier_lot_data_item[:enabled]))
             },
             actions: {
-              items: if !supplier_lot_data_item[:enabled].nil? && Marketplace.environment_name != :production
+              items: if !supplier_lot_data_item[:enabled].nil?
                       [
                         {
                           href: supplier_lot_data_edit_path(@supplier_framework, supplier_lot_data_item[:lot][:number_as_slug], :lot_status),

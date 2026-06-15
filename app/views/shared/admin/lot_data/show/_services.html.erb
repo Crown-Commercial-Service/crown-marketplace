@@ -5,13 +5,11 @@
         <h2 class="govuk-summary-card__title">
           <%= t('.services_supplier_offers') %>
         </h2>
-        <% if Marketplace.environment_name != :production%>
-          <ul class="govuk-summary-card__actions">
-            <li class="govuk-summary-card__action">
-              <%= link_to(t("shared.admin.lot_data.show.#{@supplier_framework_lot_service_ids.any? ? 'change_html' : 'add_html'}", section: t('.services_supplier_offers')), supplier_lot_data_edit_path(@supplier_framework, @lot.number_as_slug, @section), class: 'govuk-link govuk-link--no-visited-state') %>
-            </li>
-          </ul>
-        <% end %>
+        <ul class="govuk-summary-card__actions">
+          <li class="govuk-summary-card__action">
+            <%= link_to(t("shared.admin.lot_data.show.#{@supplier_framework_lot_service_ids.any? ? 'change_html' : 'add_html'}", section: t('.services_supplier_offers')), supplier_lot_data_edit_path(@supplier_framework, @lot.number_as_slug, @section), class: 'govuk-link govuk-link--no-visited-state') %>
+          </li>
+        </ul>
       </div>
       <div class="govuk-summary-card__content">
         <% if @supplier_framework_lot_service_ids.none? %>

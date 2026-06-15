@@ -103,7 +103,7 @@ module FM::RM6232
       end
 
       def jurisdiction_ids
-        @jurisdiction_ids ||= Jurisdiction.where.not(category: %i[core non-core]).pluck(:id)
+        @jurisdiction_ids ||= Jurisdiction.where(framework_id: 'RM6378').pluck(:id)
       end
 
       def random_ids(ids)

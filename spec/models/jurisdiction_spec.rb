@@ -4,11 +4,16 @@ RSpec.describe Jurisdiction do
   describe 'associations' do
     let(:jurisdiction) { described_class.first }
 
+    it { is_expected.to belong_to(:framework) }
     it { is_expected.to have_many(:supplier_framework_lot_jurisdictions) }
+
+    it 'has the framework relationship' do
+      expect(jurisdiction.framework).to be_present
+    end
   end
 
   it 'has all the jurisdictions loaded' do
-    expect(described_class.count).to eq(327)
+    expect(described_class.count).to eq(332)
   end
 
   describe 'scopes' do
@@ -23,12 +28,12 @@ RSpec.describe Jurisdiction do
 
   describe 'ordered_by_category_and_number scope' do
     it 'returns the servies sorted by category then number' do
-      expect(described_class.where(id: ['TLD3', 'TLD1', 'TLN0D', 'TLN0A', 'TLN06', 'TLG2']).ordered_by_category_and_number.pluck(:id)).to eq(['TLD1', 'TLD3', 'TLG2', 'TLN06', 'TLN0A', 'TLN0D'])
+      expect(described_class.where(id: %w[RM6378.TLD3 RM6378.TLD1 RM6378.TLN0D RM6378.TLN0A RM6378.TLN06 RM6378.TLG2]).ordered_by_category_and_number.pluck(:id)).to eq(%w[RM6378.TLD1 RM6378.TLD3 RM6378.TLG2 RM6378.TLN06 RM6378.TLN0A RM6378.TLN0D])
     end
   end
 
   describe 'regions_grouped_by_category' do
-    let(:result) { described_class.regions_grouped_by_category.map { |category, regions| [category, regions.length] } }
+    let(:result) { described_class.regions_grouped_by_category('RM6378').map { |category, regions| [category, regions.length] } }
 
     # rubocop:disable RSpec/ExampleLength
     it 'services are grouped together as expected' do

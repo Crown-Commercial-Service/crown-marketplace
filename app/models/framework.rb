@@ -19,6 +19,7 @@ class Framework < ApplicationRecord
   has_many :uploads, inverse_of: :framework, dependent: :destroy
   has_many :admin_uploads, inverse_of: :framework, class_name: 'Admin::Upload', dependent: :destroy
   has_many :change_logs, inverse_of: :framework, dependent: :destroy
+  has_many :jurisdictions, inverse_of: :framework, dependent: :destroy
 
   acts_as_gov_uk_date :live_at, :expires_at, error_clash_behaviour: :omit_gov_uk_date_field_error
 

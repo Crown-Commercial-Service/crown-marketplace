@@ -22,7 +22,7 @@ class FacilitiesManagement::RM6378::Admin::ReportExport < ReportExport
         helpers.pluralize(procurement.estimated_contract_duration, I18n.t('facilities_management.rm6378.procurements.new.year')),
         procurement.private_finance_initiative == 'yes' ? I18n.t('yes') : I18n.t('no'),
         procurement.services.map { |service| "#{service.number} #{service.name}" }.join("\n"),
-        procurement.jurisdictions.map { |jurisdiction| "#{jurisdiction.id} #{jurisdiction.name}" }.join("\n"),
+        procurement.jurisdictions.map { |jurisdiction| "#{jurisdiction.name} (#{jurisdiction.code})" }.join("\n"),
         I18n.t('shared.admin.lot_data.index.supplier_lot_data_summary_list.lot_name', number: procurement.lot.number, name: procurement.lot.name),
       ]
     end

@@ -6,7 +6,7 @@
         value: jurisdiction.id,
         checked: @supplier_framework_lot_jurisdiction_ids.include?(jurisdiction.id),
         label: {
-          text: jurisdiction.name
+          text: "#{jurisdiction.name} (#{jurisdiction.code})"
         },
         attributes: {
           id: "jurisdiction_#{jurisdiction.id.gsub('.', '-')}"

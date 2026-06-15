@@ -239,13 +239,13 @@ module ApplicationHelper
   end
 
   def rm6378_accordion_region_items(region_codes)
-    Jurisdiction.regions_grouped_by_category.map do |section_id, regions|
+    Jurisdiction.regions_grouped_by_category('RM6378').map do |section_id, regions|
       [
         section_id,
         {
           name: t(".regions.section.#{section_id}.title"),
           items: regions.map do |region|
-            region_name = "#{region.name} (#{region.id})"
+            region_name = "#{region.name} (#{region.code})"
 
             {
               value: region.id,
@@ -254,7 +254,7 @@ module ApplicationHelper
               },
               checked: region_codes&.include?(region.id),
               attributes: {
-                id: "region_#{region.id}",
+                id: "region_#{region.id.gsub('.', '-')}",
                 title: region_name,
                 sectionid: section_id
               }

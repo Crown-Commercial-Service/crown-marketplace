@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_10_094212) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_15_125801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -557,10 +557,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_10_094212) do
 
   create_table "jurisdictions", id: :text, force: :cascade do |t|
     t.text "category"
+    t.text "code", null: false
     t.datetime "created_at", null: false
+    t.text "framework_id", null: false
     t.text "mapping_name"
     t.text "name"
     t.datetime "updated_at", null: false
+    t.index ["framework_id"], name: "index_jurisdictions_on_framework_id"
   end
 
   create_table "lots", id: :text, force: :cascade do |t|
@@ -910,6 +913,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_10_094212) do
   add_foreign_key "facilities_management_rm6232_procurements", "users"
   add_foreign_key "facilities_management_rm6232_services", "facilities_management_rm6232_work_packages", column: "work_package_code", primary_key: "code"
   add_foreign_key "facilities_management_rm6232_supplier_lot_data", "facilities_management_rm6232_suppliers"
+  add_foreign_key "jurisdictions", "frameworks"
   add_foreign_key "lots", "frameworks"
   add_foreign_key "positions", "lots"
   add_foreign_key "procurements", "frameworks"

@@ -7,8 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [8.0.0] - 2026-06-15
-
 ### Added
 
 - Add the initial admin pages for Facilities Management RM6378 ([PR 5318](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5318))
@@ -25,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update how we do releases to preview and production to target a specific tag ([PR 5308](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5308))
 - Allow framework status to be updated at the framework level rather than the service level ([PR 5318](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5318))
 - Removed the contact opt in question from RM6378 ([PR 5342](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5342))
+- Change how jurisdictions work so that they have a framework relationship ([PR 5352](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5352))
 
 ### Fixed
 
