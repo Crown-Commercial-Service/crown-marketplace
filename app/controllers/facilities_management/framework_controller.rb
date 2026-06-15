@@ -17,7 +17,7 @@ module FacilitiesManagement
     end
 
     def redirect_to_buyer_detail
-      redirect_to(buyer_path) if current_user&.fm_buyer_details_incomplete?
+      redirect_to(buyer_path) if current_user&.fm_buyer_details_incomplete?(params[:framework])
     end
   end
 end
