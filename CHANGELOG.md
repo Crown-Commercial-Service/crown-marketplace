@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add the framework for the new Legal Services framework RM6374 ([PR 5354](https://github.com/Crown-Commercial-Service/crown-marketplace-legacy/pull/5354))
+
 ## [8.0.0] - 2026-06-15
 
 ### Added

@@ -56,7 +56,12 @@ After do
     Rake::Task['db:static'].reenable
     Rake::Task['db:frameworks'].reenable
 
-    Rake::Task['db:import_test_data_for_framework_service'].reenable
-    Rake::Task['db:import_test_data_for_framework_service'].invoke(@framework)
+    if @framework
+      Rake::Task['db:import_test_data_for_framework_service'].reenable
+      Rake::Task['db:import_test_data_for_framework_service'].invoke(@framework)
+    else
+      Rake::Task['db:import_test_data'].reenable
+      Rake::Task['db:import_test_data'].invoke
+    end
   end
 end
