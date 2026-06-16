@@ -45,17 +45,17 @@ FactoryBot.define do
 
     trait :with_update_supplier_framework_lot_rates_change_type do
       change_type { 'update_supplier_framework_lot_rates' }
-      change_data { { 'id' => SecureRandom.uuid, 'supplier_name' => Faker::Name.unique.name, 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'GB', 'rates' => [{ 'before' => 15000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.1' }, { 'before' => 18000, 'after' => 17999, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.2' }, { 'after' => 20000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.3' }] } }
+      change_data { { 'id' => SecureRandom.uuid, 'supplier_name' => Faker::Name.unique.name, 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'RM6376.GB', 'rates' => [{ 'before' => 15000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.1' }, { 'before' => 18000, 'after' => 17999, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.2' }, { 'after' => 20000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.3' }] } }
     end
 
     trait :with_add_rates_for_supplier_framework_lot_jurisdiction_change_type do
       change_type { 'add_rates_for_supplier_framework_lot_jurisdiction' }
-      change_data { { 'id' => SecureRandom.uuid, 'supplier_name' => Faker::Name.unique.name, 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'GB', 'rates' => [{ 'after' => 15000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.1' }, { 'after' => 18000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.2' }, { 'after' => 20000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.3' }] } }
+      change_data { { 'id' => SecureRandom.uuid, 'supplier_name' => Faker::Name.unique.name, 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'RM6376.GB', 'rates' => [{ 'after' => 15000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.1' }, { 'after' => 18000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.2' }, { 'after' => 20000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.3' }] } }
     end
 
     trait :with_remove_rates_for_supplier_framework_lot_jurisdiction_change_type do
       change_type { 'remove_rates_for_supplier_framework_lot_jurisdiction' }
-      change_data { { 'id' => SecureRandom.uuid, 'supplier_name' => Faker::Name.unique.name, 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'GB', 'rates' => [{ 'before' => 15000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.1' }, { 'before' => 18000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.2' }, { 'before' => 20000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.3' }] } }
+      change_data { { 'id' => SecureRandom.uuid, 'supplier_name' => Faker::Name.unique.name, 'lot_id' => 'RM6376.1', 'jurisdiction_id' => 'RM6376.GB', 'rates' => [{ 'before' => 15000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.1' }, { 'before' => 18000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.2' }, { 'before' => 20000, 'id' => SecureRandom.uuid, 'position_id' => 'RM6376.1.3' }] } }
     end
 
     trait :with_update_supplier_framework_lot_branch_change_type do

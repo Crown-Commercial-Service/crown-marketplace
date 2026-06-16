@@ -142,22 +142,22 @@ RSpec.describe Upload do
               supplier_framework_lot_services: [],
               supplier_framework_lot_jurisdictions: [
                 {
-                  jurisdiction_id: 'GB'
+                  jurisdiction_id: 'RM6360.GB'
                 },
                 {
-                  jurisdiction_id: 'DE'
+                  jurisdiction_id: 'RM6360.DE'
                 }
               ],
               supplier_framework_lot_rates: [
                 {
                   position_id: 'RM6360.4a.1',
                   rate: 10000,
-                  jurisdiction_id: 'GB'
+                  jurisdiction_id: 'RM6360.GB'
                 },
                 {
                   position_id: 'RM6360.4a.1',
                   rate: 20000,
-                  jurisdiction_id: 'DE'
+                  jurisdiction_id: 'RM6360.DE'
                 }
               ],
               supplier_framework_lot_branches: []
@@ -168,14 +168,14 @@ RSpec.describe Upload do
               supplier_framework_lot_services: [],
               supplier_framework_lot_jurisdictions: [
                 {
-                  jurisdiction_id: 'GB'
+                  jurisdiction_id: 'RM6360.GB'
                 }
               ],
               supplier_framework_lot_rates: [
                 {
                   position_id: 'RM6360.4b.1',
                   rate: 20000,
-                  jurisdiction_id: 'GB'
+                  jurisdiction_id: 'RM6360.GB'
                 }
               ],
               supplier_framework_lot_branches: []
@@ -195,7 +195,7 @@ RSpec.describe Upload do
         it 'assigns attributes to the jurisdictions' do
           result
 
-          expect(supplier_framework.lots.map { |lot| lot.jurisdictions.pluck(:jurisdiction_id) }).to eq([['GB', 'DE'], ['GB']])
+          expect(supplier_framework.lots.map { |lot| lot.jurisdictions.pluck(:jurisdiction_id) }).to eq([['RM6360.GB', 'RM6360.DE'], ['RM6360.GB']])
         end
 
         it 'assigns attributes to the rates' do
@@ -309,22 +309,22 @@ RSpec.describe Upload do
             supplier_framework_lot_services: [],
             supplier_framework_lot_jurisdictions: [
               {
-                jurisdiction_id: 'GB'
+                jurisdiction_id: 'RM6360.GB'
               },
               {
-                jurisdiction_id: 'DE'
+                jurisdiction_id: 'RM6360.DE'
               }
             ],
             supplier_framework_lot_rates: [
               {
                 position_id: 'RM6360.4a.88',
                 rate: 10000,
-                jurisdiction_id: 'GB'
+                jurisdiction_id: 'RM6360.GB'
               },
               {
                 position_id: 'RM6360.4a.1',
                 rate: 20000,
-                jurisdiction_id: 'DE'
+                jurisdiction_id: 'RM6360.DE'
               }
             ],
             supplier_framework_lot_branches: []
@@ -335,14 +335,14 @@ RSpec.describe Upload do
             supplier_framework_lot_services: [],
             supplier_framework_lot_jurisdictions: [
               {
-                jurisdiction_id: 'GB'
+                jurisdiction_id: 'RM6360.GB'
               }
             ],
             supplier_framework_lot_rates: [
               {
                 position_id: 'RM6360.4b.1',
                 rate: 20000,
-                jurisdiction_id: 'GB'
+                jurisdiction_id: 'RM6360.GB'
               }
             ],
             supplier_framework_lot_branches: []
@@ -380,22 +380,22 @@ RSpec.describe Upload do
           ],
           supplier_framework_lot_jurisdictions: [
             {
-              jurisdiction_id: 'GB'
+              jurisdiction_id: 'RM6360.GB'
             },
             {
-              jurisdiction_id: 'DE'
+              jurisdiction_id: 'RM6360.DE'
             }
           ],
           supplier_framework_lot_rates: [
             {
               position_id: 'RM6360.4a.1',
               rate: 10000,
-              jurisdiction_id: 'GB'
+              jurisdiction_id: 'RM6360.GB'
             },
             {
               position_id: 'RM6360.4a.1',
               rate: 20000,
-              jurisdiction_id: 'DE'
+              jurisdiction_id: 'RM6360.DE'
             }
           ],
           supplier_framework_lot_branches: []
@@ -410,14 +410,14 @@ RSpec.describe Upload do
           ],
           supplier_framework_lot_jurisdictions: [
             {
-              jurisdiction_id: 'GB'
+              jurisdiction_id: 'RM6360.GB'
             }
           ],
           supplier_framework_lot_rates: [
             {
               position_id: 'RM6360.4b.1',
               rate: 20000,
-              jurisdiction_id: 'GB'
+              jurisdiction_id: 'RM6360.GB'
             }
           ],
           supplier_framework_lot_branches: []

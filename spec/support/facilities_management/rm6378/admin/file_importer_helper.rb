@@ -202,11 +202,11 @@ module FacilitiesManagement
         end
       end
 
-      HEADERS = Jurisdiction.regions_grouped_by_category.map do |category, regions|
+      HEADERS = Jurisdiction.regions_grouped_by_category('RM6378').map do |category, regions|
         [
           [category, category]
         ] + regions.map do |region|
-          [region.name, region.id]
+          [region.name, region.code]
         end + [
           [nil, nil]
         ]

@@ -1,328 +1,333 @@
-id,name,mapping_name,category
-AD,Andorra,Andorra,non-core
-AE,United Arab Emirates,UAE,non-core
-AF,Afghanistan,Afghanistan,non-core
-AG,Antigua and Barbuda,Antigua and Barbuda,non-core
-AI,Anguilla,Anguilla,non-core
-AL,Albania,Albania,non-core
-AM,Armenia,Armenia,non-core
-AO,Angola,Angola,non-core
-AQ,Antarctica,Antarctica,non-core
-AR,Argentina,Argentina,non-core
-AS,American Samoa,American Samoa,non-core
-AT,Austria,Austria,non-core
-AU,Australia,Australia,non-core
-AW,Aruba,Aruba,non-core
-AX,Åland Islands,Åland Islands,non-core
-AZ,Azerbaijan,Azerbaijan,non-core
-BA,Bosnia and Herzegovina,Bosnia and Herzegovina,non-core
-BB,Barbados,Barbados,non-core
-BD,Bangladesh,Bangladesh,non-core
-BE,Belgium,Belgium,core
-BF,Burkina Faso,Burkina Faso,non-core
-BG,Bulgaria,Bulgaria,non-core
-BH,Bahrain,Bahrain,non-core
-BI,Burundi,Burundi,non-core
-BJ,Benin,Benin,non-core
-BL,St Barthélemy,Saint Barthélemy,non-core
-BM,Bermuda,Bermuda,non-core
-BN,Brunei,Brunei,non-core
-BO,Bolivia,Bolivia (Plurinational State of),non-core
-BQ,"Bonaire, Sint Eustatius and Saba","Bonaire, Sint Eustatius and Saba",non-core
-BR,Brazil,Brazil,non-core
-BS,The Bahamas,Bahamas,non-core
-BT,Bhutan,Bhutan,non-core
-BV,Bouvet Island,Bouvet Island,non-core
-BW,Botswana,Botswana,non-core
-BY,Belarus,Belarus,non-core
-BZ,Belize,Belize,non-core
-CA,Canada,Canada,core
-CC,Cocos (Keeling) Islands,Cocos (Keeling) Islands,non-core
-CD,Congo (Democratic Republic),"Congo, Democratic Republic of the",non-core
-CF,Central African Republic,Central African Republic,non-core
-CG,Congo,Congo,non-core
-CH,Switzerland,Switzerland,core
-CI,Côte d'Ivoire,Côte d'Ivoire,non-core
-CK,Cook Islands,Cook Islands,non-core
-CL,Chile,Chile,non-core
-CM,Cameroon,Cameroon,non-core
-CN,China,China,non-core
-CO,Colombia,Colombia,non-core
-CR,Costa Rica,Costa Rica,non-core
-CU,Cuba,Cuba,non-core
-CV,Cabo Verde,Cabo Verde,non-core
-CW,Curaçao,Curaçao,non-core
-CX,Christmas Island,Christmas Island,non-core
-CY,Cyprus,Cyprus,non-core
-CZ,Czechia,Czechia,non-core
-DE,Germany,Germany,core
-DJ,Djibouti,Djibouti,non-core
-DK,Denmark,Denmark,non-core
-DM,Dominica,Dominica,non-core
-DO,Dominican Republic,Dominican Republic,non-core
-DZ,Algeria,Algeria,non-core
-EC,Ecuador,Ecuador,non-core
-EE,Estonia,Estonia,non-core
-EG,Egypt,Egypt,non-core
-EH,Western Sahara,Western Sahara,non-core
-ER,Eritrea,Eritrea,non-core
-ES,Spain,Spain,non-core
-ET,Ethiopia,Ethiopia,non-core
-FI,Finland,Finland,non-core
-FJ,Fiji,Fiji,non-core
-FK,Falkland Islands,Falkland Islands (Malvinas),non-core
-FM,Federated States of Micronesia,Micronesia (Federated States of),non-core
-FO,Faroe Islands,Faroe Islands,non-core
-FR,France,France,core
-GA,Gabon,Gabon,non-core
-GB,United Kingdom,UK,core
-GD,Grenada,Grenada,non-core
-GE,Georgia,Georgia,non-core
-GF,French Guiana,French Guiana,non-core
-GG,Guernsey,Guernsey,non-core
-GH,Ghana,Ghana,non-core
-GI,Gibraltar,Gibraltar,non-core
-GL,Greenland,Greenland,non-core
-GM,The Gambia,Gambia,non-core
-GN,Guinea,Guinea,non-core
-GP,Guadeloupe,Guadeloupe,non-core
-GQ,Equatorial Guinea,Equatorial Guinea,non-core
-GR,Greece,Greece,non-core
-GS,South Georgia and the South Sandwich Islands,South Georgia and the South Sandwich Islands,non-core
-GT,Guatemala,Guatemala,non-core
-GU,Guam,Guam,non-core
-GW,Guinea-Bissau,Guinea-Bissau,non-core
-GY,Guyana,Guyana,non-core
-HK,Hong Kong,Hong Kong,non-core
-HM,Heard Island and McDonald Islands,Heard Island and McDonald Islands,non-core
-HN,Honduras,Honduras,non-core
-HR,Croatia,Croatia,non-core
-HT,Haiti,Haiti,non-core
-HU,Hungary,Hungary,non-core
-ID,Indonesia,Indonesia,non-core
-IE,Ireland,Ireland,core
-IL,Israel,Israel,non-core
-IM,Isle of Man,Isle of Man,non-core
-IN,India,India,non-core
-IO,British Indian Ocean Territory,British Indian Ocean Territory,non-core
-IQ,Iraq,Iraq,non-core
-IR,Iran,Iran (Islamic Republic of),non-core
-IS,Iceland,Iceland,non-core
-IT,Italy,Italy,non-core
-JE,Jersey,Jersey,non-core
-JM,Jamaica,Jamaica,non-core
-JO,Jordan,Jordan,non-core
-JP,Japan,Japan,non-core
-KE,Kenya,Kenya,non-core
-KG,Kyrgyzstan,Kyrgyzstan,non-core
-KH,Cambodia,Cambodia,non-core
-KI,Kiribati,Kiribati,non-core
-KM,Comoros,Comoros,non-core
-KN,St Kitts and Nevis,Saint Kitts and Nevis,non-core
-KP,North Korea,Korea (Democratic People's Republic of),non-core
-KR,South Korea,South Korea,non-core
-KW,Kuwait,Kuwait,non-core
-KY,Cayman Islands,Cayman Islands,non-core
-KZ,Kazakhstan,Kazakhstan,non-core
-LA,Laos,Lao People's Democratic Republic,non-core
-LB,Lebanon,Lebanon,non-core
-LC,St Lucia,Saint Lucia,non-core
-LI,Liechtenstein,Liechtenstein,non-core
-LK,Sri Lanka,Sri Lanka,non-core
-LR,Liberia,Liberia,non-core
-LS,Lesotho,Lesotho,non-core
-LT,Lithuania,Lithuania,non-core
-LU,Luxembourg,Luxembourg,non-core
-LV,Latvia,Latvia,non-core
-LY,Libya,Libya,non-core
-MA,Morocco,Morocco,non-core
-MC,Monaco,Monaco,non-core
-MD,Moldova,"Moldova, Republic of",non-core
-ME,Montenegro,Montenegro,non-core
-MF,St Martin (French part),Saint Martin (French part),non-core
-MG,Madagascar,Madagascar,non-core
-MH,Marshall Islands,Marshall Islands,non-core
-MK,North Macedonia,North Macedonia,non-core
-ML,Mali,Mali,non-core
-MM,Myanmar (Burma),Myanmar,non-core
-MN,Mongolia,Mongolia,non-core
-MO,Macao,Macao,non-core
-MP,Northern Mariana Islands,Northern Mariana Islands,non-core
-MQ,Martinique,Martinique,non-core
-MR,Mauritania,Mauritania,non-core
-MS,Montserrat,Montserrat,non-core
-MT,Malta,Malta,non-core
-MU,Mauritius,Mauritius,non-core
-MV,Maldives,Maldives,non-core
-MW,Malawi,Malawi,non-core
-MX,Mexico,Mexico,non-core
-MY,Malaysia,Malaysia,non-core
-MZ,Mozambique,Mozambique,non-core
-NA,Namibia,Namibia,non-core
-NC,New Caledonia,New Caledonia,non-core
-NE,Niger,Niger,non-core
-NF,Norfolk Island,Norfolk Island,non-core
-NG,Nigeria,Nigeria,non-core
-NI,Nicaragua,Nicaragua,non-core
-NL,Netherlands,Netherlands,non-core
-NO,Norway,Norway,non-core
-NP,Nepal,Nepal,non-core
-NR,Nauru,Nauru,non-core
-NU,Niue,Niue,non-core
-NZ,New Zealand,New Zealand,non-core
-OM,Oman,Oman,non-core
-PA,Panama,Panama,non-core
-PE,Peru,Peru,non-core
-PF,French Polynesia,French Polynesia,non-core
-PG,Papua New Guinea,Papua New Guinea,non-core
-PH,Philippines,Philippines,non-core
-PK,Pakistan,Pakistan,non-core
-PL,Poland,Poland,non-core
-PM,St Pierre and Miquelon,Saint Pierre and Miquelon,non-core
-PN,Pitcairn,Pitcairn,non-core
-PR,Puerto Rico,Puerto Rico,non-core
-PS,State of Palestine,"Palestine, State of",non-core
-PT,Portugal,Portugal,non-core
-PW,Palau,Palau,non-core
-PY,Paraguay,Paraguay,non-core
-QA,Qatar,Qatar,non-core
-RE,Réunion,Réunion,non-core
-RO,Romania,Romania,non-core
-RS,Serbia,Serbia,non-core
-RU,Russia,Russian Federation,non-core
-RW,Rwanda,Rwanda,non-core
-SA,Saudi Arabia,Saudi Arabia,non-core
-SB,Solomon Islands,Solomon Islands,non-core
-SC,Seychelles,Seychelles,non-core
-SD,Sudan,Sudan,non-core
-SE,Sweden,Sweden,non-core
-SH,"St Helena, Ascension and Tristan da Cunha","Saint Helena, Ascension and Tristan da Cunha",non-core
-SI,Slovenia,Slovenia,non-core
-SJ,Svalbard and Jan Mayen,Svalbard and Jan Mayen,non-core
-SK,Slovakia,Slovakia,non-core
-SL,Sierra Leone,Sierra Leone,non-core
-SM,San Marino,San Marino,non-core
-SN,Senegal,Senegal,non-core
-SO,Somalia,Somalia,non-core
-SR,Suriname,Suriname,non-core
-SS,South Sudan,South Sudan,non-core
-ST,Sao Tome and Principe,Sao Tome and Principe,non-core
-SV,El Salvador,El Salvador,non-core
-SX,Sint Maarten (Dutch part),Sint Maarten (Dutch part),non-core
-SY,Syria,Syrian Arab Republic,non-core
-SZ,Eswatini,Eswatini,non-core
-TC,Turks and Caicos Islands,Turks and Caicos Islands,non-core
-TD,Chad,Chad,non-core
-TF,French Southern Territories,French Southern Territories,non-core
-TG,Togo,Togo,non-core
-TH,Thailand,Thailand,non-core
-TJ,Tajikistan,Tajikistan,non-core
-TK,Tokelau,Tokelau,non-core
-TL,Timor-Leste,Timor-Leste,non-core
-TM,Turkmenistan,Turkmenistan,non-core
-TN,Tunisia,Tunisia,non-core
-TO,Tonga,Tonga,non-core
-TR,Turkey,Turkey,non-core
-TT,Trinidad and Tobago,Trinidad and Tobago,non-core
-TV,Tuvalu,Tuvalu,non-core
-TW,Taiwan,Taiwan,non-core
-TZ,Tanzania,"Tanzania, United Republic of",non-core
-UA,Ukraine,Ukraine,non-core
-UG,Uganda,Uganda,non-core
-UM,United States Minor Outlying Islands,United States Minor Outlying Islands,non-core
-US,United States,USA,core
-UY,Uruguay,Uruguay,non-core
-UZ,Uzbekistan,Uzbekistan,non-core
-VA,Vatican City,Holy See,non-core
-VC,St Vincent and the Grenadines,Saint Vincent and the Grenadines,non-core
-VE,Venezuela,Venezuela (Bolivarian Republic of),non-core
-VG,British Virgin Islands,Virgin Islands (British),non-core
-VI,United States Virgin Island,Virgin Islands (U.S.),non-core
-VN,Vietnam,Viet Nam,non-core
-VU,Vanuatu,Vanuatu,non-core
-WF,Wallis and Futuna,Wallis and Futuna,non-core
-WS,Samoa,Samoa,non-core
-YE,Yemen,Yemen,non-core
-YT,Mayotte,Mayotte,non-core
-ZA,South Africa,South Africa,non-core
-ZM,Zambia,Zambia,non-core
-ZW,Zimbabwe,Zimbabwe,non-core
-TLC3,Tees Valley,Tees Valley,TLC
-TLC4,"Northumberland, Durham and Tyne & Wear","Northumberland, Durham and Tyne & Wear",TLC
-TLD1,Cumbria,Cumbria,TLD
-TLD3,Greater Manchester,Greater Manchester,TLD
-TLD4,Lancashire,Lancashire,TLD
-TLD6,Cheshire,Cheshire,TLD
-TLD7,Merseyside,Merseyside,TLD
-TLE1,East Yorkshire and Northern Lincolnshire,East Yorkshire and Northern Lincolnshire,TLE
-TLE2,North Yorkshire,North Yorkshire,TLE
-TLE3,South Yorkshire,South Yorkshire,TLE
-TLE4,West Yorkshire,West Yorkshire,TLE
-TLF1,Derbyshire and Nottinghamshire,Derbyshire and Nottinghamshire,TLF
-TLF2,"Leicestershire, Rutland and Northamptonshire","Leicestershire, Rutland and Northamptonshire",TLF
-TLF3,Lincolnshire,Lincolnshire,TLF
-TLG1,"Herefordshire, Worcestershire and Warwickshire","Herefordshire, Worcestershire and Warwickshire",TLG
-TLG2,Shropshire and Staffordshire,Shropshire and Staffordshire,TLG
-TLG3,West Midlands,West Midlands,TLG
-TLH2,Bedfordshire and Hertfordshire,Bedfordshire and Hertfordshire,TLH
-TLH3,Essex,Essex,TLH
-TLH4,Cambridgeshire and Peterborough,Cambridgeshire and Peterborough,TLH
-TLH5,Norfolk,Norfolk,TLH
-TLH6,Suffolk,Suffolk,TLH
-TLI3,Inner London - West,Inner London - West,TLI
-TLI4,Inner London - East,Inner London - East,TLI
-TLI5,Outer London - East and North East,Outer London - East and North East,TLI
-TLI6,Outer London - South,Outer London - South,TLI
-TLI7,Outer London - West and North West,Outer London - West and North West,TLI
-TLJ1,"Berkshire, Buckinghamshire and Oxfordshire","Berkshire, Buckinghamshire and Oxfordshire",TLJ
-TLJ2,"Surrey, East and West Sussex","Surrey, East and West Sussex",TLJ
-TLJ3,Hampshire and Isle of Wight,Hampshire and Isle of Wight,TLJ
-TLJ4,Kent,Kent,TLJ
-TLK3,Cornwall and Isles of Scilly,Cornwall and Isles of Scilly,TLK
-TLK4,Devon,Devon,TLK
-TLK5,West of England,West of England,TLK
-TLK6,"North Somerset, Somerset and Dorset","North Somerset, Somerset and Dorset",TLK
-TLK7,Gloucestershire and Wiltshire,Gloucestershire and Wiltshire,TLK
-TLL31,Isle of Anglesey,Isle of Anglesey,TLL
-TLL32,Gwynedd,Gwynedd,TLL
-TLL33,Conwy and Denbighshire,Conwy and Denbighshire,TLL
-TLL34,Flintshire and Wrexham,Flintshire and Wrexham,TLL
-TLL41,Mid Wales,Mid Wales,TLL
-TLL42,South West Wales,South West Wales,TLL
-TLL43,Swansea,Swansea,TLL
-TLL44,Neath Port Talbot,Neath Port Talbot,TLL
-TLL51,Central Valleys and Bridgend,Central Valleys and Bridgend,TLL
-TLL52,Cardiff and Vale of Glamorgan,Cardiff and Vale of Glamorgan,TLL
-TLL53,Gwent Valleys,Gwent Valleys,TLL
-TLL54,Monmouthshire and Newport,Monmouthshire and Newport,TLL
-TLM01,Clackmannanshire and Fife,Clackmannanshire and Fife,TLM
-TLM02,"Perth and Kinross, and Stirling","Perth and Kinross, and Stirling",TLM
-TLM03,Angus and Dundee City,Angus and Dundee City,TLM
-TLM11,East Lothian and Midlothian,East Lothian and Midlothian,TLM
-TLM12,Falkirk,Falkirk,TLM
-TLM13,City of Edinburgh,City of Edinburgh,TLM
-TLM14,West Lothian,West Lothian,TLM
-TLM20,Highlands and Islands,Highlands and Islands,TLM
-TLM31,East Dunbartonshire and West Dunbartonshire,East Dunbartonshire and West Dunbartonshire,TLM
-TLM32,Glasgow City,Glasgow City,TLM
-TLM33,"Inverclyde, East Renfrewshire, and Renfrewshire","Inverclyde, East Renfrewshire, and Renfrewshire",TLM
-TLM34,North Lanarkshire,North Lanarkshire,TLM
-TLM50,Aberdeen City and Aberdeenshire,Aberdeen City and Aberdeenshire,TLM
-TLM91,Scottish Borders,Scottish Borders,TLM
-TLM92,Dumfries and Galloway,Dumfries and Galloway,TLM
-TLM93,North Ayrshire and East Ayrshire,North Ayrshire and East Ayrshire,TLM
-TLM94,South Ayrshire,South Ayrshire,TLM
-TLM95,South Lanarkshire,South Lanarkshire,TLM
-TLN06,Belfast,Belfast,TLN
-TLN07,"Armagh City, Banbridge and Craigavon","Armagh City, Banbridge and Craigavon",TLN
-TLN08,"Newry, Mourne and Down","Newry, Mourne and Down",TLN
-TLN09,Ards and North Down,Ards and North Down,TLN
-TLN0A,Derry City and Strabane,Derry City and Strabane,TLN
-TLN0B,Mid Ulster,Mid Ulster,TLN
-TLN0C,Causeway Coast and Glens,Causeway Coast and Glens,TLN
-TLN0D,Antrim and Newtownabbey,Antrim and Newtownabbey,TLN
-TLN0E,Lisburn and Castlereagh,Lisburn and Castlereagh,TLN
-TLN0F,Mid and East Antrim,Mid and East Antrim,TLN
-TLN0G,Fermanagh and Omagh,Fermanagh and Omagh,TLN
-NC01,National coverage (all of the above),National coverage (all of the above),NC0
-OS01,International coverage,International coverage,OS0
+id,framework_id,code,name,mapping_name,category
+RM6360.AD,RM6360,AD,Andorra,Andorra,non-core
+RM6360.AE,RM6360,AE,United Arab Emirates,UAE,non-core
+RM6360.AF,RM6360,AF,Afghanistan,Afghanistan,non-core
+RM6360.AG,RM6360,AG,Antigua and Barbuda,Antigua and Barbuda,non-core
+RM6360.AI,RM6360,AI,Anguilla,Anguilla,non-core
+RM6360.AL,RM6360,AL,Albania,Albania,non-core
+RM6360.AM,RM6360,AM,Armenia,Armenia,non-core
+RM6360.AO,RM6360,AO,Angola,Angola,non-core
+RM6360.AQ,RM6360,AQ,Antarctica,Antarctica,non-core
+RM6360.AR,RM6360,AR,Argentina,Argentina,non-core
+RM6360.AS,RM6360,AS,American Samoa,American Samoa,non-core
+RM6360.AT,RM6360,AT,Austria,Austria,non-core
+RM6360.AU,RM6360,AU,Australia,Australia,non-core
+RM6360.AW,RM6360,AW,Aruba,Aruba,non-core
+RM6360.AX,RM6360,AX,Åland Islands,Åland Islands,non-core
+RM6360.AZ,RM6360,AZ,Azerbaijan,Azerbaijan,non-core
+RM6360.BA,RM6360,BA,Bosnia and Herzegovina,Bosnia and Herzegovina,non-core
+RM6360.BB,RM6360,BB,Barbados,Barbados,non-core
+RM6360.BD,RM6360,BD,Bangladesh,Bangladesh,non-core
+RM6360.BE,RM6360,BE,Belgium,Belgium,core
+RM6360.BF,RM6360,BF,Burkina Faso,Burkina Faso,non-core
+RM6360.BG,RM6360,BG,Bulgaria,Bulgaria,non-core
+RM6360.BH,RM6360,BH,Bahrain,Bahrain,non-core
+RM6360.BI,RM6360,BI,Burundi,Burundi,non-core
+RM6360.BJ,RM6360,BJ,Benin,Benin,non-core
+RM6360.BL,RM6360,BL,St Barthélemy,Saint Barthélemy,non-core
+RM6360.BM,RM6360,BM,Bermuda,Bermuda,non-core
+RM6360.BN,RM6360,BN,Brunei,Brunei,non-core
+RM6360.BO,RM6360,BO,Bolivia,Bolivia (Plurinational State of),non-core
+RM6360.BQ,RM6360,BQ,"Bonaire, Sint Eustatius and Saba","Bonaire, Sint Eustatius and Saba",non-core
+RM6360.BR,RM6360,BR,Brazil,Brazil,non-core
+RM6360.BS,RM6360,BS,The Bahamas,Bahamas,non-core
+RM6360.BT,RM6360,BT,Bhutan,Bhutan,non-core
+RM6360.BV,RM6360,BV,Bouvet Island,Bouvet Island,non-core
+RM6360.BW,RM6360,BW,Botswana,Botswana,non-core
+RM6360.BY,RM6360,BY,Belarus,Belarus,non-core
+RM6360.BZ,RM6360,BZ,Belize,Belize,non-core
+RM6360.CA,RM6360,CA,Canada,Canada,core
+RM6360.CC,RM6360,CC,Cocos (Keeling) Islands,Cocos (Keeling) Islands,non-core
+RM6360.CD,RM6360,CD,Congo (Democratic Republic),"Congo, Democratic Republic of the",non-core
+RM6360.CF,RM6360,CF,Central African Republic,Central African Republic,non-core
+RM6360.CG,RM6360,CG,Congo,Congo,non-core
+RM6360.CH,RM6360,CH,Switzerland,Switzerland,core
+RM6360.CI,RM6360,CI,Côte d'Ivoire,Côte d'Ivoire,non-core
+RM6360.CK,RM6360,CK,Cook Islands,Cook Islands,non-core
+RM6360.CL,RM6360,CL,Chile,Chile,non-core
+RM6360.CM,RM6360,CM,Cameroon,Cameroon,non-core
+RM6360.CN,RM6360,CN,China,China,non-core
+RM6360.CO,RM6360,CO,Colombia,Colombia,non-core
+RM6360.CR,RM6360,CR,Costa Rica,Costa Rica,non-core
+RM6360.CU,RM6360,CU,Cuba,Cuba,non-core
+RM6360.CV,RM6360,CV,Cabo Verde,Cabo Verde,non-core
+RM6360.CW,RM6360,CW,Curaçao,Curaçao,non-core
+RM6360.CX,RM6360,CX,Christmas Island,Christmas Island,non-core
+RM6360.CY,RM6360,CY,Cyprus,Cyprus,non-core
+RM6360.CZ,RM6360,CZ,Czechia,Czechia,non-core
+RM6360.DE,RM6360,DE,Germany,Germany,core
+RM6360.DJ,RM6360,DJ,Djibouti,Djibouti,non-core
+RM6360.DK,RM6360,DK,Denmark,Denmark,non-core
+RM6360.DM,RM6360,DM,Dominica,Dominica,non-core
+RM6360.DO,RM6360,DO,Dominican Republic,Dominican Republic,non-core
+RM6360.DZ,RM6360,DZ,Algeria,Algeria,non-core
+RM6360.EC,RM6360,EC,Ecuador,Ecuador,non-core
+RM6360.EE,RM6360,EE,Estonia,Estonia,non-core
+RM6360.EG,RM6360,EG,Egypt,Egypt,non-core
+RM6360.EH,RM6360,EH,Western Sahara,Western Sahara,non-core
+RM6360.ER,RM6360,ER,Eritrea,Eritrea,non-core
+RM6360.ES,RM6360,ES,Spain,Spain,non-core
+RM6360.ET,RM6360,ET,Ethiopia,Ethiopia,non-core
+RM6360.FI,RM6360,FI,Finland,Finland,non-core
+RM6360.FJ,RM6360,FJ,Fiji,Fiji,non-core
+RM6360.FK,RM6360,FK,Falkland Islands,Falkland Islands (Malvinas),non-core
+RM6360.FM,RM6360,FM,Federated States of Micronesia,Micronesia (Federated States of),non-core
+RM6360.FO,RM6360,FO,Faroe Islands,Faroe Islands,non-core
+RM6360.FR,RM6360,FR,France,France,core
+RM6360.GA,RM6360,GA,Gabon,Gabon,non-core
+RM6360.GB,RM6360,GB,United Kingdom,UK,core
+RM6360.GD,RM6360,GD,Grenada,Grenada,non-core
+RM6360.GE,RM6360,GE,Georgia,Georgia,non-core
+RM6360.GF,RM6360,GF,French Guiana,French Guiana,non-core
+RM6360.GG,RM6360,GG,Guernsey,Guernsey,non-core
+RM6360.GH,RM6360,GH,Ghana,Ghana,non-core
+RM6360.GI,RM6360,GI,Gibraltar,Gibraltar,non-core
+RM6360.GL,RM6360,GL,Greenland,Greenland,non-core
+RM6360.GM,RM6360,GM,The Gambia,Gambia,non-core
+RM6360.GN,RM6360,GN,Guinea,Guinea,non-core
+RM6360.GP,RM6360,GP,Guadeloupe,Guadeloupe,non-core
+RM6360.GQ,RM6360,GQ,Equatorial Guinea,Equatorial Guinea,non-core
+RM6360.GR,RM6360,GR,Greece,Greece,non-core
+RM6360.GS,RM6360,GS,South Georgia and the South Sandwich Islands,South Georgia and the South Sandwich Islands,non-core
+RM6360.GT,RM6360,GT,Guatemala,Guatemala,non-core
+RM6360.GU,RM6360,GU,Guam,Guam,non-core
+RM6360.GW,RM6360,GW,Guinea-Bissau,Guinea-Bissau,non-core
+RM6360.GY,RM6360,GY,Guyana,Guyana,non-core
+RM6360.HK,RM6360,HK,Hong Kong,Hong Kong,non-core
+RM6360.HM,RM6360,HM,Heard Island and McDonald Islands,Heard Island and McDonald Islands,non-core
+RM6360.HN,RM6360,HN,Honduras,Honduras,non-core
+RM6360.HR,RM6360,HR,Croatia,Croatia,non-core
+RM6360.HT,RM6360,HT,Haiti,Haiti,non-core
+RM6360.HU,RM6360,HU,Hungary,Hungary,non-core
+RM6360.ID,RM6360,ID,Indonesia,Indonesia,non-core
+RM6360.IE,RM6360,IE,Ireland,Ireland,core
+RM6360.IL,RM6360,IL,Israel,Israel,non-core
+RM6360.IM,RM6360,IM,Isle of Man,Isle of Man,non-core
+RM6360.IN,RM6360,IN,India,India,non-core
+RM6360.IO,RM6360,IO,British Indian Ocean Territory,British Indian Ocean Territory,non-core
+RM6360.IQ,RM6360,IQ,Iraq,Iraq,non-core
+RM6360.IR,RM6360,IR,Iran,Iran (Islamic Republic of),non-core
+RM6360.IS,RM6360,IS,Iceland,Iceland,non-core
+RM6360.IT,RM6360,IT,Italy,Italy,non-core
+RM6360.JE,RM6360,JE,Jersey,Jersey,non-core
+RM6360.JM,RM6360,JM,Jamaica,Jamaica,non-core
+RM6360.JO,RM6360,JO,Jordan,Jordan,non-core
+RM6360.JP,RM6360,JP,Japan,Japan,non-core
+RM6360.KE,RM6360,KE,Kenya,Kenya,non-core
+RM6360.KG,RM6360,KG,Kyrgyzstan,Kyrgyzstan,non-core
+RM6360.KH,RM6360,KH,Cambodia,Cambodia,non-core
+RM6360.KI,RM6360,KI,Kiribati,Kiribati,non-core
+RM6360.KM,RM6360,KM,Comoros,Comoros,non-core
+RM6360.KN,RM6360,KN,St Kitts and Nevis,Saint Kitts and Nevis,non-core
+RM6360.KP,RM6360,KP,North Korea,Korea (Democratic People's Republic of),non-core
+RM6360.KR,RM6360,KR,South Korea,South Korea,non-core
+RM6360.KW,RM6360,KW,Kuwait,Kuwait,non-core
+RM6360.KY,RM6360,KY,Cayman Islands,Cayman Islands,non-core
+RM6360.KZ,RM6360,KZ,Kazakhstan,Kazakhstan,non-core
+RM6360.LA,RM6360,LA,Laos,Lao People's Democratic Republic,non-core
+RM6360.LB,RM6360,LB,Lebanon,Lebanon,non-core
+RM6360.LC,RM6360,LC,St Lucia,Saint Lucia,non-core
+RM6360.LI,RM6360,LI,Liechtenstein,Liechtenstein,non-core
+RM6360.LK,RM6360,LK,Sri Lanka,Sri Lanka,non-core
+RM6360.LR,RM6360,LR,Liberia,Liberia,non-core
+RM6360.LS,RM6360,LS,Lesotho,Lesotho,non-core
+RM6360.LT,RM6360,LT,Lithuania,Lithuania,non-core
+RM6360.LU,RM6360,LU,Luxembourg,Luxembourg,non-core
+RM6360.LV,RM6360,LV,Latvia,Latvia,non-core
+RM6360.LY,RM6360,LY,Libya,Libya,non-core
+RM6360.MA,RM6360,MA,Morocco,Morocco,non-core
+RM6360.MC,RM6360,MC,Monaco,Monaco,non-core
+RM6360.MD,RM6360,MD,Moldova,"Moldova, Republic of",non-core
+RM6360.ME,RM6360,ME,Montenegro,Montenegro,non-core
+RM6360.MF,RM6360,MF,St Martin (French part),Saint Martin (French part),non-core
+RM6360.MG,RM6360,MG,Madagascar,Madagascar,non-core
+RM6360.MH,RM6360,MH,Marshall Islands,Marshall Islands,non-core
+RM6360.MK,RM6360,MK,North Macedonia,North Macedonia,non-core
+RM6360.ML,RM6360,ML,Mali,Mali,non-core
+RM6360.MM,RM6360,MM,Myanmar (Burma),Myanmar,non-core
+RM6360.MN,RM6360,MN,Mongolia,Mongolia,non-core
+RM6360.MO,RM6360,MO,Macao,Macao,non-core
+RM6360.MP,RM6360,MP,Northern Mariana Islands,Northern Mariana Islands,non-core
+RM6360.MQ,RM6360,MQ,Martinique,Martinique,non-core
+RM6360.MR,RM6360,MR,Mauritania,Mauritania,non-core
+RM6360.MS,RM6360,MS,Montserrat,Montserrat,non-core
+RM6360.MT,RM6360,MT,Malta,Malta,non-core
+RM6360.MU,RM6360,MU,Mauritius,Mauritius,non-core
+RM6360.MV,RM6360,MV,Maldives,Maldives,non-core
+RM6360.MW,RM6360,MW,Malawi,Malawi,non-core
+RM6360.MX,RM6360,MX,Mexico,Mexico,non-core
+RM6360.MY,RM6360,MY,Malaysia,Malaysia,non-core
+RM6360.MZ,RM6360,MZ,Mozambique,Mozambique,non-core
+RM6360.NA,RM6360,NA,Namibia,Namibia,non-core
+RM6360.NC,RM6360,NC,New Caledonia,New Caledonia,non-core
+RM6360.NE,RM6360,NE,Niger,Niger,non-core
+RM6360.NF,RM6360,NF,Norfolk Island,Norfolk Island,non-core
+RM6360.NG,RM6360,NG,Nigeria,Nigeria,non-core
+RM6360.NI,RM6360,NI,Nicaragua,Nicaragua,non-core
+RM6360.NL,RM6360,NL,Netherlands,Netherlands,non-core
+RM6360.NO,RM6360,NO,Norway,Norway,non-core
+RM6360.NP,RM6360,NP,Nepal,Nepal,non-core
+RM6360.NR,RM6360,NR,Nauru,Nauru,non-core
+RM6360.NU,RM6360,NU,Niue,Niue,non-core
+RM6360.NZ,RM6360,NZ,New Zealand,New Zealand,non-core
+RM6360.OM,RM6360,OM,Oman,Oman,non-core
+RM6360.PA,RM6360,PA,Panama,Panama,non-core
+RM6360.PE,RM6360,PE,Peru,Peru,non-core
+RM6360.PF,RM6360,PF,French Polynesia,French Polynesia,non-core
+RM6360.PG,RM6360,PG,Papua New Guinea,Papua New Guinea,non-core
+RM6360.PH,RM6360,PH,Philippines,Philippines,non-core
+RM6360.PK,RM6360,PK,Pakistan,Pakistan,non-core
+RM6360.PL,RM6360,PL,Poland,Poland,non-core
+RM6360.PM,RM6360,PM,St Pierre and Miquelon,Saint Pierre and Miquelon,non-core
+RM6360.PN,RM6360,PN,Pitcairn,Pitcairn,non-core
+RM6360.PR,RM6360,PR,Puerto Rico,Puerto Rico,non-core
+RM6360.PS,RM6360,PS,State of Palestine,"Palestine, State of",non-core
+RM6360.PT,RM6360,PT,Portugal,Portugal,non-core
+RM6360.PW,RM6360,PW,Palau,Palau,non-core
+RM6360.PY,RM6360,PY,Paraguay,Paraguay,non-core
+RM6360.QA,RM6360,QA,Qatar,Qatar,non-core
+RM6360.RE,RM6360,RE,Réunion,Réunion,non-core
+RM6360.RO,RM6360,RO,Romania,Romania,non-core
+RM6360.RS,RM6360,RS,Serbia,Serbia,non-core
+RM6360.RU,RM6360,RU,Russia,Russian Federation,non-core
+RM6360.RW,RM6360,RW,Rwanda,Rwanda,non-core
+RM6360.SA,RM6360,SA,Saudi Arabia,Saudi Arabia,non-core
+RM6360.SB,RM6360,SB,Solomon Islands,Solomon Islands,non-core
+RM6360.SC,RM6360,SC,Seychelles,Seychelles,non-core
+RM6360.SD,RM6360,SD,Sudan,Sudan,non-core
+RM6360.SE,RM6360,SE,Sweden,Sweden,non-core
+RM6360.SH,RM6360,SH,"St Helena, Ascension and Tristan da Cunha","Saint Helena, Ascension and Tristan da Cunha",non-core
+RM6360.SI,RM6360,SI,Slovenia,Slovenia,non-core
+RM6360.SJ,RM6360,SJ,Svalbard and Jan Mayen,Svalbard and Jan Mayen,non-core
+RM6360.SK,RM6360,SK,Slovakia,Slovakia,non-core
+RM6360.SL,RM6360,SL,Sierra Leone,Sierra Leone,non-core
+RM6360.SM,RM6360,SM,San Marino,San Marino,non-core
+RM6360.SN,RM6360,SN,Senegal,Senegal,non-core
+RM6360.SO,RM6360,SO,Somalia,Somalia,non-core
+RM6360.SR,RM6360,SR,Suriname,Suriname,non-core
+RM6360.SS,RM6360,SS,South Sudan,South Sudan,non-core
+RM6360.ST,RM6360,ST,Sao Tome and Principe,Sao Tome and Principe,non-core
+RM6360.SV,RM6360,SV,El Salvador,El Salvador,non-core
+RM6360.SX,RM6360,SX,Sint Maarten (Dutch part),Sint Maarten (Dutch part),non-core
+RM6360.SY,RM6360,SY,Syria,Syrian Arab Republic,non-core
+RM6360.SZ,RM6360,SZ,Eswatini,Eswatini,non-core
+RM6360.TC,RM6360,TC,Turks and Caicos Islands,Turks and Caicos Islands,non-core
+RM6360.TD,RM6360,TD,Chad,Chad,non-core
+RM6360.TF,RM6360,TF,French Southern Territories,French Southern Territories,non-core
+RM6360.TG,RM6360,TG,Togo,Togo,non-core
+RM6360.TH,RM6360,TH,Thailand,Thailand,non-core
+RM6360.TJ,RM6360,TJ,Tajikistan,Tajikistan,non-core
+RM6360.TK,RM6360,TK,Tokelau,Tokelau,non-core
+RM6360.TL,RM6360,TL,Timor-Leste,Timor-Leste,non-core
+RM6360.TM,RM6360,TM,Turkmenistan,Turkmenistan,non-core
+RM6360.TN,RM6360,TN,Tunisia,Tunisia,non-core
+RM6360.TO,RM6360,TO,Tonga,Tonga,non-core
+RM6360.TR,RM6360,TR,Turkey,Turkey,non-core
+RM6360.TT,RM6360,TT,Trinidad and Tobago,Trinidad and Tobago,non-core
+RM6360.TV,RM6360,TV,Tuvalu,Tuvalu,non-core
+RM6360.TW,RM6360,TW,Taiwan,Taiwan,non-core
+RM6360.TZ,RM6360,TZ,Tanzania,"Tanzania, United Republic of",non-core
+RM6360.UA,RM6360,UA,Ukraine,Ukraine,non-core
+RM6360.UG,RM6360,UG,Uganda,Uganda,non-core
+RM6360.UM,RM6360,UM,United States Minor Outlying Islands,United States Minor Outlying Islands,non-core
+RM6360.US,RM6360,US,United States,USA,core
+RM6360.UY,RM6360,UY,Uruguay,Uruguay,non-core
+RM6360.UZ,RM6360,UZ,Uzbekistan,Uzbekistan,non-core
+RM6360.VA,RM6360,VA,Vatican City,Holy See,non-core
+RM6360.VC,RM6360,VC,St Vincent and the Grenadines,Saint Vincent and the Grenadines,non-core
+RM6360.VE,RM6360,VE,Venezuela,Venezuela (Bolivarian Republic of),non-core
+RM6360.VG,RM6360,VG,British Virgin Islands,Virgin Islands (British),non-core
+RM6360.VI,RM6360,VI,United States Virgin Island,Virgin Islands (U.S.),non-core
+RM6360.VN,RM6360,VN,Vietnam,Viet Nam,non-core
+RM6360.VU,RM6360,VU,Vanuatu,Vanuatu,non-core
+RM6360.WF,RM6360,WF,Wallis and Futuna,Wallis and Futuna,non-core
+RM6360.WS,RM6360,WS,Samoa,Samoa,non-core
+RM6360.YE,RM6360,YE,Yemen,Yemen,non-core
+RM6360.YT,RM6360,YT,Mayotte,Mayotte,non-core
+RM6360.ZA,RM6360,ZA,South Africa,South Africa,non-core
+RM6360.ZM,RM6360,ZM,Zambia,Zambia,non-core
+RM6360.ZW,RM6360,ZW,Zimbabwe,Zimbabwe,non-core
+RM6187.GB,RM6187,GB,United Kingdom,UK,
+RM6238.GB,RM6238,GB,United Kingdom,UK,
+RM6240.GB,RM6240,GB,United Kingdom,UK,
+RM6309.GB,RM6309,GB,United Kingdom,UK,
+RM6376.GB,RM6376,GB,United Kingdom,UK,
+RM6378.TLC3,RM6378,TLC3,Tees Valley,Tees Valley,TLC
+RM6378.TLC4,RM6378,TLC4,"Northumberland, Durham and Tyne & Wear","Northumberland, Durham and Tyne & Wear",TLC
+RM6378.TLD1,RM6378,TLD1,Cumbria,Cumbria,TLD
+RM6378.TLD3,RM6378,TLD3,Greater Manchester,Greater Manchester,TLD
+RM6378.TLD4,RM6378,TLD4,Lancashire,Lancashire,TLD
+RM6378.TLD6,RM6378,TLD6,Cheshire,Cheshire,TLD
+RM6378.TLD7,RM6378,TLD7,Merseyside,Merseyside,TLD
+RM6378.TLE1,RM6378,TLE1,East Yorkshire and Northern Lincolnshire,East Yorkshire and Northern Lincolnshire,TLE
+RM6378.TLE2,RM6378,TLE2,North Yorkshire,North Yorkshire,TLE
+RM6378.TLE3,RM6378,TLE3,South Yorkshire,South Yorkshire,TLE
+RM6378.TLE4,RM6378,TLE4,West Yorkshire,West Yorkshire,TLE
+RM6378.TLF1,RM6378,TLF1,Derbyshire and Nottinghamshire,Derbyshire and Nottinghamshire,TLF
+RM6378.TLF2,RM6378,TLF2,"Leicestershire, Rutland and Northamptonshire","Leicestershire, Rutland and Northamptonshire",TLF
+RM6378.TLF3,RM6378,TLF3,Lincolnshire,Lincolnshire,TLF
+RM6378.TLG1,RM6378,TLG1,"Herefordshire, Worcestershire and Warwickshire","Herefordshire, Worcestershire and Warwickshire",TLG
+RM6378.TLG2,RM6378,TLG2,Shropshire and Staffordshire,Shropshire and Staffordshire,TLG
+RM6378.TLG3,RM6378,TLG3,West Midlands,West Midlands,TLG
+RM6378.TLH2,RM6378,TLH2,Bedfordshire and Hertfordshire,Bedfordshire and Hertfordshire,TLH
+RM6378.TLH3,RM6378,TLH3,Essex,Essex,TLH
+RM6378.TLH4,RM6378,TLH4,Cambridgeshire and Peterborough,Cambridgeshire and Peterborough,TLH
+RM6378.TLH5,RM6378,TLH5,Norfolk,Norfolk,TLH
+RM6378.TLH6,RM6378,TLH6,Suffolk,Suffolk,TLH
+RM6378.TLI3,RM6378,TLI3,Inner London - West,Inner London - West,TLI
+RM6378.TLI4,RM6378,TLI4,Inner London - East,Inner London - East,TLI
+RM6378.TLI5,RM6378,TLI5,Outer London - East and North East,Outer London - East and North East,TLI
+RM6378.TLI6,RM6378,TLI6,Outer London - South,Outer London - South,TLI
+RM6378.TLI7,RM6378,TLI7,Outer London - West and North West,Outer London - West and North West,TLI
+RM6378.TLJ1,RM6378,TLJ1,"Berkshire, Buckinghamshire and Oxfordshire","Berkshire, Buckinghamshire and Oxfordshire",TLJ
+RM6378.TLJ2,RM6378,TLJ2,"Surrey, East and West Sussex","Surrey, East and West Sussex",TLJ
+RM6378.TLJ3,RM6378,TLJ3,Hampshire and Isle of Wight,Hampshire and Isle of Wight,TLJ
+RM6378.TLJ4,RM6378,TLJ4,Kent,Kent,TLJ
+RM6378.TLK3,RM6378,TLK3,Cornwall and Isles of Scilly,Cornwall and Isles of Scilly,TLK
+RM6378.TLK4,RM6378,TLK4,Devon,Devon,TLK
+RM6378.TLK5,RM6378,TLK5,West of England,West of England,TLK
+RM6378.TLK6,RM6378,TLK6,"North Somerset, Somerset and Dorset","North Somerset, Somerset and Dorset",TLK
+RM6378.TLK7,RM6378,TLK7,Gloucestershire and Wiltshire,Gloucestershire and Wiltshire,TLK
+RM6378.TLL31,RM6378,TLL31,Isle of Anglesey,Isle of Anglesey,TLL
+RM6378.TLL32,RM6378,TLL32,Gwynedd,Gwynedd,TLL
+RM6378.TLL33,RM6378,TLL33,Conwy and Denbighshire,Conwy and Denbighshire,TLL
+RM6378.TLL34,RM6378,TLL34,Flintshire and Wrexham,Flintshire and Wrexham,TLL
+RM6378.TLL41,RM6378,TLL41,Mid Wales,Mid Wales,TLL
+RM6378.TLL42,RM6378,TLL42,South West Wales,South West Wales,TLL
+RM6378.TLL43,RM6378,TLL43,Swansea,Swansea,TLL
+RM6378.TLL44,RM6378,TLL44,Neath Port Talbot,Neath Port Talbot,TLL
+RM6378.TLL51,RM6378,TLL51,Central Valleys and Bridgend,Central Valleys and Bridgend,TLL
+RM6378.TLL52,RM6378,TLL52,Cardiff and Vale of Glamorgan,Cardiff and Vale of Glamorgan,TLL
+RM6378.TLL53,RM6378,TLL53,Gwent Valleys,Gwent Valleys,TLL
+RM6378.TLL54,RM6378,TLL54,Monmouthshire and Newport,Monmouthshire and Newport,TLL
+RM6378.TLM01,RM6378,TLM01,Clackmannanshire and Fife,Clackmannanshire and Fife,TLM
+RM6378.TLM02,RM6378,TLM02,"Perth and Kinross, and Stirling","Perth and Kinross, and Stirling",TLM
+RM6378.TLM03,RM6378,TLM03,Angus and Dundee City,Angus and Dundee City,TLM
+RM6378.TLM11,RM6378,TLM11,East Lothian and Midlothian,East Lothian and Midlothian,TLM
+RM6378.TLM12,RM6378,TLM12,Falkirk,Falkirk,TLM
+RM6378.TLM13,RM6378,TLM13,City of Edinburgh,City of Edinburgh,TLM
+RM6378.TLM14,RM6378,TLM14,West Lothian,West Lothian,TLM
+RM6378.TLM20,RM6378,TLM20,Highlands and Islands,Highlands and Islands,TLM
+RM6378.TLM31,RM6378,TLM31,East Dunbartonshire and West Dunbartonshire,East Dunbartonshire and West Dunbartonshire,TLM
+RM6378.TLM32,RM6378,TLM32,Glasgow City,Glasgow City,TLM
+RM6378.TLM33,RM6378,TLM33,"Inverclyde, East Renfrewshire, and Renfrewshire","Inverclyde, East Renfrewshire, and Renfrewshire",TLM
+RM6378.TLM34,RM6378,TLM34,North Lanarkshire,North Lanarkshire,TLM
+RM6378.TLM50,RM6378,TLM50,Aberdeen City and Aberdeenshire,Aberdeen City and Aberdeenshire,TLM
+RM6378.TLM91,RM6378,TLM91,Scottish Borders,Scottish Borders,TLM
+RM6378.TLM92,RM6378,TLM92,Dumfries and Galloway,Dumfries and Galloway,TLM
+RM6378.TLM93,RM6378,TLM93,North Ayrshire and East Ayrshire,North Ayrshire and East Ayrshire,TLM
+RM6378.TLM94,RM6378,TLM94,South Ayrshire,South Ayrshire,TLM
+RM6378.TLM95,RM6378,TLM95,South Lanarkshire,South Lanarkshire,TLM
+RM6378.TLN06,RM6378,TLN06,Belfast,Belfast,TLN
+RM6378.TLN07,RM6378,TLN07,"Armagh City, Banbridge and Craigavon","Armagh City, Banbridge and Craigavon",TLN
+RM6378.TLN08,RM6378,TLN08,"Newry, Mourne and Down","Newry, Mourne and Down",TLN
+RM6378.TLN09,RM6378,TLN09,Ards and North Down,Ards and North Down,TLN
+RM6378.TLN0A,RM6378,TLN0A,Derry City and Strabane,Derry City and Strabane,TLN
+RM6378.TLN0B,RM6378,TLN0B,Mid Ulster,Mid Ulster,TLN
+RM6378.TLN0C,RM6378,TLN0C,Causeway Coast and Glens,Causeway Coast and Glens,TLN
+RM6378.TLN0D,RM6378,TLN0D,Antrim and Newtownabbey,Antrim and Newtownabbey,TLN
+RM6378.TLN0E,RM6378,TLN0E,Lisburn and Castlereagh,Lisburn and Castlereagh,TLN
+RM6378.TLN0F,RM6378,TLN0F,Mid and East Antrim,Mid and East Antrim,TLN
+RM6378.TLN0G,RM6378,TLN0G,Fermanagh and Omagh,Fermanagh and Omagh,TLN
+RM6378.NC01,RM6378,NC01,National coverage (all of the above),National coverage (all of the above),NC0
+RM6378.OS01,RM6378,OS01,International coverage,International coverage,OS0

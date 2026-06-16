@@ -7,7 +7,7 @@ FactoryBot.define do
     procurement_details do
       {
         'service_ids' => ['RM6378.1a.E1', 'RM6378.1a.E2'],
-        'jurisdiction_ids' => ['TLH3', 'TLH5'],
+        'jurisdiction_ids' => ['RM6378.TLH3', 'RM6378.TLH5'],
         'annual_contract_value' => 12_345,
         'contract_start_date_dd' => '1',
         'contract_start_date_mm' => '1',

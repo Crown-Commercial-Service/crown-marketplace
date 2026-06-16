@@ -18,7 +18,7 @@ module FacilitiesManagement
           sheet.add_row ['ITL Code', 'Region Name'], style: @styles[:bordered_heading_style], height: LARGE_ROW_HEIGHT
 
           @regions.each do |region|
-            sheet.add_row [region.id, region.name], style: @styles[:standard_bordered_column_style], height: LARGE_ROW_HEIGHT
+            sheet.add_row [region.code, region.name], style: @styles[:standard_bordered_column_style], height: LARGE_ROW_HEIGHT
           end
 
           sheet.column_widths(*COLUMN_WIDTHS)

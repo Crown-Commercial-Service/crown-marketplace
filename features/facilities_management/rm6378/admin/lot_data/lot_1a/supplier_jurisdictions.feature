@@ -166,7 +166,7 @@ Feature: Facilities Management - Admin - Supplier lot data - 1a - View jurisdict
       | Cheshire                                        |
       | Merseyside                                      |
       | North Yorkshire                                 |
-      | Lincolnshire                                    |
+      | Lincolnshire (TLF3)                             |
       | Herefordshire, Worcestershire and Warwickshire  |
       | Shropshire and Staffordshire                    |
       | West Midlands                                   |

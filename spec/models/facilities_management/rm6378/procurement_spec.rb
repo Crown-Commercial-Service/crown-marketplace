@@ -84,10 +84,10 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
       end
 
       context 'when the procurement_details contains the jurisdiction ids' do
-        let(:procurement_details) { { 'jurisdiction_ids' => ['TLH3', 'TLH5'] } }
+        let(:procurement_details) { { 'jurisdiction_ids' => ['RM6378.TLH3', 'RM6378.TLH5'] } }
 
         it 'gets ther jurisdiction ids from the procurement_details' do
-          expect(procurement.jurisdiction_ids).to eq(['TLH3', 'TLH5'])
+          expect(procurement.jurisdiction_ids).to eq(['RM6378.TLH3', 'RM6378.TLH5'])
         end
       end
     end
@@ -114,7 +114,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
       end
 
       context 'when the procurement_details contains the jurisdiction ids' do
-        let(:procurement_details) { { 'jurisdiction_ids' => ['TLH3', 'TLH5'], 'something' => 'else' } }
+        let(:procurement_details) { { 'jurisdiction_ids' => ['RM6378.TLH3', 'RM6378.TLH5'], 'something' => 'else' } }
 
         it 'updates the procurement_details with jurisdiction ids' do
           procurement.jurisdiction_ids = ['TLH2', 'TLH4']
@@ -538,18 +538,18 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
 
       create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6378.1a.C4')
 
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_1_lot_a, jurisdiction_id: 'TLH3')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_2_lot_a, jurisdiction_id: 'TLH3')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_2_lot_a, jurisdiction_id: 'TLK4')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_3_lot_a, jurisdiction_id: 'TLH3')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_3_lot_a, jurisdiction_id: 'TLK4')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_4_lot_a, jurisdiction_id: 'TLH3')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_5_lot_a, jurisdiction_id: 'TLH3')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_1_lot_a, jurisdiction_id: 'RM6378.TLH3')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_2_lot_a, jurisdiction_id: 'RM6378.TLH3')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_2_lot_a, jurisdiction_id: 'RM6378.TLK4')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_3_lot_a, jurisdiction_id: 'RM6378.TLH3')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_3_lot_a, jurisdiction_id: 'RM6378.TLK4')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_4_lot_a, jurisdiction_id: 'RM6378.TLH3')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_5_lot_a, jurisdiction_id: 'RM6378.TLH3')
     end
 
     context 'when we pass a single service code and jurisdiction id' do
       let(:service_ids) { ['RM6378.1a.C1'] }
-      let(:jurisdiction_ids) { ['TLH3'] }
+      let(:jurisdiction_ids) { ['RM6378.TLH3'] }
 
       it 'returns three suppliers' do
         expect(result).to eq(['Supplier 2', 'Supplier 3', 'Supplier 5'])
@@ -562,7 +562,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
 
     context 'when we pass multiple service codes and a single jurisdiction id' do
       let(:service_ids) { ['RM6378.1a.C1', 'RM6378.1a.C2'] }
-      let(:jurisdiction_ids) { ['TLH3'] }
+      let(:jurisdiction_ids) { ['RM6378.TLH3'] }
 
       it 'returns the first and second suppliers' do
         expect(result).to eq(['Supplier 2', 'Supplier 3'])
@@ -575,7 +575,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
 
     context 'when we pass multiple jurisdiction ids and single service ids' do
       let(:service_ids) { ['RM6378.1a.C1'] }
-      let(:jurisdiction_ids) { ['TLH3', 'TLK4'] }
+      let(:jurisdiction_ids) { ['RM6378.TLH3', 'RM6378.TLK4'] }
 
       it 'returns the second and fifth suppliers' do
         expect(result).to eq(['Supplier 2', 'Supplier 5'])
@@ -588,7 +588,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
 
     context 'when we pass multiple service codes and a multiple jurisdiction ids' do
       let(:service_ids) { ['RM6378.1a.C3', 'RM6378.1a.C4'] }
-      let(:jurisdiction_ids) { ['TLH3', 'TLK4'] }
+      let(:jurisdiction_ids) { ['RM6378.TLH3', 'RM6378.TLK4'] }
 
       it 'returns the fifth supplier' do
         expect(result).to eq(['Supplier 5'])
@@ -601,7 +601,7 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
 
     context 'when we pass service codes neither supplier does' do
       let(:service_ids) { ['RM6378.2a.1'] }
-      let(:jurisdiction_ids) { ['TLH3'] }
+      let(:jurisdiction_ids) { ['RM6378.TLH3'] }
 
       it 'returns an empty array' do
         expect(result).to be_empty
@@ -640,9 +640,9 @@ RSpec.describe FacilitiesManagement::RM6378::Procurement do
     let(:procurement) { create(:facilities_management_rm6378_procurement, procurement_details:) }
 
     it 'returns the jurisdictions sorted by category then number' do
-      procurement = create(:facilities_management_rm6378_procurement, procurement_details: { 'jurisdiction_ids' => ['TLD3', 'TLD1', 'TLN0D', 'TLN0A', 'TLN06', 'TLG2'] })
+      procurement = create(:facilities_management_rm6378_procurement, procurement_details: { 'jurisdiction_ids' => ['RM6378.TLD3', 'RM6378.TLD1', 'RM6378.TLN0D', 'RM6378.TLN0A', 'RM6378.TLN06', 'RM6378.TLG2'] })
 
-      expect(procurement.jurisdictions.pluck(:id)).to eq(['TLD1', 'TLD3', 'TLG2', 'TLN06', 'TLN0A', 'TLN0D'])
+      expect(procurement.jurisdictions.pluck(:id)).to eq(['RM6378.TLD1', 'RM6378.TLD3', 'RM6378.TLG2', 'RM6378.TLN06', 'RM6378.TLN0A', 'RM6378.TLN0D'])
     end
   end
 

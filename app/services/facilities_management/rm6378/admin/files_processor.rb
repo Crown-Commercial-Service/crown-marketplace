@@ -88,7 +88,7 @@ class FacilitiesManagement::RM6378::Admin::FilesProcessor < FilesProcessor
 
       lot_id = "RM6378.#{lot_number}"
 
-      supplier_framework_lots_data[lot_id][:jurisdictions] << { jurisdiction_id: region_codes[index] }
+      supplier_framework_lots_data[lot_id][:jurisdictions] << { jurisdiction_id: "RM6378.#{region_codes[index]}" }
     end
   end
 

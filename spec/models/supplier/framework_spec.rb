@@ -81,24 +81,24 @@ RSpec.describe Supplier::Framework do
 
   describe '.grouped_rates_for_lot_and_jurisdictions' do
     let(:result) { supplier_framework.grouped_rates_for_lot_and_jurisdictions(lot_id, jurisdiction_ids) }
-    let(:lot_id) { 'RM6240.1a' }
-    let(:jurisdiction_ids) { %w[AE AX] }
-    let(:supplier_framework_lot) { create(:supplier_framework_lot, supplier_framework: supplier_framework, lot_id: 'RM6240.1a') }
+    let(:lot_id) { 'RM6360.4a' }
+    let(:jurisdiction_ids) { %w[RM6360.AE RM6360.AX] }
+    let(:supplier_framework_lot) { create(:supplier_framework_lot, supplier_framework: supplier_framework, lot_id: 'RM6360.4a') }
     let(:lot_grouped_rates) { [] }
 
     before do
-      ae_jurisdiction = create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_lot, jurisdiction_id: 'AE')
-      az_jurisdiction = create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_lot, jurisdiction_id: 'AX')
+      ae_jurisdiction = create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_lot, jurisdiction_id: 'RM6360.AE')
+      az_jurisdiction = create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_lot, jurisdiction_id: 'RM6360.AX')
 
-      lot_grouped_rates << create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, position_id: 'RM6240.1a.1', jurisdiction: ae_jurisdiction)
-      lot_grouped_rates << create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, position_id: 'RM6240.1a.1', jurisdiction: az_jurisdiction)
-      lot_grouped_rates << create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, position_id: 'RM6240.1a.2', jurisdiction: az_jurisdiction)
-      lot_grouped_rates << create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, position_id: 'RM6240.1a.3', jurisdiction: ae_jurisdiction)
-      lot_grouped_rates << create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, position_id: 'RM6240.1a.3', jurisdiction: az_jurisdiction)
+      lot_grouped_rates << create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, position_id: 'RM6360.4a.1', jurisdiction: ae_jurisdiction)
+      lot_grouped_rates << create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, position_id: 'RM6360.4a.1', jurisdiction: az_jurisdiction)
+      lot_grouped_rates << create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, position_id: 'RM6360.4a.2', jurisdiction: az_jurisdiction)
+      lot_grouped_rates << create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, position_id: 'RM6360.4a.3', jurisdiction: ae_jurisdiction)
+      lot_grouped_rates << create(:supplier_framework_lot_rate, supplier_framework_lot: supplier_framework_lot, position_id: 'RM6360.4a.3', jurisdiction: az_jurisdiction)
     end
 
     context 'when we pass a lot with no rates' do
-      let(:lot_id) { 'RM6240.2a' }
+      let(:lot_id) { 'RM6360.2a' }
 
       it 'raises no method error' do
         expect { result }.to raise_error(NoMethodError)
@@ -109,29 +109,29 @@ RSpec.describe Supplier::Framework do
       it 'returns the 3 grouped rates' do
         expect(result).to eq(
           {
-            'RM6240.1a.1' => { 'AE' => lot_grouped_rates[0], 'AX' => lot_grouped_rates[1] },
-            'RM6240.1a.2' => { 'AX' => lot_grouped_rates[2] },
-            'RM6240.1a.3' => { 'AE' => lot_grouped_rates[3], 'AX' => lot_grouped_rates[4] }
+            'RM6360.4a.1' => { 'RM6360.AE' => lot_grouped_rates[0], 'RM6360.AX' => lot_grouped_rates[1] },
+            'RM6360.4a.2' => { 'RM6360.AX' => lot_grouped_rates[2] },
+            'RM6360.4a.3' => { 'RM6360.AE' => lot_grouped_rates[3], 'RM6360.AX' => lot_grouped_rates[4] }
           }
         )
       end
     end
 
     context 'when one jurisdiction is passed' do
-      let(:jurisdiction_ids) { %w[AE] }
+      let(:jurisdiction_ids) { %w[RM6360.AE] }
 
       it 'returns the 3 grouped rates' do
         expect(result).to eq(
           {
-            'RM6240.1a.1' => { 'AE' => lot_grouped_rates[0] },
-            'RM6240.1a.3' => { 'AE' => lot_grouped_rates[3] }
+            'RM6360.4a.1' => { 'RM6360.AE' => lot_grouped_rates[0] },
+            'RM6360.4a.3' => { 'RM6360.AE' => lot_grouped_rates[3] }
           }
         )
       end
     end
 
     context 'when a jurisdiction that is not done is passed' do
-      let(:jurisdiction_ids) { %w[DE] }
+      let(:jurisdiction_ids) { %w[RM6360.DE] }
 
       it 'returns the 3 grouped rates' do
         expect(result).to eq({})
@@ -245,7 +245,7 @@ RSpec.describe Supplier::Framework do
 
   describe '.with_services_and_jurisdictions' do
     let(:result) { described_class.with_services_and_jurisdiction(service_ids, jurisdiction_ids).pluck(:id) }
-    let(:supplier_frameworks) { create_list(:supplier_framework, 5, framework_id: 'RM6240') }
+    let(:supplier_frameworks) { create_list(:supplier_framework, 5, framework_id: 'RM6360') }
     let(:supplier_framework_1_id) { supplier_frameworks[0].id }
     let(:supplier_framework_2_id) { supplier_frameworks[1].id }
     let(:supplier_framework_3_id) { supplier_frameworks[2].id }
@@ -253,38 +253,38 @@ RSpec.describe Supplier::Framework do
     before do
       supplier_frameworks[3].update(enabled: false)
 
-      supplier_framework_1_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[0], lot_id: 'RM6240.1a')
-      supplier_framework_2_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[1], lot_id: 'RM6240.1a')
-      supplier_framework_3_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[2], lot_id: 'RM6240.1a')
-      supplier_framework_4_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[3], lot_id: 'RM6240.1a')
-      supplier_framework_5_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[4], lot_id: 'RM6240.1a', enabled: false)
+      supplier_framework_1_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[0], lot_id: 'RM6360.4a')
+      supplier_framework_2_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[1], lot_id: 'RM6360.4a')
+      supplier_framework_3_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[2], lot_id: 'RM6360.4a')
+      supplier_framework_4_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[3], lot_id: 'RM6360.4a')
+      supplier_framework_5_lot_a = create(:supplier_framework_lot, supplier_framework: supplier_frameworks[4], lot_id: 'RM6360.4a', enabled: false)
 
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_1_lot_a, service_id: 'RM6240.1a.1')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6240.1a.1')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6240.1a.1')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_4_lot_a, service_id: 'RM6240.1a.1')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_5_lot_a, service_id: 'RM6240.1a.1')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_1_lot_a, service_id: 'RM6360.4a.1')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6360.4a.1')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6360.4a.1')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_4_lot_a, service_id: 'RM6360.4a.1')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_5_lot_a, service_id: 'RM6360.4a.1')
 
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_1_lot_a, service_id: 'RM6240.1a.2')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6240.1a.2')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_1_lot_a, service_id: 'RM6360.4a.2')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6360.4a.2')
 
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6240.1a.3')
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6240.1a.3')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_2_lot_a, service_id: 'RM6360.4a.3')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6360.4a.3')
 
-      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6240.1a.4')
+      create(:supplier_framework_lot_service, supplier_framework_lot: supplier_framework_3_lot_a, service_id: 'RM6360.4a.4')
 
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_1_lot_a, jurisdiction_id: 'GB')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_2_lot_a, jurisdiction_id: 'GB')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_2_lot_a, jurisdiction_id: 'AX')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_3_lot_a, jurisdiction_id: 'GB')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_3_lot_a, jurisdiction_id: 'AX')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_4_lot_a, jurisdiction_id: 'GB')
-      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_5_lot_a, jurisdiction_id: 'GB')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_1_lot_a, jurisdiction_id: 'RM6360.GB')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_2_lot_a, jurisdiction_id: 'RM6360.GB')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_2_lot_a, jurisdiction_id: 'RM6360.AX')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_3_lot_a, jurisdiction_id: 'RM6360.GB')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_3_lot_a, jurisdiction_id: 'RM6360.AX')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_4_lot_a, jurisdiction_id: 'RM6360.GB')
+      create(:supplier_framework_lot_jurisdiction, supplier_framework_lot: supplier_framework_5_lot_a, jurisdiction_id: 'RM6360.GB')
     end
 
     context 'when we pass a single service code and jurisdiction id' do
-      let(:service_ids) { ['RM6240.1a.1'] }
-      let(:jurisdiction_ids) { ['GB'] }
+      let(:service_ids) { ['RM6360.4a.1'] }
+      let(:jurisdiction_ids) { ['RM6360.GB'] }
 
       it 'returns three suppliers' do
         expect(result).to contain_exactly(supplier_framework_1_id, supplier_framework_2_id, supplier_framework_3_id)
@@ -292,8 +292,8 @@ RSpec.describe Supplier::Framework do
     end
 
     context 'when we pass multiple service codes and a single jurisdiction id' do
-      let(:service_ids) { ['RM6240.1a.1', 'RM6240.1a.2'] }
-      let(:jurisdiction_ids) { ['GB'] }
+      let(:service_ids) { ['RM6360.4a.1', 'RM6360.4a.2'] }
+      let(:jurisdiction_ids) { ['RM6360.GB'] }
 
       it 'returns the first and second suppliers' do
         expect(result).to contain_exactly(supplier_framework_1_id, supplier_framework_2_id)
@@ -301,8 +301,8 @@ RSpec.describe Supplier::Framework do
     end
 
     context 'when we pass multiple jurisdiction ids and single service ids' do
-      let(:service_ids) { ['RM6240.1a.1'] }
-      let(:jurisdiction_ids) { ['GB', 'AX'] }
+      let(:service_ids) { ['RM6360.4a.1'] }
+      let(:jurisdiction_ids) { ['RM6360.GB', 'RM6360.AX'] }
 
       it 'returns the second and third suppliers' do
         expect(result).to contain_exactly(supplier_framework_2_id, supplier_framework_3_id)
@@ -310,8 +310,8 @@ RSpec.describe Supplier::Framework do
     end
 
     context 'when we pass multiple service codes and a multiple jurisdiction ids' do
-      let(:service_ids) { ['RM6240.1a.3', 'RM6240.1a.4'] }
-      let(:jurisdiction_ids) { ['GB', 'AX'] }
+      let(:service_ids) { ['RM6360.4a.3', 'RM6360.4a.4'] }
+      let(:jurisdiction_ids) { ['RM6360.GB', 'RM6360.AX'] }
 
       it 'returns the third supplier' do
         expect(result).to contain_exactly(supplier_framework_3_id)
@@ -319,8 +319,8 @@ RSpec.describe Supplier::Framework do
     end
 
     context 'when we pass service codes neither supplier does' do
-      let(:service_ids) { ['RM6240.2a.1'] }
-      let(:jurisdiction_ids) { ['GB'] }
+      let(:service_ids) { ['RM6360.2a.1'] }
+      let(:jurisdiction_ids) { ['RM6360.GB'] }
 
       it 'returns an emoty array' do
         expect(result).to be_empty
@@ -328,8 +328,8 @@ RSpec.describe Supplier::Framework do
     end
 
     context 'when we pass jurisdictions neither supplier does' do
-      let(:service_ids) { ['RM6240.1a.1'] }
-      let(:jurisdiction_ids) { ['DE'] }
+      let(:service_ids) { ['RM6360.4a.1'] }
+      let(:jurisdiction_ids) { ['RM6360.DE'] }
 
       it 'returns an emoty array' do
         expect(result).to be_empty

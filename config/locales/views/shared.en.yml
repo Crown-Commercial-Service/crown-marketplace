@@ -342,6 +342,89 @@ en:
           status: 'Status:'
     error_summary:
       there_is_a_problem: There is a problem
+    rates_table:
+      rm6187:
+        categories:
+          default: Max day rate
+        job_titles:
+          director: Partner
+          junior: Analyst / Junior Consultant
+          managing: Managing Consultant / Director
+          principal: Principal Consultant / Associate Director
+          senior: Senior Consultant / Engagement Manager / Project Lead
+          standard: Consultant
+      rm6238:
+        categories:
+          daily: Agency mark-up Daily Supply
+          default: Agency mark-up
+          six_weeks_plus: Agency mark-up Long Term (6 weeks+)
+        job_titles:
+          agency_management: Agency Management
+          agency_management_daily: 'Agency Management Fee: Daily supply worker (per worker, per day)'
+          agency_management_six_weeks_plus: 'Agency Management Fee: Long term assignment (6 weeks+) (per worker, per day)'
+          fixed_term: Fixed Term
+          nominated: Nominated Worker
+          other: 'Other Roles: (Invigilators, Admin & Clerical, IT Staff, Finance Staff, Cleaners etc.)'
+          over_12_week: Over 12 Week Reduction
+          senior: 'Senior Roles: Headteacher and Senior Leadership positions'
+          support: 'Educational Support Staff: (incl. Cover Supervisor, Teaching Assistants)'
+          teacher: 'Teacher: (Incl. Qualified and Unqualified Teachers, Tutors)'
+      rm6240:
+        categories:
+          default: Hourly
+        job_titles:
+          junior: NQ Solicitor/Associate, Junior Solicitor/Associate
+          legal_project_manager: LMP (Legal project manager)
+          paralegal: Paralegal, Legal Assistant
+          partner: Partner
+          senior: Senior Solicitor, Senior Associate
+          solicitor: Solicitor, Associate
+          trainee: Trainee
+      rm6309:
+        categories:
+          advice: Max day rate (Advice)
+          complex: Max day rate (Complex)
+          delivery: Max day rate (Delivery)
+          non_complex: Max day rate (Non-Complex)
+        job_titles:
+          director: Partner / Managing Director
+          junior: Analyst / Junior Consultant
+          managing: Managing Consultant / Director
+          principal: Principal Consultant / Associate Director
+          senior: Senior Consultant / Manager / Project Lead
+          standard: Consultant / Senior Analyst
+      rm6360:
+        categories:
+          default: Hourly
+        job_titles:
+          analyst: Analyst, Associate Analyst, Research Associate, Research Officer
+          junior: NQ Solicitor/Associate, Junior Solicitor/Associate/Legal Executive
+          legal_director: Legal Director/Counsel or equivalent
+          legal_project_manager: Legal Project Managers
+          modeller: Modeller, Econometrician, Analyst, Associate Analyst
+          paralegal: Paralegal, Legal Assistant
+          partner: Partner
+          senior: Senior Solicitor, Senior Associate/Senior Legal Executive
+          senior_analyst: Senior Analyst
+          senior_modeller: Senior Modeller, Senior Econometrician, Senior Analyst
+          senior_partner: Senior Counsel, Senior Partner (20 years +PQE)
+          solicitor: Solicitor, Associate/Legal Executive
+          trainee: Trainee/Legal Apprentice
+      rm6376:
+        categories:
+          default: Agency mark-up
+        job_titles:
+          admin_and_clerical: Admin & Clerical (Inc. Office Staff, Finance Support)
+          educationl_support_non_send: Educational Support Staff non SEND (Inc. Cover Supervisor, Teaching Assistants and unqualified teachers)
+          educationl_support_send: Educational Support Staff SEND (Inc. Cover Supervisor, Teaching Assistants and unqualified teachers)
+          facilities_management: Facilities Management (Inc. Caretakers, site roles etc)
+          fixed_term: Fixed Term / Permanent Roles (on School Payroll)
+          nominated_worker: Nominated Workers
+          non_stem_teacher: Non-STEM Teachers (Inc. Qualified Teachers, Tutors)
+          other: Other (Inc. Invigilators, cleaners)
+          over_12_week: Over 12 Week Reduction
+          senior_roles: Senior Roles (Inc. Headteacher and Senior Leadership positions)
+          stem_teacher: STEM Teacher (Inc. Qualified Teachers, Tutors)
     tags:
       cannot_start: Cannot start yet
       completed: Completed
