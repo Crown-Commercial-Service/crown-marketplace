@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.0.0] - 2026-06-15
+
 ### Added
 
 - Add the initial admin pages for Facilities Management RM6378 ([PR 5318](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5318))
