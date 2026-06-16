@@ -40,6 +40,19 @@ class AddFrameworkToJurisdictions < ActiveRecord::Migration[8.1]
   end
 
   def up
+    CSV.read(Rails.root.join('data', 'frameworks.csv'), headers: true).each do |row|
+      row['live_at'] = Time.new(*row['live_at'].split('-')).in_time_zone('London')
+      row['expires_at'] = Time.new(*row['expires_at'].split('-')).in_time_zone('London')
+
+      record = Frameworks.find_by(id: row['id'])
+
+      if record.present?
+        record.update!(**row)
+      else
+        Frameworks.create!(**row)
+      end
+    end
+
     add_reference :jurisdictions, :framework, type: :text, foreign_key: true, index: true
     add_column :jurisdictions, :code, :text
 
