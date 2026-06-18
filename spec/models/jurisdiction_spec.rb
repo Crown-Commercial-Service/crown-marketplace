@@ -13,7 +13,7 @@ RSpec.describe Jurisdiction do
   end
 
   it 'has all the jurisdictions loaded' do
-    expect(described_class.count).to eq(332)
+    expect(described_class.count).to eq(336)
   end
 
   describe 'scopes' do

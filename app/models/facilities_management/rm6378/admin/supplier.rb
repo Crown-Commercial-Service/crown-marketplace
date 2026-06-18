@@ -4,7 +4,7 @@ module FacilitiesManagement
       class Supplier < ::Supplier
         self.table_name = 'suppliers'
 
-        ATTRIBUTES_TO_SKIP_VALIDATION = %i[trading_name additional_identifier].freeze
+        ATTRIBUTES_TO_VALIDATE = %i[name duns_number sme].freeze
       end
     end
   end
