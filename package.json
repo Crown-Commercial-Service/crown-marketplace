@@ -7,7 +7,7 @@
     "@types/js-cookie": "^3.0.6",
     "@types/rails__request.js": "^0.0.1",
     "ccs-frontend": "^3.2.0",
-    "govuk-frontend": "^6.2.0",
+    "govuk-frontend": "^6.3.0",
     "jquery": "^4.0.0",
     "js-cookie": "^3.0.8",
     "sass": "^1.101.0",
