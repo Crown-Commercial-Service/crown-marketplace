@@ -24,7 +24,7 @@ When('I go to the {string} not permitted page for {string}') do |user_type, fram
 end
 
 Then('I sign in') do
-  expect(page).to have_css('input[type="email"], #user_email, #email', visible: true)
+  expect(page).to have_css('input[type="email"], #user_email, #email', visible: :visible)
 
   if page.has_field?('Email address')
     fill_in 'Email address', with: @user.email
