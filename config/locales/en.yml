@@ -513,6 +513,7 @@ en:
         RM6376: Supply Teachers and Education Recruitment (RM6376)
         RM6378: Facilities Management and Security Services (RM6378)
         RM6232: Facilities Management and Workplace Services (RM6232)
+        RM6374: Legal Panel for Public Sector (RM6374)
       cant_find_html: Can't find the agreement you're looking for? %{search_agreements_link} on the Government Commercial Agency website.
       crown_marketplace_link: Crown Marketplace
       facilities_management_admin_link: Managing framework and supplier data
