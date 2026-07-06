@@ -24,8 +24,22 @@ When('I go to the {string} not permitted page for {string}') do |user_type, fram
 end
 
 Then('I sign in') do
-  fill_in 'Email address', with: @user.email
-  fill_in 'Password', with: 'ValidPassword'
+  expect(page).to have_css('input[type="email"], #user_email, #email', visible: true)
+
+  if page.has_field?('Email address')
+    fill_in 'Email address', with: @user.email
+  elsif page.has_field?('Email')
+    fill_in 'Email', with: @user.email
+  else
+    find('input[type="email"]').set(@user.email)
+  end
+
+  if page.has_field?('Password')
+    fill_in 'Password', with: 'ValidPassword'
+  else
+    find('input[type="password"]').set('ValidPassword')
+  end
+
   click_button 'Sign in'
 end
 
