@@ -9,7 +9,7 @@ RSpec.describe HomeController do
     end
 
     it 'sets the frameworks' do
-      expect(assigns(:frameworks).pluck(:id)).to eq(%w[RM6238 RM6240 RM6378 RM6309 RM6360 RM6376])
+      expect(assigns(:frameworks).pluck(:id)).to eq(%w[RM6374 RM6378 RM6309 RM6360 RM6376])
     end
   end
 

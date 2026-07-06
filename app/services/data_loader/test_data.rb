@@ -63,27 +63,24 @@ class DataLoader::TestData
       )
     end
 
+    FRAMEWORK_TO_MODULE = {
+      'RM3830' => FM::RM3830,
+      'RM6232' => FM::RM6232,
+      'RM6378' => FM::RM6378,
+    }.freeze
+
     public
 
     def import_test_data
       empty_tables
 
-      FM::RM3830.import_data
-      FM::RM6232.import_data
-      FM::RM6378.import_data
+      FRAMEWORK_TO_MODULE.each_value(&:import_data)
     end
 
     def import_test_data_for_framework_service(framework)
       empty_tables
 
-      case framework
-      when 'RM3830'
-        FM::RM3830.import_data
-      when 'RM6232'
-        FM::RM6232.import_data
-      when 'RM6378'
-        FM::RM6378.import_data
-      end
+      FRAMEWORK_TO_MODULE[framework].import_data
     end
   end
 end

@@ -1266,3 +1266,297 @@ RM6378.4d.S1,RM6378.4d,S1,Security Advisory Services,S,"Security related advisor
 RM6378.4d.T1,RM6378.4d,T1,Security Assessments,T,"Provision of security assessments, for example evaluating existing or planned security measures to protect the Buyer from threats and identify improvements when deemed necessary"
 RM6378.4d.T2,RM6378.4d,T2,Risk Assessments,T,"Provision of risk assessments including but not limited to Health and safety, Fire safety and Identifying hazards."
 RM6378.4d.U1,RM6378.4d,U1,Security Awareness / Training,U,"Provision to design, deliver and evaluate security awareness and training"
+RM6374.1a.1,RM6374.1a,1,Artificial Intelligence and Machine Learning Law
+RM6374.1a.2,RM6374.1a,2,Assimilated Law
+RM6374.1a.3,RM6374.1a,3,Aviation and Airports
+RM6374.1a.4,RM6374.1a,4,Charities
+RM6374.1a.5,RM6374.1a,5,Children and Vulnerable Adults
+RM6374.1a.7,RM6374.1a,7,Commercial Litigation and Dispute Resolution
+RM6374.1a.8,RM6374.1a,8,Competition Law
+RM6374.1a.9,RM6374.1a,9,Construction Law
+RM6374.1a.10,RM6374.1a,10,Contracts
+RM6374.1a.11,RM6374.1a,11,Corporate Finance
+RM6374.1a.12,RM6374.1a,12,Corporate Law
+RM6374.1a.13,RM6374.1a,13,Court of Protection
+RM6374.1a.15,RM6374.1a,15,Criminal Law
+RM6374.1a.18,RM6374.1a,18,Debt Recovery
+RM6374.1a.19,RM6374.1a,19,Defence and Security Law
+RM6374.1a.20,RM6374.1a,20,Dispute Resolution and Litigation Law
+RM6374.1a.21,RM6374.1a,21,Education Law
+RM6374.1a.22,RM6374.1a,22,Emerging Policy and Legal Risk Advisory
+RM6374.1a.23,RM6374.1a,23,Employment Law
+RM6374.1a.25,RM6374.1a,25,Energy and Natural Resources
+RM6374.1a.26,RM6374.1a,26,Environmental Law
+RM6374.1a.28,RM6374.1a,28,Finance and Investment
+RM6374.1a.31,RM6374.1a,31,"Financial Services, Market and Competition Regulation"
+RM6374.1a.32,RM6374.1a,32,Fintech Crypto Assets
+RM6374.1a.33,RM6374.1a,33,"Food, Rural and Environmental Affairs"
+RM6374.1a.34,RM6374.1a,34,Franchise Law
+RM6374.1a.35,RM6374.1a,35,Gaming and Gambling Law
+RM6374.1a.37,RM6374.1a,37,Grants
+RM6374.1a.38,RM6374.1a,38,Health and Safety
+RM6374.1a.39,RM6374.1a,39,"Health, Healthcare and Social Care"
+RM6374.1a.41,RM6374.1a,41,Housing Law
+RM6374.1a.42,RM6374.1a,42,Immigration
+RM6374.1a.43,RM6374.1a,43,Information Law including Data Protection Law
+RM6374.1a.44,RM6374.1a,44,Information Technology Law
+RM6374.1a.45,RM6374.1a,45,Insurance and Reinsurance
+RM6374.1a.46,RM6374.1a,46,Intellectual Property Law
+RM6374.1a.50,RM6374.1a,50,International Trade
+RM6374.1a.54,RM6374.1a,54,Life Sciences
+RM6374.1a.56,RM6374.1a,56,Maritime and Shipping
+RM6374.1a.57,RM6374.1a,57,Media Law
+RM6374.1a.58,RM6374.1a,58,Merger and Acquisition Activity
+RM6374.1a.59,RM6374.1a,59,Outsourcing
+RM6374.1a.60,RM6374.1a,60,Partnership Law
+RM6374.1a.61,RM6374.1a,61,Pensions Law
+RM6374.1a.62,RM6374.1a,62,Planning Law
+RM6374.1a.63,RM6374.1a,63,Private Law Litigation and Dispute Resolution
+RM6374.1a.66,RM6374.1a,66,Projects/PPP
+RM6374.1a.67,RM6374.1a,67,Property and Real Estate Litigation and Dispute Resolution
+RM6374.1a.70,RM6374.1a,70,Public Inquiries - Support to Participants and Inquests
+RM6374.1a.71,RM6374.1a,71,Public International Law
+RM6374.1a.72,RM6374.1a,72,Public Law
+RM6374.1a.73,RM6374.1a,73,Public Law Litigation and Dispute Resolution
+RM6374.1a.74,RM6374.1a,74,Public Procurement Law
+RM6374.1a.77,RM6374.1a,77,Real Estate and Real Estate Finance
+RM6374.1a.79,RM6374.1a,79,Restructuring and Insolvency
+RM6374.1a.81,RM6374.1a,81,Space Law
+RM6374.1a.82,RM6374.1a,82,Sports Law
+RM6374.1a.85,RM6374.1a,85,Supporting Public Inquiries
+RM6374.1a.86,RM6374.1a,86,Sustainable Finance/ Green Finance
+RM6374.1a.87,RM6374.1a,87,Tax Law
+RM6374.1b.1,RM6374.1b,1,Artificial Intelligence and Machine Learning Law
+RM6374.1b.2,RM6374.1b,2,Assimilated Law
+RM6374.1b.3,RM6374.1b,3,Aviation and Airports
+RM6374.1b.4,RM6374.1b,4,Charities
+RM6374.1b.5,RM6374.1b,5,Children and Vulnerable Adults
+RM6374.1b.7,RM6374.1b,7,Commercial Litigation and Dispute Resolution
+RM6374.1b.8,RM6374.1b,8,Competition Law
+RM6374.1b.9,RM6374.1b,9,Construction Law
+RM6374.1b.10,RM6374.1b,10,Contracts
+RM6374.1b.11,RM6374.1b,11,Corporate Finance
+RM6374.1b.12,RM6374.1b,12,Corporate Law
+RM6374.1b.13,RM6374.1b,13,Court of Protection
+RM6374.1b.15,RM6374.1b,15,Criminal Law
+RM6374.1b.18,RM6374.1b,18,Debt Recovery
+RM6374.1b.19,RM6374.1b,19,Defence and Security Law
+RM6374.1b.20,RM6374.1b,20,Dispute Resolution and Litigation Law
+RM6374.1b.21,RM6374.1b,21,Education Law
+RM6374.1b.22,RM6374.1b,22,Emerging Policy and Legal Risk Advisory
+RM6374.1b.23,RM6374.1b,23,Employment Law
+RM6374.1b.25,RM6374.1b,25,Energy and Natural Resources
+RM6374.1b.26,RM6374.1b,26,Environmental Law
+RM6374.1b.28,RM6374.1b,28,Finance and Investment
+RM6374.1b.31,RM6374.1b,31,"Financial Services, Market and Competition Regulation"
+RM6374.1b.32,RM6374.1b,32,Fintech Crypto Assets
+RM6374.1b.33,RM6374.1b,33,"Food, Rural and Environmental Affairs"
+RM6374.1b.34,RM6374.1b,34,Franchise Law
+RM6374.1b.35,RM6374.1b,35,Gaming and Gambling Law
+RM6374.1b.37,RM6374.1b,37,Grants
+RM6374.1b.38,RM6374.1b,38,Health and Safety
+RM6374.1b.39,RM6374.1b,39,"Health, Healthcare and Social Care"
+RM6374.1b.41,RM6374.1b,41,Housing Law
+RM6374.1b.42,RM6374.1b,42,Immigration
+RM6374.1b.43,RM6374.1b,43,Information Law including Data Protection Law
+RM6374.1b.44,RM6374.1b,44,Information Technology Law
+RM6374.1b.45,RM6374.1b,45,Insurance and Reinsurance
+RM6374.1b.46,RM6374.1b,46,Intellectual Property Law
+RM6374.1b.50,RM6374.1b,50,International Trade
+RM6374.1b.54,RM6374.1b,54,Life Sciences
+RM6374.1b.56,RM6374.1b,56,Maritime and Shipping
+RM6374.1b.57,RM6374.1b,57,Media Law
+RM6374.1b.58,RM6374.1b,58,Merger and Acquisition Activity
+RM6374.1b.59,RM6374.1b,59,Outsourcing
+RM6374.1b.60,RM6374.1b,60,Partnership Law
+RM6374.1b.61,RM6374.1b,61,Pensions Law
+RM6374.1b.62,RM6374.1b,62,Planning Law
+RM6374.1b.63,RM6374.1b,63,Private Law Litigation and Dispute Resolution
+RM6374.1b.66,RM6374.1b,66,Projects/PPP
+RM6374.1b.67,RM6374.1b,67,Property and Real Estate Litigation and Dispute Resolution
+RM6374.1b.70,RM6374.1b,70,Public Inquiries - Support to Participants and Inquests
+RM6374.1b.71,RM6374.1b,71,Public International Law
+RM6374.1b.72,RM6374.1b,72,Public Law
+RM6374.1b.73,RM6374.1b,73,Public Law Litigation and Dispute Resolution
+RM6374.1b.74,RM6374.1b,74,Public Procurement Law
+RM6374.1b.77,RM6374.1b,77,Real Estate and Real Estate Finance
+RM6374.1b.79,RM6374.1b,79,Restructuring and Insolvency
+RM6374.1b.81,RM6374.1b,81,Space Law
+RM6374.1b.82,RM6374.1b,82,Sports Law
+RM6374.1b.85,RM6374.1b,85,Supporting Public Inquiries
+RM6374.1b.86,RM6374.1b,86,Sustainable Finance/ Green Finance
+RM6374.1b.87,RM6374.1b,87,Tax Law
+RM6374.1c.1,RM6374.1c,1,Artificial Intelligence and Machine Learning Law
+RM6374.1c.2,RM6374.1c,2,Assimilated Law
+RM6374.1c.3,RM6374.1c,3,Aviation and Airports
+RM6374.1c.4,RM6374.1c,4,Charities
+RM6374.1c.5,RM6374.1c,5,Children and Vulnerable Adults
+RM6374.1c.7,RM6374.1c,7,Commercial Litigation and Dispute Resolution
+RM6374.1c.8,RM6374.1c,8,Competition Law
+RM6374.1c.9,RM6374.1c,9,Construction Law
+RM6374.1c.10,RM6374.1c,10,Contracts
+RM6374.1c.11,RM6374.1c,11,Corporate Finance
+RM6374.1c.12,RM6374.1c,12,Corporate Law
+RM6374.1c.13,RM6374.1c,13,Court of Protection
+RM6374.1c.15,RM6374.1c,15,Criminal Law
+RM6374.1c.18,RM6374.1c,18,Debt Recovery
+RM6374.1c.19,RM6374.1c,19,Defence and Security Law
+RM6374.1c.20,RM6374.1c,20,Dispute Resolution and Litigation Law
+RM6374.1c.21,RM6374.1c,21,Education Law
+RM6374.1c.22,RM6374.1c,22,Emerging Policy and Legal Risk Advisory
+RM6374.1c.23,RM6374.1c,23,Employment Law
+RM6374.1c.25,RM6374.1c,25,Energy and Natural Resources
+RM6374.1c.26,RM6374.1c,26,Environmental Law
+RM6374.1c.28,RM6374.1c,28,Finance and Investment
+RM6374.1c.31,RM6374.1c,31,"Financial Services, Market and Competition Regulation"
+RM6374.1c.32,RM6374.1c,32,Fintech Crypto Assets
+RM6374.1c.33,RM6374.1c,33,"Food, Rural and Environmental Affairs"
+RM6374.1c.34,RM6374.1c,34,Franchise Law
+RM6374.1c.35,RM6374.1c,35,Gaming and Gambling Law
+RM6374.1c.37,RM6374.1c,37,Grants
+RM6374.1c.38,RM6374.1c,38,Health and Safety
+RM6374.1c.39,RM6374.1c,39,"Health, Healthcare and Social Care"
+RM6374.1c.41,RM6374.1c,41,Housing Law
+RM6374.1c.42,RM6374.1c,42,Immigration
+RM6374.1c.43,RM6374.1c,43,Information Law including Data Protection Law
+RM6374.1c.44,RM6374.1c,44,Information Technology Law
+RM6374.1c.45,RM6374.1c,45,Insurance and Reinsurance
+RM6374.1c.46,RM6374.1c,46,Intellectual Property Law
+RM6374.1c.50,RM6374.1c,50,International Trade
+RM6374.1c.54,RM6374.1c,54,Life Sciences
+RM6374.1c.56,RM6374.1c,56,Maritime and Shipping
+RM6374.1c.57,RM6374.1c,57,Media Law
+RM6374.1c.58,RM6374.1c,58,Merger and Acquisition Activity
+RM6374.1c.59,RM6374.1c,59,Outsourcing
+RM6374.1c.60,RM6374.1c,60,Partnership Law
+RM6374.1c.61,RM6374.1c,61,Pensions Law
+RM6374.1c.62,RM6374.1c,62,Planning Law
+RM6374.1c.63,RM6374.1c,63,Private Law Litigation and Dispute Resolution
+RM6374.1c.66,RM6374.1c,66,Projects/PPP
+RM6374.1c.67,RM6374.1c,67,Property and Real Estate Litigation and Dispute Resolution
+RM6374.1c.70,RM6374.1c,70,Public Inquiries - Support to Participants and Inquests
+RM6374.1c.71,RM6374.1c,71,Public International Law
+RM6374.1c.72,RM6374.1c,72,Public Law
+RM6374.1c.73,RM6374.1c,73,Public Law Litigation and Dispute Resolution
+RM6374.1c.74,RM6374.1c,74,Public Procurement Law
+RM6374.1c.77,RM6374.1c,77,Real Estate and Real Estate Finance
+RM6374.1c.79,RM6374.1c,79,Restructuring and Insolvency
+RM6374.1c.81,RM6374.1c,81,Space Law
+RM6374.1c.82,RM6374.1c,82,Sports Law
+RM6374.1c.85,RM6374.1c,85,Supporting Public Inquiries
+RM6374.1c.86,RM6374.1c,86,Sustainable Finance/ Green Finance
+RM6374.1c.87,RM6374.1c,87,Tax Law
+RM6374.2.1,RM6374.2,1,Artificial Intelligence and Machine Learning Law
+RM6374.2.2,RM6374.2,2,Assimilated Law
+RM6374.2.3,RM6374.2,3,Aviation and Airports
+RM6374.2.4,RM6374.2,4,Charities
+RM6374.2.5,RM6374.2,5,Children and Vulnerable Adults
+RM6374.2.8,RM6374.2,8,Competition Law
+RM6374.2.9,RM6374.2,9,Construction Law
+RM6374.2.10,RM6374.2,10,Contracts
+RM6374.2.11,RM6374.2,11,Corporate Finance
+RM6374.2.12,RM6374.2,12,Corporate Law
+RM6374.2.13,RM6374.2,13,Court of Protection
+RM6374.2.14,RM6374.2,14,Credit Insurance and Related Products
+RM6374.2.15,RM6374.2,15,Criminal Law
+RM6374.2.16,RM6374.2,16,Crofting
+RM6374.2.17,RM6374.2,17,Debt Capital Markets
+RM6374.2.18,RM6374.2,18,Debt Recovery
+RM6374.2.19,RM6374.2,19,Defence and Security Law
+RM6374.2.21,RM6374.2,21,Education Law
+RM6374.2.22,RM6374.2,22,Emerging Policy and Legal Risk Advisory
+RM6374.2.23,RM6374.2,23,Employment Law
+RM6374.2.25,RM6374.2,25,Energy and Natural Resources
+RM6374.2.26,RM6374.2,26,Environmental Law
+RM6374.2.27,RM6374.2,27,Equity Capital Markets
+RM6374.2.28,RM6374.2,28,Finance and Investment
+RM6374.2.29,RM6374.2,29,"Financial Institutions Rescue, Restructuring and Insolvency"
+RM6374.2.31,RM6374.2,31,"Financial Services, Market and Competition Regulation"
+RM6374.2.32,RM6374.2,32,Fintech Crypto Assets
+RM6374.2.33,RM6374.2,33,"Food, Rural and Environmental Affairs"
+RM6374.2.34,RM6374.2,34,Franchise Law
+RM6374.2.35,RM6374.2,35,Gaming and Gambling Law
+RM6374.2.37,RM6374.2,37,Grants
+RM6374.2.38,RM6374.2,38,Health and Safety
+RM6374.2.39,RM6374.2,39,"Health, Healthcare and Social Care"
+RM6374.2.41,RM6374.2,41,Housing Law
+RM6374.2.42,RM6374.2,42,Immigration
+RM6374.2.43,RM6374.2,43,Information Law including Data Protection Law
+RM6374.2.44,RM6374.2,44,Information Technology Law
+RM6374.2.45,RM6374.2,45,Insurance and Reinsurance
+RM6374.2.46,RM6374.2,46,Intellectual Property Law
+RM6374.2.47,RM6374.2,47,International Development/Aid Funding
+RM6374.2.48,RM6374.2,48,International Finance Organisations
+RM6374.2.50,RM6374.2,50,International Trade
+RM6374.2.51,RM6374.2,51,Investment and Asset Management
+RM6374.2.52,RM6374.2,52,Investment and Commercial Banking
+RM6374.2.53,RM6374.2,53,Islamic Finance / Sukuk
+RM6374.2.54,RM6374.2,54,Life Sciences
+RM6374.2.56,RM6374.2,56,Maritime and Shipping
+RM6374.2.57,RM6374.2,57,Media Law
+RM6374.2.58,RM6374.2,58,Merger and Acquisition Activity
+RM6374.2.59,RM6374.2,59,Outsourcing
+RM6374.2.60,RM6374.2,60,Partnership Law
+RM6374.2.61,RM6374.2,61,Pensions Law
+RM6374.2.62,RM6374.2,62,Planning Law
+RM6374.2.64,RM6374.2,64,Project and Asset Finance
+RM6374.2.65,RM6374.2,65,Projects and Transactions
+RM6374.2.67,RM6374.2,67,Property and Real Estate Litigation and Dispute Resolution
+RM6374.2.69,RM6374.2,69,Public Inquiries - Non-Statutory Independent Inquiries/ Reviews
+RM6374.2.70,RM6374.2,70,Public Inquiries - Support to Participants and Inquests
+RM6374.2.71,RM6374.2,71,Public International Law
+RM6374.2.72,RM6374.2,72,Public Law
+RM6374.2.74,RM6374.2,74,Public Procurement Law
+RM6374.2.77,RM6374.2,77,Real Estate and Real Estate Finance
+RM6374.2.79,RM6374.2,79,Restructuring and Insolvency
+RM6374.2.80,RM6374.2,80,Sovereign Debt Restructuring
+RM6374.2.81,RM6374.2,81,Space Law
+RM6374.2.82,RM6374.2,82,Sports Law
+RM6374.2.86,RM6374.2,86,Sustainable Finance/ Green Finance
+RM6374.2.87,RM6374.2,87,Tax Law
+RM6374.2.88,RM6374.2,88,United States Securities & Regulatory
+RM6374.3.7,RM6374.3,7,Commercial Litigation and Dispute Resolution
+RM6374.3.18,RM6374.3,18,Debt Recovery
+RM6374.3.20,RM6374.3,20,Dispute Resolution and Litigation Law
+RM6374.3.24,RM6374.3,24,Employment Litigation and Dispute Resolution
+RM6374.3.30,RM6374.3,30,Financial Litigation
+RM6374.3.63,RM6374.3,63,Private Law Litigation and Dispute Resolution
+RM6374.3.67,RM6374.3,67,Property and Real Estate Litigation and Dispute Resolution
+RM6374.3.73,RM6374.3,73,Public Law Litigation and Dispute Resolution
+RM6374.3.83,RM6374.3,83,Statutory Civil Recovery
+RM6374.4.8,RM6374.4,8,Competition Law
+RM6374.4.9,RM6374.4,9,Construction Law
+RM6374.4.10,RM6374.4,10,Contracts
+RM6374.4.55,RM6374.4,55,Litigation and Dispute Resolution
+RM6374.4.62,RM6374.4,62,Planning Law
+RM6374.4.64,RM6374.4,64,Project and Asset Finance
+RM6374.4.65,RM6374.4,65,Projects and Transactions
+RM6374.4.68,RM6374.4,68,"Property, Real Estate and Real Estate Finance"
+RM6374.4.72,RM6374.4,72,Public Law
+RM6374.4.74,RM6374.4,74,Public Procurement Law
+RM6374.4.75,RM6374.4,75,Public-Private Partnerships (PPP)
+RM6374.5.2,RM6374.5,2,Assimilated Law
+RM6374.5.3,RM6374.5,3,Aviation and Airports
+RM6374.5.8,RM6374.5,8,Competition Law
+RM6374.5.20,RM6374.5,20,Dispute Resolution and Litigation Law
+RM6374.5.23,RM6374.5,23,Employment Law
+RM6374.5.26,RM6374.5,26,Environmental Law
+RM6374.5.38,RM6374.5,38,Health and Safety
+RM6374.5.40,RM6374.5,40,Highways Law
+RM6374.5.43,RM6374.5,43,Information Law including Data Protection Law
+RM6374.5.44,RM6374.5,44,Information Technology Law
+RM6374.5.45,RM6374.5,45,Insurance and Reinsurance
+RM6374.5.46,RM6374.5,46,Intellectual Property Law
+RM6374.5.49,RM6374.5,49,International Law
+RM6374.5.56,RM6374.5,56,Maritime and Shipping
+RM6374.5.61,RM6374.5,61,Pensions Law
+RM6374.5.62,RM6374.5,62,Planning Law
+RM6374.5.74,RM6374.5,74,Public Procurement Law
+RM6374.5.76,RM6374.5,76,Rail Commercial Law
+RM6374.5.77,RM6374.5,77,Real Estate and Real Estate Finance
+RM6374.5.78,RM6374.5,78,Regulatory Law
+RM6374.5.79,RM6374.5,79,Restructuring and Insolvency
+RM6374.5.84,RM6374.5,84,Subsidy Control Law
+RM6374.5.87,RM6374.5,87,Tax Law
+RM6374.6.6,RM6374.6,6,Clinical Negligence Specialist Services
+RM6374.6.36,RM6374.6,36,General Costs Law Services

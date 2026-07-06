@@ -13,11 +13,11 @@ class Supplier < ApplicationRecord
   with_options on: %i[basic_supplier_information] do
     before_validation :remove_excess_whitespace_from_name, :remove_excess_whitespace_from_duns_number, :remove_excess_whitespace_from_trading_name, :remove_excess_whitespace_from_additional_identifier
 
-    validates :name, presence: true, uniqueness: true, length: { maximum: MAX_FIELD_LENGTH }
-    validates :duns_number, presence: true, uniqueness: true, format: { with: /\A\d{9}\z/ }, unless: -> { self.class::ATTRIBUTES_TO_SKIP_VALIDATION.include?(:duns_number) }
-    validates :sme, inclusion: { in: [true, false] }, unless: -> { self.class::ATTRIBUTES_TO_SKIP_VALIDATION.include?(:sme) }
-    validates :trading_name, presence: true, length: { maximum: MAX_FIELD_LENGTH }, unless: -> { self.class::ATTRIBUTES_TO_SKIP_VALIDATION.include?(:trading_name) }
-    validates :additional_identifier, presence: true, length: { maximum: MAX_FIELD_LENGTH }, unless: -> { self.class::ATTRIBUTES_TO_SKIP_VALIDATION.include?(:additional_identifier) }
+    validates :name, presence: true, uniqueness: true, length: { maximum: MAX_FIELD_LENGTH }, if: -> { self.class::ATTRIBUTES_TO_VALIDATE.include?(:name) }
+    validates :duns_number, presence: true, uniqueness: true, format: { with: /\A\d{9}\z/ }, if: -> { self.class::ATTRIBUTES_TO_VALIDATE.include?(:duns_number) }
+    validates :sme, inclusion: { in: [true, false] }, if: -> { self.class::ATTRIBUTES_TO_VALIDATE.include?(:sme) }
+    validates :trading_name, presence: true, length: { maximum: MAX_FIELD_LENGTH }, if: -> { self.class::ATTRIBUTES_TO_VALIDATE.include?(:trading_name) }
+    validates :additional_identifier, presence: true, length: { maximum: MAX_FIELD_LENGTH }, if: -> { self.class::ATTRIBUTES_TO_VALIDATE.include?(:additional_identifier) }
   end
 
   private
