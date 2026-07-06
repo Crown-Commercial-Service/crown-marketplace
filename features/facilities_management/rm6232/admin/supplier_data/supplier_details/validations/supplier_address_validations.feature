@@ -22,14 +22,14 @@ Feature: Supplier address - validations
   Scenario Outline: Full address - postcode validation
     And I enter the following details into the form:
       | Building and street | 112 Test street |
-      | Town or city        | Westminister    |
-      | Postcode            | <postocde>      |
+      | Town or city        | Westminster    |
+      | Postcode            | <postcode>      |
     And I click on 'Save and return'
     Then I should see the following error messages:
       | Enter a valid postcode, for example SW1A 1AA |
 
     Examples:
-      | postocde |
+      | postcode |
       |          |
       | toast    |
       | A1111A   |
