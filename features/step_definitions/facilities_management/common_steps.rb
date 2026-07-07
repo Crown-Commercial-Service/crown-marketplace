@@ -3,7 +3,7 @@ Given 'I sign in and navigate to my account for {string}' do |framework|
   update_banner_cookie(true) if @javascript
   create_user_with_details
   step 'I sign in'
-  expect(page.find('h1')).to have_text(@user.email)
+  expect(page).to have_css('h1', text: @user.email)
 end
 
 # There is an issue where this will sometimes raise a
@@ -11,9 +11,7 @@ end
 # I'm not exactly sure why this happens but adding the rescue
 # To try again does seem to sort it out
 Then 'I am on the {string} page' do |title|
-  expect(page.find('h1')).to have_text(title)
-rescue NoMethodError
-  expect(page.find('h1')).to have_text(title)
+  expect(page).to have_css('h1', text: title)
 end
 
 When 'I click on {string}' do |button_text|
