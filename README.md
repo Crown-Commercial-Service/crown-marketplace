@@ -6,19 +6,15 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/37cd5c1a9986ca396884/maintainability)](https://codeclimate.com/github/Crown-Commercial-Service/crown-marketplace/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/37cd5c1a9986ca396884/test_coverage)](https://codeclimate.com/github/Crown-Commercial-Service/crown-marketplace/test_coverage)
 
-**Deployments**
-| Environment | Deployment status                                                                                                                                                 |
-| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Sandbox     | ![Latest Sandbox deployment](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml/badge.svg?branch=develop)       |
-| CMPDEV      | ![Latest CMPDEV deployment](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml/badge.svg?branch=main)         |
-| Preview     | ![Latest Preview deployment](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml/badge.svg?branch=preview)       |
-| Production  | ![Latest Production deployment](https://github.com/Crown-Commercial-Service/crown-marketplace/actions/workflows/setup_deployment.yml/badge.svg?branch=production) |
-
 This repository contains the code for:
 - Facilities Management
 - Crown Marketplace admin
 
 For any other services relating to the Crown Marketplace, please view [Crown Marketplace Legacy](https://github.com/Crown-Commercial-Service/crown-marketplace-legacy).
+
+## Crown Marketplace Runner
+
+Because this project is made up of two apps, it is recommended that you use the [Crown Marketplace Runner](https://github.com/Crown-Commercial-Service/crown-marketplace-runner) to setup and run the web applications locally.
 
 ## Prerequisites for installing the project
 
@@ -262,20 +258,17 @@ We have four environments which map to branches on github:
 | ----------- | ----------- | --------------------------------------------------------------------------------- |
 | Sandbox     | develop     | Used by developers to try out any changes that will affect the other environments |
 | CMPDEV      | main        | The testing environment                                                           |
-| Preview     | preview     | Environment that matches production and can be used for any final checks          |
-| Production  | production  | The live environment which uses use                                               |
+| Preview     |             | Environment that matches production and can be used for any final checks          |
+| Production  |             | The live environment which uses use                                               |
+
+Sandbox and CMPDEV are deployed with pushes to the respective branches. See [Deploying to Preview and Production](#deploying-to-preview-and-production) for how the code gets into the Preview and Production environments.
+
+### Deploying to Sandbox and CMPDEV
 
 When one of these branches are pushed to, the code will be released to the respective environments in the following process:
-- A GitHub action will run the unit and feature test suites against the branch.
-- If these tests pass, the AWS pipeline will be triggered using the [CCS AWS Pipeline action][].
-  Note, in preview and production you will be asked to review the release before it is deployed.
-- If something goes wrong during this phase you should:
-  - [investigate the action][]
-  - If the test section failed, try re-running them
-  - If the deployment section failed, try re-running them
-  - If that does not work and you have to release the code you can still do it within [AWS CodePipeline][]
+- The AWS pipeline will be triggered using the [CCS AWS Pipeline action][].
 - In AWS we use [AWS CodeBuild][] and [AWS CodePipeline][] to build and deploy the application.
--  A container is built using the `Dockerfile` in this repo, uploaded to the [AWS Elastic Container Registry][], and deployed using [AWS Elastic Container Service][].
+- A container is built using the `Dockerfile` in this repo, uploaded to the [AWS Elastic Container Registry][], and deployed using [AWS Elastic Container Service][].
 - Environment variables for the various containers running on the AWS infrastructure are obtained from the [AWS Systems Manager Parameter Store][aws-parameter-store].
 - See the [CMpDevEnvironment][] repository, particularly the [Developer Guide][CMp Developer Guide], for more details.
 
@@ -344,6 +337,16 @@ environments:
 
 - `LOG_LEVEL` can be used to manipulate the log level in production. Set to `'debug'` to see debug output; the default (if not set) is `:info`
 
+## Bank Holidays
+
+We load the Bank Holidays in the database through a combination of a CSV and the [GOV.UK Bank Holidays API][]. This is because the dates in API get moved as years go by so some dates get removed even though we still need them.
+
+The CSV can be updated by running the following command:
+```shell
+bin/rails db:update_bank_holidays
+```
+
+The data in the database is updated automatically by SideKiq so strictly speaking the CSV does not need to be updated but it would be good to do that once a year (last done on 11/08/2025)
 
 [geocoding-key]: https://console.developers.google.com/flows/enableapi?apiid=geocoding_backend&keyType=SERVER_SIDE
 [dotenv-rails]: https://github.com/bkeepers/dotenv
