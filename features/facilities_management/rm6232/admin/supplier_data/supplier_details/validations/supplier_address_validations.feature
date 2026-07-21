@@ -33,3 +33,4 @@ Feature: Supplier address - validations
       |          |
       | toast    |
       | A1111A   |
+
