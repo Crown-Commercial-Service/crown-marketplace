@@ -235,7 +235,7 @@ en:
           return_text: Return to your account
       procurements:
         new:
-          annual_contract_value: Annual contract cost
+          annual_contract_value: Estimated average annual contract value
           based_on_info: 'Based on the information provided, this procurement would be eligible for the following Lot, with your supplier shortlist as shown below:'
           based_on_info_plural: 'Based on the information provided, this procurement would be eligible for the following Lots, with your supplier shortlists as shown below:'
           change: Change
