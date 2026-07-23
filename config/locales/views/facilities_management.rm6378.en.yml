@@ -291,3 +291,4 @@ en:
           generic_requirements: "%{work_package_name} - Generic Requirements"
           heading: Work Package %{code} - %{work_package_name}
           service_specification: Service specification
+
