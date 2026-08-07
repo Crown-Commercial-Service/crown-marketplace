@@ -237,7 +237,7 @@ en:
         new:
           annual_contract_value: Estimated average annual contract value
           based_on_info: 'Based on the information provided, this procurement would be eligible for the following Lot, with your supplier shortlist as shown below:'
-          based_on_info_plural: 'Based on the information provided, this procurement would be eligible for the following Lots, with your supplier shortlists as shown below:'
+          based_on_info_plural: Based on the Information provided, this procurement would be eligible for the following Lots, with your supplier shortlist/s as shown below.
           change: Change
           contract_name:
             hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
@@ -256,6 +256,7 @@ en:
           selection_summary: Selection summary
           services: Services
           sub_lot: Sub-lot %{sub_lot}
+          two_procurements_notice: If your outcome is to run two procurements, you need to check the FM component sits within the correct lot based on the average estimated annual value of the FM element alone.
           year: year
         show:
           fm_framework_page: Facilities Management and Security Services framework
