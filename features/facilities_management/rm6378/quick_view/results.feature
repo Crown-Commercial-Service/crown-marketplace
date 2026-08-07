@@ -14,8 +14,8 @@ Feature: Information appears correctly on results page
       | Tees Valley |
       | Essex       |
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
-    And I enter '123456' for the annual contract cost
+    Then I am on the 'Average estimated contract value' page
+    And I enter '123456' for the Average estimated contract value
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I enter 'tomorrow' for the contract start date
@@ -32,7 +32,7 @@ Feature: Information appears correctly on results page
     And I should see the following 'regions' in the selection summary:
       | Tees Valley |
       | Essex       |
-    And I should see the following 'annual contract cost' in the selection summary:
+    And I should see the following 'Average estimated contract value' in the selection summary:
       | £123,456 |
     And I should see the following 'estimated contract start date' in the selection summary:
       | tomorrow |
@@ -50,7 +50,7 @@ Feature: Information appears correctly on results page
     And I click on 'Continue'
     Then I am on the 'Regions' page
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
+    Then I am on the 'Average estimated contract value' page
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I click on 'Continue'
@@ -69,7 +69,7 @@ Feature: Information appears correctly on results page
       | Tees Valley |
     And I select 'West of England'
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
+    Then I am on the 'Average estimated contract value' page
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I click on 'Continue'
@@ -80,17 +80,17 @@ Feature: Information appears correctly on results page
       | Essex           |
       | West of England |
 
-  Scenario: I can change the annual contract cost from the results page
-    Given I change the 'annual contract cost' from the selection summary
-    Then I am on the 'Annual contract cost' page
-    And I enter '123456789' for the annual contract cost
+  Scenario: I can change the Average estimated contract value from the results page
+    Given I change the 'Average estimated contract value' from the selection summary
+    Then I am on the 'Average estimated contract value' page
+    And I enter '123456789' for the Average estimated contract value
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in the following sub-lots:
       | 2b |
-    And I should see the following 'annual contract cost' in the selection summary:
+    And I should see the following 'Average estimated contract value' in the selection summary:
       | £123,456,789 |
 
   Scenario: I can change the estimated contract start date from the results page

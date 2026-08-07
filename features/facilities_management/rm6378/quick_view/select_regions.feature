@@ -97,7 +97,7 @@ Feature: Select regions
       | Inner London - East         |
       | East Lothian and Midlothian |
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
+    Then I am on the 'Average estimated contract value' page
     And I click on the 'Return to regions' back link
     Then I am on the 'Regions' page
     And the following items should appear in the basket:
