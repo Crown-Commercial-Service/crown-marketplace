@@ -12,7 +12,7 @@ Feature: Results validations
       | Essex |
     And I click on 'Continue'
     Then I am on the 'Average estimated contract value' page
-    And I enter '123456' for the Average estimated contract value
+    And I enter '123456' for 'the Average estimated contract value'
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I enter 'tomorrow' for the contract start date

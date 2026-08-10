@@ -1,4 +1,3 @@
----
 en:
   activemodel:
     errors:
@@ -299,10 +298,16 @@ en:
           region_singular: region found
       journey:
         annual_contract_value:
-          heading: Average estimated contract value
-          question: What is your average estimated contract value?
-          return_text: Return to your account
-          subtitle: Enter your average estimated annual value of the call off contract (including any potential Additional Works that you may put through the contract).
+          rm6232:
+            heading: Annual contract value
+            question: What is your annual contract value?
+            return_text: Return to your account
+            subtitle: Enter your annual value of the call off contract (including any potential Additional Works that you may put through the contract).
+          rm6378:
+            heading: Average estimated contract value
+            question: What is your average estimated contract value?
+            return_text: Return to your account
+            subtitle: Enter your average estimated annual value of the call off contract (including any potential Additional Works that you may put through the contract).
         choose_locations:
           checkbox_legend: "%{section} items"
           heading: Regions

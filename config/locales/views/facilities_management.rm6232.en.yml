@@ -453,6 +453,7 @@ en:
             item_3: receive a compliant Lot recommendation
           youneedtoknow: 'To receive a shortlist and compliant Lot, you need to know:'
       journey:
+      
         choose_services:
           learn_more: Further details (opens in a new tab)
       procurements:

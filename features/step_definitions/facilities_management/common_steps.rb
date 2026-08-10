@@ -80,6 +80,10 @@ Then('I click on the {string} link') do |link_text|
   page.click_link(link_text)
 end
 
+Then('I enter {string} for the Average estimated contract value') do |value|
+  fill_in 'annual_contract_value', with: value
+end
+
 Then('the caption is {string}') do |caption|
   expect(page.first('span[class*=govuk-caption]')).to have_text(caption)
 end
