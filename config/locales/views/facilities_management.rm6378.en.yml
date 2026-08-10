@@ -9,6 +9,7 @@ en:
               blank: The Average estimated contract value must be a whole number greater than 0
               greater_than: The Average estimated contract value must be a whole number greater than 0
               greater_than_or_equal_to: The Average estimated contract value must be a whole number greater than 0
+              less_than: The Average estimated contract value must be less than 1,000,000,000,000 (1 trillion)
               less_than_or_equal_to: The Average estimated contract value must be less than 1,000,000,000,000 (1 trillion)
               not_a_number: The Average estimated contract value must be a whole number greater than 0
               not_an_integer: The Average estimated contract value must be a whole number greater than 0
