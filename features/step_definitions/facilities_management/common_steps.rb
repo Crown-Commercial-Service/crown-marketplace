@@ -111,3 +111,12 @@ PAGE_HEADING = {
   'supplier' => 'Facilities management supplier account',
   'admin' => 'Managing framework and supplier data'
 }.freeze
+
+Then('I enter {string} for the {string}') do |value, field_name|
+  case field_name
+  when 'Average estimated contract value', 'annual contract cost'
+    fill_in 'annual_contract_value', with: value
+  else
+    fill_in field_name, with: value
+  end
+end
