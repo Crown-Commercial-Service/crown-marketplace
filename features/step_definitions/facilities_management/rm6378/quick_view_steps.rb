@@ -27,3 +27,7 @@ def add_contract_start_date(day, month, year)
   quick_view_page.contract_start_date.month.set(month)
   quick_view_page.contract_start_date.year.set(year)
 end
+
+Then('I enter {string} for the Average estimated contract value') do |annual_contract_value|
+  fill_in 'annual_contract_value', with: annual_contract_value
+end
