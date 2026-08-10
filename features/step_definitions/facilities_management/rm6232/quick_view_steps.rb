@@ -22,8 +22,10 @@ Then('I should see the following {string} in the selection summary:') do |option
     raise "cannot check #{option} selection summary"
   end
 end
+
 Given('I change the {string} from the selection summary') do |option|
-  quick_view_page.selection_summary.send(option.to_sym).change.click
+  method_name = option == 'Average estimated contract value' ? 'annual contract cost' : option
+  quick_view_page.selection_summary.send(method_name.to_sym).change.click
 end
 
 Given('I click on the service specification for {string}') do |service_name|
