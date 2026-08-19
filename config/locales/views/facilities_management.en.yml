@@ -300,14 +300,9 @@ en:
       journey:
         annual_contract_value:
           heading: Annual contract cost
-          question: What is your annual contract cost?
+          question: What is your estimate for the annual contract cost?
           return_text: Return to your account
-          rm6378:
-            heading: Average estimated contract value
-            question: What is your average estimated contract value?
-            return_text: Return to your account
-            subtitle: Enter your average estimated annual value of the call off contract (including any potential Additional Works that you may put through the contract).
-          subtitle: Enter your annual value of the call off contract (including any potential Additional Works that you may put through the contract).
+          subtitle: Enter your estimated annual cost of the call off contract (including any potential billable works that you may put through the contract).
         choose_locations:
           checkbox_legend: "%{section} items"
           heading: Regions
