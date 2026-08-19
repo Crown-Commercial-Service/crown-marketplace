@@ -1047,6 +1047,8 @@ RM6378.2a.D10,RM6378.2a,D10,Display Energy Certificates (DECs),D,"Auditing, issu
 RM6378.2a.D11,RM6378.2a,D11,Energy Performance Certificates (EPCs),D,"Auditing, issuing and displaying of EPCs, and renewing of EPC certificates"
 RM6378.2a.D12,RM6378.2a,D12,Radon Gas Management Services,D,"Managing radon requirements, including radon surveys and radon risk assessments"
 RM6378.2a.D13,RM6378.2a,D13,Permit to Work (PtW),D,Issuing and managing permits to work
+RM6378.2a.H13,RM6378.2a,H13,Stores and Goods Management Services,H,"Provision, management and operation of a storage and supply service within the buyer premises"
+RM6378.2a.H14,RM6378.2a,H14,Portable Washroom Solutions,H,"Management and cleaning of latrines, and the supply of portable facilities"
 RM6378.2a.H19,RM6378.2a,H19,Housing and Residential Accommodation Management,H,"Professionally managed housing and estates management service, for residential occupancy and potential occupancy by buyer staff"
 RM6378.2a.H20,RM6378.2a,H20,Energy and Utilities Management Bureau Services,H,"Provide, operate and manage an Energy and Utilities Management Bureau"
 RM6378.2a.M2,RM6378.2a,M2,Hard / Soft FM CAFM Requirements,M,"CAFM system and associated software required to deliver Hard/Soft FM services, aligned to asset requirements and SFG20"
@@ -1086,6 +1088,8 @@ RM6378.2b.D10,RM6378.2b,D10,Display Energy Certificates (DECs),D,"Auditing, issu
 RM6378.2b.D11,RM6378.2b,D11,Energy Performance Certificates (EPCs),D,"Auditing, issuing and displaying of EPCs, and renewing of EPC certificates"
 RM6378.2b.D12,RM6378.2b,D12,Radon Gas Management Services,D,"Managing radon requirements, including radon surveys and radon risk assessments"
 RM6378.2b.D13,RM6378.2b,D13,Permit to Work (PtW),D,Issuing and managing permits to work
+RM6378.2b.H13,RM6378.2b,H13,Stores and Goods Management Services,H,"Provision, management and operation of a storage and supply service within the buyer premises"
+RM6378.2b.H14,RM6378.2b,H14,Portable Washroom Solutions,H,"Management and cleaning of latrines, and the supply of portable facilities"
 RM6378.2b.H19,RM6378.2b,H19,Housing and Residential Accommodation Management,H,"Professionally managed housing and estates management service, for residential occupancy and potential occupancy by buyer staff"
 RM6378.2b.H20,RM6378.2b,H20,Energy and Utilities Management Bureau Services,H,"Provide, operate and manage an Energy and Utilities Management Bureau"
 RM6378.2b.M2,RM6378.2b,M2,Hard / Soft FM CAFM Requirements,M,"CAFM system and associated software required to deliver Hard/Soft FM services, aligned to asset requirements and SFG20"
@@ -1139,6 +1143,7 @@ RM6378.3a.H16,RM6378.3a,H16,Sports and Leisure Service,H,"Full management of the
 RM6378.3a.H17,RM6378.3a,H17,"Transport, Driver and Vehicle Service",H,"Including onsite and intersite transport services, vehicle inspection and maintenance services, valet services, breakdown services"
 RM6378.3a.H18,RM6378.3a,H18,First Aid and Medical Service,H,First aid and medical services in line with health and safety executive guidance to visitors or staff who are injured whilst on the buyer premises
 RM6378.3a.H19,RM6378.3a,H19,Housing and Residential Accommodation Management,H,"Professionally managed housing and estates management service, for residential occupancy and potential occupancy by buyer staff"
+RM6378.3a.H20,RM6378.3a,H20,Energy and Utilities Management Bureau Services,H,"Provide, operate and manage an Energy and Utilities Management Bureau"
 RM6378.3a.H21,RM6378.3a,H21,Additional Support Services,H,"Provision of additional support services, for example, clerical support, event management, switchboard services"
 RM6378.3a.I1,RM6378.3a,I1,Reception Service,I,Provision of a professional reception service
 RM6378.3a.I2,RM6378.3a,I2,Taxi Booking Service,I,Managing and co-ordinating a taxi booking service for the buyer
@@ -1211,6 +1216,7 @@ RM6378.3b.H16,RM6378.3b,H16,Sports and Leisure Service,H,"Full management of the
 RM6378.3b.H17,RM6378.3b,H17,"Transport, Driver and Vehicle Service",H,"Including onsite and intersite transport services, vehicle inspection and maintenance services, valet services, breakdown services"
 RM6378.3b.H18,RM6378.3b,H18,First Aid and Medical Service,H,First aid and medical services in line with health and safety executive guidance to visitors or staff who are injured whilst on the buyer premises
 RM6378.3b.H19,RM6378.3b,H19,Housing and Residential Accommodation Management,H,"Professionally managed housing and estates management service, for residential occupancy and potential occupancy by buyer staff"
+RM6378.3b.H20,RM6378.3b,H20,Energy and Utilities Management Bureau Services,H,"Provide, operate and manage an Energy and Utilities Management Bureau"
 RM6378.3b.H21,RM6378.3b,H21,Additional Support Services,H,"Provision of additional support services, for example, clerical support, event management, switchboard services"
 RM6378.3b.I1,RM6378.3b,I1,Reception Service,I,Provision of a professional reception service
 RM6378.3b.I2,RM6378.3b,I2,Taxi Booking Service,I,Managing and co-ordinating a taxi booking service for the buyer
