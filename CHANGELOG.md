@@ -9,7 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add the framework for the new Legal Services framework RM6374 ([PR 5354](https://github.com/Crown-Commercial-Service/crown-marketplace-legacy/pull/5354))
+## [8.1.0] - 2026-08-19
+
+### Added
+
+- Framework support for Legal Services RM6374 ([PR 5354](https://github.com/Crown-Commercial-Service/crown-marketplace-legacy/pull/5354))
+- Missing FM RM6378 services for Lots 2A, 2B, 3A, and 3C ([PR 5393](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5393)) 
+    - *Note:* Admin spreadsheet uploads do not yet support these new services. Admins can manage them via the UI while tech debt is addressed in a future release.
+
+### Changed
+
+- Question copy change for FM RM6378  ([PR 5392](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5392))
 
 ## [8.0.0] - 2026-06-15
 
