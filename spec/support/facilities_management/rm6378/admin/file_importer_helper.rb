@@ -117,9 +117,19 @@ module FacilitiesManagement
         end
       end
 
-      def self.categories
+      def self.categories # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
         @categories ||= Framework.find('RM6378').lots.order(:number).map do |lot|
+          excluded_services = case lot.number
+                              when '2a', '2b'
+                                %w[H13 H14]
+                              when '3a', '3b'
+                                %w[H20]
+                              else
+                                []
+                              end
+
           services = Service.where(lot_id: lot.id)
+          services = services.where.not(number: excluded_services) if excluded_services.any?
 
           category_names = services.pluck(:category).uniq
 

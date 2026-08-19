@@ -112,9 +112,9 @@ RSpec.describe FacilitiesManagement::RM6378::Admin::FilesImporter do
   describe 'import_data' do
     let(:expected_supplier_results) do
       {
-        'Rex LTD': { lots: 4, services: 167, jurisdictions: 212 },
-        'Nia Corp': { lots: 4, services: 172, jurisdictions: 216 },
-        'Tora LTD': { lots: 8, services: 331, jurisdictions: 416 },
+        'Rex LTD': { lots: 4, services: 168, jurisdictions: 212 },
+        'Nia Corp': { lots: 4, services: 169, jurisdictions: 216 },
+        'Tora LTD': { lots: 8, services: 333, jurisdictions: 416 },
         'Vandham Eexc Corp': { lots: 4, services: 165, jurisdictions: 216 },
         'Morag Jewel LTD': { lots: 6, services: 253, jurisdictions: 310 },
         'ZEKE VON GEMBU Corp': { lots: 2, services: 85, jurisdictions: 108 },
