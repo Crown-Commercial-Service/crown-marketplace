@@ -7,22 +7,25 @@ Then('I should be in sub-lot {string}') do |sub_lot|
 end
 
 Then('I should see the following {string} in the selection summary:') do |option, selection_summary_table|
+  method_name = option == 'Average estimated contract value' ? 'annual contract cost' : option
+
   case option
   when 'services', 'regions'
-    quick_view_page.selection_summary.send(option.to_sym).selection.zip(selection_summary_table.raw.flatten).each do |element, expected_value|
+    quick_view_page.selection_summary.send(method_name.to_sym).selection.zip(selection_summary_table.raw.flatten).each do |element, expected_value|
       expect(element).to have_text(expected_value)
     end
-  when 'annual contract cost', 'estimated contract duration', 'requirement linked to pfi'
-    expect(quick_view_page.selection_summary.send(option.to_sym).selection).to have_text(selection_summary_table.raw.flatten.first)
+  when 'annual contract cost', 'Average estimated contract value', 'estimated contract duration', 'requirement linked to pfi'
+    expect(quick_view_page.selection_summary.send(method_name.to_sym).selection).to have_text(selection_summary_table.raw.flatten.first)
   when 'estimated contract start date'
-    expect(quick_view_page.selection_summary.send(option.to_sym).selection).to have_text(date_options_to_date(selection_summary_table.raw.flatten.first).strftime('%-d %B %Y'))
+    expect(quick_view_page.selection_summary.send(method_name.to_sym).selection).to have_text(date_options_to_date(selection_summary_table.raw.flatten.first).strftime('%-d %B %Y'))
   else
     raise "cannot check #{option} selection summary"
   end
 end
 
 Given('I change the {string} from the selection summary') do |option|
-  quick_view_page.selection_summary.send(option.to_sym).change.click
+  method_name = option == 'Average estimated contract value' ? 'annual contract cost' : option
+  quick_view_page.selection_summary.send(method_name.to_sym).change.click
 end
 
 Given('I click on the service specification for {string}') do |service_name|

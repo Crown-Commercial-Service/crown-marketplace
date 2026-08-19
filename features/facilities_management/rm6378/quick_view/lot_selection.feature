@@ -1,4 +1,4 @@
-Feature: Service selection and annual contract cost result in correct sub lot
+Feature: Service selection and Average estimated contract value result in correct sub lot
 
   Background: Navigate to the services page
     Given I sign in and navigate to my account for 'RM6378'
@@ -16,8 +16,8 @@ Feature: Service selection and annual contract cost result in correct sub lot
       | Tees Valley |
       | Essex       |
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
-    And I enter '<estimated_annual_cost>' for the annual contract cost
+    Then I am on the 'Average estimated contract value' page
+    And I enter '<estimated_annual_cost>' for the 'Average estimated contract value'
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I enter 'tomorrow' for the contract start date
@@ -44,8 +44,8 @@ Feature: Service selection and annual contract cost result in correct sub lot
       | Tees Valley |
       | Essex       |
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
-    And I enter '<estimated_annual_cost>' for the annual contract cost
+    Then I am on the 'Average estimated contract value' page
+    And I enter '<estimated_annual_cost>' for the 'Average estimated contract value'
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I enter 'tomorrow' for the contract start date
@@ -72,8 +72,8 @@ Feature: Service selection and annual contract cost result in correct sub lot
       | Tees Valley |
       | Essex       |
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
-    And I enter '<estimated_annual_cost>' for the annual contract cost
+    Then I am on the 'Average estimated contract value' page
+    And I enter '<estimated_annual_cost>' for the 'Average estimated contract value'
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I enter 'tomorrow' for the contract start date
@@ -100,8 +100,8 @@ Feature: Service selection and annual contract cost result in correct sub lot
       | Tees Valley |
       | Essex       |
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
-    And I enter '123456' for the annual contract cost
+    Then I am on the 'Average estimated contract value' page
+    And I enter '123456' for the 'Average estimated contract value'
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I enter 'tomorrow' for the contract start date
@@ -132,8 +132,8 @@ Feature: Service selection and annual contract cost result in correct sub lot
       | Tees Valley |
       | Essex       |
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
-    And I enter '2500000' for the annual contract cost
+    Then I am on the 'Average estimated contract value' page
+    And I enter '2500000' for the Average estimated contract value
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I enter 'tomorrow' for the contract start date
@@ -157,8 +157,8 @@ Feature: Service selection and annual contract cost result in correct sub lot
       | Tees Valley |
       | Essex       |
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
-    And I enter '2500000' for the annual contract cost
+    Then I am on the 'Average estimated contract value' page
+    And I enter '2500000' for the Average estimated contract value
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I enter 'tomorrow' for the contract start date

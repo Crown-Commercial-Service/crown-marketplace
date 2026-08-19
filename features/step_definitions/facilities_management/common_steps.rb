@@ -80,6 +80,21 @@ Then('I click on the {string} link') do |link_text|
   page.click_link(link_text)
 end
 
+Then('I enter {string} for {string}') do |value, field_name|
+  clean_field_name = field_name.sub(/^the /i, '')
+
+  case clean_field_name
+  when 'Average estimated contract value', 'annual contract cost'
+    fill_in 'annual_contract_value', with: value
+  else
+    fill_in clean_field_name, with: value
+  end
+end
+
+Then('I enter {string} for the {string}') do |value, field_name|
+  step "I enter '#{value}' for '#{field_name}'"
+end
+
 Then('the caption is {string}') do |caption|
   expect(page.first('span[class*=govuk-caption]')).to have_text(caption)
 end

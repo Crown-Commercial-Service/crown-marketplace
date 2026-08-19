@@ -11,8 +11,8 @@ Feature: Information about your requirements validations
     Then I select the following items:
       | Tees Valley |
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
-    And I enter '100000' for the annual contract cost
+    Then I am on the 'Average estimated contract value' page
+    And I enter '100000' for the Average estimated contract value
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
 

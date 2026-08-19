@@ -16,8 +16,8 @@ Feature: Information appears correctly on results page in the complex scenario
       | Tees Valley |
       | Essex       |
     And I click on 'Continue'
-    Then I am on the 'Annual contract cost' page
-    And I enter '123456' for the annual contract cost
+    Then I am on the 'Average estimated contract value' page
+    And I enter '123456' for the 'Average estimated contract value'
     And I click on 'Continue'
     Then I am on the 'Information about your requirements' page
     And I enter 'tomorrow' for the contract start date
@@ -37,7 +37,7 @@ Feature: Information appears correctly on results page in the complex scenario
     And I should see the following 'regions' in the selection summary:
       | Tees Valley |
       | Essex       |
-    And I should see the following 'annual contract cost' in the selection summary:
+    And I should see the following 'Average estimated contract value' in the selection summary:
       | £123,456 |
     And I should see the following 'estimated contract start date' in the selection summary:
       | tomorrow |
