@@ -148,6 +148,11 @@ en:
             item_3: receive a compliant Lot recommendation
           youneedtoknow: 'To receive a shortlist and compliant Lot, you need to know:'
       journey:
+        annual_contract_value:
+          heading: Average estimated contract value
+          question: What is your average estimated contract value?
+          return_text: Return to your account
+          subtitle: Enter your average estimated annual value of the call off contract (including any potential Additional Works that you may put through the contract).
         choose_locations:
           regions:
             section:
@@ -179,11 +184,6 @@ en:
                 title: Scotland
               TLN:
                 title: Northern Ireland
-        annual_contract_value:
-          heading: Average estimated contract value
-          question: What is your average estimated contract value?
-          return_text: Return to your account
-          subtitle: Enter your average estimated annual value of the call off contract (including any potential Additional Works that you may put through the contract).
         choose_services:
           learn_more: Further details (opens in a new tab)
           services:
