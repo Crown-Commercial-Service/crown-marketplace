@@ -263,6 +263,9 @@ We have four environments which map to branches on github:
 
 Sandbox and CMPDEV are deployed with pushes to the respective branches. See [Deploying to Preview and Production](#deploying-to-preview-and-production) for how the code gets into the Preview and Production environments.
 
+> **Note:** The **preview** and **production** branches are managed by AWS CodePipeline. Direct commits or pushes to these branches are strictly prohibited.
+
+
 ### Deploying to Sandbox and CMPDEV
 
 When one of these branches are pushed to, the code will be released to the respective environments in the following process:
