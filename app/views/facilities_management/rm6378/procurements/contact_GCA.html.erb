@@ -1,0 +1,31 @@
+<% content_for :page_title, t(".title") %>
+
+<% if flash[:second_procurement_name] %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_notification_banner(t('.second_procurement_banner.text_html', second_procurement_name: flash[:second_procurement_name], dashboard_link: link_to(t('.second_procurement_banner.dashboard_link_text'), facilities_management_rm6378_procurements_path, class: 'govuk-notification-banner__link') )) %>
+    </div>
+  </div>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span id="procurement-subtitle" class="govuk-caption-m govuk-!-font-size-24">
+      <%= @procurement.contract_name %> - <%= @procurement.contract_number %>
+    </span>
+    <h1 class="govuk-heading-xl">
+      <%= t(".title") %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <p class="govuk-body-l">
+      <%= t('.body_html', reference_number: @procurement.contract_number) %>
+    </p>
+    <%= link_to t('.back_to_start'), facilities_management_journey_question_path(framework: 'RM6378', slug: 'choose-services'), class: 'govuk-button', data: { module: 'govuk-button' } %>
+    <br/>
+    <%= link_to t('.return_to_your_account'), facilities_management_rm6378_path, class: 'govuk-body govuk-link--no-visited-state' %>
+  </div>
+</div>

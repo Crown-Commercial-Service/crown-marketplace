@@ -10,7 +10,13 @@ module FacilitiesManagement
         @searches = current_user.procurements.where(framework_id: 'RM6378').order(updated_at: :asc)
       end
 
-      def show; end
+      def show
+        # h19:Housing and Residential Accommodation Management
+        service_ids = @procurement.procurement_details&.dig('service_ids') || []
+        @contains_h19 = service_ids.any? { |code| code.to_s.end_with?('H19') }
+
+        render :contact_GCA if @contains_h19
+      end
 
       def new; end
 

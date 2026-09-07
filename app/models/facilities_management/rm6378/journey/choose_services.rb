@@ -16,7 +16,11 @@ module FacilitiesManagement
       attribute :private_finance_initiative
 
       def next_step_class
-        Journey::ChooseLocations
+        if service_codes.include?('H19')
+          Journey::AnnualContractValue
+        else
+          Journey::ChooseLocations
+        end
       end
 
       def services_grouped_by_category

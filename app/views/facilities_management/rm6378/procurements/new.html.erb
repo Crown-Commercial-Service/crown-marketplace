@@ -1,144 +1,148 @@
 <% content_for :page_title, t('.heading') %>
+<% contains_h19 = @services.any? { |service| service.number == 'H19' } %>
 
 <%= render partial: 'shared/error_summary', locals: { errors: @procurements.first.errors } %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-xl">
-      <%= t('.heading') %>
-    </h1>
-    <p class="govuk-body-l">
-      <%= @procurements.length > 1 ? t('.based_on_info_plural') : t('.based_on_info') %>
-    </p>
+<% if not contains_h19 %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">
+        <%= t('.heading') %>
+      </h1>
+      <p class="govuk-body-l">
+        <%= @procurements.length > 1 ? t('.based_on_info_plural') : t('.based_on_info') %>
+      </p>
 
-    <p class="govuk-body">
-      <%= t('.two_procurements_notice') %>
-    </p>
+      <p class="govuk-body">
+        <%= t('.two_procurements_notice') %>
+      </p>
 
-  </div>
-</div>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-one-third">
-    <h2 class="govuk-heading-m">
-      <%= t('.selection_summary') %>
-    </h2>
-    <div class="ccs-summary-box">
-      <div class="ccs-summary-box__headings">
-        <span class="ccs-summary-box__title">
-          <%= t('.services') %>
-        </span>
-        <span class="ccs-summary-box__change">
-          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-services', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
-        </span>
-      </div>
-      <div class="ccs-summary-box__content">
-        <%= govuk_details("#{@services.count} selected") do %>
-          <ul class="govuk-list govuk-list--bullet">
-            <% @services.each do |service| %>
-              <li>
-                <%= service.name %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
-    </div>
-    <div class="ccs-summary-box">
-      <div class="ccs-summary-box__headings">
-        <span class="ccs-summary-box__title">
-          <%= t('.regions') %>
-        </span>
-        <span class="ccs-summary-box__change">
-          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-locations', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
-        </span>
-      </div>
-      <div class="ccs-summary-box__content">
-        <%= govuk_details("#{@regions.count} selected") do %>
-          <ul class="govuk-list govuk-list--bullet">
-            <% @regions.each do |region| %>
-              <li>
-                <%= region.name %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
-    </div>
-    <div class="ccs-summary-box">
-      <div class="ccs-summary-box__headings">
-        <div class="ccs-summary-box__title">
-          <%= t('.annual_contract_value') %>
-        </div>
-        <div class="ccs-summary-box__change">
-          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'annual-contract-value', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
-        </div>
-      </div>
-      <div class="ccs-summary-box__content">
-        <%= format_money(@annual_contract_value, 0) %>
-      </div>
-    </div>
-    <div class="ccs-summary-box">
-      <div class="ccs-summary-box__headings">
-        <div class="ccs-summary-box__title">
-          <%= t('.estimated_contract_start_date') %>
-        </div>
-        <div class="ccs-summary-box__change">
-          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'information-about-your-requirements', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
-        </div>
-      </div>
-      <div class="ccs-summary-box__content">
-        <%= format_date(@contract_start_date) %>
-      </div>
-    </div>
-    <div class="ccs-summary-box">
-      <div class="ccs-summary-box__headings">
-        <div class="ccs-summary-box__title">
-          <%= t('.estimated_contract_duration') %>
-        </div>
-        <div class="ccs-summary-box__change">
-          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'information-about-your-requirements', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
-        </div>
-      </div>
-      <div class="ccs-summary-box__content">
-        <%= pluralize(@estimated_contract_duration, t('.year')) %>
-      </div>
-    </div>
-    <div class="ccs-summary-box">
-      <div class="ccs-summary-box__headings">
-        <div class="ccs-summary-box__title">
-          <%= t('.private_finance_initiative') %>
-        </div>
-        <div class="ccs-summary-box__change">
-          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'information-about-your-requirements', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
-        </div>
-      </div>
-      <div class="ccs-summary-box__content">
-        <%= t(@private_finance_initiative) %>
-      </div>
     </div>
   </div>
-  <div class="govuk-grid-column-two-thirds">
-    <%= govuk_tabs(
-      @procurements.map do |procurement|
-        {
-          label: tag.span(t('.sub_lot', sub_lot: procurement.lot.number), class: 'govuk-!-font-weight-bold govuk-!-font-size-27'),
-          panel: {
-            content: render(partial: 'supplier_list', locals: { suppliers: procurement.suppliers }),
-            attributes: {
-              id: "sub-lot-#{procurement.lot.number}"
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-m">
+        <%= t('.selection_summary') %>
+      </h2>
+      <div class="ccs-summary-box">
+        <div class="ccs-summary-box__headings">
+          <span class="ccs-summary-box__title">
+            <%= t('.services') %>
+          </span>
+          <span class="ccs-summary-box__change">
+            <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-services', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+          </span>
+        </div>
+        <div class="ccs-summary-box__content">
+          <%= govuk_details("#{@services.count} selected") do %>
+            <ul class="govuk-list govuk-list--bullet">
+              <% @services.each do |service| %>
+                <li>
+                  <%= service.name %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+      <div class="ccs-summary-box">
+        <div class="ccs-summary-box__headings">
+          <span class="ccs-summary-box__title">
+            <%= t('.regions') %>
+          </span>
+          <span class="ccs-summary-box__change">
+            <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-locations', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+          </span>
+        </div>
+        <div class="ccs-summary-box__content">
+          <%= govuk_details("#{@regions.count} selected") do %>
+            <ul class="govuk-list govuk-list--bullet">
+              <% @regions.each do |region| %>
+                <li>
+                  <%= region.name %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+      <div class="ccs-summary-box">
+        <div class="ccs-summary-box__headings">
+          <div class="ccs-summary-box__title">
+            <%= t('.annual_contract_value') %>
+          </div>
+          <div class="ccs-summary-box__change">
+            <%= link_to t('.change'), journey_step_url_former(journey_slug: 'annual-contract-value', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+          </div>
+        </div>
+        <div class="ccs-summary-box__content">
+          <%= format_money(@annual_contract_value, 0) %>
+        </div>
+      </div>
+      <div class="ccs-summary-box">
+        <div class="ccs-summary-box__headings">
+          <div class="ccs-summary-box__title">
+            <%= t('.estimated_contract_start_date') %>
+          </div>
+          <div class="ccs-summary-box__change">
+            <%= link_to t('.change'), journey_step_url_former(journey_slug: 'information-about-your-requirements', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+          </div>
+        </div>
+        <div class="ccs-summary-box__content">
+          <%= format_date(@contract_start_date) %>
+        </div>
+      </div>
+      <div class="ccs-summary-box">
+        <div class="ccs-summary-box__headings">
+          <div class="ccs-summary-box__title">
+            <%= t('.estimated_contract_duration') %>
+          </div>
+          <div class="ccs-summary-box__change">
+            <%= link_to t('.change'), journey_step_url_former(journey_slug: 'information-about-your-requirements', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+          </div>
+        </div>
+        <div class="ccs-summary-box__content">
+          <%= pluralize(@estimated_contract_duration, t('.year')) %>
+        </div>
+      </div>
+      <div class="ccs-summary-box">
+        <div class="ccs-summary-box__headings">
+          <div class="ccs-summary-box__title">
+            <%= t('.private_finance_initiative') %>
+          </div>
+          <div class="ccs-summary-box__change">
+            <%= link_to t('.change'), journey_step_url_former(journey_slug: 'information-about-your-requirements', private_finance_initiative: @private_finance_initiative, estimated_contract_duration: @estimated_contract_duration, contract_start_date: @contract_start_date, annual_contract_value: @annual_contract_value, region_codes: @regions.pluck(:id), service_codes: @services.pluck(:number)), class: 'govuk-link govuk-link--no-visited-state' %>
+          </div>
+        </div>
+        <div class="ccs-summary-box__content">
+          <%= t(@private_finance_initiative) %>
+        </div>
+      </div>
+    </div>
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_tabs(
+        @procurements.map do |procurement|
+          {
+            label: tag.span(t('.sub_lot', sub_lot: procurement.lot.number), class: 'govuk-!-font-weight-bold govuk-!-font-size-27'),
+            panel: {
+              content: render(partial: 'supplier_list', locals: { suppliers: procurement.suppliers }),
+              attributes: {
+                id: "sub-lot-#{procurement.lot.number}"
+              }
             }
           }
+        end,
+        attributes: {
+          id: 'procurement-search-results'
         }
-      end,
-      attributes: {
-        id: 'procurement-search-results'
-      }
-    ) %>
+      ) %>
+    </div>
   </div>
-</div>
 
-<hr class="govuk-section-break govuk-section-break--m">
+  <hr class="govuk-section-break govuk-section-break--m">
+
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
