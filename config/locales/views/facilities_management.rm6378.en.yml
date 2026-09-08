@@ -242,6 +242,14 @@ en:
             question: Is your requirement linked to a current or previous Private Finance Initiative (PFI)?
           return_text: Return to your account
       procurements:
+        contact_GCA:
+          back_to_start: Back to start
+          body_html: Housing and residential accommodation management has been selected. Email <a href='mailto:info@gca.gov.uk'>info@gca.gov.uk</a> to discuss your requirement and lotting. Quote <strong>%{reference_number}</strong> in your email.
+          return_to_your_account: Return to your account
+          second_procurement_banner:
+            dashboard_link_text: from the dashboard
+            text_html: Your result which included security services was saved as %{second_procurement_name} and can be found %{dashboard_link}
+          title: Please contact GCA
         new:
           annual_contract_value: Estimated average annual contract value
           based_on_info: 'Based on the information provided, this procurement would be eligible for the following Lot, with your supplier shortlist as shown below:'

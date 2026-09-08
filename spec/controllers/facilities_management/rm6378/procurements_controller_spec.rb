@@ -36,6 +36,42 @@ RSpec.describe FacilitiesManagement::RM6378::ProcurementsController do
     end
   end
 
+  describe 'GET show' do
+    let(:procurement) do
+      create(
+        :facilities_management_rm6378_procurement,
+        user: user,
+        procurement_details: { 'service_ids' => service_ids }
+      )
+    end
+
+    before { get :show, params: { id: procurement.id } }
+
+    context 'when service_ids contains H19:Housing and Residential Accommodation Management' do
+      let(:service_ids) { ['RM6378.1a.H19', 'RM6378.1a.C1'] }
+
+      it 'assigns @contains_h19 to true' do
+        expect(assigns(:contains_h19)).to be true
+      end
+
+      it 'renders the contact_GCA template' do
+        expect(response).to render_template('contact_GCA')
+      end
+    end
+
+    context 'when service_ids does not contain H19:Housing and Residential Accommodation Management' do
+      let(:service_ids) { ['RM6378.1a.C1', 'RM6378.1a.C2'] }
+
+      it 'assigns @contains_h19 to false' do
+        expect(assigns(:contains_h19)).to be false
+      end
+
+      it 'renders the standard show template' do
+        expect(response).to render_template('show')
+      end
+    end
+  end
+
   describe 'GET new' do
     let(:service_codes) { ['C1', 'C2'] }
 
