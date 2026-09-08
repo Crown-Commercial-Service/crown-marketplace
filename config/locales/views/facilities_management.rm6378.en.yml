@@ -244,7 +244,7 @@ en:
       procurements:
         contact_GCA:
           back_to_start: Back to start
-          body_html: Housing and residential accommodation management has been selected. Please email <a href='mailto:info@gca.gov.uk'>info@gca.gov.uk</a> to discuss your requirement and lotting. Please quote reference <strong>%{reference_number}</strong> in your email.
+          body_html: Housing and residential accommodation management has been selected. Email <a href='mailto:info@gca.gov.uk'>info@gca.gov.uk</a> to discuss your requirement and lotting. Quote <strong>%{reference_number}</strong> in your email.
           return_to_your_account: Return to your account
           second_procurement_banner:
             dashboard_link_text: from the dashboard
