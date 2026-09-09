@@ -53,6 +53,9 @@ module FacilitiesManagement::RM6378
       end
 
       def determine_facilities_management_lot_number(service_numbers)
+        check_edge_case = mod_services_check(service_numbers)
+        return check_edge_case unless check_edge_case.nil?
+
         total_service_count = Service.where(lot_id: 'RM6378.1a', number: service_numbers).count
         hard_fm_service_count = Service.where(lot_id: 'RM6378.2a', number: service_numbers).count
         soft_fm_service_count = Service.where(lot_id: 'RM6378.3a', number: service_numbers).count
@@ -68,6 +71,46 @@ module FacilitiesManagement::RM6378
           # TOTAL FM
           '1'
         )
+      end
+
+      def mod_services_check(service_numbers) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+        h_services = ['H13', 'H14']
+        s_services = ['H20']
+
+        h_count = (service_numbers & h_services).count
+        s_count = (service_numbers & s_services).count
+
+        remaining_services = service_numbers - h_services - s_services
+
+        hard_fm_service_count = Service.where(lot_id: 'RM6378.2a', number: remaining_services).count
+        soft_fm_service_count = Service.where(lot_id: 'RM6378.3a', number: remaining_services).count
+
+        return '1' if h_count.positive? && s_count.positive? && hard_fm_service_count.zero? && soft_fm_service_count.zero?
+
+        if h_count.positive?
+          has_hard = hard_fm_service_count.positive? || s_count.positive?
+          has_soft = soft_fm_service_count.positive?
+
+          if has_hard && has_soft
+            return '1'
+          elsif has_hard
+            return '2'
+          else
+            return '3'
+          end
+        end
+
+        if s_count.positive?
+          if hard_fm_service_count.positive? && soft_fm_service_count.positive?
+            return '1'
+          elsif soft_fm_service_count.positive?
+            return '3'
+          else
+            return '2'
+          end
+        end
+
+        nil
       end
 
       def determine_facilities_management_lot_code(lot_number, annual_contract_value)
