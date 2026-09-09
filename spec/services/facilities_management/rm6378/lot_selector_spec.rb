@@ -9,7 +9,7 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
 
     # rubocop:disable RSpec/LeakyLocalVariable
     total_service_numbers = %w[K1 L1 L9]
-    hard_service_numbers = %w[C1 D1 H20]
+    hard_service_numbers = %w[C1 D1]
     soft_service_numbers = %w[E1 F3 G6]
     hard_and_soft_service_numbers = %w[H19 N1]
     security_officer_service_numbers = %w[O1 O2]
@@ -24,6 +24,163 @@ RSpec.describe FacilitiesManagement::RM6378::LotSelector do
         lot_id,
         service_numbers.map { |service_number| "#{lot_id}.#{service_number}" }
       ]
+    end
+    describe '.mod_services_check' do
+      subject(:mod_check) { described_class.send(:mod_services_check, input_service_numbers) }
+
+      let(:hard_service) { 'C1' }
+      let(:soft_service) { 'I1' }
+
+      before do
+        # Dynamically query the database or mock using the base Service class
+        service_class = begin
+          defined?(FacilitiesManagement::RM6378::Service) ? FacilitiesManagement::RM6378::Service : FacilitiesManagement::RM6378::Supplier::Service
+        rescue StandardError
+          Service
+        end
+
+        hard_count = (input_service_numbers & [hard_service]).count
+        soft_count = (input_service_numbers & [soft_service]).count
+
+        hard_relation = instance_double(ActiveRecord::Relation, count: hard_count)
+        soft_relation = instance_double(ActiveRecord::Relation, count: soft_count)
+
+        allow(service_class)
+          .to receive(:where)
+          .with(lot_id: 'RM6378.2a', number: anything)
+          .and_return(hard_relation)
+
+        allow(service_class)
+          .to receive(:where)
+          .with(lot_id: 'RM6378.3a', number: anything)
+          .and_return(soft_relation)
+      end
+
+      context 'when neither H13, H14, nor H20 are present' do
+        let(:input_service_numbers) { [hard_service, soft_service] }
+
+        it 'returns nil to allow standard lot processing' do
+          expect(mod_check).to be_nil
+        end
+      end
+
+      context 'when H13 or H14 (Soft/Default edge cases) are selected' do
+        context 'when H13 is selected alone' do
+          let(:input_service_numbers) { ['H13'] }
+
+          it 'defaults to Lot 3 (Soft FM)' do
+            expect(mod_check).to eq('3')
+          end
+        end
+
+        context 'when H14 is selected alone' do
+          let(:input_service_numbers) { ['H14'] }
+
+          it 'defaults to Lot 3 (Soft FM)' do
+            expect(mod_check).to eq('3')
+          end
+        end
+
+        context 'when both H13 and H14 are selected together without other services' do
+          let(:input_service_numbers) { %w[H13 H14] }
+
+          it 'defaults to Lot 3 (Soft FM)' do
+            expect(mod_check).to eq('3')
+          end
+        end
+
+        context 'when H13/H14 are selected with Soft FM services' do
+          let(:input_service_numbers) { ['H13', soft_service] }
+
+          it 'routes to Lot 3 (Soft FM)' do
+            expect(mod_check).to eq('3')
+          end
+        end
+
+        context 'when H13/H14 are selected with Hard FM services' do
+          let(:input_service_numbers) { ['H13', hard_service] }
+
+          it 'routes to Lot 2 (Hard FM)' do
+            expect(mod_check).to eq('2')
+          end
+        end
+
+        context 'when H13/H14 are selected with BOTH Hard FM and Soft FM services' do
+          let(:input_service_numbers) { ['H13', hard_service, soft_service] }
+
+          it 'routes to Lot 1 (Total FM)' do
+            expect(mod_check).to eq('1')
+          end
+        end
+
+        context 'when H13/H14 are selected with H20 (and no standard services)' do
+          let(:input_service_numbers) { %w[H13 H20] }
+
+          it 'routes to Lot 1 (Total FM)' do
+            expect(mod_check).to eq('1')
+          end
+        end
+
+        context 'when H13/H14 are selected with H20 and Hard FM services' do
+          let(:input_service_numbers) { %w[H13 H20] + [hard_service] }
+
+          it 'routes to Lot 2 (Hard FM)' do
+            expect(mod_check).to eq('2')
+          end
+        end
+
+        context 'when H13/H14 are selected with H20 and Soft FM services' do
+          let(:input_service_numbers) { %w[H13 H20] + [soft_service] }
+
+          it 'routes to Lot 1 (Total FM)' do
+            expect(mod_check).to eq('1')
+          end
+        end
+      end
+
+      context 'when H20 (Special service) is selected (without H13 or H14)' do
+        context 'when H20 is selected alone' do
+          let(:input_service_numbers) { ['H20'] }
+
+          it 'routes to Lot 2 (Hard FM)' do
+            expect(mod_check).to eq('2')
+          end
+        end
+
+        context 'when H20 is selected with Hard FM services' do
+          let(:input_service_numbers) { ['H20', hard_service] }
+
+          it 'routes to Lot 2 (Hard FM)' do
+            expect(mod_check).to eq('2')
+          end
+        end
+
+        context 'when H20 is selected with Soft FM services' do
+          let(:input_service_numbers) { ['H20', soft_service] }
+
+          it 'routes to Lot 3 (Soft FM)' do
+            expect(mod_check).to eq('3')
+          end
+        end
+
+        context 'when H20 is selected with BOTH Hard FM and Soft FM services' do
+          let(:input_service_numbers) { ['H20', hard_service, soft_service] }
+
+          it 'routes to Lot 1 (Total FM)' do
+            expect(mod_check).to eq('1')
+          end
+        end
+      end
+
+      context 'when evaluating input array side-effects' do
+        let(:input_service_numbers) { %w[H13 H20 C1] }
+
+        it 'does not mutate the original service_numbers array' do
+          original_array = input_service_numbers.dup
+          described_class.send(:mod_services_check, input_service_numbers)
+          expect(input_service_numbers).to eq(original_array)
+        end
+      end
     end
 
     context 'when only FM services are selected' do
