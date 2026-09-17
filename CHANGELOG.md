@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+## [8.2.0] - 2026-09-17
+### Changed
+
+- Updated logic and results page based on user selections (H19) ([PR 5399](https://github.com/Crown-Commercial-Service/crown-marketplace-legacy/pull/5399))
+- Updated recommended lot logic when H13, H14, or H20 are selected ([PR 5400](https://github.com/Crown-Commercial-Service/crown-marketplace-legacy/pull/5400))
+
 ## [8.1.0] - 2026-08-19
 
 ### Added
