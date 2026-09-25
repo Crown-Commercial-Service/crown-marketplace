@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '4.0.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.1.3'
+gem 'rails', '~> 8.1.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -65,7 +65,7 @@ gem 'friendly_id', '~> 5.7.0'
 gem 'aws-sdk-s3', '~> 1'
 
 # handles spreadsheets
-gem 'roo', '~> 2.10.1'
+gem 'roo', '~> 3.0.0'
 
 # state machine
 gem 'aasm', '~> 5.5'
