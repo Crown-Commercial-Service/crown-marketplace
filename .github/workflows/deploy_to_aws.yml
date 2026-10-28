@@ -46,7 +46,7 @@ concurrency:
 
 jobs:
   deploy-to-application:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: ${{ inputs.environment }}
     steps:
@@ -60,7 +60,7 @@ jobs:
           target-branch: ${{ inputs.target_branch }}
 
   deploy-to-sidekiq:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: ${{ inputs.environment }}
     steps:
