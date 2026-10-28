@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   check_for_release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     outputs:
       version: ${{ steps.release_version.outputs.version }}
@@ -36,7 +36,7 @@ jobs:
 
     needs: [check_for_release]
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     permissions:
       id-token: write
