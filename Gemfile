@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '4.0.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.1.3'
+gem 'rails', '~> 8.1.3', '>= 8.1.3.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -56,7 +56,7 @@ gem 'devise', '~> 5.0.4'
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.144.0'
 
 # for pagination
-gem 'kaminari', '~> 1.2.2'
+gem 'kaminari', '~> 1.3.0'
 
 # for pretty urls
 gem 'friendly_id', '~> 5.7.0'
@@ -93,13 +93,13 @@ gem 'date_validator', '>= 0.12.0'
 gem 'ratonvirus', '>= 0.3.2', git: 'https://github.com/MaksJS/ratonvirus.git', ref: '13e4cd2bc2ef066f40634344f756b45cda3ac105'
 gem 'ratonvirus-clamby', '>= 0.3.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 1.0.3'
+gem 'active_storage_validations', '>= 3.0.6'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 2.2.0'
 # gov notify
 gem 'notifications-ruby-client'
 # DOCX generation
-gem 'caracal-rails', '>= 1.0.2'
+gem 'caracal-rails', '>= 1.0.3'
 
 # duplicating procurements
 gem 'amoeba', '>= 3.2.0'
@@ -124,7 +124,7 @@ group :development, :test do
   gem 'factory_bot_rails', '>= 6.2.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
-  gem 'rspec-rails', '>= 6.0.1'
+  gem 'rspec-rails', '>= 8.0.5'
   gem 'shoulda-matchers', '>= 5.1.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
@@ -133,7 +133,7 @@ group :development, :test do
   gem 'rubocop-factory_bot', '>= 2.25.1', require: false
   gem 'rubocop-rspec_rails', '>= 2.28.3', require: false
   gem 'rubyXL', '>= 3.4.23'
-  gem 'i18n-tasks', '>= 1.0.12'
+  gem 'i18n-tasks', '>= 1.2.0'
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[windows]
   gem 'tzinfo-data', platforms: %i[windows]
@@ -154,7 +154,7 @@ group :test do
   gem 'webmock', '>= 3.12.1'
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
-  gem 'cucumber-rails', '>= 2.6.1', require: false
+  gem 'cucumber-rails', '>= 4.1.0', require: false
   gem 'capybara', '>= 3.38.0'
   gem 'database_cleaner-active_record', '>= 2.0.1', require: false
   gem 'site_prism', '>= 3.7.3'
