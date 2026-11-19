@@ -5,14 +5,14 @@ on:
 
 jobs:
   code_analysis:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
 
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@v1.338.0
+        uses: ruby/setup-ruby@v1.342.0
         with:
           bundler-cache: true
 
