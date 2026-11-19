@@ -5,7 +5,7 @@ on:
 
 jobs:
   code_analysis:
-    runs-on: ubuntu-24.latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
