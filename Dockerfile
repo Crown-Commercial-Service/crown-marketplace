@@ -1,5 +1,5 @@
 # Set the alpine version so they match for both images
-ARG ALPINE_VERSION=3.23
+ARG ALPINE_VERSION=3.24
 
 # Set the Ruby version
 ARG RUBY_VERSION=4.0.10
