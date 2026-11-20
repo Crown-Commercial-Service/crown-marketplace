@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+## [8.3.0] - 2026-11-20
+### Changed
+- Upgrade ruby version to v4.0.10 ([PR 5412](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5412))
+- Upgrade ruby/setup-ruby to v1.342.0 ([PR 5412](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5412))
+
 
 ## [8.2.0] - 2026-09-17
 ### Changed
