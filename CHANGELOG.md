@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.3.1] - 2026-11-20
+### Changed
+- Upgrade ALPINE version to v3.24
+
 ## [8.3.0] - 2026-11-20
 ### Changed
 - Upgrade ruby version to v4.0.10 ([PR 5412](https://github.com/Crown-Commercial-Service/crown-marketplace/pull/5412))
